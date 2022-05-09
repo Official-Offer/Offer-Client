@@ -1,0 +1,14 @@
+.preloader {
+    background-color: $green-bold-color;
+    .lds-ripple {
+        div {
+            border: 4px solid $white-color;
+        }
+    }
+    &.preloader-five {
+        background-color: $green-bold-color;
+    }
+}
+.lds-ripple div {
+    border: 5px solid $white-color;
+  }

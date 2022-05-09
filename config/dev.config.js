@@ -1,0 +1,18 @@
+module.exports = {
+    BLOCKCHAIN_NETWORK: "TESTNET",
+    CHAIN_ID: "97",
+    CHAIN_ID_POLYGON: "80001",
+    ADDRESS_TOP_POLYGON: "0xe2fa71255957985e77412e449d97acb8c230d3d1",
+    ADDRESS_TOP_BSC: "0x2e064270620e7a63f732dbede3dd796b5c35e236",
+    CONTRACT_ADDRESS_ERC1155: "0x9D99D5604D4c8C64A166A68559adB88b5c48E1bd",
+    BSC_SCAN: "https://testnet.bscscan.com/tx/",
+    POLYGON_SCAN: "https://mumbai.polygonscan.com/tx/",
+    RPC_POLYGON: "https://explorer-mumbai.maticvigil.com/",
+    RPC_BSC: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    URL_NFT: "dev-nft.tokenplay.app",
+    URL_API: 'https://dev-api-nft.tokenplay.app/api',
+    URL_API_ADMIN: 'https://dev-api-admin.tokenplay.app',
+    facebook: "https://dev-api-nft.tokenplay.app/api/login/facebook?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%dev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
+    google: "https://dev-api-nft.tokenplay.app/api/login/google?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
+    twitter: "https://dev-api-nft.tokenplay.app/api/login/twitter?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
+}

@@ -1,0 +1,14 @@
+.bg {
+    &-grey-bold {
+        background-color: #011b20;
+    }
+    &-purple {
+        background-color: $purple-color1;
+    }
+    &-black {
+        background-color: $black-color;
+    }
+    &-error {
+        background-color: #ef466f;
+    }
+}

@@ -1,0 +1,689 @@
+.main {
+    &-background {
+        position: absolute;
+        user-select: none;
+        width: 100%;
+        height: 550px;
+        background: linear-gradient(180deg, rgba(0, 182, 176, 0) 0%, rgba(0, 182, 176, 0.1) 100%);
+        clip-path: polygon(0 0, 100% 0%, 100% 80%, 50% 100%, 0 80%);
+        z-index: -1;
+        &-position-banner {
+            left: 0;
+            top: 100px;
+        }
+    }
+    &-homepage {
+        &-news-container {
+            width: 70%;
+            @include lg {
+                width: 85%;
+            }
+            margin: auto;
+            z-index: 1;
+        }
+        &-news {
+            padding: 50px 0 100px 0;
+            position: relative;
+            overflow: visible;
+            .swiper-slide {
+                padding: 20px 10px !important;
+            }
+            &-card {
+                border-radius: 20px;
+                background-color: #fff;
+                box-shadow: 0px 5px 12px -1px rgba(0, 0, 0, 0.75);
+                overflow: hidden;
+                &-header {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    &-img {
+                        width: 100%;
+                    }
+                    .logo {
+                        position: absolute;
+                        left: 45%;
+                        bottom: -7%;
+                        border: 1px solid #fcfcfd;
+                        background-color: #0a2129;
+                        border-radius: 50%;
+                        padding: 5px;
+                        width: 40px;
+                        height: 35px;
+                        z-index: 3;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+                &-body {
+                    padding: 20px;
+                    &-title {
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-align: center;
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                        font-size: 1rem;
+                    }
+                    &-tag {
+                        text-align: center;
+                        color: #1d8c9a;
+                    }
+                    &-description {
+                        font-size: 0.9rem;
+                        text-align: center;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        // height: 100px;
+                    }
+                }
+            }
+        }
+        &-statistical {
+            padding: 10px 0 80px 0;
+            &-viewmore {
+                color: #058499;
+            }
+            &-decrease {
+                color: #ef466f;
+            }
+            &-increase {
+                color: #45b36b;
+            }
+        }
+        &-tokenranking {
+            padding: 10px 0 80px 0;
+            background-image: url(/img/banner/bg-pattern.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            &-table {
+                width: 100%;
+                &-sorter {
+                    display: inherit;
+                    margin-left: 5px;
+                    &-inner {
+                        display: inline-flex;
+                        flex-direction: column;
+                        align-items: center;
+                        .up,
+                        .down {
+                            font-size: 14px;
+                            color: #223052;
+                            cursor: pointer;
+                            transition: 0.25s;
+                            &:hover {
+                                color: #058499;
+                            }
+                        }
+                        .active.up,
+                        .active.down {
+                            color: #058499;
+                        }
+                    }
+                }
+                &-transfer-volume,
+                &-marketcaps,
+                &-holder,
+                &-active-address,
+                &-transfer-count {
+                    text-align: end;
+                }
+                &-token {
+                    .token {
+                        justify-content: start !important;
+                    }
+                }
+                &-number {
+                    text-align: center;
+                }
+                &-status {
+                    background: #058499;
+                    border-radius: 8px;
+                    padding: 3px 7px;
+                    color: $white-color;
+                }
+                &-decrease {
+                    color: #ef466f;
+                }
+                &-increase {
+                    color: #45b36b;
+                }
+                &-decrease {
+                    p {
+                        color: #ef466f;
+                    }
+                }
+                &-increase {
+                    p {
+                        color: #45b36b;
+                    }
+                }
+                &-logo {
+                    width: 30px;
+                    height: 30px;
+                    img {
+                        max-width: 100%;
+                    }
+                }
+                thead {
+                    background: #f4f5f6;
+                    th {
+                        padding: 10px;
+                        font-size: 1.1rem;
+                    }
+                }
+                tbody {
+                    tr {
+                        border-bottom: 1px solid #b1b5c4;
+                        transition: 0.25s;
+                        cursor: pointer;
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                        &:hover {
+                            background: #f4f5f6;
+                        }
+                    }
+                    td {
+                        padding: 10px;
+                    }
+                    p,
+                    span {
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+        &-banners {
+            padding: 50px 0 80px 0;
+            position: relative;
+            overflow: visible;
+            &-background {
+                position: absolute;
+                user-select: none;
+                width: 100%;
+                height: 94%;
+                left: 0;
+                top: 0;
+                background: linear-gradient(180deg, rgba(0, 182, 176, 0.1) 0%, rgba(0, 182, 176, 0) 100%);
+                clip-path: polygon(50% 0, 100% 20%, 100% 100%, 0 100%, 0 20%);
+                z-index: -1;
+            }
+        }
+        &-highestsocial {
+            padding: 10px 0 80px 0;
+            background-image: url(/img/banner/bg-pattern1.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            &-table {
+                width: 100%;
+                p {
+                    margin: 0;
+                }
+                &-decrease {
+                    p {
+                        color: #ef466f;
+                    }
+                }
+                &-increase {
+                    p {
+                        color: #45b36b;
+                    }
+                }
+                &-category,
+                &-blockchain,
+                &-24volume {
+                    text-align: center;
+                }
+                &-24users,
+                &-24transactions,
+                &-social {
+                    text-align: end;
+                }
+                &-24volume {
+                    &-bar-top {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-bottom: 5px;
+                    }
+                    &-bar-bottom {
+                        width: 100%;
+                        height: 8px;
+                        border-radius: 4px;
+                        display: flex;
+                        align-items: center;
+                        overflow: hidden;
+                        .volume-bar {
+                            height: 100%;
+                            &:first-child {
+                                background: #058499;
+                            }
+                            &:nth-child(2),
+                            &:nth-child(3) {
+                                position: relative;
+                                &::before {
+                                    position: absolute;
+                                    left: -10px;
+                                    top: -2px;
+                                    content: "";
+                                    width: 0;
+                                    height: 0;
+                                    border-bottom: 10px solid #fff;
+                                    border-left: 10px solid transparent;
+                                }
+                                &::after {
+                                    position: absolute;
+                                    left: -8px;
+                                    top: 0;
+                                    content: "";
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 8px solid transparent;
+                                }
+                            }
+                            &:nth-child(2) {
+                                background: #1b6263;
+                                &::after {
+                                    border-bottom: 8px solid #1b6263;
+                                }
+                            }
+                            &:nth-child(3) {
+                                background: #058499;
+                                &::after {
+                                    border-bottom: 8px solid #058499;
+                                }
+                            }
+                        }
+                    }
+                    &-price-combine {
+                        height: auto;
+                    }
+                    &-unit-column {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        transition: 0.25s;
+                        span {
+                            margin-left: 5px;
+                            font-size: 11px;
+                            // color: #000;
+                            color: #058499;
+                            &:first-child {
+                                margin-left: 0;
+                            }
+                            &:nth-child(2) {
+                                color: #1b6263;
+                            }
+                        }
+                    }
+                }
+                &-sorter {
+                    display: inherit;
+                    margin-left: 5px;
+                    &-inner {
+                        display: inline-flex;
+                        flex-direction: column;
+                        align-items: center;
+                        .up,
+                        .down {
+                            font-size: 14px;
+                            color: #223052;
+                            cursor: pointer;
+                            transition: 0.25s;
+                            &:hover {
+                                color: #058499;
+                            }
+                        }
+                        .active.up,
+                        .active.down {
+                            color: #058499;
+                        }
+                    }
+                }
+                &-blockchain {
+                    img {
+                        width: 32px;
+                        height: 32px;
+                    }
+                }
+                &-dapp {
+                    img {
+                        width: 32px;
+                        height: 32px;
+                    }
+                }
+                thead {
+                    background: #f4f5f6;
+                    th {
+                        padding: 10px 5px;
+                        font-size: 1rem;
+                    }
+                    &:first-child {
+                        border-top-left-radius: 15px;
+                    }
+                    &:last-child {
+                        border-top-right-radius: 15px;
+                    }
+                }
+                tbody {
+                    tr {
+                        border-bottom: 1px solid #b1b5c4;
+                        transition: 0.25s;
+                        cursor: pointer;
+                        &:last-child {
+                            border-bottom: none;
+                        }
+                        &:hover {
+                            background: #f4f5f6;
+                        }
+                    }
+                    td {
+                        padding: 15px 5px;
+                    }
+                    p,
+                    span {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        &-tokenranking,
+        &-highestsocial {
+            &-table {
+                &.pc {
+                    @include sm {
+                        display: none;
+                    }
+                }
+                &.mobile {
+                    display: none;
+                    @include sm {
+                        display: block !important;
+                    }
+                }
+                &-header,
+                &-body {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    padding: 15px;
+                    background-color: #f4f5f6;
+                    border-radius: 8px;
+                    &-item {
+                        flex: 0 0 auto;
+                        width: 14%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        @include sm {
+                            width: 47.5%;
+                        }
+                        &:first-child {
+                            width: 2%;
+                            justify-content: start;
+                            @include sm {
+                                width: 5%;
+                            }
+                        }
+                        &-title {
+                            font-size: 0.9rem;
+                            margin-left: 5px;
+                        }
+                        .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+                            background: transparent !important;
+                            border: none;
+                        }
+                        .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+                            .ant-select-selector {
+                            outline: none !important;
+                            box-shadow: none !important;
+                            border-color: transparent !important;
+                        }
+                        .ant-select-selection-item {
+                            color: $black-color;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+                        .ant-select-arrow {
+                            color: $black-color;
+                        }
+                    }
+                }
+                &-body {
+                    margin: 20px 0;
+                    cursor: pointer;
+                    background-color: transparent;
+                    &-item {
+                        @include sm {
+                            width: 95%;
+                            &:first-child {
+                                width: 5%;
+                            }
+                        }
+                        p {
+                            margin: 0;
+                            font-size: 0.9rem;
+                        }
+                        &-number {
+                            align-items: end;
+                            justify-content: center !important;
+                            position: relative;
+                            font-size: 15px;
+                            img {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 32p;
+                            }
+                        }
+                        &-name {
+                            justify-content: start;
+                            overflow: hidden;
+                            padding-left: 5px;
+                            .dapp-logo {
+                                width: 48px;
+                                height: 40px;
+                                border-radius: 8px;
+                                box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+                                -webkit-backface-visibility: hidden;
+                                -moz-backface-visibility: hidden;
+                                -webkit-transform: translateZ(0);
+                                -moz-transform: translateZ(0);
+                            }
+                            p {
+                                white-space: nowrap;
+                                margin-left: 10px;
+                                font-size: 0.9rem;
+                            }
+                            @include sm {
+                                .dapp-logo {
+                                    width: 36px;
+                                    height: 32px;
+                                }
+                                .blockchain-logo {
+                                    width: 18px;
+                                    height: 18px;
+                                    border-radius: 8px;
+                                    box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+                                    -webkit-backface-visibility: hidden;
+                                    -moz-backface-visibility: hidden;
+                                    -webkit-transform: translateZ(0);
+                                    -moz-transform: translateZ(0);
+                                    margin: 2px 0;
+                                }
+                            }
+                        }
+                        &-category {
+                            p {
+                                text-align: center;
+                            }
+                        }
+                        &-blockchain {
+                            img {
+                                display: block;
+                                width: 16px;
+                                height: 16px;
+                                vertical-align: middle;
+                            }
+                        }
+                        &-user,
+                        &-transaction,
+                        &-ranking {
+                            &-social {
+                                display: flex;
+                                align-items: center;
+                                justify-content: end;
+                                span {
+                                    margin-left: 5px;
+                                }
+                            }
+                            &-number {
+                                p {
+                                    font-size: 1rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &-nftexplore {
+            padding: 10px 0 80px 0;
+        }
+        &-blog {
+            padding: 80px 0;
+            position: relative;
+            overflow: visible;
+            .swiper-slide {
+                padding: 20px 10px !important;
+            }
+            &-background {
+                position: absolute;
+                user-select: none;
+                width: 100%;
+                height: 94%;
+                left: 0;
+                top: 0;
+                background: linear-gradient(180deg, rgba(0, 182, 176, 0.1) 0%, rgba(0, 182, 176, 0) 100%);
+                clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
+                z-index: -1;
+            }
+            &-card {
+                border-radius: 20px;
+                background-color: #fff;
+                box-shadow: 0px 5px 12px -1px rgba(0, 0, 0, 0.75);
+                overflow: hidden;
+                &-header {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    &-img {
+                        width: 100%;
+                    }
+                }
+                &-body {
+                    padding: 20px;
+                    &-title {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                        font-size: 1rem;
+                        height: 76px;
+                        &:hover {
+                            color: #058499;
+                        }
+                    }
+                    &-tag {
+                        text-align: center;
+                        color: #1d8c9a;
+                    }
+                    &-description {
+                        font-size: 0.9rem;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        &-socialnetwork {
+            padding: 10px 0 80px 0;
+            &-app {
+                position: relative;
+                border-radius: 10px;
+                -webkit-box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
+                box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
+                padding: 40px 20px 20px 20px;
+                &-logo {
+                    position: absolute;
+                    top: -20%;
+                    left: 5%;
+                    width: 60px;
+                    height: 60px;
+                }
+                &-description {
+                    margin-bottom: 30px;
+                }
+                &-btn {
+                    display: inline !important;
+                    transition: ease-in-out 0.25s !important;
+                }
+                &-form-submit {
+                    input,
+                    textarea {
+                        width: 100%;
+                        margin: 10px 0;
+                        padding: 10px;
+                        border-radius: 10px;
+                        -webkit-box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
+                        box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
+                        background-color: #fcfcfd;
+                        border: none;
+                        outline: none;
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.nft_main_list {
+    width: 100%;
+    margin: 0;
+    @include sm {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+    }
+    .nft_main_item {
+        flex: 0 0 auto;
+        width: 20%;
+        padding: 10px;
+        @include sm {
+            width: 100%;
+            flex: 0 0 auto;
+        }
+    }
+    .card_home_title {
+        width: 283px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        a {
+            font-size: 17px;
+        }
+    }
+}

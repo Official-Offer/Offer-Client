@@ -1,0 +1,64 @@
+/* facbook icon */
+.icon_facebook {
+    transition: 0.25s;
+    &:hover {
+        color: #3b5998;
+    }
+}
+/* reddit icon */
+.icon_reddit {
+    transition: 0.25s;
+    &:hover {
+        color: #bb0000;
+    }
+}
+/* youtube */
+.icon_youtube {
+    transition: 0.25s;
+    &:hover {
+        color: #e50914;
+    }
+}
+/* twitter */
+.icon_twitter {
+    transition: 0.25s;
+    &:hover {
+        color: #1da1f2;
+    }
+}
+/* dribble */
+.icon_dribble {
+    transition: 0.25s;
+    &:hover {
+        color: #000000;
+    }
+}
+/* linkedIn */
+.icon_linkedIn {
+    transition: 0.25s;
+    &:hover {
+        color: #0e76a8;
+    }
+}
+/* telegram */
+.icon_telegram {
+    transition: 0.25s;
+    &:hover {
+        color: #0088cc;
+    }
+}
+// metamask
+.icon-metamask {
+    background-image: url("/img/wallets/icn-metamask.svg");
+}
+.icon-connect-wallet {
+    flex-shrink: 0;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+}
