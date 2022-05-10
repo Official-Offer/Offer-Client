@@ -17,7 +17,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
         { tag: 'category', name: 'Category', sort: false, query: '', },
         { tag: 'blockchain', name: 'Blockchain', sort: false, query: '', },
         { tag: '24users', name: '24hr Users', sort: true, query: 'dailyUser', },
-        { tag: '24hr Transactions', name: '24hr Transactions', sort: true, query: 'dailyTransaction', },
+        { tag: '24transactions', name: '24hr Transactions', sort: true, query: 'dailyTransaction', },
         { tag: '24volume', name: '24hr volume', sort: true, query: 'dailyVolume', },
         { tag: 'social', name: 'Social Signal', sort: true, query: 'socialSignal', },
     ];
@@ -38,7 +38,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     };
 
     return (
-        <div className="p-lg-4 p-1">
+        <div className="py-lg-4 px-lg-2 p-1">
             <BoxWhiteShadow className="p-lg-4 p-2">
                 <table className="main-homepage-highestsocial-table pc">
                     <thead>
@@ -51,7 +51,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                                     >
                                         <BoxALignCenter_Justify_ItemsCenter
                                             className={`${thead.tag === '24users' ? 'justify-content-end' :
-                                                thead.tag === '24hr Transactions' ? 'justify-content-end' :
+                                                thead.tag === '24transactions' ? 'justify-content-end' :
                                                     thead.tag === 'social' ? 'justify-content-end' :
                                                         thead.tag === 'dapp' ? 'justify-content-start' : ''
                                                 }`}

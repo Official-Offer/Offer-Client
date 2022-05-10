@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { BoxALignCenter_Justify_ItemsBetween, BoxALignCenter_Justify_ItemsEnd, BoxALignItemsCenter } from '@styledComponents/styledBox';
-import { Button, ButtonBlueBold, ButtonGradientBlue } from '@styledComponents/styledButton';
+import { Button, ButtonBackgroundBlueBold, ButtonBlue } from '@styledComponents/styledButton';
 import { MenuOutlined, UploadOutlined } from '@ant-design/icons';
 import { Drawer, Menu } from 'antd';
 import { useRouter } from 'next/router';
@@ -90,7 +90,7 @@ export const NavbarHome: FC = () => {
                 </BoxALignCenter_Justify_ItemsEnd>
                 <BoxALignCenter_Justify_ItemsEnd className="col-lg-3 navbar_home_pc">
                     <div className="d-flex align-items-center display_none_res">
-                        <ButtonBlueBold
+                        <ButtonBackgroundBlueBold
                             className="rounded-pill d-flex align-items-center me-3"
                             onClick={() => {
                                 router.push("/submit");
@@ -98,8 +98,8 @@ export const NavbarHome: FC = () => {
                         >
                             <UploadOutlined className="me-2 fontSize_1-2" />
                             Submit Dapp
-                        </ButtonBlueBold>
-                        <ButtonGradientBlue
+                        </ButtonBackgroundBlueBold>
+                        <ButtonBlue
                             className="rounded-pill px-4"
                         // onClick={() => {
                         //     dispatch(nameModalConnect('connectWallet'));
@@ -107,7 +107,7 @@ export const NavbarHome: FC = () => {
                         // }}
                         >
                             Login
-                        </ButtonGradientBlue>
+                        </ButtonBlue>
                         {/* <WalletModal /> */}
                     </div>
                 </BoxALignCenter_Justify_ItemsEnd>

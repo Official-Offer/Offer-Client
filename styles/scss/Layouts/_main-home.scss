@@ -174,7 +174,7 @@
                     background: #f4f5f6;
                     th {
                         padding: 10px;
-                        font-size: 1.1rem;
+                        font-size: 0.9rem;
                     }
                 }
                 tbody {
@@ -366,7 +366,7 @@
                     background: #f4f5f6;
                     th {
                         padding: 10px 5px;
-                        font-size: 1rem;
+                        font-size: 0.9rem;
                     }
                     &:first-child {
                         border-top-left-radius: 15px;
@@ -672,6 +672,9 @@
         flex: 0 0 auto;
         width: 20%;
         padding: 10px;
+        @include lg {
+            padding: 10px 5px;
+        }
         @include sm {
             width: 100%;
             flex: 0 0 auto;

@@ -38,7 +38,7 @@ export default function TokenList({ data, setSort, sort }: any) {
     };
 
     return (
-        <div className="p-lg-4 p-1">
+        <div className="py-lg-4 px-lg-2 p-1">
             <BoxWhiteShadow className="p-lg-4 p-2">
                 <table className="main-homepage-tokenranking-table pc">
                     <thead>

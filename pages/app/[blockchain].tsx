@@ -1,6 +1,6 @@
 import { FacebookFilled, TwitterOutlined, UserOutlined, YoutubeFilled } from '@ant-design/icons';
 import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxAlignItemsEnd_FlexColumn, BoxALignItemsStart, BoxBlueBold, BoxBlueBorderRounded, BoxWhiteShadow } from '@styles/styled-components/styledBox';
-import { Button, ButtonBorderBlueTransparent, ButtonGradientBlue } from '@styles/styled-components/styledButton';
+import { Button, ButtonBorderBlueTransparent, ButtonBlue } from '@styles/styled-components/styledButton';
 import { File, Heart, MessageSquare, Share2, User } from 'react-feather';
 import { TabMain, TabMain_Sub } from '@styles/styled-components/styledTabs';
 import { useRouter } from 'next/router';
@@ -73,9 +73,9 @@ const BlockchainDetails: NextPage = () => {
                         </BoxBlueBorderRounded>
                     </BoxALignItemsCenter>
                     <BoxALignItemsCenter className="blockchain-details-social">
-                        <ButtonGradientBlue type="button">
+                        <ButtonBlue type="button">
                             View Website
-                        </ButtonGradientBlue>
+                        </ButtonBlue>
                         <BoxALignItemsCenter className="ms-5">
                             <span className="me-3">Social: </span>
                             <a href="#" className="blockchain-details-social-facebook">
@@ -96,9 +96,9 @@ const BlockchainDetails: NextPage = () => {
                             <User color='#1DBBBD' />
                             <span className="ms-2">8 followers</span>
                         </BoxALignItemsCenter>
-                        <ButtonGradientBlue className="rounded-pill mb-3">
+                        <ButtonBlue className="rounded-pill mb-3">
                             Follow
-                        </ButtonGradientBlue>
+                        </ButtonBlue>
                         <BoxALignItemsCenter className="mb-5">
                             <Button className="blockchain-details-right-follow">
                                 <BoxALignItemsCenter>
@@ -247,9 +247,9 @@ const BlockchainDetails: NextPage = () => {
                                         <p className="fw-bold mb-1 fontSize_1-1">Want More Dashboards</p>
                                         <p className="mb-0 fontSize_09">Submit Your Request To Us</p>
                                         <div className="mt-auto">
-                                            <ButtonGradientBlue className="fw-bold">
+                                            <ButtonBlue className="fw-bold">
                                                 Submit
-                                            </ButtonGradientBlue>
+                                            </ButtonBlue>
                                         </div>
                                     </div>
                                 </div>

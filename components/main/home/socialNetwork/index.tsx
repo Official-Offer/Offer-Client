@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ButtonGradientBlue } from '@styles/styled-components/styledButton';
+import { ButtonBlue } from '@styles/styled-components/styledButton';
 import { message } from 'antd';
 import axios from 'axios';
 import { URL_API_ADMIN } from '@config/index';
@@ -47,7 +47,7 @@ export const SocialNetwork: FC = () => {
                                         <p className="main-homepage-socialnetwork-app-description">
                                             {app.description}
                                         </p>
-                                        <a className="main-homepage-socialnetwork-app-btn btn-grad" href={app.href}>
+                                        <a className="main-homepage-socialnetwork-app-btn btn-blue px-3 py-2" href={app.href}>
                                             {app.button}
                                         </a>
                                     </div>
@@ -65,9 +65,9 @@ export const SocialNetwork: FC = () => {
                         <input type="text" placeholder="Your name" name="name" required />
                         <input type="email" placeholder="Your email" name="email" required />
                         <textarea rows={15} placeholder='Message' name="message" />
-                        <ButtonGradientBlue className="px-4 py-2" type="submit">
+                        <ButtonBlue className="px-4 py-2" type="submit">
                             Send Message
-                        </ButtonGradientBlue>
+                        </ButtonBlue>
                     </form>
                 </div>
             </div>

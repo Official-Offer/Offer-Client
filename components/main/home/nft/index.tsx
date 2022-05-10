@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { BoxALignCenter_Justify_ItemsCenter } from '@styles/styled-components/styledBox';
-import { ButtonGradientBlue } from '@styles/styled-components/styledButton';
+import { ButtonBlue } from '@styles/styled-components/styledButton';
 import { useRouter } from 'next/router';
 import { URL_API } from '@config/index';
 import NFTLists from '@components/common/NFTLists';
@@ -31,12 +31,12 @@ export const NFTExplore: FC = () => {
                 />
             </div>
             <BoxALignCenter_Justify_ItemsCenter className="mt-4">
-                <ButtonGradientBlue
-                    className="btn-grad fw-bold px-5 fontSize_1-3"
+                <ButtonBlue
+                    className="fw-bold px-5 fontSize_1-3"
                     onClick={() => router.push(`/nft-marketplace`)}
                 >
                     Explore
-                </ButtonGradientBlue>
+                </ButtonBlue>
             </BoxALignCenter_Justify_ItemsCenter>
         </section>
     );

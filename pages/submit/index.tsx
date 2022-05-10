@@ -1,7 +1,7 @@
 import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxAlignItemsStart_FlexColumn, BoxBlueBold } from '@styles/styled-components/styledBox';
 import { Facebook, PlusCircle, Send, Twitter } from 'react-feather';
 import { Radio, Select, Space } from 'antd';
-import { ButtonGradientBlue } from '@styles/styled-components/styledButton';
+import { ButtonBlue } from '@styles/styled-components/styledButton';
 import { TitleGlobal } from '@components/common/Title';
 import { useState } from 'react';
 import type { NextPage } from 'next';
@@ -375,9 +375,9 @@ const Submit: NextPage = () => {
                 </BoxBlueBold>
                 <br />
                 <div className="main-submit-box">
-                    <ButtonGradientBlue>
+                    <ButtonBlue>
                         Submit your project
-                    </ButtonGradientBlue>
+                    </ButtonBlue>
                 </div>
             </section>
         </>

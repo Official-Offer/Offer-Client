@@ -47,7 +47,30 @@ export const ButtonBorderBlueTransparent = styled.div `
         outline: none;
     }
 `;
-export const ButtonBlueBold = styled.button `
+export const ButtonBlue = styled.button `
+    background-color: #058499;
+    padding: .375rem .75rem;
+    border: none;
+    color: #FFF;
+    outline: none;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.25s;
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    &:hover {
+        background-color: #058399cb;
+        border: none;
+    }
+`;
+export const ButtonBackgroundBlueBold = styled.button `
     color: #FFF;
     display: inline-block;
     line-height: 1.5;

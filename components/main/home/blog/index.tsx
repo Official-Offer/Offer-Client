@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ButtonGradientBlue } from '@styles/styled-components/styledButton';
+import { ButtonBlue } from '@styles/styled-components/styledButton';
 import BlogSlides from '../slides/BlogSlides';
 import request from '@services/apiService';
 import * as qs from 'qs';
@@ -33,9 +33,9 @@ export const Blog: FC = () => {
                     <p>
                         Here you will find the history and technology behind Bitcoin and other popular altcoins. Learn how Cryptos are shaping Web 3.0.
                     </p>
-                    <ButtonGradientBlue className="px-4">
+                    <ButtonBlue className="px-4">
                         View All
-                    </ButtonGradientBlue>
+                    </ButtonBlue>
                 </div>
                 <div className="col-lg-9 col-12 mt-lg-0 mt-4 px-lg-2 px-0">
                     <BlogSlides data={blogList} />
