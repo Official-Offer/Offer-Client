@@ -25,6 +25,8 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
                     </Button>
                     <Swiper
                         modules={[Navigation, Pagination, A11y]}
+                        observeParents={true}
+                        observer={true}
                         spaceBetween={10}
                         breakpoints={{
                             320: {
@@ -49,6 +51,7 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
                         navigation={{
                             prevEl: navigationPrevRef.current,
                             nextEl: navigationNextRef.current,
+
                         }}
                         effect="fade"
                         fadeEffect={{

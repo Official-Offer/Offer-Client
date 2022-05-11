@@ -18,6 +18,14 @@
 @import "./scss/Layouts/submitdapp";
 @import "./scss/Layouts/footer";
 
+@font-face {
+  font-family: "Circular Std";
+  src: url("../public/fonts/CircularStd-Book.otf") format("opentype"),
+    url("../public/fonts/CircularStd-Medium.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html,
 body {
   padding: 0;
@@ -25,7 +33,7 @@ body {
   position: relative;
 }
 body {
-  font-family: "Mulish" !important;
+  font-family: "Circular Std" !important;
   height: auto;
   // background-image: url(/img/bg-dots.png) !important;
   // background-size: contain !important;

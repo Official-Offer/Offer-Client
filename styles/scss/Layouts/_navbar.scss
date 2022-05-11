@@ -6,7 +6,7 @@
     z-index: 1000;
     width: 100%;
     .searchTerm {
-        width: 250px;
+        width: 100%;
         border: 1px solid rgba(139, 152, 156, 0.5);
         border-right: none;
         background-color: transparent;
@@ -77,5 +77,10 @@
                 color: $white-color;
             }
         }
+    }
+}
+.navbar_home {
+    &-form {
+        width: 100%;
     }
 }

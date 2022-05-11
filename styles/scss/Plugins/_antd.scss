@@ -175,7 +175,6 @@
         padding: 8px 18px;
         margin: 0px 5px;
         color: #223052 !important;
-        font-family: "Nunito";
         font-size: 15px;
         border-radius: 10px;
         &:focus {
@@ -186,4 +185,14 @@
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: white !important;
     background-color: #058499;
+}
+.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
+    content: none !important;
+}
+.ant-menu-title-content {
+    a {
+        &:hover {
+            color: $blue-color !important;
+        }
+    }
 }

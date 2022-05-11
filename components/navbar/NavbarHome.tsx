@@ -40,11 +40,11 @@ export const NavbarHome: FC = () => {
 
     return (
         <section id="navbar_home">
-            <BoxALignCenter_Justify_ItemsBetween className="px-md-5 px-2 py-2">
+            <BoxALignCenter_Justify_ItemsBetween className="px-md-4 px-2 py-2">
                 {!boxSearch ? (
                     <>
-                        <BoxALignItemsCenter className="col-lg-4">
-                            <div className="img-logo pe-4">
+                        <BoxALignItemsCenter className="col-md-6">
+                            <div className="img-logo">
                                 <Link href="/">
                                     <a>
                                         <img alt="" src="/img/logo.png" style={{ width: '86px', height: '63px' }} />
@@ -55,7 +55,8 @@ export const NavbarHome: FC = () => {
                                 defaultSelectedKeys={router.route === "/nft-marketplace" ? ["1"] :
                                     router.route === "/dapp-portal" ? ["4"] : [""]
                                 }
-                                className="d-flex justify-content-center align-items-center display_none_res415"
+                                mode="horizontal"
+                                className="w-100"
                             >
                                 {listMenu.map((menu, i) => {
                                     return (
@@ -76,26 +77,29 @@ export const NavbarHome: FC = () => {
                                 })}
                             </Menu>
                         </BoxALignItemsCenter>
-                        <BoxALignCenter_Justify_ItemsEnd className="col-lg-3 navbar_home_pc">
-                            <form
-                                onSubmit={onSearch}
-                            >
-                                <BoxALignItemsCenter>
-                                    <input
-                                        type="text"
-                                        className="searchTerm"
-                                        placeholder="Searching..."
-                                        onChange={handleChangeSearch}
-                                    />
-                                    <button type="button" className="searchButton">
-                                        <span>
-                                            <Search width={18} height={18} />
-                                        </span>
-                                    </button>
-                                </BoxALignItemsCenter>
-                            </form>
-                        </BoxALignCenter_Justify_ItemsEnd>
-                        <BoxALignCenter_Justify_ItemsEnd className="col-lg-3 navbar_home_pc">
+                        <div className="col-md-3 navbar_home_pc">
+                            <BoxALignCenter_Justify_ItemsEnd className="w-100">
+                                <form
+                                    onSubmit={onSearch}
+                                    className="navbar_home-form"
+                                >
+                                    <BoxALignItemsCenter>
+                                        <input
+                                            type="text"
+                                            className="searchTerm"
+                                            placeholder="Searching..."
+                                            onChange={handleChangeSearch}
+                                        />
+                                        <button type="button" className="searchButton">
+                                            <span>
+                                                <Search width={18} height={18} />
+                                            </span>
+                                        </button>
+                                    </BoxALignItemsCenter>
+                                </form>
+                            </BoxALignCenter_Justify_ItemsEnd>
+                        </div>
+                        <BoxALignCenter_Justify_ItemsEnd className="col-md-3 navbar_home_pc">
                             <div className="d-flex align-items-center display_none_res">
                                 <ButtonBackgroundBlueBold
                                     className="rounded-pill d-flex align-items-center me-3"
@@ -191,7 +195,7 @@ export const NavbarHome: FC = () => {
                             className="ms-2"
                             type="button"
                             onClick={() => setBoxSearch(false)}
-                        > 
+                        >
                             Cancle
                         </Button>
                     </BoxALignCenter_Justify_ItemsCenter>
