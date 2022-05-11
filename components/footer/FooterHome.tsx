@@ -6,6 +6,18 @@ import { IconsCircle } from "@styles/styled-components/styledButton";
 import Link from "next/link";
 
 export const FooterHome: FC = () => {
+
+    const menuListFooter = [
+        { name: 'Listing NFT', href: '#', tab: false },
+        { name: 'Submit Dapp', href: '#', tab: false },
+        { name: 'Advertise', href: '#', tab: false },
+        { name: 'Term of use', href: '#', tab: false },
+        { name: 'Policy', href: '#', tab: false },
+        { name: 'Whitepaper', href: '#', tab: false },
+        { name: 'Proposal', href: '#', tab: false },
+        { name: 'Apply INO Project', href: '#', tab: false },
+    ];
+
     return (
         <footer id="footer_home">
             <div className="container">
@@ -27,72 +39,43 @@ export const FooterHome: FC = () => {
                         </p>
                         <p className="text-green mt-3 fontSize_1-1">
                             <span className="text-green">
-                                <i className="fa fa-paper-plane"></i>
+                                <Send width={'1.3em'} height={'1.3em'} />
                             </span>
                             <span className="text-white ms-2">contact@tokenplay.app</span>
                         </p>
                     </div>
                     <div className="col-lg-2 col-12 footer_home_pc">
-                        <h4 className="fw-bold text-green">About us</h4>
+                        {/* <h4 className="fw-bold text-green">About us</h4> */}
                         <ul className="mt-2" style={{ listStyle: "none" }}>
-                            <li>
-                                <Link
-                                    href="https://tokenplay.medium.com/about-token-play-smart-blockchain-game-ecosystem-74b1c830f64b"
-                                    passHref
-                                >
-                                    <a className="text-white" target="_blank">
-                                        About
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="https://docs.google.com/forms/d/1yaFSKe4T6vh00ncQ0YQOhXq2oJtKBVsbSVmTQFBnCKk/edit"
-                                    passHref
-                                >
-                                    <a className="text-white" target="_blank">
-                                        Apply as an Artist
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="https://tokenplay.app/game-product" passHref>
-                                    <a className="text-white" target="_blank">
-                                        Play Game
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="https://nft.tokenplay.app/" passHref>
-                                    <a className="text-white" target="_blank">
-                                        Marketplace
-                                    </a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="https://t.me/tokenplaycommunityofficial" passHref>
-                                    <a className="text-white" target="_blank">
-                                        Channel Community
-                                    </a>
-                                </Link>
-                            </li>
-                            {/* <li>
-                                <Link href="https://bscscan.com/token/0x728f8d003109d7b895cc5805ffc973de2bad9def" passHref>
-                                    <a target="_blank">
-                                        <TextDescriptionToggle>Contract</TextDescriptionToggle>
-                                    </a>
-                                </Link>
-                            </li> */}
-                            <li>
-                                <Link
-                                    href="https://docs.google.com/spreadsheets/d/1B6f4T8gOHnf0x3rW6n6K91tilVeqU23I/edit#gid=681877334"
-                                    passHref
-                                >
-                                    <a className="text-white" target="_blank">
-                                        How it works
-                                    </a>
-                                </Link>
-                            </li>
+                            {menuListFooter.map((menu, i) => {
+                                return (
+                                    <li key={i}>
+                                        {menu.tab ? (
+                                            <Link
+                                                href={menu.href}
+                                                passHref
+                                            >
+                                                <a
+                                                    className="text-white"
+                                                    target="_blank"
+                                                >
+                                                    {menu.name}
+                                                </a>
+                                            </Link>
+                                        ) : (
+                                            <Link
+                                                href={menu.href}
+                                            >
+                                                <a
+                                                    className="text-white"
+                                                >
+                                                    {menu.name}
+                                                </a>
+                                            </Link>
+                                        )}
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </div>
                     {/* <div className="col-12 mt-4 mb-5 footer_home_mobile">

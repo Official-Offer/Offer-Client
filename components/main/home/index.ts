@@ -1,5 +1,5 @@
 export { HighestSocial } from './highestSocial';
-export { TokenRanking } from './tokenRanking';
+export { PriceBoard } from './priceBoard';
 export { Statistical } from './statistical';
 export { NFTExplore } from './nft';
 export { Banners } from './banners';

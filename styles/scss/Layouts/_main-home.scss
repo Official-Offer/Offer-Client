@@ -81,6 +81,12 @@
                         text-overflow: ellipsis;
                         // height: 100px;
                     }
+                    &-createdAt {
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 0.8rem;
+                        color: #7d7d7d;
+                    }
                 }
             }
         }
@@ -641,7 +647,8 @@
                     transition: ease-in-out 0.25s !important;
                 }
                 &-form-submit {
-                    input,
+                    input[type="text"],
+                    input[type="email"],
                     textarea {
                         width: 100%;
                         margin: 10px 0;
@@ -650,10 +657,14 @@
                         -webkit-box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
                         box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
                         background-color: #fcfcfd;
+                        border: 1.5px solid #fcfcfd !important;
+                        color: $black-color;
                         border: none;
                         outline: none;
                         &:focus {
                             outline: none;
+                            -webkit-box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
+                            box-shadow: -1px 0px 15px -4px rgba(0, 0, 0, 0.79);
                         }
                     }
                 }

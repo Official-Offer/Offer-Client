@@ -7,7 +7,7 @@ import * as qs from 'qs';
 
 const { TabPane } = Tabs;
 
-export const TokenRanking: FC = () => {
+export const PriceBoard: FC = () => {
     const [tokenList, setTokenList] = useState([]);
     const [viewMore, setNumberViewMore] = useState(10);
     const [sort, setSort] = useState(['transferCount', 'desc']);
@@ -46,7 +46,7 @@ export const TokenRanking: FC = () => {
 
     return (
         <section className="main-homepage-tokenranking px-lg-3 px-0">
-            <h2>Token Ranking</h2>
+            <h2>Price Board</h2>
             {/* <Tabs
                     defaultActiveKey={"crypto"}
                     onChange={onChangeTab}

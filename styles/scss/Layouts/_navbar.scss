@@ -12,8 +12,12 @@
         background-color: transparent;
         padding: 15px;
         height: 40px;
+        color: $black-color;
         border-radius: 90px 0 0 90px;
         outline: none;
+        @include sm {
+            width: 80%;
+        }
     }
     .searchButton {
         width: 40px;

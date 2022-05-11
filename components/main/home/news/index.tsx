@@ -9,21 +9,25 @@ const { TabPane } = Tabs;
 export const News: FC = () => {
     const [newsList, setNewsList] = useState([]);
     const [category, setCategory] = useState({
-        data: null,
-        key: ''
+        data: [
+            { name: 'Campaign' },
+            { name: 'Airdrops' },
+            { name: 'Scholarship' },
+        ],
+        key: 'Campaign'
     });
 
     useEffect(() => {
         (async () => {
-            if (category.key === '') {
-                await request.get(`/post-categories`).then(async (response) => {
-                    const res = response.data.data;
-                    setCategory({
-                        data: res,
-                        key: res[0].attributes.name
-                    });
-                })
-            }
+            // if (category.key === '') {
+            //     await request.get(`/post-categories`).then(async (response) => {
+            //         const res = response.data.data;
+            //         setCategory({
+            //             data: res,
+            //             key: res[0].attributes.name
+            //         });
+            //     })
+            // }
             const query = qs.stringify({
                 populate: '*',
                 // pagination: {
@@ -65,7 +69,7 @@ export const News: FC = () => {
             >
                 {category.data && [...category.data].map((cate: any) => {
                     return (
-                        <TabPane tab={cate.attributes.name} key={cate.attributes.name}>
+                        <TabPane tab={cate.name} key={cate.name}>
                             <NewsSlides data={newsList} tag={category.key} />
                         </TabPane>
                     )

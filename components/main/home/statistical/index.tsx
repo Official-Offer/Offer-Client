@@ -70,16 +70,14 @@ export const Statistical: FC = () => {
 
     return (
         <section className="main-homepage-statistical">
-            <div className="container">
-                <div className="row">
-                    {statisticalList && statisticalList.map((statistical, i) => {
-                        return (
-                            <div className="col-lg-4 col-12 my-lg-0 my-4" key={i}>
-                                <UserStats data={statistical} />
-                            </div>
-                        )
-                    })}
-                </div>
+            <div className="row">
+                {statisticalList && statisticalList.map((statistical, i) => {
+                    return (
+                        <div className="col-lg-4 col-12 my-lg-0 my-4 px-lg-5 px-2" key={i}>
+                            <UserStats data={statistical} />
+                        </div>
+                    )
+                })}
             </div>
         </section>
     );

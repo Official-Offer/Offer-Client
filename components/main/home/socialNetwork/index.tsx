@@ -3,13 +3,14 @@ import { ButtonBlue } from '@styles/styled-components/styledButton';
 import { message } from 'antd';
 import axios from 'axios';
 import { URL_API_ADMIN } from '@config/index';
+import Link from 'next/link';
 
 export const SocialNetwork: FC = () => {
 
     const appList = [
-        { logo: '/img/icons/social-discord.png', description: 'Lorem Ipsum is simply dummy text of the', href: '#', button: 'Join Discord' },
-        { logo: '/img/icons/social-twitter.png', description: 'Lorem Ipsum is simply dummy text of the', href: '#', button: 'Follow Twitter' },
-        { logo: '/img/icons/social-telegram.png', description: 'Lorem Ipsum is simply dummy text of the', href: '#', button: 'Join Telegram' },
+        { logo: '/img/icons/social-discord.png', description: 'Lorem Ipsum is simply dummy text of the', href: 'https://discord.gg/jD4PK8dECp', button: 'Join Discord' },
+        { logo: '/img/icons/social-twitter.png', description: 'Lorem Ipsum is simply dummy text of the', href: 'https://twitter.com/tokenplay2', button: 'Follow Twitter' },
+        { logo: '/img/icons/social-telegram.png', description: 'Lorem Ipsum is simply dummy text of the', href: 'https://t.me/tokenplaycommunityofficial', button: 'Join Telegram' },
     ];
 
     const onSubmitMessage = async (e: any) => {
@@ -47,9 +48,17 @@ export const SocialNetwork: FC = () => {
                                         <p className="main-homepage-socialnetwork-app-description">
                                             {app.description}
                                         </p>
-                                        <a className="main-homepage-socialnetwork-app-btn btn-blue px-3 py-2" href={app.href}>
-                                            {app.button}
-                                        </a>
+                                        <Link
+                                            href={app.href}
+                                            passHref={app.href === '' ? false : true}
+                                        >
+                                            <a
+                                                className="main-homepage-socialnetwork-app-btn btn-blue px-3 py-2"
+                                                target={app.href === '#' ? '_self' : '_blank'}
+                                            >
+                                                {app.button}
+                                            </a>
+                                        </Link>
                                     </div>
                                 </div>
                             );
