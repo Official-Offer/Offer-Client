@@ -38,6 +38,9 @@
             svg {
                 margin-top: -4px;
             }
+            @include sm {
+                margin-left: -13px;
+            }
         }
     }
     .navbar_home_pc {

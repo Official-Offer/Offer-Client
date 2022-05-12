@@ -196,7 +196,7 @@ export const NavbarHome: FC = () => {
                             type="button"
                             onClick={() => setBoxSearch(false)}
                         >
-                            Cancle
+                            Cancel
                         </Button>
                     </BoxALignCenter_Justify_ItemsCenter>
                 )}
