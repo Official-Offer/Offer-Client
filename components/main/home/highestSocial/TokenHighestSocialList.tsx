@@ -9,7 +9,7 @@ const { Option } = Select;
 
 export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     const router = useRouter();
-    const [valueSelected, setValueSelected] = useState('');
+    const [valueSelected, setValueSelected] = useState(sort[0]);
 
     const theadList = [
         { tag: 'number', name: '#', sort: false, query: '', },
@@ -23,10 +23,10 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     ];
 
     const listTitleHeaderMobile = [
+        { title: 'Social Signal', sort: true, query: 'socialSignal', },
         { title: 'Users', sort: true, query: 'dailyUser', },
         { title: 'Transactions', sort: true, query: 'dailyTransaction', },
         { title: 'Volume', sort: true, query: 'dailyVolume', },
-        { title: 'Social Signal', sort: true, query: 'socialSignal', },
     ];
 
     const activeItem = (sort: string, query: string) => {
@@ -34,7 +34,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     };
     const handleChangeSelectThead = (value: string) => {
         setValueSelected(value);
-        setSort(['desc', value]);
+        setSort([value, 'desc']);
     };
 
     return (

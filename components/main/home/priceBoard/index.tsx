@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 export const PriceBoard: FC = () => {
     const [tokenList, setTokenList] = useState([]);
     const [viewMore, setNumberViewMore] = useState(10);
-    const [sort, setSort] = useState(['transferCount', 'desc']);
+    const [sort, setSort] = useState(['holder', 'desc']);
 
     useEffect(() => {
         (async () => {

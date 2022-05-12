@@ -9,7 +9,7 @@ const { Option } = Select;
 
 export default function TokenList({ data, setSort, sort }: any) {
     const router = useRouter();
-    const [valueSelected, setValueSelected] = useState('');
+    const [valueSelected, setValueSelected] = useState(sort[0]);
 
     const theadList = [
         { tag: 'number', name: '#', sort: false, query: '', },
