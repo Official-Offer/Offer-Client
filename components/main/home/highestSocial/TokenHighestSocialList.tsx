@@ -18,7 +18,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
         { tag: 'blockchain', name: 'Blockchain', sort: false, query: '', },
         { tag: '24users', name: '24hr Users', sort: true, query: 'dailyUser', },
         { tag: '24transactions', name: '24hr Transactions', sort: true, query: 'dailyTransaction', },
-        { tag: '24volume', name: '24hr volume', sort: true, query: 'dailyVolume', },
+        { tag: '24volume', name: '24hr Volume', sort: true, query: 'dailyVolume', },
         { tag: 'social', name: 'Social Signal', sort: true, query: 'socialSignal', },
     ];
 

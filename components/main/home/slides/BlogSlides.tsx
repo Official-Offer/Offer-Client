@@ -18,77 +18,71 @@ export default function BlogSlides({ data }: any): ReactElement {
 
     return (
         <BoxALignCenter_Justify_ItemsCenter>
-            {data.length > 0 ? (
-                <>
-                    <Button className="p-0 me-2" ref={navigationPrevRef}>
-                        <ArrowLeftCircle color="#058499" width={'30'} height={'30'} />
-                    </Button>
-                    <Swiper
-                        modules={[Navigation, Pagination, A11y]}
-                        observeParents={true}
-                        observer={true}
-                        spaceBetween={10}
-                        breakpoints={{
-                            320: {
-                                slidesPerView: 1,
-                            },
-                            480: {
-                                slidesPerView: 1,
-                            },
-                            640: {
-                                slidesPerView: 1,
-                            },
-                            1440: {
-                                slidesPerView: 3,
-                            },
-                            1920: {
-                                slidesPerView: 3,
-                            },
-                        }}
-                        pagination={false}
-                        loop={true}
-                        autoplay={{ delay: 2000 }}
-                        navigation={{
-                            prevEl: navigationPrevRef.current,
-                            nextEl: navigationNextRef.current,
-                        }}
-                        effect="fade"
-                        fadeEffect={{
-                            crossFade: true
-                        }}
-                    // onSwiper={setSwiper}
-                    >
-                        {data.map((blog: any, i: number) => {
-                            return (
-                                <SwiperSlide key={i}>
-                                    <div className="main-homepage-blog-card">
-                                        <div className="main-homepage-blog-card-header">
-                                            <img
-                                                className="main-homepage-blog-card-header-img"
-                                                src={`${URL_API_ADMIN}${blog.attributes.thumbnail.data.attributes.url}`}
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="main-homepage-blog-card-body">
-                                            <a href="#" className="main-homepage-blog-card-body-title">
-                                                {blog.attributes.title}
-                                            </a>
-                                            <p className="main-homepage-blog-card-body-createdat">
-                                                {moment(blog.attributes.createdAt).format('LL')}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            )
-                        })}
-                    </Swiper>
-                    <Button className="p-0 ms-2" ref={navigationNextRef}>
-                        <ArrowRightCircle color="#058499" width={'30'} height={'30'} />
-                    </Button>
-                </>
-            ) : (
-                <Empty />
-            )}
+            <Button className="p-0 me-2" ref={navigationPrevRef}>
+                <ArrowLeftCircle color="#058499" width={'30'} height={'30'} />
+            </Button>
+            <Swiper
+                modules={[Navigation, Pagination, A11y]}
+                observeParents={true}
+                observer={true}
+                spaceBetween={10}
+                breakpoints={{
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    480: {
+                        slidesPerView: 1,
+                    },
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    1440: {
+                        slidesPerView: 3,
+                    },
+                    1920: {
+                        slidesPerView: 3,
+                    },
+                }}
+                pagination={false}
+                loop={true}
+                autoplay={{ delay: 2000 }}
+                navigation={{
+                    prevEl: navigationPrevRef.current,
+                    nextEl: navigationNextRef.current,
+                }}
+                effect="fade"
+                fadeEffect={{
+                    crossFade: true
+                }}
+            // onSwiper={setSwiper}
+            >
+                {data.map((blog: any, i: number) => {
+                    return (
+                        <SwiperSlide key={i}>
+                            <div className="main-homepage-blog-card">
+                                <div className="main-homepage-blog-card-header">
+                                    <img
+                                        className="main-homepage-blog-card-header-img"
+                                        src={`${URL_API_ADMIN}${blog.attributes.thumbnail.data.attributes.url}`}
+                                        alt=""
+                                    />
+                                </div>
+                                <div className="main-homepage-blog-card-body">
+                                    <a href="#" className="main-homepage-blog-card-body-title">
+                                        {blog.attributes.title}
+                                    </a>
+                                    <p className="main-homepage-blog-card-body-createdat">
+                                        {moment(blog.attributes.createdAt).format('LL')}
+                                    </p>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+                    )
+                })}
+            </Swiper>
+            <Button className="p-0 ms-2" ref={navigationNextRef}>
+                <ArrowRightCircle color="#058499" width={'30'} height={'30'} />
+            </Button>
         </BoxALignCenter_Justify_ItemsCenter>
     )
 }

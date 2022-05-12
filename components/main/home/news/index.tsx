@@ -72,7 +72,7 @@ export const News: FC = () => {
                         <TabPane tab={cate.name} key={cate.name}>
                             <NewsSlides data={newsList} tag={category.key} />
                         </TabPane>
-                    )
+                    );
                 })}
             </Tabs>
         </section>
