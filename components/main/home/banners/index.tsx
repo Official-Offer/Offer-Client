@@ -6,10 +6,14 @@ export const Banners: FC = () => {
         <section className="main-homepage-banners">
             <div className="row">
                 <div className="col-lg-6 col-12">
-                    <img className="mw-100" src="/img/banner/banner-superslither.png" alt="" />
+                    <a href="https://heroarena.app/">
+                    <img className="mw-100" src="/img/banner/hero_arena.png" alt="" />
+                    </a>
                 </div>
                 <div className="col-lg-6 col-12">
-                    <img className="mw-100" src="/img/banner/banner-nft.png" alt="" />
+                    <a href="https://horizonland.app/">
+                    <img className="mw-100" src="/img/banner/horizon.png" alt="" />
+                    </a>
                 </div>
             </div>
         </section>
