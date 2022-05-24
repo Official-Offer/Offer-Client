@@ -12,6 +12,7 @@ module.exports = {
     URL_NFT: "dev-nft.tokenplay.app",
     URL_API: 'https://dev-api-nft.tokenplay.app/api',
     URL_API_ADMIN: 'https://dev-api-admin.tokenplay.app',
+    // URL_API_ADMIN: 'https://dev-api-dappverse.tokenplay.app/coins/markets?vs_currency=usd&price_change_percentage=1h,24h,7d&per_page=10&page=1&order=market_cap_desc',
     facebook: "https://dev-api-nft.tokenplay.app/api/login/facebook?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%dev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
     google: "https://dev-api-nft.tokenplay.app/api/login/google?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
     twitter: "https://dev-api-nft.tokenplay.app/api/login/twitter?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",

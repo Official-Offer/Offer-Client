@@ -14,19 +14,22 @@ export default function TokenList({ data, setSort, sort }: any) {
     const theadList = [
         { tag: 'number', name: '#', sort: false, query: '', },
         { tag: 'token', name: 'Token Name', sort: false, query: '', },
-        { tag: 'holder', name: 'Holders', sort: true, query: 'holder', },
-        { tag: 'active-address', name: 'Active Address', sort: true, query: 'activeAddress', },
-        { tag: 'transfer-volume', name: 'Transfer Volume', sort: true, query: 'transferVolume', },
-        { tag: 'transfer-count', name: 'Transfer Count', sort: true, query: 'transferCount', },
-        { tag: 'marketcaps', name: 'Market Caps', sort: true, query: 'marketCap', },
+        // { tag: 'holder', name: 'Holders', sort: true, query: 'holder', },
+        // { tag: 'active-address', name: 'Active Address', sort: true, query: 'activeAddress', },
+        // { tag: 'transfer-volume', name: 'Transfer Volume', sort: true, query: 'transferVolume', },
+        // { tag: 'transfer-count', name: 'Transfer Count', sort: true, query: 'transferCount', },
+        // { tag: 'marketcaps', name: 'Market Caps', sort: true, query: 'marketCap', },
+        { tag: 'price', name: 'Price', sort: true, query: 'price', },
+        {tag:'1h', name: '1h', sort: true, query: '1h'},
+
     ];
 
     const listTitleHeaderMobile = [
         { title: 'Holders', sort: true, query: 'holder', },
-        { title: 'Active Address', sort: true, query: 'activeAddress', },
-        { title: 'Transfer Volume', sort: true, query: 'transferVolume', },
-        { title: 'Transfer Count', sort: true, query: 'transferCount', },
-        { title: 'Market Caps', sort: true, query: 'marketCap', },
+        // { title: 'Active Address', sort: true, query: 'activeAddress', },
+        // { title: 'Transfer Volume', sort: true, query: 'transferVolume', },
+        // { title: 'Transfer Count', sort: true, query: 'transferCount', },
+        // { title: 'Market Caps', sort: true, query: 'marketCap', },
     ];
 
     const activeItem = (sort: string, query: string) => {
