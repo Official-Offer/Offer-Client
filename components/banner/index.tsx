@@ -3,13 +3,13 @@ import { BoxALignCenter_Justify_ItemsCenter } from '@styles/styled-components/st
 
 export function BannerLeft(): ReactElement {
     return (
-        <img style={{ maxWidth: '70%' }} src="/img/banner/banner_left.png" alt="" />
+        <img style={{ maxWidth: '70%' }} src="/img/banner/banner_left_right.png" alt="" />
     );
 };
 
 export function BannerRight(): ReactElement {
     return (
-        <img style={{ maxWidth: '70%' }} src="/img/banner/banner_right.png" alt="" />
+        <img style={{ maxWidth: '70%' }} src="/img/banner/banner_left_right.png" alt="" />
     );
 };
 
