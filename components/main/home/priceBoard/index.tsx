@@ -4,6 +4,7 @@ import { Button } from '@styles/styled-components/styledButton';
 import TokenList from './TokenList';
 import request from '@services/apiService';
 import * as qs from 'qs';
+import { SectionHeader } from '@styles/styled-components/styledTabs';
 
 const { TabPane } = Tabs;
 
@@ -46,7 +47,7 @@ export const PriceBoard: FC = () => {
 
     return (
         <section className="main-homepage-tokenranking px-lg-3 px-0">
-            <h2>Price Board</h2>
+            <SectionHeader>Price Board</SectionHeader>
             {/* <Tabs
                     defaultActiveKey={"crypto"}
                     onChange={onChangeTab}

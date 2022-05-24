@@ -4,6 +4,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import { URL_API_ADMIN } from '@config/index';
 import Link from 'next/link';
+import { SectionHeader } from '@styles/styled-components/styledTabs';
 
 export const SocialNetwork: FC = () => {
 
@@ -36,7 +37,7 @@ export const SocialNetwork: FC = () => {
 
     return (
         <section className="main-homepage-socialnetwork px-lg-3 px-0">
-            <h2>Join With Us</h2>
+            <SectionHeader>Join With Us</SectionHeader>
             <div className="row align-items-center">
                 <div className="col-lg-6 col-12">
                     <div className="row">

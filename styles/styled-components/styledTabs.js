@@ -37,3 +37,7 @@ export const TabMain_Sub = styled.a `
         color: #058499;
     }
 `;
+
+export const SectionHeader = styled.h2`
+    font-weight: bold;
+`

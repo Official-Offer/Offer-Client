@@ -4,6 +4,7 @@ import { Button } from '@styles/styled-components/styledButton';
 import TokenHighestSocialList from './TokenHighestSocialList';
 import request from '@services/apiService';
 import * as qs from 'qs';
+import { SectionHeader } from '@styles/styled-components/styledTabs';
 
 const { TabPane } = Tabs;
 
@@ -49,7 +50,7 @@ export const HighestSocial: FC = () => {
 
     return (
         <section className="main-homepage-highestsocial px-lg-3 px-0">
-            <h2>Projects With The Highest Social Signal</h2>
+            <SectionHeader>Projects With The Highest Social Signal</SectionHeader>
             <Tabs
                 defaultActiveKey={"crypto"}
                 onChange={onChangeTab}

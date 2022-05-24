@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { URL_API } from '@config/index';
 import NFTLists from '@components/common/NFTLists';
 import axios from 'axios';
+import { SectionHeader } from '@styles/styled-components/styledTabs';
 
 export const NFTExplore: FC = () => {
     const router = useRouter();
@@ -24,7 +25,7 @@ export const NFTExplore: FC = () => {
 
     return (
         <section className="main-homepage-nftexplore px-lg-3 px-0">
-            <h2>NFTs - Marketplace</h2>
+            <SectionHeader>NFTs - Marketplace</SectionHeader>
             <div className="row nft_main_list m-0">
                 <NFTLists
                     data={data}
