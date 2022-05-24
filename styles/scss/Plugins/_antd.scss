@@ -186,6 +186,10 @@
     color: white !important;
     background-color: #058499;
 }
+.ant-tabs-tab-btn {
+    min-width: 120px;
+    text-align: center;
+}
 .ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
     content: none !important;
 }

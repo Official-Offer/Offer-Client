@@ -61,6 +61,7 @@ export const ButtonBlue = styled.button `
     text-decoration: none;
     vertical-align: middle;
     transition: 0.25s;
+    min-width: 120px;
     &:focus {
         box-shadow: none;
         outline: none;
@@ -91,7 +92,7 @@ export const ButtonBackgroundBlueBold = styled.div`
     &:hover {
         background-color: #058499;
         color:#FFF;
-        border: none;
+        /* border: none; */
     }
 `;
 
