@@ -46,7 +46,7 @@ export const NavbarHome: FC = () => {
     { name: "NFT Marketplace", link: "#", newTab: false },
     { name: "Farm", link: "#", newTab: false },
     { name: "Dapp News", link: "#", newTab: false },
-    { name: "Dapp Portal", link: "/dapp-portal", newTab: false },
+    { name: "Dapp Portal", link: "#", newTab: false },
     { name: "PriceBoard", link: "#", newTab: false },
     { name: "INO", link: "#", newTab: false },
   ];
