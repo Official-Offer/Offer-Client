@@ -41,3 +41,28 @@ export const TabMain_Sub = styled.a `
 export const SectionHeader = styled.h2`
     font-weight: bold;
 `
+export const AdDiv = styled.div`
+width: 32px;
+    height: 14px;
+    left: 0px;
+    top: 0px;
+`
+
+export const AdTag = styled.button`
+    /* Button */
+    background: linear-gradient(95.79deg, #642B73 0.9%, #C5426E 99.55%);
+    border-radius: 10px 0px;
+`
+export const AdText = styled.p`
+position: absolute;
+width: 19px;
+height: 14px;
+left: 7px;
+top: 0px;
+
+font-family: 'Nunito';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 16px;
+`

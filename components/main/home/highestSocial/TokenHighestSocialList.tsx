@@ -4,13 +4,14 @@ import { isExistAndFormatCurrency, formatter } from '@utils/formatCurrency';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
 import { useRouter } from 'next/router';
+import { AdDiv, AdTag, AdText } from '@styles/styled-components/styledTabs';
 
 const { Option } = Select;
 
 export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     const router = useRouter();
     const [valueSelected, setValueSelected] = useState(sort[0]);
-
+    console.log(data);
     const theadList = [
         { tag: 'number', name: '#', sort: false, query: '', },
         { tag: 'dapp', name: 'Dapp', sort: false, query: '', },
@@ -113,13 +114,13 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                                     </td>
                                     <td className="main-homepage-highestsocial-table-category">
                                         <span>
-                                            {token.attributes.category.data.attributes.name}
+                                            {i <2 ? token.attributes.crawl.name : token.attributes.category.data.attributes.name}
                                         </span>
                                     </td>
                                     <td className="main-homepage-highestsocial-table-blockchain">
                                         <BoxALignCenter_Justify_ItemsCenter>
-                                            <img src={token.attributes.chain.data.attributes.crawl.color_icon} alt={token.attributes.chain.data.attributes.crawl.slug} />
-                                            <span className="ms-2">{token.attributes.chain.data.attributes.crawl.name}</span>
+                                            <img src={i< 2 ? token.attributes.crawl.chains[0].color_icon : token.attributes.chain.data.attributes.crawl.color_icon} alt={i< 2 ? token.attributes.crawl.chains[0].slug :token.attributes.chain.data.attributes.crawl.slug} />
+                                            <span className="ms-2">{i< 2 ? token.attributes.crawl.chains[0].name :token.attributes.chain.data.attributes.crawl.name}</span>
                                         </BoxALignCenter_Justify_ItemsCenter>
                                     </td>
                                     <td className="main-homepage-highestsocial-table-24users">

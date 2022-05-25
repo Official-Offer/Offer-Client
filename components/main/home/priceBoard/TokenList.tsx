@@ -15,7 +15,7 @@ const { Option } = Select;
 export default function TokenList({ data, setSort, sort }: any) {
   const router = useRouter();
   const [valueSelected, setValueSelected] = useState(sort[0]);
-  console.log(data);
+  // console.log(data);
   const theadList = [
     { tag: "number", name: "#", sort: false, query: "" },
     { tag: "token", name: "Token Name", sort: false, query: "" },

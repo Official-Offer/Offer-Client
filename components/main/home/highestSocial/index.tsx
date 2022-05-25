@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 export const HighestSocial: FC = () => {
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(10);
+  const [viewMore, setNumberViewMore] = useState(8);
   const [sort, setSort] = useState(["socialSignal", "desc"]);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const HighestSocial: FC = () => {
           filters: {
             chain: {
               name: {
-                $eq: chain === 'All' ? undefined : chain,
+                $eq: chain === "All" ? undefined : chain,
               },
             },
           },
@@ -36,17 +36,27 @@ export const HighestSocial: FC = () => {
           encodeValuesOnly: true,
         }
       );
-      await request.get(`/dapps?${query}`).then((res) => {
-        setTokenList(res.data.data);
+      let display: Array<any>;
+      await request.get(`/dapp-ads?populate=*`).then((res) => {
+        // console.log(res.data.data.map(e => e.attributes.dapp.data));
+        // setTokenList(res.data.data.map(e => e.attributes.dapp.data));
+        display = [...res.data.data.map((e) => e.attributes.dapp.data)];
       });
+      await request.get(`/dapps?${query}`).then((res) => {
+        // console.log(res.data.data);
+        // setTokenList([...tokenList,...res.data.data]);
+        display = [...display, ...res.data.data];
+      });
+      setTokenList(display);
     })();
   }, [chain, viewMore, sort]);
 
   const onChangeTab = (key: any) => {
     setChain(key);
   };
+
   const category = [
-    { tab: "All", key: 'All' },
+    { tab: "All", key: "All" },
     { tab: "BSC", key: "BNB Chain" },
     { tab: "Polygon", key: "Polygon" },
     { tab: "Solana", key: "Solana" },
@@ -74,7 +84,7 @@ export const HighestSocial: FC = () => {
                 <Button
                   className="text-green fw-bold fontSize_1-1"
                   onClick={() => {
-                    setNumberViewMore(viewMore + 10);
+                    if (viewMore < 20) setNumberViewMore(viewMore + 10);
                   }}
                 >
                   View more
