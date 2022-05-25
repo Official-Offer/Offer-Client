@@ -3,7 +3,7 @@ import { ArrowLeftCircle, ArrowRightCircle } from "react-feather";
 import SwiperCore, { Navigation, Pagination, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { BoxALignCenter_Justify_ItemsCenter, BoxALignItemsCenter } from "@styles/styled-components/styledBox";
-import { URL_API_ADMIN } from "@config/index";
+import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import { Button } from '@styles/styled-components/styledButton';
 import moment from "moment";
 import 'swiper/css';
@@ -43,7 +43,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                         slidesPerView: 3,
                     },
                 }}
-                pagination={false}
+                pagination={true}
                 loop={true}
                 autoplay={{ delay: 2000 }}
                 navigation={{
@@ -63,7 +63,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                 <div className="main-homepage-blog-card-header">
                                     <img
                                         className="main-homepage-blog-card-header-img"
-                                        src={`${URL_API_ADMIN}${blog.attributes.thumbnail.data.attributes.url}`}
+                                        src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
                                         alt=""
                                     />
                                 </div>

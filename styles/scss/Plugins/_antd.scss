@@ -200,3 +200,13 @@
         }
     }
 }
+.swiper-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
+    top: 95%;
+    z-index: 10;
+    .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        background: #058499;
+    }
+}
+div.col-lg-9.col-12.mt-lg-0.mt-4.px-lg-2.px-0>div>.swiper .swiper-initialized .swiper-horizontal .swiper-pointer-events .swiper-backface-hidden {
+    padding-bottom: 30px;
+}
