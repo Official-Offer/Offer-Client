@@ -14,29 +14,29 @@ export const PriceBoard: FC = () => {
   const [viewMore, setNumberViewMore] = useState(10);
   const [sort, setSort] = useState(["price", "desc"]);
 
-//   useEffect(() => {
-//     (async () => {
-//       const query = qs.stringify(
-//         {
-//           sort: [`${sort[0]}:${sort[1]}`],
-//           vs_currency: "usd",
-//           price_change_percentage: "1h,24h,7d",
-//           per_page: viewMore,
-//           page: 1,
-//           order: "market_cap_desc",
-//         },
-//         {
-//           encodeValuesOnly: true,
-//         }
-//       );
-//       await axios
-//         .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
-//         .then((res) => {
-//           // console.log(res.data);
-//           setTokenList(res.data);
-//         });
-//     })();
-//   }, [viewMore, sort]);
+  //   useEffect(() => {
+  //     (async () => {
+  //       const query = qs.stringify(
+  //         {
+  //           sort: [`${sort[0]}:${sort[1]}`],
+  //           vs_currency: "usd",
+  //           price_change_percentage: "1h,24h,7d",
+  //           per_page: viewMore,
+  //           page: 1,
+  //           order: "market_cap_desc",
+  //         },
+  //         {
+  //           encodeValuesOnly: true,
+  //         }
+  //       );
+  //       await axios
+  //         .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
+  //         .then((res) => {
+  //           // console.log(res.data);
+  //           setTokenList(res.data);
+  //         });
+  //     })();
+  //   }, [viewMore, sort]);
 
   const UPDATE_INTERVAL_MS = 10000;
   useEffect(() => {
@@ -105,7 +105,9 @@ export const PriceBoard: FC = () => {
         <Button
           className="text-green fw-bold fontSize_1-1"
           onClick={() => {
-            if (viewMore < 20) setNumberViewMore(viewMore + 10);
+            if (viewMore < 20) {
+              setNumberViewMore(viewMore + 10);
+            }
           }}
         >
           View more
