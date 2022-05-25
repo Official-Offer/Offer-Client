@@ -72,28 +72,6 @@ export default function TokenList({ data, setSort, sort }: any) {
                       }`}
                     >
                       <span>{thead.name}</span>
-                      {thead.sort && (
-                        <div className="main-homepage-tokenranking-table-sorter">
-                          <div className="main-homepage-tokenranking-table-sorter-inner">
-                            <CaretUpOutlined
-                              className={`up ${
-                                sort[0] === thead.query && sort[1] === "asc"
-                                  ? "active"
-                                  : ""
-                              }`}
-                              onClick={() => activeItem("asc", thead.query)}
-                            />
-                            <CaretDownOutlined
-                              className={`down ${
-                                sort[0] === thead.query && sort[1] === "desc"
-                                  ? "active"
-                                  : ""
-                              }`}
-                              onClick={() => activeItem("desc", thead.query)}
-                            />
-                          </div>
-                        </div>
-                      )}
                     </BoxALignCenter_Justify_ItemsCenter>
                   </th>
                 );
@@ -102,16 +80,17 @@ export default function TokenList({ data, setSort, sort }: any) {
           </thead>
           <tbody>
             {data.map((token: any, i: number) => {
+              console.log(token);
               let oneHourDiff =
                 token.price_change_percentage_1h_in_currency > 0
                   ? "increase"
                   : "decrease";
               let tw4HourDiff =
-                token.price_change_24h_in_currency > 0
+                token.price_change_percentage_24h_in_currency > 0
                   ? "increase"
                   : "decrease";
               let sevenDayDiff =
-                token.price_change_7d_in_currency > 0 ? "increase" : "decrease";
+                token.price_change_percentage_7d_in_currency > 0 ? "increase" : "decrease";
 
               return (
                 <tr
@@ -151,10 +130,10 @@ export default function TokenList({ data, setSort, sort }: any) {
                       className={`main-homepage-tokenranking-table-${oneHourDiff} text-end`}
                     >
                       {token.price_change_percentage_1h_in_currency
-                        ? Math.abs(token.price_change_percentage_1h_in_currency).toFixed(
+                        ? token.price_change_percentage_1h_in_currency.toFixed(
                             2
                           )
-                        : "0"}
+                        : "0"}% 
                       {oneHourDiff === "increase" ? "↑" : "↓"}
                     </p>
                   </td>
@@ -163,10 +142,10 @@ export default function TokenList({ data, setSort, sort }: any) {
                       className={`main-homepage-tokenranking-table-${tw4HourDiff} text-end`}
                     >
                       {token.price_change_percentage_24h_in_currency
-                        ? Math.abs(token.price_change_percentage_24h_in_currency).toFixed(
+                        ? token.price_change_percentage_24h_in_currency.toFixed(
                             2
                           )
-                        : "0"}
+                        : "0"}%
                       {tw4HourDiff === "increase" ? "↑" : "↓"}
                     </p>
                   </td>
@@ -174,11 +153,11 @@ export default function TokenList({ data, setSort, sort }: any) {
                     <p
                       className={`main-homepage-tokenranking-table-${sevenDayDiff} text-end`}
                     >
-                      {token.price_change_percentage_1h_in_currency
-                        ? Math.abs(token.price_change_percentage_1h_in_currency).toFixed(
+                      {token.price_change_percentage_7d_in_currency
+                        ? token.price_change_percentage_7d_in_currency.toFixed(
                             2
                           )
-                        : "0"}
+                        : "0"}%
                       {sevenDayDiff === "increase" ? "↑" : "↓"}
                     </p>
                   </td>
@@ -253,9 +232,9 @@ export default function TokenList({ data, setSort, sort }: any) {
                 ? "increase"
                 : "decrease";
             let tw4HourDiff =
-              token.price_change_24h_in_currency > 0 ? "increase" : "decrease";
+              token.price_change_percentage_24h_in_currency > 0 ? "increase" : "decrease";
             let sevenDayDiff =
-              token.price_change_7d_in_currency > 0 ? "increase" : "decrease";
+              token.price_change_percentage_7d_in_currency > 0 ? "increase" : "decrease";
             return (
               <div className="main-homepage-tokenranking-table-body" key={i}>
                 <div className="main-homepage-tokenranking-table-body-item table-body-item-number">
