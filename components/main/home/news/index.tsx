@@ -10,7 +10,7 @@ export const News: FC = () => {
     const [newsList, setNewsList] = useState([]);
     const [category, setCategory] = useState({
         data: [
-            { name: 'Campaign' },
+            { name: 'Campaigns' },
             { name: 'Airdrops' },
             { name: 'Scholarship' },
         ],
