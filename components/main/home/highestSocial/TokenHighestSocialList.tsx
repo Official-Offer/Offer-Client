@@ -104,7 +104,9 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                             }
                             return (
                                 <tr key={i} onClick={() => router.push(`/app/${token.attributes.slug}`)}>
-                                    <td className="main-homepage-highestsocial-table-number">{i + 1}</td>
+                                    <td className="main-homepage-highestsocial-table-number">
+                                        {i < 2 ? <img src="img/icons/ad.png"/> : i-1}
+                                    </td>
                                     <td className="main-homepage-highestsocial-table-dapp">
                                         <BoxALignItemsCenter>
                                             <img src={token.attributes.crawl.icon} alt={''} />
