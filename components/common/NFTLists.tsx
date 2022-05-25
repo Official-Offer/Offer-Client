@@ -13,7 +13,7 @@ export default function NFTLists({ data }: any): ReactElement {
             {data && data.map((asset: any, i: number) => {
                 const priceAsc = asset.item && asset.item.sellOrders.length > 0 && [...asset.item.sellOrders].sort((a: any, b: any) => ((b.buyToken - a.buyToken) || (a.price - b.price)))[0].price;
                 const buyTokenAsc = asset.item && asset.item.sellOrders.length > 0 && [...asset.item.sellOrders].sort((a: any, b: any) => ((b.buyToken - a.buyToken) || (a.price - b.price)))[0].buyToken;
-                let imageUrl = asset.metadataNft.imageUrl;
+                let imageUrl = asset.metadata.video;
                 const imageType = imageUrl.split('.')[3];
 
                 return (
@@ -25,7 +25,7 @@ export default function NFTLists({ data }: any): ReactElement {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={`${URL_NFT}/token/${asset.metadataNft.nftContractAddress}:${asset.metadataNft.tokenId}`}
+                                href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
                             >
                                 <BoxRelativeImage>
                                     <BoxRelativeImage_1>
@@ -41,10 +41,10 @@ export default function NFTLists({ data }: any): ReactElement {
                                                         className="mw-100"
                                                         controlsList="nodownload"
                                                         poster="/img/frame/poster.png"
-                                                        src={asset.metadataNft.imageUrl}
+                                                        src={imageUrl}
                                                     />
                                                 ) : (
-                                                    <img alt="" src={asset.metadataNft.imageUrl} loading="lazy" />
+                                                    <img alt="" src={imageUrl} loading="lazy" />
                                                 )}
                                             </BoxRelativeImage_3>
                                         </BoxRelativeImage_2>
@@ -56,10 +56,10 @@ export default function NFTLists({ data }: any): ReactElement {
                                 <a
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    href={`${URL_NFT}/token/${asset.metadataNft.nftContractAddress}:${asset.metadataNft.tokenId}`}
+                                    href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
                                 >
-                                    <Tooltip title={asset.metadataNft.name}>
-                                        <a className="fw-bold">{asset.metadataNft.name}</a>
+                                    <Tooltip title={asset.metadata.name}>
+                                        <a className="fw-bold">{asset.metadata.name}</a>
                                     </Tooltip>
                                 </a>
                             </div>
@@ -96,10 +96,10 @@ export default function NFTLists({ data }: any): ReactElement {
                                 <a
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    href={`${URL_NFT}/user/${asset.owner}`}
+                                    href={`${URL_NFT}/user/${asset.item.owners[0]}`}
                                 >
-                                    <Tooltip title={`Owner: ${asset.owner.substring(0, 6) + "..." + asset.owner.substring(38)}`}>
-                                        <Avatar src={`https://avatars.dicebear.com/v2/jdenticon/${asset.owner}.svg`} className="avatar_ownerImg" style={{ width: "32px", height: "32px", cursor: "pointer" }} />
+                                    <Tooltip title={`Owner: ${asset.item.owners[0].substring(0, 6) + "..." + asset.item.owners[0].substring(38)}`}>
+                                        <Avatar src={`https://avatars.dicebear.com/v2/jdenticon/${asset.item.owners[0]}.svg`} className="avatar_ownerImg" style={{ width: "32px", height: "32px", cursor: "pointer" }} />
                                     </Tooltip>
                                 </a>
                             </div>

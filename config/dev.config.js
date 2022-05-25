@@ -11,6 +11,7 @@ module.exports = {
     RPC_BSC: "https://data-seed-prebsc-1-s1.binance.org:8545/",
     URL_NFT: "dev-nft.tokenplay.app",
     URL_API: 'https://dev-api-nft.tokenplay.app/api',
+    URL_NFTs: 'https://api-nft.heroarena.app/api',
     URL_API_IMG: 'https://dev-api-admin.tokenplay.app',
     URL_API_ADMIN: 'https://dev-api-admin.tokenplay.app/api',
     // URL_API_ADMIN: 'https://dev-api-dappverse.tokenplay.app/coins/markets?vs_currency=usd&price_change_percentage=1h,24h,7d&per_page=10&page=1&order=market_cap_desc',
