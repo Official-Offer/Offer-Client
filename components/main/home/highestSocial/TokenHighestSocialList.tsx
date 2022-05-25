@@ -11,7 +11,6 @@ const { Option } = Select;
 export default function TokenHighestSocialList({ data, setSort, sort }: any) {
     const router = useRouter();
     const [valueSelected, setValueSelected] = useState(sort[0]);
-    console.log(data);
     const theadList = [
         { tag: 'number', name: '#', sort: false, query: '', },
         { tag: 'dapp', name: 'Dapp', sort: false, query: '', },
