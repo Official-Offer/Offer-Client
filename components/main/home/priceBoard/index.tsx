@@ -14,60 +14,59 @@ export const PriceBoard: FC = () => {
   const [viewMore, setNumberViewMore] = useState(10);
   const [sort, setSort] = useState(["price", "desc"]);
 
-  //   useEffect(() => {
-  //     (async () => {
-  //       const query = qs.stringify(
-  //         {
-  //           sort: [`${sort[0]}:${sort[1]}`],
-  //           vs_currency: "usd",
-  //           price_change_percentage: "1h,24h,7d",
-  //           per_page: viewMore,
-  //           page: 1,
-  //           order: "market_cap_desc",
-  //         },
-  //         {
-  //           encodeValuesOnly: true,
-  //         }
-  //       );
-  //       await axios
-  //         .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
-  //         .then((res) => {
-  //           // console.log(res.data);
-  //           setTokenList(res.data);
-  //         });
-  //     })();
-  //   }, [viewMore, sort]);
+    useEffect(() => {
+      (async () => {
+        const query = qs.stringify(
+          {
+            sort: [`${sort[0]}:${sort[1]}`],
+            vs_currency: "usd",
+            price_change_percentage: "1h,24h,7d",
+            per_page: viewMore,
+            page: 1,
+            order: "market_cap_desc",
+          },
+          {
+            encodeValuesOnly: true,
+          }
+        );
+        await axios
+          .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
+          .then((res) => {
+            // console.log(res.data);
+            setTokenList(res.data);
+          });
+      })();
+    }, [viewMore, sort]);
 
   const UPDATE_INTERVAL_MS = 10000;
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      await updateDataPriceBoard();
-    }, UPDATE_INTERVAL_MS);
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     await updateDataPriceBoard();
+  //   }, UPDATE_INTERVAL_MS);
 
-    const updateDataPriceBoard = async () => {
-      const query = qs.stringify(
-        {
-          sort: [`${sort[0]}:${sort[1]}`],
-          vs_currency: "usd",
-          price_change_percentage: "1h,24h,7d",
-          per_page: viewMore,
-          page: 1,
-          order: "market_cap_desc",
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      await axios
-        .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
-        .then((res) => {
-          // console.log(res.data);
-          setTokenList(res.data);
-        });
-    };
-
-    return () => clearInterval(interval);
-  }, [viewMore, sort]);
+  //   const updateDataPriceBoard = async () => {
+  //     const query = qs.stringify(
+  //       {
+  //         sort: [`${sort[0]}:${sort[1]}`],
+  //         vs_currency: "usd",
+  //         price_change_percentage: "1h,24h,7d",
+  //         per_page: viewMore,
+  //         page: 1,
+  //         order: "market_cap_desc",
+  //       },
+  //       {
+  //         encodeValuesOnly: true,
+  //       }
+  //     );
+  //     await axios
+  //       .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
+  //       .then((res) => {
+  //         // console.log(res.data);
+  //         setTokenList(res.data);
+  //       });
+  //   };
+  //   return () => clearInterval(interval);
+  // }, [viewMore, sort]);
 
   const onChangeTab = (key: any) => {
     //
