@@ -37,10 +37,10 @@ export const SocialNetwork: FC = () => {
 
     return (
         <section className="main-homepage-socialnetwork px-lg-3 px-0">
-            <SectionHeader>Join With Us</SectionHeader>
+            <SectionHeader>Contact Us</SectionHeader>
             <div className="row align-items-center">
                 <div className="col-lg-6 col-12">
-                    <div className="row">
+                    {/* <div className="row">
                         {appList.map((app, i) => {
                             return (
                                 <div className="col-lg-6 col-12 my-4" key={i}>
@@ -64,7 +64,8 @@ export const SocialNetwork: FC = () => {
                                 </div>
                             );
                         })}
-                    </div>
+                    </div> */}
+                    <img src="img/draw/joinwithus.png" alt="block" className='row main-homepage-socialnetwork-block'/>    
                 </div>
                 <div className="col-lg-6 col-12">
                     <h4>Leave A Message</h4>
