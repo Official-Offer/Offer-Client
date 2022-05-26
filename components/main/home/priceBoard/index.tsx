@@ -12,7 +12,7 @@ const { TabPane } = Tabs;
 export const PriceBoard: FC = () => {
   const [tokenList, setTokenList] = useState([]);
   const [viewMore, setNumberViewMore] = useState(10);
-  const [sort, setSort] = useState(["price", "desc"]);
+  const [sort, setSort] = useState(["market_cap", "desc"]);
 
     useEffect(() => {
       (async () => {
@@ -23,7 +23,7 @@ export const PriceBoard: FC = () => {
             price_change_percentage: "1h,24h,7d",
             per_page: viewMore,
             page: 1,
-            order: "market_cap_desc",
+            order: `${sort[0]}_${sort[1]}`,
           },
           {
             encodeValuesOnly: true,
