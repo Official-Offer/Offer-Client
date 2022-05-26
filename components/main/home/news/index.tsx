@@ -28,25 +28,24 @@ export const News: FC = () => {
             //         });
             //     })
             // }
-            const query = qs.stringify({
-                populate: '*',
-                // pagination: {
-                //     page: 1,
-                //     pageSize: 6,
-                // },
-                filters: {
-                    isPinned: {
-                        $eq: true
-                    },
-                    category: {
-                        name: category.key
-                    }
-                },
-                sort: [`createdAt:desc`],
-            }, {
-                encodeValuesOnly: true,
-            });
-            await request.get(`/posts?${query}`).then((res) => {
+            // const query = qs.stringify({
+            //     populate: '*',
+            //     // pagination: {
+            //     //     page: 1,
+            //     //     pageSize: 6,
+            //     // },
+            //     filters: {
+            //         isPinned: {
+            //             $eq: true
+            //         },
+            //         category: {
+            //             name: category.key
+            //         }
+            //     },
+            // }, {
+            //     encodeValuesOnly: true,
+            // });
+            await request.get(`/posts?populate=%2A&filters[isPinned][$eq]=true&filters[category][name][$eq]=Campaign&sort[0]=createdAt%3Adesc`).then((res) => {
                 setNewsList(res.data.data);
             });
         })();
