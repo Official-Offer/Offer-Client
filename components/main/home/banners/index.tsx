@@ -10,7 +10,7 @@ export const Banners: FC = () => {
           </div>
         </div>
         <div className="col-lg-6 col-12">
-          <div onClick={() => window.open("https://heroarena.app/")}>
+          <div onClick={() => window.open("https://horizonland.app/")}>
             <img className="mw-100" src="/img/banner/horizon.png" alt="" />
           </div>
         </div>

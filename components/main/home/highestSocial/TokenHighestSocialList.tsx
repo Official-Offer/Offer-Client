@@ -147,7 +147,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                   <td className="main-homepage-highestsocial-table-category">
                     <span>
                       {i < 2
-                        ? token.attributes.crawl.name
+                        ? token.attributes.crawl.category.name
                         : token.attributes.category.data.attributes.name}
                     </span>
                   </td>

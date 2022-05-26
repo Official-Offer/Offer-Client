@@ -84,7 +84,7 @@ export const HighestSocial: FC = () => {
                 <Button
                   className="text-green fw-bold fontSize_1-1"
                   onClick={() => {
-                    if (viewMore < 20) setNumberViewMore(viewMore + 10);
+                    if (viewMore < 18) setNumberViewMore(viewMore + 10);
                   }}
                 >
                   View more
