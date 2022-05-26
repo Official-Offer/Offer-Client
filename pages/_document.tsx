@@ -32,6 +32,7 @@ class MyDocument extends Document {
                     <meta property='og:type' content='website' />
                     <meta property='og:site_name' content='Tokenplay Dappverse' />
                     <meta property='og:image' content='img/thumbnail.png'/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"></meta>
                     {/* <meta property='og:image:alt' content='Visit nft.Tokenplay.app' /> */}
                     <link rel="icon" href="symbol.ico" type="image/x-icon" />
                     {styleTags}
