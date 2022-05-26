@@ -10,7 +10,7 @@ export const News: FC = () => {
     const [newsList, setNewsList] = useState([]);
     const [category, setCategory] = useState({
         data: [
-            { name: 'Campaigns' },
+            { name: 'Campaign' },
             { name: 'Airdrops' },
             { name: 'Scholarship' },
         ],
@@ -69,7 +69,7 @@ export const News: FC = () => {
             >
                 {category.data && [...category.data].map((cate: any) => {
                     return (
-                        <TabPane tab={cate.name} key={cate.name}>
+                        <TabPane tab={cate.name === 'Campaign' ? 'Campaigns' : cate.name} key={cate.name}>
                             <NewsSlides data={newsList} tag={category.key} />
                         </TabPane>
                     );
