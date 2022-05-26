@@ -44,8 +44,7 @@ export const NFTExplore: FC = () => {
       </div>
       <BoxALignCenter_Justify_ItemsCenter className="mt-4">
         <ButtonBlue
-          className="fw-bold px-5 fontSize_1-3"
-          onClick={() => router.push(`/nft-marketplace`)}
+          // onClick={() => router.push(`/nft-marketplace`)}
         >
           Explore
         </ButtonBlue>
