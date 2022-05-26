@@ -24,7 +24,7 @@ export const SocialNetwork: FC = () => {
                     description: e.target[2].value,
                 },
             };
-            await axios.post(`${URL_API_ADMIN}/api/contacts`, data).then((res) => {
+            await axios.post(`${URL_API_ADMIN}/contacts`, data).then((res) => {
                 if (res.status == 200) {
                     message.success('Send message success');
                     e.target.reset();

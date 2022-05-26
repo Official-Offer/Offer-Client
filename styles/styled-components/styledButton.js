@@ -61,7 +61,7 @@ export const ButtonBlue = styled.button `
     text-decoration: none;
     vertical-align: middle;
     transition: 0.25s;
-    width: 120px;
+    min-width: 120px;
     font-size: 16px;
     &:focus {
         box-shadow: none;
