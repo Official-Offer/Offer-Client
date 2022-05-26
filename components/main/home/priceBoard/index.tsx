@@ -18,7 +18,7 @@ export const PriceBoard: FC = () => {
       (async () => {
         const query = qs.stringify(
           {
-            sort: [`${sort[0]}:${sort[1]}`],
+            // sort: [`${sort[0]}:${sort[1]}`],
             vs_currency: "usd",
             price_change_percentage: "1h,24h,7d",
             per_page: viewMore,

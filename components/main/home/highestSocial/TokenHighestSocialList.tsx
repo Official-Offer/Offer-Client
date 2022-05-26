@@ -147,7 +147,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                   <td className="main-homepage-highestsocial-table-category">
                     <span>
                       {i < 2
-                        ? token.attributes.crawl.name
+                        ? token.attributes.crawl.category.name
                         : token.attributes.category.data.attributes.name}
                     </span>
                   </td>
@@ -157,19 +157,19 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                         src={
                           i < 2
                             ? token.attributes.crawl.chains[0].color_icon
-                            : token.attributes.chain.data.attributes.crawl
+                            : token.attributes.chain.data?.attributes.crawl
                                 .color_icon
                         }
                         alt={
                           i < 2
                             ? token.attributes.crawl.chains[0].slug
-                            : token.attributes.chain.data.attributes.crawl.slug
+                            : token.attributes.chain.data?.attributes.crawl.slug
                         }
                       />
                       <span className="ms-2">
                         {i < 2
                           ? token.attributes.crawl.chains[0].name
-                          : token.attributes.chain.data.attributes.crawl.name}
+                          : token.attributes.chain.data?.attributes.crawl.name}
                       </span>
                     </BoxALignCenter_Justify_ItemsCenter>
                   </td>

@@ -15,7 +15,6 @@ export default function NFTLists({ data }: any): ReactElement {
                 const buyTokenAsc = asset.item && asset.item.sellOrders.length > 0 && [...asset.item.sellOrders].sort((a: any, b: any) => ((b.buyToken - a.buyToken) || (a.price - b.price)))[0].buyToken;
                 let imageUrl = asset.metadata.video;
                 const imageType = imageUrl.split('.')[3];
-
                 return (
                     <div
                         className="nft_main_item"
@@ -25,7 +24,7 @@ export default function NFTLists({ data }: any): ReactElement {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
+                                // href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
                             >
                                 <BoxRelativeImage>
                                     <BoxRelativeImage_1>
@@ -56,7 +55,7 @@ export default function NFTLists({ data }: any): ReactElement {
                                 <a
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
+                                    // href={`${URL_NFT}/token/${asset.item.token}:${asset.item.tokenId}`}
                                 >
                                     <Tooltip title={asset.metadata.name}>
                                         <a className="fw-bold">{asset.metadata.name}</a>
@@ -96,7 +95,7 @@ export default function NFTLists({ data }: any): ReactElement {
                                 <a
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    href={`${URL_NFT}/user/${asset.item.owners[0]}`}
+                                    // href={`${URL_NFT}/user/${asset.item.owners[0]}`}
                                 >
                                     <Tooltip title={`Owner: ${asset.item.owners[0].substring(0, 6) + "..." + asset.item.owners[0].substring(38)}`}>
                                         <Avatar src={`https://avatars.dicebear.com/v2/jdenticon/${asset.item.owners[0]}.svg`} className="avatar_ownerImg" style={{ width: "32px", height: "32px", cursor: "pointer" }} />

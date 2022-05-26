@@ -23,14 +23,14 @@ export const NFTExplore: FC = () => {
     // })();
     (async () => {
       const params = {
-        limit: 9,
+        limit: 10,
         offset: 0,
         filter: {
             sellOrders: true,
         }
       };
       await axios.post(`${URL_NFTs}/items`, params).then((res: any) => {
-        console.log(res.data)
+        // console.log(res.data)
         setData(res.data.data);
       });
     })();
@@ -44,8 +44,7 @@ export const NFTExplore: FC = () => {
       </div>
       <BoxALignCenter_Justify_ItemsCenter className="mt-4">
         <ButtonBlue
-          className="fw-bold px-5 fontSize_1-3"
-          onClick={() => router.push(`/nft-marketplace`)}
+          // onClick={() => router.push(`/nft-marketplace`)}
         >
           Explore
         </ButtonBlue>

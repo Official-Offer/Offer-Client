@@ -62,6 +62,7 @@ export const ButtonBlue = styled.button `
     vertical-align: middle;
     transition: 0.25s;
     min-width: 120px;
+    font-size: 16px;
     &:focus {
         box-shadow: none;
         outline: none;

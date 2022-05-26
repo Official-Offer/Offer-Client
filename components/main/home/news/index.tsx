@@ -10,7 +10,7 @@ export const News: FC = () => {
     const [newsList, setNewsList] = useState([]);
     const [category, setCategory] = useState({
         data: [
-            { name: 'Campaigns' },
+            { name: 'Campaign' },
             { name: 'Airdrops' },
             { name: 'Scholarship' },
         ],
@@ -28,25 +28,24 @@ export const News: FC = () => {
             //         });
             //     })
             // }
-            const query = qs.stringify({
-                populate: '*',
-                // pagination: {
-                //     page: 1,
-                //     pageSize: 6,
-                // },
-                filters: {
-                    isPinned: {
-                        $eq: true
-                    },
-                    category: {
-                        name: category.key
-                    }
-                },
-                sort: [`createdAt:desc`],
-            }, {
-                encodeValuesOnly: true,
-            });
-            await request.get(`/posts?${query}`).then((res) => {
+            // const query = qs.stringify({
+            //     populate: '*',
+            //     // pagination: {
+            //     //     page: 1,
+            //     //     pageSize: 6,
+            //     // },
+            //     filters: {
+            //         isPinned: {
+            //             $eq: true
+            //         },
+            //         category: {
+            //             name: category.key
+            //         }
+            //     },
+            // }, {
+            //     encodeValuesOnly: true,
+            // });
+            await request.get(`/posts?populate=%2A&filters[isPinned][$eq]=true&filters[category][name][$eq]=Campaign&sort[0]=createdAt%3Adesc`).then((res) => {
                 setNewsList(res.data.data);
             });
         })();
@@ -69,7 +68,7 @@ export const News: FC = () => {
             >
                 {category.data && [...category.data].map((cate: any) => {
                     return (
-                        <TabPane tab={cate.name} key={cate.name}>
+                        <TabPane tab={cate.name === 'Campaign' ? 'Campaigns' : cate.name} key={cate.name}>
                             <NewsSlides data={newsList} tag={category.key} />
                         </TabPane>
                     );

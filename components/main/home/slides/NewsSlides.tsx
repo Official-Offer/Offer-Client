@@ -56,7 +56,6 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
         }}
       >
         {data.map((blog: any, i: number) => {
-          console.log(blog);
           return (
             <SwiperSlide key={i}>
               <div className="main-homepage-news-card">

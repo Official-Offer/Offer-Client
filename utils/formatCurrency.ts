@@ -8,7 +8,8 @@ export const isExistAndFormatCurrency = (num: any, fixed: any) => {
 };
 
 export const numberSeperator = (x: any) => {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    // return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 export const formatter = Intl.NumberFormat('en', { notation: 'compact' });
