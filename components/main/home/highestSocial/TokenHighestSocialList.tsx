@@ -353,7 +353,6 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
             </div>
           </div>
           {data.map((token: any, i: number) => {
-            console.log(token);
             let usds_24hr = token.attributes.crawl.usds_24h;
             let userDiff: string;
             let transactionsDiff: string;

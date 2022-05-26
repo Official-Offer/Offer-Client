@@ -80,7 +80,6 @@ export default function TokenList({ data, setSort, sort }: any) {
           </thead>
           <tbody>
             {data.map((token: any, i: number) => {
-              console.log(token);
               let oneHourDiff =
                 token.price_change_percentage_1h_in_currency > 0
                   ? "increase"
