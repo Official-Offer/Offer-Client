@@ -106,7 +106,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                         <img src={token.image} alt="" />
                       </span>
                       <span className="main-homepage-tokenranking-table-name ms-2">
-                        {`${token.name} (${token.symbol})`}
+                        {`${token.name} (${token.symbol.toUpperCase()})`}
                       </span>
                       {/* {token.status !== '' && (
                                                 <span className="main-homepage-tokenranking-table-status ms-2">
@@ -165,9 +165,9 @@ export default function TokenList({ data, setSort, sort }: any) {
                     <div className="main-homepage-tokenranking-table text-end">
                       <p>
                         $
-                        {!token.market_cap
+                        {!token.total_volume
                           ? 0
-                          : numberSeperator(token.market_cap)}
+                          : numberSeperator(token.total_volume)}
                       </p>
                     </div>
                   </td>
@@ -175,9 +175,9 @@ export default function TokenList({ data, setSort, sort }: any) {
                     <div className="main-homepage-tokenranking-table text-end">
                       <p>
                         $
-                        {!token.total_volume
+                        {!token.market_cap
                           ? 0
-                          : numberSeperator(token.total_volume)}
+                          : numberSeperator(token.market_cap)}
                       </p>
                     </div>
                   </td>
