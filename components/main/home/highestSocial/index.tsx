@@ -41,7 +41,7 @@ export const HighestSocial: FC = () => {
         display = [...res.data.data.map((e) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
-        console.log(query);
+        // console.log(query);
         display = [...display, ...res.data.data];
       });
       setTokenList(display);

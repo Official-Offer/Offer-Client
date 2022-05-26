@@ -157,19 +157,19 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
                         src={
                           i < 2
                             ? token.attributes.crawl.chains[0].color_icon
-                            : token.attributes.chain.data.attributes.crawl
+                            : token.attributes.chain.data?.attributes.crawl
                                 .color_icon
                         }
                         alt={
                           i < 2
                             ? token.attributes.crawl.chains[0].slug
-                            : token.attributes.chain.data.attributes.crawl.slug
+                            : token.attributes.chain.data?.attributes.crawl.slug
                         }
                       />
                       <span className="ms-2">
                         {i < 2
                           ? token.attributes.crawl.chains[0].name
-                          : token.attributes.chain.data.attributes.crawl.name}
+                          : token.attributes.chain.data?.attributes.crawl.name}
                       </span>
                     </BoxALignCenter_Justify_ItemsCenter>
                   </td>
@@ -353,6 +353,7 @@ export default function TokenHighestSocialList({ data, setSort, sort }: any) {
             </div>
           </div>
           {data.map((token: any, i: number) => {
+            console.log(token);
             let usds_24hr = token.attributes.crawl.usds_24h;
             let userDiff: string;
             let transactionsDiff: string;
