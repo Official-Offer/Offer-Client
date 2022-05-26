@@ -25,7 +25,7 @@ export const HighestSocial: FC = () => {
           },
           filters: {
             chain: {
-              name: {
+              id: {
                 $eq: chain === "All" ? undefined : chain,
               },
             },
@@ -38,13 +38,10 @@ export const HighestSocial: FC = () => {
       );
       let display: Array<any>;
       await request.get(`/dapp-ads?populate=*`).then((res) => {
-        // console.log(res.data.data.map(e => e.attributes.dapp.data));
-        // setTokenList(res.data.data.map(e => e.attributes.dapp.data));
         display = [...res.data.data.map((e) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
-        // console.log(res.data.data);
-        // setTokenList([...tokenList,...res.data.data]);
+        console.log(query);
         display = [...display, ...res.data.data];
       });
       setTokenList(display);
@@ -57,9 +54,9 @@ export const HighestSocial: FC = () => {
 
   const category = [
     { tab: "All", key: "All" },
-    { tab: "BSC", key: "BNB Chain" },
-    { tab: "Polygon", key: "Polygon" },
-    { tab: "Solana", key: "Solana" },
+    { tab: "BSC", key: "2" },
+    { tab: "Polygon", key: "5" },
+    { tab: "Solana", key: "0" },
   ];
 
   return (

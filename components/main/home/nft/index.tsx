@@ -30,7 +30,7 @@ export const NFTExplore: FC = () => {
         }
       };
       await axios.post(`${URL_NFTs}/items`, params).then((res: any) => {
-        console.log(res.data)
+        // console.log(res.data)
         setData(res.data.data);
       });
     })();
