@@ -23,7 +23,7 @@ export const NFTExplore: FC = () => {
     // })();
     (async () => {
       const params = {
-        limit: 9,
+        limit: 10,
         offset: 0,
         filter: {
             sellOrders: true,
