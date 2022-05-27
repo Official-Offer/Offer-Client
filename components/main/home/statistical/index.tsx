@@ -19,34 +19,37 @@ export const Statistical: FC = () => {
     useEffect(() => {
         (async () => {
             const userQuery = qs.stringify({
-                populate: '*',
+                populate: `%2A`,
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['dailyUser:desc']
+                sort: [`dailyUserDiff%3Adesc`]
             }, {
                 encodeValuesOnly: true,
+                encode:false,
             });
             const volumeQuery = qs.stringify({
-                populate: '*',
+                populate: '%2A',
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['dailyVolume:desc']
+                sort: ['dailyVolumeDiff%3Adesc']
             }, {
                 encodeValuesOnly: true,
+                encode: false,
             });
             const socialSignalQuery = qs.stringify({
-                populate: '*',
+                populate: '%2A',
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['socialSignal:desc']
+                sort: ['socialSignalDiff%3Adesc']
             }, {
                 encodeValuesOnly: true,
+                encode: false,
             });
             let newArr = [...statisticalList];
             await request.get(`/dapps?${userQuery}`).then((res) => {
