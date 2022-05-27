@@ -21,19 +21,19 @@ export default function TokenList({ data, setSort, sort }: any) {
     { tag: "token", name: "Token Name", sort: false, query: "" },
     { tag: "price", name: "Price", sort: false, query: "current_price" },
     {
-      tag: "1h",
+      tag: "oneh",
       name: "1h",
       sort: false,
       query: "price_change_percentage_1h_in_currency",
     },
     {
-      tag: "24h",
+      tag: "twentyfourh",
       name: "24h",
       sort: false,
       query: "price_change_percentage_24h_in_currency",
     },
     {
-      tag: "7d",
+      tag: "sevend",
       name: "7d",
       sort: false,
       query: "price_change_percentage_7d_in_currency",

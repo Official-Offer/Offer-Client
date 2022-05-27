@@ -195,6 +195,12 @@
                         }
                     }
                 }
+                .price,
+                .oneh,
+                .twentyfourh,
+                .sevend {
+                    justify-content: end !important;
+                }
                 &-transfer-volume,
                 &-marketcaps,
                 &-holder,
