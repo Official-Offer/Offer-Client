@@ -7,7 +7,7 @@ import * as qs from "qs";
 const { TabPane } = Tabs;
 
 export const News: FC = () => {
-  const [newsList, setNewsList] = useState([]);
+  const [newsList, setNewsList] = useState<any>([]);
   const [category, setCategory] = useState({
     data: [{ name: "Campaign" }, { name: "Airdrops" }, { name: "Scholarship" }],
     key: "Campaign",
@@ -44,7 +44,7 @@ export const News: FC = () => {
           encodeValuesOnly: true,
         }
       );
-      await request.get(`/posts?${query}`).then((res) => {
+      await request.get(`/posts?${query}`).then((res: any) => {
         setNewsList([...res.data.data, ...res.data.data, ...res.data.data]);
       });
     })();

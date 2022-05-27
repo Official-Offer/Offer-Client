@@ -7,7 +7,7 @@ export const isExistAndFormatCurrency = (num: any, fixed: any) => {
     return num;
 };
 
-export const numberSeperator = (x) => {
+export const numberSeperator = (x: any) => {
     // return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }

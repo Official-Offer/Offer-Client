@@ -36,9 +36,11 @@ export const HighestSocial: FC = () => {
           encodeValuesOnly: true,
         }
       );
-      let display: Array<any>;
+      let display: any;
       await request.get(`/dapp-ads?populate=*`).then((res) => {
-        display = [...res.data.data.map((e) => e.attributes.dapp.data)];
+        // console.log(res.data.data.map(e => e.attributes.dapp.data));
+        // setTokenList(res.data.data.map(e => e.attributes.dapp.data));
+        display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
         // console.log(query);
