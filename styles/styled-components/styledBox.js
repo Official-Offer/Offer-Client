@@ -15,6 +15,13 @@ export const BoxALignItemsCenter = styled.div `
   display: flex;
   align-items: center;
 `;
+export const BoxALignItemsCenterNFTItems = styled.div `
+  /* display: flex; */
+  align-items: center;
+  padding-top: 2px !important;
+  padding-left: 6px !important;
+  padding-right: 9.5px!important;
+`;
 export const BoxAlignItemsStart_FlexColumn = styled.div `
   display: flex;
   align-items: start;
