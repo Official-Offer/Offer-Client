@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxRelativeImage, BoxRelativeImage_1, BoxRelativeImage_2, BoxRelativeImage_3 } from '@styles/styled-components/styledBox';
+import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxALignItemsCenterNFTItems, BoxRelativeImage, BoxRelativeImage_1, BoxRelativeImage_2, BoxRelativeImage_3 } from '@styles/styled-components/styledBox';
 import { ADDRESS_TOP_BSC, URL_NFT } from '@config/index';
 import { CurrencyAmountAdapter } from '@utils/chainAdapter';
 import { BoxWhiteShadowItem } from '@styles/styled-components/styledBox';
@@ -72,13 +72,13 @@ export default function NFTLists({ data }: any): ReactElement {
                                                 className="border_toggle p-1 me-1"
                                             />{priceAsc}<span className="text_description"> {buyTokenAsc === ADDRESS_TOP_BSC ? currencySwitch.top_currency_amount : currencySwitch.currency_amount}</span>
                                         </p>
-                                        <BoxALignItemsCenter className="bg-primary rounded p-1 pe-2 ps-2 fw-bold">
+                                        <BoxALignItemsCenterNFTItems className="bg-primary rounded p-1 pe-2 ps-2 fw-bold">
                                             <img src="/img/icons/edtionIcon.svg" alt="" className="edition_icon_home" />
                                             <span className="ms-1 mb-0 text-white fontSize_08" key={i}>
                                                 {/* {`${asset.item.sellOrders.reduce((acc, cur) => acc + cur.stock, 0)}/${asset.item.supply}`} */}
                                                 1
                                             </span>
-                                        </BoxALignItemsCenter>
+                                        </BoxALignItemsCenterNFTItems>
                                     </BoxALignCenter_Justify_ItemsBetween>
                                 </>
                             ) : (

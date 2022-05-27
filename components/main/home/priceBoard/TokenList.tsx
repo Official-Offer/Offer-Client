@@ -295,7 +295,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                           <img src={token.image} alt="" />
                         </span>
                         <span className="main-homepage-tokenranking-table-name ms-2">
-                          {`${token.name} (${token.symbol})`}
+                          {`${token.name} (${token.symbol.toUpperCase()})`}
                         </span>
                       </BoxALignItemsCenter>
                     </div>
