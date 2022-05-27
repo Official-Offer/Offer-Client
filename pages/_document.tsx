@@ -28,7 +28,7 @@ class MyDocument extends Document {
                     {/* <meta name="description" content="https://nft.tokenplay.app/" />
                     <meta property="og:image" content="https://data-nft.tokenplay.app/NFTmarket.jpg" /> */}
                     <meta property='og:title' content='Tokenplay' />
-                    <meta property='og:url' content='https://nft.tokenplay.app/' />
+                    <meta property='og:url' content='https://tokenplay.app/' />
                     <meta property='og:type' content='website' />
                     <meta property='og:site_name' content='Tokenplay Dappverse' />
                     <meta property='og:image' content='img/thumbnail_1.png'/>
