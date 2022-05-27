@@ -15,7 +15,7 @@ export default function TabsChain(): ReactElement {
       });
     })();
   }, []);
-  const listBlockchain = chainIdArray.map((chain, i) => {
+  const listBlockchain = chainIdArray.map((chain: any, i) => {
     if (i===0) return chain;
     return {
        id: chain.id,

@@ -3,7 +3,7 @@ import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxRelativeIm
 
 export default function Stats({ data }: any) {
   console.log(data)
-  let key: String;
+  let key: any;
   switch(data.title) {
     case 'User(24h)':
       key = 'dailyUserDiff';
