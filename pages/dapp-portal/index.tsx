@@ -1,12 +1,17 @@
-import { TitleGlobal } from '@components/common/Title';
-import type { NextPage } from 'next';
-import dynamic from 'next/dynamic';
+import { TitleGlobal } from "@components/common/Title";
+import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 
 const DappPortal: NextPage = () => {
-  const TabsChain = dynamic(() => import("@components/main/dapp-portal/TabsChain"));
-  const TabsCategory = dynamic(() => import("@components/main/dapp-portal/TabsCategory"));
-  const TableDapp = dynamic(() => import("@components/main/dapp-portal/TableDapp"));
-
+  const TabsChain = dynamic(
+    () => import("@components/main/dapp-portal/TabsChain")
+  );
+  const TabsCategory = dynamic(
+    () => import("@components/main/dapp-portal/TabsCategory")
+  );
+  const TableDapp = dynamic(
+    () => import("@components/main/dapp-portal/TableDapp")
+  );
   return (
     <>
       <section id="main-portal">
@@ -22,7 +27,7 @@ const DappPortal: NextPage = () => {
         <TableDapp />
       </section>
     </>
-  )
-}
+  );
+};
 
 export default DappPortal;

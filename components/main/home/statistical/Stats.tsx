@@ -1,7 +1,19 @@
 import React from 'react';
-import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxWhiteShadow } from '@styles/styled-components/styledBox';
+import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxRelativeImage, BoxWhiteShadow } from '@styles/styled-components/styledBox';
 
 export default function Stats({ data }: any) {
+  console.log(data)
+  let key: String;
+  switch(data.title) {
+    case 'User(24h)':
+      key = 'dailyUserDiff';
+      break;
+    case 'Volume':
+      key = 'dailyVolumeDiff';
+      break;
+    default:
+      key = 'socialSignalDiff';
+  }
   return (
     <BoxWhiteShadow className="p-3">
       <BoxALignItemsCenter>
@@ -11,12 +23,13 @@ export default function Stats({ data }: any) {
         </h6>
       </BoxALignItemsCenter>
       {data.dapp.map((app: any, i: number) => {
-        let dailyUserDiff: string;
-        if (app.attributes.dailyUserDiff < 0) {
-          dailyUserDiff = 'decrease';
+        let diff: string;
+        if (app.attributes[key] < 0) {
+          diff = 'decrease';
         } else {
-          dailyUserDiff = 'increase';
+          diff = 'increase';
         }
+        console.log(app);
         return (
           <BoxALignCenter_Justify_ItemsBetween className="my-3" key={i}>
             <BoxALignItemsCenter>
@@ -27,8 +40,8 @@ export default function Stats({ data }: any) {
               <span className="ms-2 fw-bold">{app.attributes.crawl.name}</span>
               {/* <span className="text_description ms-2">{app.attributes.tag}</span> */}
             </BoxALignItemsCenter>
-            <span className={`main-homepage-statistical-${dailyUserDiff}`}>
-              {((app.attributes.dailyUserDiff) * 100).toFixed(2)}% {dailyUserDiff === 'increase' ? "↑" : "↓"}
+            <span className={`main-homepage-statistical-${diff}`}>
+              {((app.attributes[key]) * 100).toFixed(2)}% {diff === 'increase' ? "↑" : "↓"}
             </span>
           </BoxALignCenter_Justify_ItemsBetween>
         );
