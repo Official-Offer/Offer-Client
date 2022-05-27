@@ -13,6 +13,9 @@
     .table-body {
         background-color: transparent;
     }
+    .hover-underline:hover {
+        text-decoration: underline;
+    }
     .table-header,
     .table-body {
         width: 100%;
@@ -42,6 +45,7 @@
                 margin-left: 5px;
             }
         }
+       
         &-item-sorter {
             display: inherit;
             margin-left: 5px;
