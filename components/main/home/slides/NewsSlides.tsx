@@ -56,6 +56,7 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
         }}
       >
         {data.map((blog: any, i: number) => {
+          console.log(blog);
           return (
             <SwiperSlide key={i}>
               <div className="main-homepage-news-card">
@@ -75,7 +76,7 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
                   </p>
                   <p className="main-homepage-news-card-body-tag">{tag}</p>
                   <p className="main-homepage-news-card-body-description">
-                    {blog.attributes.content}
+                    {blog.attributes.description}
                   </p>
                   <p className="main-homepage-news-card-body-createdAt">
                     {moment(blog.attributes.createdAt).format("LL")}
