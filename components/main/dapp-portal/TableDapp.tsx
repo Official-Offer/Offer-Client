@@ -17,7 +17,7 @@ import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
 
 const { Option } = Select;
 
-export default function TableDapp({tokenList}): ReactElement {
+export default function TableDapp({ tokenList }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
 
@@ -97,7 +97,7 @@ export default function TableDapp({tokenList}): ReactElement {
               })}
             </div>
           </div>
-          {tokenList.map((token, i) => {
+          {tokenList.map((token: any, i: number) => {
             let usds_24hr = token.attributes.crawl.usds_24h;
             let userDiff: string;
             let transactionsDiff: string;
@@ -156,7 +156,7 @@ export default function TableDapp({tokenList}): ReactElement {
                       i < 2
                         ? token.attributes.crawl.chains[0].color_icon
                         : token.attributes.chain.data?.attributes.crawl
-                            .color_icon
+                          .color_icon
                     }
                     alt={
                       i < 2
@@ -215,59 +215,57 @@ export default function TableDapp({tokenList}): ReactElement {
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
-                  {usds_24hr.length == 2 ? (
-                    <>
-                      <div
-                        className="volume-bar"
-                        style={{
-                          width: `${
-                            usds_24hr[0].ratio == 0
-                              ? "10%"
-                              : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
-                          }`,
-                        }}
-                      />
-                      <div
-                        className="volume-bar"
-                        style={{
-                          width: `${`${(usds_24hr[1].ratio * 100).toFixed(
-                            1
-                          )}%`}`,
-                        }}
-                      />
-                    </>
-                  ) : usds_24hr.length == 3 ? (
-                    <>
-                      <div
-                        className="volume-bar"
-                        style={{
-                          width: `${
-                            usds_24hr[0].ratio == 0
-                              ? "10%"
-                              : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
-                          }`,
-                        }}
-                      />
-                      <div
-                        className="volume-bar"
-                        style={{
-                          width: `${`${(usds_24hr[1].ratio * 100).toFixed(
-                            1
-                          )}%`}`,
-                        }}
-                      />
-                      <div
-                        className="volume-bar"
-                        style={{
-                          width: `${`${(usds_24hr[2].ratio * 100).toFixed(
-                            1
-                          )}%`}`,
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <div className="volume-bar" style={{ width: `100%` }} />
-                  )}
+                    {usds_24hr.length == 2 ? (
+                      <>
+                        <div
+                          className="volume-bar"
+                          style={{
+                            width: `${usds_24hr[0].ratio == 0
+                                ? "10%"
+                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                              }`,
+                          }}
+                        />
+                        <div
+                          className="volume-bar"
+                          style={{
+                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                              1
+                            )}%`}`,
+                          }}
+                        />
+                      </>
+                    ) : usds_24hr.length == 3 ? (
+                      <>
+                        <div
+                          className="volume-bar"
+                          style={{
+                            width: `${usds_24hr[0].ratio == 0
+                                ? "10%"
+                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                              }`,
+                          }}
+                        />
+                        <div
+                          className="volume-bar"
+                          style={{
+                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                              1
+                            )}%`}`,
+                          }}
+                        />
+                        <div
+                          className="volume-bar"
+                          style={{
+                            width: `${`${(usds_24hr[2].ratio * 100).toFixed(
+                              1
+                            )}%`}`,
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <div className="volume-bar" style={{ width: `100%` }} />
+                    )}
                   </div>
                 </div>
                 <div className="table-body-item table-body-item-ranking">

@@ -5,7 +5,7 @@ import { listCategory } from "./TabsCategory";
 import request from "@services/apiService";
 const { Option } = Select;
 
-export default function TabsChain({setChain, chain}): ReactElement {
+export default function TabsChain({ setChain, chain }: any): ReactElement {
   const [chainIdArray, setChainIdArray] = useState([
     { id: 'All', name: "All", tag: "all", icon: "", icon_white: "" },
   ]);
@@ -37,11 +37,11 @@ export default function TabsChain({setChain, chain}): ReactElement {
   ];
   const listBlockchain = chainIdArray
     .filter(
-      (chain) =>
+      (chain: any) =>
         chain.name === "All" ||
         chainTagsToBeIncluded.includes(chain.attributes?.name)
     )
-    .map((chain) => {
+    .map((chain: any) => {
       if (chain.name === "All") return chain;
       return {
         id: chain.id,
@@ -51,44 +51,43 @@ export default function TabsChain({setChain, chain}): ReactElement {
         icon_white: chain.attributes.crawl.color_icon,
       };
     });
-//   const listBlockchain = [
-//     { name: "All", tag: "all", icon: "", icon_white: "" },
-//     {
-//       name: "Ethereum",
-//       tag: "eth",
-//       icon: "/img/coin/eth.png",
-//       icon_white: "/img/coin/eth-white.png",
-//     },
-//     {
-//       name: "BNB Chain",
-//       tag: "bnb",
-//       icon: "/img/coin/bnb.png",
-//       icon_white: "/img/coin/bnb-white.png",
-//     },
-//     {
-//       name: "Polygon (Matic)",
-//       tag: "matic",
-//       icon: "/img/coin/matic.png",
-//       icon_white: "/img/coin/matic-white.png",
-//     },
-//     {
-//       name: "TRON",
-//       tag: "tron",
-//       icon: "/img/coin/tron.png",
-//       icon_white: "/img/coin/tron-white.png",
-//     },
-//   ];
+  //   const listBlockchain = [
+  //     { name: "All", tag: "all", icon: "", icon_white: "" },
+  //     {
+  //       name: "Ethereum",
+  //       tag: "eth",
+  //       icon: "/img/coin/eth.png",
+  //       icon_white: "/img/coin/eth-white.png",
+  //     },
+  //     {
+  //       name: "BNB Chain",
+  //       tag: "bnb",
+  //       icon: "/img/coin/bnb.png",
+  //       icon_white: "/img/coin/bnb-white.png",
+  //     },
+  //     {
+  //       name: "Polygon (Matic)",
+  //       tag: "matic",
+  //       icon: "/img/coin/matic.png",
+  //       icon_white: "/img/coin/matic-white.png",
+  //     },
+  //     {
+  //       name: "TRON",
+  //       tag: "tron",
+  //       icon: "/img/coin/tron.png",
+  //       icon_white: "/img/coin/tron-white.png",
+  //     },
+  //   ];
 
   return (
     <>
       <div className="tab-bar-combination flex-for-pc">
         {listBlockchain.map((blockchain, i) => {
           return (
-            <button className="tab-bar-combination-item" key={i} onClick={()=>{setChain(blockchain.id)}}>
+            <button className="tab-bar-combination-item" key={i} onClick={() => { setChain(blockchain.id) }}>
               <div
-                className={`tab-bar-combination-item-blockchain ${
-                  blockchain.tag
-                } ${i == chain && "active"}`}
+                className={`tab-bar-combination-item-blockchain ${blockchain.tag
+                  } ${i == chain && "active"}`}
               >
                 <div className={`fill-background ${blockchain.tag}`} />
                 {blockchain.icon !== "" && blockchain.icon_white !== "" && (
