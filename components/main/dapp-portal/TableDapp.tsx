@@ -17,7 +17,7 @@ import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
 
 const { Option } = Select;
 
-export default function TableDapp(): ReactElement {
+export default function TableDapp({tokenList}): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
 
@@ -70,47 +70,6 @@ export default function TableDapp(): ReactElement {
       sort: true,
     },
   ];
-
-  const [tokenList, setTokenList] = useState([]);
-  const [chain, setChain] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(8);
-  const [sort, setSort] = useState(["socialSignal", "desc"]);
-
-  useEffect(() => {
-    (async () => {
-      const query = qs.stringify(
-        {
-          populate: "*",
-          pagination: {
-            page: 1,
-            pageSize: viewMore,
-          },
-          filters: {
-            chain: {
-              id: {
-                $eq: chain === "All" ? undefined : chain,
-              },
-            },
-          },
-          sort: [`${sort[0]}:${sort[1]}`],
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      let display: any;
-      await request.get(`/dapp-ads?populate=*`).then((res) => {
-        // console.log(res.data.data.map(e => e.attributes.dapp.data));
-        // setTokenList(res.data.data.map(e => e.attributes.dapp.data));
-        display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
-      });
-      await request.get(`/dapps?${query}`).then((res) => {
-        // console.log(query);
-        display = [...display, ...res.data.data];
-      });
-      setTokenList(display);
-    })();
-  }, [chain, viewMore, sort]);
 
   return (
     <>

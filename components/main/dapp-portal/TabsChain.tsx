@@ -5,9 +5,9 @@ import { listCategory } from "./TabsCategory";
 import request from "@services/apiService";
 const { Option } = Select;
 
-export default function TabsChain(): ReactElement {
+export default function TabsChain({setChain, chain}): ReactElement {
   const [chainIdArray, setChainIdArray] = useState([
-    { id: 0, name: "All", tag: "all", icon: "", icon_white: "" },
+    { id: 'All', name: "All", tag: "all", icon: "", icon_white: "" },
   ]);
   useEffect(() => {
     (async () => {
@@ -84,11 +84,11 @@ export default function TabsChain(): ReactElement {
       <div className="tab-bar-combination flex-for-pc">
         {listBlockchain.map((blockchain, i) => {
           return (
-            <button className="tab-bar-combination-item" key={i}>
+            <button className="tab-bar-combination-item" key={i} onClick={()=>{setChain(blockchain.id)}}>
               <div
                 className={`tab-bar-combination-item-blockchain ${
                   blockchain.tag
-                } ${i == 0 && "active"}`}
+                } ${i == chain && "active"}`}
               >
                 <div className={`fill-background ${blockchain.tag}`} />
                 {blockchain.icon !== "" && blockchain.icon_white !== "" && (
