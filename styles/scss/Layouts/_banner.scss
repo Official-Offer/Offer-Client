@@ -1,0 +1,12 @@
+#banner-main {
+    padding: 50px 0 0 0;
+}
+.banner-left, .banner-right {
+    &-sticky {
+        position: sticky;
+        top: 300px;
+    }
+    @include sm {
+        display: none;
+    }
+}

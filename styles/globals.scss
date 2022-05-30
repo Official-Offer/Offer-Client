@@ -1,0 +1,138 @@
+@import "./scss/Helper/mixin";
+@import "./scss/Helper/variable";
+@import "./scss/Helper/background-color";
+@import "./scss/Helper/text-color";
+@import "./scss/Helper/button";
+@import "./scss/Helper/font-size";
+@import "./scss/Helper/icons-color";
+@import "./scss/Helper/height";
+@import "./scss/Helper/input";
+@import "./scss/Layouts/navbar";
+@import "./scss/Plugins/antd";
+@import "./scss/Components/loading";
+@import "./scss/Layouts/banner";
+@import "./scss/Layouts/news-details";
+@import "./scss/Components/tabs";
+@import "./scss/Layouts/main-home";
+@import "./scss/Layouts/main-portal";
+@import "./scss/Layouts/blockchain";
+@import "./scss/Layouts/submitdapp";
+@import "./scss/Layouts/footer";
+
+@font-face {
+  font-family: "Circular Std";
+  src: url("../public/fonts/CircularStd-Book.otf") format("opentype"),
+    url("../public/fonts/CircularStd-Medium.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+body {
+  font-family: "Circular Std" !important;
+  height: auto;
+  // background-image: url(/img/bg-dots.png) !important;
+  // background-size: contain !important;
+  // background-repeat: repeat;
+  // background: #061216;
+  transition: all 0.25s linear;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.361);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #058499;
+    outline: 1px solid #058499;
+  }
+}
+#__next {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+strong {
+  color: $black-color;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.row-global {
+  display: flex;
+  flex-wrap: wrap;
+  &-banner {
+    flex: 0 0 auto;
+    width: 7%;
+    @include lg {
+      width: 9%;
+    }
+  }
+  &-center {
+    flex: 0 0 auto;
+    width: 86%;
+    @include lg {
+      width: 82%;
+    }
+    @include sm {
+      width: 100%;
+    }
+  }
+}
+
+.focus_none {
+  outline: none;
+  &:focus {
+    outline: none !important;
+  }
+}
+.display_none {
+  display: none !important;
+}
+.block-for-pc {
+  display: block;
+}
+.block-for-mobile {
+  display: none;
+}
+.flex-for-pc {
+  display: flex;
+}
+.flex-for-mobile {
+  display: none;
+}
+@include sm {
+  .block-for-pc {
+    display: none;
+  }
+  .block-for-mobile {
+    display: block;
+  }
+  .flex-for-pc {
+    display: none;
+  }
+  .flex-for-mobile {
+    display: flex;
+  }
+}

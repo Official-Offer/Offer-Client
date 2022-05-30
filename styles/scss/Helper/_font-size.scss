@@ -1,0 +1,96 @@
+.fontSize_03 {
+    font-size: 0.3rem;
+}
+.fontSize_04 {
+    font-size: 0.4rem;
+}
+.fontSize_05 {
+    font-size: 0.5rem;
+}
+.fontSize_06 {
+    font-size: 0.6rem;
+}
+.fontSize_07 {
+    font-size: 0.7rem;
+}
+.fontSize_08 {
+    font-size: 0.8rem !important;
+}
+.fontSize_09 {
+    font-size: 0.9rem !important;
+}
+.fontSize_1 {
+    font-size: 1rem !important;
+}
+.fontSize_1-1 {
+    font-size: 1.1rem;
+}
+.fontSize_1-2 {
+    font-size: 1.2rem;
+}
+.fontSize_1-3 {
+    font-size: 1.3rem;
+}
+.fontSize_1-5 {
+    font-size: 1.5rem !important;
+}
+.fontSize_1-3 {
+    font-size: 1.3rem !important;
+}
+.fontSize_1_8 {
+    font-size: 1.8rem !important;
+}
+.fontSize_2 {
+    font-size: 2rem;
+}
+.fontSize_2-5 {
+    font-size: 2.5rem !important;
+}
+.fontSize_2-9 {
+    font-size: 2.9rem !important;
+}
+.fontSize_3 {
+    font-size: 3rem;
+}
+.fontSize_3-5 {
+    font-size: 3.5rem;
+}
+.fontSize_4-5 {
+    font-size: 4.5rem;
+}
+
+@include sm {
+    .fontSize_res_03 {
+        font-size: 0.3rem !important;
+    }
+    .fontSize_res_04 {
+        font-size: 0.4rem !important;
+    }
+    .fontSize_res_05 {
+        font-size: 0.5rem !important;
+    }
+    .fontSize_res_06 {
+        font-size: 0.6rem !important;
+    }
+    .fontSize_res_07 {
+        font-size: 0.7rem !important;
+    }
+    .fontSize_res_08 {
+        font-size: 0.8rem !important;
+    }
+    .fontSize_res_09 {
+        font-size: 0.9rem !important;
+    }
+    .fontSize_res_1-2 {
+        font-size: 1.2rem !important;
+    }
+    .fontSize_res_2 {
+        font-size: 2rem !important;
+    }
+    .fontSize_res_3 {
+        font-size: 3rem !important;
+    }
+    .empty_space_height0_res {
+        height: 0px !important;
+    }
+}
