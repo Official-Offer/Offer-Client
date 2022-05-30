@@ -3,6 +3,7 @@ import { Empty, Tabs } from "antd";
 import NewsSlides from "../slides/NewsSlides";
 import request from "@services/apiService";
 import * as qs from "qs";
+import axios from "axios";
 
 const { TabPane } = Tabs;
 
