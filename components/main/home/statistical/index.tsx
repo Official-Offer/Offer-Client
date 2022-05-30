@@ -73,10 +73,10 @@ export const Statistical: FC = () => {
 
     return (
         <section className="main-homepage-statistical">
-            <div className="row">
+            <div className="d-flex justify-content-center flex-wrap">
                 {statisticalList && statisticalList.map((statistical, i) => {
                     return (
-                        <div className="col-lg-4 col-12 my-lg-0 my-4 px-lg-5 px-2" key={i}>
+                        <div className="main-homepage-statistical-box px-lg-4 px-md-2 px-2" key={i}>
                             <UserStats data={statistical} />
                         </div>
                     )

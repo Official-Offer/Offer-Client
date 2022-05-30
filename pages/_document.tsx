@@ -28,11 +28,11 @@ class MyDocument extends Document {
                     {/* <meta name="description" content="https://nft.tokenplay.app/" />
                     <meta property="og:image" content="https://data-nft.tokenplay.app/NFTmarket.jpg" /> */}
                     <meta property='og:title' content='Tokenplay' />
-                    <meta property='og:url' content='https://nft.tokenplay.app/' />
+                    <meta property='og:url' content='https://tokenplay.app/' />
                     <meta property='og:type' content='website' />
                     <meta property='og:site_name' content='Tokenplay Dappverse' />
-                    <meta property='og:image' content='img/thumbnail.png'/>
-                    {/* <meta name="viewport" content="width=device-width, initial-scale=1 "/> */}
+                    <meta property='og:image' content='img/thumbnail_1.png'/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1 "/>
                     {/* <meta property='og:image:alt' content='Visit nft.Tokenplay.app' /> */}
                     <link rel="icon" href="symbol.ico" type="image/x-icon" />
                     {styleTags}

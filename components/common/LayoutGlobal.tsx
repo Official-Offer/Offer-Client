@@ -1,8 +1,10 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { BoxALignCenter_Justify_ItemsCenter, BoxALignCenter_Justify_ItemsEnd, BoxALignCenter_Justify_ItemsStart, BoxALignItemsCenter } from '@styles/styled-components/styledBox'
 import { BannerLeft, BannerRight } from '@components/banner'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import request from '@services/apiService'
+import * as qs from 'qs'
 import 'antd/dist/antd.css'
 
 export default function LayoutGlobal(props: any): ReactElement {
@@ -10,6 +12,20 @@ export default function LayoutGlobal(props: any): ReactElement {
     const BannerMain = dynamic(() => import("@components/banner").then((mod: any) => mod.BannerMain));
     const NavbarHome = dynamic(() => import('../navbar').then((mod: any) => mod.NavbarHome));
     const FooterHome = dynamic(() => import('../footer').then((mod: any) => mod.FooterHome));
+
+    useEffect(() => {
+        (async () => {
+            const bannerQuery = qs.stringify({
+                populate: '%2A',
+            }, {
+                encodeValuesOnly: true,
+                encode: false,
+            });
+            await request.get(`/dapp-ads?${bannerQuery}`).then((res) => {
+                console.log(res);
+            });
+        })();
+    }, []);
 
     return (
         <>
@@ -35,6 +51,9 @@ export default function LayoutGlobal(props: any): ReactElement {
                     </BoxALignCenter_Justify_ItemsEnd>
                 </div>
                 <div className="main-background main-background-position-banner" />
+                <div className="main-background main-background-position-priceboard" />
+                <div className="main-background main-background-position-highestsocial" />
+                <div className="main-background main-background-position-blog" />
             </div>
             <FooterHome />
         </>
