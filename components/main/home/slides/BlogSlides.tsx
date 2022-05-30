@@ -57,7 +57,7 @@ export default function BlogSlides({ data }: any): ReactElement {
             // onSwiper={setSwiper}
             >
                 {data.map((blog: any, i: number) => {
-                    console.log(blog)
+                    // console.log(blog)
                     return (
                         <SwiperSlide key={i}>
                             <div className="main-homepage-blog-card">
