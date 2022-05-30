@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
 import { URL_API_IMG } from "@config/dev.config";
 
-export function BannerLeft({ img }): ReactElement {
+export function BannerLeft({ img }: any): ReactElement {
   console.log(img);
   return (
     <img
@@ -14,7 +14,7 @@ export function BannerLeft({ img }): ReactElement {
   );
 }
 
-export function BannerRight({ img }): ReactElement {
+export function BannerRight({ img }: any): ReactElement {
   return (
     <img
       style={{ maxWidth: "70%" }}
@@ -25,7 +25,7 @@ export function BannerRight({ img }): ReactElement {
   );
 }
 
-export function BannerMain({ img }): ReactElement {
+export function BannerMain({ img }: any): ReactElement {
   return (
     <section id="banner-main">
       <BoxALignCenter_Justify_ItemsCenter style={{ borderRadius: "15px" }}>

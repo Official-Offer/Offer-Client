@@ -4,7 +4,7 @@ import * as qs from "qs";
 import { URL_API_IMG } from "@config/dev.config";
 
 export const Banners: FC = () => {
-  const [banners, setBanners] = useState([
+  const [banners, setBanners] = useState<any>([
     // { url: "https://heroarena.app/", src: "/img/banner/hero_arena.png" },
     // { url: "https://horizonland.app/", src: "/img/banner/horizon.png" },
   ]);
@@ -22,8 +22,8 @@ export const Banners: FC = () => {
       await request.get(`/ads-banners?${bannerQuery}`).then((res) => {
         setBanners(
           res.data.data
-            .map((img) => img.attributes)
-            .filter((img) => img.Position === "Section2")
+            .map((img: any) => img.attributes)
+            .filter((img: any) => img.Position === "Section2")
         );
       });
     })();

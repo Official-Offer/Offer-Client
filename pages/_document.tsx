@@ -1,7 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import React from "react";
-import {NEXT_PUBLIC_GOOGLE_ANALYTICS} from '@config/index';
 class MyDocument extends Document {
   static getInitialProps({ renderPage }: any) {
     // Step 1: Create an instance of ServerStyleSheet
@@ -23,22 +22,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-              page_path: window.location.pathname,
-            });
-          `,
-            }}
-          />
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           {/* <meta name="description" content="https://nft.tokenplay.app/" />
@@ -48,10 +31,6 @@ class MyDocument extends Document {
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Tokenplay Dappverse" />
           <meta property="og:image" content="img/thumbnail_1.png" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1 "
-          />
           {/* <meta property='og:image:alt' content='Visit nft.Tokenplay.app' /> */}
           <link rel="icon" href="symbol.ico" type="image/x-icon" />
           {styleTags}
