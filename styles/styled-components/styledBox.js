@@ -69,17 +69,14 @@ export const BoxBlueBold = styled.div `
 `;
 export const BoxWhiteShadow = styled.div `
   border-radius: 10px;
-  // box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
-  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;
 export const BoxWhiteShadowItem = styled.div `
   border-radius: 20px;
   background-color: #FFF;
-  // -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20); 
-  // box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20);
-  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75); 
-  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20); 
+  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20);
 `;
 
 // Box NFT Items
@@ -153,7 +150,7 @@ export const CategoryBox = styled.div`
 
   /* Inside auto layout */
 
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-`;
+flex: none;
+order: 0;
+flex-grow: 0;
+`

@@ -1,23 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
 import { Empty, Tabs } from "antd";
-import NewsSlides from "../slides/NewsSlides";
 import request from "@services/apiService";
 import * as qs from "qs";
-import NewsLists from "@components/common/NewsList";
+import NewsLists from "@components/main/dapp-news/NewsList";
 import { Button, LoadMore } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
 import { BoxALignItemsCenter } from "@styles/styled-components/styledBox";
 import { NavMain, Nav_Sub, ToggleMain, ToggleMain_Sub } from "@styles/styled-components/styledTabs";
-import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
-import {
-  CaretDownOutlined,
-  CaretUpOutlined,
-  QuestionCircleOutlined,
-} from "@ant-design/icons";
-const { TabPane } = Tabs;
 
-export const DappNews: FC = () => {
+const DappNews: FC = () => {
   const router = useRouter();
   const [newsList, setNewsList] = useState([]);
   const [crit, setCrit] = useState("viewer");
@@ -191,3 +183,5 @@ export const DappNews: FC = () => {
     </section>
   );
 };
+
+export default DappNews;

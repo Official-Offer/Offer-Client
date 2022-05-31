@@ -57,7 +57,7 @@ export default function BlogSlides({ data }: any): ReactElement {
             // onSwiper={setSwiper}
             >
                 {data.map((blog: any, i: number) => {
-                    console.log(blog)
+                    // console.log(blog)
                     return (
                         <SwiperSlide key={i}>
                             <div className="main-homepage-blog-card">
@@ -79,7 +79,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                         {blog.attributes.description || 'Description is here, but null'}
                                     </p>
                                     <p className="main-homepage-blog-card-body-createdat">
-                                       By {blog.attributes.Author}  | {moment(blog.attributes.createdAt).format('LL')}
+                                       By anonymous  | {moment(blog.attributes.createdAt).format('LL')}
                                     </p>
                                 </div>
                             </div>

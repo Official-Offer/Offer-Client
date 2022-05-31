@@ -96,25 +96,18 @@ export const ButtonBackgroundBlueBold = styled.div`
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
-    // background: #011B20;
-    border: 2px solid #058499;
-    border-radius: 10px;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    outline: none;
     transition: 0.25s;
     &:focus {
+        box-shadow: none;
         outline: none;
     }
     &:hover {
-        background: #058499;
-        color: #FFF;
-    }
-    &:disabled {
-        background: #011B20;
-        opacity: 0.6;
+        background-color: #058499;
+        color:#FFF;
+        /* border: none; */
     }
 `;
+
 export const IconsCircle = styled.span `
     width: 45px;
     height: 45px;

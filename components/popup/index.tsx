@@ -1,14 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-
+import request from "@services/apiService";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import axios from "axios";
 import { URL_API_ADMIN } from "@config/dev.config";
 import message from "antd/lib/message";
 
-const PopUp = ({ text }: any) => {
+const PopUp = ({ text, name }: any) => {
+  const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -17,13 +18,15 @@ const PopUp = ({ text }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
+    console.log(e.target.value);
     e.preventDefault();
     const data = {
-      data: {
-        username: e.target.value,
+      "data": {
+        "comment": "a",
+        "user": 1
       },
     };
-    await axios.post(`${URL_API_ADMIN}/api/reviews`, data).then((res) => {
+    await request.post(`/reviews`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
@@ -45,18 +48,19 @@ const PopUp = ({ text }: any) => {
           <Modal.Title>Write Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form
-            className="mb-3"
-            //controlId="exampleForm.ControlTextarea1"
-            onSubmit={onSubmitMessage}
-          >
-            <p>What would you like to share with us?</p>
+          <form className="mb-3" onSubmit={onSubmitMessage}>
+            <p>
+              {replyTo
+                ? `Reply to ${replyTo}`
+                : `What would you like to share with us?`}
+            </p>
             <Form.Control
               as="textarea"
               rows={3}
               placeholder="Message"
               name="message"
             />
+            {/* <textarea name=""></textarea> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>

@@ -45,8 +45,8 @@ export const NavbarHome: FC = () => {
   const listMenu = [
     { name: "NFT Marketplace", link: "#", newTab: false },
     { name: "Farm", link: "#", newTab: false },
-    { name: "Dapp News", link: "#", newTab: false },
-    { name: "Dapp Portal", link: "#", newTab: false },
+    { name: "Dapp News", link: "/dapp-news", newTab: false },
+    { name: "Dapp Portal", link: "/dapp-portal", newTab: false },
     { name: "PriceBoard", link: "#", newTab: false },
     { name: "INO", link: "#", newTab: false },
   ];

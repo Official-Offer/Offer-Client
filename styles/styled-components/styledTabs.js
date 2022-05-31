@@ -17,10 +17,12 @@ export const TabMain = styled.div `
     }
 `;
 export const TabMain_Sub = styled.a `
+    color: #A1A1A1;
     align-items: center;
     border-radius: 6px;
     display: inline-flex;
     font-family: inherit;
+    font-size: 11px;
     -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
@@ -35,34 +37,6 @@ export const TabMain_Sub = styled.a `
     }
 `;
 
-export const SectionHeader = styled.h2`
-    font-weight: bold;
-`
-export const AdDiv = styled.div`
-width: 32px;
-    height: 14px;
-    left: 0px;
-    top: 0px;
-`
-
-export const AdTag = styled.button`
-    /* Button */
-    background: linear-gradient(95.79deg, #642B73 0.9%, #C5426E 99.55%);
-    border-radius: 10px 0px;
-`
-export const AdText = styled.p`
-position: absolute;
-width: 19px;
-height: 14px;
-left: 7px;
-top: 0px;
-
-font-family: 'Nunito';
-font-style: normal;
-font-weight: 700;
-font-size: 10px;
-line-height: 16px;
-`
 export const NavMain = styled.div `
     background-color: transparent;
     border-radius: 8px;
@@ -135,3 +109,31 @@ export const ToggleMain_Sub = styled.a `
         color: #058499;
     }
 `;
+export const SectionHeader = styled.h2`
+    font-weight: bold;
+`
+export const AdDiv = styled.div`
+width: 32px;
+    height: 14px;
+    left: 0px;
+    top: 0px;
+`
+
+export const AdTag = styled.button`
+    /* Button */
+    background: linear-gradient(95.79deg, #642B73 0.9%, #C5426E 99.55%);
+    border-radius: 10px 0px;
+`
+export const AdText = styled.p`
+position: absolute;
+width: 19px;
+height: 14px;
+left: 7px;
+top: 0px;
+
+font-family: 'Nunito';
+font-style: normal;
+font-weight: 700;
+font-size: 10px;
+line-height: 16px;
+`
