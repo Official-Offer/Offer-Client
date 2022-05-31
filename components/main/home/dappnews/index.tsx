@@ -21,7 +21,7 @@ export const DappNews: FC = () => {
   const router = useRouter();
   const [newsList, setNewsList] = useState([]);
   const [crit, setCrit] = useState("viewer");
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<any>([]);
   const [categoryKey, setCategoryKey] = useState("All");
   const [viewMore, setNumberViewMore] = useState(8);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -42,7 +42,7 @@ export const DappNews: FC = () => {
     })();
   }, [categories]);
 
-  if (!categories?.find((cat) => cat.attributes.name === "All")) {
+  if (!categories?.find((cat: any) => cat.attributes.name === "All")) {
     categories?.unshift({ attributes: { name: "All" } });
   }
 
@@ -94,7 +94,7 @@ export const DappNews: FC = () => {
       setNumberViewMore(8);
     }
     let index = categories.findIndex(
-      (cat) => cat.attributes.name === key.target.attributes.value.value
+      (cat: any) => cat.attributes.name === key.target.attributes.value.value
     );
     setActiveIndex(index);
     setCategoryKey(key.target.attributes.value.value);
@@ -104,7 +104,7 @@ export const DappNews: FC = () => {
     if (viewMore > 8) {
       setNumberViewMore(8);
     }
-    let index = categories.findIndex((cat) => cat.attributes.name === key);
+    let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
     setCategoryKey(key);
   };
@@ -119,11 +119,11 @@ export const DappNews: FC = () => {
             style={{ width: "100%" }}
             onSelect={onSelect}
           >
-            {categories.map((cat, i) => {
+            {categories.map((cat: any, i: number) => {
               return (
-                <Option value={cat.attributes.name} key={i}>
+                <Select.Option value={cat.attributes.name} key={i}>
                   {cat.attributes.name}
-                </Option>
+                </Select.Option>
               );
             })}
           </Select>
@@ -132,9 +132,9 @@ export const DappNews: FC = () => {
       <div className="bar-category">
         <div className="block-for-pc">
           <NavMain className="bar-category-left">
-            {categories?.map((cat, i) => {
+            {categories?.map((cat: any, i: number) => {
               return (
-                <span className="d-inline-flex position-relative">
+                <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
                     onClick={onChangeTab}
                     value={cat.attributes.name}
