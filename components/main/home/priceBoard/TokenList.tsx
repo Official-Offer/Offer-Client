@@ -168,7 +168,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                         $
                         {!token.current_price
                           ? 0
-                          : numberSeperator(token.current_price)}
+                          : numberSeperator.format(token.current_price)}
                       </p>
                     </div>
                   </td>
@@ -214,7 +214,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                         $
                         {!token.total_volume
                           ? 0
-                          : numberSeperator(token.total_volume)}
+                          : numberSeperator.format(token.total_volume)}
                       </p>
                     </div>
                   </td>
@@ -224,7 +224,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                         $
                         {!token.market_cap
                           ? 0
-                          : numberSeperator(token.market_cap)}
+                          : numberSeperator.format(token.market_cap)}
                       </p>
                     </div>
                   </td>
@@ -310,21 +310,21 @@ export default function TokenList({ data, setSort, sort }: any) {
                           $
                           {!token.current_price
                             ? 0
-                            : numberSeperator(token.current_price)}
+                            : formatter.format(token.current_price)}
                         </p>
                       ) : valueSelected === "volume" ? (
                         <p className="main-homepage-tokenranking-table text-end">
                           $
                           {!token.total_volume
                             ? 0
-                            : numberSeperator(token.total_volume)}
+                            : formatter.format(token.total_volume)}
                         </p>
                       ) : valueSelected === "market_cap" ? (
                         <p className="main-homepage-tokenranking-table text-end">
                           $
                           {!token.market_cap
                             ? 0
-                            : numberSeperator(token.market_cap)}
+                            : formatter.format(token.market_cap)}
                         </p>
                       ) : valueSelected === "1h" ? (
                         <>
