@@ -16,6 +16,7 @@ module.exports = {
     URL_API_ADMIN: 'https://dev-api-admin.tokenplay.app/api',
     URL_API_DAPPVERSE: 'https://dev-api-dappverse.tokenplay.app',
     TOKEN_BEARER: 'bfc2d4872da46ae420bf3f8b68ac1b445ffa9666e05cc00b3131f0523b786f63bbb72a48f8b344e020e29d1da6e23fae394143f949b435d8b84b5fead975c414d12e078ba8e73e114fd9ab8336d7a0bf7532a0ef1de597efcdb233a459cd1d52f5fb7cf441c8e479c5efba6a693fcec776173e96e5303363a03a8888fd4013e8',
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: 'GTM-M9PFF9K',
     // URL_API_ADMIN: 'https://dev-api-dappverse.tokenplay.app/coins/markets?vs_currency=usd&price_change_percentage=1h,24h,7d&per_page=10&page=1&order=market_cap_desc',
     facebook: "https://dev-api-nft.tokenplay.app/api/login/facebook?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%dev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",
     google: "https://dev-api-nft.tokenplay.app/api/login/google?redirectFalse=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%2Fdev-nft.tokenplay.app%2F%3Flogin%3Dsuccess",

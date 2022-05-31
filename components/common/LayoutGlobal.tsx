@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from 'react'
 import { BoxALignCenter_Justify_ItemsCenter, BoxALignCenter_Justify_ItemsEnd, BoxALignCenter_Justify_ItemsStart, BoxALignItemsCenter } from '@styles/styled-components/styledBox'
 import { BannerLeft, BannerRight } from '@components/banner'
+import { NEXT_PUBLIC_GOOGLE_ANALYTICS } from '@config/index'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import request from '@services/apiService'
@@ -32,6 +33,22 @@ export default function LayoutGlobal(props: any): ReactElement {
             <Head>
                 <title>Tokenplay</title>
                 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+                <script
+                    async
+                    src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+                        page_path: window.location.pathname,
+                        });
+                    `,
+                    }}
+                />
             </Head>
             <NavbarHome />
             <div className="row-global pb-5 m-0 h-100">
