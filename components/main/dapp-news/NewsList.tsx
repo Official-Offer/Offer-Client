@@ -16,13 +16,12 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
               onClick={() => {
                 router.push(
                   {
-                    pathname: `/NewsDetails`,
+                    pathname: `/dapp-news/${blog.id}`,
                     query: {
                       id: blog.id,
                       category: blog.attributes.category.data.attributes.name,
                     },
-                  },
-                  `/`
+                  }
                 );
               }}
             >

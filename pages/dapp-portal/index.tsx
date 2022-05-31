@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import { TitleGlobal } from '@components/common/Title';
-import type { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-
-const DappPortal: NextPage = () => {
-  const TabsChain = dynamic(() => import("@components/main/dapp-portal/TabsChain"));
-  const TabsCategory = dynamic(() => import("@components/main/dapp-portal/TabsCategory"));
-  const TableDapp = dynamic(() => import("@components/main/dapp-portal/TableDapp"));
-=======
 import { TitleGlobal } from "@components/common/Title";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
@@ -67,7 +57,6 @@ const DappPortal: NextPage = () => {
       setTokenList(display);
     })();
   }, [chain, viewMore, sort]);
->>>>>>> origin/dev
 
   return (
     <>
@@ -77,17 +66,6 @@ const DappPortal: NextPage = () => {
           <h1 className="mb-0">Dapp Portal</h1>
         </TitleGlobal>
         <br />
-<<<<<<< HEAD
-        <TabsChain />
-        <br />
-        <TabsCategory />
-        <br />
-        <TableDapp />
-      </section>
-    </>
-  )
-}
-=======
         <TabsChain setChain={setChain} chain={chain}/>
         <br />
         <TabsCategory/>
@@ -97,6 +75,5 @@ const DappPortal: NextPage = () => {
     </>
   );
 };
->>>>>>> origin/dev
 
 export default DappPortal;
