@@ -17,29 +17,32 @@ export default function TokenList({ data, setSort, sort }: any) {
   const [valueSelected, setValueSelected] = useState(sort[0]);
   // console.log(data);
   const theadList = [
-    { tag: "number", name: "#", sort: false, query: "" },
-    { tag: "token", name: "Token Name", sort: false, query: "" },
-    { tag: "price", name: "Price", sort: false, query: "current_price" },
+    { tag: "number", name: "#", sort: false, query: "", styles: 'justify-content-center' },
+    { tag: "token", name: "Token Name", sort: false, query: "", styles: 'justify-content-start' },
+    { tag: "price", name: "Price", sort: false, query: "current_price", styles: 'justify-content-end' },
     {
       tag: "oneh",
       name: "1h",
       sort: false,
       query: "price_change_percentage_1h_in_currency",
+      styles: 'justify-content-end'
     },
     {
       tag: "twentyfourh",
       name: "24h",
       sort: false,
       query: "price_change_percentage_24h_in_currency",
+      styles: 'justify-content-end'
     },
     {
       tag: "sevend",
       name: "7d",
       sort: false,
       query: "price_change_percentage_7d_in_currency",
+      styles: 'justify-content-end'
     },
-    { tag: "24hVol", name: "24h Volume", sort: true, query: "volume" },
-    { tag: "mktCap", name: "Market Cap", sort: true, query: "market_cap" },
+    { tag: "24hVol", name: "24h Volume", sort: true, query: "volume", styles: 'justify-content-end' },
+    { tag: "mktCap", name: "Market Cap", sort: true, query: "market_cap", styles: 'justify-content-end' },
   ];
 
   const listTitleHeaderMobile = [
@@ -90,10 +93,8 @@ export default function TokenList({ data, setSort, sort }: any) {
                     className={`main-homepage-tokenranking-table-${thead.tag}`}
                     key={i}
                   >
-                    <BoxALignCenter_Justify_ItemsCenter
-                      className={`${thead.sort && "justify-content-end"} ${
-                        thead.tag
-                      }`}
+                    <BoxALignItemsCenter
+                      className={`${thead.styles}`}
                     >
                       <span>{thead.name}</span>
                       {thead.sort && (
@@ -118,7 +119,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                           </div>
                         </div>
                       )}
-                    </BoxALignCenter_Justify_ItemsCenter>
+                    </BoxALignItemsCenter>
                   </th>
                 );
               })}
