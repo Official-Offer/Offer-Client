@@ -28,7 +28,7 @@ import {
   import styled from "styled-components";
   
   const NewsDetails: NextPage = () => {
-    const [news, setNews] = useState([]);
+    const [news, setNews] = useState<any>([]);
     const [comments, setComments] = useState([]);
     const [relatedNews, setRelatedNews] = useState([]);
     const [content, setContent] = useState("");
@@ -161,9 +161,9 @@ import {
             <div className="news-details-right col-lg-3 col-12 mt-lg-5">
               <h3 className="mb-3">Tags</h3>
               <div className="row">
-                {news[0]?.attributes.tags.data.map((tag: any, i: any) => {
+                {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
                   return (
-                    <BoxWhiteShadow className="news-details-right-tag">
+                    <BoxWhiteShadow className="news-details-right-tag" key={i}>
                       {tag.attributes.name}
                     </BoxWhiteShadow>
                   );
@@ -180,9 +180,9 @@ import {
               <div className="news-details-right-topic">
                 <h3 className="mb-3">Related News</h3>
                 <div className="row">
-                  {relatedNews.map((news, i) => {
+                  {relatedNews.map((news: any, i: number) => {
                     return (
-                      <div className="col-lg-12 col-12 px-3">
+                      <div className="col-lg-12 col-12 px-3" key={i}>
                         <div
                           onClick={() => {
                             router.push(
@@ -250,7 +250,7 @@ import {
                 </ButtonBlue>
               </BoxALignCenter_Justify_ItemsBetween>
               <BoxWhiteShadow className="p-4 news-details-comment">
-                {news[0]?.attributes.reviews.data.map((cmt, i) => {
+                {news[0]?.attributes.reviews.data.map((cmt: any, i: number) => {
                   return (
                     <div className="news-details-comment-box" key={i}>
                       <BoxALignCenter_Justify_ItemsBetween className="mb-4">
