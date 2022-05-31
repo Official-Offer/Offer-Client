@@ -9,6 +9,17 @@ export const Button = styled.button `
         outline: none;
     }
 `;
+
+export const LoadMore = styled.button `
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 2px solid #058499;
+    -webkit-box-pack: center;
+    padding: 8px 15px;
+    background-color: transparent;
+    
+`
 export const ButtonGradientBlue = styled.button `
     background-image: linear-gradient(to right, #058499 0%, #12d8fa 51%, #058499 100%);
     padding: 10px 25px;
@@ -74,29 +85,36 @@ export const ButtonBlue = styled.button `
 `;
 export const ButtonBackgroundBlueBold = styled.div`
     background-color: #FCFCFD;
-    padding: .375rem .75rem;
-    border: 1px solid #058499;
-    color: #058499;
-    outline: none;
-    border-radius: 10px;
+    // padding: .375rem .75rem;
+    // border: 1px solid #058499;
+    // color: #058499;
+    // outline: none;
+    // border-radius: 10px;
     display: inline-block;
     font-weight: bold;
     line-height: 1.5;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
+    // background: #011B20;
+    border: 2px solid #058499;
+    border-radius: 10px;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    outline: none;
     transition: 0.25s;
     &:focus {
-        box-shadow: none;
         outline: none;
     }
     &:hover {
-        background-color: #058499;
-        color:#FFF;
-        /* border: none; */
+        background: #058499;
+        color: #FFF;
+    }
+    &:disabled {
+        background: #011B20;
+        opacity: 0.6;
     }
 `;
-
 export const IconsCircle = styled.span `
     width: 45px;
     height: 45px;

@@ -27,19 +27,12 @@ export class CurrencyAmountAdapter {
     switchCurrencyAmount() {
         switch (this.chain_id) {
             default:
-                // this.currency_amount = "BNB";
-                // this.top_currency_amount = "TOP";
-                // this.top_logo_currency_amount = "/img/logo.png";
-                // this.logo_currency_amount = "/img/coin/binance-coin.png";
-                // this.networkName = "BSC";
-                // this.networkFullName = "Binance Smart Chain";
-                // this.scan_site = BSC_SCAN;
-                this.currency_amount = "HERA";
+                this.currency_amount = "BNB";
                 this.top_currency_amount = "TOP";
                 this.top_logo_currency_amount = "/img/logo.png";
-                this.logo_currency_amount = "/img/coin/hera.png";
-                this.networkName = "HERA";
-                this.networkFullName = "Hero Arena Coin";
+                this.logo_currency_amount = "/img/coin/binance-coin.png";
+                this.networkName = "BSC";
+                this.networkFullName = "Binance Smart Chain";
                 this.scan_site = BSC_SCAN;
                 break;
         }

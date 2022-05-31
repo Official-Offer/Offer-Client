@@ -69,14 +69,17 @@ export const BoxBlueBold = styled.div `
 `;
 export const BoxWhiteShadow = styled.div `
   border-radius: 10px;
-  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
+  // box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
+  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.75);
   background-color: #FFF;
 `;
 export const BoxWhiteShadowItem = styled.div `
   border-radius: 20px;
   background-color: #FFF;
-  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20); 
-  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20);
+  // -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20); 
+  // box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20);
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75); 
+  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75);
 `;
 
 // Box NFT Items
@@ -133,24 +136,24 @@ export const CategoryBox = styled.div`
   color: white;
   background: #058499;
   display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 6px 8px;
-gap: 12px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 12px;
 
-width: 69px;
-height: 28px;
+  width: 69px;
+  height: 28px;
 
-/* Button */
+  /* Button */
 
-background: #058499;
-box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
-border-radius: 4px;
+  background: #058499;
+  box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+  border-radius: 4px;
 
-/* Inside auto layout */
+  /* Inside auto layout */
 
-flex: none;
-order: 0;
-flex-grow: 0;
-`
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
