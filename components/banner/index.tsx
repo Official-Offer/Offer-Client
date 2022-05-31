@@ -33,7 +33,7 @@ export function BannerMain({ img }: any): ReactElement {
           className="mw-100"
           src={`${URL_API_IMG}${img?.adsbanner?.data.attributes.url}`}
           alt=""
-        //   onClick={() => window.open(img.URL)}
+          onClick={() => window.open(img.URL)}
         />
       </BoxALignCenter_Justify_ItemsCenter>
     </section>
