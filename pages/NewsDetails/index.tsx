@@ -9,7 +9,6 @@ import {
   BoxALignItemsCenter,
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
-// import { MarkDown } from "@styles/styled-components/markDown";
 import {
   Button,
   ButtonBorderBlueTransparent,
@@ -27,7 +26,6 @@ import moment from "moment";
 import PopUp from "@components/popup";
 import markdownToHtml from "@utils/markDownToHtml";
 import ReactMarkdown from "react-markdown";
-// import MarkdownIt from "markdown-it";
 import styled from "styled-components";
 
 const NewsDetails: NextPage = () => {
@@ -82,34 +80,36 @@ const NewsDetails: NextPage = () => {
       });
     })();
   }, [news]);
+  console.log(news);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const query = qs.stringify(
+  //       {
+  //         populate: "*",
+  //         filters: {
+  //           id: {
+  //             $eq: news[0].attributes.review.data.
+  //           },
+  //         },
+  //       },
+  //       {
+  //         encodeValuesOnly: true,
+  //       }
+  //     );
+  //     await request.get(`/reviews?${query}`).then((res) => {
+  //       setComments(res.data.data);
+  //     });
+  //   })();
+  // }, [news]);
+  // console.log(news);
 
   // useEffect(() => {
   //   markdownToHtml(news[0]?.attributes.content || "").then((res) => {
   //     setContent(res);
   //   });
   // }, [news]);
-
-  useEffect(() => {
-    (async () => {
-      const query = qs.stringify(
-        {
-          populate: "*",
-          filters: {
-            id: {
-              $eq: router.query.id,
-            },
-          },
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      await request.get(`/reviews?${query}`).then((res) => {
-        setComments(res);
-      });
-    })();
-  }, [news]);
-
+  // setComments(news[0].attributes.reviews.data)
   console.log(comments);
 
   const MarkDown = styled<any>(ReactMarkdown)`
@@ -165,14 +165,12 @@ const NewsDetails: NextPage = () => {
     .split("(/uploads/")
     .splice(0, keyWord.length)
     .join(`(${URL_API_ADMIN}/uploads/`);
-  console.log(modifiedContent);
 
   return (
     <div>
       <section className="news-details">
         <div className="empty_space_height50" />
         <div className="row m-0 p-0">
-          {/* <div className="empty_space_height50" /> */}
           <div className="news-details-left col-lg-9 col-12 mt-lg-5 mt-2">
             <div className="news-details-dashboard">
               <BoxALignItemsCenter>
@@ -277,7 +275,7 @@ const NewsDetails: NextPage = () => {
               </ButtonBlue>
             </BoxALignCenter_Justify_ItemsBetween>
             <BoxWhiteShadow className="p-4 news-details-comment">
-              {[0, 1, 2, 3].map((comment, i) => {
+              {news[0]?.attributes.reviews.data.map((cmt, i) => {
                 return (
                   <div className="news-details-comment-box" key={i}>
                     <BoxALignCenter_Justify_ItemsBetween className="mb-4">
@@ -287,21 +285,21 @@ const NewsDetails: NextPage = () => {
                           icon={<UserOutlined />}
                         />
                         <span className="news-details-comment-box-name">
-                          Joseph Reyes
+                          {cmt.attributes.comment}
                         </span>
                       </BoxALignItemsCenter>
                       <span className="news-details-comment-box-time">
-                        Mar 17 , 2021
+                       {moment(cmt.attributes.createdAt).format("LL")}
                       </span>
                     </BoxALignCenter_Justify_ItemsBetween>
                     <p className="news-details-comment-box-description">
-                      {`Don't buy into this scam, I've only lost $100 thankfully. Withdraw button doesn't work. Consider yourself warned.`}
+                    {cmt.attributes.comment}
                     </p>
                     <div>
                       <Button>
                         <BoxALignItemsCenter>
                           <MessageSquare color="#1DBBBD" />
-                          <PopUp text="Reply" className="ms-2 text-green">
+                          <PopUp text="Reply" name = {cmt.attributes.comment} className="ms-2 text-green">
                             Reply
                           </PopUp>
                         </BoxALignItemsCenter>
@@ -316,9 +314,6 @@ const NewsDetails: NextPage = () => {
               </ButtonBorderBlueTransparent>
               <br />
               <br />
-              <div>
-                <Button className="text-green">Rating and Reviews</Button>
-              </div>
             </BoxWhiteShadow>
           </div>
         </div>
