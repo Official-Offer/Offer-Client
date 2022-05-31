@@ -32,7 +32,7 @@ const DappNews: FC = () => {
         setCategories(res.data.data);
       });
     })();
-  }, [categories]);
+  }, []);
 
   if (!categories?.find((cat: any) => cat.attributes.name === "All")) {
     categories?.unshift({ attributes: { name: "All" } });
@@ -86,10 +86,10 @@ const DappNews: FC = () => {
       setNumberViewMore(8);
     }
     let index = categories.findIndex(
-      (cat: any) => cat.attributes.name === key.target.attributes.value.value
+      (cat: any) => cat.attributes.name === key
     );
     setActiveIndex(index);
-    setCategoryKey(key.target.attributes.value.value);
+    setCategoryKey(key);
   };
 
   const onSelect = (key: any) => {
@@ -128,7 +128,7 @@ const DappNews: FC = () => {
               return (
                 <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
-                    onClick={onChangeTab}
+                    onClick={() => onChangeTab(cat.attributes.name)}
                     className={`fontSize_08 ${
                       activeIndex === i ? "active" : ""
                     }`}
