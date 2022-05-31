@@ -21,10 +21,9 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
-import { URL_API_ADMIN } from "@config/dev.config";
+import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
 import moment from "moment";
 import PopUp from "@components/popup";
-// import markdownToHtml from "@utils/markDownToHtml";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
@@ -203,7 +202,7 @@ const NewsDetails: NextPage = () => {
                         <a target="_blank" rel="noopener noreferrer">
                           <img
                             className="mw-100 news-details-right-topic-img"
-                            src={`${URL_API_ADMIN}${news.attributes.thumbnail.data.attributes.url}`}
+                            src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
                           />
                           <p className="name">{news.attributes.title}</p>
                           <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(

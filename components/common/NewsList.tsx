@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { URL_API_ADMIN } from "@config/index";
+import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import moment from "moment";
 import router from "next/router";
 import { CalendarOutlined, EyeOutlined } from "@ant-design/icons";
@@ -31,7 +31,7 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
                   <div className="main-homepage-dappnews-card-header">
                     <img
                       className="main-homepage-blog-card-header-img"
-                      src={`${URL_API_ADMIN}${blog.attributes.thumbnail.data.attributes.url}`}
+                      src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
                     />
                   </div>
                   <div className="main-homepage-dappnews-card-body">
