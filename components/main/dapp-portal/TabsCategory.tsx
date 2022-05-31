@@ -32,7 +32,6 @@ export default function TabsCategory(): ReactElement {
                             <button
                                 className="tab-bar-category-left-item"
                                 key={i}
-                                
                             >
                                 {i != 0 && <div className="divider" />}
                                 <div

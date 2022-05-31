@@ -2,7 +2,10 @@ import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 
 const Home: NextPage = () => {
+<<<<<<< HEAD
   const DappNews = dynamic(() => import("@components/main/home").then((mod: any) => mod.DappNews));
+=======
+>>>>>>> origin/dev
   const News = dynamic(() => import("@components/main/home").then((mod: any) => mod.News));
   const Statistical = dynamic(() => import("@components/main/home").then((mod: any) => mod.Statistical));
   const PriceBoard = dynamic(() => import("@components/main/home").then((mod: any) => mod.PriceBoard));
@@ -14,7 +17,10 @@ const Home: NextPage = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <DappNews />
+=======
+>>>>>>> origin/dev
       <News />
       <Statistical />
       <PriceBoard />

@@ -72,6 +72,8 @@ export const ButtonBlue = styled.button `
     text-decoration: none;
     vertical-align: middle;
     transition: 0.25s;
+    min-width: 120px;
+    font-size: 16px;
     &:focus {
         box-shadow: none;
         outline: none;
@@ -81,31 +83,31 @@ export const ButtonBlue = styled.button `
         border: none;
     }
 `;
-export const ButtonBackgroundBlueBold = styled.button `
-    color: #FFF;
+export const ButtonBackgroundBlueBold = styled.div`
+    background-color: #FCFCFD;
+    padding: .375rem .75rem;
+    border: 1px solid #058499;
+    color: #058499;
+    outline: none;
+    border-radius: 10px;
     display: inline-block;
+    font-weight: bold;
     line-height: 1.5;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
-    background: #011B20;
-    border: 2px solid #058499;
-    border-radius: 10px;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    outline: none;
     transition: 0.25s;
     &:focus {
+        box-shadow: none;
         outline: none;
     }
     &:hover {
-        background: #058499;
-    }
-    &:disabled {
-        background: #011B20;
-        opacity: 0.6;
+        background-color: #058499;
+        color:#FFF;
+        /* border: none; */
     }
 `;
+
 export const IconsCircle = styled.span `
     width: 45px;
     height: 45px;

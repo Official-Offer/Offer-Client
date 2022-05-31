@@ -9,7 +9,11 @@ import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
+<<<<<<< HEAD
 const BlockchainDetails: NextPage = (props) => {
+=======
+const BlockchainDetails: NextPage = () => {
+>>>>>>> origin/dev
     const router = useRouter();
     const AppStatistical = dynamic(() => import("@components/main/app").then((mod: any) => mod.AppStatistical));
     const SplineChart = dynamic(() => import("@components/main/app").then((mod: any) => mod.SplineChart));

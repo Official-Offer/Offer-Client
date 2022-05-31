@@ -24,7 +24,7 @@ import request from "@services/apiService";
 import { URL_API_ADMIN } from "@config/dev.config";
 import moment from "moment";
 import PopUp from "@components/popup";
-import markdownToHtml from "@utils/markDownToHtml";
+// import markdownToHtml from "@utils/markDownToHtml";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 
@@ -81,28 +81,6 @@ const NewsDetails: NextPage = () => {
     })();
   }, [news]);
   console.log(news);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const query = qs.stringify(
-  //       {
-  //         populate: "*",
-  //         filters: {
-  //           id: {
-  //             $eq: news[0].attributes.review.data.
-  //           },
-  //         },
-  //       },
-  //       {
-  //         encodeValuesOnly: true,
-  //       }
-  //     );
-  //     await request.get(`/reviews?${query}`).then((res) => {
-  //       setComments(res.data.data);
-  //     });
-  //   })();
-  // }, [news]);
-  // console.log(news);
 
   // useEffect(() => {
   //   markdownToHtml(news[0]?.attributes.content || "").then((res) => {

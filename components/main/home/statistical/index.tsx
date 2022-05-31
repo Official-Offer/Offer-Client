@@ -19,65 +19,64 @@ export const Statistical: FC = () => {
     useEffect(() => {
         (async () => {
             const userQuery = qs.stringify({
-                populate: '*',
+                populate: `%2A`,
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['dailyUser:desc']
+                sort: [`dailyUserDiff%3Adesc`]
             }, {
                 encodeValuesOnly: true,
+                encode:false,
             });
             const volumeQuery = qs.stringify({
-                populate: '*',
+                populate: '%2A',
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['dailyVolume:desc']
+                sort: ['dailyVolumeDiff%3Adesc']
             }, {
                 encodeValuesOnly: true,
+                encode: false,
             });
             const socialSignalQuery = qs.stringify({
-                populate: '*',
+                populate: '%2A',
                 pagination: {
                     page: 1,
                     pageSize: 3,
                 },
-                sort: ['socialSignal:desc']
+                sort: ['socialSignalDiff%3Adesc']
             }, {
                 encodeValuesOnly: true,
+                encode: false,
             });
             let newArr = [...statisticalList];
             await request.get(`/dapps?${userQuery}`).then((res) => {
-                //console.log(res)
                 let newObj = { ...newArr[0] };
                 newObj.dapp = res.data.data;
                 newArr[0] = newObj;
             });
             await request.get(`/dapps?${volumeQuery}`).then((res) => {
-                //console.log(res)
                 let newObj = { ...newArr[1] };
                 newObj.dapp = res.data.data;
                 newArr[1] = newObj;
             });
             await request.get(`/dapps?${socialSignalQuery}`).then((res) => {
-                //console.log(res)
                 let newObj = { ...newArr[2] };
                 newObj.dapp = res.data.data;
                 newArr[2] = newObj;
             });
             await setStatisticalList(newArr);
-            // console.log(newArr)
         })();
     }, []);
 
     return (
         <section className="main-homepage-statistical">
-            <div className="row">
+            <div className="d-flex justify-content-center flex-wrap">
                 {statisticalList && statisticalList.map((statistical, i) => {
                     return (
-                        <div className="col-lg-4 col-12 my-lg-0 my-4 px-lg-5 px-2" key={i}>
+                        <div className="main-homepage-statistical-box px-lg-4 px-md-2 px-2" key={i}>
                             <UserStats data={statistical} />
                         </div>
                     )

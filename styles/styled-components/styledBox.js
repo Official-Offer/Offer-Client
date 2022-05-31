@@ -15,6 +15,13 @@ export const BoxALignItemsCenter = styled.div `
   display: flex;
   align-items: center;
 `;
+export const BoxALignItemsCenterNFTItems = styled.div `
+  /* display: flex; */
+  align-items: center;
+  padding-top: 2px !important;
+  padding-left: 6px !important;
+  padding-right: 9.5px!important;
+`;
 export const BoxAlignItemsStart_FlexColumn = styled.div `
   display: flex;
   align-items: start;
@@ -62,14 +69,14 @@ export const BoxBlueBold = styled.div `
 `;
 export const BoxWhiteShadow = styled.div `
   border-radius: 10px;
-  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.75);
+  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;
 export const BoxWhiteShadowItem = styled.div `
   border-radius: 20px;
   background-color: #FFF;
-  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75); 
-  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20); 
+  box-shadow: 0px 0px 15px -5px rgba(0,0,0,0.20);
 `;
 
 // Box NFT Items
@@ -115,8 +122,35 @@ export const BoxRelativeImage_3 = styled(RenderedSizeImage)`
     width: auto !important;
     height: auto !important;
     border-radius: 6px !important;
-    max-width: 50% !important;
+    max-width: 100% !important;
     max-height: 100% !important;
     transition: opacity 400ms ease 0s;
   }
 `;
+
+export const CategoryBox = styled.div`
+  text-align: center;
+  color: white;
+  background: #058499;
+  display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 8px;
+gap: 12px;
+
+width: 69px;
+height: 28px;
+
+/* Button */
+
+background: #058499;
+box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+border-radius: 4px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+`

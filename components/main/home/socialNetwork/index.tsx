@@ -4,6 +4,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import { URL_API_ADMIN } from '@config/index';
 import Link from 'next/link';
+import { SectionHeader } from '@styles/styled-components/styledTabs';
 
 export const SocialNetwork: FC = () => {
 
@@ -23,7 +24,7 @@ export const SocialNetwork: FC = () => {
                     description: e.target[2].value,
                 },
             };
-            await axios.post(`${URL_API_ADMIN}/api/contacts`, data).then((res) => {
+            await axios.post(`${URL_API_ADMIN}/contacts`, data).then((res) => {
                 if (res.status == 200) {
                     message.success('Send message success');
                     e.target.reset();
@@ -36,10 +37,10 @@ export const SocialNetwork: FC = () => {
 
     return (
         <section className="main-homepage-socialnetwork px-lg-3 px-0">
-            <h2>Join With Us</h2>
+            <SectionHeader>Contact Us</SectionHeader>
             <div className="row align-items-center">
                 <div className="col-lg-6 col-12">
-                    <div className="row">
+                    {/* <div className="row">
                         {appList.map((app, i) => {
                             return (
                                 <div className="col-lg-6 col-12 my-4" key={i}>
@@ -63,7 +64,8 @@ export const SocialNetwork: FC = () => {
                                 </div>
                             );
                         })}
-                    </div>
+                    </div> */}
+                    <img src="img/draw/joinwithus.png" alt="block" className='row main-homepage-socialnetwork-block'/>    
                 </div>
                 <div className="col-lg-6 col-12">
                     <h4>Leave A Message</h4>
