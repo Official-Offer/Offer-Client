@@ -79,3 +79,47 @@ export const ProfileSetting = styled.div`
     border-radius: 8px;
 `
 
+export const ProfileTitle = styled.div`
+    height: 44px;
+
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 44px;
+    display: flex;
+    align-items: center;
+
+    /* cl-text */
+
+    color: #223052;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+`
+
+export const FormWrapper = styled.div`
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 30px 25px;
+gap: 50px;
+
+width: 1010px;
+height: 1531px;
+
+background: #FFFFFF;
+box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.25);
+border-radius: 16px;
+
+/* Inside auto layout */
+
+flex: none;
+order: 2;
+flex-grow: 0;
+`
