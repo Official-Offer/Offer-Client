@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonBlue } from './styledButton';
 
 export const ContentWrapper = styled.div`
     padding: 100px 25px;
@@ -11,8 +12,7 @@ export const AvatarWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 50px 15px;
-    gap: 30px;
-    width: 346px;
+    gap: 25px;
     height: auto;
     background: #FCFCFD;
     box-shadow: 0px 0px 60px rgba(34, 48, 82, 0.25);
@@ -20,6 +20,10 @@ export const AvatarWrapper = styled.div`
     flex: none;
     /* order: 0; */
     flex-grow: 0;
+    margin-bottom: 25px;
+    @media screen and (max-width:992px){
+        width: 100%;
+    }
 `
 
 export const AvatarImg = styled.img`
@@ -100,26 +104,62 @@ export const ProfileTitle = styled.div`
     flex: none;
     order: 0;
     flex-grow: 0;
+    margin-bottom: 40px;;
 `
 
 export const FormWrapper = styled.div`
     display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-padding: 30px 25px;
-gap: 50px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 25px;
+    gap: 32px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+`
 
-width: 1010px;
-height: 1531px;
+export const FormDescription = styled.p`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: rgba(34, 48, 82, 0.65);
+    margin-bottom: 40px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+`
 
-background: #FFFFFF;
-box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.25);
-border-radius: 16px;
+export const FormAvatarContainer = styled.div`
+    padding: 0;
+`
 
-/* Inside auto layout */
+export const FormTitle =styled.p`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 24px;
+    margin-bottom: 0px;
+`
 
-flex: none;
-order: 2;
-flex-grow: 0;
+export const FormAvatarImg = styled(AvatarImg)`
+    width:140px;
+`
+
+export const UploadPhoto = styled(ButtonBlue)`
+    margin-left: 40px;
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 11px 20px
 `
