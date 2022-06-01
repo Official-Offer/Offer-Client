@@ -151,7 +151,7 @@ const NewsDetails: NextPage = () => {
   const modifiedContent = news[0]?.attributes.content
     .split("(/uploads/")
     .splice(0, keyWord.length)
-    .join(`(${URL_API_ADMIN}/uploads/`);
+    .join(`(${URL_API_IMG}/uploads/`);
 
   return (
     <div>
