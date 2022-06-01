@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 
 const Home: NextPage = () => {
-  //const DappNews = dynamic(() => import("@components/main/home").then((mod: any) => mod.DappNews));
   const News = dynamic(() => import("@components/main/home").then((mod: any) => mod.News));
   const Statistical = dynamic(() => import("@components/main/home").then((mod: any) => mod.Statistical));
   const PriceBoard = dynamic(() => import("@components/main/home").then((mod: any) => mod.PriceBoard));
@@ -14,7 +13,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {/* <DappNews /> */}
       <News />
       <Statistical />
       <PriceBoard />
