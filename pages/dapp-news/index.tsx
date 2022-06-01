@@ -15,7 +15,7 @@ const DappNews: FC = () => {
   const [crit, setCrit] = useState("viewer");
   const [categories, setCategories] = useState<any>([]);
   const [categoryKey, setCategoryKey] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(8);
+  const [viewMore, setNumberViewMore] = useState(20);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -82,8 +82,8 @@ const DappNews: FC = () => {
   }, [categoryKey, viewMore, crit]);
 
   const onChangeTab = (key: any) => {
-    if (viewMore > 8) {
-      setNumberViewMore(8);
+    if (viewMore > 20) {
+      setNumberViewMore(20);
     }
     let index = categories.findIndex(
       (cat: any) => cat.attributes.name === key
@@ -93,8 +93,8 @@ const DappNews: FC = () => {
   };
 
   const onSelect = (key: any) => {
-    if (viewMore > 8) {
-      setNumberViewMore(8);
+    if (viewMore > 20) {
+      setNumberViewMore(20);
     }
     let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
@@ -172,7 +172,7 @@ const DappNews: FC = () => {
           <LoadMore
             className="text-green fw-bold fontSize_1-1"
             onClick={() => {
-              setNumberViewMore(viewMore + 4);
+              setNumberViewMore(viewMore + 20);
             }}
           >
             Load more

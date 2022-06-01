@@ -10,6 +10,10 @@
         }
         // flex-direction: row;
     }
+    &-createdAt{
+        color: gray;
+        font-size: 14px;
+    }
     .status-label {
         margin-left: 12px;
         padding: 1px 12px;
@@ -81,8 +85,13 @@
         margin-top: 20px;
     }
     &-social {
+        display: flex;
+        //justify-content: space-between;
         &-facebook,
         &-twitter,
+        &-heart {
+            margin-left: "30vw"
+        }
         &-youtube {
             height: auto;
             border-radius: 10px;
@@ -186,6 +195,9 @@
         }
     }
     &-right {
+        &-banner {
+            height: 80px;
+        }
         &-tag {
             border: 2px solid #058499;
             font-size: 0.9rem;
