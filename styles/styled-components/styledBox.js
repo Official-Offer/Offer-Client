@@ -127,3 +127,30 @@ export const BoxRelativeImage_3 = styled(RenderedSizeImage)`
     transition: opacity 400ms ease 0s;
   }
 `;
+
+export const CategoryBox = styled.div`
+  text-align: center;
+  color: white;
+  background: #058499;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 12px;
+
+  width: 69px;
+  height: 28px;
+
+  /* Button */
+
+  background: #058499;
+  box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+  border-radius: 4px;
+
+  /* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+`

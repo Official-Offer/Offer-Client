@@ -5,5 +5,5 @@
 //     //we are in dev-return dev key!
 //     module.exports = require('./dev.config');
 // }
-// module.exports = require('./dev.config');
-module.exports = require('./prod.config');
+module.exports = require('./dev.config');
+// module.exports = require('./prod.config');

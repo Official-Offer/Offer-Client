@@ -17,40 +17,48 @@ export default function TokenList({ data, setSort, sort }: any) {
   const [valueSelected, setValueSelected] = useState(sort[0]);
   // console.log(data);
   const theadList = [
-    { tag: "number", name: "#", sort: false, query: "" },
-    { tag: "token", name: "Token Name", sort: false, query: "" },
-    { tag: "price", name: "Price", sort: false, query: "current_price" },
+    { tag: "number", name: "#", sort: false, query: "", styles: 'justify-content-center' },
+    { tag: "token", name: "Token Name", sort: false, query: "", styles: 'justify-content-start' },
+    { tag: "price", name: "Price", sort: false, query: "current_price", styles: 'justify-content-end' },
     {
       tag: "oneh",
       name: "1h",
       sort: false,
       query: "price_change_percentage_1h_in_currency",
+      styles: 'justify-content-end'
     },
     {
       tag: "twentyfourh",
       name: "24h",
       sort: false,
       query: "price_change_percentage_24h_in_currency",
+      styles: 'justify-content-end'
     },
     {
       tag: "sevend",
       name: "7d",
       sort: false,
       query: "price_change_percentage_7d_in_currency",
+      styles: 'justify-content-end'
     },
-    { tag: "24hVol", name: "24h Volume", sort: true, query: "volume" },
-    { tag: "mktCap", name: "Market Cap", sort: true, query: "market_cap" },
+    { tag: "24hVol", name: "24h Volume", sort: true, query: "volume", styles: 'justify-content-end' },
+    { tag: "mktCap", name: "Market Cap", sort: true, query: "market_cap", styles: 'justify-content-end' },
   ];
 
   const listTitleHeaderMobile = [
-    { title: "Price", sort: true, query: "current_price" },
+    { title: "Price", sort: false, query: "current_price" },
+    { title: "24h Volume", sort: true, query: "volume" },
+    { title: "Market Cap", sort: true, query: "market_cap" },
+    { title: "1h", sort: false, query: "1h" },
+    { title: "24h", sort: false, query: "24h" },
+    { title: "7d", sort: false, query: "7d" },
   ];
 
   const activeItem = (sort: string, query: string) => {
     setSort([query, sort]);
   };
   const handleChangeSelectThead = (value: string) => {
-    console.log(value)
+    console.log(value);
     setValueSelected(value);
     setSort([value, "desc"]);
   };
@@ -85,10 +93,8 @@ export default function TokenList({ data, setSort, sort }: any) {
                     className={`main-homepage-tokenranking-table-${thead.tag}`}
                     key={i}
                   >
-                    <BoxALignCenter_Justify_ItemsCenter
-                      className={`${thead.sort && "justify-content-end"} ${
-                        thead.tag
-                      }`}
+                    <BoxALignItemsCenter
+                      className={`${thead.styles}`}
                     >
                       <span>{thead.name}</span>
                       {thead.sort && (
@@ -113,7 +119,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                           </div>
                         </div>
                       )}
-                    </BoxALignCenter_Justify_ItemsCenter>
+                    </BoxALignItemsCenter>
                   </th>
                 );
               })}
@@ -159,11 +165,11 @@ export default function TokenList({ data, setSort, sort }: any) {
                   </td>
                   <td className="main-homepage-tokenranking-table-holder">
                     <div className="main-homepage-tokenranking-table text-end">
-                      <p>
+                      <p className="main-homepage-tokenranking-table text-end">
                         $
                         {!token.current_price
                           ? 0
-                          : numberSeperator(token.current_price)}
+                          : numberSeperator.format(token.current_price)}
                       </p>
                     </div>
                   </td>
@@ -188,7 +194,7 @@ export default function TokenList({ data, setSort, sort }: any) {
                             2
                           )
                         : "0"}
-                      %{tw4HourDiff === "increase" ? "↑" : "↓"}
+                      %
                     </p>
                   </td>
                   <td className="main-homepage-tokenranking-table-transfer-volume">
@@ -205,21 +211,21 @@ export default function TokenList({ data, setSort, sort }: any) {
                   </td>
                   <td className="main-homepage-tokenranking-table-marketcaps">
                     <div className="main-homepage-tokenranking-table text-end">
-                      <p>
+                      <p className="main-homepage-tokenranking-table text-end">
                         $
                         {!token.total_volume
                           ? 0
-                          : numberSeperator(token.total_volume)}
+                          : numberSeperator.format(token.total_volume)}
                       </p>
                     </div>
                   </td>
                   <td className="main-homepage-tokenranking-table-marketcaps">
                     <div className="main-homepage-tokenranking-table text-end">
-                      <p>
+                      <p className="main-homepage-tokenranking-table text-end">
                         $
                         {!token.market_cap
                           ? 0
-                          : numberSeperator(token.market_cap)}
+                          : numberSeperator.format(token.market_cap)}
                       </p>
                     </div>
                   </td>
@@ -300,16 +306,67 @@ export default function TokenList({ data, setSort, sort }: any) {
                       </BoxALignItemsCenter>
                     </div>
                     <div className="col-6">
-                      <div className="w-100">
-                        <div className="main-homepage-tokenranking-table-body-item-user-number text-end">
-                          <p>
-                            $
-                            {!token.current_price
-                              ? 0
-                              : numberSeperator(token.current_price)}
+                      {valueSelected === "current_price" ? (
+                        <p className="main-homepage-tokenranking-table text-end">
+                          $
+                          {!token.current_price
+                            ? 0
+                            : formatter.format(token.current_price)}
+                        </p>
+                      ) : valueSelected === "volume" ? (
+                        <p className="main-homepage-tokenranking-table text-end">
+                          $
+                          {!token.total_volume
+                            ? 0
+                            : formatter.format(token.total_volume)}
+                        </p>
+                      ) : valueSelected === "market_cap" ? (
+                        <p className="main-homepage-tokenranking-table text-end">
+                          $
+                          {!token.market_cap
+                            ? 0
+                            : formatter.format(token.market_cap)}
+                        </p>
+                      ) : valueSelected === "1h" ? (
+                        <>
+                          <p
+                            className={`main-homepage-tokenranking-table-${oneHourDiff} text-end`}
+                          >
+                            <p
+                              className={`main-homepage-tokenranking-table-${oneHourDiff} text-end`}
+                            >
+                              {token.price_change_percentage_1h_in_currency
+                                ? token.price_change_percentage_1h_in_currency.toFixed(
+                                    2
+                                  )
+                                : "0"}
+                              %{oneHourDiff === "increase" ? "↑" : "↓"}
+                            </p>
                           </p>
-                        </div>
-                      </div>
+                        </>
+                      ) : valueSelected === "24h" ? (
+                        <p
+                          className={`main-homepage-tokenranking-table-${oneHourDiff} text-end`}
+                        >
+                          {token.price_change_percentage_24h_in_currency
+                            ? token.price_change_percentage_24h_in_currency.toFixed(
+                                2
+                              )
+                            : "0"}
+                          % {tw4HourDiff === "increase" ? "↑" : "↓"}
+                        </p>
+                      ) : (
+                        <p
+                          className={`main-homepage-tokenranking-table-${sevenDayDiff} text-end`}
+                        >
+                          {token.price_change_percentage_7d_in_currency
+                            ? token.price_change_percentage_7d_in_currency.toFixed(
+                                2
+                              )
+                            : "0"}
+                          %{sevenDayDiff === "increase" ? "↑" : "↓"}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>

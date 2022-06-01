@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { ArrowLeftCircle, ArrowRightCircle } from "react-feather";
 import SwiperCore, { Navigation, Pagination, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { BoxALignCenter_Justify_ItemsCenter, BoxALignItemsCenter } from "@styles/styled-components/styledBox";
+import { BoxALignCenter_Justify_ItemsCenter, BoxALignItemsCenter, CategoryBox } from "@styles/styled-components/styledBox";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import { Button } from '@styles/styled-components/styledButton';
 import moment from "moment";
@@ -57,6 +57,7 @@ export default function BlogSlides({ data }: any): ReactElement {
             // onSwiper={setSwiper}
             >
                 {data.map((blog: any, i: number) => {
+                    // console.log(blog)
                     return (
                         <SwiperSlide key={i}>
                             <div className="main-homepage-blog-card">
@@ -68,11 +69,17 @@ export default function BlogSlides({ data }: any): ReactElement {
                                     />
                                 </div>
                                 <div className="main-homepage-blog-card-body">
+                                    <CategoryBox>
+                                        {blog.attributes.category.data.attributes.name}
+                                    </CategoryBox>
                                     <a href="#" className="main-homepage-blog-card-body-title">
                                         {blog.attributes.title}
                                     </a>
+                                    <p className="main-homepage-blog-card-body-description">
+                                        {blog.attributes.description || 'Description is here, but null'}
+                                    </p>
                                     <p className="main-homepage-blog-card-body-createdat">
-                                        {moment(blog.attributes.createdAt).format('LL')}
+                                       By {blog.attributes.Author}  | {moment(blog.attributes.createdAt).format('LL')}
                                     </p>
                                 </div>
                             </div>
