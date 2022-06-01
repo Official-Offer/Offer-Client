@@ -43,12 +43,12 @@ export const NavbarHome: FC = () => {
     setBoxSearch(true);
   };
   const listMenu = [
-    { name: "NFT Marketplace", link: "#", newTab: false },
-    { name: "Farm", link: "#", newTab: false },
-    { name: "Dapp News", link: "#", newTab: false },
-    { name: "Dapp Portal", link: "#", newTab: false },
-    { name: "PriceBoard", link: "#", newTab: false },
-    { name: "INO", link: "#", newTab: false },
+    { name: "NFT Marketplace", link: "#", newTab: false, routeSelected: '/nft', },
+    { name: "Farm", link: "#", newTab: false, routeSelected: '/farm', },
+    { name: "Dapp News", link: "/dapp-news", newTab: false, routeSelected: '/dapp-news', },
+    { name: "Dapp Portal", link: "/dapp-portal", newTab: false, routeSelected: '/dapp-portal', },
+    { name: "PriceBoard", link: "#", newTab: false, routeSelected: '/price-board', },
+    { name: "INO", link: "#", newTab: false, routeSelected: '/ino', },
   ];
 
   return (
@@ -69,19 +69,13 @@ export const NavbarHome: FC = () => {
                 </Link>
               </div>
               <Menu
-                defaultSelectedKeys={
-                  router.route === "/nft-marketplace"
-                    ? ["1"]
-                    : router.route === "/dapp-portal"
-                    ? ["4"]
-                    : [""]
-                }
+                defaultSelectedKeys={[`${router.route}`]}
                 mode="horizontal"
                 className="w-100"
               >
                 {listMenu.map((menu, i) => {
                   return (
-                    <Menu.Item key={i + 1} className="m-0">
+                    <Menu.Item key={menu.routeSelected} className="m-0">
                       {menu.newTab ? (
                         <a
                           target="_blank"
@@ -124,19 +118,19 @@ export const NavbarHome: FC = () => {
               <div className="d-flex align-items-center display_none_res">
                 <ButtonBackgroundBlueBold
                   className="d-flex align-items-center me-3"
-                  // onClick={() => {
-                  //   router.push("/submit");
-                  // }}
+                // onClick={() => {
+                //   router.push("/submit");
+                // }}
                 >
                   <UploadOutlined className="me-2 fontSize_1-2" />
                   Submit Dapp
                 </ButtonBackgroundBlueBold>
                 <ButtonBlue
                   className="px-4"
-                  // onClick={() => {
-                  //     dispatch(nameModalConnect('connectWallet'));
-                  //     dispatch(modalConnect(true));
-                  // }}
+                // onClick={() => {
+                //     dispatch(nameModalConnect('connectWallet'));
+                //     dispatch(modalConnect(true));
+                // }}
                 >
                   Login
                 </ButtonBlue>
@@ -172,17 +166,11 @@ export const NavbarHome: FC = () => {
                 </div>
                 <br />
                 <Menu
-                  defaultSelectedKeys={
-                    router.route === "/nft-marketplace"
-                      ? ["1"]
-                      : router.route === "/dapp-portal"
-                      ? ["4"]
-                      : ["0"]
-                  }
+                  defaultSelectedKeys={[`${router.route}`]}
                 >
                   {listMenu.map((menu, i) => {
                     return (
-                      <Menu.Item key={i + 1} className="m-0">
+                      <Menu.Item key={menu.routeSelected} className="m-0">
                         {menu.newTab ? (
                           <a
                             target="_blank"

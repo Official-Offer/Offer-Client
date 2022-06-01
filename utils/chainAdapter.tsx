@@ -27,6 +27,12 @@ export class CurrencyAmountAdapter {
     switchCurrencyAmount() {
         switch (this.chain_id) {
             default:
+                this.currency_amount = "BNB";
+                this.top_currency_amount = "TOP";
+                this.top_logo_currency_amount = "/img/logo.png";
+                this.logo_currency_amount = "/img/coin/binance-coin.png";
+                this.networkName = "BSC";
+                this.networkFullName = "Binance Smart Chain";
                 // this.currency_amount = "BNB";
                 // this.top_currency_amount = "TOP";
                 // this.top_logo_currency_amount = "/img/logo.png";

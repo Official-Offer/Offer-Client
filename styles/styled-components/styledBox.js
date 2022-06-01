@@ -133,22 +133,22 @@ export const CategoryBox = styled.div`
   color: white;
   background: #058499;
   display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 6px 8px;
-gap: 12px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 12px;
 
-width: 69px;
-height: 28px;
+  width: 69px;
+  height: 28px;
 
-/* Button */
+  /* Button */
 
-background: #058499;
-box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
-border-radius: 4px;
+  background: #058499;
+  box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+  border-radius: 4px;
 
-/* Inside auto layout */
+  /* Inside auto layout */
 
 flex: none;
 order: 0;

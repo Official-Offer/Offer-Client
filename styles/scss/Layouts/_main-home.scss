@@ -6,11 +6,7 @@
     height: 550px;
     z-index: -1;
     &-position-banner {
-      background: linear-gradient(
-        180deg,
-        rgba(0, 182, 176, 0) 0%,
-        rgba(0, 182, 176, 0.1) 100%
-      );
+      background: linear-gradient(180deg, rgba(0, 182, 176, 0) 0%, rgba(0, 182, 176, 0.1) 100%);
       clip-path: polygon(0 0, 100% 0%, 100% 80%, 50% 100%, 0 80%);
       left: 0;
       top: 100px;
@@ -38,11 +34,7 @@
       }
     }
     &-position-blog {
-      background: linear-gradient(
-        180deg,
-        rgba(0, 182, 176, 0.1) 0%,
-        rgba(0, 182, 176, 0) 100%
-      );
+      background: linear-gradient(180deg, rgba(0, 182, 176, 0.1) 0%, rgba(0, 182, 176, 0) 100%);
       clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
       left: 0;
       bottom: 21%;
@@ -52,6 +44,91 @@
     }
   }
   &-homepage {
+    &-news-container {
+      width: 70%;
+      @include lg {
+        width: 85%;
+      }
+      margin: auto;
+      z-index: 1;
+    }
+    &-dappnews {
+      position: relative;
+      overflow: visible;
+      &-layout {
+        flex: 0 0 auto;
+        width: 25%;
+        padding: 10px;
+        @include lg {
+          padding: 10px 5px;
+        }
+        @include sm {
+          width: 100%;
+          flex: 0 0 auto;
+        }
+      }
+      &-card {
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0px 5px 12px -1px rgba(0, 0, 0, 0.75);
+        overflow: hidden;
+        &-header {
+          position: relative;
+          width: 100%;
+          height: auto;
+          &-img {
+            width: 100%;
+          }
+          .logo {
+            position: absolute;
+            left: 25%;
+            bottom: -7%;
+            border: 1px solid #fcfcfd;
+            background-color: #0a2129;
+            border-radius: 50%;
+            padding: 5px;
+            width: 40px;
+            height: 35px;
+            z-index: 3;
+            img {
+              max-width: 100%;
+            }
+          }
+        }
+        &-body {
+          padding: 20px;
+          &-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+          }
+          &-tag {
+            text-align: center;
+            color: #1d8c9a;
+          }
+          &-description {
+            font-size: 0.75rem;
+            display: -webkit-box;
+            color: gray;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            // height: 100px;
+          }
+          &-createdAt {
+            //text-align: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #7d7d7d;
+          }
+        }
+      }
+    }
     &-news-container {
       width: 70%;
       @include lg {
@@ -294,11 +371,7 @@
         height: 94%;
         left: 0;
         top: 0;
-        background: linear-gradient(
-          180deg,
-          rgba(0, 182, 176, 0.1) 0%,
-          rgba(0, 182, 176, 0) 100%
-        );
+        background: linear-gradient(180deg, rgba(0, 182, 176, 0.1) 0%, rgba(0, 182, 176, 0) 100%);
         clip-path: polygon(50% 0, 100% 20%, 100% 100%, 0 100%, 0 20%);
         z-index: -1;
       }
