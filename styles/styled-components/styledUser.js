@@ -161,5 +161,8 @@ export const UploadPhoto = styled(ButtonBlue)`
     font-weight: 700;
     font-size: 14px;
     line-height: 16px;
-    padding: 11px 20px
+    padding: 11px 20px;
+`
+export const FormContainer = styled.form`
+    
 `

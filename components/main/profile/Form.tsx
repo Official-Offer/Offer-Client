@@ -24,6 +24,7 @@ const Form = () => {
           <FormAvatarImg src="/img/ys.jpg"></FormAvatarImg>
           <UploadPhoto>Update Photo</UploadPhoto>
         </FormAvatarContainer>
+        
       </FormWrapper>
     </div>
   );
