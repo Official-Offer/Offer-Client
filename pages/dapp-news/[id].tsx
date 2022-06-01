@@ -1,6 +1,7 @@
 import {
   FacebookFilled,
   HeartOutlined,
+  HeartFilled,
   TwitterOutlined,
   UserOutlined,
   YoutubeFilled,
@@ -34,6 +35,7 @@ const NewsDetails: NextPage = () => {
   const [relatedNews, setRelatedNews] = useState([]);
   const [content, setContent] = useState("");
   const [banner, setBanner] = useState("");
+  const [liked, setLiked] = useState(false);
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -95,11 +97,14 @@ const NewsDetails: NextPage = () => {
         setBanner(res.data.data[0].attributes);
       });
     })();
-  }, [news])
+  }, [news]);
 
   const MarkDown = styled<any>(ReactMarkdown)`
     img {
-      width: 100%;
+      width: 90%;
+      padding: 20px;
+      margin: auto;
+      display: block;
     }
     pre {
       color: #ccc;
@@ -256,15 +261,14 @@ const NewsDetails: NextPage = () => {
               </div>
             </div>
           </div>
-          {/* <div className="empty_space_height50" /> */}
           <div className="news-details-left col-lg-9 col-12">
-            <hr className="mb-4" />
+            <hr className="mb-4" style={{ color: "#1DBBBD" }} />
             <div className="news-details-social">
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
                 <img
-                  src="/img/icons/social-discord.png"
+                  src="/img/icons/social-facebook.png"
                   className="news-details-social-icon"
                 />
               </div>
@@ -280,14 +284,25 @@ const NewsDetails: NextPage = () => {
                   className="news-details-social-icon"
                 />
               </div>
-              <div className="news-details-social-heart">
-                <HeartOutlined style={{ width: "30px" }} />
+              <div
+                className="news-details-social-heart"
+                onClick={() => {
+                  setLiked(!liked);
+                }}
+              >
+                <a target="_blank" rel="noopener noreferrer">
+                {liked ? (
+                  <HeartFilled style={{ color: "#1DBBBD", marginLeft: "30vw" }} />
+                ) : (
+                  <HeartOutlined style={{ marginLeft: "30vw" }} />
+                )}
+                </a>
               </div>
               <br />
             </div>
-            <hr className="mt-4" />
+            <hr className="mt-4" style={{ color: "#1DBBBD" }} />
             <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-              <h3>Comments</h3>
+              <h3>COMMENTS</h3>
               <ButtonBlue>
                 <PopUp text="Write Comment" />
               </ButtonBlue>
