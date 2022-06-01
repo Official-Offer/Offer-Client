@@ -79,7 +79,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                         {blog.attributes.description || 'Description is here, but null'}
                                     </p>
                                     <p className="main-homepage-blog-card-body-createdat">
-                                       By anonymous  | {moment(blog.attributes.createdAt).format('LL')}
+                                       By {blog.attributes.Author}  | {moment(blog.attributes.createdAt).format('LL')}
                                     </p>
                                 </div>
                             </div>
