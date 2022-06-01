@@ -16,6 +16,7 @@ import {
   ClearButton,
   PlaceholderWrapper,
   ColoredPlaceHolder,
+  Container,
 } from "@styles/styled-components/styledUser";
 import { Field } from "rc-field-form";
 import useForm from "@utils/hook/useForm";
@@ -44,9 +45,13 @@ const Form = () => {
       </FormDescription>
       <FormWrapper>
         <FormTitle>Edit Profile</FormTitle>
-        <FormAvatarContainer>
-          <FormAvatarImg src="/img/ys.jpg"></FormAvatarImg>
-          <FormButton className="px-4">Update Photo</FormButton>
+        <FormAvatarContainer className="row">
+          <Container className="col-lg-3 col-12">
+            <FormAvatarImg src="/img/ys.jpg" />
+          </Container>
+          <Container className="col-lg-6 col-12 px-4">
+            <FormButton>Update Photo</FormButton>
+          </Container>
         </FormAvatarContainer>
         <FormContainer>
           <FormTitle>Account Info</FormTitle>
@@ -62,9 +67,11 @@ const Form = () => {
             </div>
             <div className="col-12">
               <FieldTitle>Custom URL</FieldTitle>
-              <FormField  onChange={handleChange}
-                  name="customURL"
-                  placeholder="ui8.next/Your custom URL"></FormField>
+              <FormField
+                onChange={handleChange}
+                name="customURL"
+                placeholder="ui8.next/Your custom URL"
+              ></FormField>
               {/* <PlaceholderWrapper>
                 <ColoredPlaceHolder>
                   <b>ui8.next/</b> Your custom URL

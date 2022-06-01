@@ -128,17 +128,13 @@ export const FormDescription = styled.p`
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
-    display: flex;
-    align-items: center;
     color: rgba(34, 48, 82, 0.65);
     margin-bottom: 40px;
-    flex: none;
-    /* order: 1; */
-    flex-grow: 0;
 `
 
 export const FormAvatarContainer = styled.div`
     padding: 0;
+    width: 100%;
 `
 
 export const FormTitle =styled.p`
@@ -151,11 +147,27 @@ export const FormTitle =styled.p`
 `
 
 export const FormAvatarImg = styled(AvatarImg)`
-    width:140px;
+    width:100%;
+    @media screen and (max-width: 992px) {
+        width: 80%;
+    }
+    /* left: 50%; */
+    
+`
+
+export const Container = styled.div`
+    width: 100%; 
+    justify-content: flex-start;
+    @media screen and (max-width: 992px) {
+    display: flex;
+
+        justify-content: center;
+    }
 `
 
 export const FormButton = styled(ButtonBlue)`
-    margin: 0 40px ;
+    /* margin: 0 51px ; */
+    margin-top: 20px;
     font-family: 'Circular Std';
     font-style: normal;
     font-weight: 500 !important;
