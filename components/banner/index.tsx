@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
-import { URL_API_IMG } from "@config/dev.config";
+import { URL_API_IMG } from "@config/index";
 
 export function BannerLeft({ img }: any): ReactElement {
   console.log(img);
