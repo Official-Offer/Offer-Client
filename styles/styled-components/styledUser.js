@@ -133,7 +133,7 @@ export const FormDescription = styled.p`
     color: rgba(34, 48, 82, 0.65);
     margin-bottom: 40px;
     flex: none;
-    order: 1;
+    /* order: 1; */
     flex-grow: 0;
 `
 
@@ -154,15 +154,102 @@ export const FormAvatarImg = styled(AvatarImg)`
     width:140px;
 `
 
-export const UploadPhoto = styled(ButtonBlue)`
-    margin-left: 40px;
+export const FormButton = styled(ButtonBlue)`
+    margin: 0 40px ;
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px 18px !important;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+`
+export const FormContainer = styled.form`
+    width: 100%;
+`
+export const FieldTitle = styled.p`
     font-family: 'Circular Std';
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
-    line-height: 16px;
-    padding: 11px 20px;
+    font-size: 20px;
+    line-height: 25px;
+
+    /* cl-text */
+
+    color: #223052;
 `
-export const FormContainer = styled.form`
+
+export const FormField = styled.input`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* align-items: center;
+    justify-content: center; */
+    padding: 10px 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    color: rgba(34, 48, 82, 0.65);
+    width:100%;
+    margin-bottom: 30px;
     
+`
+export const BiggerFormField = styled.textarea`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    color: rgba(34, 48, 82, 0.65);
+    width:100%;
+    margin-bottom: 30px;
+    height: 100px;
+`
+export const FormClosingNote = styled(FormDescription)`
+    font-size: 16px;
+    margin-bottom: 0;
+`
+export const ClearButton = styled.button`
+    background-color: white;
+    border: none;
+    /* :hover {
+        text-decoration: underline;
+    } */
+`
+export const PlaceholderWrapper = styled.div`
+display: inline-block;
+    position: relative;
+    background: #FFF;
+    overflow: hidden;position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #888;
+    margin-top: -.5em;
+    line-height: 1em;
+    z-index: 9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+`
+
+export const PlaceHolder = styled.span`position: absolute;
+top: 50%;
+left: 5px;
+color: #888;
+margin-top: -.5em;
+line-height: 1em;
+z-index: 9;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+width: 100%;`
+
+export const ColoredPlaceHolder = styled.b`
 `
