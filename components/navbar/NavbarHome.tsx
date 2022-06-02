@@ -250,7 +250,6 @@ export const NavbarHome: FC = () => {
       <LoginPopup
         isVisible={isPopupVisible}
         setVisible={setPopupVisible}
-        onChooseLogin={onChooseLogin}
       />
     </>
   );
