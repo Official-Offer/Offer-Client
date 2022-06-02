@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BoxWhiteShadow } from './styledBox';
 import { ButtonBlue } from './styledButton';
 
 export const ContentWrapper = styled.div`
@@ -264,4 +265,19 @@ white-space: nowrap;
 width: 100%;`
 
 export const ColoredPlaceHolder = styled.b`
+`
+
+export const DappBox = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
+  background-color: #FFF;
+  width: 100%;
+  /* height: 90px; */
+  display: flex;
+`
+
+export const DappImg = styled.img`
+    border-radius: 8px;
+    margin: 15px;
+    padding-top: 15px;
 `

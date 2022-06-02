@@ -1,13 +1,13 @@
 import Avatar from "@components/main/profile/Avatar";
 import {
   ContentWrapper,
-  FavoriteDapps,
 } from "@styles/styled-components/styledUser";
+import FavoriteDapps from "@components/main/profile/FavoriteDapps";
 import type { NextPage } from "next";
 import { useState } from "react";
 import Form from "../../components/main/profile/Form";
 const UserProfile: NextPage = () => {
-  const [showFavDapps, setShowFavDapps] = useState(false);
+  const [showFavDapps, setShowFavDapps] = useState(true);
   return (
     <ContentWrapper className="row">
       <div className="col-lg-4 col-12">
