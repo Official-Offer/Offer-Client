@@ -26,7 +26,7 @@ import request from "@services/apiService";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
 import { URL_SITE } from "@config/dev.config";
 import moment from "moment";
-import PopUp from "@components/popup";
+import PopUp from "@components/main/dapp-news/CommentBox"
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 import {
@@ -36,6 +36,7 @@ import {
   TelegramShareButton,
 } from "react-share";
 import BannerSlides  from "@components/main/home/slides/BannerSlides";
+import HelmetMetaData from "@components/main/dapp-news/HelmetData";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState([]);
@@ -208,12 +209,6 @@ const NewsDetails: NextPage = () => {
             </div>
             <div className="news-details-right-banner">
               <BannerSlides />
-              {/* <img
-                style={{ maxWidth: "100%" }}
-                src={`${URL_API_IMG}${banner?.Image?.data.attributes.url}`}
-                alt=""
-                onClick={() => window.open(banner.URL)}
-              /> */}
             </div>
             <br />
             <div className="news-details-right-topic">
@@ -259,6 +254,7 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
+                <HelmetMetaData></HelmetMetaData>
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   quote={`${news[0]?.attributes.title} 

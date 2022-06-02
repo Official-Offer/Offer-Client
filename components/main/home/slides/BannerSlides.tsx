@@ -53,7 +53,7 @@ export default function BannerSlides ({}) {
                           {/* <div className="main-homepage-blog-card"> */}
                               {/* <div className="main-homepage-blog-card-header"> */}
                                   <img
-                                      className="main-homepage-blog-card-header-img"
+                                      className="main-homepage-dappnews-card-header-img mb-10"
                                       src={`${URL_API_IMG}${banner.attributes.Image?.data.attributes.url}`}
                                       alt=""
                                   />
