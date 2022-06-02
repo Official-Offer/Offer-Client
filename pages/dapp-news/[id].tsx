@@ -35,13 +35,13 @@ import {
   TwitterShareButton,
   TelegramShareButton,
 } from "react-share";
+import BannerSlides from "@components/main/home/slides/BannerSlides";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState<any>([]);
   const [comments, setComments] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [content, setContent] = useState("");
-  const [banner, setBanner] = useState<any>("");
   const [liked, setLiked] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -86,22 +86,6 @@ const NewsDetails: NextPage = () => {
       );
       await request.get(`/posts?${query}`).then((res) => {
         setRelatedNews(res.data.data);
-      });
-    })();
-  }, [news]);
-
-  useEffect(() => {
-    (async () => {
-      const bannerQuery = qs.stringify(
-        {
-          populate: "*",
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      await request.get(`/post-banners?${bannerQuery}`).then((res) => {
-        setBanner(res.data.data[0].attributes);
       });
     })();
   }, [news]);
@@ -156,7 +140,7 @@ const NewsDetails: NextPage = () => {
     }
   `;
 
-  console.log(banner);
+  // console.log(banner);
 
   const keyWord = "(/uploads/";
 
@@ -223,12 +207,13 @@ const NewsDetails: NextPage = () => {
               })}
             </div>
             <div className="news-details-right-banner">
-              <img
+              <BannerSlides />
+              {/* <img
                 style={{ maxWidth: "100%" }}
                 src={`${URL_API_IMG}${banner?.Image?.data.attributes.url}`}
                 alt=""
                 onClick={() => window.open(banner.URL)}
-              />
+              /> */}
             </div>
             <br />
             <div className="news-details-right-topic">
@@ -257,9 +242,8 @@ const NewsDetails: NextPage = () => {
                           <p className="name">{news.attributes.title}</p>
                           <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(
                             news.attributes.createdAt
-                          ).format("LL")} . ${
-                            news.attributes.viewer
-                          } views`}</p>
+                          ).format("LL")} . ${news.attributes.viewer
+                            } views`}</p>
                         </a>
                       </div>
                     </div>
@@ -276,9 +260,13 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title}`}
+                  quote={`${news[0]?.attributes.title} 
+
+                  ${news[0]?.attributes.description} 
+                  `}
+                  //${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
-                  // className={classes.socialMediaButton}
+                // className={classes.socialMediaButton}
                 >
                   <img
                     src="/img/icons/social-facebook.png"
@@ -289,9 +277,12 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TwitterShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title}`}
-                  // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
-                  // className={classes.socialMediaButton}
+                  title={`${news[0]?.attributes.title} 
+
+                  ${news[0]?.attributes.description} 
+                  `}
+                // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
+                // className={classes.socialMediaButton}
                 >
                   <img
                     src="/img/icons/social-twitter.png"
@@ -302,8 +293,11 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TelegramShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title}`}
-                  // className={classes.socialMediaButton}
+                  title={`${news[0]?.attributes.title} 
+
+                  ${news[0]?.attributes.description} 
+                  `}
+                // className={classes.socialMediaButton}
                 >
                   <img
                     src="/img/icons/social-telegram.png"
