@@ -14,6 +14,7 @@ module.exports = {
     URL_NFTs: 'https://api-nft.heroarena.app/api',
     URL_API_IMG: 'https://admin.tokenplay.app',
     URL_API_ADMIN: 'https://admin.tokenplay.app/api',
+    URL_SITE: ' https://tokenplay.app',
     URL_API_DAPPVERSE: 'https://api-dappverse.tokenplay.app',
     TOKEN_BEARER: '956545a8766f6f2fa72831aabdfddf9fc6b663b428a10697a119bdded1198f7420d6d1c55a3ce3cc8bae14368ebfff326c2b6ab1e372c0bd8a25898a018707f36a326887882bbef965e74132bed8e097d96e81c312796aec29b5db5c626a28457bb691c3de3d00dda724b0cb6a977b7ac18093363c028aaa90c11e68fa753013',
     NEXT_PUBLIC_GOOGLE_ANALYTICS: 'GTM-M9PFF9K',
