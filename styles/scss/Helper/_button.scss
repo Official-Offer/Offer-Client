@@ -81,8 +81,16 @@
   }
 }
 
+.all-width-mobile {
+  @media screen and (max-width: 992px) {
+    width: 100%;
+  }
+}
+
 .avatar-form-submit-container {
+  margin-top: 5px;
   width: 50%;
+  margin: 0;
   @media screen and (max-width: 992px) {
     width: 100%;
   }

@@ -36,7 +36,7 @@ const UserProfile: NextPage = () => {
         <Avatar data={userInfo} showFavDapp={showFavDapps} setShowFavDapp={setShowFavDapps}/>
       </div>
       <div className="col-lg-8 col-12">
-        {showFavDapps ? <FavoriteDapps /> : <Form />}
+        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo}/>}
       </div>
     </ContentWrapper>
   );

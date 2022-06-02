@@ -108,6 +108,7 @@ export const FormDescription = styled.p`
 export const FormAvatarContainer = styled.div`
     padding: 0;
     width: 100%;
+    margin:0 !important;
 `
 
 export const FormTitle =styled.p`
@@ -200,7 +201,8 @@ export const BiggerFormField = styled.textarea`
 `
 export const FormClosingNote = styled(FormDescription)`
     font-size: 16px;
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
+    margin-top: 30px;
 `
 export const ClearButton = styled.button`
     background-color: white;

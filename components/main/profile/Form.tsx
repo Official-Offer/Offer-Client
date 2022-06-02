@@ -24,16 +24,11 @@ import { BoxALignCenter_Justify_ItemsBetween } from "@styles/styled-components/s
 import { Divider } from "antd";
 import { XCircle } from "react-feather";
 
-const Form = () => {
-  const { input, handleChange, resetForm } = useForm({
-    displayName: "",
+const Form = ({ data }) => {
+  const { input, handleChange, resetForm, clearForm } = useForm({
+    ...data,
     customURL: "",
-    bio: "",
     portfolio: "",
-    twitter: "",
-    telegram: "",
-    instagram: "",
-    facebook: "",
   });
 
   return (
@@ -53,7 +48,7 @@ const Form = () => {
             <FormButton>Update Photo</FormButton>
           </Container>
         </FormAvatarContainer>
-        <FormContainer>
+        <FormContainer onSubmit={() => console.log(input)}>
           <FormTitle>Account Info</FormTitle>
           <br />
           <div className="row">
@@ -63,6 +58,7 @@ const Form = () => {
                 onChange={handleChange}
                 name="displayName"
                 placeholder="Enter your display name"
+                value={input.displayName}
               ></FormField>
             </div>
             <div className="col-12">
@@ -71,6 +67,7 @@ const Form = () => {
                 onChange={handleChange}
                 name="customURL"
                 placeholder="ui8.next/Your custom URL"
+                value={input.customURL}
               ></FormField>
               {/* <PlaceholderWrapper>
                 <ColoredPlaceHolder>
@@ -90,6 +87,7 @@ const Form = () => {
                 onChange={handleChange}
                 name="bio"
                 placeholder="About yourself in a few words"
+                value={input.bio}
               ></BiggerFormField>
             </div>
           </div>
@@ -110,6 +108,7 @@ const Form = () => {
                 onChange={handleChange}
                 name="twitter"
                 placeholder="@twitter username"
+                value={input.twitter}
               ></FormField>
             </div>
             <div className="col-12">
@@ -118,6 +117,7 @@ const Form = () => {
                 onChange={handleChange}
                 name="telegram"
                 placeholder="@telegram user"
+                value={input.telegram}
               ></FormField>
             </div>
             <div className="col-12">
@@ -125,6 +125,7 @@ const Form = () => {
               <FormField
                 onChange={handleChange}
                 name="instagram"
+                value={input.instagram}
                 placeholder="@instagram user"
               ></FormField>
             </div>
@@ -134,26 +135,31 @@ const Form = () => {
                 onChange={handleChange}
                 name="facebook"
                 placeholder="@facebook user"
+                value={input.facebook}
                 style={{ marginBottom: 0 }}
               ></FormField>
             </div>
           </div>
+          <div>
+            <FormClosingNote>{`To update your settings you should sign message through your wallet. Click 'Update profile' then sign the message`}</FormClosingNote>
+            <Divider
+              style={{ height: "1px", backgroundColor: "#223052"}}
+            />
+            <div className="row gy-4 avatar-form-submit-container">
+              <div className="col-lg-6 col-12 center-inner-mobile">
+                <FormButton className='all-width-mobile' style={{ marginLeft: 0 }} type="submit">
+                  Update Profile
+                </FormButton>
+              </div>
+              <div className="col-lg-6 col-12 center-inner-mobile">
+                <ClearButton onClick={clearForm}>
+                  {" "}
+                  <XCircle /> Clear all
+                </ClearButton>
+              </div>
+            </div>
+          </div>
         </FormContainer>
-        <FormClosingNote>{`To update your settings you should sign message through your wallet. Click 'Update profile' then sign the message`}</FormClosingNote>
-        <Divider
-          style={{ height: "1px", backgroundColor: "#223052", margin: 0 }}
-        />
-        <div className="row gy-4 avatar-form-submit-container">
-          <div className="col-lg-6 col-12 center-inner-mobile">
-            <FormButton style={{ marginLeft: 0 }}>Update Profile</FormButton>
-          </div>
-          <div className="col-lg-6 col-12 center-inner-mobile">
-            <ClearButton>
-              {" "}
-              <XCircle /> Clear all
-            </ClearButton>
-          </div>
-        </div>
       </FormWrapper>
     </div>
   );
