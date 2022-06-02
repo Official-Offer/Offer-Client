@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
+import { URL_SITE } from "@config/dev.config";
 import moment from "moment";
 import PopUp from "@components/popup";
 import ReactMarkdown from "react-markdown";
@@ -274,7 +275,7 @@ const NewsDetails: NextPage = () => {
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
                 <FacebookShareButton
-                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   quote={`${news[0]?.attributes.title}`}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
                   // className={classes.socialMediaButton}
@@ -287,7 +288,7 @@ const NewsDetails: NextPage = () => {
               </div>
               <div className="news-details-social-icons">
                 <TwitterShareButton
-                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   title={`${news[0]?.attributes.title}`}
                   // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
                   // className={classes.socialMediaButton}
@@ -299,15 +300,15 @@ const NewsDetails: NextPage = () => {
                 </TwitterShareButton>
               </div>
               <div className="news-details-social-icons">
-              <TelegramShareButton
-                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                <TelegramShareButton
+                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   title={`${news[0]?.attributes.title}`}
                   // className={classes.socialMediaButton}
                 >
-                <img
-                  src="/img/icons/social-telegram.png"
-                  className="news-details-social-icon"
-                />
+                  <img
+                    src="/img/icons/social-telegram.png"
+                    className="news-details-social-icon"
+                  />
                 </TelegramShareButton>
               </div>
               <div
