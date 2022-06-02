@@ -267,7 +267,6 @@ const NewsDetails: NextPage = () => {
                   `}
                   //${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
-                  // className={classes.socialMediaButton}
                 >
                   <img
                     src="/img/icons/social-facebook.png"
@@ -278,12 +277,11 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TwitterShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title} 
+                  title={`${news[0]?.attributes.title} 
 
                   ${news[0]?.attributes.description} 
                   `}
                   // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
-                  // className={classes.socialMediaButton}
                 >
                   <img
                     src="/img/icons/social-twitter.png"
@@ -294,7 +292,7 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TelegramShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title} 
+                  title={`${news[0]?.attributes.title} 
 
                   ${news[0]?.attributes.description} 
                   `}
