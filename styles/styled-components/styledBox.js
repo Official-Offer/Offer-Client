@@ -154,3 +154,14 @@ flex: none;
 order: 0;
 flex-grow: 0;
 `
+
+export const SocialLoginBox = styled.button`
+  background: #223052;
+  border: 2px solid #223052;
+  border-radius: 10px;
+  color: #FFF;
+  width: 100%;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 13px
+`
