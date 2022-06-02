@@ -4,8 +4,9 @@ import {
   BoxBlueBold,
   SocialLoginBox,
 } from "@styles/styled-components/styledBox";
-import { URL_API_SSO } from "@config/dev.config";
+import { URL_API_SSO, URL_NFTs } from "@config/dev.config";
 import request from "@services/apiService";
+import axios from "axios";
 
 const LoginPopup = ({ isVisible, setVisible }) => {
   const loginMethods = [
@@ -13,20 +14,17 @@ const LoginPopup = ({ isVisible, setVisible }) => {
     { name: "Facebook", icon: "login_fb_icon.png" },
     { name: "Twitter", icon: "login_tw_icon.png" },
   ];
-
+  
   const onCancel = () => setVisible(false);
   const onLogin = async (meth) => {
-    const falseURL = 'http://localhost:8008';
-    const successURL = 'http://localhost:8008';
-    location.href=`${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`
-    // await request
+    const falseURL = "http://localhost:8008";
+    const successURL = "http://localhost:8008";
+    location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
+    // await axios
     //   .get(
-    //     `/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`
+    //     `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`
     //   )
-    //   .then((res) => {
-    //       console.log(res);
-    //   });
-    // window.open(`${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`)
+    //   .then((res) => console.log(res));
   };
 
   return (

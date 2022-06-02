@@ -56,34 +56,6 @@ export const AvatarName = styled.p`
     margin: 0;
 `
 
-export const FavoriteDapps = styled.div`
-    align-self: flex-start;
-    color: rgba(34, 48, 82, 0.75);
-    font-family: 'Circular Std';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 10px;
-    
-`
-
-export const ProfileSetting = styled.div`
-    align-self: flex-start;
-    color: white;
-    font-family: 'Circular Std';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 10px;
-    background-color: #058499;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #1DBBBD;
-    border-radius: 8px;
-`
-
 export const ProfileTitle = styled.div`
     height: 44px;
 
