@@ -70,7 +70,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                 </div>
                                 <div className="main-homepage-blog-card-body">
                                     <CategoryBox>
-                                        {blog.attributes.category.data.attributes.name}
+                                        {blog.attributes.category.data?.attributes.name}
                                     </CategoryBox>
                                     <a href="#" className="main-homepage-blog-card-body-title">
                                         {blog.attributes.title}
