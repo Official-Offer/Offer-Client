@@ -61,6 +61,7 @@
   font-size: 16px;
   line-height: 24px;
   padding-left: 10px;
+  cursor: pointer;
   &-active {
     color: white;
     background-color: #058499;
@@ -68,5 +69,21 @@
     padding: 10px;
     border: 1px solid #1dbbbd;
     border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+.center-inner-mobile {
+  @media screen and (max-width: 992px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.avatar-form-submit-container {
+  width: 50%;
+  @media screen and (max-width: 992px) {
+    width: 100%;
   }
 }

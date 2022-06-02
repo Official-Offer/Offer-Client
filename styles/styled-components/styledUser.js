@@ -123,6 +123,7 @@ export const FormAvatarImg = styled(AvatarImg)`
     width:100%;
     @media screen and (max-width: 992px) {
         width: 80%;
+        margin-bottom: 20px;
     }
     /* left: 50%; */
     
@@ -131,16 +132,16 @@ export const FormAvatarImg = styled(AvatarImg)`
 export const Container = styled.div`
     width: 100%; 
     justify-content: flex-start;
-    @media screen and (max-width: 992px) {
     display: flex;
-
+    align-items: center;
+    @media screen and (max-width: 992px) {
         justify-content: center;
     }
 `
 
 export const FormButton = styled(ButtonBlue)`
     /* margin: 0 51px ; */
-    margin-top: 20px;
+    /* margin-top: 20px; */
     font-family: 'Circular Std';
     font-style: normal;
     font-weight: 500 !important;
@@ -148,6 +149,7 @@ export const FormButton = styled(ButtonBlue)`
     line-height: 16px;
     padding: 10px 18px !important;
     box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    
 `
 export const FormContainer = styled.form`
     width: 100%;
@@ -203,6 +205,7 @@ export const FormClosingNote = styled(FormDescription)`
 export const ClearButton = styled.button`
     background-color: white;
     border: none;
+    padding-left: 0;
     /* :hover {
         text-decoration: underline;
     } */

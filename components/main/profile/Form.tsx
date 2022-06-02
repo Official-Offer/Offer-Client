@@ -143,12 +143,16 @@ const Form = () => {
         <Divider
           style={{ height: "1px", backgroundColor: "#223052", margin: 0 }}
         />
-        <div>
-          <FormButton style={{ marginLeft: 0 }}>Update Profile</FormButton>
-          <ClearButton>
-            {" "}
-            <XCircle /> Clear all
-          </ClearButton>
+        <div className="row gy-4 avatar-form-submit-container">
+          <div className="col-lg-6 col-12 center-inner-mobile">
+            <FormButton style={{ marginLeft: 0 }}>Update Profile</FormButton>
+          </div>
+          <div className="col-lg-6 col-12 center-inner-mobile">
+            <ClearButton>
+              {" "}
+              <XCircle /> Clear all
+            </ClearButton>
+          </div>
         </div>
       </FormWrapper>
     </div>
