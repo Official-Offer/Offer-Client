@@ -225,6 +225,21 @@
     margin-top: 16px;
 }
 
+.login-social-icon {
+    width: 12%;
+    padding-right: 15px;
+    @media screen and (max-width: 992px) {
+        width: 15%;
+    }
+}
+
+.login-popup-heart {
+    justify-content: center;
+    display: flex;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
 .ant-modal-footer {
     display: none;
 }

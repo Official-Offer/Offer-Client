@@ -161,7 +161,8 @@ export const SocialLoginBox = styled.button`
   border-radius: 10px;
   color: #FFF;
   width: 100%;
-  padding: 20px;
+  padding: 15px;
   text-align: left;
-  margin-bottom: 13px
+  margin-bottom: 13px;
+  font-size: 16px;
 `
