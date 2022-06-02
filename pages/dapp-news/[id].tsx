@@ -28,6 +28,12 @@ import moment from "moment";
 import PopUp from "@components/popup";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TelegramShareButton,
+} from "react-share";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState([]);
@@ -267,22 +273,42 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
-                <img
-                  src="/img/icons/social-facebook.png"
-                  className="news-details-social-icon"
-                />
+                <FacebookShareButton
+                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                  quote={`${news[0]?.attributes.title}`}
+                  hashtag={`${news[0]?.attributes.tags[0]}`}
+                  // className={classes.socialMediaButton}
+                >
+                  <img
+                    src="/img/icons/social-facebook.png"
+                    className="news-details-social-icon"
+                  />
+                </FacebookShareButton>
               </div>
               <div className="news-details-social-icons">
-                <img
-                  src="/img/icons/social-twitter.png"
-                  className="news-details-social-icon"
-                />
+                <TwitterShareButton
+                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                  title={`${news[0]?.attributes.title}`}
+                  // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
+                  // className={classes.socialMediaButton}
+                >
+                  <img
+                    src="/img/icons/social-twitter.png"
+                    className="news-details-social-icon"
+                  />
+                </TwitterShareButton>
               </div>
               <div className="news-details-social-icons">
+              <TelegramShareButton
+                  url={`https://dev.tokenplay.app/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
+                  title={`${news[0]?.attributes.title}`}
+                  // className={classes.socialMediaButton}
+                >
                 <img
                   src="/img/icons/social-telegram.png"
                   className="news-details-social-icon"
                 />
+                </TelegramShareButton>
               </div>
               <div
                 className="news-details-social-heart"
@@ -291,11 +317,13 @@ const NewsDetails: NextPage = () => {
                 }}
               >
                 <a target="_blank" rel="noopener noreferrer">
-                {liked ? (
-                  <HeartFilled style={{ color: "#1DBBBD", marginLeft: "30vw" }} />
-                ) : (
-                  <HeartOutlined style={{ marginLeft: "30vw" }} />
-                )}
+                  {liked ? (
+                    <HeartFilled
+                      style={{ color: "#1DBBBD", marginLeft: "30vw" }}
+                    />
+                  ) : (
+                    <HeartOutlined style={{ marginLeft: "30vw" }} />
+                  )}
                 </a>
               </div>
               <br />
