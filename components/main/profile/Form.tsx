@@ -36,7 +36,7 @@ const Form = ({ data }: any) => {
   });
   const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(`${URL_API_IMG}${data.avatar}`);
-  const [uploadAvatarFile, setUploadAvatarFile] = useState();
+  const [uploadAvatarFile, setUploadAvatarFile] = useState<any>();
   useEffect(() => {
     if (!uploadAvatarFile) {
       setAvatar(`${URL_API_IMG}${data.avatar}`);

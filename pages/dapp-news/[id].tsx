@@ -26,7 +26,7 @@ import request from "@services/apiService";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
 import { URL_SITE } from "@config/dev.config";
 import moment from "moment";
-import PopUp from "@components/popup";
+import PopUp from "@components/main/dapp-news/CommentBox"
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 import {
@@ -35,7 +35,9 @@ import {
   TwitterShareButton,
   TelegramShareButton,
 } from "react-share";
-import BannerSlides from "@components/main/home/slides/BannerSlides";
+import BannerSlides  from "@components/main/home/slides/BannerSlides";
+import HelmetMetaData from "@components/main/dapp-news/HelmetData";
+import { Helmet } from "react-helmet";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState<any>([]);
@@ -140,8 +142,6 @@ const NewsDetails: NextPage = () => {
     }
   `;
 
-  // console.log(banner);
-
   const keyWord = "(/uploads/";
 
   const modifiedContent = news[0]?.attributes.content
@@ -151,6 +151,7 @@ const NewsDetails: NextPage = () => {
 
   return (
     <div>
+      <HelmetMetaData props={news}/>
       <section className="news-details">
         <div className="empty_space_height50" />
         <div className="row m-0 p-0">
@@ -208,12 +209,6 @@ const NewsDetails: NextPage = () => {
             </div>
             <div className="news-details-right-banner">
               <BannerSlides />
-              {/* <img
-                style={{ maxWidth: "100%" }}
-                src={`${URL_API_IMG}${banner?.Image?.data.attributes.url}`}
-                alt=""
-                onClick={() => window.open(banner.URL)}
-              /> */}
             </div>
             <br />
             <div className="news-details-right-topic">
@@ -258,15 +253,13 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
+                {/* <HelmetMetaData props={news}/> */}
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
-                  `}
+                  quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
                   //${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
-                // className={classes.socialMediaButton}
+                  
                 >
                   <img
                     src="/img/icons/social-facebook.png"
@@ -277,12 +270,9 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TwitterShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
+                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
                   `}
-                // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
-                // className={classes.socialMediaButton}
+                  // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
                 >
                   <img
                     src="/img/icons/social-twitter.png"
@@ -292,10 +282,9 @@ const NewsDetails: NextPage = () => {
               </div>
               <div className="news-details-social-icons">
                 <TelegramShareButton
+                  // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
+                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
                   `}
                 // className={classes.socialMediaButton}
                 >
