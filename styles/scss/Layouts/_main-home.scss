@@ -467,47 +467,23 @@
                 }
               }
             }
-          }
-          &-price-combine {
-            height: auto;
-          }
-          &-unit-column {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            transition: 0.25s;
-            span {
-              margin-left: 5px;
-              font-size: 11px;
-              // color: #000;
-              color: #058499;
-              &:first-child {
-                margin-left: 0;
-              }
-              &:nth-child(2) {
-                color: #1b6263;
-              }
-            }
-          }
+            margin: auto;
+            z-index: 1;
         }
-        &-sorter {
-          display: inherit;
-          margin-left: 5px;
-          &-inner {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            .up,
-            .down {
-              font-size: 14px;
-              color: #223052;
-              cursor: pointer;
-              transition: 0.25s;
-              &:hover {
-                color: #058499;
-              }
+        &-dappnews {
+            position: relative;
+            overflow: visible;
+            &-layout{
+                flex: 0 0 auto;
+                width: 25%;
+                padding: 10px;
+                @include lg {
+                    padding: 10px 5px;
+                }
+                @include sm {
+                    width: 100%;
+                    flex: 0 0 auto;
+                }
             }
             &-card {
                 border-radius: 20px;
