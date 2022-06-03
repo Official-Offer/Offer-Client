@@ -48,11 +48,12 @@ const Form = ({ data }: any) => {
   }, [uploadAvatarFile]);
 
   const onSubmit = async (e: any) => {
-    // e.preventDefault();
+    e.preventDefault();
     // console.log(input);
     const resData = await request.put(`users/${data.id}`, input);
     // if avatar is uploaded, post it too.
     if (uploadAvatarFile) {
+      console.log(uploadAvatarFile);
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
       const resAvatar = await request.post(`users/uploadAvatar`, formData);
