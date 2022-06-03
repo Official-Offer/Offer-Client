@@ -37,6 +37,7 @@ import {
 } from "react-share";
 import BannerSlides  from "@components/main/home/slides/BannerSlides";
 import HelmetMetaData from "@components/main/dapp-news/HelmetData";
+import { Helmet } from "react-helmet";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState([]);
@@ -141,8 +142,6 @@ const NewsDetails: NextPage = () => {
     }
   `;
 
-  // console.log(banner);
-
   const keyWord = "(/uploads/";
 
   const modifiedContent = news[0]?.attributes.content
@@ -152,6 +151,7 @@ const NewsDetails: NextPage = () => {
 
   return (
     <div>
+      <HelmetMetaData props={news}/>
       <section className="news-details">
         <div className="empty_space_height50" />
         <div className="row m-0 p-0">
@@ -254,15 +254,12 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
-                <HelmetMetaData></HelmetMetaData>
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
-                  `}
+                  quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
                   //${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
+                  
                 >
                   <img
                     src="/img/icons/social-facebook.png"
@@ -273,9 +270,7 @@ const NewsDetails: NextPage = () => {
               <div className="news-details-social-icons">
                 <TwitterShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
+                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
                   `}
                   // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
                 >
@@ -287,10 +282,9 @@ const NewsDetails: NextPage = () => {
               </div>
               <div className="news-details-social-icons">
                 <TelegramShareButton
+                  // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title} 
-
-                  ${news[0]?.attributes.description} 
+                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
                   `}
                   // className={classes.socialMediaButton}
                 >
