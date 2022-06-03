@@ -23,13 +23,12 @@ const UserProfile: NextPage = () => {
   });
   const [login, setLogin] = useState(false);
   useEffect(() => {
-    console.log(Cookies.get('accessToken'));
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          console.log(res.data.data);
+          console.log(res.data)
           setUserInfo(res.data);
           setLogin(true);
         })
