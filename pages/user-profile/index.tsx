@@ -23,24 +23,19 @@ const UserProfile: NextPage = () => {
   });
   const [login, setLogin] = useState(false);
   useEffect(() => {
+    console.log(Cookies.get('accessToken'));
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
-      await request.get(`/users/me`).then((res: any) => {
-        console.log(res.data);
-        setUserInfo(res.data.data);
-      }).catch(console.log); 
-      
-      // await request.get(`/users/2`).then((res: any) => {
-      //   // change 2 to other user's id
-      //   console.log(res.data);
-      //   setUserInfo(res.data);
-      // });
+      await request
+        .get(`/users/me`)
+        .then((res: any) => {
+          console.log(res.data.data);
+          setUserInfo(res.data);
+          setLogin(true);
+        })
+        .catch(()=>setLogin(false));
     })();
   }, []);
-
-  useEffect(() => {
-    if (userInfo.id) setLogin(true);
-  }, [userInfo]);
 
   return (
     <ContentWrapper className="row">

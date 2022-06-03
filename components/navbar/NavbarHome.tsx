@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   BoxALignCenter_Justify_ItemsBetween,
   BoxALignCenter_Justify_ItemsCenter,
@@ -20,12 +20,29 @@ import { useRouter } from "next/router";
 import { Search } from "react-feather";
 import Link from "next/link";
 import LoginPopup from "./LoginPopup";
-
+import getUserInfo from "@utils/getUserInfo";
+import request from "@services/apiSSO";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState(false);
   const [boxSearch, setBoxSearch] = useState(false);
+  const [user, setUser] = useState();
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+  useEffect(() => {
+    (async () => {
+      //uncomment when deployed on dev since localhost can't access cookie
+      await request
+        .get(`/users/me`)
+        .then((res: any) => {
+          console.log(res.data);
+          setUser(res.data.data);
+        })
+        .catch(() => null);
+    })();
+  }, []);
 
   const showDrawer = () => {
     setVisible(true);
@@ -73,8 +90,8 @@ export const NavbarHome: FC = () => {
   ];
 
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const onChooseLogin = (e: any) => console.log("loggin in");
   const openLoginPopup = () => setPopupVisible(true);
+
   return (
     <>
       <section id="navbar_home">
@@ -143,23 +160,27 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                  // onClick={() => {
-                  //   router.push("/submit");
-                  // }}
+                    // onClick={() => {
+                    //   router.push("/submit");
+                    // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
-                  <ButtonBlue
-                    className="px-4"
-                    // onClick={() => {
-                    //     dispatch(nameModalConnect('connectWallet'));
-                    //     dispatch(modalConnect(true));
-                    // }}
-                    onClick={openLoginPopup}
-                  >
-                    Login
-                  </ButtonBlue>
+                  {user ? (
+                    <img className="navbar-avatar" src="/img/ys.jpg"></img>
+                  ) : (
+                    <ButtonBlue
+                      className="px-4"
+                      // onClick={() => {
+                      //     dispatch(nameModalConnect('connectWallet'));
+                      //     dispatch(modalConnect(true));
+                      // }}
+                      onClick={openLoginPopup}
+                    >
+                      Login
+                    </ButtonBlue>
+                  )}
                   {/* <WalletModal /> */}
                 </div>
               </BoxALignCenter_Justify_ItemsEnd>
@@ -248,6 +269,7 @@ export const NavbarHome: FC = () => {
         </BoxALignCenter_Justify_ItemsBetween>
       </section>
       <LoginPopup
+        setUser={setUser}
         isVisible={isPopupVisible}
         setVisible={setPopupVisible}
       />
