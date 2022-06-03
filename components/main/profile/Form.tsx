@@ -54,9 +54,9 @@ const Form = ({ data }: any) => {
     // if avatar is uploaded, post it too.
     if (avatar !== `${URL_API_IMG}${data.avatar}`) {
       const formData = new FormData();
-      for (let key in Object.keys(input)) {
-        formData.append(key, input[key]);
-      }
+      // for (let key in Object.keys(input)) {
+      //   formData.append(key, input[key]);
+      // }
       formData.append("avatar", uploadAvatarFile);
       const resAvatar = await request.post(`users/uploadAvatar`, formData);
       // console.log({
@@ -89,7 +89,7 @@ const Form = ({ data }: any) => {
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
             <Container className="col-lg-3 col-12">
-              <FormAvatarImg src={avatar} />
+              <FormAvatarImg src={avatar || '/img/ys.jpg'} />
             </Container>
             <Container className="col-lg-6 col-12 px-4">
               {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
