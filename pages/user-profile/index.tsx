@@ -22,6 +22,7 @@ const UserProfile: NextPage = () => {
     facebook: "",
   });
   const [login, setLogin] = useState(false);
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
@@ -34,7 +35,7 @@ const UserProfile: NextPage = () => {
         })
         .catch(()=>setLogin(false));
     })();
-  }, []);
+  }, [reload]);
 
   return (
     <ContentWrapper className="row">
@@ -46,7 +47,7 @@ const UserProfile: NextPage = () => {
         />
       </div>
       <div className="col-lg-8 col-12">
-        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo} />}
+        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo} reload={reload} setReload={setReload}/>}
       </div>
     </ContentWrapper>
   );

@@ -28,7 +28,7 @@ import request from "@services/apiSSO";
 import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-const Form = ({ data }: any) => {
+const Form = ({ data, reload, setReload }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
     customURL: "",
@@ -55,7 +55,9 @@ const Form = ({ data }: any) => {
       console.log(uploadAvatarFile);
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
-      const resAvatar = await request.post(`users/uploadAvatar`, formData);
+      const resAvatar = await request
+        .post(`users/uploadAvatar`, formData)
+        .then(() => setReload(!reload)); //force api refetch
     }
   };
 
