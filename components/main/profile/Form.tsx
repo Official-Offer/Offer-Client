@@ -48,7 +48,7 @@ const Form = ({ data }: any) => {
   }, [uploadAvatarFile]);
 
   const onSubmit = async (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
     // console.log(input);
     const resData = await request.put(`users/${data.id}`, input);
     // if avatar is uploaded, post it too.
@@ -82,7 +82,7 @@ const Form = ({ data }: any) => {
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
             <Container className="col-lg-3 col-12">
-              <FormAvatarImg src={data.avatar || avatar} />
+              <FormAvatarImg src={avatar || data.avatar} />
             </Container>
             <Container className="col-lg-6 col-12 px-4">
               {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
