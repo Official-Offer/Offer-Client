@@ -27,7 +27,6 @@ import { XCircle } from "react-feather";
 import request from "@services/apiSSO";
 import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 const Form = ({ data }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
@@ -35,8 +34,8 @@ const Form = ({ data }: any) => {
     customURL: "",
   });
   const token = Cookies.get("accessToken");
-  const [avatar, setAvatar] = useState(data.avatar);
-  const [uploadAvatarFile, setUploadAvatarFile] = useState<any>();
+  const [avatar, setAvatar] = useState(data.avatar); //upload base64
+  const [uploadAvatarFile, setUploadAvatarFile] = useState<any>(); //raw file
   useEffect(() => {
     if (!uploadAvatarFile) {
       setAvatar(data.avatar);
@@ -65,6 +64,7 @@ const Form = ({ data }: any) => {
       setUploadAvatarFile(undefined);
       return;
     }
+    // console.log(e.target.files[0]);
     setUploadAvatarFile(e.target.files[0]);
   };
 
