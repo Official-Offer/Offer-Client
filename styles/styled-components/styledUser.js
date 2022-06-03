@@ -106,7 +106,7 @@ export const FormDescription = styled.p`
 `
 
 export const FormAvatarContainer = styled.div`
-    padding: 0;
+    padding: 35px 0;
     width: 100%;
     margin:0 !important;
 `

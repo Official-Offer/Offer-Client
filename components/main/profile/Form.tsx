@@ -25,14 +25,16 @@ import { BoxALignCenter_Justify_ItemsBetween } from "@styles/styled-components/s
 import { Divider } from "antd";
 import { XCircle } from "react-feather";
 import request from "@services/apiSSO";
-import { URL_API_IMG } from "@config/dev.config";
+import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 const Form = ({ data }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
     customURL: "",
   });
-
+  const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(`${URL_API_IMG}${data.avatar}`);
   const [uploadAvatarFile, setUploadAvatarFile] = useState();
   useEffect(() => {
@@ -51,10 +53,12 @@ const Form = ({ data }: any) => {
     const resData = await request.put(`users/${data.id}`, input);
     // if avatar is uploaded, post it too.
     if (avatar !== `${URL_API_IMG}${data.avatar}`) {
-      const resAvatar = await request.post(`users/uploadAvatar`, {
-        ...input,
-        avatar: avatar,
-      });
+      const formData = new FormData();
+      for (let key in Object.keys(input)) {
+        formData.append(key, input[key]);
+      }
+      formData.append("avatar", uploadAvatarFile);
+      const resAvatar = await request.post(`users/uploadAvatar`, formData);
       // console.log({
       //   ...input,
       //   avatar: avatar,
@@ -78,25 +82,28 @@ const Form = ({ data }: any) => {
         other personal settings.
       </FormDescription>
       <FormWrapper>
-        <FormTitle>Edit Profile</FormTitle>
-        <FormAvatarContainer className="row">
-          <Container className="col-lg-3 col-12">
-            <FormAvatarImg src={avatar} />
-          </Container>
-          <Container className="col-lg-6 col-12 px-4">
-            {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
-            <UploadButton>
-              Upload Image
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={onSelectImage}
-              ></input>
-            </UploadButton>
-          </Container>
-        </FormAvatarContainer>
-        <FormContainer onSubmit={(e) => onSubmit(e)}>
+        <FormContainer
+          onSubmit={(e) => onSubmit(e)}
+          encType="multipart/form-data"
+        >
+          <FormTitle>Edit Profile</FormTitle>
+          <FormAvatarContainer className="row">
+            <Container className="col-lg-3 col-12">
+              <FormAvatarImg src={avatar} />
+            </Container>
+            <Container className="col-lg-6 col-12 px-4">
+              {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
+              <UploadButton>
+                Upload Image
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={onSelectImage}
+                ></input>
+              </UploadButton>
+            </Container>
+          </FormAvatarContainer>
           <FormTitle>Account Info</FormTitle>
           <br />
           <div className="row">
