@@ -29,16 +29,13 @@ export const NavbarHome: FC = () => {
   const [boxSearch, setBoxSearch] = useState(false);
   const [user, setUser] = useState();
   useEffect(() => {
-    console.log(user);
-  }, [user]);
-  useEffect(() => {
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
       await request
         .get(`/users/me`)
         .then((res: any) => {
           console.log(res.data);
-          setUser(res.data.data);
+          setUser(res.data);
         })
         .catch(() => null);
     })();
@@ -168,7 +165,7 @@ export const NavbarHome: FC = () => {
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
-                    <img className="navbar-avatar" src="/img/ys.jpg"></img>
+                    <img className="navbar-avatar" src={user.avatar}></img>
                   ) : (
                     <ButtonBlue
                       className="px-4"
