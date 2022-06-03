@@ -52,7 +52,7 @@ const Form = ({ data }: any) => {
     // console.log(input);
     const resData = await request.put(`users/${data.id}`, input);
     // if avatar is uploaded, post it too.
-    if (avatar !== data.avatar) {
+    if (uploadAvatarFile) {
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
       const resAvatar = await request.post(`users/uploadAvatar`, formData);
