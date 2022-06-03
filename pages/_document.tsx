@@ -31,8 +31,8 @@ class MyDocument extends Document {
           <meta property="og:url" content="https://tokenplay.app/" />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Tokenplay Dappverse" />
-          {/* <meta property="og:image" content="img/thumbnail_1.png" /> */}
-          <meta property="og:image" content="img/logo.png" />
+          <meta property="og:image" content="img/thumbnail_1.png" />
+          {/* <meta property="og:image" content="img/logo.png" /> */}
           <meta property="og:URL" content="%PUBLIC_URL%/localImage.jpg" />
           {/* <meta property="og:image" content="%PUBLIC_URL%/localImage.jpg" />  */}
           {/* <meta property='og:image:alt' content='Visit nft.Tokenplay.app' /> */}
