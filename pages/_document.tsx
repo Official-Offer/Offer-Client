@@ -2,6 +2,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import React from "react";
 import HelmetMetaData from "@components/main/dapp-news/HelmetData";
+import { Helmet } from "react-helmet";
 class MyDocument extends Document {
   static getInitialProps({ renderPage }: any) {
     // Step 1: Create an instance of ServerStyleSheet
@@ -26,7 +27,7 @@ class MyDocument extends Document {
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           {/* {/* <meta name="description" content="https://nft.tokenplay.app/" /> */}
-                    <meta property="og:image" content="https://data-nft.tokenplay.app/NFTmarket.jpg" /> */}
+          <meta property="og:image" content="https://data-nft.tokenplay.app/NFTmarket.jpg" /> */}
           <meta property="og:title" content="Tokenplay" />
           <meta property="og:url" content="https://tokenplay.app/" />
           <meta property="og:type" content="website" />
@@ -40,6 +41,7 @@ class MyDocument extends Document {
           {styleTags}
         </Head>
         <body>
+          <Helmet></Helmet>
           <Main />
           <NextScript />
         </body>

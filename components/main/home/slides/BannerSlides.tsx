@@ -47,7 +47,6 @@ export default function BannerSlides({}) {
         }}
       >
         {banners.map((banner: any, i: number) => {
-          // console.log(blog)
           return (
             <SwiperSlide key={i}>
               <img
