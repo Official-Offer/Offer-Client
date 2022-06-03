@@ -15,7 +15,13 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   SwiperCore.use([Autoplay]);
-
+  const onClick = (data: any) => {
+    const id = data.id;
+    const cate = data.attributes.category.data.attributes.name;
+    window.open(
+      `${window.location.origin}/dapp-news/${id}?id=${id}&category=${cate}`
+    );
+  };
   return (
     <BoxALignCenter_Justify_ItemsCenter>
       <Button className="p-0 me-2" ref={navigationPrevRef}>
@@ -56,9 +62,8 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
         }}
       >
         {data.map((blog: any, i: number) => {
-          console.log(blog);
           return (
-            <SwiperSlide key={i}>
+            <SwiperSlide key={i} onClick={()=>onClick(blog)}>
               <div className="main-homepage-news-card">
                 <div className="main-homepage-news-card-header">
                   <img
