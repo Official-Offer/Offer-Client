@@ -35,11 +35,11 @@ const Form = ({ data }: any) => {
     customURL: "",
   });
   const token = Cookies.get("accessToken");
-  const [avatar, setAvatar] = useState(`${URL_API_IMG}${data.avatar}`);
+  const [avatar, setAvatar] = useState(data.avatar);
   const [uploadAvatarFile, setUploadAvatarFile] = useState<any>();
   useEffect(() => {
     if (!uploadAvatarFile) {
-      setAvatar(`${URL_API_IMG}${data.avatar}`);
+      setAvatar(data.avatar);
       return;
     }
     const avatarURL = URL.createObjectURL(uploadAvatarFile);
@@ -52,7 +52,7 @@ const Form = ({ data }: any) => {
     // console.log(input);
     const resData = await request.put(`users/${data.id}`, input);
     // if avatar is uploaded, post it too.
-    if (avatar !== `${URL_API_IMG}${data.avatar}`) {
+    if (avatar !== data.avatar) {
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
       const resAvatar = await request.post(`users/uploadAvatar`, formData);
@@ -82,7 +82,7 @@ const Form = ({ data }: any) => {
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
             <Container className="col-lg-3 col-12">
-              <FormAvatarImg src={avatar || '/img/ys.jpg'} />
+              <FormAvatarImg src={data.avatar || avatar} />
             </Container>
             <Container className="col-lg-6 col-12 px-4">
               {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
