@@ -8,7 +8,7 @@ export default function useForm(initial = {}) {
     setInputs(initial);
   }, [initialValues]);
 
-  function handleChange(e) {
+  function handleChange(e: any) {
     let { value, name, type } = e.target;
     if (type === 'number') {
       value = parseInt(value);

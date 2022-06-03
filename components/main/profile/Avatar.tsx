@@ -3,12 +3,10 @@ import {
   AvatarImg,
   AvatarName,
   AvatarWrapper,
-  FavoriteDapps,
-  ProfileSetting,
 } from "@styles/styled-components/styledUser";
 import { Divider } from "antd";
 import { Heart, Settings } from "react-feather";
-const Avatar = ({ data, showFavDapp, setShowFavDapp }) => {
+const Avatar = ({ data, showFavDapp, setShowFavDapp }: any) => {
   return (
     <AvatarWrapper>
       <AvatarContainer className="row">

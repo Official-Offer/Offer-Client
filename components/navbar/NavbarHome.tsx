@@ -73,7 +73,7 @@ export const NavbarHome: FC = () => {
   ];
 
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const onChooseLogin = (e) => console.log("loggin in");
+  const onChooseLogin = (e: any) => console.log("loggin in");
   const openLoginPopup = () => setPopupVisible(true);
   return (
     <>
@@ -143,9 +143,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                  // onClick={() => {
+                  //   router.push("/submit");
+                  // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp

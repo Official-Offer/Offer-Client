@@ -4,17 +4,17 @@ import {
   BoxBlueBold,
   SocialLoginBox,
 } from "@styles/styled-components/styledBox";
-import { URL_API_SSO, URL_NFTs } from "@config/dev.config";
+import { URL_API_SSO, URL_NFTs } from "@config/index";
 import axios from "axios";
 
-const LoginPopup = ({ isVisible, setVisible }) => {
+const LoginPopup = ({ isVisible, setVisible }: any) => {
   const loginMethods = [
     { name: "Google", icon: "login_gg_icon.png" },
     { name: "Facebook", icon: "login_fb_icon.png" },
     { name: "Twitter", icon: "login_tw_icon.png" },
   ];
   const onCancel = () => setVisible(false);
-  const onLogin = async (meth) => {
+  const onLogin = async (meth: any) => {
     const falseURL = `${window.location.origin}/error`;
     const successURL = window.location.origin;
     location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;

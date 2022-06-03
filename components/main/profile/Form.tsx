@@ -27,8 +27,8 @@ import { XCircle } from "react-feather";
 import request from "@services/apiSSO";
 import { URL_API_IMG } from "@config/dev.config";
 import { useEffect, useState } from "react";
-const Form = ({ data }) => {
-  const { input, handleChange, resetForm, clearForm } = useForm({
+const Form = ({ data }: any) => {
+  const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
     customURL: "",
   });
@@ -45,7 +45,7 @@ const Form = ({ data }) => {
     return () => URL.revokeObjectURL(avatarURL);
   }, [uploadAvatarFile]);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     // console.log(input);
     const resData = await request.put(`users/${data.id}`, input);
@@ -62,7 +62,7 @@ const Form = ({ data }) => {
     }
   };
 
-  const onSelectImage = (e) => {
+  const onSelectImage = (e: any) => {
     if (!e.target.files || e.target.files.length === 0) {
       setUploadAvatarFile(undefined);
       return;
