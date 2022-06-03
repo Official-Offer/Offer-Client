@@ -38,6 +38,7 @@ import {
 import BannerSlides  from "@components/main/home/slides/BannerSlides";
 import HelmetMetaData from "@components/main/dapp-news/HelmetData";
 import { Helmet } from "react-helmet";
+import Head from "next/head";
 
 const NewsDetails: NextPage = () => {
   const [news, setNews] = useState([]);
@@ -151,7 +152,13 @@ const NewsDetails: NextPage = () => {
 
   return (
     <div>
-      <HelmetMetaData props={news}/>
+      {/* <HelmetMetaData props={news}/> */}
+      <Head>
+        <meta property="og:title" content={news[0]?.attributes.title} />
+        <meta property="og:image" content={`${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}`} />
+        <meta property="og:url" content={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`} />
+        <meta property="og:description" content={news[0]?.attributes.description} />
+      </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
         <div className="row m-0 p-0">
@@ -258,9 +265,7 @@ const NewsDetails: NextPage = () => {
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
-                  //${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}
                   hashtag={`${news[0]?.attributes.tags[0]}`}
-                  
                 >
                   <img
                     src="/img/icons/social-facebook.png"

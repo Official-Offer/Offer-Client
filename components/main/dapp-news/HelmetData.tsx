@@ -22,12 +22,11 @@ export default function HelmetMetaData({ props }) {
       <meta property="title" content={title} />
       <meta name="description" content={description} />
       <meta property="image" content={image} />
-      {/* <meta property="og:locale" content="en_US" /> */}
       <meta property="og:type" content="website" />
-      <meta property="og:title" content={title} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={currentUrl} />
-      <meta property="og:description" content={description} />{" "}
+      <meta property="og:title" content={props[0]?.attributes.title} />
+      <meta property="og:image" content={`${URL_API_IMG}${props[0]?.attributes.thumbnail.data.attributes.url}`} />
+      <meta property="og:url" content={`${URL_SITE}/dapp-news/${props[0]?.attributes.slug}`} />
+      <meta property="og:description" content={props[0]?.attributes.description} />
     </Helmet>
   );
 }
