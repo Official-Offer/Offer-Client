@@ -27,7 +27,7 @@ export const NavbarHome: FC = () => {
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState(false);
   const [boxSearch, setBoxSearch] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>(null);
   useEffect(() => {
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
