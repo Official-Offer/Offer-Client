@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BoxWhiteShadow } from './styledBox';
 import { ButtonBlue } from './styledButton';
 
 export const ContentWrapper = styled.div`
@@ -55,34 +56,6 @@ export const AvatarName = styled.p`
     margin: 0;
 `
 
-export const FavoriteDapps = styled.div`
-    align-self: flex-start;
-    color: rgba(34, 48, 82, 0.75);
-    font-family: 'Circular Std';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 10px;
-    
-`
-
-export const ProfileSetting = styled.div`
-    align-self: flex-start;
-    color: white;
-    font-family: 'Circular Std';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    padding-left: 10px;
-    background-color: #058499;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #1DBBBD;
-    border-radius: 8px;
-`
-
 export const ProfileTitle = styled.div`
     height: 44px;
 
@@ -128,17 +101,14 @@ export const FormDescription = styled.p`
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
-    display: flex;
-    align-items: center;
     color: rgba(34, 48, 82, 0.65);
     margin-bottom: 40px;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
 `
 
 export const FormAvatarContainer = styled.div`
     padding: 0;
+    width: 100%;
+    margin:0 !important;
 `
 
 export const FormTitle =styled.p`
@@ -151,15 +121,174 @@ export const FormTitle =styled.p`
 `
 
 export const FormAvatarImg = styled(AvatarImg)`
-    width:140px;
+    width:100%;
+    @media screen and (max-width: 992px) {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+    /* left: 50%; */
+    
 `
 
-export const UploadPhoto = styled(ButtonBlue)`
-    margin-left: 40px;
+export const Container = styled.div`
+    width: 100%; 
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 992px) {
+        justify-content: center;
+    }
+`
+
+export const FormButton = styled(ButtonBlue)`
+    /* margin: 0 51px ; */
+    /* margin-top: 20px; */
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px 18px !important;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    
+`
+export const UploadButton = styled.label`
+    background-color: #058499;
+    padding: .375rem .75rem;
+    border: none;
+    color: #FFF;
+    outline: none;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.25s;
+    min-width: 120px;
+    font-size: 16px;
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    &:hover {
+        background-color: #058399cb;
+        border: none;
+    }
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px 18px !important;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    cursor:pointer;
+`
+
+export const FormContainer = styled.form`
+    width: 100%;
+`
+export const FieldTitle = styled.p`
     font-family: 'Circular Std';
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
-    line-height: 16px;
-    padding: 11px 20px
+    font-size: 20px;
+    line-height: 25px;
+
+    /* cl-text */
+
+    color: #223052;
+`
+
+export const FormField = styled.input`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    /* align-items: center;
+    justify-content: center; */
+    padding: 10px 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    color: rgba(34, 48, 82, 0.65);
+    width:100%;
+    margin-bottom: 30px;
+    
+`
+export const BiggerFormField = styled.textarea`
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 10px 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    color: rgba(34, 48, 82, 0.65);
+    width:100%;
+    margin-bottom: 30px;
+    height: 100px;
+`
+export const FormClosingNote = styled(FormDescription)`
+    font-size: 16px;
+    /* margin-bottom: 0; */
+    margin-top: 30px;
+`
+export const ClearButton = styled.button`
+    background-color: white;
+    border: none;
+    padding-left: 0;
+    /* :hover {
+        text-decoration: underline;
+    } */
+`
+export const PlaceholderWrapper = styled.div`
+display: inline-block;
+    position: relative;
+    background: #FFF;
+    overflow: hidden;position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #888;
+    margin-top: -.5em;
+    line-height: 1em;
+    z-index: 9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+`
+
+export const PlaceHolder = styled.span`position: absolute;
+top: 50%;
+left: 5px;
+color: #888;
+margin-top: -.5em;
+line-height: 1em;
+z-index: 9;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+width: 100%;`
+
+export const ColoredPlaceHolder = styled.b`
+`
+
+export const DappBox = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
+  background-color: #FFF;
+  width: 100%;
+  /* height: 90px; */
+  display: flex;
+`
+
+export const DappImg = styled.img`
+    border-radius: 8px;
+    margin: 15px;
+    padding-top: 15px;
 `

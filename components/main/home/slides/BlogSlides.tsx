@@ -64,13 +64,13 @@ export default function BlogSlides({ data }: any): ReactElement {
                                 <div className="main-homepage-blog-card-header">
                                     <img
                                         className="main-homepage-blog-card-header-img"
-                                        src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
+                                        src={`${URL_API_IMG}${blog.attributes.thumbnail.data?.attributes.url}`}
                                         alt=""
                                     />
                                 </div>
                                 <div className="main-homepage-blog-card-body">
                                     <CategoryBox>
-                                        {blog.attributes.category.data.attributes.name}
+                                        {blog.attributes.category.data?.attributes.name}
                                     </CategoryBox>
                                     <a href="#" className="main-homepage-blog-card-body-title">
                                         {blog.attributes.title}
