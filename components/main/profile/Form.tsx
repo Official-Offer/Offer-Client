@@ -54,15 +54,8 @@ const Form = ({ data }: any) => {
     // if avatar is uploaded, post it too.
     if (avatar !== `${URL_API_IMG}${data.avatar}`) {
       const formData = new FormData();
-      // for (let key in Object.keys(input)) {
-      //   formData.append(key, input[key]);
-      // }
-      formData.append("avatar", uploadAvatarFile);
+      formData.append("file", uploadAvatarFile);
       const resAvatar = await request.post(`users/uploadAvatar`, formData);
-      // console.log({
-      //   ...input,
-      //   avatar: avatar,
-      // })
     }
   };
 
