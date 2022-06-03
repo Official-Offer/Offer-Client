@@ -165,7 +165,7 @@ export const NavbarHome: FC = () => {
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
-                    <img className="navbar-avatar" src={user.avatar}></img>
+                    <img className="navbar_avatar" src={user.avatar}></img>
                   ) : (
                     <ButtonBlue
                       className="px-4"
