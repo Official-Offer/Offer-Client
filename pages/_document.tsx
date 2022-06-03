@@ -25,7 +25,7 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          {/* {/* <meta name="description" content="https://nft.tokenplay.app/" /> */}
+          {/* {/* <meta name="description" content="https://nft.tokenplay.app/" />
                     <meta property="og:image" content="https://data-nft.tokenplay.app/NFTmarket.jpg" /> */}
           <meta property="og:title" content="Tokenplay" />
           <meta property="og:url" content="https://tokenplay.app/" />

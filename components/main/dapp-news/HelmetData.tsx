@@ -1,7 +1,7 @@
 import { URL_API_IMG, URL_SITE } from "@config/dev.config";
 import React from "react";
 import { Helmet } from "react-helmet";
-export default function HelmetMetaData({ props }) {
+export default function HelmetMetaData({ props }: any) {
 //   console.log(props);
   let currentUrl = `${URL_SITE}/dapp-news/${props[0]?.attributes.slug}`;
   let title = props[0]?.attributes.title;
@@ -11,7 +11,7 @@ export default function HelmetMetaData({ props }) {
     <Helmet>
       <title>{title}</title>
       <meta charSet="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="csrf_token" content="" />
       <meta property="type" content="website" />
       <meta property="url" content={currentUrl} />
