@@ -253,6 +253,7 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
+                {/* <HelmetMetaData props={news}/> */}
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
