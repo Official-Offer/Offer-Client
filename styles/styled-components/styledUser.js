@@ -152,6 +152,40 @@ export const FormButton = styled(ButtonBlue)`
     box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
     
 `
+export const UploadButton = styled.label`
+    background-color: #058499;
+    padding: .375rem .75rem;
+    border: none;
+    color: #FFF;
+    outline: none;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.25s;
+    min-width: 120px;
+    font-size: 16px;
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    &:hover {
+        background-color: #058399cb;
+        border: none;
+    }
+    font-family: 'Circular Std';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px 18px !important;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    cursor:pointer;
+`
+
 export const FormContainer = styled.form`
     width: 100%;
 `

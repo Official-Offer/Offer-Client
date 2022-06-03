@@ -5,7 +5,6 @@ import {
   SocialLoginBox,
 } from "@styles/styled-components/styledBox";
 import { URL_API_SSO, URL_NFTs } from "@config/dev.config";
-import request from "@services/apiService";
 import axios from "axios";
 
 const LoginPopup = ({ isVisible, setVisible }) => {
@@ -14,17 +13,16 @@ const LoginPopup = ({ isVisible, setVisible }) => {
     { name: "Facebook", icon: "login_fb_icon.png" },
     { name: "Twitter", icon: "login_tw_icon.png" },
   ];
-  
   const onCancel = () => setVisible(false);
   const onLogin = async (meth) => {
-    const falseURL = "http://localhost:8008";
-    const successURL = "http://localhost:8008";
+    const falseURL = `${window.location.origin}/error`;
+    const successURL = window.location.origin;
     location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
     // await axios
     //   .get(
     //     `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`
     //   )
-    //   .then((res) => console.log(res));
+    //   .then((res) => console.log(res)).catch(console.log);
   };
 
   return (

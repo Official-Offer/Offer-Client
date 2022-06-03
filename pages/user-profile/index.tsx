@@ -10,33 +10,49 @@ import request from "@services/apiSSO";
 const UserProfile: NextPage = () => {
   const [showFavDapps, setShowFavDapps] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    id: 1,
-    address: "1 Hacker Way",
-    displayName: "Steve Nguyen",
-    bio: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, aut earum! Tempora maiores iure nulla debitis, numquam unde laborum quo at fugiat corporis amet et excepturi, beatae modi, itaque enim!",
-    avatar: '',
-    website: '',
-    twitter: '',
-    telegram: '',
-    instagram: '',
-    facebook:'',
+    id: null,
+    address: "",
+    displayName: "",
+    bio: "",
+    avatar: "",
+    website: "",
+    twitter: "",
+    telegram: "",
+    instagram: "",
+    facebook: "",
   });
+  const [login, setLogin] = useState(false);
   useEffect(() => {
     (async () => {
-      // await request.get(`/users/me`).then((res: any) => {
+      //uncomment when deployed on dev since localhost can't access cookie
+      await request.get(`/users/me`).then((res: any) => {
+        console.log(res.data);
+        setUserInfo(res.data.data);
+      }).catch(console.log); 
+      
+      // await request.get(`/users/2`).then((res: any) => {
+      //   // change 2 to other user's id
       //   console.log(res.data);
-      //   setUserInfo(res.data.data);
-      // }); uncomment when deployed on dev since localhost can't access cookie
+      //   setUserInfo(res.data);
+      // });
     })();
   }, []);
+
+  useEffect(() => {
+    if (userInfo.id) setLogin(true);
+  }, [userInfo]);
 
   return (
     <ContentWrapper className="row">
       <div className="col-lg-4 col-12">
-        <Avatar data={userInfo} showFavDapp={showFavDapps} setShowFavDapp={setShowFavDapps}/>
+        <Avatar
+          data={userInfo}
+          showFavDapp={showFavDapps}
+          setShowFavDapp={setShowFavDapps}
+        />
       </div>
       <div className="col-lg-8 col-12">
-        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo}/>}
+        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo} />}
       </div>
     </ContentWrapper>
   );

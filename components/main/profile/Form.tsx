@@ -17,19 +17,58 @@ import {
   PlaceholderWrapper,
   ColoredPlaceHolder,
   Container,
+  UploadButton,
 } from "@styles/styled-components/styledUser";
 import { Field } from "rc-field-form";
 import useForm from "@utils/hook/useForm";
 import { BoxALignCenter_Justify_ItemsBetween } from "@styles/styled-components/styledBox";
 import { Divider } from "antd";
 import { XCircle } from "react-feather";
-
+import request from "@services/apiSSO";
+import { URL_API_IMG } from "@config/dev.config";
+import { useEffect, useState } from "react";
 const Form = ({ data }) => {
   const { input, handleChange, resetForm, clearForm } = useForm({
     ...data,
     customURL: "",
-    portfolio: "",
   });
+
+  const [avatar, setAvatar] = useState(`${URL_API_IMG}${data.avatar}`);
+  const [uploadAvatarFile, setUploadAvatarFile] = useState();
+  useEffect(() => {
+    if (!uploadAvatarFile) {
+      setAvatar(`${URL_API_IMG}${data.avatar}`);
+      return;
+    }
+    const avatarURL = URL.createObjectURL(uploadAvatarFile);
+    setAvatar(avatarURL);
+    return () => URL.revokeObjectURL(avatarURL);
+  }, [uploadAvatarFile]);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(input);
+    const resData = await request.put(`users/${data.id}`, input);
+    // if avatar is uploaded, post it too.
+    if (avatar !== `${URL_API_IMG}${data.avatar}`) {
+      const resAvatar = await request.post(`users/uploadAvatar`, {
+        ...input,
+        avatar: avatar,
+      });
+      // console.log({
+      //   ...input,
+      //   avatar: avatar,
+      // })
+    }
+  };
+
+  const onSelectImage = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setUploadAvatarFile(undefined);
+      return;
+    }
+    setUploadAvatarFile(e.target.files[0]);
+  };
 
   return (
     <div>
@@ -42,13 +81,22 @@ const Form = ({ data }) => {
         <FormTitle>Edit Profile</FormTitle>
         <FormAvatarContainer className="row">
           <Container className="col-lg-3 col-12">
-            <FormAvatarImg src="/img/ys.jpg" />
+            <FormAvatarImg src={avatar} />
           </Container>
           <Container className="col-lg-6 col-12 px-4">
-            <FormButton>Update Photo</FormButton>
+            {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
+            <UploadButton>
+              Upload Image
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={onSelectImage}
+              ></input>
+            </UploadButton>
           </Container>
         </FormAvatarContainer>
-        <FormContainer onSubmit={() => console.log(input)}>
+        <FormContainer onSubmit={(e) => onSubmit(e)}>
           <FormTitle>Account Info</FormTitle>
           <br />
           <div className="row">
@@ -100,6 +148,7 @@ const Form = ({ data }) => {
                 onChange={handleChange}
                 name="portfolio"
                 placeholder="Enter URL"
+                value={input.website}
               ></FormField>
             </div>
             <div className="col-12">
@@ -142,12 +191,14 @@ const Form = ({ data }) => {
           </div>
           <div>
             <FormClosingNote>{`To update your settings you should sign message through your wallet. Click 'Update profile' then sign the message`}</FormClosingNote>
-            <Divider
-              style={{ height: "1px", backgroundColor: "#223052"}}
-            />
+            <Divider style={{ height: "1px", backgroundColor: "#223052" }} />
             <div className="row gy-4 avatar-form-submit-container">
               <div className="col-lg-6 col-12 center-inner-mobile">
-                <FormButton className='all-width-mobile' style={{ marginLeft: 0 }} type="submit">
+                <FormButton
+                  className="all-width-mobile"
+                  style={{ marginLeft: 0 }}
+                  type="submit"
+                >
                   Update Profile
                 </FormButton>
               </div>
