@@ -184,7 +184,7 @@ export const NavbarHome: FC = () => {
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
-                  {true ? (
+                  {user ? (
                     <Popover content={popoverContent}>
                       <img
                         className="navbar_avatar"
