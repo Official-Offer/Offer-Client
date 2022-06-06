@@ -184,7 +184,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
 
 export default NewsDetails;
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx: any) => {
   let newsData = null;
   const query = qs.stringify(
     {

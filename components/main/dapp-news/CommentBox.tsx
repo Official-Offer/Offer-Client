@@ -6,6 +6,7 @@ import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 import router from "next/router";
+import axios from "axios";
 
 const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
@@ -21,7 +22,7 @@ const CommentBox = ({ text, name }: any) => {
     const data = {
       data: {
         comment: e.target[0].value,
-        user: e.target[0].value,
+        rating: 2,
       },
     };
     await request.post(`/reviews`, data).then((res) => {
@@ -33,8 +34,17 @@ const CommentBox = ({ text, name }: any) => {
       }
     })
     .then(() => router.reload()); //force api refetch;
-    handleClose();
-  };
+  }
+  //   await axios.post(`${URL_API_ADMIN}/reviews`, data).then((res) => {
+  //     if (res.status == 200) {
+  //         message.success('Send message success');
+  //         e.target.reset();
+  //     } else {
+  //         message.success('Something was errors! Please try again');
+  //     }
+  //   });
+  //   handleClose();
+  // };
 
   return (
     <>
