@@ -1,14 +1,13 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiService";
+import request from "@services/apiSSO";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
-import axios from "axios";
-import { URL_API_ADMIN } from "@config/dev.config";
+import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
+import router from "next/router";
 
-const PopUp = ({ text, name }: any) => {
+const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -18,12 +17,11 @@ const PopUp = ({ text, name }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    console.log(e.target.value);
     e.preventDefault();
     const data = {
-      "data": {
-        "comment": "a",
-        "user": 1
+      data: {
+        comment: e.target[0].value,
+        user: e.target[0].value,
       },
     };
     await request.post(`/reviews`, data).then((res) => {
@@ -33,7 +31,8 @@ const PopUp = ({ text, name }: any) => {
       } else {
         message.success("Something was wrong! Please try again");
       }
-    });
+    })
+    .then(() => router.reload()); //force api refetch;
     handleClose();
   };
 
@@ -60,7 +59,7 @@ const PopUp = ({ text, name }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <textarea name=""></textarea> */}
+            {/* <input onChange={(e) => console.log(e)}></input> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>
@@ -71,4 +70,4 @@ const PopUp = ({ text, name }: any) => {
   );
 };
 
-export default PopUp;
+export default CommentBox;

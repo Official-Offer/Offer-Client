@@ -23,7 +23,6 @@ class MyDocument extends Document {
     const { styleTags }: any = this.props;
     return (
       <Html>
-        {/* <HelmetMetaData props='main'/> */}
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

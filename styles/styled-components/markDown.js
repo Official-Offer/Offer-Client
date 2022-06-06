@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ReactMarkdown from "react-markdown";
 
-export const MarkDown = styled<any>(ReactMarkdown)`
+export const MarkDown = styled(ReactMarkdown)`
   h1 {
     font-size: 3rem;
   }
@@ -9,7 +9,10 @@ export const MarkDown = styled<any>(ReactMarkdown)`
     font-size: 1.2rem;
   }
   img {
-    width: 100%;
+    width: 95%;
+    padding: 20px;
+    margin: auto;
+    display: block;
   }
   pre {
     color: #ccc;
