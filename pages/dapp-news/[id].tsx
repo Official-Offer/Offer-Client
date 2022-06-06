@@ -1,22 +1,9 @@
-import {
-  FacebookFilled,
-  HeartOutlined,
-  HeartFilled,
-  TwitterOutlined,
-  UserOutlined,
-  YoutubeFilled,
-} from "@ant-design/icons";
+
 import {
   BoxALignCenter_Justify_ItemsBetween,
   BoxALignItemsCenter,
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
-import {
-  Button,
-  ButtonBorderBlueTransparent,
-  ButtonBlue,
-} from "@styles/styled-components/styledButton";
-import { File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { useRouter } from "next/router";
 import { Avatar, Rate } from "antd";
 import type { NextPage } from "next";
@@ -25,25 +12,19 @@ import * as qs from "qs";
 import request from "@services/apiService";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
-import PopUp from "@components/main/dapp-news/CommentBox"
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  TelegramShareButton,
-} from "react-share";
-import BannerSlides  from "@components/main/home/slides/BannerSlides";
+import BannerSlides from "@components/main/home/slides/BannerSlides";
 import Head from "next/head";
+import CommentSection from "@components/main/dapp-news/CommentSection";
+import SharingSection from "@components/main/dapp-news/SharingSection";
 
-const NewsDetails: NextPage = ({newsData}) => {
-  console.log(newsData)
+const NewsDetails: NextPage = ({ newsData }) => {
+  console.log(newsData);
   const [news, setNews] = useState<any>([]);
   const [comments, setComments] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [content, setContent] = useState("");
-  const [liked, setLiked] = useState(false);
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -152,9 +133,18 @@ const NewsDetails: NextPage = ({newsData}) => {
     <div>
       <Head>
         <meta property="og:title" content={newsData[0]?.attributes.title} />
-        <meta property="og:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
-        <meta property="og:url" content={`${URL_SITE}/dapp-news/${newsData[0]?.attributes.slug}`} />
-        <meta property="og:description" content={newsData[0]?.attributes.description} />
+        <meta
+          property="og:image"
+          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+        />
+        <meta
+          property="og:url"
+          content={`${URL_SITE}/dapp-news/${newsData[0]?.attributes.slug}`}
+        />
+        <meta
+          property="og:description"
+          content={newsData[0]?.attributes.description}
+        />
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
@@ -241,8 +231,9 @@ const NewsDetails: NextPage = ({newsData}) => {
                           <p className="name">{news.attributes.title}</p>
                           <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(
                             news.attributes.createdAt
-                          ).format("LL")} . ${news.attributes.viewer
-                            } views`}</p>
+                          ).format("LL")} . ${
+                            news.attributes.viewer
+                          } views`}</p>
                         </a>
                       </div>
                     </div>
@@ -253,118 +244,9 @@ const NewsDetails: NextPage = ({newsData}) => {
           </div>
           <div className="news-details-left col-lg-9 col-12">
             <hr className="mb-4" style={{ color: "#1DBBBD" }} />
-            <div className="news-details-social">
-              <br />
-              <h4>Share this article</h4>
-              <div className="news-details-social-icons">
-                <FacebookShareButton
-                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
-                  hashtag={`${news[0]?.attributes.tags[0]}`}
-                >
-                  <img
-                    src="/img/icons/social-facebook.png"
-                    className="news-details-social-icon"
-                  />
-                </FacebookShareButton>
-              </div>
-              <div className="news-details-social-icons">
-                <TwitterShareButton
-                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
-                  `}
-                  // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
-                >
-                  <img
-                    src="/img/icons/social-twitter.png"
-                    className="news-details-social-icon"
-                  />
-                </TwitterShareButton>
-              </div>
-              <div className="news-details-social-icons">
-                <TelegramShareButton
-                  // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
-                  title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
-                  `}
-                // className={classes.socialMediaButton}
-                >
-                  <img
-                    src="/img/icons/social-telegram.png"
-                    className="news-details-social-icon"
-                  />
-                </TelegramShareButton>
-              </div>
-              <div
-                className="news-details-social-heart"
-                onClick={() => {
-                  setLiked(!liked);
-                }}
-              >
-                <a target="_blank" rel="noopener noreferrer">
-                  {liked ? (
-                    <HeartFilled
-                      style={{ color: "#1DBBBD", marginLeft: "30vw" }}
-                    />
-                  ) : (
-                    <HeartOutlined style={{ marginLeft: "30vw" }} />
-                  )}
-                </a>
-              </div>
-              <br />
-            </div>
+            <SharingSection news={news} category={router.query.category} />
             <hr className="mt-4" style={{ color: "#1DBBBD" }} />
-            <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-              <h3>COMMENTS</h3>
-              <ButtonBlue>
-                <PopUp text="Write Comment" />
-              </ButtonBlue>
-            </BoxALignCenter_Justify_ItemsBetween>
-            <BoxWhiteShadow className="p-4 news-details-comment">
-              {news[0]?.attributes.reviews.data.map((cmt: any, i: number) => {
-                return (
-                  <div className="news-details-comment-box" key={i}>
-                    <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                      <BoxALignItemsCenter>
-                        <Avatar
-                          style={{ backgroundColor: "#1DBBBD" }}
-                          icon={<UserOutlined />}
-                        />
-                        <span className="news-details-comment-box-name">
-                          {cmt.attributes.comment}
-                        </span>
-                      </BoxALignItemsCenter>
-                      <span className="news-details-comment-box-time">
-                        {moment(cmt.attributes.createdAt).format("LL")}
-                      </span>
-                    </BoxALignCenter_Justify_ItemsBetween>
-                    <p className="news-details-comment-box-description">
-                      {cmt.attributes.comment}
-                    </p>
-                    <div>
-                      <Button>
-                        <BoxALignItemsCenter>
-                          <MessageSquare color="#1DBBBD" />
-                          <PopUp
-                            text="Reply"
-                            name={cmt.attributes.comment}
-                            className="ms-2 text-green"
-                          >
-                            Reply
-                          </PopUp>
-                        </BoxALignItemsCenter>
-                      </Button>
-                    </div>
-                    <hr />
-                  </div>
-                );
-              })}
-              <ButtonBorderBlueTransparent className="w-100 rounded-pill py-2">
-                View more
-              </ButtonBorderBlueTransparent>
-              <br />
-              <br />
-            </BoxWhiteShadow>
+            <CommentSection news={news} />
           </div>
         </div>
       </section>
@@ -375,8 +257,6 @@ const NewsDetails: NextPage = ({newsData}) => {
 export default NewsDetails;
 
 export const getServerSideProps = async () => {
-  //const router = useRouter();
-  //console.log(router);
   let newsData = null;
   const query = qs.stringify(
     {
@@ -392,8 +272,8 @@ export const getServerSideProps = async () => {
     }
   );
   await request.get(`/posts?${query}`).then((res) => {
-    newsData = res.data.data
-  })
+    newsData = res.data.data;
+  });
 
   return {
     props: {

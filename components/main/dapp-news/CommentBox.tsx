@@ -1,14 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiService";
+import request from "@services/apiSSO";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import axios from "axios";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 
-const PopUp = ({ text, name }: any) => {
+const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -26,7 +26,7 @@ const PopUp = ({ text, name }: any) => {
         "user": 1
       },
     };
-    await request.post(`/reviews`, data).then((res) => {
+    await request.post(`/review`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
@@ -71,4 +71,4 @@ const PopUp = ({ text, name }: any) => {
   );
 };
 
-export default PopUp;
+export default CommentBox;
