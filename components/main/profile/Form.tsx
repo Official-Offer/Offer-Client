@@ -32,7 +32,6 @@ import { useRouter } from "next/router";
 const Form = ({ data, reload, setReload }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
-    customURL: "",
   });
   const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(data.avatar); //upload base64
@@ -113,26 +112,6 @@ const Form = ({ data, reload, setReload }: any) => {
                 placeholder="Enter your display name"
                 value={input.displayName}
               ></FormField>
-            </div>
-            <div className="col-12">
-              <FieldTitle>Custom URL</FieldTitle>
-              <FormField
-                onChange={handleChange}
-                name="customURL"
-                placeholder="ui8.next/Your custom URL"
-                value={input.customURL}
-              ></FormField>
-              {/* <PlaceholderWrapper>
-                <ColoredPlaceHolder>
-                  <b>ui8.next/</b> Your custom URL
-                </ColoredPlaceHolder>
-                <FormField
-                  onChange={handleChange}
-                  name="customURL"
-                  // placeholder="ui8.next/Your custom URL"
-                  style={{zIndex: 10, position:'relative'}}
-                ></FormField>
-              </PlaceholderWrapper> */}
             </div>
             <div className="col-12">
               <FieldTitle>BIO</FieldTitle>
