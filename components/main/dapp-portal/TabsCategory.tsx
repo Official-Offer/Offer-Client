@@ -69,7 +69,7 @@ export default function TabsCategory({ setCate, cate }): ReactElement {
                 {i != 0 && <div className="divider" />}
                 <div
                   className={`tab-bar-category-left-item-sub ${category.tag} ${
-                    i == 0 && "active"
+                    category.id === cate && "active"
                   }`}
                 >
                   {category.icon !== "" && category.icon_white !== "" && (
