@@ -74,7 +74,7 @@ const DappPortal: NextPage = () => {
         <br />
         <TabsCategory setCate={setCate} cate={cate}/>
         <br />
-        <TableDapp tokenList={tokenList}/>
+        <TableDapp tokenList={tokenList} sort={sort} setSort={setSort}/>
       </section>
     </>
   );
