@@ -1,7 +1,14 @@
 import { UserOutlined } from "@ant-design/icons";
-import { BoxALignCenter_Justify_ItemsBetween, BoxALignItemsCenter, BoxWhiteShadow } from "@styles/styled-components/styledBox";
-import { ButtonBlue, ButtonBorderBlueTransparent } from "@styles/styled-components/styledButton";
-import { Avatar, Button } from "antd";
+import {
+  BoxALignCenter_Justify_ItemsBetween,
+  BoxALignItemsCenter,
+  BoxWhiteShadow,
+} from "@styles/styled-components/styledBox";
+import {
+  ButtonBlue,
+  ButtonBorderBlueTransparent,
+} from "@styles/styled-components/styledButton";
+import { Avatar } from "antd";
 import moment from "moment";
 import { MessageSquare } from "react-feather";
 import CommentBox from "./CommentBox";
@@ -37,7 +44,8 @@ const CommentSection = ({ news }) => (
               {cmt.attributes.comment}
             </p>
             <div>
-              <Button>
+              {/* <Button> */}
+              <a target="_blank" rel="noopener noreferrer">
                 <BoxALignItemsCenter>
                   <MessageSquare color="#1DBBBD" />
                   <CommentBox
@@ -48,7 +56,8 @@ const CommentSection = ({ news }) => (
                     Reply
                   </CommentBox>
                 </BoxALignItemsCenter>
-              </Button>
+              </a>
+              {/* </Button> */}
             </div>
             <hr />
           </div>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ReactMarkdown from "react-markdown";
 
-export const MarkDown = styled<any>(ReactMarkdown)`
+export const MarkDown = styled(ReactMarkdown)`
   h1 {
     font-size: 3rem;
   }
