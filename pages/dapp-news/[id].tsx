@@ -23,8 +23,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
-import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
-import { URL_SITE } from "@config/dev.config";
+import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
 import PopUp from "@components/main/dapp-news/CommentBox"
 import ReactMarkdown from "react-markdown";
@@ -36,11 +35,10 @@ import {
   TelegramShareButton,
 } from "react-share";
 import BannerSlides  from "@components/main/home/slides/BannerSlides";
-import HelmetMetaData from "@components/main/dapp-news/HelmetData";
-import { Helmet } from "react-helmet";
 import Head from "next/head";
 
-const NewsDetails: NextPage = () => {
+const NewsDetails: NextPage = ({newsData}) => {
+  console.log(newsData)
   const [news, setNews] = useState<any>([]);
   const [comments, setComments] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
@@ -152,12 +150,11 @@ const NewsDetails: NextPage = () => {
 
   return (
     <div>
-      {/* <HelmetMetaData props={news}/> */}
       <Head>
-        <meta property="og:title" content={news[0]?.attributes.title} />
-        <meta property="og:image" content={`${URL_API_IMG}${news[0]?.attributes.thumbnail.data.attributes.url}`} />
-        <meta property="og:url" content={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`} />
-        <meta property="og:description" content={news[0]?.attributes.description} />
+        <meta property="og:title" content={newsData[0]?.attributes.title} />
+        <meta property="og:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
+        <meta property="og:url" content={`${URL_SITE}/dapp-news/${newsData[0]?.attributes.slug}`} />
+        <meta property="og:description" content={newsData[0]?.attributes.description} />
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
@@ -260,7 +257,6 @@ const NewsDetails: NextPage = () => {
               <br />
               <h4>Share this article</h4>
               <div className="news-details-social-icons">
-                {/* <HelmetMetaData props={news}/> */}
                 <FacebookShareButton
                   url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
                   quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
@@ -377,3 +373,31 @@ const NewsDetails: NextPage = () => {
 };
 
 export default NewsDetails;
+
+export const getServerSideProps = async () => {
+  //const router = useRouter();
+  //console.log(router);
+  let newsData = null;
+  const query = qs.stringify(
+    {
+      populate: "*",
+      filters: {
+        id: {
+          $eq: 2,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+  await request.get(`/posts?${query}`).then((res) => {
+    newsData = res.data.data
+  })
+
+  return {
+    props: {
+      newsData,
+    },
+  };
+};

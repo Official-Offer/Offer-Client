@@ -5,7 +5,7 @@ import request from "@services/apiService";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import axios from "axios";
-import { URL_API_ADMIN } from "@config/dev.config";
+import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 
 const PopUp = ({ text, name }: any) => {
