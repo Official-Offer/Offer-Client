@@ -123,7 +123,7 @@ export const FormTitle =styled.p`
 
 export const FormAvatarImg = styled(AvatarImg)`
     width:100%;
-    background-color: #67c767;
+    background-color: #67c767; 
     @media screen and (max-width: 992px) {
         width: 80%;
         margin-bottom: 20px;

@@ -192,10 +192,13 @@ export const NavbarHome: FC = () => {
                   </ButtonBackgroundBlueBold>
                   {user ? (
                     <Popover content={popoverContent}>
-                      <img
-                        className="navbar_avatar"
-                        src={user?.avatar || "/img/austin.png"}
-                      ></img>
+                      <div className="navbar_userinfo_wrapper">
+                        <img
+                          className="navbar_avatar"
+                          src={user?.avatar || "/img/austin.png"}
+                        ></img>
+                        <div>{user?.displayName}</div>
+                      </div>
                     </Popover>
                   ) : (
                     <ButtonBlue
