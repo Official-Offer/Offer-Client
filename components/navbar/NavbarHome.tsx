@@ -94,14 +94,14 @@ export const NavbarHome: FC = () => {
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
+        router.push('/');
+        router.reload();
         await request
           .get(`/users/me`)
           .then((res: any) => {
-            // setUser(res.data);
-            // router.push('/');
-            router.reload();
+            setUser(res.data);
           })
-          .catch(() => router.reload());
+          .catch(() => null);
       });
   };
 
