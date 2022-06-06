@@ -4,7 +4,7 @@ import {
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
 import { MarkDown } from "@styles/styled-components/markDown";
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
@@ -16,13 +16,12 @@ import Head from "next/head";
 import CommentSection from "@components/main/dapp-news/CommentSection";
 import SharingSection from "@components/main/dapp-news/SharingSection";
 import { Calendar, Eye } from "react-feather";
+import { getRouteRegex } from "next/dist/shared/lib/router/utils";
 
 const NewsDetails: NextPage = ({ newsData }) => {
   console.log(newsData);
   const [news, setNews] = useState<any>([]);
-  const [comments, setComments] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
-  const [content, setContent] = useState("");
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -92,7 +91,7 @@ const NewsDetails: NextPage = ({ newsData }) => {
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
-        />
+        /> 
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
@@ -185,14 +184,14 @@ const NewsDetails: NextPage = ({ newsData }) => {
 
 export default NewsDetails;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
   let newsData = null;
   const query = qs.stringify(
     {
       populate: "*",
       filters: {
         id: {
-          $eq: 2,
+          $eq: ctx.query.id,
         },
       },
     },

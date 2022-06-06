@@ -8,8 +8,6 @@ import store from "@redux/store";
 import "bootstrap/dist/css/bootstrap.css";
 import "@styles/globals.scss";
 import * as ga from '../utils/ga';
-import HelmetMetaData from "@components/main/dapp-news/HelmetData";
-import { Helmet } from "react-helmet";
 TopBarProgress.config({
   barColors: {
     "0": "#1DBBBD",

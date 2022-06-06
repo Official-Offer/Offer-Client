@@ -16,7 +16,9 @@ const SharingSection = ({ news, category }) => {
       <div className="news-details-social-icons">
         <FacebookShareButton
           url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-          quote={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
+          quote={`${news[0]?.attributes.title}
+          
+          ${news[0]?.attributes.description}`}
           hashtag={`${news[0]?.attributes.tags[0]}`}
         >
           <img
@@ -28,7 +30,9 @@ const SharingSection = ({ news, category }) => {
       <div className="news-details-social-icons">
         <TwitterShareButton
           url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-          title={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
+          title={`${news[0]?.attributes.title}
+          
+          ${news[0]?.attributes.description}`}
           // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
         >
           <img
@@ -40,7 +44,9 @@ const SharingSection = ({ news, category }) => {
       <div className="news-details-social-icons">
         <TelegramShareButton
           url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-          title={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
+          title={`${news[0]?.attributes.title}
+          
+          ${news[0]?.attributes.description}`}
         >
           <img
             src="/img/icons/social-telegram.png"
