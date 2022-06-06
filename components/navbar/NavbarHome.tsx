@@ -23,6 +23,7 @@ import LoginPopup from "./LoginPopup";
 import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
 import Cookies from "js-cookie";
+import axios from "axios";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -93,14 +94,14 @@ export const NavbarHome: FC = () => {
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
-        if (res.data) {
-          await request
-            .get(`/users/me`)
-            .then((res: any) => {
-              setUser(res.data);
-            })
-            .catch(() => null);
-        }
+        router.push('/');
+        router.reload();
+        await request
+          .get(`/users/me`)
+          .then((res: any) => {
+            setUser(res.data);
+          })
+          .catch(() => null);
       });
   };
 
