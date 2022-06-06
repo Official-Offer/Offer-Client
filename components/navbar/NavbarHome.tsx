@@ -90,10 +90,11 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
-    await request.get("/logout").then((res) => {
+    await request.post("/logout").then((res) => {
+      Cookies.remove("accessToken");
+      console.log(res);
       if (res.data) {
-        Cookies.remove("accessToken");
-        router.reload(); //full reload
+        // router.reload(); //full reload
       }
     });
   };
