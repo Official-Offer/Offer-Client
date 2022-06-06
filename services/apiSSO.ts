@@ -2,8 +2,8 @@ import { TOKEN_BEARER, URL_API_SSO } from '@config/index';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const token = Cookies.get("accessToken");
-// const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZGlzcGxheU5hbWUiOiJUaHXhuqVuIE5ndXnhu4VuIFbDtSIsInVzZXJBcGlJZCI6NCwiaWF0IjoxNjU0NDk5NjQ1LCJleHAiOjE2NTQ1ODYwNDV9.hMxpGbQU097Hgsw9l5sqKUKe7XR4TCSmSBoLVEWd68U'
+// const token = Cookies.get("accessToken");
+const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZGlzcGxheU5hbWUiOiJUaHXhuqVuIE5ndXnhu4VuIFbDtSIsInVzZXJBcGlJZCI6NCwiaWF0IjoxNjU0NDk5NjQ1LCJleHAiOjE2NTQ1ODYwNDV9.hMxpGbQU097Hgsw9l5sqKUKe7XR4TCSmSBoLVEWd68U'
 // const token = TOKEN_BEARER;
 export default axios.create({
     baseURL: URL_API_SSO,

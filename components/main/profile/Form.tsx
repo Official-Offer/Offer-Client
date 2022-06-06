@@ -57,10 +57,10 @@ const Form = ({ data, reload, setReload }: any) => {
       console.log(uploadAvatarFile);
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
-      const resAvatar = await request
-        .post(`users/uploadAvatar`, formData)
-        .then(() => router.reload()); //force api refetch
+      const resAvatar = await request.post(`users/uploadAvatar`, formData);
+      // .then(() => router.reload()); //force api refetch
     }
+    router.reload();
   };
 
   const onSelectImage = (e: any) => {
@@ -151,7 +151,7 @@ const Form = ({ data, reload, setReload }: any) => {
               <FieldTitle>Portfolio Or Website</FieldTitle>
               <FormField
                 onChange={handleChange}
-                name="portfolio"
+                name="website"
                 placeholder="Enter URL"
                 value={input.website}
               ></FormField>
