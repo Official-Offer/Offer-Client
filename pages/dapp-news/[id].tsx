@@ -3,7 +3,7 @@ import {
   BoxALignItemsCenter,
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
-import {MarkDown} from "@styles/styled-components/markDown";
+import { MarkDown } from "@styles/styled-components/markDown";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
@@ -11,13 +11,11 @@ import * as qs from "qs";
 import request from "@services/apiService";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
-import ReactMarkdown from "react-markdown";
-import styled from "styled-components";
 import BannerSlides from "@components/main/home/slides/BannerSlides";
 import Head from "next/head";
 import CommentSection from "@components/main/dapp-news/CommentSection";
 import SharingSection from "@components/main/dapp-news/SharingSection";
-import { CalendarOutlined, EyeOutlined } from "@ant-design/icons";
+import { Calendar, Eye } from "react-feather";
 
 const NewsDetails: NextPage = ({ newsData }) => {
   console.log(newsData);
@@ -103,35 +101,13 @@ const NewsDetails: NextPage = ({ newsData }) => {
             <div className="news-details-dashboard">
               <div className="mb-5">
                 <span className="news-details-createdAt">
-                  <CalendarOutlined className=""/>
-                  <i class="bi bi-calendar"></i>
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="10"
-                    fill="currentColor"
-                    className="bi bi-calendar"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                  </svg> */}
+                  <Calendar size={15}/>
                   &nbsp;
                   {moment(news[0]?.attributes.createdAt).format("LL")}
                 </span>
                 <span>&nbsp;&nbsp;&nbsp;</span>
                 <span className="news-details-createdAt">
-                  <EyeOutlined />
-                  {/* <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-eye"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                  </svg> */}
+                  <Eye size={15}/>
                   &nbsp;
                   {news[0]?.attributes.viewer}
                 </span>

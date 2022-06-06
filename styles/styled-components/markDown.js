@@ -9,7 +9,10 @@ export const MarkDown = styled(ReactMarkdown)`
     font-size: 1.2rem;
   }
   img {
-    width: 100%;
+    width: 95%;
+    padding: 20px;
+    margin: auto;
+    display: block;
   }
   pre {
     color: #ccc;

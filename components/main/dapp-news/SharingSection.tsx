@@ -39,11 +39,8 @@ const SharingSection = ({ news, category }) => {
       </div>
       <div className="news-details-social-icons">
         <TelegramShareButton
-          // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${router.query.category}`}
           url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-          title={`${news[0]?.attributes.title}${news[0]?.attributes.description} 
-                  `}
-          // className={classes.socialMediaButton}
+          title={`${news[0]?.attributes.title}${news[0]?.attributes.description}`}
         >
           <img
             src="/img/icons/social-telegram.png"

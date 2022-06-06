@@ -1,12 +1,11 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import request from "@services/apiSSO";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
-import axios from "axios";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
+import router from "next/router";
 
 const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
@@ -18,22 +17,22 @@ const CommentBox = ({ text, name }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    console.log(e.target.value);
     e.preventDefault();
     const data = {
-      "data": {
-        "comment": "a",
-        "user": 1
+      data: {
+        comment: e.target[0].value,
+        user: e.target[0].value,
       },
     };
-    await request.post(`/review`, data).then((res) => {
+    await request.post(`/reviews`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
       } else {
         message.success("Something was wrong! Please try again");
       }
-    });
+    })
+    .then(() => router.reload()); //force api refetch;
     handleClose();
   };
 
@@ -60,7 +59,7 @@ const CommentBox = ({ text, name }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <textarea name=""></textarea> */}
+            {/* <input onChange={(e) => console.log(e)}></input> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>
