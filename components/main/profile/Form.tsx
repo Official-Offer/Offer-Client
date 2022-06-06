@@ -90,6 +90,12 @@ const Form = ({ data, reload, setReload }: any) => {
     });
   };
 
+  const onClearForm = () => {
+    const blankState = Object.fromEntries(
+      Object.entries(input).map(([key, value]) => [key, null])
+    );
+  }
+
   return (
     <div>
       <ProfileTitle> Profile Settings </ProfileTitle>
@@ -200,7 +206,7 @@ const Form = ({ data, reload, setReload }: any) => {
                 <FormButton
                   className="all-width-mobile"
                   style={{ marginLeft: 0 }}
-                  type="submit"
+                  // type="submit"
                 >
                   Update Profile
                 </FormButton>
