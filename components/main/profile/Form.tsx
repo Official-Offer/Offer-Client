@@ -28,7 +28,8 @@ import request from "@services/apiSSO";
 import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-const Form = ({ data }: any) => {
+import { useRouter } from "next/router";
+const Form = ({ data, reload, setReload }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
     customURL: "",
@@ -36,6 +37,7 @@ const Form = ({ data }: any) => {
   const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(data.avatar); //upload base64
   const [uploadAvatarFile, setUploadAvatarFile] = useState<any>(); //raw file
+  const router = useRouter();
   useEffect(() => {
     if (!uploadAvatarFile) {
       setAvatar(data.avatar);
@@ -55,7 +57,9 @@ const Form = ({ data }: any) => {
       console.log(uploadAvatarFile);
       const formData = new FormData();
       formData.append("file", uploadAvatarFile);
-      const resAvatar = await request.post(`users/uploadAvatar`, formData);
+      const resAvatar = await request
+        .post(`users/uploadAvatar`, formData)
+        .then(() => router.reload()); //force api refetch
     }
   };
 
@@ -83,7 +87,7 @@ const Form = ({ data }: any) => {
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
             <Container className="col-lg-3 col-12">
-              <FormAvatarImg src={avatar || data.avatar} />
+              <FormAvatarImg src={avatar || data.avatar || "/img/austin.png"} />
             </Container>
             <Container className="col-lg-6 col-12 px-4">
               {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}

@@ -1,6 +1,7 @@
 .tab-bar-combination {
     align-items: center;
     flex-wrap: wrap;
+    gap: 13px;
     &-item {
         display: flex;
         align-items: center;
@@ -76,13 +77,40 @@
                     background: linear-gradient(45deg, #8991b1, #454a74);
                 }
                 &.bnb {
-                    background: linear-gradient(45deg, #f0b90b, #f0b90b);
+                    background: linear-gradient(45deg, #ede0b6, #f0b90b);
                 }
-                &.matic {
+                &.mat {
                     background: linear-gradient(45deg, #8247e5, #b87df4);
                 }
-                &.tron {
+                &.tro {
                     background: linear-gradient(45deg, #e36159, #c3322d);
+                }
+                &.neo {
+                    background: linear-gradient(45deg, #85e359, #109110);
+                }
+                &.ste {
+                    background: linear-gradient(45deg, #598ee3, #162cd1);
+                }
+                &.tom {
+                    background: linear-gradient(45deg, #b4e3af, #2c900d);
+                }
+                &.vex {
+                    background: linear-gradient(45deg, #cfd8cf, #515350);
+                }
+                &.ico {
+                    background: linear-gradient(45deg, #59cee3, #07515e);
+                }
+                &.chi {
+                    background: linear-gradient(45deg, #e36159, #c3322d);
+                }
+                &.hiv {
+                    background: linear-gradient(45deg, #e36159, #c3322d);
+                }
+                &.nea {
+                    background: linear-gradient(45deg, #ededed, #464646);
+                }
+                &.thu {
+                    background: linear-gradient(45deg, #e6edb6, #e1f03b);
                 }
             }
             &.eth {

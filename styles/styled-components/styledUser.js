@@ -29,6 +29,7 @@ export const AvatarWrapper = styled.div`
 
 export const AvatarImg = styled.img`
     clip-path: circle();
+    background-color: #67c767;
 `
 
 export const AvatarContainer = styled.div`
@@ -122,6 +123,7 @@ export const FormTitle =styled.p`
 
 export const FormAvatarImg = styled(AvatarImg)`
     width:100%;
+    background-color: #67c767;
     @media screen and (max-width: 992px) {
         width: 80%;
         margin-bottom: 20px;

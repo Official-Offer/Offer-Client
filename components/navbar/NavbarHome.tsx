@@ -15,13 +15,14 @@ import {
   SearchOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { Drawer, Menu } from "antd";
-import { useRouter } from "next/router";
+import { Drawer, Menu, Popover } from "antd";
+import { Router, useRouter } from "next/router";
 import { Search } from "react-feather";
 import Link from "next/link";
 import LoginPopup from "./LoginPopup";
 import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
+import Cookies from "js-cookie";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -88,7 +89,26 @@ export const NavbarHome: FC = () => {
 
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
+  const onLogout = async () => {
+    await request.post("/logout").then((res) => {
+      Cookies.remove("accessToken");
+      console.log(res);
+      if (res.data) {
+        // router.reload(); //full reload
+      }
+    });
+  };
 
+  const popoverContent = (
+    <div className="navbar_popover">
+      <p className="navbar_popover_content" onClick={onLogout}>
+        Log out
+      </p>
+      <Link href="/user-profile">
+        <p className="navbar_popover_content">User Profile</p>
+      </Link>
+    </div>
+  );
   return (
     <>
       <section id="navbar_home">
@@ -164,8 +184,13 @@ export const NavbarHome: FC = () => {
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
-                  {user ? (
-                    <img className="navbar_avatar" src={user.avatar}></img>
+                  {true ? (
+                    <Popover content={popoverContent}>
+                      <img
+                        className="navbar_avatar"
+                        src={user?.avatar || "/img/austin.png"}
+                      ></img>
+                    </Popover>
                   ) : (
                     <ButtonBlue
                       className="px-4"

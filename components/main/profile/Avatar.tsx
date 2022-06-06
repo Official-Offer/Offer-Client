@@ -10,7 +10,7 @@ const Avatar = ({ data, showFavDapp, setShowFavDapp }: any) => {
   return (
     <AvatarWrapper>
       <AvatarContainer className="row">
-        <AvatarImg className="avatar-img" src={data.avatar}></AvatarImg>
+        <AvatarImg className="avatar-img" src={data.avatar || '/img/austin.png'}></AvatarImg>
       </AvatarContainer>
       <AvatarName>{data.displayName}</AvatarName>
       <Divider style={{ background: "rgba(29, 187, 189, 0.5)", margin: 0 }} />
