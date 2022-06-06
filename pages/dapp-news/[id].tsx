@@ -17,7 +17,7 @@ import CommentSection from "@components/main/dapp-news/CommentSection";
 import SharingSection from "@components/main/dapp-news/SharingSection";
 import { Calendar, Eye } from "react-feather";
 
-const NewsDetails: NextPage = ({ newsData }) => {
+const NewsDetails: NextPage = ({ newsData }: any) => {
   console.log(newsData);
   const [news, setNews] = useState<any>([]);
   const [comments, setComments] = useState([]);

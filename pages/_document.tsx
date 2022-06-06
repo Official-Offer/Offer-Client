@@ -1,8 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import React from "react";
-import HelmetMetaData from "@components/main/dapp-news/HelmetData";
-import { Helmet } from "react-helmet";
+// import HelmetMetaData from "@components/main/dapp-news/HelmetData";
+// import { Helmet } from "react-helmet";
 class MyDocument extends Document {
   static getInitialProps({ renderPage }: any) {
     // Step 1: Create an instance of ServerStyleSheet
