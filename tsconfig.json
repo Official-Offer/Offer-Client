@@ -33,6 +33,6 @@
       "@styledComponents/*": ["styles/styled-components/*"],
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss", "components/navbar/LoginPopup.jsx"],
   "exclude": ["node_modules"]
 }

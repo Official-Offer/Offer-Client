@@ -7,7 +7,7 @@ import {
   TwitterShareButton,
 } from "react-share";
 
-const SharingSection = ({ news, category }) => {
+const SharingSection = ({ news, category }: any) => {
   const [liked, setLiked] = useState(false);
   return (
     <div className="news-details-social">

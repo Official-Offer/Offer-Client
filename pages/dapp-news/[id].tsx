@@ -18,7 +18,7 @@ import SharingSection from "@components/main/dapp-news/SharingSection";
 import { Calendar, Eye } from "react-feather";
 import { getRouteRegex } from "next/dist/shared/lib/router/utils";
 
-const NewsDetails: NextPage = ({ newsData }) => {
+const NewsDetails: NextPage = ({ newsData }: any) => {
   console.log(newsData);
   const [news, setNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);

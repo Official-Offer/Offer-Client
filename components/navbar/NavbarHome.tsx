@@ -23,6 +23,7 @@ import LoginPopup from "./LoginPopup";
 import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
 import Cookies from "js-cookie";
+import axios from "axios";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -90,13 +91,18 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
-    await request.post("/logout").then((res) => {
-      Cookies.remove("accessToken");
-      console.log(res);
-      if (res.data) {
-        // router.reload(); //full reload
-      }
-    });
+    await request
+      .get("/logout", { withCredentials: true })
+      .then(async (res) => {
+        window.location.href = window.location.origin;
+        router.reload();
+        await request
+          .get(`/users/me`)
+          .then((res: any) => {
+            setUser(res.data);
+          })
+          .catch(() => null);
+      });
   };
 
   const popoverContent = (
@@ -184,7 +190,7 @@ export const NavbarHome: FC = () => {
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
-                  {true ? (
+                  {user ? (
                     <Popover content={popoverContent}>
                       <img
                         className="navbar_avatar"
