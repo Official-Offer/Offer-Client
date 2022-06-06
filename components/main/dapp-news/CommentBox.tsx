@@ -7,6 +7,7 @@ import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 import router from "next/router";
 import axios from "axios";
+import qs from "qs";
 
 const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
@@ -25,7 +26,20 @@ const CommentBox = ({ text, name }: any) => {
         rating: 2,
       },
     };
-    await request.post(`/reviews`, data).then((res) => {
+    const commentQuery = qs.stringify(
+      {
+        populate: "*",
+        // filters: {
+        //   post: {
+        //     title: 
+        //   },
+        // },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    await request.post(`/reviews?${commentQuery}`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
@@ -35,16 +49,6 @@ const CommentBox = ({ text, name }: any) => {
     })
     .then(() => router.reload()); //force api refetch;
   }
-  //   await axios.post(`${URL_API_ADMIN}/reviews`, data).then((res) => {
-  //     if (res.status == 200) {
-  //         message.success('Send message success');
-  //         e.target.reset();
-  //     } else {
-  //         message.success('Something was errors! Please try again');
-  //     }
-  //   });
-  //   handleClose();
-  // };
 
   return (
     <>

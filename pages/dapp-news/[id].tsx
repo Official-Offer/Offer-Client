@@ -69,6 +69,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
     })();
   }, [news]);
 
+  console.log(news)
   const keyWord = "(/uploads/";
 
   const modifiedContent = news[0]?.attributes.content
