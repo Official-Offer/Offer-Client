@@ -29,6 +29,7 @@ import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { notification } from "antd";
 const Form = ({ data, reload, setReload }: any) => {
   const { input, handleChange, resetForm, clearForm }: any = useForm({
     ...data,
@@ -50,16 +51,18 @@ const Form = ({ data, reload, setReload }: any) => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     // console.log(input);
-    const resData = await request.put(`users/${data.id}`, input);
+    const resData = await request
+      .put(`users/${data.id}`, input)
+      .then(async () => {
+        if (uploadAvatarFile) {
+          const formData = new FormData();
+          formData.append("file", uploadAvatarFile);
+          const resAvatar = await request.post(`users/uploadAvatar`, formData);
+        }
+      })
+      .then(onSuccessfullyEdit)
+      .catch(onFailedEdit);
     // if avatar is uploaded, post it too.
-    if (uploadAvatarFile) {
-      console.log(uploadAvatarFile);
-      const formData = new FormData();
-      formData.append("file", uploadAvatarFile);
-      const resAvatar = await request.post(`users/uploadAvatar`, formData);
-      // .then(() => router.reload()); //force api refetch
-    }
-    router.reload();
   };
 
   const onSelectImage = (e: any) => {
@@ -69,6 +72,22 @@ const Form = ({ data, reload, setReload }: any) => {
     }
     // console.log(e.target.files[0]);
     setUploadAvatarFile(e.target.files[0]);
+  };
+
+  const onSuccessfullyEdit = () => {
+    notification.open({
+      message: "Success 🥳",
+      description:
+        "Your info has been successfully updated! \nReload to see full changes",
+      duration: 3,
+    });
+  };
+  const onFailedEdit = () => {
+    notification.open({
+      message: "Error 🤢",
+      description: "Error, try again.",
+      duration: 3,
+    });
   };
 
   return (
