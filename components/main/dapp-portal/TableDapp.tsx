@@ -160,7 +160,7 @@ export default function TableDapp({
                 }}
               >
                 <div className="table-body-item table-body-item-number">
-                  <img src="img/icons/ad.png" alt="" />
+                  <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
                   <span>{i + 1}</span>
                 </div>
                 <div className="table-body-item table-body-item-name">
