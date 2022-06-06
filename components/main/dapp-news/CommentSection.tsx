@@ -13,7 +13,7 @@ import moment from "moment";
 import { MessageSquare } from "react-feather";
 import CommentBox from "./CommentBox";
 
-const CommentSection = ({ news }) => (
+const CommentSection = ({ news }: any) => (
   <div>
     <BoxALignCenter_Justify_ItemsBetween className="mb-4">
       <h3>COMMENTS</h3>
