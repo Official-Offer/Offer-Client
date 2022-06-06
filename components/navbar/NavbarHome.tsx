@@ -22,6 +22,7 @@ import Link from "next/link";
 import LoginPopup from "./LoginPopup";
 import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
+import Cookies from "js-cookie";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -89,11 +90,12 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
-    await request.get("/logout").then(res => {
+    await request.get("/logout").then((res) => {
       if (res.data) {
+        Cookies.remove("accessToken");
         router.reload(); //full reload
       }
-    })
+    });
   };
 
   const popoverContent = (
