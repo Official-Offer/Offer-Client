@@ -58,7 +58,7 @@ export default function TokenList({ data, setSort, sort }: any) {
     setSort([query, sort]);
   };
   const handleChangeSelectThead = (value: string) => {
-    console.log(value);
+    // console.log(value);
     setValueSelected(value);
     setSort([value, "desc"]);
   };

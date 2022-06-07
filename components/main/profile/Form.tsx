@@ -31,9 +31,10 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { notification } from "antd";
 const Form = ({ data, reload, setReload }: any) => {
-  const { input, handleChange, resetForm, clearForm }: any = useForm({
-    ...data,
-  });
+  const { input, handleChange, resetForm, clearForm, clearFormFields }: any =
+    useForm({
+      ...data,
+    });
   const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(data.avatar); //upload base64
   const [uploadAvatarFile, setUploadAvatarFile] = useState<any>(); //raw file
@@ -74,7 +75,8 @@ const Form = ({ data, reload, setReload }: any) => {
     setUploadAvatarFile(e.target.files[0]);
   };
 
-  const onSuccessfullyEdit = () => {
+  const onSuccessfullyEdit = (err: any) => {
+    console.log(err);
     notification.open({
       message: "Success 🥳",
       description:
@@ -82,6 +84,7 @@ const Form = ({ data, reload, setReload }: any) => {
       duration: 3,
     });
   };
+
   const onFailedEdit = () => {
     notification.open({
       message: "Error 🤢",
@@ -91,10 +94,16 @@ const Form = ({ data, reload, setReload }: any) => {
   };
 
   const onClearForm = () => {
-    const blankState = Object.fromEntries(
-      Object.entries(input).map(([key, value]) => [key, null])
-    );
-  }
+    const nullField = [
+      "facebook",
+      "website",
+      "twitter",
+      "telegram",
+      "instagram",
+      "bio",
+    ];
+    clearFormFields(nullField);
+  };
 
   return (
     <div>
@@ -105,8 +114,7 @@ const Form = ({ data, reload, setReload }: any) => {
       </FormDescription>
       <FormWrapper>
         <FormContainer
-          onSubmit={(e) => onSubmit(e)}
-          encType="multipart/form-data"
+          onSubmit={onSubmit}
         >
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
@@ -206,13 +214,13 @@ const Form = ({ data, reload, setReload }: any) => {
                 <FormButton
                   className="all-width-mobile"
                   style={{ marginLeft: 0 }}
-                  // type="submit"
+                  type="submit"
                 >
                   Update Profile
                 </FormButton>
               </div>
               <div className="col-lg-6 col-12 center-inner-mobile">
-                <ClearButton onClick={clearForm}>
+                <ClearButton onClick={onClearForm} type="button">
                   {" "}
                   <XCircle /> Clear all
                 </ClearButton>

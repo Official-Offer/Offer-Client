@@ -30,7 +30,7 @@ export default function BannerSlides({}) {
       });
     })();
   }, []);
-  console.log(banners);
+  // console.log(banners);
   return (
     <>
       <Swiper

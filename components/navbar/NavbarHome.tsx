@@ -36,7 +36,7 @@ export const NavbarHome: FC = () => {
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          console.log(res.data);
+          // console.log(res.data);
           setUser(res.data);
         })
         .catch(() => null);
