@@ -1,7 +1,10 @@
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import {
   DappBox,
+  DappHeart,
   DappImg,
+  DappName,
+  DappWrapper,
   FormTitle,
   ProfileTitle,
 } from "@styles/styled-components/styledUser";
@@ -24,12 +27,14 @@ const FavoriteDapps = ({ data }) => {
         // .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=${data.id}`)
         .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=5`)
         .then((res) => {
-          setDapps(res.data.data.map(dapp => {
-            return {
-              imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
-              name: dapp.attributes.dapp.data.attributes.name
-            }
-          }));       
+          setDapps(
+            res.data.data.map((dapp: any) => {
+              return {
+                imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
+                name: dapp.attributes.dapp.data.attributes.name,
+              };
+            })
+          );
         });
     })();
   }, []);
@@ -38,10 +43,13 @@ const FavoriteDapps = ({ data }) => {
       <ProfileTitle>Favorite Dapps</ProfileTitle>
       <div className="row g-4">
         {dapps.map((dapp) => (
-          <div className="col-12 col-xl-4" key={1}>
+          <div className="col-12 col-lg-6 col-xl-4" key={1}>
             <DappBox>
-              <DappImg src={dapp.imgSrc}></DappImg>
-              <p>{dapp.name}</p>
+              <DappWrapper>
+                <DappImg src={dapp.imgSrc}></DappImg>
+                <DappName>{dapp.name}</DappName>
+              </DappWrapper>
+              <DappHeart src="/img/icons/circled_heart.png"></DappHeart>
             </DappBox>
           </div>
         ))}

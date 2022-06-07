@@ -285,10 +285,35 @@ export const DappBox = styled.div`
   background-color: #FFF;
   width: 100%;
   /* height: 90px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const DappImg = styled.img`
-    /* border-radius: 8px;
-    margin: 15px;
-    padding-top: 15px; */
+    border-radius: 8px;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    justify-self: flex-end !important;
+`
+
+export const DappName = styled.p`
+    font-family: 'Circular Std';
+    font-style: 'Book';
+    font-size: 11px;
+    line-height: 20px;
+    vertical-align: top;
+    text-align: left;
+    text-align:center;
+`
+export const DappHeart = styled.img`
+    padding-right: 15px;
+    width: 50px;
+`
+export const DappWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: left;
 `

@@ -196,7 +196,7 @@ const Form = ({ data, reload, setReload }: any) => {
               ></FormField>
             </div>
             <div className="col-12">
-              <FieldTitle>Telegram</FieldTitle>
+              <FieldTitle>Facebook</FieldTitle>
               <FormField
                 onChange={handleChange}
                 name="facebook"
