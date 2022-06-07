@@ -29,11 +29,12 @@ import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { notification } from "antd";
 const Form = ({ data, reload, setReload }: any) => {
-  const { input, handleChange, resetForm, clearForm }: any = useForm({
-    ...data,
-    customURL: "",
-  });
+  const { input, handleChange, resetForm, clearForm, clearFormFields }: any =
+    useForm({
+      ...data,
+    });
   const token = Cookies.get("accessToken");
   const [avatar, setAvatar] = useState(data.avatar); //upload base64
   const [uploadAvatarFile, setUploadAvatarFile] = useState<any>(); //raw file
@@ -51,16 +52,18 @@ const Form = ({ data, reload, setReload }: any) => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     // console.log(input);
-    const resData = await request.put(`users/${data.id}`, input);
+    const resData = await request
+      .put(`users/${data.id}`, input)
+      .then(async () => {
+        if (uploadAvatarFile) {
+          const formData = new FormData();
+          formData.append("file", uploadAvatarFile);
+          const resAvatar = await request.post(`users/uploadAvatar`, formData);
+        }
+      })
+      .then(onSuccessfullyEdit)
+      .catch(onFailedEdit);
     // if avatar is uploaded, post it too.
-    if (uploadAvatarFile) {
-      console.log(uploadAvatarFile);
-      const formData = new FormData();
-      formData.append("file", uploadAvatarFile);
-      const resAvatar = await request
-        .post(`users/uploadAvatar`, formData)
-        .then(() => router.reload()); //force api refetch
-    }
   };
 
   const onSelectImage = (e: any) => {
@@ -72,6 +75,36 @@ const Form = ({ data, reload, setReload }: any) => {
     setUploadAvatarFile(e.target.files[0]);
   };
 
+  const onSuccessfullyEdit = (err: any) => {
+    console.log(err);
+    notification.open({
+      message: "Success 🥳",
+      description:
+        "Your info has been successfully updated! \nReload to see full changes",
+      duration: 3,
+    });
+  };
+
+  const onFailedEdit = () => {
+    notification.open({
+      message: "Error 🤢",
+      description: "Error, try again.",
+      duration: 3,
+    });
+  };
+
+  const onClearForm = () => {
+    const nullField = [
+      "facebook",
+      "website",
+      "twitter",
+      "telegram",
+      "instagram",
+      "bio",
+    ];
+    clearFormFields(nullField);
+  };
+
   return (
     <div>
       <ProfileTitle> Profile Settings </ProfileTitle>
@@ -81,8 +114,7 @@ const Form = ({ data, reload, setReload }: any) => {
       </FormDescription>
       <FormWrapper>
         <FormContainer
-          onSubmit={(e) => onSubmit(e)}
-          encType="multipart/form-data"
+          onSubmit={onSubmit}
         >
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
@@ -115,26 +147,6 @@ const Form = ({ data, reload, setReload }: any) => {
               ></FormField>
             </div>
             <div className="col-12">
-              <FieldTitle>Custom URL</FieldTitle>
-              <FormField
-                onChange={handleChange}
-                name="customURL"
-                placeholder="ui8.next/Your custom URL"
-                value={input.customURL}
-              ></FormField>
-              {/* <PlaceholderWrapper>
-                <ColoredPlaceHolder>
-                  <b>ui8.next/</b> Your custom URL
-                </ColoredPlaceHolder>
-                <FormField
-                  onChange={handleChange}
-                  name="customURL"
-                  // placeholder="ui8.next/Your custom URL"
-                  style={{zIndex: 10, position:'relative'}}
-                ></FormField>
-              </PlaceholderWrapper> */}
-            </div>
-            <div className="col-12">
               <FieldTitle>BIO</FieldTitle>
               <BiggerFormField
                 onChange={handleChange}
@@ -151,7 +163,7 @@ const Form = ({ data, reload, setReload }: any) => {
               <FieldTitle>Portfolio Or Website</FieldTitle>
               <FormField
                 onChange={handleChange}
-                name="portfolio"
+                name="website"
                 placeholder="Enter URL"
                 value={input.website}
               ></FormField>
@@ -206,12 +218,6 @@ const Form = ({ data, reload, setReload }: any) => {
                 >
                   Update Profile
                 </FormButton>
-              </div>
-              <div className="col-lg-6 col-12 center-inner-mobile">
-                <ClearButton onClick={clearForm}>
-                  {" "}
-                  <XCircle /> Clear all
-                </ClearButton>
               </div>
             </div>
           </div>

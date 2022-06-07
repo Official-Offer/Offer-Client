@@ -36,7 +36,7 @@ export const NavbarHome: FC = () => {
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          console.log(res.data);
+          // console.log(res.data);
           setUser(res.data);
         })
         .catch(() => null);
@@ -95,7 +95,6 @@ export const NavbarHome: FC = () => {
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
         window.location.href = window.location.origin;
-        router.reload();
         await request
           .get(`/users/me`)
           .then((res: any) => {
@@ -192,10 +191,13 @@ export const NavbarHome: FC = () => {
                   </ButtonBackgroundBlueBold>
                   {user ? (
                     <Popover content={popoverContent}>
-                      <img
-                        className="navbar_avatar"
-                        src={user?.avatar || "/img/austin.png"}
-                      ></img>
+                      <div className="navbar_userinfo_wrapper">
+                        <img
+                          className="navbar_avatar"
+                          src={user?.avatar || "/img/austin.png"}
+                        ></img>
+                        <div>{user?.displayName}</div>
+                      </div>
                     </Popover>
                   ) : (
                     <ButtonBlue

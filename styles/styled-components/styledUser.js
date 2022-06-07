@@ -123,7 +123,7 @@ export const FormTitle =styled.p`
 
 export const FormAvatarImg = styled(AvatarImg)`
     width:100%;
-    background-color: #67c767;
+    background-color: #67c767; 
     @media screen and (max-width: 992px) {
         width: 80%;
         margin-bottom: 20px;
@@ -133,7 +133,6 @@ export const FormAvatarImg = styled(AvatarImg)`
 `
 
 export const Container = styled.div`
-    width: 100%; 
     justify-content: flex-start;
     display: flex;
     align-items: center;
@@ -286,11 +285,10 @@ export const DappBox = styled.div`
   background-color: #FFF;
   width: 100%;
   /* height: 90px; */
-  display: flex;
 `
 
 export const DappImg = styled.img`
-    border-radius: 8px;
+    /* border-radius: 8px;
     margin: 15px;
-    padding-top: 15px;
+    padding-top: 15px; */
 `

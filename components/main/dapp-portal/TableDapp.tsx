@@ -17,7 +17,11 @@ import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
 
 const { Option } = Select;
 
-export default function TableDapp({ tokenList }: any): ReactElement {
+export default function TableDapp({
+  tokenList,
+  setSort,
+  sort,
+}: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
 
@@ -30,21 +34,25 @@ export default function TableDapp({ tokenList }: any): ReactElement {
       title: "24hr Users",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyUser",
     },
     {
       title: "24hr Transactions",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyTransaction",
     },
     {
       title: "24hr Volume",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyVolume",
     },
     {
       title: "Social Signal",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "socialSignal",
     },
   ];
 
@@ -53,24 +61,30 @@ export default function TableDapp({ tokenList }: any): ReactElement {
       title: "Users",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyUser",
     },
     {
       title: "Transactions",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyTransaction",
     },
     {
       title: "Volume",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "dailyVolume",
     },
     {
       title: "Social Signal",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
+      query: "socialSignal",
     },
   ];
-
+  const activeItem = (sort: string, query: string) => {
+    setSort([query, sort]);
+  };
   return (
     <>
       <div className="block-for-pc">
@@ -87,8 +101,22 @@ export default function TableDapp({ tokenList }: any): ReactElement {
                     {header.sort && (
                       <div className="table-header-item-sorter">
                         <div className="table-header-item-sorter-inner">
-                          <CaretUpOutlined className="up" />
-                          <CaretDownOutlined className="down" />
+                          <CaretUpOutlined
+                            className={`up ${
+                              sort[0] === header.query && sort[1] === "asc"
+                                ? "active"
+                                : ""
+                            }`}
+                            onClick={() => activeItem("asc", header.query)}
+                          />
+                          <CaretDownOutlined
+                            className={`down ${
+                              sort[0] === header.query && sort[1] === "desc"
+                                ? "active"
+                                : ""
+                            }`}
+                            onClick={() => activeItem("desc", header.query)}
+                          />
                         </div>
                       </div>
                     )}
@@ -132,7 +160,7 @@ export default function TableDapp({ tokenList }: any): ReactElement {
                 }}
               >
                 <div className="table-body-item table-body-item-number">
-                  <img src="img/icons/ad.png" alt="" />
+                  <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
                   <span>{i + 1}</span>
                 </div>
                 <div className="table-body-item table-body-item-name">
@@ -156,7 +184,7 @@ export default function TableDapp({ tokenList }: any): ReactElement {
                       i < 2
                         ? token.attributes.crawl.chains[0].color_icon
                         : token.attributes.chain.data?.attributes.crawl
-                          .color_icon
+                            .color_icon
                     }
                     alt={
                       i < 2
@@ -220,10 +248,11 @@ export default function TableDapp({ tokenList }: any): ReactElement {
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${usds_24hr[0].ratio == 0
+                            width: `${
+                              usds_24hr[0].ratio == 0
                                 ? "10%"
                                 : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
-                              }`,
+                            }`,
                           }}
                         />
                         <div
@@ -240,10 +269,11 @@ export default function TableDapp({ tokenList }: any): ReactElement {
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${usds_24hr[0].ratio == 0
+                            width: `${
+                              usds_24hr[0].ratio == 0
                                 ? "10%"
                                 : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
-                              }`,
+                            }`,
                           }}
                         />
                         <div

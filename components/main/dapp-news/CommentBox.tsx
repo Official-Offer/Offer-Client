@@ -19,6 +19,7 @@ const CommentBox = ({ text, name }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
+    // console.log(e.target.value);
     e.preventDefault();
     const data = {
       data: {
