@@ -133,7 +133,6 @@ export const FormAvatarImg = styled(AvatarImg)`
 `
 
 export const Container = styled.div`
-    width: 100%; 
     justify-content: flex-start;
     display: flex;
     align-items: center;
