@@ -189,7 +189,7 @@ export const NavbarHome: FC = () => {
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
-                  {!user ? (
+                  {user ? (
                     <>
                       <Popover placement="bottom" content={popoverContent} trigger="focus">
                         <button className="navbar_userinfo_wrapper" type="button">
