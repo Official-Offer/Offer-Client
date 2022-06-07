@@ -95,7 +95,6 @@ export const NavbarHome: FC = () => {
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
         window.location.href = window.location.origin;
-        router.reload();
         await request
           .get(`/users/me`)
           .then((res: any) => {
