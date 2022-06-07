@@ -49,7 +49,7 @@ console.log(comments);
       <BoxALignCenter_Justify_ItemsBetween className="mb-4">
         <h3>COMMENTS</h3>
         <ButtonBlue>
-          <CommentBox text="Write Comment" />
+          <CommentBox text="Write Comment"  title={news[0]?.attributes.title}/>
         </ButtonBlue>
       </BoxALignCenter_Justify_ItemsBetween>
       <BoxWhiteShadow className="p-4 news-details-comment">
@@ -82,6 +82,7 @@ console.log(comments);
                     <CommentBox
                       text="Reply"
                       name={cmt.attributes?.comment}
+                      title={news[0]?.attributes.title}
                       className="ms-2 text-green"
                     >
                       Reply

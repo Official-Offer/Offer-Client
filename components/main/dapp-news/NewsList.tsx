@@ -9,6 +9,7 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
     <>
       {data &&
         data.map((blog: any, i: number) => {
+          console.log(blog);
           return (
             <div
               key={i}
@@ -37,21 +38,19 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
                     <p className="main-homepage-dappnews-card-body-title">
                       {blog.attributes.title}
                     </p>
-                    <p className="main-homepage-dappnews-card-body-description">
+                    {/* <p className="main-homepage-dappnews-card-body-description">
                       {blog.attributes.description}
-                    </p>
+                    </p> */}
                     <div>
-                      <span className="main-homepage-dappnews-card-body-createdAt p-1">
-                        <Calendar size={15}/>
-                        &nbsp;
-                        {moment(blog.attributes.createdAt).format("LL")}
+                      <span className="main-homepage-dappnews-card-body-createdAt">
+                      By {blog.attributes.Author} | {moment(blog.attributes.createdAt).format("LL")}
                       </span>
                       &nbsp;
-                      <span className="main-homepage-dappnews-card-body-createdAt">
+                      {/* <span className="main-homepage-dappnews-card-body-createdAt">
                         <Eye size={15}/>
                         &nbsp;
                         {blog.attributes.viewer} 
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>

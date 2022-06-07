@@ -9,7 +9,7 @@ import router from "next/router";
 import axios from "axios";
 import qs from "qs";
 
-const CommentBox = ({ text, name }: any) => {
+const CommentBox = ({ text, name, title }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -25,15 +25,16 @@ const CommentBox = ({ text, name }: any) => {
         comment: e.target[0].value,
         rating: 2,
       },
+      post: title
     };
     const commentQuery = qs.stringify(
       {
         populate: "*",
-        // filters: {
-        //   post: {
-        //     title: 
-        //   },
-        // },
+        filters: {
+          post: {
+            title: title
+          },
+        },
       },
       {
         encodeValuesOnly: true,
