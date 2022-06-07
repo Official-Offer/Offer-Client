@@ -7,6 +7,7 @@ import Form from "../../components/main/profile/Form";
 import { URL_API_SSO } from "@config/dev.config";
 import Cookies from "js-cookie";
 import request from "@services/apiSSO";
+
 const UserProfile: NextPage = () => {
   const [showFavDapps, setShowFavDapps] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -33,23 +34,29 @@ const UserProfile: NextPage = () => {
           setUserInfo(res.data);
           setLogin(true);
         })
-        .catch(()=>setLogin(false));
+        .catch(() => setLogin(false));
     })();
   }, [reload]);
 
   return (
-    <ContentWrapper className="row">
-      <div className="col-lg-4 col-12">
-        <Avatar
-          data={userInfo}
-          showFavDapp={showFavDapps}
-          setShowFavDapp={setShowFavDapps}
-        />
-      </div>
-      <div className="col-lg-8 col-12">
-        {showFavDapps ? <FavoriteDapps /> : <Form data={userInfo} reload={reload} setReload={setReload}/>}
-      </div>
-    </ContentWrapper>
+    login && (
+      <ContentWrapper className="row">
+        <div className="col-lg-4 col-12">
+          <Avatar
+            data={userInfo}
+            showFavDapp={showFavDapps}
+            setShowFavDapp={setShowFavDapps}
+          />
+        </div>
+        <div className="col-lg-8 col-12">
+          {showFavDapps ? (
+            <FavoriteDapps />
+          ) : (
+            <Form data={userInfo} reload={reload} setReload={setReload} />
+          )}
+        </div>
+      </ContentWrapper>
+    )
   );
 };
 export default UserProfile;
