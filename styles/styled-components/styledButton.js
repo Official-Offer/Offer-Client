@@ -85,11 +85,12 @@ export const ButtonBlue = styled.button `
 `;
 export const ButtonBackgroundBlueBold = styled.div`
     background-color: #FCFCFD;
-    // padding: .375rem .75rem;
-    // border: 1px solid #058499;
-    // color: #058499;
-    // outline: none;
-    // border-radius: 10px;
+    padding: .375rem .75rem;
+    border: 1px solid #058499;
+    color: #058499;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
     display: inline-block;
     font-weight: bold;
     line-height: 1.5;
