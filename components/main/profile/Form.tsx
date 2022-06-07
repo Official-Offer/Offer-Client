@@ -219,12 +219,6 @@ const Form = ({ data, reload, setReload }: any) => {
                   Update Profile
                 </FormButton>
               </div>
-              <div className="col-lg-6 col-12 center-inner-mobile">
-                <ClearButton onClick={onClearForm} type="button">
-                  {" "}
-                  <XCircle /> Clear all
-                </ClearButton>
-              </div>
             </div>
           </div>
         </FormContainer>
