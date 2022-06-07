@@ -285,11 +285,10 @@ export const DappBox = styled.div`
   background-color: #FFF;
   width: 100%;
   /* height: 90px; */
-  display: flex;
 `
 
 export const DappImg = styled.img`
-    border-radius: 8px;
+    /* border-radius: 8px;
     margin: 15px;
-    padding-top: 15px;
+    padding-top: 15px; */
 `

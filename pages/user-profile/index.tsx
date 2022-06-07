@@ -50,7 +50,7 @@ const UserProfile: NextPage = () => {
         </div>
         <div className="col-lg-8 col-12">
           {showFavDapps ? (
-            <FavoriteDapps />
+            <FavoriteDapps data={userInfo}/>
           ) : (
             <Form data={userInfo} reload={reload} setReload={setReload} />
           )}
