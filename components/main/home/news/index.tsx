@@ -16,15 +16,6 @@ export const News: FC = () => {
 
   useEffect(() => {
     (async () => {
-      // if (category.key === '') {
-      //     await request.get(`/post-categories`).then(async (response) => {
-      //         const res = response.data.data;
-      //         setCategory({
-      //             data: res,
-      //             key: res[0].attributes.name
-      //         });
-      //     })
-      // }
       const query = qs.stringify(
         {
           populate: "*",

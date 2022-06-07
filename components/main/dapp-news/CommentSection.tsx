@@ -3,6 +3,7 @@ import {
   BoxALignCenter_Justify_ItemsBetween,
   BoxALignItemsCenter,
   BoxWhiteShadow,
+  BoxWhiteShadowItem,
 } from "@styles/styled-components/styledBox";
 import {
   ButtonBlue,
@@ -45,14 +46,14 @@ console.log(comments);
     
 
   return (
-    <div>
-      <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+    <BoxWhiteShadow>
+      <BoxALignCenter_Justify_ItemsBetween className="p-4">
         <h3>COMMENTS</h3>
         <ButtonBlue>
           <CommentBox text="Write Comment"  title={news[0]?.attributes.title}/>
         </ButtonBlue>
       </BoxALignCenter_Justify_ItemsBetween>
-      <BoxWhiteShadow className="p-4 news-details-comment">
+      <div className="p-4 news-details-comment">
         {comments.map((cmt: any, i: number) => {
           console.log(cmt);
           return (
@@ -100,8 +101,8 @@ console.log(comments);
         </ButtonBorderBlueTransparent>
         <br />
         <br />
-      </BoxWhiteShadow>
-    </div>
+      </div>
+    </BoxWhiteShadow>
   );
 };
 export default CommentSection;

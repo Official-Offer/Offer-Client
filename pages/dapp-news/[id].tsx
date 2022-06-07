@@ -69,7 +69,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
     })();
   }, [news]);
 
-  console.log(news)
+  console.log(news);
   const keyWord = "(/uploads/";
 
   const modifiedContent = news[0]?.attributes.content
@@ -92,49 +92,53 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
-        /> 
+        />
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
         <div className="row m-0 p-0">
-          <div className="news-details-left col-lg-9 col-12 mt-lg-5 mt-2">
-            <div className="news-details-dashboard">
-              <div className="mb-5">
-                <span className="news-details-createdAt">
-                  <Calendar size={15}/>
-                  &nbsp;
-                  {moment(news[0]?.attributes.createdAt).format("LL")}
-                </span>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                <span className="news-details-createdAt">
-                  <Eye size={15}/>
-                  &nbsp;
-                  {news[0]?.attributes.viewer}
-                </span>
+          <BoxWhiteShadow className="p-lg-4 p-2">
+            <div className="news-details-left col-lg-9 col-12 mt-lg-5 mt-2">
+              <div className="news-details-dashboard">
+                <div className="mb-5">
+                  <span className="news-details-createdAt">
+                    <Calendar size={15} />
+                    &nbsp;
+                    {moment(news[0]?.attributes.createdAt).format("LL")}
+                  </span>
+                  <span>&nbsp;&nbsp;&nbsp;</span>
+                  <span className="news-details-createdAt">
+                    <Eye size={15} />
+                    &nbsp;
+                    {news[0]?.attributes.viewer}
+                  </span>
+                </div>
+                <BoxALignItemsCenter>
+                  <h2>{`${news[0]?.attributes.title}`}</h2>
+                </BoxALignItemsCenter>
+                <br />
+                <MarkDown>{modifiedContent}</MarkDown>
               </div>
-              <BoxALignItemsCenter>
-                <h2>{`${news[0]?.attributes.title}`}</h2>
-              </BoxALignItemsCenter>
-              <br />
-              <MarkDown>{modifiedContent}</MarkDown>
             </div>
-          </div>
+          </BoxWhiteShadow>
           <div className="news-details-right col-lg-3 col-12 mt-lg-5">
-            <h3 className="mb-3">Tags</h3>
-            <div className="row">
-              {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
-                return (
-                  <BoxWhiteShadow className="news-details-right-tag" key={i}>
-                    {tag.attributes.name}
-                  </BoxWhiteShadow>
-                );
-              })}
-            </div>
-            <div className="news-details-right-banner">
-              <BannerSlides />
-            </div>
+            <BoxWhiteShadow className="p-2">
+              <h3 className="mb-3">Tags</h3>
+              <div className="row">
+                {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
+                  return (
+                    <BoxWhiteShadow className="news-details-right-tag" key={i}>
+                      {tag.attributes.name}
+                    </BoxWhiteShadow>
+                  );
+                })}
+              </div>
+              <div className="news-details-right-banner">
+                <BannerSlides />
+              </div>
+            </BoxWhiteShadow>
             <br />
-            <div className="news-details-right-topic">
+            <BoxWhiteShadow className="news-details-right-topic p-2">
               <h3 className="mb-3">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
@@ -158,18 +162,18 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                             src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
                           />
                           <p className="name">{news.attributes.title}</p>
-                          <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(
+                          {/* <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(
                             news.attributes.createdAt
                           ).format("LL")} . ${
                             news.attributes.viewer
-                          } views`}</p>
+                          } views`}</p> */}
                         </a>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
+            </BoxWhiteShadow>
           </div>
           <div className="news-details-left col-lg-9 col-12">
             <hr className="mb-4" style={{ color: "#1DBBBD" }} />

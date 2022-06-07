@@ -46,11 +46,6 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
                       By {blog.attributes.Author} | {moment(blog.attributes.createdAt).format("LL")}
                       </span>
                       &nbsp;
-                      {/* <span className="main-homepage-dappnews-card-body-createdAt">
-                        <Eye size={15}/>
-                        &nbsp;
-                        {blog.attributes.viewer} 
-                      </span> */}
                     </div>
                   </div>
                 </div>

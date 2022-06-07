@@ -7,3 +7,4 @@ export default axios.create({
         'Authorization': `Bearer ${TOKEN_BEARER}`
     },
 });
+ 

@@ -5,7 +5,7 @@ import * as qs from "qs";
 import NewsLists from "@components/main/dapp-news/NewsList";
 import { Button, LoadMore } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
-import { BoxALignItemsCenter } from "@styles/styled-components/styledBox";
+import { BoxALignItemsCenter, BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import { NavMain, Nav_Sub, ToggleMain, ToggleMain_Sub } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
 
@@ -104,6 +104,9 @@ const DappNews: FC = () => {
   return (
     <section className="main-homepage-news px-lg-3 px-0">
       <h2 className="text-center">Dapp News</h2>
+      <BoxWhiteShadow className="p-lg-4 p-2">
+        Lol
+      </BoxWhiteShadow>
       <div className="block-for-mobile">
         <div className="bar-category">
           <Select

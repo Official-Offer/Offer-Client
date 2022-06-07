@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiSSO";
+import request from "@services/apiDapp";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { URL_API_ADMIN } from "@config/index";
@@ -22,25 +22,13 @@ const CommentBox = ({ text, name, title }: any) => {
     e.preventDefault();
     const data = {
       data: {
-        comment: e.target[0].value,
-        rating: 2,
-      },
-      post: title
-    };
-    const commentQuery = qs.stringify(
-      {
-        populate: "*",
-        filters: {
-          post: {
-            title: title
-          },
-        },
-      },
-      {
-        encodeValuesOnly: true,
+        "comment": "text here",
+        "rating": 5,
+        "post": 21,
+        "user": 1
       }
-    );
-    await request.post(`/reviews?${commentQuery}`, data).then((res) => {
+    };
+    await request.post(`/dapp/comments`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
