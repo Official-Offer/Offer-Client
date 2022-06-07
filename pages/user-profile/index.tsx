@@ -39,24 +39,26 @@ const UserProfile: NextPage = () => {
   }, [reload]);
 
   return (
-    login && (
-      <ContentWrapper className="row">
-        <div className="col-lg-4 col-12">
-          <Avatar
-            data={userInfo}
-            showFavDapp={showFavDapps}
-            setShowFavDapp={setShowFavDapps}
-          />
-        </div>
-        <div className="col-lg-8 col-12">
-          {showFavDapps ? (
-            <FavoriteDapps data={userInfo}/>
-          ) : (
-            <Form data={userInfo} reload={reload} setReload={setReload} />
-          )}
-        </div>
-      </ContentWrapper>
-    )
+    <>
+      {login && (
+        <ContentWrapper className="row">
+          <div className="col-lg-4 col-12">
+            <Avatar
+              data={userInfo}
+              showFavDapp={showFavDapps}
+              setShowFavDapp={setShowFavDapps}
+            />
+          </div>
+          <div className="col-lg-8 col-12">
+            {showFavDapps ? (
+              <FavoriteDapps data={userInfo} />
+            ) : (
+              <Form data={userInfo} reload={reload} setReload={setReload} />
+            )}
+          </div>
+        </ContentWrapper>
+      )}
+    </>
   );
 };
 export default UserProfile;
