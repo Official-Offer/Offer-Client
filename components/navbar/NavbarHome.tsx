@@ -190,7 +190,7 @@ export const NavbarHome: FC = () => {
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
-                    <Popover content={popoverContent}>
+                    <Popover content={popoverContent} trigger="focus">
                       <div className="navbar_userinfo_wrapper">
                         <img
                           className="navbar_avatar"

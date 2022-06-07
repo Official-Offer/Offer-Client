@@ -91,7 +91,7 @@ export default function TableDapp({
         <BoxWhiteShadow className="p-4">
           <div className="table-header-outer">
             <div className="table-header">
-              {listTitleHeader.map((header, i) => {
+              {listTitleHeader.map((header: any, i: number) => {
                 return (
                   <div className="table-header-item" key={i}>
                     {header.icon !== "" && header.icon}
