@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { removeVietnameseTones } from "@utils/processTextInput";
 export default function useForm(initial = {}) {
   // create a state object fror our inputs
   const [input, setInputs] = useState(initial);
@@ -16,10 +16,14 @@ export default function useForm(initial = {}) {
     if (type === "file") {
       [value] = e.target.files;
     }
+    if (type === "textarea" || type === "text") {
+      value = removeVietnameseTones(value);
+    }
     setInputs({
       ...input,
       [name]: value,
     });
+    console.log(type);
   }
   function resetForm() {
     setInputs(initial);

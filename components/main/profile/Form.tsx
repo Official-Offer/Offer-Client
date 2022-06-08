@@ -83,6 +83,9 @@ const Form = ({ data, reload, setReload }: any) => {
         "Your info has been successfully updated! \nReload to see full changes",
       duration: 3,
     });
+    setTimeout(()=> {
+      router.reload();
+    }, 3000);
   };
 
   const onFailedEdit = () => {
@@ -196,7 +199,7 @@ const Form = ({ data, reload, setReload }: any) => {
               ></FormField>
             </div>
             <div className="col-12">
-              <FieldTitle>Telegram</FieldTitle>
+              <FieldTitle>Facebook</FieldTitle>
               <FormField
                 onChange={handleChange}
                 name="facebook"

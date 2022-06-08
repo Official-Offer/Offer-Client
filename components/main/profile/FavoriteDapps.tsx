@@ -1,7 +1,10 @@
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import {
   DappBox,
+  DappHeart,
   DappImg,
+  DappName,
+  DappWrapper,
   FormTitle,
   ProfileTitle,
 } from "@styles/styled-components/styledUser";
@@ -38,10 +41,13 @@ const FavoriteDapps = ({ data }: any) => {
       <ProfileTitle>Favorite Dapps</ProfileTitle>
       <div className="row g-4">
         {dapps.map((dapp) => (
-          <div className="col-12 col-xl-4" key={1}>
+          <div className="col-12 col-lg-6 col-xl-4" key={1}>
             <DappBox>
-              <DappImg src={dapp.imgSrc}></DappImg>
-              <p>{dapp.name}</p>
+              <DappWrapper>
+                <DappImg src={dapp.imgSrc}></DappImg>
+                <DappName>{dapp.name}</DappName>
+              </DappWrapper>
+              <DappHeart src="/img/icons/circled_heart.png"></DappHeart>
             </DappBox>
           </div>
         ))}

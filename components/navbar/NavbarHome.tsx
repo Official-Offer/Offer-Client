@@ -88,12 +88,13 @@ export const NavbarHome: FC = () => {
     { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
   ];
 
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isPopupVisible, setPopupVisible] = useState(router.query.login && !user);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
+        // window.history.replaceState(null, '','/');
         window.location.href = window.location.origin;
         await request
           .get(`/users/me`)
@@ -114,6 +115,7 @@ export const NavbarHome: FC = () => {
       </Link>
     </div>
   );
+
   return (
     <>
       <section id="navbar_home">
