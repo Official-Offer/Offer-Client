@@ -26,7 +26,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { removeVietnameseTones } from "@utils/processTextInput";
 export const NavbarHome: FC = () => {
-  const router = useRouter();
+  const router: any = useRouter();
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState(false);
   const [boxSearch, setBoxSearch] = useState(false);
