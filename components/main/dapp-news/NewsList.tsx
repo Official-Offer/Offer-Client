@@ -2,7 +2,6 @@ import React, { ReactElement, useState } from "react";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import moment from "moment";
 import router from "next/router";
-import { Calendar, Eye } from "react-feather";
 
 export default function NewsLists({ data }: any, { tag }: any): ReactElement {
   return (
@@ -16,14 +15,8 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
               onClick={() => {
                 router.push(
                   {
-                    // pathname: `/dapp-news/${blog.id}`,
-                    pathname: `/dapp-news/main`,
-                    query: {
-                      id: blog.id,
-                      category: blog.attributes.category.data.attributes.name,
-                    },
-                  },
-                  `/dapp-news/${blog.attributes.slug}`
+                    pathname: `/dapp-news/${blog.attributes.slug}`,
+                  }
                 );
               }}
             >
@@ -39,9 +32,6 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
                     <p className="main-homepage-dappnews-card-body-title">
                       {blog.attributes.title}
                     </p>
-                    {/* <p className="main-homepage-dappnews-card-body-description">
-                      {blog.attributes.description}
-                    </p> */}
                     <div>
                       <span className="main-homepage-dappnews-card-body-createdAt">
                       By {blog.attributes.Author} | {moment(blog.attributes.createdAt).format("LL")}

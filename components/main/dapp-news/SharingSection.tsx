@@ -1,4 +1,3 @@
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { URL_SITE } from "@config/index";
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import { useState } from "react";
@@ -17,7 +16,7 @@ const SharingSection = ({ news, category }: any) => {
       <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton
-            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            //url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           
@@ -33,7 +32,7 @@ const SharingSection = ({ news, category }: any) => {
         <div className="news-details-social-icons">
           <TwitterShareButton
             // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-            url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
+           url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             title={`${news[0]?.attributes.title}
           
             ${news[0]?.attributes.description}`}
@@ -47,7 +46,7 @@ const SharingSection = ({ news, category }: any) => {
         </div>
         <div className="news-details-social-icons">
           <TelegramShareButton
-            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            //url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             title={`${news[0]?.attributes.title}
           
@@ -59,20 +58,6 @@ const SharingSection = ({ news, category }: any) => {
             />
           </TelegramShareButton>
         </div>
-        {/* <div
-        className="news-details-social-heart"
-        onClick={() => {
-          setLiked(!liked);
-        }}
-      >
-        <a target="_blank" rel="noopener noreferrer">
-          {liked ? (
-            <HeartFilled style={{ color: "#1DBBBD", marginLeft: "30vw" }} />
-          ) : (
-            <HeartOutlined style={{ marginLeft: "30vw" }} />
-          )}
-        </a>
-      </div> */}
         <br />
       </div>
     </BoxWhiteShadow>

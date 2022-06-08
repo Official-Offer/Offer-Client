@@ -11,10 +11,12 @@ import { URL_API_IMG } from "@config/index";
 import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 export default function PinnedSlides({}) {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+  const router = useRouter();
   const [pinnedPosts, setPinned] = useState([]);
   useEffect(() => {
     (async () => {
@@ -73,7 +75,16 @@ export default function PinnedSlides({}) {
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
-            <SwiperSlide key={i}>
+            <SwiperSlide 
+              key={i}
+              className="main-homepage-dappnews-pinnedSlides"
+              onClick={() => {
+                router.push(
+                  {
+                    pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
+                  },
+                );
+              }}>
               <img
                 className="main-homepage-dappnews-pinnedSlides-img"
                 src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}

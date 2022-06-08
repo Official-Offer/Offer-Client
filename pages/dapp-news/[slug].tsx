@@ -9,6 +9,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
 import BannerSlides from "@components/main/home/slides/BannerSlides";
@@ -19,9 +20,10 @@ import { Calendar, Eye } from "react-feather";
 import { getRouteRegex } from "next/dist/shared/lib/router/utils";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
-  console.log(newsData);
+  
   const [news, setNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
+  const [liked, setLiked] = useState(false);
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -29,9 +31,12 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         {
           populate: "*",
           filters: {
-            id: {
-              $eq: router.query.id,
-            },
+            // id: {
+            //   $eq: router.query.id,
+            // },
+            slug: {
+              $eq: router.query.slug
+            }
           },
         },
         {
@@ -42,7 +47,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         setNews(res.data.data);
       });
     })();
-  }, [router.query.id]);
+  }, [router.query.slug]);
 
   useEffect(() => {
     (async () => {
@@ -55,7 +60,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           },
           filters: {
             category: {
-              name: router.query.category,
+              name: news[0]?.attributes.category.data.attributes.name,
             },
           },
         },
@@ -80,15 +85,16 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   return (
     <div>
       <Head>
+        <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
         <meta
           property="og:image"
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
         />
-        <meta
+        {/* <meta
           property="og:url"
           content={`${URL_SITE}/dapp-news/${newsData[0]?.attributes.slug}`}
-        />
+        /> */}
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
@@ -112,6 +118,22 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     &nbsp;
                     {news[0]?.attributes.viewer}
                   </span>
+                </div>
+                <div
+                  className="news-details-social-heart"
+                  onClick={() => {
+                    setLiked(!liked);
+                  }}
+                >
+                  <a target="_blank" rel="noopener noreferrer">
+                    {liked ? (
+                      <HeartFilled
+                        style={{ color: "#1DBBBD", marginLeft: "30vw" }}
+                      />
+                    ) : (
+                      <HeartOutlined style={{ marginLeft: "30vw" }} />
+                    )}
+                  </a>
                 </div>
                 <BoxALignItemsCenter>
                   <h2>{`${news[0]?.attributes.title}`}</h2>
@@ -146,14 +168,16 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     <div className="col-lg-12 col-12 px-3" key={i}>
                       <div
                         onClick={() => {
-                          router.push({
-                            pathname: `/dapp-news/${news.id}`,
-                            query: {
-                              id: news.id,
-                              category:
-                                news.attributes.category.data.attributes.name,
+                          router.push(
+                            {
+                              pathname:`/dapp-news/${news.attributes.slug}`,
+                              // pathname: `/dapp-news/main`,
+                              query: {
+                                id: news.id,
+                                category: news.attributes.category.data.attributes.name,
+                              },
                             },
-                          });
+                          );
                         }}
                       >
                         <a target="_blank" rel="noopener noreferrer">
@@ -162,11 +186,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                             src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
                           />
                           <p className="name">{news.attributes.title}</p>
-                          {/* <p className="main-homepage-dappnews-card-body-createdAt">{`${moment(
-                            news.attributes.createdAt
-                          ).format("LL")} . ${
-                            news.attributes.viewer
-                          } views`}</p> */}
                         </a>
                       </div>
                     </div>

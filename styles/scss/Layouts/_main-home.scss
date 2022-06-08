@@ -93,6 +93,7 @@
       &-pinnedSlides {
         width: 100%;
         height: auto;
+        cursor: pointer;
         &-img {
           width: 100%;
           border-radius: 20px;
@@ -111,6 +112,7 @@
         flex-grow: grow;
         text-overflow: ellipsis;
         padding-top: 20px;
+        cursor: pointer;
         // padding-bottom: 10px;
         &-desc {
           padding-left: 10px;

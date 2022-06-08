@@ -9,7 +9,8 @@ export const MarkDown = styled(ReactMarkdown)`
     font-size: 1.2rem;
   }
   img {
-    padding: 20px;
+    // padding: 20px;
+    width: 100%;
     margin: auto;
     border-radius: 20px;
     display: block;
