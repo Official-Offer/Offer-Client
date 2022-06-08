@@ -80,7 +80,7 @@ const Form = ({ data, reload, setReload }: any) => {
     notification.open({
       message: "Success 🥳",
       description:
-        "Your info has been successfully updated! \nReload to see full changes",
+        "Your info has been successfully updated!",
       duration: 3,
     });
     setTimeout(()=> {
