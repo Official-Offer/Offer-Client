@@ -83,6 +83,9 @@ const Form = ({ data, reload, setReload }: any) => {
         "Your info has been successfully updated! \nReload to see full changes",
       duration: 3,
     });
+    setTimeout(()=> {
+      router.reload();
+    }, 3000);
   };
 
   const onFailedEdit = () => {
