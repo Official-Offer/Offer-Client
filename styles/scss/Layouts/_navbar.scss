@@ -97,16 +97,17 @@
 }
 
 .navbar_popover {
-  width: 200px;
+  width: 130px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   
 }
 
 .navbar_popover_content {
   cursor: pointer;
+  // text-align: left;
 }
 .navbar_userinfo_wrapper {
   display: flex;
@@ -120,4 +121,7 @@
     box-shadow: none;
     outline: none;
   }
+}
+.ant-popover-inner-content {
+  padding-bottom: 0 !important;
 }
