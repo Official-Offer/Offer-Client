@@ -36,7 +36,7 @@ export const NavbarHome: FC = () => {
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          console.log(res.data);
+          // console.log(res.data);
           setUser(res.data);
         })
         .catch(() => null);
@@ -95,7 +95,6 @@ export const NavbarHome: FC = () => {
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
         window.location.href = window.location.origin;
-        router.reload();
         await request
           .get(`/users/me`)
           .then((res: any) => {
@@ -183,20 +182,25 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                  // onClick={() => {
+                  //   router.push("/submit");
+                  // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
-                    <Popover content={popoverContent}>
-                      <img
-                        className="navbar_avatar"
-                        src={user?.avatar || "/img/austin.png"}
-                      ></img>
-                    </Popover>
+                    <>
+                      <Popover placement="bottom" content={popoverContent} trigger="focus">
+                        <button className="navbar_userinfo_wrapper" type="button">
+                          <img
+                            className="navbar_avatar"
+                            src={user?.avatar || "/img/austin.png"}
+                          ></img>
+                          <div>{user?.displayName}</div>
+                        </button>
+                      </Popover>
+                    </>
                   ) : (
                     <ButtonBlue
                       className="px-4"

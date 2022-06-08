@@ -1,109 +1,123 @@
 #navbar_home {
-    position: fixed;
-    top: 0;
-    background-color: #FCFCFD;
-    box-shadow: 0px 10px 20px rgba(34, 48, 82, 0.25);
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  background-color: #fcfcfd;
+  box-shadow: 0px 10px 20px rgba(34, 48, 82, 0.25);
+  z-index: 1000;
+  width: 100%;
+  .searchTerm {
     width: 100%;
-    .searchTerm {
-        width: 100%;
-        border: 1px solid rgba(139, 152, 156, 0.5);
-        border-right: none;
-        background-color: transparent;
-        padding: 15px;
-        height: 40px;
-        color: $black-color;
-        border-radius: 90px 0 0 90px;
-        outline: none;
-        @include sm {
-            width: 80%;
-        }
+    border: 1px solid rgba(139, 152, 156, 0.5);
+    border-right: none;
+    background-color: transparent;
+    padding: 15px;
+    height: 40px;
+    color: $black-color;
+    border-radius: 90px 0 0 90px;
+    outline: none;
+    @include sm {
+      width: 80%;
     }
-    .searchButton {
-        width: 40px;
-        height: 40px;
-        border: 1px solid rgba(139, 152, 156, 0.5);
-        border-left: none;
-        background-color: transparent;
-        text-align: center;
-        border-radius: 0 90px 90px 0;
-        cursor: pointer;
-        font-size: 15px;
-        span {
-            background-color: #058499;
-            color: $white-color;
-            border-radius: 50%;
-            padding: 7px 8px;
-            margin-left: -5px;
-            svg {
-                margin-top: -4px;
-            }
-            @include sm {
-                margin-left: -13px;
-            }
-        }
+  }
+  .searchButton {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(139, 152, 156, 0.5);
+    border-left: none;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 0 90px 90px 0;
+    cursor: pointer;
+    font-size: 15px;
+    span {
+      background-color: #058499;
+      color: $white-color;
+      border-radius: 50%;
+      padding: 7px 8px;
+      margin-left: -5px;
+      svg {
+        margin-top: -4px;
+      }
+      @include sm {
+        margin-left: -13px;
+      }
     }
-    .navbar_home_pc {
-        display: flex !important;
+  }
+  .navbar_home_pc {
+    display: flex !important;
+  }
+  .navbar_home_mobile {
+    display: none !important;
+  }
+  @include md {
+    .display_none_res {
+      display: none !important;
+    }
+    .img-logo {
+      border-right: none !important;
+    }
+    .ant-menu {
+      display: none !important;
     }
     .navbar_home_mobile {
+      .navbar_home_mobile_sub {
         display: none !important;
+      }
+      display: flex !important;
+      button {
+        font-size: 1.4rem;
+      }
     }
-    @include md {
-        .display_none_res {
-            display: none !important;
-        }
-        .img-logo {
-            border-right: none !important;
-        }
-        .ant-menu {
-            display: none !important;
-        }
-        .navbar_home_mobile {
-            .navbar_home_mobile_sub {
-                display: none !important;
-            }
-            display: flex !important;
-            button {
-                font-size: 1.4rem;
-            }
-        }
+  }
+  @include sm {
+    .navbar_home_pc {
+      display: none !important;
     }
-    @include sm {
-        .navbar_home_pc {
-            display: none !important;
-        }
-        .navbar_home_mobile {
-            display: flex !important;
-            button {
-                font-size: 1.4rem;
-                color: $white-color;
-            }
-        }
+    .navbar_home_mobile {
+      display: flex !important;
+      button {
+        font-size: 1.4rem;
+        color: $white-color;
+      }
     }
+  }
 }
 .navbar_home {
-    &-form {
-        width: 100%;
-    }
+  &-form {
+    width: 100%;
+  }
 }
 
-.navbar_avatar {    
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border:solid 3px #058499;
-    background-color: #67c767;
+.navbar_avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid 3px #058499;
+  background-color: #67c767;
 }
 
 .navbar_popover {
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  
 }
 
 .navbar_popover_content {
-    cursor: pointer;
+  cursor: pointer;
+}
+.navbar_userinfo_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
 }

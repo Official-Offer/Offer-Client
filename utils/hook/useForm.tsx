@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export default function useForm(initial = {}) {
   // create a state object fror our inputs
   const [input, setInputs] = useState(initial);
-  const initialValues = Object.values(initial).join('');
+  const initialValues = Object.values(initial).join("");
   useEffect(() => {
     setInputs(initial);
   }, [initialValues]);
 
   function handleChange(e: any) {
     let { value, name, type } = e.target;
-    if (type === 'number') {
+    if (type === "number") {
       value = parseInt(value);
     }
-    if (type === 'file') {
+    if (type === "file") {
       [value] = e.target.files;
     }
     setInputs({
@@ -30,10 +30,21 @@ export default function useForm(initial = {}) {
     );
     setInputs(blankState);
   }
+
+  function clearFormFields(arr: String[]) {
+    const blankState = Object.fromEntries(
+      Object.entries(input).map(([key, value]) =>
+        !arr.includes(key) ? [key, value] : [key, null]
+      )
+    );
+    console.log(blankState);
+    setInputs(blankState);
+  }
   return {
     input,
     handleChange,
     resetForm,
     clearForm,
+    clearFormFields,
   };
 }
