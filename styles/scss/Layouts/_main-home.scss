@@ -116,11 +116,11 @@
           padding-left: 10px;
         }
         &-img {
-          width: 120px;
-          margin-top: auto;
-          margin-bottom: auto;
+          width: 130px;
+          // margin-top: auto;
+          // margin-bottom: auto;
           border-radius: 10px;
-          height: 80px;
+          height: 90px;
         }
         &-title {
             text-overflow: ellipsis;
@@ -146,6 +146,7 @@
           height: auto;
           &-img {
             width: 100%;
+            padding: 10px;
           }
           .logo {
             position: absolute;

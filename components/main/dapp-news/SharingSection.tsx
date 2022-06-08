@@ -12,12 +12,13 @@ const SharingSection = ({ news, category }: any) => {
   const [liked, setLiked] = useState(false);
   return (
     <BoxWhiteShadow className="p-3">
-        <br />
-        <h4>Share this article</h4>
-        <div className="news-details-social">
+      <br />
+      <h4>Share this article</h4>
+      <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton
-            url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           
           ${news[0]?.attributes.description}`}
@@ -31,10 +32,11 @@ const SharingSection = ({ news, category }: any) => {
         </div>
         <div className="news-details-social-icons">
           <TwitterShareButton
-            url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             title={`${news[0]?.attributes.title}
           
-          ${news[0]?.attributes.description}`}
+            ${news[0]?.attributes.description}`}
             // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
           >
             <img
@@ -45,7 +47,8 @@ const SharingSection = ({ news, category }: any) => {
         </div>
         <div className="news-details-social-icons">
           <TelegramShareButton
-            url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
+            url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             title={`${news[0]?.attributes.title}
           
           ${news[0]?.attributes.description}`}

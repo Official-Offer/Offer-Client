@@ -40,15 +40,35 @@ export default function PinnedSlides({}) {
     <>
       <Swiper
         modules={[Navigation, Pagination, A11y]}
-        slidesPerView={1}
-        centeredSlides={true}
-        loop={true}
+        observeParents={true}
+        observer={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+          },
+          480: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 1,
+          },
+          1440: {
+            slidesPerView: 1,
+          },
+          1920: {
+            slidesPerView: 1,
+          },
+        }}
         pagination={false}
-        onInit={(swiper: any) => {
-          swiper.params.navigation.prevEl = navigationPrevRef.current;
-          swiper.params.navigation.nextEl = navigationNextRef.current;
-          swiper.navigation.init();
-          swiper.navigation.update();
+        loop={true}
+        autoplay={{ delay: 2000 }}
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+        effect="fade"
+        fadeEffect={{
+          crossFade: true,
         }}
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {

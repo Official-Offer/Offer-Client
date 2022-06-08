@@ -55,7 +55,6 @@ console.log(comments);
       </BoxALignCenter_Justify_ItemsBetween>
       <div className="p-4 news-details-comment">
         {comments.map((cmt: any, i: number) => {
-          console.log(cmt);
           return (
             <div className="news-details-comment-box" key={i}>
               <BoxALignCenter_Justify_ItemsBetween className="mb-4">

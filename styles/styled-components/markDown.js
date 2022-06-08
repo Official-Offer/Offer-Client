@@ -9,15 +9,14 @@ export const MarkDown = styled(ReactMarkdown)`
     font-size: 1.2rem;
   }
   img {
-    width: 95%;
     padding: 20px;
     margin: auto;
+    border-radius: 20px;
     display: block;
   }
   pre {
     color: #ccc;
     background: #2d2d2d;
-    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
     font-size: 1em;
     text-align: left;
     white-space: pre;
@@ -56,3 +55,6 @@ export const MarkDown = styled(ReactMarkdown)`
     hyphens: none;
   }
 `;
+
+//    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+

@@ -29,8 +29,7 @@ function LatestNews() {
   return (
     <div>
       {latestNews.map((news) => (
-        <div>
-          <div className="main-homepage-dappnews-pinnedCard">
+          <div className="fontSize_08 main-homepage-dappnews-pinnedCard">
             <img
               className="main-homepage-dappnews-pinnedCard-img"
               src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
@@ -45,8 +44,6 @@ function LatestNews() {
               </p>
             </div>{" "}
           </div>
-          {/* <hr /> */}
-        </div>
       ))}
     </div>
   );

@@ -9,20 +9,21 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
     <>
       {data &&
         data.map((blog: any, i: number) => {
-          console.log(blog);
           return (
             <div
               key={i}
-              className="mt-5 main-homepage-dappnews-layout"
+              className="mt-5 main-homepage-dappnews-layout p-4"
               onClick={() => {
                 router.push(
                   {
-                    pathname: `/dapp-news/${blog.id}`,
+                    // pathname: `/dapp-news/${blog.id}`,
+                    pathname: `/dapp-news/main`,
                     query: {
                       id: blog.id,
                       category: blog.attributes.category.data.attributes.name,
                     },
-                  }
+                  },
+                  `/dapp-news/${blog.attributes.slug}`
                 );
               }}
             >

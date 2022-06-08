@@ -1,10 +1,12 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import React from "react";
-// import HelmetMetaData from "@components/main/dapp-news/HelmetData";
-// import { Helmet } from "react-helmet";
+import { Router, useRouter } from "next/router";
+
 class MyDocument extends Document {
+  
   static getInitialProps({ renderPage }: any) {
+    
     // Step 1: Create an instance of ServerStyleSheet
     const sheet = new ServerStyleSheet();
 
@@ -15,12 +17,14 @@ class MyDocument extends Document {
 
     // Step 3: Extract the styles as <style> tags
     const styleTags = sheet.getStyleElement();
-
+  
     // Step 4: Pass styleTags as a prop
     return { ...page, styleTags };
   }
   render() {
     const { styleTags }: any = this.props;
+    
+    
     return (
       <Html>
         <Head>

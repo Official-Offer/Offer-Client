@@ -113,7 +113,7 @@ const DappNews: FC = () => {
     <section className="main-homepage-news px-lg-3 px-0">
       <h2 className="text-center mb-5">Dapp News</h2>
       <BoxWhiteShadow className="row">
-        <div className="main-homepage-dappnews-pinnedSection-left">
+        <div className="fontSize_08 main-homepage-dappnews-pinnedSection-left">
           <PinnedSlides />
         </div>
         <div className="main-homepage-dappnews-pinnedSection-right">
@@ -180,7 +180,7 @@ const DappNews: FC = () => {
         </BoxALignItemsCenter>
       </div>
       <div>
-        <div className="row m-0">
+        <div className="row">
           <NewsLists data={newsList} />
         </div>
         <br />
