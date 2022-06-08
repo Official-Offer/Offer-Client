@@ -267,4 +267,11 @@ div.col-lg-9.col-12.mt-lg-0.mt-4.px-lg-2.px-0>div>.swiper.swiper-initialized.swi
 
 .ant-popover {
     position: fixed !important;
+    padding-top: 0 !important;
+}
+.ant-popover-inner {
+    border-radius: 0 !important;
+}
+.ant-popover-arrow {
+    display: none;
 }
