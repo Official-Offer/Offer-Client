@@ -27,7 +27,7 @@ export const listCategory = [
   { name: "High-risk", tag: "high-risk", icon: "/img/icons/icn-high-risk.png" },
 ];
 
-export default function TabsCategory({ setCate, cate }): ReactElement {
+export default function TabsCategory({ setCate, cate }: any): ReactElement {
   const router = useRouter();
   const [cateIdArray, setCateIdArray] = useState([{ name: "All", id: "All" }]);
   useEffect(() => {

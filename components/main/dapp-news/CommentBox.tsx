@@ -1,14 +1,15 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiService";
+import request from "@services/apiSSO";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
-import axios from "axios";
-import { URL_API_ADMIN } from "@config/dev.config";
+import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
+import router from "next/router";
+import axios from "axios";
+import qs from "qs";
 
-const PopUp = ({ text, name }: any) => {
+const CommentBox = ({ text, name }: any) => {
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -21,21 +22,34 @@ const PopUp = ({ text, name }: any) => {
     // console.log(e.target.value);
     e.preventDefault();
     const data = {
-      "data": {
-        "comment": "a",
-        "user": 1
+      data: {
+        comment: e.target[0].value,
+        rating: 2,
       },
     };
-    await request.post(`/reviews`, data).then((res) => {
+    const commentQuery = qs.stringify(
+      {
+        populate: "*",
+        // filters: {
+        //   post: {
+        //     title: 
+        //   },
+        // },
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+    await request.post(`/reviews?${commentQuery}`, data).then((res) => {
       if (res.status == 200) {
         message.success("Comment created");
         e.target.reset();
       } else {
         message.success("Something was wrong! Please try again");
       }
-    });
-    handleClose();
-  };
+    })
+    .then(() => router.reload()); //force api refetch;
+  }
 
   return (
     <>
@@ -60,7 +74,7 @@ const PopUp = ({ text, name }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <textarea name=""></textarea> */}
+            {/* <input onChange={(e) => console.log(e)}></input> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>
@@ -71,4 +85,4 @@ const PopUp = ({ text, name }: any) => {
   );
 };
 
-export default PopUp;
+export default CommentBox;

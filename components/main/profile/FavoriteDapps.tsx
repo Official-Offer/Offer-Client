@@ -10,7 +10,7 @@ import {
 } from "@styles/styled-components/styledUser";
 import { useEffect, useState } from "react";
 import request from "@services/apiService";
-const FavoriteDapps = ({ data }) => {
+const FavoriteDapps = ({ data }: any) => {
   console.log(data);
   const [dapps, setDapps] = useState([
     { imgSrc: "/img/ys.jpg", name: "Uniswap V3" },
@@ -27,14 +27,12 @@ const FavoriteDapps = ({ data }) => {
         // .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=${data.id}`)
         .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=5`)
         .then((res) => {
-          setDapps(
-            res.data.data.map((dapp: any) => {
-              return {
-                imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
-                name: dapp.attributes.dapp.data.attributes.name,
-              };
-            })
-          );
+          setDapps(res.data.data.map((dapp: any) => {
+            return {
+              imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
+              name: dapp.attributes.dapp.data.attributes.name
+            }
+          }));       
         });
     })();
   }, []);

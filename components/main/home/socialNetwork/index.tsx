@@ -22,6 +22,7 @@ export const SocialNetwork: FC = () => {
                     username: e.target[0].value,
                     email: e.target[1].value,
                     description: e.target[2].value,
+                    // description: 123
                 },
             };
             await axios.post(`${URL_API_ADMIN}/contacts`, data).then((res) => {

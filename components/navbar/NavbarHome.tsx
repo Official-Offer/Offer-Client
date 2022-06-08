@@ -182,23 +182,25 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                  // onClick={() => {
+                  //   router.push("/submit");
+                  // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
-                    <Popover content={popoverContent}>
-                      <div className="navbar_userinfo_wrapper">
-                        <img
-                          className="navbar_avatar"
-                          src={user?.avatar || "/img/austin.png"}
-                        ></img>
-                        <div>{user?.displayName}</div>
-                      </div>
-                    </Popover>
+                    <>
+                      <Popover placement="bottom" content={popoverContent} trigger="focus">
+                        <button className="navbar_userinfo_wrapper" type="button">
+                          <img
+                            className="navbar_avatar"
+                            src={user?.avatar || "/img/austin.png"}
+                          ></img>
+                          <div>{user?.displayName}</div>
+                        </button>
+                      </Popover>
+                    </>
                   ) : (
                     <ButtonBlue
                       className="px-4"
