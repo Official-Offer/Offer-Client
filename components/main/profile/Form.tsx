@@ -122,7 +122,7 @@ const Form = ({ data, reload, setReload }: any) => {
           <FormTitle>Edit Profile</FormTitle>
           <FormAvatarContainer className="row">
             <Container className="col-lg-3 col-12">
-              <FormAvatarImg src={avatar || data.avatar || "/img/austin.png"} />
+              <FormAvatarImg src={avatar || data.avatar || "/img/defaultAvatar.jpg"} />
             </Container>
             <Container className="col-lg-6 col-12 px-4">
               {/* <UploadButton placeholder="Update Photo" type='file' accept="image/*"/> */}
