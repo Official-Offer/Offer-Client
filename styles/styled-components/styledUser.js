@@ -47,8 +47,8 @@ export const AvatarName = styled.p`
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    /* display: flex; */
-    /* align-items: center; */
+    display: flex;
+    align-items: center;
     text-transform: uppercase;
     color: #223052;
     /* flex: none;

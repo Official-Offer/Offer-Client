@@ -94,6 +94,7 @@ export const NavbarHome: FC = () => {
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
+        // window.history.replaceState(null, '','/');
         window.location.href = window.location.origin;
         await request
           .get(`/users/me`)
@@ -114,6 +115,10 @@ export const NavbarHome: FC = () => {
       </Link>
     </div>
   );
+  if (router.query && !user) {
+    //not login, but router does have login query means the user just used back button
+    setPopupVisible(true);
+  }
   return (
     <>
       <section id="navbar_home">
