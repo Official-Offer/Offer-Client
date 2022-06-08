@@ -67,6 +67,73 @@
           flex: 0 0 auto;
         }
       }
+      &-pinnedSection {
+        display: flex;
+        flex: 0 0 auto;
+        &-left{
+          @include md {
+            width: 100%;
+          }
+          @include sm {
+            width: 100%;
+          }
+          width: 66%;
+        }
+        &-right{
+          @include md {
+            width: 100%;
+          }
+          @include sm {
+            width: 100%;
+          }
+          width: 33%;
+          margin-bottom: 20px;
+        }
+      }
+      &-pinnedSlides {
+        width: 100%;
+        height: auto;
+        &-img {
+          width: 100%;
+          border-radius: 20px;
+        }
+        &-title {
+          font-size: 1.5rem;
+        }
+        &-author {
+          font-weight: bold;
+          font-size: 1.2rem;
+          color: #7d7d7d;
+        }
+      }
+      &-pinnedCard {
+        display: flex;
+        flex-grow: grow;
+        text-overflow: ellipsis;
+        padding-top: 20px;
+        // padding-bottom: 10px;
+        &-desc {
+          padding-left: 10px;
+        }
+        &-img {
+          width: 120px;
+          margin-top: auto;
+          margin-bottom: auto;
+          border-radius: 10px;
+          height: 80px;
+        }
+        &-title {
+            text-overflow: ellipsis;
+            font-weight: bold;
+            font-size: 0.85rem;
+            overflow-wrap: break-word;
+        }
+        &-author {
+          font-weight: bold;
+          font-size: 0.75rem;
+          color: #7d7d7d;
+        }
+      }
       &-card {
         border-radius: 10px;
         background-color: #fff;

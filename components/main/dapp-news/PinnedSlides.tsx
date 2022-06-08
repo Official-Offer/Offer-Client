@@ -36,7 +36,6 @@ export default function PinnedSlides({}) {
       });
     })();
   }, []);
-  console.log(pinnedPosts);
   return (
     <>
       <Swiper
@@ -56,15 +55,15 @@ export default function PinnedSlides({}) {
           return (
             <SwiperSlide key={i}>
               <img
-                className="main-homepage-dappnews-card-header-img mb-10"
+                className="main-homepage-dappnews-pinnedSlides-img"
                 src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
                 alt=""
               />
-              <p className="main-homepage-dappnews-card-body-title mt-4">
+              <p className="main-homepage-dappnews-pinnedSlides-title mt-4">
                 {pinnedPost.attributes.title}
               </p>
               <div>
-                <span className="main-homepage-dappnews-card-body-createdAt">
+                <span className="main-homepage-dappnews-pinnedSlides-author">
                   By {pinnedPost.attributes.Author} |{" "}
                   {moment(pinnedPost.attributes.createdAt).format("LL")}
                 </span>

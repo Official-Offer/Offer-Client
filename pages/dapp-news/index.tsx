@@ -5,10 +5,19 @@ import * as qs from "qs";
 import NewsLists from "@components/main/dapp-news/NewsList";
 import { Button, LoadMore } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
-import { BoxALignItemsCenter, BoxWhiteShadow } from "@styles/styled-components/styledBox";
-import { NavMain, Nav_Sub, ToggleMain, ToggleMain_Sub } from "@styles/styled-components/styledTabs";
+import {
+  BoxALignItemsCenter,
+  BoxWhiteShadow,
+} from "@styles/styled-components/styledBox";
+import {
+  NavMain,
+  Nav_Sub,
+  ToggleMain,
+  ToggleMain_Sub,
+} from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
+import LatestNews from "@components/main/dapp-news/LatestNews";
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -86,9 +95,7 @@ const DappNews: FC = () => {
     if (viewMore > 20) {
       setNumberViewMore(20);
     }
-    let index = categories.findIndex(
-      (cat: any) => cat.attributes.name === key
-    );
+    let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
     setCategoryKey(key);
   };
@@ -104,12 +111,14 @@ const DappNews: FC = () => {
 
   return (
     <section className="main-homepage-news px-lg-3 px-0">
-      <h2 className="text-center">Dapp News</h2>
-      <BoxWhiteShadow className="p-lg-4 p-2 row">
-        <div className ="col-7">
+      <h2 className="text-center mb-5">Dapp News</h2>
+      <BoxWhiteShadow className="row">
+        <div className="main-homepage-dappnews-pinnedSection-left">
           <PinnedSlides />
         </div>
-        <div className ="col-5">lol</div>
+        <div className="main-homepage-dappnews-pinnedSection-right">
+          <LatestNews />
+        </div>
       </BoxWhiteShadow>
       <div className="block-for-mobile">
         <div className="bar-category">
@@ -148,26 +157,26 @@ const DappNews: FC = () => {
           </NavMain>
         </div>
         <BoxALignItemsCenter className="bar-category-right">
-            <ToggleMain>
-              <span className="d-inline-flex position-relative bar-category-right-toggle">
-                <ToggleMain_Sub
-                  onClick={() => setCrit("viewer")}
-                  className={`fontSize_08 ${crit === "viewer" ? "active" : ""}`}
-                >
-                  Popular
-                </ToggleMain_Sub>
-              </span>
-              <span className="d-inline-flex position-relative bar-category-right-toggle">
-                <ToggleMain_Sub
-                  onClick={() => setCrit("createdAt")}
-                  className={`fontSize_08 ${
-                    crit === "createdAt" ? "active" : ""
-                  }`}
-                >
-                  Newest
-                </ToggleMain_Sub>
-              </span>
-            </ToggleMain>
+          <ToggleMain>
+            <span className="d-inline-flex position-relative bar-category-right-toggle">
+              <ToggleMain_Sub
+                onClick={() => setCrit("viewer")}
+                className={`fontSize_08 ${crit === "viewer" ? "active" : ""}`}
+              >
+                Popular
+              </ToggleMain_Sub>
+            </span>
+            <span className="d-inline-flex position-relative bar-category-right-toggle">
+              <ToggleMain_Sub
+                onClick={() => setCrit("createdAt")}
+                className={`fontSize_08 ${
+                  crit === "createdAt" ? "active" : ""
+                }`}
+              >
+                Newest
+              </ToggleMain_Sub>
+            </span>
+          </ToggleMain>
         </BoxALignItemsCenter>
       </div>
       <div>
@@ -176,14 +185,16 @@ const DappNews: FC = () => {
         </div>
         <br />
         <div className="text-center">
-          {newsList.length !== 0 && <LoadMore
-            className="text-green fw-bold fontSize_1-1"
-            onClick={() => {
-              setNumberViewMore(viewMore + 20);
-            }}
-          >
-            Load more
-          </LoadMore>}
+          {newsList.length !== 0 && (
+            <LoadMore
+              className="text-green fw-bold fontSize_1-1"
+              onClick={() => {
+                setNumberViewMore(viewMore + 20);
+              }}
+            >
+              Load more
+            </LoadMore>
+          )}
         </div>
       </div>
     </section>
