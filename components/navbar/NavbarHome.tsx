@@ -24,6 +24,7 @@ import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { removeVietnameseTones } from "@utils/processTextInput";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -211,7 +212,7 @@ export const NavbarHome: FC = () => {
                             className="navbar_avatar"
                             src={user?.avatar || "/img/austin.png"}
                           ></img>
-                          <div>{user?.displayName}</div>
+                          <div>{removeVietnameseTones(user?.displayName)}</div>
                         </button>
                       </Popover>
                     </>
