@@ -88,7 +88,7 @@ export const NavbarHome: FC = () => {
     { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
   ];
 
-  const [isPopupVisible, setPopupVisible] = useState(router.query.login && !user);
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
     await request
@@ -100,10 +100,15 @@ export const NavbarHome: FC = () => {
           .get(`/users/me`)
           .then((res: any) => {
             setUser(res.data);
+            setPopupVisible(false);
           })
           .catch(() => null);
       });
   };
+
+  useEffect(() => {
+    setPopupVisible(router.query.login && !user);
+  }, [user]); //if login query still here yet user not logged in, the browser was backed.
 
   const popoverContent = (
     <div className="navbar_popover">
@@ -184,17 +189,24 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                  // onClick={() => {
-                  //   router.push("/submit");
-                  // }}
+                    // onClick={() => {
+                    //   router.push("/submit");
+                    // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
                   </ButtonBackgroundBlueBold>
                   {user ? (
                     <>
-                      <Popover placement="bottom" content={popoverContent} trigger="focus">
-                        <button className="navbar_userinfo_wrapper" type="button">
+                      <Popover
+                        placement="bottom"
+                        content={popoverContent}
+                        trigger="focus"
+                      >
+                        <button
+                          className="navbar_userinfo_wrapper"
+                          type="button"
+                        >
                           <img
                             className="navbar_avatar"
                             src={user?.avatar || "/img/austin.png"}
