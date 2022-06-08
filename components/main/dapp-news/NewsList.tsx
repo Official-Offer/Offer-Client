@@ -3,7 +3,7 @@ import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import moment from "moment";
 import router from "next/router";
 
-export default function NewsLists({ data }: any, { tag }: any): ReactElement {
+export default function NewsLists({ data }: any): ReactElement {
   return (
     <>
       {data &&

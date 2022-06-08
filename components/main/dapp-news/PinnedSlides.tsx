@@ -13,7 +13,7 @@ import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
 
-export default function PinnedSlides({}) {
+export default function PinnedSlides({crit}: any) {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   const router = useRouter();
@@ -28,6 +28,7 @@ export default function PinnedSlides({}) {
               $eq: true,
             },
           },
+          sort: [`${crit}:desc`]
         },
         {
           encodeValuesOnly: true,

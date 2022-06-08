@@ -17,11 +17,12 @@ import Head from "next/head";
 import CommentSection from "@components/main/dapp-news/CommentSection";
 import SharingSection from "@components/main/dapp-news/SharingSection";
 import { Calendar, Eye } from "react-feather";
-import { getRouteRegex } from "next/dist/shared/lib/router/utils";
+import NewsList from "@components/main/dapp-news/NewsList";
+import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
-  
   const [news, setNews] = useState<any>([]);
+  const [popularNews, setPopularNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [liked, setLiked] = useState(false);
   const router = useRouter();
@@ -31,13 +32,23 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         {
           populate: "*",
           filters: {
-            // id: {
-            //   $eq: router.query.id,
-            // },
             slug: {
-              $eq: router.query.slug
-            }
+              $eq: router.query.slug,
+            },
           },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      const popularQuery = qs.stringify(
+        {
+          populate: "*",
+          pagination: {
+            page: 1,
+            pageSize: 6,
+          },
+          sort: [`viewer:desc`],
         },
         {
           encodeValuesOnly: true,
@@ -45,6 +56,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
       );
       await request.get(`/posts?${query}`).then((res) => {
         setNews(res.data.data);
+      });
+      await request.get(`/posts?${popularQuery}`).then((res) => {
+        setPopularNews(res.data.data);
       });
     })();
   }, [router.query.slug]);
@@ -91,10 +105,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           property="og:image"
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
         />
-        {/* <meta
-          property="og:url"
-          content={`${URL_SITE}/dapp-news/${newsData[0]?.attributes.slug}`}
-        /> */}
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
@@ -102,48 +112,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
-        <div className="row m-0 p-0">
-          <BoxWhiteShadow className="p-lg-4 p-2">
-            <div className="news-details-left col-lg-9 col-12 mt-lg-5 mt-2">
-              <div className="news-details-dashboard">
-                <div className="mb-5">
-                  <span className="news-details-createdAt">
-                    <Calendar size={15} />
-                    &nbsp;
-                    {moment(news[0]?.attributes.createdAt).format("LL")}
-                  </span>
-                  <span>&nbsp;&nbsp;&nbsp;</span>
-                  <span className="news-details-createdAt">
-                    <Eye size={15} />
-                    &nbsp;
-                    {news[0]?.attributes.viewer}
-                  </span>
-                </div>
-                <div
-                  className="news-details-social-heart"
-                  onClick={() => {
-                    setLiked(!liked);
-                  }}
-                >
-                  <a target="_blank" rel="noopener noreferrer">
-                    {liked ? (
-                      <HeartFilled
-                        style={{ color: "#1DBBBD", marginLeft: "30vw" }}
-                      />
-                    ) : (
-                      <HeartOutlined style={{ marginLeft: "30vw" }} />
-                    )}
-                  </a>
-                </div>
-                <BoxALignItemsCenter>
-                  <h2>{`${news[0]?.attributes.title}`}</h2>
-                </BoxALignItemsCenter>
-                <br />
-                <MarkDown>{modifiedContent}</MarkDown>
-              </div>
-            </div>
-          </BoxWhiteShadow>
-          <div className="news-details-right col-lg-3 col-12 mt-lg-5">
+        <div className="news-details-row p-5">
+          <div className="news-details-sharing news-details-row-side">
+            <SharingSection news={news} category={router.query.category} />
             <BoxWhiteShadow className="p-2">
               <h3 className="mb-3">Tags</h3>
               <div className="row">
@@ -159,8 +130,61 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 <BannerSlides />
               </div>
             </BoxWhiteShadow>
-            <br />
-            <BoxWhiteShadow className="news-details-right-topic p-2">
+          </div>
+          <div className="news-details-row-center">
+            <BoxWhiteShadow>
+              <div className="news-details-left col-12 mt-2 p-3">
+                <div className="news-details-dashboard">
+                  <BoxALignItemsCenter>
+                    <h2>{`${news[0]?.attributes.title}`}</h2>
+                  </BoxALignItemsCenter>
+                  <div className="">
+                    <span className="news-details-createdAt">
+                      <Calendar size={15} />
+                      &nbsp;
+                      {moment(news[0]?.attributes.createdAt).format("LL")}
+                    </span>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span className="news-details-createdAt">
+                      <Eye size={15} />
+                      &nbsp;
+                      {news[0]?.attributes.viewer}
+                    </span>
+                  </div>
+                  <div
+                    className="news-details-social-heart"
+                    onClick={() => {
+                      setLiked(!liked);
+                    }}
+                  >
+                    <a target="_blank" rel="noopener noreferrer">
+                      {liked ? (
+                        <HeartFilled
+                          style={{ color: "#1DBBBD", marginLeft: "30vw" }}
+                        />
+                      ) : (
+                        <HeartOutlined style={{ marginLeft: "30vw" }} />
+                      )}
+                    </a>
+                  </div>
+                  <br />
+                  <MarkDown>{modifiedContent}</MarkDown>
+                </div>
+              </div>
+            </BoxWhiteShadow>
+            <CommentSection news={news} />
+            <div className="news-details-posts-desk row">
+              <h2>Popular</h2>
+              <NewsList data={popularNews} />
+            </div>
+            <div className="news-details-posts-mobile">
+              <PinnedSlides crit={"viewer"} />
+            </div>
+          </div>
+          {/* <div className="news-details-right col-md-4 col-12 mt-lg-5"> */}
+          <br />
+          <div className="news-details-row-side">
+            <BoxWhiteShadow className="p-3">
               <h3 className="mb-3">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
@@ -168,16 +192,14 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     <div className="col-lg-12 col-12 px-3" key={i}>
                       <div
                         onClick={() => {
-                          router.push(
-                            {
-                              pathname:`/dapp-news/${news.attributes.slug}`,
-                              // pathname: `/dapp-news/main`,
-                              query: {
-                                id: news.id,
-                                category: news.attributes.category.data.attributes.name,
-                              },
+                          router.push({
+                            pathname: `/dapp-news/${news.attributes.slug}`,
+                            query: {
+                              id: news.id,
+                              category:
+                                news.attributes.category.data.attributes.name,
                             },
-                          );
+                          });
                         }}
                       >
                         <a target="_blank" rel="noopener noreferrer">
@@ -194,13 +216,8 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               </div>
             </BoxWhiteShadow>
           </div>
-          <div className="news-details-left col-lg-9 col-12">
-            <hr className="mb-4" style={{ color: "#1DBBBD" }} />
-            <SharingSection news={news} category={router.query.category} />
-            <hr className="mt-4" style={{ color: "#1DBBBD" }} />
-            <CommentSection news={news} />
-          </div>
         </div>
+        {/* </div> */}
       </section>
     </div>
   );

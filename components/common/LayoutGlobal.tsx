@@ -21,8 +21,8 @@ export default function LayoutGlobal(props: any): ReactElement {
     import("../footer").then((mod: any) => mod.FooterHome)
   );
   const router = useRouter();
-  const route = router.asPath.split('/');
-  const isDappNewsDetails = (route[1] == 'dapp-news') && route.length > 2
+  const route = router.asPath.split("/");
+  const isDappNewsDetails = route[1] == "dapp-news" && route.length > 2;
   const [banners, setBanners] = useState<any>([]);
   useEffect(() => {
     (async () => {
@@ -67,8 +67,10 @@ export default function LayoutGlobal(props: any): ReactElement {
         />
       </Head>
       <NavbarHome />
-      <div className="row-global pb-5 m-0 h-100">
-        {!isDappNewsDetails && (
+      {isDappNewsDetails ? (
+        <div>{props.children}</div>
+      ) : (
+        <div className="row-global pb-5 m-0 h-100">
           <div className="row-global-banner banner-left">
             <BoxALignCenter_Justify_ItemsStart className="banner-left-sticky">
               <BannerLeft
@@ -78,15 +80,14 @@ export default function LayoutGlobal(props: any): ReactElement {
               />
             </BoxALignCenter_Justify_ItemsStart>
           </div>
-        )}
-        <div className="row-global-center px-lg-0 px-3">
-          <div className="empty_space_height79"></div>
-          <BannerMain
-            img={banners.filter((img: any) => img.Position == "Section1")[0]}
-          />
-          {props.children}
-        </div>
-        {!isDappNewsDetails && (
+          <div className="row-global-center px-lg-0 px-3">
+            <div className="empty_space_height79"></div>
+            <BannerMain
+              img={banners.filter((img: any) => img.Position == "Section1")[0]}
+            />
+            {props.children}
+          </div>
+
           <div className="row-global-banner banner-right">
             <BoxALignCenter_Justify_ItemsEnd className="banner-right-sticky">
               <BannerRight
@@ -96,12 +97,12 @@ export default function LayoutGlobal(props: any): ReactElement {
               />
             </BoxALignCenter_Justify_ItemsEnd>
           </div>
-        )}
-        <div className="main-background main-background-position-banner" />
-        <div className="main-background main-background-position-priceboard" />
-        <div className="main-background main-background-position-highestsocial" />
-        <div className="main-background main-background-position-blog" />
-      </div>
+          <div className="main-background main-background-position-banner" />
+          <div className="main-background main-background-position-priceboard" />
+          <div className="main-background main-background-position-highestsocial" />
+          <div className="main-background main-background-position-blog" />
+        </div>
+      )}
       <FooterHome />
     </>
   );

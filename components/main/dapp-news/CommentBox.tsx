@@ -19,11 +19,11 @@ const CommentBox = ({ text, name, title }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    // console.log(e.target.value);
+    //console.log(e);
     e.preventDefault();
     const data = {
       data: {
-        "comment": "text here",
+        "comment": e.target[0].value,
         "rating": 5,
         "post": 21,
         "user": 1
@@ -63,7 +63,6 @@ const CommentBox = ({ text, name, title }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <input onChange={(e) => console.log(e)}></input> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>

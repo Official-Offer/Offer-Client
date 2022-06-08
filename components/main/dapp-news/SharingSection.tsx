@@ -11,7 +11,6 @@ const SharingSection = ({ news, category }: any) => {
   const [liked, setLiked] = useState(false);
   return (
     <BoxWhiteShadow className="p-3">
-      <br />
       <h4>Share this article</h4>
       <div className="news-details-social">
         <div className="news-details-social-icons">
