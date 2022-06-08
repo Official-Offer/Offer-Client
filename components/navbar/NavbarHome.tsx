@@ -88,7 +88,7 @@ export const NavbarHome: FC = () => {
     { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
   ];
 
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isPopupVisible, setPopupVisible] = useState(router.query.login && !user);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
     await request
@@ -115,10 +115,8 @@ export const NavbarHome: FC = () => {
       </Link>
     </div>
   );
-  if (router.query && !user) {
-    //not login, but router does have login query means the user just used back button
-    setPopupVisible(true);
-  }
+  console.log(router.query)
+
   return (
     <>
       <section id="navbar_home">
