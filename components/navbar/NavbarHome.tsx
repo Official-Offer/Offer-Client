@@ -115,7 +115,6 @@ export const NavbarHome: FC = () => {
       </Link>
     </div>
   );
-  console.log(router.query)
 
   return (
     <>
