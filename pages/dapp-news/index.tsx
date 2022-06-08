@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { BoxALignItemsCenter, BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import { NavMain, Nav_Sub, ToggleMain, ToggleMain_Sub } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
+import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -104,8 +105,11 @@ const DappNews: FC = () => {
   return (
     <section className="main-homepage-news px-lg-3 px-0">
       <h2 className="text-center">Dapp News</h2>
-      <BoxWhiteShadow className="p-lg-4 p-2">
-        Lol
+      <BoxWhiteShadow className="p-lg-4 p-2 row">
+        <div className ="col-7">
+          <PinnedSlides />
+        </div>
+        <div className ="col-5">lol</div>
       </BoxWhiteShadow>
       <div className="block-for-mobile">
         <div className="bar-category">
