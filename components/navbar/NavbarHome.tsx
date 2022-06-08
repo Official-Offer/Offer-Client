@@ -210,7 +210,7 @@ export const NavbarHome: FC = () => {
                         >
                           <img
                             className="navbar_avatar"
-                            src={user?.avatar || "/img/defaultAvatar.jpg"}
+                            src={user?.avatar || "/img/default.png"}
                           ></img>
                           <div>{removeVietnameseTones(user?.displayName)}</div>
                         </button>
