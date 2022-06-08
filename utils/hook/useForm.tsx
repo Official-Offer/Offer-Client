@@ -16,6 +16,9 @@ export default function useForm(initial = {}) {
     if (type === "file") {
       [value] = e.target.files;
     }
+    if (type === "string") {
+      value = value.replace(/[^A-Za-z0-9]/g,'');
+    }
     setInputs({
       ...input,
       [name]: value,
