@@ -96,25 +96,19 @@ export const NavbarHome: FC = () => {
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
         // window.history.replaceState(null, '','/');
-        // window.location.href = window.location.origin;
-        router.push('/');
+        window.location.href = window.location.origin;
         await request
           .get(`/users/me`)
           .then((res: any) => {
             setUser(res.data);
             setPopupVisible(false);
           })
-          .catch(() => {
-            setPopupVisible(true);
-            setUser(null);
-          });
+          .catch(() => {});
       });
   };
 
   useEffect(() => {
-    if (router.query.login && router) {
-      setTimeout(() => setPopupVisible(router.query.login !== 'success' && !user ? true : false), 1500);
-    }
+      setTimeout(() => setPopupVisible(router && router.query.login && router.query.login !== 'success' && !user ? true : router && !router.query.login && !user ? true : false), 1500);
     // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
   }, [user, router]); //if login query still here yet user not logged in, the browser was backed.
 
