@@ -108,8 +108,9 @@ export const NavbarHome: FC = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
-  }, [user]); //if login query still here yet user not logged in, the browser was backed.
+    if (router.query.login) {setPopupVisible(router.query.login && !user);}
+    // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
+  }, [user, router]); //if login query still here yet user not logged in, the browser was backed.
 
   const popoverContent = (
     <div className="navbar_popover">
