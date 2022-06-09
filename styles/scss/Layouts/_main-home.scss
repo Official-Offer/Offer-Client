@@ -59,6 +59,9 @@
         flex: 0 0 auto;
         width: 33%;
         padding: 10px;
+        &-details{
+          padding: 3px;
+        }
         @include lg {
           padding: 10px 5px;
         }

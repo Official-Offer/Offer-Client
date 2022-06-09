@@ -75,14 +75,20 @@
         &-side {
             flex: 0 0 auto;
             width: 18%;
+            @include md {
+                width: 22%;
+            }
             @include sm {
-            width: 100%;
+                width: 100%;
             }
         }
         &-center {
             flex: 0 0 auto;
             width: 60%;
             margin: 10px;
+            @include md {
+                width: 52%;
+            }
             @include sm {
                 width: 100%;
             }
@@ -215,36 +221,40 @@
     }
     &-sharing {
         padding-bottom: 10px;
-        &-sticky {
+        &-top {
+            margin-top: 18px;
+            margin-bottom: 15px;
             position: sticky;
-            top: 300px;
+            top: 100px;
         }
-        @include sm {
-            width: 100%;
+        &-bottom {
+            position: sticky;
+            top: 250px;
         }
     }
     &-tag {
         height: 100%;
-        &-sticky {
-            position: sticky;
-            top: 300px;
-
-        }
+        margin-top: 100px;
         @include sm {
             width: 100%;
         }
     }
     &-relatedNews {
-        &-sticky {
-            position: sticky;
-            top: 300px;
-        }
+        overflow-y: scroll;
+        position: sticky;
+        top: 100px;
+        margin-top: 18px;
         @include sm {
-            width: 100px;
+            width: 100%;
         }
+    }
+    &-commentsection {
+        margin-top: 20px;
     }
     &-posts{
         &-desk{
+            margin-top: 60px;
+            text-align: center;
             @include sm{
                 display: none;
             }

@@ -16,7 +16,6 @@ import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 
-
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
     () => import("@components/main/dapp-news/CommentSection")
@@ -24,9 +23,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const SharingSection = dynamic(
     () => import("@components/main/dapp-news/SharingSection")
   );
-  const NewsList = dynamic(
-    () => import("@components/main/dapp-news/NewsList")
-  );
+  const NewsList = dynamic(() => import("@components/main/dapp-news/NewsList"));
   const PinnedSlides = dynamic(
     () => import("@components/main/dapp-news/PinnedSlides")
   );
@@ -127,65 +124,75 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         <div className="empty_space_height50" />
         <div className="news-details-row p-5">
           <div className="news-details-sharing news-details-row-side">
-            <SharingSection news={news} category={router.query.category} />
-            <BoxWhiteShadow className="p-2">
-              <h3 className="mb-3">Tags</h3>
-              <div className="row">
-                {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
-                  return (
-                    <BoxWhiteShadow className="news-details-right-tag" key={i}>
-                      {tag.attributes.name}
-                    </BoxWhiteShadow>
-                  );
-                })}
-              </div>
-              <div className="news-details-right-banner">
-                <BannerSlides />
-              </div>
-            </BoxWhiteShadow>
+            <div className="news-details-sharing-top">
+              <SharingSection news={news} category={router.query.category} />
+            </div>
+            <div className="news-details-sharing-bottom">
+              <BoxWhiteShadow className="p-2">
+                <h3 className="mb-3">Tags</h3>
+                <div className="row">
+                  {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
+                    return (
+                      <BoxWhiteShadow
+                        className="news-details-right-tag"
+                        key={i}
+                      >
+                        {tag.attributes.name}
+                      </BoxWhiteShadow>
+                    );
+                  })}
+                </div>
+                <div className="news-details-right-banner">
+                  <BannerSlides />
+                </div>
+              </BoxWhiteShadow>
+            </div>
           </div>
           <div className="news-details-row-center">
             <BoxWhiteShadow>
               <div className="col-12 mt-2 p-3">
-                <div className="news-details-dashboard">
-                  <BoxALignItemsCenter>
-                    <h2>{`${news[0]?.attributes.title}`}</h2>
-                  </BoxALignItemsCenter>
-                  <div className="">
-                    <span className="news-details-createdAt">
-                      <Calendar size={15} />
-                      &nbsp;
-                      {moment(news[0]?.attributes.createdAt).format("LL")}
+                <BoxALignItemsCenter>
+                  <h2>{`${news[0]?.attributes.title}`}</h2>
+                </BoxALignItemsCenter>
+                <BoxALignCenter_Justify_ItemsBetween>
+                  <span className="news-details-createdAt">
+                    {news[0]?.attributes.Author}
+                    &nbsp; | &nbsp;
+                    {moment(news[0]?.attributes.createdAt).format("LL")}
+                  </span>
+                  <span>&nbsp;&nbsp;&nbsp;</span>
+                  <span className="news-details-createdAt">
+                    <span
+                      className="news-details-createdAt"
+                      onClick={() => {
+                        setLiked(!liked);
+                      }}
+                    >
+                      <a target="_blank" rel="noopener noreferrer">
+                        {liked ? (
+                          <HeartFilled
+                            style={{ color: "#1DBBBD", marginLeft: "30vw" }}
+                          />
+                        ) : (
+                          <HeartOutlined style={{ marginLeft: "30vw" }} />
+                        )}
+                      </a>
                     </span>
-                    <span>&nbsp;&nbsp;&nbsp;</span>
-                    <span className="news-details-createdAt">
-                      <Eye size={15} />
-                      &nbsp;
-                      {news[0]?.attributes.viewer}
-                    </span>
-                  </div>
-                  <div
-                    className="news-details-social-heart"
-                    onClick={() => {
-                      setLiked(!liked);
-                    }}
-                  >
-                    <a target="_blank" rel="noopener noreferrer">
-                      {liked ? (
-                        <HeartFilled
-                          style={{ color: "#1DBBBD", marginLeft: "30vw" }}
-                        />
-                      ) : (
-                        <HeartOutlined style={{ marginLeft: "30vw" }} />
-                      )}
-                    </a>
-                  </div>
-                  <br />
-                  <MarkDown>{modifiedContent}</MarkDown>
-                </div>
+                    &nbsp;
+                    <span className="news-details-createdAt">{liked? 2: 1}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Eye size={15} />
+                    &nbsp;
+                    {news[0]?.attributes.viewer}
+                  </span>
+                </BoxALignCenter_Justify_ItemsBetween>
+                <br />
+                <MarkDown>{modifiedContent}</MarkDown>
               </div>
             </BoxWhiteShadow>
-            <CommentSection news={news} />
+            <div className="news-details-commentsection">
+              <CommentSection news={news} />
+            </div>
             <div className="news-details-posts-desk row">
               <h2>Popular</h2>
               <NewsList data={popularNews} />
@@ -194,10 +201,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               <PinnedSlides crit={"viewer"} />
             </div>
           </div>
-          {/* <div className="news-details-right col-md-4 col-12 mt-lg-5"> */}
           <br />
           <div className="news-details-row-side">
-            <BoxWhiteShadow className="p-3">
+            <BoxWhiteShadow className="p-3 news-details-relatedNews">
               <h3 className="mb-3">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
@@ -230,7 +236,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
             </BoxWhiteShadow>
           </div>
         </div>
-        {/* </div> */}
       </section>
     </div>
   );
