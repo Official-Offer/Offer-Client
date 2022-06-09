@@ -19,10 +19,6 @@ export const News: FC = () => {
       const query = qs.stringify(
         {
           populate: "*",
-          //   pagination: {
-          //     page: 1,
-          //     pageSize: 6,
-          //   },
           filters: {
             isPinned: {
               $eq: true,

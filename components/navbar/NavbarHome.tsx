@@ -92,6 +92,7 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
+    Cookies.remove('accessToken');
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
@@ -103,13 +104,14 @@ export const NavbarHome: FC = () => {
             setUser(res.data);
             setPopupVisible(false);
           })
-          .catch(() => null);
+          .catch(() => {});
       });
   };
 
   useEffect(() => {
-    setPopupVisible(router.query.login && !user);
-  }, [user]); //if login query still here yet user not logged in, the browser was backed.
+      setTimeout(() => setPopupVisible(!Cookies.get('accessToken') ? true : false), 1500);
+    // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
+  }, [user, router]); //if login query still here yet user not logged in, the browser was backed.
 
   const popoverContent = (
     <div className="navbar_popover">
@@ -190,9 +192,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                  // onClick={() => {
+                  //   router.push("/submit");
+                  // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
@@ -210,7 +212,7 @@ export const NavbarHome: FC = () => {
                         >
                           <img
                             className="navbar_avatar"
-                            src={user?.avatar || "/img/defaultAvatar.jpg"}
+                            src={user?.avatar || "/img/default.png"}
                           ></img>
                           <div>{removeVietnameseTones(user?.displayName)}</div>
                         </button>
