@@ -30,7 +30,7 @@ function LatestNews() {
   console.log(latestNews);
   return (
     <div>
-      {latestNews.map((news) => (
+      {latestNews.map((news: any, i: number) => (
         <div
           className="fontSize_08 main-homepage-dappnews-pinnedCard"
           onClick={() => {
@@ -40,6 +40,7 @@ function LatestNews() {
               }
             );
           }}
+          key={i}
         >
           <img
             className="main-homepage-dappnews-pinnedCard-img"
