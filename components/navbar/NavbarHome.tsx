@@ -28,8 +28,8 @@ import { removeVietnameseTones } from "@utils/processTextInput";
 export const NavbarHome: FC = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [boxSearch, setBoxSearch] = useState(false);
+  const [visible, setVisible] = useState<any>(false);
+  const [boxSearch, setBoxSearch] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   useEffect(() => {
     (async () => {
