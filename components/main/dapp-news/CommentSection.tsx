@@ -43,10 +43,10 @@ const CommentSection = ({ news }: any) => {
         setComments(res.data.data);
       });
     })();
-  }, [news]);
+  }, [news, viewMore]);
 
-  console.log(comments);
-  console.log(news);
+  // console.log(comments);
+  // console.log(news);
 
   return (
     <BoxWhiteShadow>
