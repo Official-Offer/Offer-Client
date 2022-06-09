@@ -142,81 +142,11 @@ import { URL_API_IMG } from "@config/index";
               </BoxALignItemsCenter>
             </BoxALignItemsCenter>
           </div>
-<<<<<<< HEAD
-          <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
-            {dapp?.tags.data.map((tag: any, i: number) => (
-              <BoxBlueBorderRounded className="py-2 px-3 me-3" key={i}>
-                <span>{tag.name}</span>
-              </BoxBlueBorderRounded>
-            ))}
-          </BoxALignItemsCenter>
-          <BoxALignItemsCenter className="blockchain-details-social">
-            <ButtonBlue
-              type="button"
-              onClick={() => window.open(dapp?.website)}
-            >
-              View Website
-            </ButtonBlue>
-            <BoxALignItemsCenter className="ms-5">
-              <span className="me-3">Social: </span>
-              <a href="#" className="blockchain-details-social-facebook">
-                <FacebookFilled style={{ fontSize: "2rem" }} onClick={()=>window.open(dapp?.crawl.socials.filter((soc: any) => soc.name === 'Facebook')[0].url || 'https://facebook.com')}/>
-              </a>
-              <a href="#" className="blockchain-details-social-twitter">
-                <TwitterOutlined style={{ fontSize: "2rem" }} onClick={()=>window.open(dapp?.crawl.socials.filter((soc: any) => soc.name === 'Twitter')[0].url || 'https://twitter.com')}/>
-              </a>
-              <a href="#" className="blockchain-details-social-youtube">
-                <YoutubeFilled style={{ fontSize: "1.5rem" }} onClick={()=>window.open(dapp?.crawl.socials.filter((soc: any) => soc.name === 'Youtube')[0]?.url || 'https://youtube.com')}/>
-              </a>
-            </BoxALignItemsCenter>
-          </BoxALignItemsCenter>
-        </div>
-        <div className="blockchain-details-right col-lg-3 col-12 p-0">
-          <BoxAlignItemsEnd_FlexColumn>
-            <BoxALignItemsCenter className="mb-2">
-              <User color="#1DBBBD" />
-              <span className="ms-2">{dapp?.crawl.follows} Follower(s)</span>
-            </BoxALignItemsCenter>
-            <ButtonBlue className="rounded-pill mb-3">Follow</ButtonBlue>
-            <BoxALignItemsCenter className="mb-5">
-              <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter>
-                  <File color="#1DBBBD" />
-                  <span className="ms-2">Collect</span>
-                </BoxALignItemsCenter>
-              </Button>
-              <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter>
-                  <Heart color="#1DBBBD" />
-                  <span className="ms-2">Collect</span>
-                </BoxALignItemsCenter>
-              </Button>
-              <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter>
-                  <Share2 color="#1DBBBD" />
-                  <span className="ms-2">Collect</span>
-                </BoxALignItemsCenter>
-              </Button>
-            </BoxALignItemsCenter>
-            <div className="w-100">
-              <AppSlide />
-            </div>
-          </BoxAlignItemsEnd_FlexColumn>
-        </div>
-        {/* <div className="empty_space_height50" /> */}
-        <div className="blockchain-details-left col-lg-9 col-12 mt-lg-5 mt-2">
-          <div className="blockchain-details-dashboard">
-            <BoxALignItemsCenter>
-              <h3>{`${dapp?.name.toUpperCase()}'s`} Dashboards</h3>
-              <BoxALignItemsCenter className="status-label main ms-4">
-                <span>On-Chain</span>
-=======
           <div className="blockchain-details-right col-lg-3 col-12 p-0">
             <BoxAlignItemsEnd_FlexColumn>
               <BoxALignItemsCenter className="mb-2">
                 <User color="#1DBBBD" />
                 <span className="ms-2">{dapp?.crawl.follows} Follower(s)</span>
->>>>>>> dev
               </BoxALignItemsCenter>
               <ButtonBlue className="rounded-pill mb-3">Follow</ButtonBlue>
               <BoxALignItemsCenter className="mb-5">
