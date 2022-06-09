@@ -92,11 +92,12 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
+    Cookies.remove('accessToken');
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
         // window.history.replaceState(null, '','/');
-        window.location.href = window.location.origin;
+        // window.location.href = window.location.origin;
         await request
           .get(`/users/me`)
           .then((res: any) => {
