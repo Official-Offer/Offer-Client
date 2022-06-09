@@ -219,6 +219,7 @@
         }
     }
     &-sharing {
+        overflow: auto;
         &-top {
             margin-top: 18px;
             position: sticky;
@@ -241,8 +242,8 @@
         }
     }
     &-relatedNews {
-        overflow-y: scroll;
-        position: sticky;
+        overflow: auto;       
+         position: sticky;
         top: 100px;
         margin-top: 18px;
         @include sm {
