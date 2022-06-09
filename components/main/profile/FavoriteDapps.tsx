@@ -5,6 +5,7 @@ import {
   DappImg,
   DappName,
   DappWrapper,
+  FormDescription,
   FormTitle,
   ProfileTitle,
 } from "@styles/styled-components/styledUser";
@@ -33,6 +34,9 @@ const FavoriteDapps = ({ data }: any) => {
   return (
     <div>
       <ProfileTitle>Favorite Dapps</ProfileTitle>
+      <FormDescription>
+        Here are the Dapps you have previously favored.
+      </FormDescription>
       <div className="row g-4">
         {dapps.map((dapp :any) => (
           <div className="col-12 col-lg-6 col-xl-4" key={1}>
