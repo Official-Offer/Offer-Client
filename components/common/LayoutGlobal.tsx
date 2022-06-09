@@ -49,6 +49,20 @@ export default function LayoutGlobal(props: any): ReactElement {
           name="viewport"
           content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
         />
+        {!isDappNewsDetails && (
+          <>
+            <meta
+              property="og:image"
+              content="https://data-nft.tokenplay.app/NFTmarket.jpg"
+            />
+            <meta property="og:title" content="Tokenplay" />
+            <meta property="og:url" content="https://tokenplay.app/" />
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="Tokenplay Dappverse" />
+            <meta property="og:image" content="img/thumbnail_1.png" />
+            <meta property="og:URL" content="%PUBLIC_URL%/localImage.jpg" />
+          </>
+        )}
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
