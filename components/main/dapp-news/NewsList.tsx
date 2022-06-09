@@ -2,9 +2,8 @@ import React, { ReactElement, useState } from "react";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import moment from "moment";
 import router from "next/router";
-import { Calendar, Eye } from "react-feather";
 
-export default function NewsLists({ data }: any, { tag }: any): ReactElement {
+export default function NewsLists({ data }: any): ReactElement {
   return (
     <>
       {data &&
@@ -12,15 +11,11 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
           return (
             <div
               key={i}
-              className="mt-5 main-homepage-dappnews-layout"
+              className="mt-5 main-homepage-dappnews-layout p-4"
               onClick={() => {
                 router.push(
                   {
-                    pathname: `/dapp-news/${blog.id}`,
-                    query: {
-                      id: blog.id,
-                      category: blog.attributes.category.data.attributes.name,
-                    },
+                    pathname: `/dapp-news/${blog.attributes.slug}`,
                   }
                 );
               }}
@@ -37,21 +32,11 @@ export default function NewsLists({ data }: any, { tag }: any): ReactElement {
                     <p className="main-homepage-dappnews-card-body-title">
                       {blog.attributes.title}
                     </p>
-                    <p className="main-homepage-dappnews-card-body-description">
-                      {blog.attributes.description}
-                    </p>
                     <div>
-                      <span className="main-homepage-dappnews-card-body-createdAt p-1">
-                        <Calendar size={15}/>
-                        &nbsp;
-                        {moment(blog.attributes.createdAt).format("LL")}
+                      <span className="main-homepage-dappnews-card-body-createdAt">
+                      By {blog.attributes.Author} | {moment(blog.attributes.createdAt).format("LL")}
                       </span>
                       &nbsp;
-                      <span className="main-homepage-dappnews-card-body-createdAt">
-                        <Eye size={15}/>
-                        &nbsp;
-                        {blog.attributes.viewer} 
-                      </span>
                     </div>
                   </div>
                 </div>
