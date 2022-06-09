@@ -12,15 +12,28 @@ import request from "@services/apiService";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
-import BannerSlides from "@components/main/home/slides/BannerSlides";
 import Head from "next/head";
-import CommentSection from "@components/main/dapp-news/CommentSection";
-import SharingSection from "@components/main/dapp-news/SharingSection";
 import { Calendar, Eye } from "react-feather";
-import NewsList from "@components/main/dapp-news/NewsList";
-import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
+import dynamic from "next/dynamic";
+
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
+  const CommentSection = dynamic(
+    () => import("@components/main/dapp-news/CommentSection")
+  );
+  const SharingSection = dynamic(
+    () => import("@components/main/dapp-news/SharingSection")
+  );
+  const NewsList = dynamic(
+    () => import("@components/main/dapp-news/NewsList")
+  );
+  const PinnedSlides = dynamic(
+    () => import("@components/main/dapp-news/PinnedSlides")
+  );
+  const BannerSlides = dynamic(
+    () => import("@components/main/dapp-news/BannerSlides")
+  );
+
   const [news, setNews] = useState<any>([]);
   const [popularNews, setPopularNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
