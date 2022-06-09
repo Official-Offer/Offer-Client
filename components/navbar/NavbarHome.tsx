@@ -109,7 +109,11 @@ export const NavbarHome: FC = () => {
   };
 
   useEffect(() => {
-      setTimeout(() => setPopupVisible(router && router.query.login && router.query.login !== 'success' && !user ? true : router && !router.query.login && !user ? true : false), 1500);
+    if (router && router.query.login && router.query.login !== 'success' && !user) {
+      setTimeout(() => setPopupVisible(true), 1500);
+    } else if (router && !router.query.login && !user) {
+      setTimeout(() => setPopupVisible(true), 1500);
+    }
     // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
   }, [user, router]); //if login query still here yet user not logged in, the browser was backed.
 
