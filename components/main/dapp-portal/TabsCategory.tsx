@@ -52,7 +52,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
       id: cateIdArray.filter((e) => e.name === cate.name)[0]?.id,
     };
   });
-  console.log(listCate);
+  // console.log(listCate);
   return (
     <>
       <div className="tab-bar-category flex-for-pc">

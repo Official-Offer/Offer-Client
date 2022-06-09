@@ -9,12 +9,12 @@ import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-const BlockchainDetails: NextPage = () => {
+const BlockchainDetails: NextPage = ({ query }) => {
     const router = useRouter();
     const AppStatistical = dynamic(() => import("@components/main/app").then((mod: any) => mod.AppStatistical));
     const SplineChart = dynamic(() => import("@components/main/app").then((mod: any) => mod.SplineChart));
     const AppSlide = dynamic(() => import("@components/main/app").then((mod: any) => mod.AppSlide));
-
+    console.log(query)
     return (
         <section className="blockchain-details">
             <div className="empty_space_height50" />

@@ -154,9 +154,9 @@ export default function TableDapp({
             return (
               <div
                 className="table-body"
-                key={i}
+                key={token.id}
                 onClick={() => {
-                  router.push(`/app/${i}`);
+                  router.push(`/app/${token.id}`);
                 }}
               >
                 <div className="table-body-item table-body-item-number">
