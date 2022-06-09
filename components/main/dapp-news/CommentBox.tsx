@@ -6,10 +6,13 @@ import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 import router from "next/router";
+import LoginPopup from "@components/navbar/LoginPopup";
 
 const CommentBox = ({ text, name, postId }: any) => {
-  console.log(postId)
+  console.log(postId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
+  const [user, setUser] = useState<any>(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -22,22 +25,29 @@ const CommentBox = ({ text, name, postId }: any) => {
     e.preventDefault();
     const data = {
       data: {
-        "comment": e.target[0].value,
+        comment: e.target[0].value,
         // "rating": 5,
-        "post": postId,
+        post: postId,
         // "user": 1
-      }
+      },
     };
-    await request.post(`/dapp/comments`, data).then((res) => {
-      if (res.status == 200) {
-        message.success("Comment created");
-        e.target.reset();
-      } else {
-        message.success("Something was wrong! Please try again");
-      }
-    })
-    .then(() => router.reload()); //force api refetch;
-  }
+    await request
+      .post(`/dapp/comments`, data)
+      .then((res) => {
+        if (res.status == 200) {
+          message.success("Comment created");
+          e.target.reset();
+        } else {
+          message.success("Please Log In");
+          <LoginPopup
+            setUser={setUser}
+            isVisible={isPopupVisible}
+            setVisible={setPopupVisible}
+          />;
+        }
+      })
+      .then(() => router.reload()); //force api refetch;
+  };
 
   return (
     <>
