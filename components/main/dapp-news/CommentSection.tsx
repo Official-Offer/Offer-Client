@@ -46,13 +46,14 @@ const CommentSection = ({ news }: any) => {
   }, [news]);
 
   console.log(comments);
+  console.log(news);
 
   return (
     <BoxWhiteShadow>
       <BoxALignCenter_Justify_ItemsBetween className="p-4">
         <h3>COMMENTS</h3>
         <ButtonBlue>
-          <CommentBox text="Write Comment" title={news[0]?.attributes.title} />
+          <CommentBox text="Write Comment" postId={news[0]?.id} />
         </ButtonBlue>
       </BoxALignCenter_Justify_ItemsBetween>
       <div className="p-4 news-details-comment">
@@ -83,7 +84,7 @@ const CommentSection = ({ news }: any) => {
                     <CommentBox
                       text="Reply"
                       name={cmt.attributes?.comment}
-                      title={news[0]?.attributes.title}
+                      postId={news[0]?.id}
                       className="ms-2 text-green"
                     >
                       Reply

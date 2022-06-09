@@ -9,7 +9,8 @@ import router from "next/router";
 import axios from "axios";
 import qs from "qs";
 
-const CommentBox = ({ text, name, title }: any) => {
+const CommentBox = ({ text, name, postId }: any) => {
+  console.log(postId)
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -24,9 +25,9 @@ const CommentBox = ({ text, name, title }: any) => {
     const data = {
       data: {
         "comment": e.target[0].value,
-        "rating": 5,
-        "post": 21,
-        "user": 1
+        // "rating": 5,
+        "post": postId,
+        // "user": 1
       }
     };
     await request.post(`/dapp/comments`, data).then((res) => {
