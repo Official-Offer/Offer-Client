@@ -108,7 +108,11 @@ export const NavbarHome: FC = () => {
   };
 
   useEffect(() => {
-    if (router.query.login && router) {setPopupVisible(router.query.login && !user);}
+    console.log(router.query.login, user);
+
+    if (router.query.login && router) {
+      setTimeout(() => setPopupVisible(router.query.login !== 'success' && !user ? true : false), 1500);
+    }
     // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
   }, [user, router]); //if login query still here yet user not logged in, the browser was backed.
 
@@ -191,9 +195,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                  // onClick={() => {
+                  //   router.push("/submit");
+                  // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
