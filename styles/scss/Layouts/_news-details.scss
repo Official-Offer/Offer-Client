@@ -2,6 +2,7 @@
     // padding: 15px;
     &-social{
         display: flex;
+        flex-wrap: wrap;
         &-icons {
             padding-left: 20px;
         }
@@ -107,10 +108,8 @@
     &-description,
     &-tags,
     &-social {
-        margin-top: 20px;
-    }
-    &-social {
         display: flex;
+        margin-top: 20px;
         //justify-content: space-between;
         &-facebook,
         &-twitter,
@@ -220,17 +219,19 @@
         }
     }
     &-sharing {
-        padding-bottom: 10px;
         &-top {
             margin-top: 18px;
-            margin-bottom: 15px;
             position: sticky;
             top: 100px;
         }
         &-bottom {
             position: sticky;
             top: 250px;
+            @include md {
+                top: 350px;
+            }
         }
+
     }
     &-tag {
         height: 100%;

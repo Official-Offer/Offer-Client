@@ -16,7 +16,9 @@ import {
 } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
 import dynamic from "next/dynamic";
-
+import NewsList from "@components/main/dapp-news/NewsList";
+import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
+import LatestNews from "@components/main/dapp-news/LatestNews";
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -27,15 +29,15 @@ const DappNews: FC = () => {
   const [viewMore, setNumberViewMore] = useState(20);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const NewsList = dynamic(
-    () => import("@components/main/dapp-news/NewsList")
-  );
-  const PinnedSlides = dynamic(
-    () => import("@components/main/dapp-news/PinnedSlides")
-  );
-  const LatestNews = dynamic(
-    () => import("@components/main/dapp-news/LatestNews")
-  );
+  // const NewsList = dynamic(
+  //   () => import("@components/main/dapp-news/NewsList")
+  // );
+  // const PinnedSlides = dynamic(
+  //   () => import("@components/main/dapp-news/PinnedSlides")
+  // );
+  // const LatestNews = dynamic(
+  //   () => import("@components/main/dapp-news/LatestNews")
+  // );
 
   useEffect(() => {
     (async () => {

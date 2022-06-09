@@ -31,7 +31,7 @@ const SharingSection = ({ news, category }: any) => {
         <div className="news-details-social-icons">
           <TwitterShareButton
             // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
-           url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
+            url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             title={`${news[0]?.attributes.title}
           
             ${news[0]?.attributes.description}`}

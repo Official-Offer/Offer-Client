@@ -101,6 +101,12 @@ a {
   }
 }
 
+.my-custom-pagination-div {
+  width: 3px;
+  color: red;
+  line-height: 30px;
+}
+
 .focus_none {
   outline: none;
   &:focus {

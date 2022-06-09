@@ -12,6 +12,7 @@ import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
+// import { Pagination } from "swiper";
 
 export default function PinnedSlides({crit}: any) {
   const navigationPrevRef = React.useRef(null);
@@ -40,7 +41,7 @@ export default function PinnedSlides({crit}: any) {
     })();
   }, []);
   return (
-    <>
+    <div className='sliderWrapper'>
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
@@ -62,7 +63,13 @@ export default function PinnedSlides({crit}: any) {
             slidesPerView: 1,
           },
         }}
-        pagination={false}
+        pagination={true}
+        // pagination={{
+        //   clickable: true,
+        //   renderBullet: function (index, className) {
+        //     return '<span className="my-custom-pagination-div">'  + (index + 1) + "</span>";
+        //   },
+        // }}
         loop={true}
         autoplay={{ delay: 2000 }}
         navigation={{
@@ -105,6 +112,6 @@ export default function PinnedSlides({crit}: any) {
           );
         })}
       </Swiper>
-    </>
+    </div>
   );
 }
