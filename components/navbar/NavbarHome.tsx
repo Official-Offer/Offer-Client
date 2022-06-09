@@ -97,14 +97,17 @@ export const NavbarHome: FC = () => {
       .then(async (res) => {
         // window.history.replaceState(null, '','/');
         // window.location.href = window.location.origin;
+        router.push('/');
         await request
           .get(`/users/me`)
           .then((res: any) => {
-            setPopupVisible(true);
             setUser(res.data);
             setPopupVisible(false);
           })
-          .catch(() => null);
+          .catch(() => {
+            setPopupVisible(true);
+            setUser(null);
+          });
       });
   };
 
