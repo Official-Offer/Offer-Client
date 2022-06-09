@@ -6,8 +6,6 @@ import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 import router from "next/router";
-import axios from "axios";
-import qs from "qs";
 
 const CommentBox = ({ text, name, postId }: any) => {
   console.log(postId)

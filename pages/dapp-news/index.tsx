@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import { Empty, Tabs } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
-import NewsLists from "@components/main/dapp-news/NewsList";
 import { Button, LoadMore } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
 import {
@@ -16,8 +15,8 @@ import {
   ToggleMain_Sub,
 } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
-import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
-import LatestNews from "@components/main/dapp-news/LatestNews";
+import dynamic from "next/dynamic";
+
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -27,6 +26,16 @@ const DappNews: FC = () => {
   const [categoryKey, setCategoryKey] = useState("All");
   const [viewMore, setNumberViewMore] = useState(20);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const NewsList = dynamic(
+    () => import("@components/main/dapp-news/NewsList")
+  );
+  const PinnedSlides = dynamic(
+    () => import("@components/main/dapp-news/PinnedSlides")
+  );
+  const LatestNews = dynamic(
+    () => import("@components/main/dapp-news/LatestNews")
+  );
 
   useEffect(() => {
     (async () => {
@@ -181,7 +190,7 @@ const DappNews: FC = () => {
       </div>
       <div>
         <div className="row">
-          <NewsLists data={newsList} />
+          <NewsList data={newsList} />
         </div>
         <br />
         <div className="text-center">
