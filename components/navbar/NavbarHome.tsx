@@ -100,6 +100,7 @@ export const NavbarHome: FC = () => {
         await request
           .get(`/users/me`)
           .then((res: any) => {
+            setPopupVisible(true);
             setUser(res.data);
             setPopupVisible(false);
           })
@@ -108,8 +109,6 @@ export const NavbarHome: FC = () => {
   };
 
   useEffect(() => {
-    console.log(router.query.login, user);
-
     if (router.query.login && router) {
       setTimeout(() => setPopupVisible(router.query.login !== 'success' && !user ? true : false), 1500);
     }
