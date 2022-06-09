@@ -1,16 +1,18 @@
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiSSO";
+import request from "@services/apiDapp";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
 import router from "next/router";
-import axios from "axios";
-import qs from "qs";
+import LoginPopup from "@components/navbar/LoginPopup";
 
-const CommentBox = ({ text, name }: any) => {
+const CommentBox = ({ text, name, postId }: any) => {
+  console.log(postId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
+  const [user, setUser] = useState<any>(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,37 +21,33 @@ const CommentBox = ({ text, name }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    // console.log(e.target.value);
+    //console.log(e);
     e.preventDefault();
     const data = {
       data: {
         comment: e.target[0].value,
-        rating: 2,
+        // "rating": 5,
+        post: postId,
+        // "user": 1
       },
     };
-    const commentQuery = qs.stringify(
-      {
-        populate: "*",
-        // filters: {
-        //   post: {
-        //     title: 
-        //   },
-        // },
-      },
-      {
-        encodeValuesOnly: true,
-      }
-    );
-    await request.post(`/reviews?${commentQuery}`, data).then((res) => {
-      if (res.status == 200) {
-        message.success("Comment created");
-        e.target.reset();
-      } else {
-        message.success("Something was wrong! Please try again");
-      }
-    })
-    .then(() => router.reload()); //force api refetch;
-  }
+    await request
+      .post(`/dapp/comments`, data)
+      .then((res) => {
+        if (res.status == 200) {
+          message.success("Comment created");
+          e.target.reset();
+        } else {
+          message.success("Please Log In");
+          <LoginPopup
+            setUser={setUser}
+            isVisible={isPopupVisible}
+            setVisible={setPopupVisible}
+          />;
+        }
+      })
+      .then(() => router.reload()); //force api refetch;
+  };
 
   return (
     <>
@@ -74,7 +72,6 @@ const CommentBox = ({ text, name }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <input onChange={(e) => console.log(e)}></input> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>

@@ -1,7 +1,8 @@
 .news-details {
-    padding: 15px;
+    // padding: 15px;
     &-social{
         display: flex;
+        flex-wrap: wrap;
         &-icons {
             padding-left: 20px;
         }
@@ -69,6 +70,31 @@
             }
         }
     }
+    &-row {
+        display: flex;
+        flex-wrap: wrap;
+        &-side {
+            flex: 0 0 auto;
+            width: 18%;
+            @include md {
+                width: 22%;
+            }
+            @include sm {
+                width: 100%;
+            }
+        }
+        &-center {
+            flex: 0 0 auto;
+            width: 60%;
+            margin: 10px;
+            @include md {
+                width: 52%;
+            }
+            @include sm {
+                width: 100%;
+            }
+        }
+    }
     &-category {
         margin-top: 20px;
         .icon {
@@ -82,10 +108,8 @@
     &-description,
     &-tags,
     &-social {
-        margin-top: 20px;
-    }
-    &-social {
         display: flex;
+        margin-top: 20px;
         //justify-content: space-between;
         &-facebook,
         &-twitter,
@@ -191,6 +215,57 @@
                         color: #45b36b !important;
                     }
                 }
+            }
+        }
+    }
+    &-sharing {
+        // overflow: auto;
+        &-top {
+            margin-top: 18px;
+            position: sticky;
+            top: 100px;
+        }
+        &-bottom {
+            position: sticky;
+            top: 250px;
+            @include md {
+                top: 350px;
+            }
+        }
+
+    }
+    &-tag {
+        height: 100%;
+        margin-top: 100px;
+        @include sm {
+            width: 100%;
+        }
+    }
+    &-relatedNews {
+        overflow: auto;       
+         position: sticky;
+        top: 100px;
+        margin-top: 18px;
+        @include sm {
+            width: 100%;
+        }
+    }
+    &-commentsection {
+        margin-top: 20px;
+    }
+    &-posts{
+        &-desk{
+            margin-top: 60px;
+            text-align: center;
+            @include sm{
+                display: none;
+            }
+        }
+        &-mobile{
+            display: none;
+            margin: 10px;
+            @include sm {
+                display: block;
             }
         }
     }
