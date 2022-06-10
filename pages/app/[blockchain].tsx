@@ -295,9 +295,13 @@ const BlockchainDetails: NextPage = () => {
                       key={i}
                     >
                       <h5 className="mb-0">{comp.name}</h5>
-                      <SplineChart data={comp} />
+                      <SplineChart data={comp} price={stat?.stats.token.chart}/>
                       <BoxALignItemsStart>
-                        <div className="dot" />
+                        <div
+                          className={
+                            comp.name == "Social Signal" ? "dot" : "dot-yellow"
+                          }
+                        />
                         <div className="ms-2">
                           <p className="title">{comp.name}</p>
                           <div className="exp-item">
@@ -312,13 +316,23 @@ const BlockchainDetails: NextPage = () => {
                             <div className="exp-item">
                               <span className="name">Total: </span>
                               <span className="value">{comp.data.total}</span>
-                              <span className="time">{comp.data.total_days} (days)</span>
+                              <span className="time">
+                                {comp.data.total_days} (days)
+                              </span>
                             </div>
                           )}
                           <div className="exp-item">
                             <span className="name">ATH: </span>
-                            <span className="value">{comp.data.all_time_high}</span>
-                            <span className="time">({moment(comp.data.all_time_high_date).format('LL')})</span>
+                            <span className="value">
+                              {comp.data.all_time_high}
+                            </span>
+                            <span className="time">
+                              (
+                              {moment(comp.data.all_time_high_date).format(
+                                "LL"
+                              )}
+                              )
+                            </span>
                           </div>
                         </div>
                       </BoxALignItemsStart>
