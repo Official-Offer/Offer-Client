@@ -37,6 +37,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   );
 
   const [news, setNews] = useState<any>([]);
+  const [styledContent, setStyledContent] = useState("");
   const [popularNews, setPopularNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [liked, setLiked] = useState(false);
@@ -76,7 +77,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         setPopularNews(res.data.data);
       });
     })();
-  }, [router.query.slug]);
+  }, [router.query]);
 
   useEffect(() => {
     (async () => {
@@ -103,13 +104,17 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
     })();
   }, [news]);
 
-  console.log(news);
-  const keyWord = "(/uploads/";
+  // console.log(news);
 
-  const modifiedContent = news[0]?.attributes.content
-    .split("(/uploads/")
-    .splice(0, keyWord.length)
-    .join(`(${URL_API_IMG}/uploads/`);
+  useEffect(() => {
+    const keyWord = "(/uploads/";
+    const modifiedContent = news[0]?.attributes.content
+      .split("(/uploads/")
+      .splice(0, keyWord.length)
+      .join(`(${URL_API_IMG}/uploads/`);
+
+    setStyledContent(modifiedContent);
+  }, [news]);
 
   return (
     <div>
@@ -195,7 +200,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   </span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <br />
-                <MarkDown>{modifiedContent}</MarkDown>
+                <MarkDown>{styledContent}</MarkDown>
               </div>
             </BoxWhiteShadow>
             <div className="news-details-commentsection">
