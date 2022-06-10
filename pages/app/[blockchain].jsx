@@ -22,7 +22,7 @@ import { File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
 import { Avatar, Rate } from "antd";
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import * as qs from "qs";
@@ -31,23 +31,22 @@ import requestDapp from "@services/apiDapp";
 import { useEffect, useState } from "react";
 import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
-
-const BlockchainDetails: NextPage = () => {
+const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
-    import("@components/main/app").then((mod: any) => mod.AppStatistical)
+    import("@components/main/app").then((mod) => mod.AppStatistical)
   );
   const SplineChart = dynamic(() =>
-    import("@components/main/app").then((mod: any) => mod.SplineChart)
+    import("@components/main/app").then((mod) => mod.SplineChart)
   );
   const AppSlide = dynamic(() =>
-    import("@components/main/app").then((mod: any) => mod.AppSlide)
+    import("@components/main/app").then((mod) => mod.AppSlide)
   );
   const id = router.query.blockchain;
-  const [dapp, setDapp] = useState<any>();
-  const [slug, setSlug] = useState<any>("leonicorn-swap");
-  const [stat, setStat] = useState<any>();
-  const [day, setDay] = useState<any>(7);
+  const [dapp, setDapp] = useState();
+  const [slug, setSlug] = useState("leonicorn-swap");
+  const [stat, setStat] = useState(null);
+  const [day, setDay] = useState(7);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -139,7 +138,7 @@ const BlockchainDetails: NextPage = () => {
             <p>{dapp?.description}</p>
           </div>
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
-            {dapp?.tags.data.map((tag: any, i: number) => (
+            {dapp?.tags.data.map((tag, i) => (
               <BoxBlueBorderRounded className="py-2 px-3 me-3" key={i}>
                 <span>{tag.name}</span>
               </BoxBlueBorderRounded>
@@ -160,7 +159,7 @@ const BlockchainDetails: NextPage = () => {
                   onClick={() =>
                     window.open(
                       dapp?.crawl.socials.filter(
-                        (soc: any) => soc.name === "Facebook"
+                        (soc) => soc.name === "Facebook"
                       )[0].url || "https://facebook.com"
                     )
                   }
@@ -172,7 +171,7 @@ const BlockchainDetails: NextPage = () => {
                   onClick={() =>
                     window.open(
                       dapp?.crawl.socials.filter(
-                        (soc: any) => soc.name === "Twitter"
+                        (soc) => soc.name === "Twitter"
                       )[0].url || "https://twitter.com"
                     )
                   }
@@ -184,7 +183,7 @@ const BlockchainDetails: NextPage = () => {
                   onClick={() =>
                     window.open(
                       dapp?.crawl.socials.filter(
-                        (soc: any) => soc.name === "Youtube"
+                        (soc) => soc.name === "Youtube"
                       )[0]?.url || "https://youtube.com"
                     )
                   }
@@ -291,7 +290,7 @@ const BlockchainDetails: NextPage = () => {
                     <SplineChart
                       data={
                         stat?.stats.components.filter(
-                          (comp: any) => comp.name === "Users"
+                          (comp) => comp.name === "Users"
                         )[0]
                       }
                     />

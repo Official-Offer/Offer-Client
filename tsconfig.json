@@ -33,6 +33,6 @@
       "@styledComponents/*": ["styles/styled-components/*"],
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss", "components/navbar/LoginPopup.jsx", "utils/processTextInput.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss", "components/navbar/LoginPopup.jsx", "utils/processTextInput.js", "pages/app/[blockchain].jsx"],
   "exclude": ["node_modules"]
 }
