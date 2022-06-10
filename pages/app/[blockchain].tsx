@@ -48,7 +48,7 @@ const BlockchainDetails: NextPage = () => {
   const [slug, setSlug] = useState<any>("leonicorn-swap");
   const [stat, setStat] = useState<any>();
   const [day, setDay] = useState<any>(7);
-  useEffect(() => setDay(router.query.days), [router]);
+  useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
       await axios
@@ -282,84 +282,42 @@ const BlockchainDetails: NextPage = () => {
                 </TabMain>
               </div>
               <br />
-              <AppStatistical day={stat?.days} data={dapp}/>
+              <AppStatistical day={stat?.days} data={dapp} />
               <br />
               <div className="row mt-5">
-                <div className="col-lg-6 col-12 blockchain-details-dashboard-users">
-                  <h5 className="mb-0">Users</h5>
-                  <SplineChart />
-                  <BoxALignItemsStart>
-                    <div className="dot" />
-                    <div className="ms-2">
-                      <p className="title">Users</p>
-                      <div className="exp-item">
-                        <span className="name">24h: </span>
-                        <span className="value">5</span>
-                        <span className="increase">66.67%↑</span>
+                {stat?.stats.components.map((comp, i) => (
+                  <div className="col-lg-6 col-12 blockchain-details-dashboard-users" key={i}>
+                    <h5 className="mb-0">Users</h5>
+                    <SplineChart
+                      data={
+                        stat?.stats.components.filter(
+                          (comp: any) => comp.name === "Users"
+                        )[0]
+                      }
+                    />
+                    <BoxALignItemsStart>
+                      <div className="dot" />
+                      <div className="ms-2">
+                        <p className="title">Users</p>
+                        <div className="exp-item">
+                          <span className="name">24h: </span>
+                          <span className="value">5</span>
+                          <span className="increase">66.67%↑</span>
+                        </div>
+                        <div className="exp-item">
+                          <span className="name">Total: </span>
+                          <span className="value">2,543</span>
+                          <span className="time">(36 days)</span>
+                        </div>
+                        <div className="exp-item">
+                          <span className="name">ATH: </span>
+                          <span className="value">8</span>
+                          <span className="time">(Feb 17, 2022)</span>
+                        </div>
                       </div>
-                      <div className="exp-item">
-                        <span className="name">Total: </span>
-                        <span className="value">2,543</span>
-                        <span className="time">(36 days)</span>
-                      </div>
-                      <div className="exp-item">
-                        <span className="name">ATH: </span>
-                        <span className="value">8</span>
-                        <span className="time">(Feb 17, 2022)</span>
-                      </div>
-                    </div>
-                  </BoxALignItemsStart>
-                </div>
-                <div className="col-lg-6 col-12 blockchain-details-dashboard-volume">
-                  <h5 className="mb-0">Volume</h5>
-                  <SplineChart />
-                  <BoxALignItemsStart>
-                    <div className="dot" />
-                    <div className="ms-2">
-                      <p className="title">Volume</p>
-                      <div className="exp-item">
-                        <span className="name">24h: </span>
-                        <span className="value">5</span>
-                        <span className="increase">66.67%↑</span>
-                      </div>
-                      <div className="exp-item">
-                        <span className="name">Total: </span>
-                        <span className="value">2,543</span>
-                        <span className="time">(36 days)</span>
-                      </div>
-                      <div className="exp-item">
-                        <span className="name">ATH: </span>
-                        <span className="value">8</span>
-                        <span className="time">(Feb 17, 2022)</span>
-                      </div>
-                    </div>
-                  </BoxALignItemsStart>
-                </div>
-                <div className="col-lg-6 col-12 blockchain-details-dashboard-transactions">
-                  <h5 className="mb-0">Transactions</h5>
-                  <SplineChart />
-                  <BoxALignItemsStart>
-                    <div className="dot" />
-                    <div className="ms-2">
-                      <p className="title">Transactions</p>
-                      <div className="exp-item">
-                        <span className="name">24h: </span>
-                        <span className="value">5</span>
-                        <span className="decrease">66.67%↑</span>
-                      </div>
-                      <div className="exp-item">
-                        <span className="name">Total: </span>
-                        <span className="value">2,543</span>
-                        <span className="time">(36 days)</span>
-                      </div>
-                      <div className="exp-item">
-                        <span className="name">ATH: </span>
-                        <span className="value">8</span>
-                        <span className="time">(Feb 17, 2022)</span>
-                      </div>
-                    </div>
-                  </BoxALignItemsStart>
-                </div>
+                    </BoxALignItemsStart>
+                  </div>
+                ))}
                 <div className="col-lg-6 col-12 blockchain-details-dashboard-submit">
                   <div className="blockchain-details-dashboard-submit-img">
                     <p className="fw-bold mb-1 fontSize_1-1">
