@@ -4,7 +4,7 @@ import {
   BoxBlueBorderRounded,
 } from "@styles/styled-components/styledBox";
 import { formatter } from "@utils/formatCurrency";
-
+import { updown, incdec } from "@utils/numberDecorator";
 export const AppStatistical: FC = ({ data, day }: any) => {
   const userDiff = data?.crawl[`user_${day}d_gr`];
   const volDiff = data?.crawl[`volume_${day}d_gr`];
@@ -12,8 +12,7 @@ export const AppStatistical: FC = ({ data, day }: any) => {
   const user = data?.crawl[`user_${day}d`];
   const volume = formatter.format(data?.crawl[`volume_${day}d`]);
   const trans = formatter.format(data?.crawl[`amount_${day}d`]);
-  const updown = (i: number) => (i > 0 ? "↑" : "↓");
-  const incdec = (i: number) => (i > 0 ? "increase" : "decrease");
+  
   return (
     <div className="row app-statistical">
       <div className="col-lg-4 col-12 my-lg-0 my-2">

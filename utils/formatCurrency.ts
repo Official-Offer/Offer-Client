@@ -13,3 +13,5 @@ export const isExistAndFormatCurrency = (num: any, fixed: any) => {
 export const numberSeperator = Intl.NumberFormat('en', { notation: 'standard' })
 
 export const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+
+export const dateFormatter = Intl.DateTimeFormat('en', {month: 'short'})

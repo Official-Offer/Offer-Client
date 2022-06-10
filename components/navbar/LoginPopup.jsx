@@ -20,7 +20,7 @@ const LoginPopup = ({ isVisible, setVisible, setUser }) => {
     location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
   };
   return (
-    <Modal title="Login" visible={false} onCancel={onCancel}>
+    <Modal title="Login" visible={isVisible} onCancel={onCancel}>
       {loginMethods.map((meth, i) => (
         <SocialLoginBox key={i} onClick={() => onLogin(meth)}>
           <img
