@@ -84,8 +84,8 @@ const CommentSection = ({ news }: any) => {
                   </p>
               <p className="news-details-comment-box-description-reply">
                 {/* <p>Replies</p> */}
-                {cmt.attributes?.replies.data.map((reply) => (
-                  <span>
+                {cmt.attributes?.replies.data.map((reply: any, i: number) => (
+                  <span key={i}>
                     <BoxALignCenter_Justify_ItemsBetween>
                       <BoxALignItemsCenter className="news-details-comment-box-reply">
                         <Avatar
