@@ -248,7 +248,7 @@ export const NavbarHome: FC = () => {
                   <Popover
                     placement="bottom"
                     content={popoverContent}
-                    trigger="focus"
+                    // trigger="focus"
                   >
                     <button className="navbar_userinfo_wrapper" type="button">
                       <img
