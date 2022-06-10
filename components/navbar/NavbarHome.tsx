@@ -92,7 +92,10 @@ export const NavbarHome: FC = () => {
       link: "#",
       newTab: false,
       routeSelected: "/",
-      action: () => {setPopupVisible(true); onClose()},
+      action: () => {
+        setPopupVisible(true);
+        onClose();
+      },
     },
   ];
 
@@ -115,11 +118,10 @@ export const NavbarHome: FC = () => {
       });
   };
 
-  useEffect(() => {
-    setTimeout(() => setPopupVisible(!Cookies.get("accessToken")), 1500);
-    // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
-  }, [user]); //if login query still here yet user not logged in, the browser was backed.
-
+  // useEffect(() => {
+  //   setTimeout(() => setPopupVisible(!Cookies.get("accessToken") && router.asPath === '/'), 1500);
+  //   // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
+  // }, [user]); //if login query still here yet user not logged in, the browser was backed.
   const popoverContent = (
     <div className="navbar_popover">
       <p className="navbar_popover_content" onClick={onLogout}>
@@ -156,22 +158,24 @@ export const NavbarHome: FC = () => {
                 >
                   {listMenu.map((menu, i) => {
                     return (
-                      <Menu.Item key={menu.routeSelected} className="m-0">
-                        {menu.newTab ? (
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="m-0"
-                            href={menu.link}
-                          >
-                            {menu.name}
-                          </a>
-                        ) : (
-                          <Link href={menu.link}>
-                            <a className="m-0">{menu.name}</a>
-                          </Link>
-                        )}
-                      </Menu.Item>
+                      menu.name !== "Login" && (
+                        <Menu.Item key={menu.routeSelected} className="m-0">
+                          {menu.newTab ? (
+                            <a
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="m-0"
+                              href={menu.link}
+                            >
+                              {menu.name}
+                            </a>
+                          ) : (
+                            <Link href={menu.link}>
+                              <a className="m-0">{menu.name}</a>
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )
                     );
                   })}
                 </Menu>
@@ -296,7 +300,9 @@ export const NavbarHome: FC = () => {
                               {menu.name}
                             </a>
                           ) : menu.action ? (
-                            <a className="m-0" onClick={menu.action}>{menu.name}</a>
+                            <a className="m-0" onClick={menu.action}>
+                              {menu.name}
+                            </a>
                           ) : (
                             <Link href={menu.link}>
                               <a className="m-0">{menu.name}</a>
