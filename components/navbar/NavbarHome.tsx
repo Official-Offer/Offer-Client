@@ -118,10 +118,6 @@ export const NavbarHome: FC = () => {
       });
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => setPopupVisible(!Cookies.get("accessToken") && router.asPath === '/'), 1500);
-  //   // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
-  // }, [user]); //if login query still here yet user not logged in, the browser was backed.
   const popoverContent = (
     <div className="navbar_popover">
       <p className="navbar_popover_content" onClick={onLogout}>
