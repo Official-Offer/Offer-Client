@@ -284,39 +284,43 @@ const BlockchainDetails = () => {
               <AppStatistical day={stat?.days} data={dapp} />
               <br />
               <div className="row mt-5">
-                {stat?.stats.components.map((comp, i) => (
-                  <div className="col-lg-6 col-12 blockchain-details-dashboard-users" key={i}>
-                    <h5 className="mb-0">Users</h5>
-                    <SplineChart
-                      data={
-                        stat?.stats.components.filter(
-                          (comp) => comp.name === "Users"
-                        )[0]
-                      }
-                    />
-                    <BoxALignItemsStart>
-                      <div className="dot" />
-                      <div className="ms-2">
-                        <p className="title">Users</p>
-                        <div className="exp-item">
-                          <span className="name">24h: </span>
-                          <span className="value">5</span>
-                          <span className="increase">66.67%↑</span>
+                {stat?.stats.components.map((comp, i) => {
+                  return (
+                    <div
+                      className="col-lg-6 col-12 blockchain-details-dashboard-users"
+                      key={i}
+                    >
+                      <h5 className="mb-0">{comp.name}</h5>
+                      <SplineChart data={comp} />
+                      <BoxALignItemsStart>
+                        <div className="dot" />
+                        <div className="ms-2">
+                          <p className="title">{comp.name}</p>
+                          <div className="exp-item">
+                            <span className="name">24h: </span>
+                            <span className="value">{comp.data["24h"]}</span>
+                            <span className="increase">
+                              {comp.data["24h_gr"]}%
+                              {updown(comp.data["24h_gr"])}
+                            </span>
+                          </div>
+                          {comp.data.total && (
+                            <div className="exp-item">
+                              <span className="name">Total: </span>
+                              <span className="value">{comp.data.total}</span>
+                              <span className="time">{comp.data.total_days} (days)</span>
+                            </div>
+                          )}
+                          <div className="exp-item">
+                            <span className="name">ATH: </span>
+                            <span className="value">{comp.data.all_time_high}</span>
+                            <span className="time">({dateFormatter.format(comp.data.all_time_high_date)})</span>
+                          </div>
                         </div>
-                        <div className="exp-item">
-                          <span className="name">Total: </span>
-                          <span className="value">2,543</span>
-                          <span className="time">(36 days)</span>
-                        </div>
-                        <div className="exp-item">
-                          <span className="name">ATH: </span>
-                          <span className="value">8</span>
-                          <span className="time">(Feb 17, 2022)</span>
-                        </div>
-                      </div>
-                    </BoxALignItemsStart>
-                  </div>
-                ))}
+                      </BoxALignItemsStart>
+                    </div>
+                  );
+                })}
                 <div className="col-lg-6 col-12 blockchain-details-dashboard-submit">
                   <div className="blockchain-details-dashboard-submit-img">
                     <p className="fw-bold mb-1 fontSize_1-1">
