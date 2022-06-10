@@ -92,7 +92,7 @@ export const NavbarHome: FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const openLoginPopup = () => setPopupVisible(true);
   const onLogout = async () => {
-    Cookies.remove('accessToken');
+    Cookies.remove("accessToken");
     await request
       .get("/logout", { withCredentials: true })
       .then(async (res) => {
@@ -109,7 +109,10 @@ export const NavbarHome: FC = () => {
   };
 
   useEffect(() => {
-      setTimeout(() => setPopupVisible(!Cookies.get('accessToken') ? true : false), 1500);
+    setTimeout(
+      () => setPopupVisible(!Cookies.get("accessToken") ? true : false),
+      1500
+    );
     // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
   }, [user]); //if login query still here yet user not logged in, the browser was backed.
 
@@ -192,9 +195,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                  // onClick={() => {
-                  //   router.push("/submit");
-                  // }}
+                    // onClick={() => {
+                    //   router.push("/submit");
+                    // }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
@@ -241,12 +244,26 @@ export const NavbarHome: FC = () => {
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
+                {user && (
+                  <Popover
+                    placement="bottom"
+                    content={popoverContent}
+                    trigger="focus"
+                  >
+                    <button className="navbar_userinfo_wrapper" type="button">
+                      <img
+                        className="navbar_avatar_mobile"
+                        src={user?.avatar || "/img/default.png"}
+                      ></img>
+                    </button>
+                  </Popover>
+                )}
                 <Button
                   type="button"
                   onClick={showDrawer}
-                  className="d-flex align-items-center border-0 ms-3"
+                  className="d-flex align-items-center border-0 ms-3 drawer-button"
                 >
-                  <MenuOutlined style={{ color: "#000" }} />
+                  <MenuOutlined style={{ color: "#000"}} />
                 </Button>
                 <Drawer
                   placement="right"

@@ -94,6 +94,19 @@
   border-radius: 50%;
   border: solid 3px #058499;
   background-color: #67c767;
+  &_mobile {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-left: 12px;
+    border: solid 2px #058499;
+    background-color: #67c767;
+  }
+}
+
+.drawer-button {
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .navbar_popover {
@@ -125,3 +138,4 @@
 .ant-popover-inner-content {
   padding-bottom: 0 !important;
 }
+

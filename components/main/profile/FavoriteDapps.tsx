@@ -21,13 +21,15 @@ const FavoriteDapps = ({ data }: any) => {
         // .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=5`)
         .then((res) => {
           console.log(res);
-          setDapps(res.data.data.map((dapp: any) => {
-            return {
-              imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
-              name: dapp.attributes.dapp.data.attributes.name,
-              url: dapp.attributes.dapp.data.attributes.website,
-            }
-          }));       
+          setDapps(
+            res.data.data.map((dapp: any) => {
+              return {
+                imgSrc: dapp.attributes.dapp.data.attributes.crawl.icon,
+                name: dapp.attributes.dapp.data.attributes.name,
+                url: dapp.attributes.dapp.data.attributes.website,
+              };
+            })
+          );
         });
     })();
   }, []);
@@ -35,12 +37,12 @@ const FavoriteDapps = ({ data }: any) => {
     <div>
       <ProfileTitle>Favorite Dapps</ProfileTitle>
       <FormDescription>
-        Here are the Dapps you have previously favored.
+        Here are all dapps that you have previously favorited
       </FormDescription>
       <div className="row g-4">
-        {dapps.map((dapp :any) => (
+        {dapps.map((dapp: any) => (
           <div className="col-12 col-lg-6 col-xl-4" key={1}>
-            <DappBox onClick={()=> window.open(dapp.url)}>
+            <DappBox onClick={() => window.open(dapp.url)}>
               <DappWrapper>
                 <DappImg src={dapp.imgSrc}></DappImg>
                 <DappName>{dapp.name}</DappName>
