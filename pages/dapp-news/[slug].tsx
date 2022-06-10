@@ -128,14 +128,10 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
-        <div className="news-details-row p-5">
-          <div className="news-details-sharing news-details-row-side">
+        <div className="news-details-row">
+          <div className="news-details-sharing news-details-row-side-desktop-left">
             <div className="news-details-sharing-top">
-              {/* <FacebookShareButton 
-              url = "https://www.facebook.com">
-                lol
-              </FacebookShareButton> */}
-              <SharingSection newsUpdate={news}/>
+              <SharingSection newsUpdate={news} />
             </div>
             <div className="news-details-sharing-bottom">
               <BoxWhiteShadow className="p-2">
@@ -205,6 +201,34 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
             <div className="news-details-commentsection">
               <CommentSection news={news} />
             </div>
+            <div className="news-details-row-side-mobile">
+              {/* <p>asdasdads</p> */}
+              <div className="news-details-sharing-top-mobile">
+                <SharingSection newsUpdate={news} />
+              </div>
+              <div className="news-details-sharing-bottom-mobile">
+                <BoxWhiteShadow className="p-2">
+                  <h3 className="mb-3">Tags</h3>
+                  <div className="row">
+                    {news[0]?.attributes.tags.data.map(
+                      (tag: any, i: number) => {
+                        return (
+                          <BoxWhiteShadow
+                            className="news-details-right-tag"
+                            key={i}
+                          >
+                            {tag.attributes.name}
+                          </BoxWhiteShadow>
+                        );
+                      }
+                    )}
+                  </div>
+                  <div className="news-details-right-banner">
+                    <BannerSlides />
+                  </div>
+                </BoxWhiteShadow>
+              </div>
+            </div>
             <div className="news-details-posts-desk row">
               <h2>Popular</h2>
               <NewsList data={popularNews} />
@@ -214,7 +238,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
             </div>
           </div>
           <br />
-          <div className="news-details-row-side">
+          <div className="news-details-row-side-desktop">
             <BoxWhiteShadow className="p-3 news-details-relatedNews">
               <h3 className="mb-3">Related News</h3>
               <div className="row">
@@ -224,7 +248,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                       <div
                         onClick={() => {
                           router.push({
-                            pathname: `/dapp-news/${news.attributes.slug}`
+                            pathname: `/dapp-news/${news.attributes.slug}`,
                           });
                         }}
                       >

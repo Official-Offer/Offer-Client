@@ -9,9 +9,9 @@ export const MarkDown = styled(ReactMarkdown)`
     font-size: 1.2rem;
   }
   p {
-    // font-weight: bold;
-    // font-weight: 400;
-    font-size: 0.9rem;
+    font-weight: 100;
+    overflow-wrap: normal;
+    // font-size: 0.97rem;
   }
   img {
     // padding: 20px;
@@ -23,7 +23,7 @@ export const MarkDown = styled(ReactMarkdown)`
   pre {
     color: #ccc;
     background: #2d2d2d;
-    font-size: 0.8em;
+    //font-size: 0.8em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -45,7 +45,7 @@ export const MarkDown = styled(ReactMarkdown)`
     color: #ccc;
     background: none;
     //font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-    font-size: 0.8em;
+    //font-size: 0.8em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
