@@ -4,6 +4,7 @@ import {
   AvatarName,
   AvatarWrapper,
 } from "@styles/styled-components/styledUser";
+import { removeVietnameseTones } from "@utils/processTextInput";
 import { Divider } from "antd";
 import { Heart, Settings } from "react-feather";
 const Avatar = ({ data, showFavDapp, setShowFavDapp }: any) => {
@@ -12,7 +13,7 @@ const Avatar = ({ data, showFavDapp, setShowFavDapp }: any) => {
       <AvatarContainer className="row">
         <AvatarImg className="avatar-img" src={data.avatar || '/img/default.png'}></AvatarImg>
       </AvatarContainer>
-      <AvatarName>{data.displayName}</AvatarName>
+      <AvatarName>{removeVietnameseTones(data.displayName)}</AvatarName>
       <Divider style={{ background: "rgba(29, 187, 189, 0.5)", margin: 0 }} />
       <div
         className={`avatar-button${showFavDapp ? "-active" : ""}`}

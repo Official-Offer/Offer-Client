@@ -29,17 +29,22 @@ const UserProfile: NextPage = () => {
   useEffect(() => {
     (async () => {
       //uncomment when deployed on dev since localhost can't access cookie
-      // await request
-      //   .get(`/users/me`)
-      //   .then((res: any) => {
-      //     // console.log(res.data)
-      //     setUserInfo(res.data);
-      //     setLogin(true);
-      //   })
-      //   .catch(() => setLogin(false));
-      if (!Cookies.get('accessToken')) {
-        router.push('/');
-      }
+      await request
+        .get(`/users/me`)
+        .then((res: any) => {
+          // console.log(res.data)
+          setUserInfo(res.data);
+          setLogin(true);
+          if (!Cookies.get('accessToken')) {
+            router.push('/');
+          }
+        })
+        .catch(() => {
+          setLogin(false);
+          if (!Cookies.get('accessToken')) {
+            router.push('/');
+          }
+        });
     })();
   }, [reload]);
 

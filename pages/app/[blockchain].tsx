@@ -69,7 +69,7 @@ import { URL_API_IMG } from "@config/index";
           <div className="blockchain-details-left col-lg-9 col-12">
             <BoxALignItemsCenter className="blockchain-details-combine">
               <div className="blockchain-details-combine-left">
-                <img className="app-logo" src={`${URL_API_IMG}${dapp?.images.data}`} alt="" />
+                <img className="app-logo" src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`} alt="" />
               </div>
               <div className="blockchain-details-combine-right">
                 <BoxALignItemsCenter className="blockchain-details-combine-right-name">
@@ -178,7 +178,7 @@ import { URL_API_IMG } from "@config/index";
           <div className="blockchain-details-left col-lg-9 col-12 mt-lg-5 mt-2">
             <div className="blockchain-details-dashboard">
               <BoxALignItemsCenter>
-                <h3>{`TronSaving's`} Dashboards</h3>
+                <h3>{`${dapp?.name}'s`} Dashboards</h3>
                 <BoxALignItemsCenter className="status-label main ms-4">
                   <span>On-Chain</span>
                 </BoxALignItemsCenter>
