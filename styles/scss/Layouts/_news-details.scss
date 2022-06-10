@@ -243,7 +243,7 @@
     }
     &-relatedNews {
         overflow: auto;       
-         position: sticky;
+        position: sticky;
         top: 100px;
         margin-top: 18px;
         @include sm {
@@ -255,8 +255,13 @@
     }
     &-posts{
         &-desk{
+            // flex-direction: row;
             margin-top: 60px;
             text-align: center;
+            @include md{
+                // display: block;
+                width: 100%;
+            }
             @include sm{
                 display: none;
             }

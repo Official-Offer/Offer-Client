@@ -15,6 +15,11 @@ import moment from "moment";
 import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
+import {
+  FacebookShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+} from "react-share";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -111,6 +116,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
       <Head>
         <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
+        <meta property="og:url" content={newsData[0]?.attributes.slug} />
         <meta
           property="og:image"
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
@@ -125,7 +131,11 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         <div className="news-details-row p-5">
           <div className="news-details-sharing news-details-row-side">
             <div className="news-details-sharing-top">
-              <SharingSection news={news} category={router.query.category} />
+              {/* <FacebookShareButton 
+              url = "https://www.facebook.com">
+                lol
+              </FacebookShareButton> */}
+              <SharingSection newsUpdate={news}/>
             </div>
             <div className="news-details-sharing-bottom">
               <BoxWhiteShadow className="p-2">
@@ -179,7 +189,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                       </a>
                     </span>
                     &nbsp;
-                    <span className="news-details-createdAt">{liked? 2: 1}</span>
+                    <span className="news-details-createdAt">
+                      {liked ? 2 : 1}
+                    </span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <Eye size={15} />
                     &nbsp;
@@ -212,12 +224,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                       <div
                         onClick={() => {
                           router.push({
-                            pathname: `/dapp-news/${news.attributes.slug}`,
-                            query: {
-                              id: news.id,
-                              category:
-                                news.attributes.category.data.attributes.name,
-                            },
+                            pathname: `/dapp-news/${news.attributes.slug}`
                           });
                         }}
                       >

@@ -256,12 +256,7 @@
     justify-content: space-between;
     margin-top: 50px;
     &-right {
-        &-toggle {
-            // @include sm {
-            //     size: 50px;
-            //     width: 200px;
-            // }
-        }
+        
     }
     &-left {
         width: 80%;
@@ -269,7 +264,8 @@
         flex-wrap: wrap;
         position: relative;
         background: #FCFCFD;
-        box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.75);
+        //border: rgba(0,0,0,0.55);
+        box-shadow: 2px 5px 13px -8px rgba(0,0,0,1);
         padding: 2px 2px;
         border-radius: 8px;
         @include lg {

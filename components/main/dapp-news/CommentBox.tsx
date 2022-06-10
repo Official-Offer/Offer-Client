@@ -8,8 +8,8 @@ import message from "antd/lib/message";
 import router from "next/router";
 import LoginPopup from "@components/navbar/LoginPopup";
 
-const CommentBox = ({ text, name, postId }: any) => {
-  console.log(postId);
+const CommentBox = ({ text, name, commentId, postId }: any) => {
+  console.log(commentId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [user, setUser] = useState<any>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -23,12 +23,18 @@ const CommentBox = ({ text, name, postId }: any) => {
   const onSubmitMessage = async (e: any) => {
     //console.log(e);
     e.preventDefault();
-    const data = {
+    const data = commentId ? 
+    {
       data: {
         comment: e.target[0].value,
-        // "rating": 5,
+        parent: commentId,
         post: postId,
-        // "user": 1
+      },
+    }
+    : {
+      data: {
+        comment: e.target[0].value,
+        post: postId,
       },
     };
     await request

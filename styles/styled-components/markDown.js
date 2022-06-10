@@ -8,6 +8,11 @@ export const MarkDown = styled(ReactMarkdown)`
   h2 {
     font-size: 1.2rem;
   }
+  p {
+    // font-weight: bold;
+    // font-weight: 400;
+    font-size: 0.9rem;
+  }
   img {
     // padding: 20px;
     width: 100%;
@@ -18,7 +23,7 @@ export const MarkDown = styled(ReactMarkdown)`
   pre {
     color: #ccc;
     background: #2d2d2d;
-    font-size: 1em;
+    font-size: 0.8em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -39,8 +44,8 @@ export const MarkDown = styled(ReactMarkdown)`
   code {
     color: #ccc;
     background: none;
-    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-    font-size: 1em;
+    //font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-size: 0.8em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;

@@ -1,21 +1,24 @@
 import { URL_SITE } from "@config/index";
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FacebookShareButton,
   TelegramShareButton,
   TwitterShareButton,
 } from "react-share";
 
-const SharingSection = ({ news, category }: any) => {
-  const [liked, setLiked] = useState(false);
+const SharingSection = ({ newsUpdate }: any) => {
+  const [news, setNews] = useState([]);
+  useEffect(() => {
+    setNews(newsUpdate)
+  }, [newsUpdate])
+  console.log(news);
   return (
     <BoxWhiteShadow className="p-3">
       <h4>Share this article</h4>
       <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton
-            //url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           
