@@ -33,6 +33,7 @@ import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
 import { updown } from "@utils/numberDecorator";
 import { dateFormatter, formatter } from "@utils/formatCurrency";
+import moment from "moment";
 
 const BlockchainDetails: NextPage = () => {
   const router = useRouter();
@@ -317,7 +318,7 @@ const BlockchainDetails: NextPage = () => {
                           <div className="exp-item">
                             <span className="name">ATH: </span>
                             <span className="value">{comp.data.all_time_high}</span>
-                            <span className="time">({dateFormatter.format(comp.data.all_time_high_date)})</span>
+                            <span className="time">({moment(comp.data.all_time_high_date).format('LL')})</span>
                           </div>
                         </div>
                       </BoxALignItemsStart>
