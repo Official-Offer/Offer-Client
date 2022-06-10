@@ -87,6 +87,16 @@ export const NavbarHome: FC = () => {
       routeSelected: "/price-board",
     },
     { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
+    {
+      name: "Login",
+      link: "#",
+      newTab: false,
+      routeSelected: "/",
+      action: () => {
+        setPopupVisible(true);
+        onClose();
+      },
+    },
   ];
 
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -107,14 +117,6 @@ export const NavbarHome: FC = () => {
           .catch(() => {});
       });
   };
-
-  useEffect(() => {
-    setTimeout(
-      () => setPopupVisible(!Cookies.get("accessToken") ? true : false),
-      1500
-    );
-    // setTimeout(() => setPopupVisible(router.query.login && !user), 1500); //wait for 0.5s for fetching api.
-  }, [user]); //if login query still here yet user not logged in, the browser was backed.
 
   const popoverContent = (
     <div className="navbar_popover">
@@ -152,22 +154,24 @@ export const NavbarHome: FC = () => {
                 >
                   {listMenu.map((menu, i) => {
                     return (
-                      <Menu.Item key={menu.routeSelected} className="m-0">
-                        {menu.newTab ? (
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="m-0"
-                            href={menu.link}
-                          >
-                            {menu.name}
-                          </a>
-                        ) : (
-                          <Link href={menu.link}>
-                            <a className="m-0">{menu.name}</a>
-                          </Link>
-                        )}
-                      </Menu.Item>
+                      menu.name !== "Login" && (
+                        <Menu.Item key={menu.routeSelected} className="m-0">
+                          {menu.newTab ? (
+                            <a
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="m-0"
+                              href={menu.link}
+                            >
+                              {menu.name}
+                            </a>
+                          ) : (
+                            <Link href={menu.link}>
+                              <a className="m-0">{menu.name}</a>
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      )
                     );
                   })}
                 </Menu>
@@ -263,7 +267,7 @@ export const NavbarHome: FC = () => {
                   onClick={showDrawer}
                   className="d-flex align-items-center border-0 ms-3 drawer-button"
                 >
-                  <MenuOutlined style={{ color: "#000"}} />
+                  <MenuOutlined style={{ color: "#000" }} />
                 </Button>
                 <Drawer
                   placement="right"
@@ -289,6 +293,10 @@ export const NavbarHome: FC = () => {
                               className="m-0"
                               href={menu.link}
                             >
+                              {menu.name}
+                            </a>
+                          ) : menu.action ? (
+                            <a className="m-0" onClick={menu.action}>
                               {menu.name}
                             </a>
                           ) : (

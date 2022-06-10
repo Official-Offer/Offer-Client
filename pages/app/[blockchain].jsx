@@ -314,7 +314,7 @@ const BlockchainDetails = () => {
                           <div className="exp-item">
                             <span className="name">ATH: </span>
                             <span className="value">{comp.data.all_time_high}</span>
-                            <span className="time">({dateFormatter.format(comp.data.all_time_high_date)})</span>
+                            <span className="time">({moment(comp.data.all_time_high_date).format('LL')})</span>
                           </div>
                         </div>
                       </BoxALignItemsStart>
