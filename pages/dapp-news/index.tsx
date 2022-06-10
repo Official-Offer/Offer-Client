@@ -121,7 +121,7 @@ const DappNews: FC = () => {
   };
 
   return (
-    <section className="main-homepage-news px-lg-3 px-0">
+    <section className="main-homepage-dappnews px-lg-3">
       <h2 className="text-center mb-5">Dapp News</h2>
       <BoxWhiteShadow className="row">
         <div className="fontSize_08 main-homepage-dappnews-pinnedSection-left">
