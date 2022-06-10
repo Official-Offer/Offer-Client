@@ -25,7 +25,7 @@ const CommentSection = ({ news }: any) => {
     (async () => {
       const commentQuery = qs.stringify(
         {
-          populate : 'user, replies, replies.user',
+          populate: ['user','replies','replies.user'],
           pagination: {
             page: 1,
             pageSize: viewMore,
@@ -33,6 +33,11 @@ const CommentSection = ({ news }: any) => {
           filters: {
             post: {
               title: news[0]?.attributes.title,
+            },
+            parent: {
+              id: {
+                $null: true,
+              }
             },
           },
         },
@@ -46,31 +51,6 @@ const CommentSection = ({ news }: any) => {
     })();
   }, [news, viewMore]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const commentQuery = qs.stringify(
-  //       {
-  //         populate: "*",
-  //         pagination: {
-  //           page: 1,
-  //           pageSize: viewMore,
-  //         },
-  //         filters: {
-  //           id: {
-  //             $eq: comments.,
-  //           },
-  //         },
-  //       },
-  //       {
-  //         encodeValuesOnly: true,
-  //       }
-  //     );
-  //     await request.get(`/reviews?${commentQuery}`).then((res) => {
-  //       setComments(res.data.data);
-  //     });
-  //   })();
-  // }, [news, viewMore]);
-
   return (
     <BoxWhiteShadow>
       <BoxALignCenter_Justify_ItemsBetween className="p-4">
@@ -81,11 +61,10 @@ const CommentSection = ({ news }: any) => {
       </BoxALignCenter_Justify_ItemsBetween>
       <div className="p-4 news-details-comment">
         {comments.map((cmt: any, i: number) => {
-          console.log(cmt);
+          //console.log(cmt);
           return (
             <>
-            {!cmt.attributes?.parent.data && ( <div className="news-details-comment-box" key={i}>
-              
+             <div className="news-details-comment-box" key={i}>
                   <BoxALignCenter_Justify_ItemsBetween className="mb-4">
                     <BoxALignItemsCenter>
                       <Avatar
@@ -104,25 +83,26 @@ const CommentSection = ({ news }: any) => {
                     {cmt.attributes?.comment}
                   </p>
               <p className="news-details-comment-box-description-reply">
+                {/* <p>Replies</p> */}
                 {cmt.attributes?.replies.data.map((reply) => (
                   <span>
-                    <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                      <BoxALignItemsCenter>
+                    <BoxALignCenter_Justify_ItemsBetween>
+                      <BoxALignItemsCenter className="news-details-comment-box-reply">
                         <Avatar
                           size={25}
                           style={{ backgroundColor: "#1DBBBD" }}
                           icon={<UserOutlined />}
                         />
                         <span className="news-details-comment-box-name">
-                          {cmt.attributes?.user.data?.attributes.username}
+                          {reply.attributes?.user.data?.attributes.username}
                         </span>
+                        <span className="news-details-comment-box-reply-description">{reply.attributes.comment}</span>
                       </BoxALignItemsCenter>
                       <span className="news-details-comment-box-time">
-                        {moment(cmt.attributes?.createdAt).format("LL")}
+                        {moment(reply.attributes?.createdAt).format("LL")}
                       </span>
                     </BoxALignCenter_Justify_ItemsBetween>
 
-                    <p>{reply.attributes.comment}</p>
                   </span>
                 ))}
               </p>
@@ -144,7 +124,6 @@ const CommentSection = ({ news }: any) => {
               </div>
               <hr />
             </div>
-          )}
           </>
           )}
         )}

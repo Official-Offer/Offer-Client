@@ -357,7 +357,15 @@
                 color: $grey-color;
             }
             &-description {
-                font-size: 0.9rem;
+                // font-size: 0rem;
+            }
+            &-reply {
+                font-size: 0.95rem;
+                margin-left: 4.5vw;
+                margin-bottom: 4px;
+                &-description{
+                    margin-left: 12px;
+                }
             }
         }
     }
