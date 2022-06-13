@@ -9,7 +9,7 @@ import router from "next/router";
 import LoginPopup from "@components/navbar/LoginPopup";
 
 const CommentBox = ({ text, name, commentId, postId }: any) => {
-  console.log(commentId);
+  // console.log(commentId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [user, setUser] = useState<any>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -37,22 +37,28 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
         post: postId,
       },
     };
-    await request
-      .post(`/dapp/comments`, data)
-      .then((res) => {
-        if (res.status == 200) {
-          message.success("Comment created");
-          e.target.reset();
-        } else {
-          message.success("Please Log In");
-          <LoginPopup
-            setUser={setUser}
-            isVisible={isPopupVisible}
-            setVisible={setPopupVisible}
-          />;
-        }
-      })
-      .then(() => router.reload()); //force api refetch;
+    
+    try {
+      await request
+        .post(`/dapp/comments`, data)
+        .then((res) => {
+          // console.log(res.status)
+            message.success("Comment created");
+            e.target.reset();
+            handleClose();
+          // }
+        })
+      } catch (err) {
+            console.log("wrong");
+            // <LoginPopup
+            //   setUser={setUser}
+            //   isVisible={isPopupVisible}
+            //   setVisible={setPopupVisible}
+            // />;
+            message.error("Please Log In");
+            e.target.reset();
+            handleClose();
+      }
   };
 
   return (

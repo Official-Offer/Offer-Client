@@ -14,6 +14,19 @@
     &-createdAt{
         color: gray;
         font-size: 14px;
+        &-left {
+            float: left;
+            color: gray;
+            font-size: 14px;
+        }
+        &-right {
+            @include sm {
+                margin-right: 2px;
+            }
+            float: right;
+            color: gray;
+            font-size: 14px;
+        }
     }
     .status-label {
         margin-left: 12px;
@@ -82,21 +95,18 @@
         &-side {
             &-mobile {
                 @media only screen and (min-width: 760px) {
-                    display: none
+                    display: none;
                 }
                 @include sm {
                     width: 100%;
                 }
-                // @include lg {
-                //  display: none;
-                // }
             }
             &-desktop {
                 flex: 0 0 auto;
                 width: 17%;
                 // margin-top: 20px;
                 @include md {
-                    width: 22%;
+                    width: 25%;
                 }
                 @include sm {
                     width: 100%;
@@ -115,12 +125,12 @@
             width: 64%;
             margin: 10px;
             @include md {
-                width: 52%;
+                width: 55%;
             }
             @include sm {
                 width: 100%;
                 padding-top: 50px;
-                margin: 0px;
+                // margin: 0px;
             }
         }
     }
@@ -386,7 +396,7 @@
             border-bottom: 1.5px solid rgba(252, 252, 253, 0.6);
             margin-bottom: 20px;
             padding: 0 0 20px 0;
-            overflow: auto;
+            overflow-wrap: break-word;
             &:last-child {
                 border-bottom: none;
             }

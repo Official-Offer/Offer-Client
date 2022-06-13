@@ -15,11 +15,11 @@ import moment from "moment";
 import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
-import {
-  FacebookShareButton,
-  TelegramShareButton,
-  TwitterShareButton,
-} from "react-share";
+// import {
+//   FacebookShareButton,
+//   TelegramShareButton,
+//   TwitterShareButton,
+// } from "react-share";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -104,8 +104,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
     })();
   }, [news]);
 
-  // console.log(news);
-
   useEffect(() => {
     const keyWord = "(/uploads/";
     const modifiedContent = news[0]?.attributes.content
@@ -165,14 +163,14 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 <BoxALignItemsCenter>
                   <h2>{`${news[0]?.attributes.title}`}</h2>
                 </BoxALignItemsCenter>
-                <BoxALignCenter_Justify_ItemsBetween>
-                  <span className="news-details-createdAt">
+                {/* <BoxALignCenter_Justify_ItemsBetween> */}
+                <div className="news-details-createdAt">
+                  <span className="news-details-createdAt-left">
                     {news[0]?.attributes.Author}
                     &nbsp; | &nbsp;
                     {moment(news[0]?.attributes.createdAt).format("LL")}
                   </span>
-                  <span>&nbsp;&nbsp;&nbsp;</span>
-                  <span className="news-details-createdAt">
+                  <span className="news-details-createdAt-right">
                     <span
                       className="news-details-createdAt"
                       onClick={() => {
@@ -198,7 +196,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     &nbsp;
                     {news[0]?.attributes.viewer}
                   </span>
-                </BoxALignCenter_Justify_ItemsBetween>
+                </div>
                 <br />
                 <MarkDown>{styledContent}</MarkDown>
               </div>
@@ -285,8 +283,8 @@ export const getServerSideProps = async (ctx: any) => {
     {
       populate: "*",
       filters: {
-        id: {
-          $eq: ctx.query.id,
+        slug: {
+          $eq: ctx.query.slug,
         },
       },
     },

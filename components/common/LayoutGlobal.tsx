@@ -45,13 +45,14 @@ export default function LayoutGlobal(props: any): ReactElement {
   return (
     <>
       <Head>
-        <title>Tokenplay</title>
+        
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
         />
         {!isDappNews && (
           <>
+            <title>Tokenplay</title>
             <meta
               property="og:image"
               content="https://data-nft.tokenplay.app/NFTmarket.jpg"

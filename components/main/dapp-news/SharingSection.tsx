@@ -8,7 +8,7 @@ import {
 } from "react-share";
 
 const SharingSection = ({ newsUpdate }: any) => {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState<any>([]);
   useEffect(() => {
     setNews(newsUpdate)
   }, [newsUpdate])

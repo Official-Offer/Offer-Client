@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ReactMarkdown from "react-markdown";
 
 export const MarkDown = styled(ReactMarkdown)`
+  overflow-wrap: break-word;
   h1 {
     font-size: 3rem;
   }
@@ -10,7 +11,7 @@ export const MarkDown = styled(ReactMarkdown)`
   }
   p {
     font-weight: 100;
-    overflow-wrap: normal;
+    //overflow-wrap: normal;
     // font-size: 0.97rem;
   }
   img {
