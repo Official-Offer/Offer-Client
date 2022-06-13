@@ -40,6 +40,7 @@ const CommentSection = ({ news }: any) => {
               },
             },
           },
+          sort: [`createdAt:desc`]
         },
         {
           encodeValuesOnly: true,
@@ -83,7 +84,6 @@ const CommentSection = ({ news }: any) => {
                   {cmt.attributes?.comment}
                 </p>
                 <p className="news-details-comment-box-description-reply">
-                  {/* <p>Replies</p> */}
                   {cmt.attributes?.replies.data.map((reply: any, i: number) => (
                     <span key={i}>
                       <BoxALignCenter_Justify_ItemsBetween>

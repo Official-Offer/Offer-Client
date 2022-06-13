@@ -123,6 +123,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           property="og:description"
           content={newsData[0]?.attributes.description}
         />
+        <meta name="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
