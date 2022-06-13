@@ -1,5 +1,4 @@
 .news-details {
-    // padding: 15px;
     &-social{
         display: flex;
         flex-wrap: wrap;
@@ -9,7 +8,6 @@
         &-icon {
             width: 40px;
         }
-        // flex-direction: row;
     }
     &-createdAt{
         color: gray;
@@ -20,9 +18,9 @@
             font-size: 14px;
         }
         &-right {
-            @include sm {
-                margin-right: 2px;
-            }
+            // @include sm {
+            //     float: left;
+            // }
             float: right;
             color: gray;
             font-size: 14px;
