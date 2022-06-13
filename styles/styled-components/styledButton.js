@@ -89,6 +89,7 @@ export const ButtonBackgroundBlueBold = styled.div`
     border: 1px solid #058499;
     color: #058499;
     outline: none;
+    cursor: pointer;
     border-radius: 10px;
     display: inline-block;
     font-weight: bold;

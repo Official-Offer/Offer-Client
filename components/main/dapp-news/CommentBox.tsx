@@ -1,15 +1,18 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import request from "@services/apiService";
+import request from "@services/apiDapp";
 import { useState } from "react";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
-import axios from "axios";
-import { URL_API_ADMIN } from "@config/dev.config";
+import { URL_API_ADMIN } from "@config/index";
 import message from "antd/lib/message";
+import router from "next/router";
+import LoginPopup from "@components/navbar/LoginPopup";
 
-const PopUp = ({ text, name }: any) => {
+const CommentBox = ({ text, name, commentId, postId }: any) => {
+  // console.log(commentId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
+  const [user, setUser] = useState<any>(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,23 +21,39 @@ const PopUp = ({ text, name }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    console.log(e.target.value);
+    //console.log(e);
     e.preventDefault();
-    const data = {
-      "data": {
-        "comment": "a",
-        "user": 1
+    const data = commentId ? 
+    {
+      data: {
+        comment: e.target[0].value,
+        parent: commentId,
+        post: postId,
+      },
+    }
+    : {
+      data: {
+        comment: e.target[0].value,
+        post: postId,
       },
     };
-    await request.post(`/reviews`, data).then((res) => {
-      if (res.status == 200) {
-        message.success("Comment created");
-        e.target.reset();
-      } else {
-        message.success("Something was wrong! Please try again");
+    
+    try {
+      await request
+        .post(`/dapp/comments`, data)
+        .then((res) => {
+            message.success("Comment created");
+            e.target.reset();
+            handleClose();
+        })
+        .then(() => router.reload())
+
+      } catch (err) {
+            setPopupVisible(true);
+            message.error("Please Log In");
+            e.target.reset();
+            handleClose();
       }
-    });
-    handleClose();
   };
 
   return (
@@ -42,7 +61,11 @@ const PopUp = ({ text, name }: any) => {
       <span onClick={handleShow} className={className}>
         {text}
       </span>
-
+      <LoginPopup
+              setUser={setUser}
+              isVisible={isPopupVisible}
+              setVisible={() => setPopupVisible(true)}
+      />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Write Comment</Modal.Title>
@@ -60,7 +83,6 @@ const PopUp = ({ text, name }: any) => {
               placeholder="Message"
               name="message"
             />
-            {/* <textarea name=""></textarea> */}
             <Modal.Footer>
               <ButtonBlue type="submit">Send Comment</ButtonBlue>
             </Modal.Footer>
@@ -71,4 +93,4 @@ const PopUp = ({ text, name }: any) => {
   );
 };
 
-export default PopUp;
+export default CommentBox;

@@ -37,6 +37,11 @@ const DappPortal: NextPage = () => {
                 $eq: chain === "All" ? undefined : chain,
               },
             },
+            category: {
+              id: {
+                $eq: cate === "All" ? undefined : cate,
+              }
+            }
           },
           sort: [`${sort[0]}:${sort[1]}`],
         },
@@ -46,8 +51,7 @@ const DappPortal: NextPage = () => {
       );
       let display: any;
       await request.get(`/dapp-ads?populate=*`).then((res) => {
-        // console.log(res.data.data.map(e => e.attributes.dapp.data));
-        // setTokenList(res.data.data.map(e => e.attributes.dapp.data));
+        // console.log(query)
         display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
@@ -56,7 +60,7 @@ const DappPortal: NextPage = () => {
       });
       setTokenList(display);
     })();
-  }, [chain, viewMore, sort]);
+  }, [chain, viewMore, sort, cate]);
 
   return (
     <>
@@ -68,7 +72,7 @@ const DappPortal: NextPage = () => {
         <br />
         <TabsChain setChain={setChain} chain={chain}/>
         <br />
-        <TabsCategory/>
+        <TabsCategory setCate={setCate} cate={cate}/>
         <br />
         <TableDapp tokenList={tokenList}/> */}
       </section>

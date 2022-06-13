@@ -3,6 +3,7 @@ import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/st
 import { URL_API_IMG } from "@config/index";
 
 export function BannerLeft({ img }: any): ReactElement {
+  // console.log(img);
   return (
     <img
       style={{ maxWidth: "70%" }}

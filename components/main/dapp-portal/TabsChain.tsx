@@ -7,13 +7,13 @@ const { Option } = Select;
 
 export default function TabsChain({ setChain, chain }: any): ReactElement {
   const [chainIdArray, setChainIdArray] = useState([
-    { id: 'All', name: "All", tag: "all", icon: "", icon_white: "" },
+    { id: "All", name: "All", tag: "all", icon: "", icon_white: "" },
   ]);
   useEffect(() => {
     (async () => {
       await request.get("/chains").then((res) => {
         setChainIdArray([...chainIdArray, ...res.data.data]);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       });
     })();
   }, []);
@@ -46,48 +46,28 @@ export default function TabsChain({ setChain, chain }: any): ReactElement {
       return {
         id: chain.id,
         name: chain.attributes.name,
-        // tag: 'bnb', //chain.attributes.crawl.unit?.toLowerCase() 
+        tag: chain.attributes.name.substring(0, 3).toLowerCase(), //css background
         icon: chain.attributes.crawl.color_icon,
         icon_white: chain.attributes.crawl.color_icon,
       };
     });
-  //   const listBlockchain = [
-  //     { name: "All", tag: "all", icon: "", icon_white: "" },
-  //     {
-  //       name: "Ethereum",
-  //       tag: "eth",
-  //       icon: "/img/coin/eth.png",
-  //       icon_white: "/img/coin/eth-white.png",
-  //     },
-  //     {
-  //       name: "BNB Chain",
-  //       tag: "bnb",
-  //       icon: "/img/coin/bnb.png",
-  //       icon_white: "/img/coin/bnb-white.png",
-  //     },
-  //     {
-  //       name: "Polygon (Matic)",
-  //       tag: "matic",
-  //       icon: "/img/coin/matic.png",
-  //       icon_white: "/img/coin/matic-white.png",
-  //     },
-  //     {
-  //       name: "TRON",
-  //       tag: "tron",
-  //       icon: "/img/coin/tron.png",
-  //       icon_white: "/img/coin/tron-white.png",
-  //     },
-  //   ];
 
   return (
     <>
       <div className="tab-bar-combination flex-for-pc">
         {listBlockchain.map((blockchain, i) => {
           return (
-            <button className="tab-bar-combination-item" key={i} onClick={() => { setChain(blockchain.id) }}>
+            <button
+              className="tab-bar-combination-item"
+              key={i}
+              onClick={() => {
+                setChain(blockchain.id);
+              }}
+            >
               <div
-                className={`tab-bar-combination-item-blockchain ${blockchain.tag
-                  } ${i == chain && "active"}`}
+                className={`tab-bar-combination-item-blockchain ${
+                  blockchain.tag
+                } ${blockchain.id == chain && "active"}`}
               >
                 <div className={`fill-background ${blockchain.tag}`} />
                 {blockchain.icon !== "" && blockchain.icon_white !== "" && (
@@ -100,7 +80,9 @@ export default function TabsChain({ setChain, chain }: any): ReactElement {
                     />
                   </>
                 )}
-                <span className='main-portal hover-underline'>{blockchain.name}</span>
+                <span className="main-portal hover-underline">
+                  {blockchain.name}
+                </span>
               </div>
             </button>
           );
