@@ -402,23 +402,28 @@
             }
             &-name {
                 margin: 0 15px;
-                @include sm {
-                    // display: inline-block;
-                }
             }
             &-time {
                 font-size: 0.9rem;
-                color: $grey-color;
+                color: $grey-color;                
+                // &-mobile {
+                    
+                //     font-size: 0.9rem;
+                //     color: $grey-color; 
+                // }
+                // @include sm {
+                //     display: none;
+                // }
             }
             &-description {
                 // font-size: 0rem;
             }
-            &-reply {
+            &-reply {   
                 font-size: 0.95rem;
                 margin-bottom: 14px;
-                margin-left: 4.5vw;
-                // margin-bottom: 4px;
-                &-description{
+                margin-left: 4vw;
+                &-description {
+                    margin-top: 10px;
                     margin-left: 12px;
                     // margin-right: 40px;
                 }

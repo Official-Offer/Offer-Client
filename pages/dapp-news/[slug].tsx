@@ -155,7 +155,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           </div>
           <div className="news-details-row-center">
             <BoxWhiteShadow>
-              <div className="col-12 mt-2 p-3">
+              <div className="mt-2 p-3">
                 <BoxALignItemsCenter>
                   <h2>{`${news[0]?.attributes.title}`}</h2>
                 </BoxALignItemsCenter>

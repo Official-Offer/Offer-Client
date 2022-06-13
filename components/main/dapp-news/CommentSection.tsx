@@ -40,7 +40,7 @@ const CommentSection = ({ news }: any) => {
               },
             },
           },
-          sort: [`createdAt:desc`]
+          sort: [`createdAt:desc`],
         },
         {
           encodeValuesOnly: true,
@@ -50,7 +50,7 @@ const CommentSection = ({ news }: any) => {
         setComments(res.data.data);
       });
     })();
-  }, [news, viewMore]);
+  }, [comments, viewMore]);
 
   return (
     <BoxWhiteShadow>
@@ -83,28 +83,29 @@ const CommentSection = ({ news }: any) => {
                 <p className="news-details-comment-box-description">
                   {cmt.attributes?.comment}
                 </p>
-                <p className="news-details-comment-box-description-reply">
+                <p className="">
                   {cmt.attributes?.replies.data.map((reply: any, i: number) => (
                     <span key={i}>
-                      <BoxALignCenter_Justify_ItemsBetween>
-                        <BoxALignItemsCenter className="news-details-comment-box-reply">
-                        <div className="news-details-comment-box-name">
-                          <Avatar
-                            className="news-details-comment-box-reply-title"
-                            size={25}
-                            style={{ backgroundColor: "#1DBBBD" }}
-                            icon={<UserOutlined />}
-                          />
+                      <div className="news-details-comment-box-reply">
+                        <BoxALignCenter_Justify_ItemsBetween>
+                          <div className="news-details-comment-box-name ">
+                            <Avatar
+                              className="news-details-comment-box-reply-title"
+                              size={25}
+                              style={{ backgroundColor: "#1DBBBD" }}
+                              icon={<UserOutlined />}
+                            />
+                            {/* </div> */}
                             {reply.attributes?.user.data?.attributes.username}
                           </div>
-                          <span className="news-details-comment-box-reply-description">
-                            {reply.attributes.comment}
-                          </span>
-                        </BoxALignItemsCenter>
-                        <span className="news-details-comment-box-time">
-                          {moment(reply.attributes?.createdAt).format("LL")}
-                        </span>
-                      </BoxALignCenter_Justify_ItemsBetween>
+                          <div className="news-details-comment-box-time">
+                            {moment(reply.attributes?.createdAt).format("LL")}
+                          </div>
+                        </BoxALignCenter_Justify_ItemsBetween>
+                        <div className="news-details-comment-box-reply-description">
+                          {reply.attributes.comment}
+                        </div>
+                      </div>
                     </span>
                   ))}
                 </p>
