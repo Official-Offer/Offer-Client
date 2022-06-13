@@ -109,7 +109,7 @@
                 width: 17%;
                 // margin-top: 20px;
                 @include md {
-                    width: 25%;
+                    width: 20%;
                 }
                 @include sm {
                     width: 100%;
@@ -128,7 +128,7 @@
             width: 64%;
             margin: 10px;
             @include md {
-                width: 55%;
+                width: 60%;
             }
             @include sm {
                 width: 100%;

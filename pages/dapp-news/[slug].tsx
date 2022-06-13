@@ -228,6 +228,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               <NewsList data={popularNews} />
             </div>
             <div className="news-details-posts-mobile">
+              <h2>Popular</h2>
               <PinnedSlides crit={"viewer"} />
             </div>
           </div>

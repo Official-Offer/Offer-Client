@@ -88,7 +88,7 @@ const CommentSection = ({ news }: any) => {
                     <span key={i}>
                       <div className="news-details-comment-box-reply">
                         <BoxALignCenter_Justify_ItemsBetween>
-                          <div className="news-details-comment-box-name ">
+                          <div className="news-details-comment-box-name">
                             <Avatar
                               className="news-details-comment-box-reply-title"
                               size={25}
