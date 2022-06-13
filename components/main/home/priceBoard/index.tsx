@@ -1,10 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
+import { URL_API_DAPPVERSE } from "@config/index";
+import { SectionHeader } from "@styles/styled-components/styledTabs";
 import { Empty, Tabs } from "antd";
 import { Button } from "@styles/styled-components/styledButton";
 import TokenList from "./TokenList";
 import request from "@services/apiService";
 import * as qs from "qs";
-import { SectionHeader } from "@styles/styled-components/styledTabs";
 import axios from "axios";
 
 const { TabPane } = Tabs;
@@ -30,7 +31,7 @@ export const PriceBoard: FC = () => {
           }
         );
         await axios
-          .get(`https://dev-api-dappverse.tokenplay.app/coins/markets?${query}`)
+          .get(`${URL_API_DAPPVERSE}/coins/markets?${query}`)
           .then((res) => {
             // console.log(res.data);
             setTokenList(res.data);

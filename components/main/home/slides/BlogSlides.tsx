@@ -63,7 +63,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                 <div className="main-homepage-blog-card-header">
                                     <img
                                         className="main-homepage-blog-card-header-img"
-                                        src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
+                                        src={`${URL_API_IMG}${blog.attributes.thumbnail.data?.attributes.url}`}
                                         alt=""
                                     />
                                 </div>
