@@ -4,10 +4,9 @@ import moment from "moment";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
+export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
-  console.log(labels);
   const datasets = data.data.charts.datasets[data.name];
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
@@ -24,17 +23,23 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
     }
     return res;
   };
-  console.log(processPrice(labels, price));
-  const series = [
-    {
-      name: data?.name,
-      data: datasets,
-    },
-    {
-      name: "Price",
-      data: processPrice(labels, price),
-    },
-  ];
+  const series = showPrice
+    ? [
+        {
+          name: data?.name,
+          data: datasets,
+        },
+        {
+          name: "Price",
+          data: processPrice(labels, price),
+        },
+      ]
+    : [
+        {
+          name: data?.name,
+          data: datasets,
+        },
+      ];
 
   const options: any = {
     series: series,
@@ -69,41 +74,60 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
         },
       },
     },
-    yaxis: [
-      {
-        axisBorder: {
-          show: true,
-          color: color,
-        },
-        labels: {
-          style: {
-            colors: color,
+    yaxis: showPrice
+      ? [
+          {
+            axisBorder: {
+              show: true,
+              color: color,
+            },
+            labels: {
+              style: {
+                colors: color,
+              },
+            },
+            title: {
+              style: {
+                color: color,
+              },
+            },
           },
-        },
-        title: {
-          style: {
-            color: color,
+          {
+            opposite: true,
+            axisBorder: {
+              show: true,
+              color: "black",
+            },
+            labels: {
+              style: {
+                colors: "black",
+              },
+            },
+            title: {
+              style: {
+                color: "black",
+              },
+            },
           },
-        },
-      },
-      {
-        opposite: true,
-        axisBorder: {
-          show: true,
-          color: "black",
-        },
-        labels: {
-          style: {
-            colors: "black",
+        ]
+      : [
+          {
+            axisBorder: {
+              show: true,
+              color: color,
+            },
+            labels: {
+              style: {
+                colors: color,
+              },
+            },
+            title: {
+              style: {
+                color: color,
+              },
+            },
           },
-        },
-        title: {
-          style: {
-            color: "black",
-          },
-        },
-      },
-    ],
+        ],
     tooltip: {
       theme: "dark",
     },

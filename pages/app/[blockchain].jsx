@@ -21,7 +21,7 @@ import {
 import { File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
-import { Avatar, Rate } from "antd";
+import { Avatar, Rate, Switch } from "antd";
 // import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -49,6 +49,7 @@ const BlockchainDetails = () => {
   const [slug, setSlug] = useState("leonicorn-swap");
   const [stat, setStat] = useState(null);
   const [day, setDay] = useState(7);
+  const [showPrice, setShowPrice] = useState(true);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -286,6 +287,14 @@ const BlockchainDetails = () => {
               <AppStatistical day={stat?.days} data={dapp} />
               <br />
               <div className="row mt-5">
+                <div className="blockchain-details-price">
+                  <Switch
+                    defaultChecked
+                    className="blockchain-details-price-switch"
+                    onChange={()=>setShowPrice(!showPrice)}
+                  ></Switch>
+                  Show Price Comparison on Chart
+                </div>
                 {stat?.stats.components.map((comp, i) => {
                   return (
                     <div
@@ -296,6 +305,7 @@ const BlockchainDetails = () => {
                       <SplineChart
                         data={comp}
                         price={stat?.stats.token.chart}
+                        showPrice={showPrice}
                       />
                       <BoxALignItemsStart>
                         <div
