@@ -14,10 +14,18 @@ const LoginPopup = ({ isVisible, setVisible, setUser }) => {
   ];
   const onCancel = () => setVisible(false);
   const pathName = useRouter().pathname;
+  const slug = useRouter().query.slug;
   const onLogin = async (meth) => {
-    const falseURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dfalse`;
-    const successURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dsuccess`;
-    location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
+    if(pathName=="/dapp-news/[slug]"){
+      const falseURL = `${window.location.origin}/dapp-news/${slug}%2F%3Flogin%3Dfalse`;
+      const successURL = `${window.location.origin}/dapp-news/${slug}%2F%3Flogin%3Dsuccess`;
+      location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
+    }
+    else {
+      const falseURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dfalse`;
+      const successURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dsuccess`;
+      location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
+    }
   };
   return (
     <Modal title="Login" visible={isVisible} onCancel={onCancel}>

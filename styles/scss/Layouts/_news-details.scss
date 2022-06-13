@@ -405,10 +405,6 @@
                 @include sm {
                     // display: inline-block;
                 }
-                // padding: px;
-                // @include sm {
-                //     display: block;
-                // }
             }
             &-time {
                 font-size: 0.9rem;
@@ -424,6 +420,7 @@
                 // margin-bottom: 4px;
                 &-description{
                     margin-left: 12px;
+                    // margin-right: 40px;
                 }
                 &-title {
                     margin-right: 5px;

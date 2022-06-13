@@ -15,11 +15,6 @@ import moment from "moment";
 import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
-// import {
-//   FacebookShareButton,
-//   TelegramShareButton,
-//   TwitterShareButton,
-// } from "react-share";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(

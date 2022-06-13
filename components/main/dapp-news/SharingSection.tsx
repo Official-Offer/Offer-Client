@@ -12,7 +12,7 @@ const SharingSection = ({ newsUpdate }: any) => {
   useEffect(() => {
     setNews(newsUpdate)
   }, [newsUpdate])
-  console.log(news);
+  // console.log(news);
   return (
     <BoxWhiteShadow className="p-3">
       <h4>Share this article</h4>
