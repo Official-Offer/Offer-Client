@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import request from "@services/apiService";
 import qs from "qs";
-import { URL_API_IMG } from "@config/dev.config";
+import { URL_API_IMG } from "@config/index";
 import { useRouter } from "next/router";
 
 function LatestNews() {

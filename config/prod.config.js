@@ -17,6 +17,7 @@ module.exports = {
     URL_SITE: ' https://tokenplay.app',
     URL_API_DAPPVERSE: 'https://api-dappverse.tokenplay.app',
     TOKEN_BEARER: '956545a8766f6f2fa72831aabdfddf9fc6b663b428a10697a119bdded1198f7420d6d1c55a3ce3cc8bae14368ebfff326c2b6ab1e372c0bd8a25898a018707f36a326887882bbef965e74132bed8e097d96e81c312796aec29b5db5c626a28457bb691c3de3d00dda724b0cb6a977b7ac18093363c028aaa90c11e68fa753013',
+    URL_API_SSO: 'https://api-sso.tokenplay.app/api',
     NEXT_PUBLIC_GOOGLE_ANALYTICS: 'GTM-M9PFF9K',
     // URL_API_ADMIN: 'https://api-dappverse.tokenplay.app/coins/markets?vs_currency=usd&price_change_percentage=1h,24h,7d&per_page=10&page=1&order=market_cap_desc',
     facebook: "https://api.tokenplay.app/api/login/facebook?redirectFalse=https%3A%2F%2Ftokenplay.app%2F%3Flogin%3Dfalse&redirectSuccess=https%3A%2F%tokenplay.app%2F%3Flogin%3Dsuccess",

@@ -21,9 +21,9 @@ import {
   import { useEffect, useState } from "react";
   import * as qs from "qs";
   import request from "@services/apiService";
-  import { URL_API_ADMIN, URL_API_IMG } from "@config/dev.config";
+  import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
   import moment from "moment";
-  import PopUp from "@components/popup";
+  // import PopUp from "@components/popup";
   import ReactMarkdown from "react-markdown";
   import styled from "styled-components";
   

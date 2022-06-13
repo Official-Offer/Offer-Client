@@ -132,15 +132,9 @@ export const CategoryBox = styled.div`
   text-align: center;
   color: white;
   background: #058499;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  display: inline;
   padding: 6px 8px;
   gap: 12px;
-
-  width: 69px;
-  height: 28px;
 
   /* Button */
 
@@ -150,9 +144,9 @@ export const CategoryBox = styled.div`
 
   /* Inside auto layout */
 
-flex: none;
-order: 0;
-flex-grow: 0;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `
 
 export const SocialLoginBox = styled.button`

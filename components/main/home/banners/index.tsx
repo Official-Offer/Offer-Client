@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import request from "@services/apiService";
 import * as qs from "qs";
-import { URL_API_IMG } from "@config/dev.config";
+import { URL_API_IMG } from "@config/index";
 
 export const Banners: FC = () => {
   const [banners, setBanners] = useState<any>([

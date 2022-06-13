@@ -63,7 +63,10 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
       >
         {data.map((blog: any, i: number) => {
           return (
-            <SwiperSlide key={i} onClick={()=>onClick(blog)}>
+            <SwiperSlide 
+              key={i} 
+              // onClick={()=>onClick(blog)}
+            >
               <div className="main-homepage-news-card">
                 <div className="main-homepage-news-card-header">
                   <img

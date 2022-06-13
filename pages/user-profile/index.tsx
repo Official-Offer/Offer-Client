@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Form from "../../components/main/profile/Form";
-import { URL_API_SSO } from "@config/dev.config";
+import { URL_API_SSO } from "@config/index";
 import Cookies from "js-cookie";
 import request from "@services/apiSSO";
 
