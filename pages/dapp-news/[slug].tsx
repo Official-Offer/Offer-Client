@@ -197,7 +197,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     {news[0]?.attributes.viewer}
                   </span>
                 </div>
-                <br />
+                <div className="empty_space_height50" />
                 <MarkDown>{styledContent}</MarkDown>
               </div>
             </BoxWhiteShadow>
