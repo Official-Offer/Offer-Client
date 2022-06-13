@@ -156,9 +156,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           <div className="news-details-row-center">
             <BoxWhiteShadow>
               <div className="mt-2 p-3">
-                <BoxALignItemsCenter>
-                  <h2>{`${news[0]?.attributes.title}`}</h2>
-                </BoxALignItemsCenter>
+                {/* <BoxALignItemsCenter> */}
+                <h2>{`${news[0]?.attributes.title}`}</h2>
+                {/* </BoxALignItemsCenter> */}
                 {/* <BoxALignCenter_Justify_ItemsBetween> */}
                 <div className="news-details-createdAt">
                   <span className="news-details-createdAt-left">
@@ -166,13 +166,10 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     &nbsp; | &nbsp;
                     {moment(news[0]?.attributes.createdAt).format("LL")}
                   </span>
-                    <span
-                      className="news-details-createdAt-right"
-                      onClick={() => {
+                    <span className="news-details-createdAt-right">
+                      <a target="_blank" rel="noopener noreferrer" onClick={() => {
                         setLiked(!liked);
-                      }}
-                    >
-                      <a target="_blank" rel="noopener noreferrer">
+                      }}>
                         {liked ? (
                           <HeartFilled
                             style={{ color: "#1DBBBD", marginLeft: "30vw" }}
@@ -189,9 +186,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     <Eye size={15} />
                     &nbsp;
                     {news[0]?.attributes.viewer}
-                  </span>
+                    </span>
                 </div>
-                <div className="empty_space_height50" />
+                <br />
                 <MarkDown>{styledContent}</MarkDown>
               </div>
             </BoxWhiteShadow>

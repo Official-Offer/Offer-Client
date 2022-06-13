@@ -12,8 +12,13 @@
     &-createdAt{
         color: gray;
         font-size: 14px;
+        
+
+        // @include sm {
+        //     display: block;
+        // }
         &-left {
-            float: left;
+            // float: left;
             color: gray;
             font-size: 14px;
         }
@@ -127,7 +132,7 @@
             }
             @include sm {
                 width: 100%;
-                padding-top: 50px;
+                // padding-top: 50px;
                 // margin: 0px;
             }
         }
