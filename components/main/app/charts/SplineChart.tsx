@@ -12,13 +12,19 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
-    const res = price.prices.filter((p, i) => {
+    const res: Array<any> = price.prices.filter((p, i) => {
       const priceDate = new Date(price.labels[i]);
       return priceDate >= first && priceDate <= last;
     });
+    const emptyDate = labels.length - res.length;
+    const lastPrice = res[res.length - 1];
+    for (let i = 0; i < emptyDate; i++) {
+      // incase of no data for that date, use the latest date's price
+      res.push(lastPrice);
+    }
     return res;
   };
-  console.log(processPrice(labels, price))
+  console.log(processPrice(labels, price));
   const series = [
     {
       name: data?.name,
