@@ -22,7 +22,7 @@ const SharingSection = ({ newsUpdate }: any) => {
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           
-          ${news[0]?.attributes.description}`}
+            ${news[0]?.attributes.description}`}
             hashtag={`${news[0]?.attributes.tags[0]}`}
           >
             <img

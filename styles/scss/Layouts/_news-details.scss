@@ -401,7 +401,10 @@
                 border-bottom: none;
             }
             &-name {
-                margin: 0 10px;
+                margin: 0 15px;
+                @include sm {
+                    // display: inline-block;
+                }
                 // padding: px;
                 // @include sm {
                 //     display: block;
