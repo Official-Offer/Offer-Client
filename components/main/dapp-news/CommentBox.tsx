@@ -46,8 +46,9 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
             e.target.reset();
             handleClose();
         })
+        .then(() => router.reload())
+
       } catch (err) {
-            // console.log("wrong");
             setPopupVisible(true);
             message.error("Please Log In");
             e.target.reset();
