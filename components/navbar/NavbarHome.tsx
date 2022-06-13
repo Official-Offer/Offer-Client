@@ -33,11 +33,9 @@ export const NavbarHome: FC = () => {
   const [user, setUser] = useState<any>(null);
   useEffect(() => {
     (async () => {
-      //uncomment when deployed on dev since localhost can't access cookie
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          // console.log(res.data);
           setUser(res.data);
         })
         .catch(() => null);
@@ -343,7 +341,6 @@ export const NavbarHome: FC = () => {
         </BoxALignCenter_Justify_ItemsBetween>
       </section>
       <LoginPopup
-        setUser={setUser}
         isVisible={isPopupVisible}
         setVisible={setPopupVisible}
       />
