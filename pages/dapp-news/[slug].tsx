@@ -160,13 +160,13 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 <h2>{`${news[0]?.attributes.title}`}</h2>
                 {/* </BoxALignItemsCenter> */}
                 {/* <BoxALignCenter_Justify_ItemsBetween> */}
-                <div className="news-details-createdAt">
-                  <span className="news-details-createdAt-left">
+                <BoxALignCenter_Justify_ItemsBetween className="news-details-createdAt">
+                  <div className="news-details-createdAt-left">
                     {news[0]?.attributes.Author}
                     &nbsp; | &nbsp;
                     {moment(news[0]?.attributes.createdAt).format("LL")}
-                  </span>
-                    <span className="news-details-createdAt-right">
+                  </div>
+                    <div className="news-details-createdAt-right">
                       <a target="_blank" rel="noopener noreferrer" onClick={() => {
                         setLiked(!liked);
                       }}>
@@ -186,8 +186,8 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     <Eye size={15} />
                     &nbsp;
                     {news[0]?.attributes.viewer}
-                    </span>
-                </div>
+                    </div>
+                </BoxALignCenter_Justify_ItemsBetween>
                 <br />
                 <MarkDown>{styledContent}</MarkDown>
               </div>
