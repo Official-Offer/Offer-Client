@@ -166,22 +166,22 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     &nbsp; | &nbsp;
                     {moment(news[0]?.attributes.createdAt).format("LL")}
                   </div>
-                    <div className="news-details-createdAt-right">
+                  <div className="news-details-createdAt-right">
                       <a target="_blank" rel="noopener noreferrer" onClick={() => {
                         setLiked(!liked);
                       }}>
                         {liked ? (
                           <HeartFilled
-                            style={{ color: "#1DBBBD", marginLeft: "30vw" }}
+                            style={{ color: "#1DBBBD"}}
                           />
                         ) : (
-                          <HeartOutlined style={{ marginLeft: "30vw" }} />
+                          <HeartOutlined/>
                         )}
                       </a>
                     &nbsp;
-                    <span className="news-details-createdAt">
-                      {liked ? 2 : 1}
-                    </span>
+                    {/* <span className="news-details-createdAt"> */}
+                     {liked ? 2 : 1}
+                    {/* </span> */}
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <Eye size={15} />
                     &nbsp;
