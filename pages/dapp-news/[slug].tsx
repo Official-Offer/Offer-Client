@@ -114,7 +114,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
       <Head>
         <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
-        <meta property="og:url" content={newsData[0]?.attributes.slug} />
+        {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
         <meta
           property="og:image"
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
@@ -124,6 +124,10 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           content={newsData[0]?.attributes.description}
         />
         <meta name="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
+        <meta property="og:title" content={newsData[0]?.attributes.title}/>
+        <meta property="og:description" content={newsData[0]?.attributes.description}/>
+        <meta property="og:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}/>
+        {/* <meta property="og:url" content={newsData[0]?.attributes.slug}/> */}
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
@@ -179,9 +183,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                         )}
                       </a>
                     &nbsp;
-                    {/* <span className="news-details-createdAt"> */}
                      {liked ? 2 : 1}
-                    {/* </span> */}
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <Eye size={15} />
                     &nbsp;

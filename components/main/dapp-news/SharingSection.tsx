@@ -35,9 +35,9 @@ const SharingSection = ({ newsUpdate }: any) => {
           <TwitterShareButton
             // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
-            title={`${news[0]?.attributes.title}
+            // title={`${news[0]?.attributes.title}
           
-            ${news[0]?.attributes.description}`}
+            // ${news[0]?.attributes.description}`}
             // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
           >
             <img

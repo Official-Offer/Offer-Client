@@ -62,7 +62,6 @@ const CommentSection = ({ news }: any) => {
       </BoxALignCenter_Justify_ItemsBetween>
       <div className="p-4 news-details-comment">
         {comments.map((cmt: any, i: number) => {
-          //console.log(cmt);
           return (
             <>
               <div className="news-details-comment-box" key={i}>
@@ -95,7 +94,6 @@ const CommentSection = ({ news }: any) => {
                               style={{ backgroundColor: "#1DBBBD" }}
                               icon={<UserOutlined />}
                             />
-                            {/* </div> */}
                             {reply.attributes?.user.data?.attributes.username}
                           </div>
                           <div className="news-details-comment-box-time">
