@@ -63,7 +63,7 @@ const BlockchainDetails: NextPage = () => {
           setStat(res.data);
         });
     })();
-  }, [day, slug]);
+  }, [day, slug]); 
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
