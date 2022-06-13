@@ -88,14 +88,15 @@ const CommentSection = ({ news }: any) => {
                     <span key={i}>
                       <BoxALignCenter_Justify_ItemsBetween>
                         <BoxALignItemsCenter className="news-details-comment-box-reply">
+                        <div className="news-details-comment-box-name">
                           <Avatar
+                            className="news-details-comment-box-reply-title"
                             size={25}
                             style={{ backgroundColor: "#1DBBBD" }}
                             icon={<UserOutlined />}
                           />
-                          <span className="news-details-comment-box-name">
                             {reply.attributes?.user.data?.attributes.username}
-                          </span>
+                          </div>
                           <span className="news-details-comment-box-reply-description">
                             {reply.attributes.comment}
                           </span>
@@ -113,7 +114,7 @@ const CommentSection = ({ news }: any) => {
                       <MessageSquare color="#1DBBBD" />
                       <CommentBox
                         text="Reply"
-                        name={cmt.attributes?.comment}
+                        name={cmt.attributes?.user.data?.attributes.username}
                         commentId={cmt.id}
                         postId={news[0]?.id}
                         className="ms-2 text-green"

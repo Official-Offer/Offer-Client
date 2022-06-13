@@ -402,6 +402,10 @@
             }
             &-name {
                 margin: 0 10px;
+                // padding: px;
+                // @include sm {
+                //     display: block;
+                // }
             }
             &-time {
                 font-size: 0.9rem;
@@ -417,6 +421,10 @@
                 // margin-bottom: 4px;
                 &-description{
                     margin-left: 12px;
+                }
+                &-title {
+                    margin-right: 5px;
+                 // display: none;  
                 }
             }
         }
