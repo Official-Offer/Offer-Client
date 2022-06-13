@@ -31,6 +31,8 @@ import requestDapp from "@services/apiDapp";
 import { useEffect, useState } from "react";
 import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
+import { updown } from "@utils/numberDecorator";
+import moment from "moment";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -59,7 +61,7 @@ const BlockchainDetails = () => {
           setStat(res.data);
         });
     })();
-  }, [day, slug]); 
+  }, [day, slug]);
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -291,7 +293,10 @@ const BlockchainDetails = () => {
                       key={i}
                     >
                       <h5 className="mb-0">{comp.name}</h5>
-                      <SplineChart data={comp} price={stat?.stats.token.chart}/>
+                      <SplineChart
+                        data={comp}
+                        price={stat?.stats.token.chart}
+                      />
                       <BoxALignItemsStart>
                         <div
                           className={

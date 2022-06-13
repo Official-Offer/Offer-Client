@@ -1,12 +1,24 @@
 import { FC } from "react";
 import dynamic from "next/dynamic";
+import moment from "moment";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
   const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
+  console.log(labels);
   const datasets = data.data.charts.datasets[data.name];
+  const processPrice = (labels: any, price: any) => {
+    const first = new Date(labels[0]);
+    const last = new Date(labels[labels.length - 1]);
+    const res = price.prices.filter((p, i) => {
+      const priceDate = new Date(price.labels[i]);
+      return priceDate >= first && priceDate <= last;
+    });
+    return res;
+  };
+  console.log(processPrice(labels, price))
   const series = [
     {
       name: data?.name,
@@ -14,9 +26,10 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
     },
     {
       name: "Price",
-      data: [1,2,3,4,5,6,7] //price?.prices.map(p=>p*100000),
+      data: processPrice(labels, price),
     },
   ];
+
   const options: any = {
     series: series,
     chart: {
@@ -38,7 +51,7 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
       },
     },
     stroke: {
-      curve: ["straight", 'smooth'],
+      curve: ["straight", "smooth"],
       width: [2, 2],
     },
     xaxis: {
@@ -50,13 +63,6 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
         },
       },
     },
-    // yaxis: {
-    //   labels: {
-    //     style: {
-    //       colors: color,
-    //     },
-    //   },
-    // },
     yaxis: [
       {
         axisBorder: {
@@ -69,7 +75,6 @@ export const SplineChart: FC = ({ data, price, showPrice = false }: any) => {
           },
         },
         title: {
-         
           style: {
             color: color,
           },
