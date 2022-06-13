@@ -22,7 +22,8 @@ export default function LayoutGlobal(props: any): ReactElement {
   );
   const router = useRouter();
   const route = router.asPath.split("/");
-  const isDappNewsDetails = route[1] == "dapp-news" && route.length > 2;
+  const isDappNewsDetails = route[1] == "dapp-news";
+  // && route.length > 2;
   const [banners, setBanners] = useState<any>([]);
   useEffect(() => {
     (async () => {

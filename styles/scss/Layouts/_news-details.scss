@@ -71,27 +71,56 @@
         }
     }
     &-row {
+        // align-items: center;
+        padding: 10px;
+        padding-top: 32px;
         display: flex;
         flex-wrap: wrap;
+        @include sm {
+            padding: 0;
+        }
         &-side {
-            flex: 0 0 auto;
-            width: 18%;
-            @include md {
-                width: 22%;
+            &-mobile {
+                @media only screen and (min-width: 760px) {
+                    display: none
+                }
+                @include sm {
+                    width: 100%;
+                }
+                // @include lg {
+                //  display: none;
+                // }
             }
-            @include sm {
-                width: 100%;
+            &-desktop {
+                flex: 0 0 auto;
+                width: 17%;
+                // margin-top: 20px;
+                @include md {
+                    width: 22%;
+                }
+                @include sm {
+                    width: 100%;
+                }
+                &-left {
+                    width: 17%;
+                    @include sm {
+                        display: none;
+                    }
+                }  
+  
             }
         }
         &-center {
             flex: 0 0 auto;
-            width: 60%;
+            width: 64%;
             margin: 10px;
             @include md {
                 width: 52%;
             }
             @include sm {
                 width: 100%;
+                padding-top: 50px;
+                margin: 0px;
             }
         }
     }
@@ -224,12 +253,23 @@
             margin-top: 18px;
             position: sticky;
             top: 100px;
+            &-mobile {
+                margin-top: 20px;
+                margin-bottom: 30px;
+            }
         }
         &-bottom {
             position: sticky;
-            top: 250px;
-            @include md {
-                top: 350px;
+            top: 450px;
+            margin-top: 20px;
+            @media only screen and (min-width: 600px) {
+                top: 250px;
+            }
+            // @media only screen and (min-width: 400px) {
+            //     top: 400px;
+            // }
+            &-mobile {
+                margin-bottom: 30px;
             }
         }
 
@@ -243,7 +283,7 @@
     }
     &-relatedNews {
         overflow: auto;       
-         position: sticky;
+        position: sticky;
         top: 100px;
         margin-top: 18px;
         @include sm {
@@ -255,8 +295,13 @@
     }
     &-posts{
         &-desk{
+            // flex-direction: row;
             margin-top: 60px;
             text-align: center;
+            @include md{
+                // display: block;
+                width: 100%;
+            }
             @include sm{
                 display: none;
             }
@@ -341,6 +386,7 @@
             border-bottom: 1.5px solid rgba(252, 252, 253, 0.6);
             margin-bottom: 20px;
             padding: 0 0 20px 0;
+            overflow: auto;
             &:last-child {
                 border-bottom: none;
             }
@@ -352,7 +398,16 @@
                 color: $grey-color;
             }
             &-description {
-                font-size: 0.9rem;
+                // font-size: 0rem;
+            }
+            &-reply {
+                font-size: 0.95rem;
+                margin-bottom: 14px;
+                margin-left: 4.5vw;
+                // margin-bottom: 4px;
+                &-description{
+                    margin-left: 12px;
+                }
             }
         }
     }
