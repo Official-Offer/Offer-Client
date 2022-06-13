@@ -210,6 +210,9 @@
 .ant-modal-close, .ant-modal-header {
     border-radius: 16px;
 }
+.ant-modal-body {
+    gap: 20px;
+}
 .ant-modal-title {
     font-family: 'Circular Std';
     font-style: normal;
@@ -221,6 +224,7 @@
     color: #223052;
     margin-top: 17px;
 }
+
 .ant-modal-close {
     margin-top: 16px;
 }

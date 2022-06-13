@@ -33,6 +33,7 @@ import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
 import { updown } from "@utils/numberDecorator";
 import moment from "moment";
+import { Modal } from "antd";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -50,6 +51,7 @@ const BlockchainDetails = () => {
   const [stat, setStat] = useState(null);
   const [day, setDay] = useState(7);
   const [showPrice, setShowPrice] = useState(true);
+  const [showReviewPopup, setShowReviewPopup] =useState(false);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -291,7 +293,7 @@ const BlockchainDetails = () => {
                   <Switch
                     defaultChecked
                     className="blockchain-details-price-switch"
-                    onChange={()=>setShowPrice(!showPrice)}
+                    onChange={() => setShowPrice(!showPrice)}
                   ></Switch>
                   Show Price Comparison on Chart
                 </div>
@@ -441,6 +443,27 @@ const BlockchainDetails = () => {
           </BoxWhiteShadow>
         </div>
       </div>
+      <Modal
+        className="blockchain-details-reivew"
+        title="Write a Reivew"
+        visible={showReviewPopup}
+        onCancel={()=>setShowReviewPopup(false)}
+      >
+        <form>
+          <p className="blockchain-details-review-star">
+            How would you rate this dapp?
+          </p>
+          <Rate allowHalf defaultValue={0} />
+          <p className="blockchain-details-review-star">
+            What would you like to share with us?
+          </p>
+          <textarea
+            className="blockchain-details-review-comment"
+            placeholder="Write your comment..."
+          ></textarea>
+          <ButtonBlue type="submit">Submit</ButtonBlue>
+        </form>
+      </Modal>
     </section>
   );
 };

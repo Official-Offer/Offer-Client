@@ -244,4 +244,21 @@
       margin-right: 20px;
     }
   }
+  &-review {
+    &-star {
+      font-family: "Circular Std";
+      font-style: normal;
+      font-weight: 450;
+      //   line-height: 28px;
+      /* identical to box height */
+      padding-bottom: 0;
+      margin: 10px 0;
+      color: rgba(34, 48, 82, 0.65);
+    }
+    &-comment {
+        width: 100%;
+        min-height: 140px;
+        margin: 10px 0;
+    }
+  }
 }
