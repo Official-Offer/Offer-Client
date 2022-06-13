@@ -42,19 +42,13 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       await request
         .post(`/dapp/comments`, data)
         .then((res) => {
-          // console.log(res.status)
             message.success("Comment created");
             e.target.reset();
             handleClose();
-          // }
         })
       } catch (err) {
-            console.log("wrong");
-            // <LoginPopup
-            //   setUser={setUser}
-            //   isVisible={isPopupVisible}
-            //   setVisible={setPopupVisible}
-            // />;
+            // console.log("wrong");
+            setPopupVisible(true);
             message.error("Please Log In");
             e.target.reset();
             handleClose();
@@ -66,7 +60,11 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       <span onClick={handleShow} className={className}>
         {text}
       </span>
-
+      <LoginPopup
+              setUser={setUser}
+              isVisible={isPopupVisible}
+              setVisible={() => setPopupVisible(true)}
+      />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Write Comment</Modal.Title>
