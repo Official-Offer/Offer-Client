@@ -34,6 +34,7 @@ import axios from "axios";
 import { updown } from "@utils/numberDecorator";
 import moment from "moment";
 import { Modal } from "antd";
+import useForm from "@utils/hook/useForm";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -51,7 +52,25 @@ const BlockchainDetails = () => {
   const [stat, setStat] = useState(null);
   const [day, setDay] = useState(7);
   const [showPrice, setShowPrice] = useState(true);
-  const [showReviewPopup, setShowReviewPopup] =useState(false);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [review, setReview] = useState({
+    star: 0,
+    comment: "",
+  });
+
+  const onSubmitReview = async (e) => {
+    e.preventDefault();
+    const data = {
+      comment: review.comment,
+      rating: review.star,
+      dapp: parseInt(id),
+    };
+
+    await requestDapp
+      .post(`/dapp/comments`, data)
+      .then((res) => console.log(res.data.data));
+  };
+
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -438,7 +457,12 @@ const BlockchainDetails = () => {
             <br />
             <br />
             <div>
-              <Button className="text-green">Rating and Reviews</Button>
+              <Button
+                className="text-green"
+                onClick={() => setShowReviewPopup(true)}
+              >
+                Rating and Reviews
+              </Button>
             </div>
           </BoxWhiteShadow>
         </div>
@@ -447,19 +471,28 @@ const BlockchainDetails = () => {
         className="blockchain-details-reivew"
         title="Write a Reivew"
         visible={showReviewPopup}
-        onCancel={()=>setShowReviewPopup(false)}
+        onCancel={(e) => {
+          setShowReviewPopup(false);
+        }}
       >
-        <form>
+        <form onSubmit={onSubmitReview}>
           <p className="blockchain-details-review-star">
             How would you rate this dapp?
           </p>
-          <Rate allowHalf defaultValue={0} />
+          <Rate
+            allowHalf
+            defaultValue={0}
+            value={review.star}
+            onChange={(num) => setReview({ ...review, star: num })}
+          />
           <p className="blockchain-details-review-star">
             What would you like to share with us?
           </p>
           <textarea
             className="blockchain-details-review-comment"
             placeholder="Write your comment..."
+            value={review.comment}
+            onChange={(e) => setReview({ ...review, comment: e.target.value })}
           ></textarea>
           <ButtonBlue type="submit">Submit</ButtonBlue>
         </form>
