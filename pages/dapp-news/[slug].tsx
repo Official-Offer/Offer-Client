@@ -124,9 +124,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           content={newsData[0]?.attributes.description}
         />
         <meta name="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
-        <meta property="og:title" content={newsData[0]?.attributes.title}/>
-        <meta property="og:description" content={newsData[0]?.attributes.description}/>
-        <meta property="og:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}/>
+        <meta property="twitter:title" content={newsData[0]?.attributes.title}/>
+        <meta property="twitter:description" content={newsData[0]?.attributes.description}/>
+        <meta property="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}/>
         {/* <meta property="og:url" content={newsData[0]?.attributes.slug}/> */}
       </Head>
       <section className="news-details">
