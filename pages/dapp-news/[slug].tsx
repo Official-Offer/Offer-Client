@@ -129,11 +129,11 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
         />
         <meta
-          property="twitter:title"
+          name="twitter:title"
           content={newsData[0]?.attributes.title}
         />
         <meta
-          property="twitter:description"
+          name="twitter:description"
           content={newsData[0]?.attributes.description}
         />
         <meta

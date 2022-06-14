@@ -53,7 +53,7 @@
       z-index: 1;
     }
     &-dappnews {
-      padding: 160px 0 160px 0;
+      padding: 130px 0 130px 0;
       width: 92%;
       margin: auto;
       position: relative;
@@ -61,12 +61,15 @@
       &-layout {
         flex: 0 0 auto;
         width: 33%;
-        padding: 10px;
+        // padding: 10px;
         &-details{
           padding: 3px;
         }
         @include lg {
           padding: 10px 5px;
+        }
+        @include md {
+          width: 50%;
         }
         @include sm {
           width: 100%;
@@ -85,7 +88,7 @@
           @include sm {
             width: 100%;
           }
-          width: 66%;
+          width: 60%;
         }
         &-right{
           @include md {
@@ -94,7 +97,7 @@
           @include sm {
             width: 100%;
           }
-          width: 33%;
+          width: 40%;
           margin-bottom: 20px;
         }
       }
