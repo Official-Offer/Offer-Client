@@ -9,12 +9,13 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { HeartFilled, HeartOutlined, UserOutlined } from "@ant-design/icons";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
 import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
+import { Avatar } from "antd";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -123,10 +124,22 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           property="og:description"
           content={newsData[0]?.attributes.description}
         />
-        <meta name="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`} />
-        <meta property="twitter:title" content={newsData[0]?.attributes.title}/>
-        <meta property="twitter:description" content={newsData[0]?.attributes.description}/>
-        <meta property="twitter:image" content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}/>
+        <meta
+          name="twitter:image"
+          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+        />
+        <meta
+          property="twitter:title"
+          content={newsData[0]?.attributes.title}
+        />
+        <meta
+          property="twitter:description"
+          content={newsData[0]?.attributes.description}
+        />
+        <meta
+          property="twitter:image"
+          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+        />
         {/* <meta property="og:url" content={newsData[0]?.attributes.slug}/> */}
       </Head>
       <section className="news-details">
@@ -160,35 +173,39 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           <div className="news-details-row-center">
             <BoxWhiteShadow>
               <div className="mt-2 p-3">
-                {/* <BoxALignItemsCenter> */}
                 <h2>{`${news[0]?.attributes.title}`}</h2>
-                {/* </BoxALignItemsCenter> */}
-                {/* <BoxALignCenter_Justify_ItemsBetween> */}
                 <BoxALignCenter_Justify_ItemsBetween className="news-details-createdAt">
                   <div className="news-details-createdAt-left">
+                    <Avatar
+                      style={{ backgroundColor: "#1DBBBD" }}
+                      icon={<UserOutlined />}
+                    />
+                    &nbsp;&nbsp;
                     {news[0]?.attributes.Author}
                     &nbsp; | &nbsp;
                     {moment(news[0]?.attributes.createdAt).format("LL")}
                   </div>
                   <div className="news-details-createdAt-right">
-                      <a target="_blank" rel="noopener noreferrer" onClick={() => {
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
                         setLiked(!liked);
-                      }}>
-                        {liked ? (
-                          <HeartFilled
-                            style={{ color: "#1DBBBD"}}
-                          />
-                        ) : (
-                          <HeartOutlined/>
-                        )}
-                      </a>
+                      }}
+                    >
+                      {liked ? (
+                        <HeartFilled style={{ color: "#1DBBBD" }} />
+                      ) : (
+                        <HeartOutlined />
+                      )}
+                    </a>
                     &nbsp;
-                     {liked ? 2 : 1}
+                    {liked ? 2 : 1}
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <Eye size={15} />
                     &nbsp;
                     {news[0]?.attributes.viewer}
-                    </div>
+                  </div>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <br />
                 <MarkDown>{styledContent}</MarkDown>
