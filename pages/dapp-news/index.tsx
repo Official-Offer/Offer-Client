@@ -156,7 +156,7 @@ const DappNews: FC = () => {
                 <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
                     onClick={() => onChangeTab(cat.attributes.name)}
-                    className={`fontSize_08 ${
+                    className={`${
                       activeIndex === i ? "active" : ""
                     }`}
                   >
