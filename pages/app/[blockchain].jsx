@@ -21,7 +21,7 @@ import {
 import { File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
-import { Avatar, Rate, Switch } from "antd";
+import { Avatar, notification, Rate, Switch } from "antd";
 // import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -61,14 +61,22 @@ const BlockchainDetails = () => {
   const onSubmitReview = async (e) => {
     e.preventDefault();
     const data = {
-      comment: review.comment,
-      rating: review.star,
-      dapp: parseInt(id),
+      data: {
+        comment: review.comment,
+        rating: review.star,
+        dapp: parseInt(id),
+      },
     };
 
-    await requestDapp
-      .post(`/dapp/comments`, data)
-      .then((res) => console.log(res.data.data));
+    await requestDapp.post(`/dapp/comments`, data).then(() => {
+      setShowReviewPopup(false);
+      notification.open({
+        message: "Success 🥳",
+        description:
+          "Your comment has successfully submitted. ",
+        duration: 3,
+      })
+    });
   };
 
   useEffect(() => setDay(router.query.days || 7), [router]);
