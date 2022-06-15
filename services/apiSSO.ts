@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 // const token = Cookies.get("accessToken");
-const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZGlzcGxheU5hbWUiOiJOZ3V5ZW4gSG9uZyBBbmgiLCJ1c2VyQXBpSWQiOjQsImlhdCI6MTY1NTE3NTgyOCwiZXhwIjoxNjU1MjYyMjI4fQ.WRzfwOejRUDiKHxWS6RNi2RYI1cGRnNHkbeX135jBuU'
+const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZGlzcGxheU5hbWUiOiJOZ3V5ZW4gSG9uZyBBbmgiLCJ1c2VyQXBpSWQiOjQsImlhdCI6MTY1NTI2MzE2MCwiZXhwIjoxNjU1MzQ5NTYwfQ.qzlUPPOCInvG4tMkzGGbGdLhfVdJLwzYP2F9Hlx4cNk'
 export default axios.create({
     baseURL: URL_API_SSO,
     headers: {

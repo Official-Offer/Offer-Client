@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import LoginPopup from "@components/navbar/LoginPopup";
 import request from "@services/apiSSO";
+import request0 from "@services/apiService";
+import * as qs from "qs";
+import useForm from "@utils/hook/useForm";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -21,6 +24,23 @@ const Submit: NextPage = () => {
     fully_on_chain: "",
     have_referral_or_affiliate: "",
   });
+  const {input, handleChange} = useForm({
+    owner: '',
+    email:'',
+    project_name: '',
+    website: '',
+    snap_shot:'',
+    snap_shots: [],
+    category: '',
+    tags: [],
+    product_status: '',
+    description: '',
+    long_description: '',
+    review_article_url: '',
+    has_own_currency: '',
+    token_logo: '',
+  })
+
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const onChangeOwner = (e: any) => {
@@ -36,8 +56,8 @@ const Submit: NextPage = () => {
     setForm({ ...form, fully_on_chain: e.target.value });
   };
   const loginError = () => {
-    if (notLogin) message.error('Please log in to continue');
-  }
+    if (notLogin) message.error("Please log in to continue");
+  };
 
   useEffect(() => {
     (async () => {
@@ -52,6 +72,7 @@ const Submit: NextPage = () => {
         });
     })();
   }, []);
+
   useEffect(() => {
     setIsVisible(notLogin);
   }, [notLogin]);
@@ -266,7 +287,7 @@ const Submit: NextPage = () => {
             Does your product has its tokens or cryptocurrencies?
           </h5>
           <Radio.Group
-          disabled={notLogin}
+            disabled={notLogin}
             onChange={onChangeYourProduct}
             value={form.token_crypto}
             className="mb-4"
@@ -278,7 +299,7 @@ const Submit: NextPage = () => {
           <BoxALignItemsCenter className="mb-4">
             <div className="main-submit-avatar-logo">
               <img src="/img/icons/icn-upload-small.png" alt="" />
-              <input type="file" disabled={notLogin}/>
+              <input type="file" disabled={notLogin} />
             </div>
             <span className="ms-3">
               JPG,PNG with ratio of 1:1. 48*48px or larger recommended. Must be
@@ -292,7 +313,7 @@ const Submit: NextPage = () => {
                 On which blockchain do you issue your token?
               </h5>
               <Select
-              disabled={notLogin}
+                disabled={notLogin}
                 style={{ width: "100%" }}
                 onChange={(e: any) => console.log(e)}
                 placeholder="Choose blockchain"
@@ -307,7 +328,7 @@ const Submit: NextPage = () => {
                 <span className="ms-3 text-green">E.g. BTC</span>
               </BoxALignItemsCenter>
               <input
-              disabled={notLogin}
+                disabled={notLogin}
                 className="main-submit-ticker"
                 type={"email"}
                 placeholder="example@gmail.com"
@@ -316,7 +337,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
               <label className="label-input mb-3">Token Contract</label>
               <input
-              disabled={notLogin}
+                disabled={notLogin}
                 className="main-submit-contract"
                 type={"text"}
                 placeholder="Smart Contract address of your token."
@@ -325,7 +346,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
               <label className="label-input mb-3">Decimal</label>
               <input
-              disabled={notLogin}
+                disabled={notLogin}
                 className="main-submit-decimal"
                 type={"text"}
                 placeholder="Decimal of your token."
@@ -337,7 +358,7 @@ const Submit: NextPage = () => {
                 <span className="text-green">Max of 200 Characters</span>
               </BoxALignCenter_Justify_ItemsBetween>
               <textarea
-              disabled={notLogin}
+                disabled={notLogin}
                 style={{ width: "100%" }}
                 maxLength={200}
                 placeholder="Token Description."
@@ -354,7 +375,7 @@ const Submit: NextPage = () => {
                 </span>
               </BoxALignItemsCenter>
               <input
-              disabled={notLogin}
+                disabled={notLogin}
                 className="main-submit-global"
                 type={"text"}
                 placeholder="Please provide the link to your token’s Coingecko profile."
@@ -386,7 +407,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
               <h5>Product Status</h5>
               <Select
-              disabled={notLogin}
+                disabled={notLogin}
                 style={{ width: "100%" }}
                 onChange={(e: any) => console.log(e)}
                 placeholder="On which blockchain did you build your on-chain function?"
@@ -413,7 +434,7 @@ const Submit: NextPage = () => {
                   <Facebook />
                 </span>
                 <input
-                disabled={notLogin}
+                  disabled={notLogin}
                   type={"text"}
                   placeholder="E.g. https://www.facebook.com/dappverse.com/"
                 />
@@ -425,7 +446,7 @@ const Submit: NextPage = () => {
                   <Twitter />
                 </span>
                 <input
-                disabled={notLogin}
+                  disabled={notLogin}
                   type={"text"}
                   placeholder="Add your product's Twitter URL"
                 />
@@ -437,7 +458,7 @@ const Submit: NextPage = () => {
                   <Send />
                 </span>
                 <input
-                disabled={notLogin}
+                  disabled={notLogin}
                   type={"text"}
                   placeholder="Add your product's Telegram URL"
                 />
@@ -448,7 +469,11 @@ const Submit: NextPage = () => {
                 <span className="main-submit-input-suffix-logo">
                   <PlusCircle />
                 </span>
-                <input disabled={notLogin} type={"text"} placeholder="Add channel" />
+                <input
+                  disabled={notLogin}
+                  type={"text"}
+                  placeholder="Add channel"
+                />
               </div>
             </div>
           </div>
@@ -460,8 +485,8 @@ const Submit: NextPage = () => {
             Do you have an affiliate or referral program?
           </h5>
           <Radio.Group
-          disabled={notLogin}
-            onChange={onChangeHaveRefOrAff}
+            disabled={notLogin}
+            onChange={console.log}
             value={form.have_referral_or_affiliate}
             className="mb-4"
           >
@@ -481,7 +506,11 @@ const Submit: NextPage = () => {
           <ButtonBlue disabled={notLogin}>Submit your project</ButtonBlue>
         </div>
       </section>
-      <LoginPopup isVisible={isVisible} setVisible={setIsVisible} onExit={loginError}/>
+      <LoginPopup
+        isVisible={isVisible}
+        setVisible={setIsVisible}
+        onExit={loginError}
+      />
     </>
   );
 };
