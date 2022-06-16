@@ -24,22 +24,34 @@ const Submit: NextPage = () => {
     fully_on_chain: "",
     have_referral_or_affiliate: "",
   });
-  const {input, handleChange} = useForm({
-    owner: '',
-    email:'',
-    project_name: '',
-    website: '',
-    snap_shot:'',
-    snap_shots: [],
-    category: '',
+  const { input, handleChange } = useForm({
+    Socials: [{ name: "", url: "" }],
+    category: "",
+    createdAt: "",
+    dappChain: 1,
+    detailDescription: "",
+    email: "",
+    hasToken: "",
+    id: 1,
+    images: null,
+    isAdminOrOwner: false,
+    isFullyOnChain: false,
+    isOnCoingecko: false,
+    projectName: "",
+    reviewArticle: "",
+    shortDescription: "",
+    status: "",
     tags: [],
-    product_status: '',
-    description: '',
-    long_description: '',
-    review_article_url: '',
-    has_own_currency: '',
-    token_logo: '',
-  })
+    thumbnail: "",
+    tokenChain: "",
+    tokenContract: "",
+    tokenDecimal: "",
+    tokenDescription: "",
+    tokenLogo: "",
+    tokenSymbol: "",
+    updatedAt: "",
+    website: "",
+  });
 
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -74,6 +86,10 @@ const Submit: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log(input);
+  }, [input]);
+
+  useEffect(() => {
     setIsVisible(notLogin);
   }, [notLogin]);
 
@@ -96,13 +112,14 @@ const Submit: NextPage = () => {
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">Are You the Owner/Admin?</h5>
           <Radio.Group
-            onChange={onChangeOwner}
-            value={form.owner_admin}
+            onChange={handleChange}
+            value={input.isAdminOrOwner}
             className="mb-4"
             disabled={notLogin}
+            name="isAdminOrOwner"
           >
-            <Radio value={"yes"}>Yes I’m the admin/owner.</Radio>
-            <Radio value={"no"}>No. I’m just a supporter.</Radio>
+            <Radio value={true}>Yes I’m the admin/owner.</Radio>
+            <Radio value={false}>No. I’m just a supporter.</Radio>
           </Radio.Group>
           <div>
             <label className="label-input mb-3">Your Email Address</label>
@@ -111,6 +128,9 @@ const Submit: NextPage = () => {
               type={"email"}
               placeholder="example@gmail.com"
               disabled={notLogin}
+              value={input.email}
+              onChange={handleChange}
+              name="email"
             />
           </div>
         </BoxWhiteShadow>
@@ -135,6 +155,9 @@ const Submit: NextPage = () => {
                     type={"text"}
                     placeholder="Project Name"
                     disabled={notLogin}
+                    name="projectName"
+                    onChange={handleChange}
+                    value={input.projectName}
                   />
                 </div>
                 <div className="w-100">
@@ -144,6 +167,9 @@ const Submit: NextPage = () => {
                     type={"text"}
                     placeholder="A URL to visit your product’s website."
                     disabled={notLogin}
+                    name="website"
+                    value={input.website}
+                    onChange={handleChange}
                   />
                 </div>
               </BoxAlignItemsStart_FlexColumn>
@@ -187,12 +213,22 @@ const Submit: NextPage = () => {
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
-                onChange={(e: any) => console.log(e)}
                 placeholder="Select one of our categories that best fit your product."
+                name="category"
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      value: e,
+                      name: "category",
+                      type: "select",
+                    },
+                  })
+                }
+                value={input.category}
               >
-                <Option value="game">Game</Option>
-                <Option value="exchange">Exchange</Option>
-                <Option value="gambling">Gambling</Option>
+                <Option value={16}>Game</Option>
+                <Option value={170}>Exchange</Option>
+                <Option value={235}>Gambling</Option>
               </Select>
             </div>
             <div className="col-lg-6 col-12 mt-lg-0 mt-4">
@@ -206,7 +242,7 @@ const Submit: NextPage = () => {
                 disabled={notLogin}
                 mode="tags"
                 style={{ width: "100%" }}
-                onChange={(e: any) => console.log(e)}
+                onChange={handleChange}
                 showArrow
                 placeholder="Select one of our categories that best fit your product."
               >
