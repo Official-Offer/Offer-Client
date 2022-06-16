@@ -23,7 +23,6 @@ export default function useForm(initial = {}) {
       ...input,
       [name]: value,
     });
-    console.log(type);
   }
   function resetForm() {
     setInputs(initial);

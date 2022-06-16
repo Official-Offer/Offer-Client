@@ -8,7 +8,7 @@ import { Facebook, PlusCircle, Send, Twitter } from "react-feather";
 import { message, Radio, Select, Space } from "antd";
 import { ButtonBlue } from "@styles/styled-components/styledButton";
 import { TitleGlobal } from "@components/common/Title";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import LoginPopup from "@components/navbar/LoginPopup";
 import request from "@services/apiSSO";
@@ -18,16 +18,17 @@ import useForm from "@utils/hook/useForm";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
-  const [form, setForm] = useState({
-    owner_admin: "",
-    token_crypto: "",
-    fully_on_chain: "",
-    have_referral_or_affiliate: "",
-  });
-  const { input, handleChange } = useForm({
-    Socials: [{ name: "", url: "" }],
-    category: "",
-    createdAt: "",
+  const { input, handleChange }: any = useForm({
+    Socials: [
+      { name: "Facebook", url: "", image: null },
+      { name: "Twitter", url: "", image: null },
+      { name: "Telegram", url: "", image: null },
+      { name: "Medium", url: "", image: null },
+      { name: "Youtube", url: "", image: null },
+      { name: "LinkedIn", url: "", image: null },
+      { name: "Instagram", url: "", image: null },
+    ],
+    category: 1,
     dappChain: 1,
     detailDescription: "",
     email: "",
@@ -52,23 +53,26 @@ const Submit: NextPage = () => {
     updatedAt: "",
     website: "",
   });
-
+  const [channelShown, setChannelShown] = useState([
+    "Facebook",
+    "Twitter",
+    "Telegram",
+  ]);
+  const [channelPopup, setChannelPopup] = useState<boolean>(false);
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const onChangeOwner = (e: any) => {
-    setForm({ ...form, owner_admin: e.target.value });
-  };
-  const onChangeYourProduct = (e: any) => {
-    setForm({ ...form, token_crypto: e.target.value });
-  };
-  const onChangeFullyOnChain = (e: any) => {
-    setForm({ ...form, fully_on_chain: e.target.value });
-  };
-  const onChangeHaveRefOrAff = (e: any) => {
-    setForm({ ...form, fully_on_chain: e.target.value });
-  };
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
+  };
+  const onChangeSocials = (
+    e: ChangeEvent<HTMLInputElement>,
+    channel: string
+  ) => {
+    const newSocs: Array<any> = input.Socials;
+    newSocs.filter((soc) => soc.name === channel)[0].url = e.target.value;
+    handleChange({
+      target: { name: "Socials", value: newSocs },
+    });
   };
 
   useEffect(() => {
@@ -214,7 +218,6 @@ const Submit: NextPage = () => {
                 disabled={notLogin}
                 style={{ width: "100%" }}
                 placeholder="Select one of our categories that best fit your product."
-                name="category"
                 onChange={(e) =>
                   handleChange({
                     target: {
@@ -242,13 +245,21 @@ const Submit: NextPage = () => {
                 disabled={notLogin}
                 mode="tags"
                 style={{ width: "100%" }}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange({
+                    target: {
+                      name: "tags",
+                      type: "select",
+                      value: e,
+                    },
+                  });
+                }}
                 showArrow
                 placeholder="Select one of our categories that best fit your product."
               >
-                <Option value="game">Game</Option>
-                <Option value="exchange">Exchange</Option>
-                <Option value="gambling">Gambling</Option>
+                <Option value={16}>Game</Option>
+                <Option value={170}>Exchange</Option>
+                <Option value={235}>Gambling</Option>
               </Select>
             </div>
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
@@ -256,7 +267,15 @@ const Submit: NextPage = () => {
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
-                onChange={(e: any) => console.log(e)}
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      value: e,
+                      name: "status",
+                      type: "text",
+                    },
+                  })
+                }
                 showArrow
                 placeholder="Select your product status"
               >
@@ -285,6 +304,9 @@ const Submit: NextPage = () => {
                 style={{ width: "100%" }}
                 maxLength={70}
                 placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
+                value={input.shortDescription}
+                onChange={handleChange}
+                name="shortDescription"
               />
             </div>
             <div className="col-12 mt-lg-5 mt-4">
@@ -297,6 +319,9 @@ const Submit: NextPage = () => {
                 style={{ width: "100%" }}
                 maxLength={500}
                 placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                value={input.detailDescription}
+                onChange={handleChange}
+                name="detailDescription"
               />
             </div>
             <div className="col-12 mt-lg-5 mt-4">
@@ -312,6 +337,9 @@ const Submit: NextPage = () => {
                 className="main-submit-product-status"
                 type={"text"}
                 placeholder="A url link to an article about your product that you want us to know."
+                name="website"
+                onChange={handleChange}
+                value={input.website}
               />
             </div>
           </div>
@@ -324,12 +352,13 @@ const Submit: NextPage = () => {
           </h5>
           <Radio.Group
             disabled={notLogin}
-            onChange={onChangeYourProduct}
-            value={form.token_crypto}
+            onChange={handleChange}
+            name="hasToken"
+            value={input.hasToken}
             className="mb-4"
           >
-            <Radio value={"yes"}>Yes we do.</Radio>
-            <Radio value={"no"}>No we don’t.</Radio>
+            <Radio value={true}>Yes we do.</Radio>
+            <Radio value={false}>No we don’t.</Radio>
           </Radio.Group>
           <h5 className="mb-3">Token Logo</h5>
           <BoxALignItemsCenter className="mb-4">
@@ -351,11 +380,20 @@ const Submit: NextPage = () => {
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
-                onChange={(e: any) => console.log(e)}
+                onChange={(e) =>
+                  handleChange({
+                    target: {
+                      value: e,
+                      name: "tokenChain",
+                      type: "select",
+                    },
+                  })
+                }
+                value={input.tokenChain}
                 placeholder="Choose blockchain"
               >
-                <Option value="bnb">BNB Chain</Option>
-                <Option value="eth">Ethereum</Option>
+                <Option value={2}>BNB Chain</Option>
+                <Option value={1}>Ethereum</Option>
               </Select>
             </div>
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
@@ -366,8 +404,10 @@ const Submit: NextPage = () => {
               <input
                 disabled={notLogin}
                 className="main-submit-ticker"
-                type={"email"}
-                placeholder="example@gmail.com"
+                onChange={handleChange}
+                value={input.tokenSymbol}
+                type={"text"}
+                name="tokenSymbol"
               />
             </div>
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
@@ -377,6 +417,9 @@ const Submit: NextPage = () => {
                 className="main-submit-contract"
                 type={"text"}
                 placeholder="Smart Contract address of your token."
+                name="tokenContract"
+                value={input.tokenContract}
+                onChange={handleChange}
               />
             </div>
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
@@ -386,6 +429,9 @@ const Submit: NextPage = () => {
                 className="main-submit-decimal"
                 type={"text"}
                 placeholder="Decimal of your token."
+                name="tokenDecimal"
+                onChange={handleChange}
+                value={input.tokenDecimal}
               />
             </div>
             <div className="col-12 mt-lg-5 mt-4">
@@ -398,6 +444,9 @@ const Submit: NextPage = () => {
                 style={{ width: "100%" }}
                 maxLength={200}
                 placeholder="Token Description."
+                onChange={handleChange}
+                value={input.tokenDescription}
+                name="tokenDescription"
               />
             </div>
             <div className="col-12 mt-lg-5 mt-4">
@@ -411,6 +460,9 @@ const Submit: NextPage = () => {
                 </span>
               </BoxALignItemsCenter>
               <input
+                value={input.isOnCoinGecko}
+                onChange={handleChange}
+                name="isOnCoinGecko"
                 disabled={notLogin}
                 className="main-submit-global"
                 type={"text"}
@@ -428,10 +480,11 @@ const Submit: NextPage = () => {
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">Is your product fully on-chain?</h5>
           <Radio.Group
-            onChange={onChangeFullyOnChain}
-            value={form.fully_on_chain}
+            onChange={handleChange}
+            value={input.isFullyOnChain}
             className="mb-4"
             disabled={notLogin}
+            name="isFullyOnChain"
           >
             <Space direction="vertical">
               <Radio value={"yes"}>Yes, it is 100% on-chain.</Radio>
@@ -445,11 +498,18 @@ const Submit: NextPage = () => {
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
-                onChange={(e: any) => console.log(e)}
+                onChange={(e) =>
+                  handleChange({
+                    value: e,
+                    name: "dappChain",
+                    type: "select",
+                  })
+                }
+                value={input.dappChain}
                 placeholder="On which blockchain did you build your on-chain function?"
               >
-                <Option value="bnb">BNB Chain</Option>
-                <Option value="eth">Ethereum</Option>
+                <Option value={2}>BNB Chain</Option>
+                <Option value={1}>Ethereum</Option>
               </Select>
             </div>
             <div className="col-lg-6 col-12"></div>
@@ -473,6 +533,12 @@ const Submit: NextPage = () => {
                   disabled={notLogin}
                   type={"text"}
                   placeholder="E.g. https://www.facebook.com/dappverse.com/"
+                  name="Socials"
+                  value={
+                    input.Socials.filter((soc: any) => soc.name === "Facebook")
+                      .url
+                  }
+                  onChange={(e) => onChangeSocials(e, "Facebook")}
                 />
               </div>
             </div>
@@ -485,6 +551,12 @@ const Submit: NextPage = () => {
                   disabled={notLogin}
                   type={"text"}
                   placeholder="Add your product's Twitter URL"
+                  name="Socials"
+                  value={
+                    input.Socials.filter((soc: any) => soc.name === "Twitter")
+                      .url
+                  }
+                  onChange={(e) => onChangeSocials(e, "Twitter")}
                 />
               </div>
             </div>
@@ -497,6 +569,12 @@ const Submit: NextPage = () => {
                   disabled={notLogin}
                   type={"text"}
                   placeholder="Add your product's Telegram URL"
+                  name="Socials"
+                  value={
+                    input.Socials.filter((soc: any) => soc.name === "Telegram")
+                      .url
+                  }
+                  onChange={(e) => onChangeSocials(e, "Telegram")}
                 />
               </div>
             </div>
@@ -523,7 +601,7 @@ const Submit: NextPage = () => {
           <Radio.Group
             disabled={notLogin}
             onChange={console.log}
-            value={form.have_referral_or_affiliate}
+            value={false}
             className="mb-4"
           >
             <Space direction="vertical">
