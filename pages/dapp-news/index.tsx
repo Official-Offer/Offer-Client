@@ -103,8 +103,8 @@ const DappNews: FC = () => {
   }, [categoryKey, viewMore, crit]);
 
   const onChangeTab = (key: any) => {
-    if (viewMore > 20) {
-      setNumberViewMore(20);
+    if (viewMore > 18) {
+      setNumberViewMore(18);
     }
     let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
@@ -127,7 +127,7 @@ const DappNews: FC = () => {
         <div className="fontSize_08 main-homepage-dappnews-pinnedSection-left">
           <PinnedSlides crit={'createdAt'}/>
         </div>
-        <div className="main-homepage-dappnews-pinnedSection-right">
+        <div className="main-homepage-dappnews-pinnedSection-right ">
           <LatestNews/>
         </div>
       </BoxWhiteShadow>

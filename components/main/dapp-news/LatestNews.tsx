@@ -51,7 +51,7 @@ function LatestNews() {
               By {news?.attributes.Author}
             </span>
             &nbsp;
-            <p className="main-homepage-dappnews-pinnedCard-title">
+            <p className="main-homepage-dappnews-pinnedCard-title ">
               {news?.attributes.title}
             </p>
           </div>
