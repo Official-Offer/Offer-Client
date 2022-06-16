@@ -101,10 +101,10 @@
         box-shadow: none !important;
     }
     .ant-select-selection-item {
-        color: $white-color;
+        color: $black-color;
     }
     .ant-select-arrow {
-        color: $white-color;
+        color: $black-color;
     }
     .ant-select-multiple {
         .ant-select-selection-item-content {
@@ -119,6 +119,7 @@
     }
 }
 .ant-select-item-option-content {
+    color: $black-color;
     .dot {
         width: 10px;
         height: 10px;
