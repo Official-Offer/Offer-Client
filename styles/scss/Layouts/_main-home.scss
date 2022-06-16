@@ -163,17 +163,17 @@
         }
         &-title {
           text-overflow: ellipsis;
-          font-size: 11px;
+          font-size: 15px;
           @media only screen and (min-width: 1280px) {
-            font-size: 0.9vw;
+            font-size: 1vw;
           }
           font-weight: bold;
           overflow-wrap: break-word;
         }
         &-author {
-          font-size: 10px;
+          font-size: 13px;
           @media only screen and (min-width: 1280px) {
-            font-size: 0.8vw;
+            font-size: 0.9vw;
           }
           font-weight: bold;
           color: #7d7d7d;
@@ -204,7 +204,7 @@
           &-title {
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: 15px;
+            font-size: 16px;
             @media only screen and (min-width: 1680px) {
               font-size: 1.1vw;
             }
@@ -222,7 +222,7 @@
           }
           &-description {
             // font-size: 0.75rem;
-            font-size: 16px;
+            font-size: 1.7rem;
             @media only screen and (min-width: 1580px) {
               font-size: 0.9vw;
             }
