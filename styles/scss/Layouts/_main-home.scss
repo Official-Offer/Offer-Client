@@ -63,6 +63,12 @@
     &-dappnews {
       overflow: visible;
       width: 80%;
+      @media only screen and (max-width: 1080px) {
+        width: 92%;
+      }
+      @include sm {
+        width: 95%;
+      }
       overflow: hidden;
       margin: auto;
       &-layout {
@@ -144,9 +150,9 @@
         }
         &-img {
           // font-size: 18px;
-          width: 110px;
-          height: auto;
-          @media only screen and (min-width: 1080px) {
+          width: 100px;
+          height: 70px;
+          @media only screen and (min-width: 1280px) {
             width: 10vw;
             height: auto;
           }
@@ -154,16 +160,16 @@
         }
         &-title {
           text-overflow: ellipsis;
-          font-size: 15px;
-          @media only screen and (min-width: 1080px) {
+          font-size: 11px;
+          @media only screen and (min-width: 1280px) {
             font-size: 0.9vw;
           }
           font-weight: bold;
           overflow-wrap: break-word;
         }
         &-author {
-          font-size: 12px;
-          @media only screen and (min-width: 1080px) {
+          font-size: 10px;
+          @media only screen and (min-width: 1280px) {
             font-size: 0.8vw;
           }
           font-weight: bold;
