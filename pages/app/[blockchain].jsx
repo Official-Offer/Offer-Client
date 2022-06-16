@@ -57,27 +57,52 @@ const BlockchainDetails = () => {
     star: 0,
     comment: "",
   });
-
+  const [reviews, setReviews] = useState([{ cur: {}, children: {} }]);
+  const [reviewParent, setReviewParent] = useState(null);
+  const [pagination, setPagination] = useState(3);
+  const [justCommented, setJustCommented] = useState(true);
+  const viewMore = () => setPagination(pagination + 3);
+  const openParentlessReview = () => {
+    setReviewParent(null);
+    setShowReviewPopup(true);
+  };
+  const openChildReview = (id) => {
+    setReviewParent(id);
+    setShowReviewPopup(true);
+  };
+  const onChangeStar = (num) => setReview({ ...review, star: num });
+  const onChangeComment = (e) =>
+    setReview({ ...review, comment: e.target.value });
   const onSubmitReview = async (e) => {
     e.preventDefault();
-    const data = {
-      data: {
-        comment: review.comment,
-        rating: review.star,
-        dapp: parseInt(id),
-      },
-    };
+    const data = reviewParent
+      ? {
+          data: {
+            comment: review.comment,
+            rating: review.star,
+            dapp: parseInt(id),
+            parent: parseInt(reviewParent),
+          },
+        }
+      : {
+          data: {
+            comment: review.comment,
+            rating: review.star,
+            dapp: parseInt(id),
+          },
+        };
 
     await requestDapp.post(`/dapp/comments`, data).then(() => {
       setShowReviewPopup(false);
       notification.open({
         message: "Success 🥳",
-        description:
-          "Your comment has successfully submitted. ",
+        description: "Your comment has successfully submitted. ",
         duration: 3,
-      })
+      });
     });
+    setJustCommented(!justCommented);
   };
+  useEffect(() => console.log(reviews), [reviews]);
 
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
@@ -112,6 +137,70 @@ const BlockchainDetails = () => {
       });
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: ["user", "replies", "replies.user"],
+          pagination: {
+            page: 1,
+            pageSize: pagination,
+          },
+          filters: {
+            dapp: {
+              id: {
+                $eq: id, //id
+              },
+            },
+            parent: {
+              id: {
+                $null: true
+              }
+            }
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await request
+        .get(`/reviews?${query}`)
+        .then((res) => setReviews(res.data.data));
+    })();
+  }, [pagination, justCommented]);
+
+  const ReviewPopUp = (
+    <Modal
+      className="blockchain-details-reivew"
+      title="Write a Reivew"
+      visible={showReviewPopup}
+      onCancel={(e) => {
+        setShowReviewPopup(false);
+      }}
+    >
+      <form onSubmit={onSubmitReview}>
+        <p className="blockchain-details-review-star">
+          How would you rate this dapp?
+        </p>
+        <Rate
+          allowHalf
+          defaultValue={0}
+          value={review.star}
+          onChange={(num) => setReview({ ...review, star: num })}
+        />
+        <p className="blockchain-details-review-star">
+          What would you like to share with us?
+        </p>
+        <textarea
+          className="blockchain-details-review-comment"
+          placeholder="Write your comment..."
+          value={review.comment}
+          onChange={(e) => setReview({ ...review, comment: e.target.value })}
+        ></textarea>
+        <ButtonBlue type="submit">Submit</ButtonBlue>
+      </form>
+    </Modal>
+  );
 
   return (
     <section className="blockchain-details">
@@ -427,7 +516,7 @@ const BlockchainDetails = () => {
             <span className="ms-4">5 Ratings</span>
           </BoxALignItemsCenter>
           <BoxWhiteShadow className="p-4 blockchain-details-comment">
-            {[0, 1, 2, 3].map((comment, i) => {
+            {reviews.map((comment, i) => {
               return (
                 <div className="blockchain-details-comment-box" key={i}>
                   <BoxALignCenter_Justify_ItemsBetween className="mb-4">
@@ -437,38 +526,59 @@ const BlockchainDetails = () => {
                         icon={<UserOutlined />}
                       />
                       <span className="blockchain-details-comment-box-name">
-                        Joseph Reyes
+                        {comment.attributes?.user.data?.attributes.username}
                       </span>
-                      <Rate allowHalf defaultValue={2.5} />
+                      <Rate
+                        allowHalf
+                        defaultValue={comment.attributes?.rating}
+                      />
                     </BoxALignItemsCenter>
                     <span className="blockchain-details-comment-box-time">
-                      Mar 17 , 2021
+                      {moment(comment.attributes?.createdAt).format("LL")}
                     </span>
                   </BoxALignCenter_Justify_ItemsBetween>
                   <p className="blockchain-details-comment-box-description">
-                    {`Don't buy into this scam, I've only lost $100 thankfully. Withdraw button doesn't work. Consider yourself warned.`}
+                    {comment.attributes?.comment}
                   </p>
                   <div>
                     <Button>
                       <BoxALignItemsCenter>
                         <MessageSquare color="#1DBBBD" />
-                        <span className="ms-2 text-green">Comment</span>
+                        <span
+                          className="ms-2 text-green"
+                          onClick={() => openChildReview(comment.id)}
+                        >
+                          Comment
+                        </span>
                       </BoxALignItemsCenter>
                     </Button>
                   </div>
+                  {comment.attributes?.replies.data?.length >0 && <div>
+                    <Button>
+                      <BoxALignItemsCenter>
+                        <span
+                          className="ms-2 text-green"
+                          onClick={() => openChildReview(comment.id)}
+                        >
+                        View {comment.attributes?.replies.data?.length} Comments
+                        </span>
+                      </BoxALignItemsCenter>
+                    </Button>
+                  </div>}
                 </div>
               );
             })}
-            <ButtonBorderBlueTransparent className="w-100 rounded-pill py-2">
+            <ButtonBorderBlueTransparent
+              className="w-100 rounded-pill py-2"
+              onClick={viewMore}
+              style={{cursor: 'pointer'}}
+            >
               View more
             </ButtonBorderBlueTransparent>
             <br />
             <br />
             <div>
-              <Button
-                className="text-green"
-                onClick={() => setShowReviewPopup(true)}
-              >
+              <Button className="text-green" onClick={openParentlessReview}>
                 Rating and Reviews
               </Button>
             </div>
@@ -487,12 +597,7 @@ const BlockchainDetails = () => {
           <p className="blockchain-details-review-star">
             How would you rate this dapp?
           </p>
-          <Rate
-            allowHalf
-            defaultValue={0}
-            value={review.star}
-            onChange={(num) => setReview({ ...review, star: num })}
-          />
+          <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
           <p className="blockchain-details-review-star">
             What would you like to share with us?
           </p>
@@ -500,7 +605,8 @@ const BlockchainDetails = () => {
             className="blockchain-details-review-comment"
             placeholder="Write your comment..."
             value={review.comment}
-            onChange={(e) => setReview({ ...review, comment: e.target.value })}
+            onChange={onChangeComment}
+            name="comment"
           ></textarea>
           <ButtonBlue type="submit">Submit</ButtonBlue>
         </form>
