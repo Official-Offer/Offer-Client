@@ -125,17 +125,16 @@
         }
         &-title {
           font-size: 18px;
-          @media only screen and (min-width: 1180px) {
-            font-size: 1.9vw;
+          @media only screen and (min-width: 1280px) {
+            font-size: 1.7vw;
           }
         }
         &-author {
           font-weight: bold;
           font-size: 14px;
-          @media only screen and (min-width: 1180px) {
-            font-size: 1vw;
+          @media only screen and (min-width: 1280px) {
+            font-size: 0.9vw;
           }
-          // font-size: 1vw;
           color: #7d7d7d;
         }
       }
