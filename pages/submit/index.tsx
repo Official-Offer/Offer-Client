@@ -50,13 +50,12 @@ const Submit: NextPage = () => {
     tokenDescription: "",
     tokenLogo: "",
     tokenSymbol: "",
-    updatedAt: "",
     website: "",
   });
   const [channelShown, setChannelShown] = useState([
-    "Facebook",
-    "Twitter",
-    "Telegram",
+    { name: "Facebook", icon: <Facebook /> },
+    { name: "Twitter", icon: <Twitter /> },
+    { name: "Telegram", icon: <Send /> },
   ]);
   const [channelPopup, setChannelPopup] = useState<boolean>(false);
   const [notLogin, setNotLogin] = useState<boolean>(false);
