@@ -14,7 +14,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 // import { Pagination } from "swiper";
 
-export default function PinnedSlides({crit}: any) {
+export default function PinnedSlides({ crit }: any) {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function PinnedSlides({crit}: any) {
               $eq: true,
             },
           },
-          sort: [`${crit}:desc`]
+          sort: [`${crit}:desc`],
         },
         {
           encodeValuesOnly: true,
@@ -41,7 +41,7 @@ export default function PinnedSlides({crit}: any) {
     })();
   }, []);
   return (
-    <div className='sliderWrapper'>
+    <div className="sliderWrapper">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
@@ -83,31 +83,28 @@ export default function PinnedSlides({crit}: any) {
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
-            <SwiperSlide 
+            <SwiperSlide
               key={i}
               className="main-homepage-dappnews-pinnedSlides"
               onClick={() => {
-                router.push(
-                  {
-                    pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
-                  },
-                );
-              }}>
+                router.push({
+                  pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
+                });
+              }}
+            >
               <img
                 className="main-homepage-dappnews-pinnedSlides-img"
                 src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
                 alt=""
               />
-              <p className="main-homepage-dappnews-pinnedSlides-title mt-4">
+              <p className="main-homepage-dappnews-pinnedSlides-title mt-2">
                 {pinnedPost.attributes.title}
               </p>
-              <div>
-                <span className="main-homepage-dappnews-pinnedSlides-author">
-                  By {pinnedPost.attributes.Author} |{" "}
-                  {moment(pinnedPost.attributes.createdAt).format("LL")}
-                </span>
-                &nbsp;
-              </div>
+              <p className="main-homepage-dappnews-pinnedSlides-author">
+                By {pinnedPost.attributes.Author} |{" "}
+                {moment(pinnedPost.attributes.createdAt).format("LL")}
+              </p>
+              &nbsp;
             </SwiperSlide>
           );
         })}

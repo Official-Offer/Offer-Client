@@ -26,7 +26,7 @@ const DappNews: FC = () => {
   const [crit, setCrit] = useState("viewer");
   const [categories, setCategories] = useState<any>([]);
   const [categoryKey, setCategoryKey] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(20);
+  const [viewMore, setNumberViewMore] = useState(18);
   const [activeIndex, setActiveIndex] = useState(0);
 
   // const NewsList = dynamic(
@@ -200,7 +200,7 @@ const DappNews: FC = () => {
             <LoadMore
               className="text-green fw-bold fontSize_1-1"
               onClick={() => {
-                setNumberViewMore(viewMore + 20);
+                setNumberViewMore(viewMore + 18);
               }}
             >
               Load more
