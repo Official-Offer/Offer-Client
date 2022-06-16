@@ -14,8 +14,8 @@ const SharingSection = ({ newsUpdate }: any) => {
   }, [newsUpdate])
   // console.log(news);
   return (
-    <BoxWhiteShadow className="p-3">
-      <h4>Share this article</h4>
+    <BoxWhiteShadow className="news-details-social">
+      <h4 className="p-2">Share this article</h4>
       <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton

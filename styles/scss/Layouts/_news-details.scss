@@ -2,11 +2,13 @@
     &-social{
         display: flex;
         flex-wrap: wrap;
+        // padding: 5px;
         &-icons {
             padding-left: 20px;
         }
         &-icon {
             width: 40px;
+            padding-bottom: 20px;
         }
     }
     &-createdAt{
