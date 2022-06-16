@@ -61,6 +61,13 @@ const BlockchainDetails = () => {
   const [reviewParent, setReviewParent] = useState(null);
   const [pagination, setPagination] = useState(3);
   const [justCommented, setJustCommented] = useState(true);
+  const [showSubcomment, setShowSubcomment] = useState(new Set());
+  const viewSubcomment = (id) => {
+    const newState = showSubcomment;
+    if (newState.has(id)) newState.delete(id);
+    else newState.add(id);
+    setShowSubcomment(newState);
+  };
   const viewMore = () => setPagination(pagination + 3);
   const openParentlessReview = () => {
     setReviewParent(null);
@@ -103,7 +110,6 @@ const BlockchainDetails = () => {
     setJustCommented(!justCommented);
   };
   useEffect(() => console.log(reviews), [reviews]);
-
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -154,9 +160,9 @@ const BlockchainDetails = () => {
             },
             parent: {
               id: {
-                $null: true
-              }
-            }
+                $null: true,
+              },
+            },
           },
         },
         {
@@ -553,25 +559,69 @@ const BlockchainDetails = () => {
                       </BoxALignItemsCenter>
                     </Button>
                   </div>
-                  {comment.attributes?.replies.data?.length >0 && <div>
-                    <Button>
-                      <BoxALignItemsCenter>
-                        <span
-                          className="ms-2 text-green"
-                          onClick={() => openChildReview(comment.id)}
-                        >
-                        View {comment.attributes?.replies.data?.length} Comments
-                        </span>
-                      </BoxALignItemsCenter>
-                    </Button>
-                  </div>}
+                  {comment.attributes?.replies.data?.length > 0 && (
+                    <div className="blockchain-details-viewmore">
+                      {showSubcomment.has(i) ? (
+                        <div className="blockchain-details-subcomment-section">
+                          {comment.attributes?.replies.data.map((reply, ri) => (
+                            <div
+                              className="blockchain-details-subcomment-box"
+                              key={ri}
+                            >
+                              <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                                <BoxALignItemsCenter>
+                                  <Avatar
+                                    style={{ backgroundColor: "#1DBBBD" }}
+                                    icon={<UserOutlined />}
+                                  />
+                                  <span className="blockchain-details-comment-box-name">
+                                    {
+                                      reply.attributes.user.data.attributes
+                                        .username
+                                    }
+                                  </span>
+                                </BoxALignItemsCenter>
+                                <span className="blockchain-details-comment-box-time">
+                                  {moment(reply.attributes.createdAt).format(
+                                    "LL"
+                                  )}
+                                </span>
+                              </BoxALignCenter_Justify_ItemsBetween>
+                              <p className="blockchain-details-comment-box-description">
+                                {reply.attributes.comment}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <Button>
+                          <BoxALignItemsCenter>
+                            <span
+                              className="text-green"
+                              onClick={() => {
+                                viewSubcomment(i);
+                                console.log(showSubcomment);
+                              }}
+                            >
+                              View {comment.attributes?.replies.data?.length}{" "}
+                              Comments
+                              <img
+                                src="/img/icons/chevrons-up.png"
+                                className="blockchain-details-chevron"
+                              />
+                            </span>
+                          </BoxALignItemsCenter>
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}
             <ButtonBorderBlueTransparent
               className="w-100 rounded-pill py-2"
               onClick={viewMore}
-              style={{cursor: 'pointer'}}
+              style={{ cursor: "pointer" }}
             >
               View more
             </ButtonBorderBlueTransparent>

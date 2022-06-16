@@ -220,7 +220,7 @@
   }
   &-comment {
     &-box {
-      border-bottom: 1.5px solid rgba(252, 252, 253, 0.6);
+      border-bottom: 1.5px solid #e6e8ec;
       margin-bottom: 20px;
       padding: 0 0 20px 0;
       &:last-child {
@@ -259,7 +259,25 @@
       width: 100%;
       min-height: 140px;
       margin: 10px 0;
-      color: rgba(34, 48, 82, 0.65)
+      color: rgba(34, 48, 82, 0.65);
+    }
+  }
+  &-chevron {
+    margin-left: 5px;
+    margin-bottom: 5px;
+  }
+  &-viewmore {
+    margin-top: 10px;
+  }
+  &-subcomment {
+    &-section {
+      width: 100%;
+      padding-left: 15px;
+      border-left: 3px solid #1dbbbd;
+      color: $black-color;
+    }
+    &-box{
+      width: 100%;
     }
   }
 }
