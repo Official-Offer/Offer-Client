@@ -125,7 +125,7 @@
         }
         &-author {
           font-weight: bold;
-          font-size: 10px;
+          font-size: 14px;
           @media only screen and (min-width: 1180px) {
             font-size: 1vw;
           }
@@ -135,7 +135,7 @@
       }
       &-pinnedCard {
         display: flex;
-        flex-grow: 3;
+        // flex-grow: 3;
         text-overflow: ellipsis;
         padding-top: 20px;
         cursor: pointer;
@@ -162,7 +162,7 @@
           overflow-wrap: break-word;
         }
         &-author {
-          font-size: 15px;
+          font-size: 12px;
           @media only screen and (min-width: 1180px) {
             font-size: 0.8vw;
           }
