@@ -255,10 +255,12 @@
     display: flex;
     justify-content: space-between;
     margin-top: 50px;
-    font-size: 0.9em;
-
+    font-size: 0.8em;
+    &-right {
+    }
     &-left {
-        width: 80%;
+        // width: 100%;
+        margin-right: 80px;
         display: inline-flex;
         flex-wrap: wrap;
         position: relative;

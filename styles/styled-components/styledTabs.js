@@ -100,7 +100,7 @@ export const ToggleMain_Sub = styled.a `
     outline: 0;
     width: 110px;
     @media screen and (max-width: 766px) {
-        width: 45vw;
+        width: 38vw;
     }
     transition: 0.25s;
     height: 37px;

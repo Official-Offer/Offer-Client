@@ -167,8 +167,8 @@ const DappNews: FC = () => {
             })}
           </NavMain>
         </div>
-        <BoxALignItemsCenter className="bar-category-right">
-          <ToggleMain>
+        <BoxALignItemsCenter >
+          <ToggleMain className="bar-category-right">
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
                 onClick={() => setCrit("viewer")}
@@ -191,11 +191,11 @@ const DappNews: FC = () => {
         </BoxALignItemsCenter>
       </div>
       <div>
-        <div className="row">
+        <div className="mt-5 row">
           <NewsList data={newsList} />
         </div>
         <br />
-        <div className="text-center">
+        <div className="text-center mb-5">
           {newsList.length !== 0 && (
             <LoadMore
               className="text-green fw-bold fontSize_1-1"

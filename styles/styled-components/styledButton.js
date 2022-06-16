@@ -11,7 +11,7 @@ export const Button = styled.button `
 `;
 
 export const LoadMore = styled.button `
-    border-radius: 25px;
+    border-radius: 13px;
     font-size: 13px;
     font-weight: bold;
     border: 2px solid #058499;

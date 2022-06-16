@@ -11,7 +11,7 @@ export default function NewsLists({ data }: any): ReactElement {
           return (
             <div
               key={i}
-              className="mt-5 main-homepage-dappnews-layout p-4"
+              className="main-homepage-dappnews-layout p-4"
               onClick={() => {
                 router.push(
                   {
