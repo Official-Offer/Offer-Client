@@ -203,23 +203,23 @@
           padding: 20px;
           &-title {
             text-overflow: ellipsis;
-            overflow: hidden;
+            // overflow: hidden;
             font-size: 18px;
             // @media only screen and (min-width: 1680px) {
             //   font-size: 1.1vw;
             // }
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            // -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             font-weight: bold;
             margin-bottom: 5px;
           }
-          &-tag {
-            text-align: center;
-            color: #1d8c9a;
-          }
+          // &-tag {
+          //   text-align: center;
+          //   color: #1d8c9a;
+          // }
           &-description {
             // font-size: 0.75rem;
             font-size: 1.7rem;
