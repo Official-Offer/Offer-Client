@@ -58,6 +58,15 @@ export const ButtonBorderBlueTransparent = styled.div `
         outline: none;
     }
 `;
+export const BorderedButtonTransparent = styled(ButtonBorderBlueTransparent)`
+    border-radius: 90px;
+    margin: 30px auto;
+    min-width: 150px;
+    @media screen and (max-width: 992px) {
+        width: 100%;
+    }
+    
+`
 export const ButtonBlue = styled.button `
     background-color: #058499;
     padding: .375rem .75rem;

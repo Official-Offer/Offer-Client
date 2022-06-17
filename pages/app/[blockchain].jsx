@@ -267,7 +267,7 @@ const BlockchainDetails = () => {
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (
               <BoxBlueBorderRounded className="py-2 px-3 me-3" key={i}>
-                <span>{tag.name}</span>
+                <span>{tag.attributes.name}</span>
               </BoxBlueBorderRounded>
             ))}
           </BoxALignItemsCenter>
