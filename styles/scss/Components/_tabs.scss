@@ -256,8 +256,6 @@
     justify-content: space-between;
     margin-top: 50px;
     font-size: 0.8em;
-    &-right {
-    }
     &-left {
         // width: 100%;
         margin-right: 80px;
@@ -268,9 +266,10 @@
         box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.75);
         padding: 2px 2px;
         border-radius: 8px;
+        font-size: 16px;
         @media only screen and (min-width: 1680px) {
             font-size: 1vw;
-          }
+        }
         @include lg {
             justify-content: center;
         }
