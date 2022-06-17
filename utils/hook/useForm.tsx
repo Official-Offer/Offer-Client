@@ -13,9 +13,9 @@ export default function useForm(initial = {}) {
     if (type === "number") {
       value = parseInt(value);
     }
-    if (type === "file") {
-      [value] = e.target.files;
-    }
+    // if (type === "file") {
+    //   [value] = e.target.files;
+    // }
     if (type === "textarea" || type === "text") {
       value = removeVietnameseTones(value);
     }

@@ -34,7 +34,7 @@ const Submit: NextPage = () => {
     email: "",
     hasToken: "",
     id: 1,
-    images: null,
+    images: [],
     isAdminOrOwner: false,
     isFullyOnChain: false,
     isOnCoingecko: false,
@@ -73,6 +73,51 @@ const Submit: NextPage = () => {
     handleChange({
       target: { name: "Socials", value: newSocs },
     });
+  };
+
+  const onUploadImageToField = (
+    e: ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    let value;
+    if (!e.target.files || e.target.files.length === 0) {
+      value = undefined;
+    } else {
+      value = e.target.files[0];
+    }
+    handleChange({
+      target: {
+        name: field,
+        value,
+        type: "file",
+      },
+    });
+  };
+
+  const onUploadImagesToField = (e: ChangeEvent<HTMLInputElement>) => {
+    //push images to the four boxes
+    let value;
+    if (!e.target.files || e.target.files.length === 0) {
+      value = undefined;
+    } else {
+      value = e.target.files[0];
+    }
+    const newState: Array<any> = input.images;
+    if (value) newState.push(value);
+    console.log(newState);
+    handleChange({
+      target: {
+        name: "images",
+        value: newState,
+        type: "images",
+      },
+    });
+  };
+
+  const rawImgToBase64 = (raw: any) => {
+    // convert to b64 to display on input, still send raw file to server
+    if (!raw || raw == "") return null;
+    return URL.createObjectURL(raw);
   };
 
   useEffect(() => {
@@ -144,10 +189,25 @@ const Submit: NextPage = () => {
           <div className="row">
             <div className="col-lg-2 col-12">
               <div className="main-submit-avatar">
-                <img src="/img/icons/icn-upload.png" alt="" />
-                <br />
-                <p>JPG,PNG with ratio of 1:1 300*300 or larger recommended</p>
-                <input type="file" disabled={notLogin} />
+                {rawImgToBase64(input.thumbnail) ? (
+                  <img src={rawImgToBase64(input.thumbnail)} />
+                ) : (
+                  <>
+                    {" "}
+                    <img src="/img/icons/icn-upload.png" alt="" />
+                    <br />
+                    <p>
+                      JPG,PNG with ratio of 1:1 300*300 or larger recommended
+                    </p>
+                  </>
+                )}
+                <input
+                  type="file"
+                  accept="/image/*"
+                  disabled={notLogin}
+                  name="thumbnail"
+                  onChange={(e) => onUploadImageToField(e, "thumbnail")}
+                />
               </div>
             </div>
             <div className="col-lg-10 col-12 mt-lg-0 mt-4">
@@ -185,31 +245,36 @@ const Submit: NextPage = () => {
                 and be featured by our editors. 4 Product Images Max
               </p>
               <div className="row p-0">
-                <div className="col-lg-3 col-12">
-                  <div className="main-submit-avatar-area">
-                    <img src="/img/icons/icn-upload.png" alt="" />
-                    <br />
-                    <p>
-                      JPG,PNG with ratio of 1:1 300*300 or larger recommended
-                    </p>
-                    <input type="file" disabled={notLogin} />
+                {[0, 1, 2, 3].map((_, i) => (
+                  <div className="col-lg-3 col-12" key={i}>
+                    <div className="main-submit-avatar-area">
+                      {input.images.length >= i && (
+                        <img
+                          src={
+                            rawImgToBase64(input.images[i]) ||
+                            "/img/icons/icn-upload.png"
+                          }
+                          alt=""
+                        />
+                      )}
+                      {input.images.length < i || (
+                        <>
+                          {" "}
+                          <br />
+                          <p>
+                            JPG,PNG with ratio of 1:1 300*300 or larger
+                            recommended
+                          </p>
+                          <input
+                            type="file"
+                            disabled={notLogin}
+                            onChange={onUploadImagesToField}
+                          />
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div className="col-lg-3 col-12 mt-lg-0 mt-4">
-                  <div className="main-submit-avatar-empty">
-                    <input type="file" disabled={notLogin} />
-                  </div>
-                </div>
-                <div className="col-lg-3 col-12 mt-lg-0 mt-4">
-                  <div className="main-submit-avatar-empty">
-                    <input type="file" disabled={notLogin} />
-                  </div>
-                </div>
-                <div className="col-lg-3 col-12 mt-lg-0 mt-4">
-                  <div className="main-submit-avatar-empty">
-                    <input type="file" disabled={notLogin} />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             <div className="col-lg-6 col-12">
@@ -363,8 +428,18 @@ const Submit: NextPage = () => {
           <h5 className="mb-3">Token Logo</h5>
           <BoxALignItemsCenter className="mb-4">
             <div className="main-submit-avatar-logo">
-              <img src="/img/icons/icn-upload-small.png" alt="" />
-              <input type="file" disabled={notLogin} />
+              <img
+                src={
+                  rawImgToBase64(input.tokenLogo) ||
+                  "/img/icons/icn-upload-small.png"
+                }
+                alt=""
+              />
+              <input
+                type="file"
+                disabled={notLogin}
+                onChange={(e) => onUploadImageToField(e, "tokenLogo")}
+              />
             </div>
             <span className="ms-3">
               JPG,PNG with ratio of 1:1. 48*48px or larger recommended. Must be
