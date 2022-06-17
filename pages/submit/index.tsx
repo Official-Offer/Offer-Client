@@ -35,9 +35,8 @@ const Submit: NextPage = () => {
     detailDescription: "",
     email: "",
     hasToken: false,
-    id: 1,
     images: [],
-    isAdminOrOwner: false,
+    isOwnerOrAdmin: false,
     isFullyOnChain: false,
     isOnCoingecko: "",
     projectName: "",
@@ -313,9 +312,9 @@ const Submit: NextPage = () => {
                 }
                 value={input.category}
               >
-                <Option value={16}>Game</Option>
-                <Option value={170}>Exchange</Option>
-                <Option value={235}>Gambling</Option>
+                <Option value={7}>Game</Option>
+                <Option value={8}>Exchange</Option>
+                <Option value={6}>Gambling</Option>
               </Select>
             </div>
             <div className="col-lg-6 col-12 mt-lg-0 mt-4">
