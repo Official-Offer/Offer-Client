@@ -51,6 +51,7 @@ const Submit: NextPage = () => {
     tokenLogo: "",
     tokenSymbol: "",
     website: "",
+    referralProgram: "",
   });
   const [channelShown, setChannelShown] = useState([
     { name: "Facebook", icon: <Facebook /> },
@@ -599,18 +600,19 @@ const Submit: NextPage = () => {
           </h5>
           <Radio.Group
             disabled={notLogin}
-            onChange={console.log}
-            value={false}
+            onChange={handleChange}
+            value={input.referralProgram}
+            name="referralProgram"
             className="mb-4"
           >
             <Space direction="vertical">
-              <Radio value={"yes"}>
+              <Radio value={"Yes, here is an affiliate link for Dapp.com."}>
                 Yes, here is an affiliate link for Dapp.com.
               </Radio>
-              <Radio value={"but"}>
+              <Radio value={"Yes, but you will have to apply separately."}>
                 Yes, but you will have to apply separately.
               </Radio>
-              <Radio value={"no"}>Sorry, we don’t.</Radio>
+              <Radio value={"Sorry, we don’t."}>Sorry, we don’t.</Radio>
             </Space>
           </Radio.Group>
         </BoxWhiteShadow>
