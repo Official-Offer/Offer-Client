@@ -15,6 +15,8 @@ import request from "@services/apiSSO";
 import request0 from "@services/apiService";
 import * as qs from "qs";
 import useForm from "@utils/hook/useForm";
+import axios from "axios";
+import { URL_API_ADMIN } from "config/index";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -32,12 +34,12 @@ const Submit: NextPage = () => {
     dappChain: 1,
     detailDescription: "",
     email: "",
-    hasToken: "",
+    hasToken: false,
     id: 1,
     images: [],
     isAdminOrOwner: false,
     isFullyOnChain: false,
-    isOnCoingecko: false,
+    isOnCoingecko: "",
     projectName: "",
     reviewArticle: "",
     shortDescription: "",
@@ -61,9 +63,11 @@ const Submit: NextPage = () => {
   const [channelPopup, setChannelPopup] = useState<boolean>(false);
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
+
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
   };
+
   const onChangeSocials = (
     e: ChangeEvent<HTMLInputElement>,
     channel: string
@@ -118,6 +122,21 @@ const Submit: NextPage = () => {
     // convert to b64 to display on input, still send raw file to server
     if (!raw || raw == "") return null;
     return URL.createObjectURL(raw);
+  };
+
+  const onSubmitForm = async (e: any) => {
+    e.preventDefault();
+    //validate input data
+    // for (let key in Object.keys(input)) {
+    //   if (!input[key] || input[key] == "") {
+    //     message.error(`Field ${key} cannot be empty`);
+    //     return;
+    //   }
+    // }
+    const res = await axios
+      .post(`${URL_API_ADMIN}/submit-dapps`, {data: input})
+      .then((res) => console.log("success"))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -693,7 +712,9 @@ const Submit: NextPage = () => {
         </BoxWhiteShadow>
         <br />
         <div className="main-submit-box">
-          <ButtonBlue disabled={notLogin}>Submit your project</ButtonBlue>
+          <ButtonBlue disabled={notLogin} onClick={onSubmitForm}>
+            Submit your project
+          </ButtonBlue>
         </div>
       </section>
       <LoginPopup
