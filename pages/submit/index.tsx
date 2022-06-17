@@ -3,10 +3,22 @@ import {
   BoxALignItemsCenter,
   BoxAlignItemsStart_FlexColumn,
   BoxWhiteShadow,
+  Channel,
 } from "@styles/styled-components/styledBox";
-import { Facebook, PlusCircle, Send, Twitter } from "react-feather";
+import {
+  Facebook,
+  PlusCircle,
+  Send,
+  Twitter,
+  Youtube,
+  Instagram,
+  Linkedin,
+} from "react-feather";
 import { message, Radio, Select, Space } from "antd";
-import { ButtonBlue } from "@styles/styled-components/styledButton";
+import {
+  BigButtonSmallText,
+  ButtonBlue,
+} from "@styles/styled-components/styledButton";
 import { TitleGlobal } from "@components/common/Title";
 import { ChangeEvent, useEffect, useState } from "react";
 import type { NextPage } from "next";
@@ -17,6 +29,8 @@ import * as qs from "qs";
 import useForm from "@utils/hook/useForm";
 import axios from "axios";
 import { URL_API_ADMIN } from "config/index";
+import { Modal } from "antd";
+
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -55,10 +69,55 @@ const Submit: NextPage = () => {
     referralProgram: "",
   });
   const [channelShown, setChannelShown] = useState([
-    { name: "Facebook", icon: <Facebook /> },
-    { name: "Twitter", icon: <Twitter /> },
-    { name: "Telegram", icon: <Send /> },
+    {
+      name: "Facebook",
+      icon: <Facebook />,
+      placeholder: "E.g. https://www.facebook.com/dappverse.com/",
+      shown: true,
+    },
+    {
+      name: "Twitter",
+      icon: <Twitter />,
+      shown: true,
+      placeholder: "Add your product's Twitter URL",
+    },
+    {
+      name: "Telegram",
+      icon: <Send />,
+      shown: true,
+      placeholder: "Add your product's Telegram URL",
+    },
+    {
+      name: "Medium",
+      icon: <Send />,
+      shown: false,
+      placeholder: "Add your product's Medium URL",
+    },
+    {
+      name: "Youtube",
+      icon: <Youtube />,
+      shown: false,
+      placeholder: "Add your product's Youtube URL",
+    },
+    {
+      name: "LinkedIn",
+      icon: <Linkedin />,
+      shown: false,
+      placeholder: "Add your product's Linkedin URL",
+    },
+    {
+      name: "Instagram",
+      icon: <Instagram />,
+      shown: false,
+      placeholder: "Add your product's Instagram URL",
+    },
   ]);
+  const channelNotShown = [
+    { name: "Medium", src: "/img/icons/channel_medium.png", index: 3 },
+    { name: "Youtube", src: "/img/icons/channel_youtube.png", index: 4 },
+    { name: "LinkedIn", src: "/img/icons/channel_in.png", index: 5 },
+    { name: "Instagram", src: "/img/icons/channel_instagram.png", index: 6 },
+  ];
   const [channelPopup, setChannelPopup] = useState<boolean>(false);
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -77,6 +136,32 @@ const Submit: NextPage = () => {
       target: { name: "Socials", value: newSocs },
     });
   };
+
+  const onCloseChannel = () => setChannelPopup(false);
+  const onAddNewChannel = () => {
+    onCloseChannel();
+  };
+  const onClickChannel = (index: any) => {
+    const newState = channelShown;
+    newState[index].shown = true;
+    setChannelShown(newState);
+  };
+
+  const ChannelPopup = () => (
+    <Modal title="Add Channel" visible={channelPopup} onCancel={onCloseChannel}>
+      <div className="main-submit-channel-wrap">
+        {channelNotShown.map((channel, i) => (
+          <Channel
+            src={channel.src}
+            alt={channel.name}
+            key={i}
+            onClick={() => onClickChannel(channel.index)}
+          />
+        ))}
+      </div>
+      <BigButtonSmallText onClick={onAddNewChannel}>Add</BigButtonSmallText>
+    </Modal>
+  );
 
   const onUploadImageToField = (
     e: ChangeEvent<HTMLInputElement>,
@@ -133,7 +218,7 @@ const Submit: NextPage = () => {
     //   }
     // }
     const res = await axios
-      .post(`${URL_API_ADMIN}/submit-dapps`, {data: input})
+      .post(`${URL_API_ADMIN}/submit-dapps`, { data: input })
       .then((res) => console.log("success"))
       .catch((err) => console.log(err));
   };
@@ -617,72 +702,51 @@ const Submit: NextPage = () => {
         </p>
         <BoxWhiteShadow className="px-4 py-5">
           <div className="row">
-            <div className="col-lg-6 col-12">
-              <div className="main-submit-input-suffix">
-                <span className="main-submit-input-suffix-logo">
-                  <Facebook />
-                </span>
-                <input
-                  disabled={notLogin}
-                  type={"text"}
-                  placeholder="E.g. https://www.facebook.com/dappverse.com/"
-                  name="Socials"
-                  value={
-                    input.Socials.filter((soc: any) => soc.name === "Facebook")
-                      .url
-                  }
-                  onChange={(e) => onChangeSocials(e, "Facebook")}
-                />
+            <>
+              {channelShown
+                .filter((channel) => channel.shown)
+                .map((channel, i) => (
+                  <div className={`col-lg-6 col-12 ${i > 1 && "mt-4"}`} key={i}>
+                    <div className="main-submit-input-suffix">
+                      <span className="main-submit-input-suffix-logo">
+                        {channel.icon}
+                      </span>
+                      <input
+                        disabled={notLogin}
+                        type={"text"}
+                        placeholder={channel.placeholder}
+                        name="Socials"
+                        value={
+                          input.Socials.filter(
+                            (soc: any) => soc.name === channel.name
+                          ).url
+                        }
+                        onChange={(e) => onChangeSocials(e, channel.name)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              <div className="col-lg-6 col-12 mt-4">
+                <div
+                  style={{
+                    display: channelShown.every((channel) => channel.shown)
+                      ? "none"
+                      : "flex",
+                  }}
+                  className="main-submit-input-suffix"
+                  onClick={() => setChannelPopup(true)}
+                >
+                  <span className="main-submit-input-suffix-logo">
+                    <PlusCircle />
+                  </span>
+                  <input
+                    disabled={true}
+                    type={"text"}
+                    placeholder="Add channel"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-6 col-12 mt-lg-0 mt-4">
-              <div className="main-submit-input-suffix">
-                <span className="main-submit-input-suffix-logo">
-                  <Twitter />
-                </span>
-                <input
-                  disabled={notLogin}
-                  type={"text"}
-                  placeholder="Add your product's Twitter URL"
-                  name="Socials"
-                  value={
-                    input.Socials.filter((soc: any) => soc.name === "Twitter")
-                      .url
-                  }
-                  onChange={(e) => onChangeSocials(e, "Twitter")}
-                />
-              </div>
-            </div>
-            <div className="col-lg-6 col-12 mt-4">
-              <div className="main-submit-input-suffix">
-                <span className="main-submit-input-suffix-logo">
-                  <Send />
-                </span>
-                <input
-                  disabled={notLogin}
-                  type={"text"}
-                  placeholder="Add your product's Telegram URL"
-                  name="Socials"
-                  value={
-                    input.Socials.filter((soc: any) => soc.name === "Telegram")
-                      .url
-                  }
-                  onChange={(e) => onChangeSocials(e, "Telegram")}
-                />
-              </div>
-            </div>
-            <div className="col-lg-6 col-12 mt-4">
-              <div className="main-submit-input-suffix">
-                <span className="main-submit-input-suffix-logo">
-                  <PlusCircle />
-                </span>
-                <input
-                  disabled={notLogin}
-                  type={"text"}
-                  placeholder="Add channel"
-                />
-              </div>
-            </div>
+            </>
           </div>
         </BoxWhiteShadow>
         <br />
@@ -721,6 +785,7 @@ const Submit: NextPage = () => {
         setVisible={setIsVisible}
         onExit={loginError}
       />
+      <ChannelPopup />
     </>
   );
 };

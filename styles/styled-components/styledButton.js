@@ -129,3 +129,12 @@ export const IconsCircle = styled.span `
     align-items: center;
     justify-content: center;
 `;
+
+export const BigButtonSmallText = styled(ButtonBlue)`
+    background: #058499;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: normal;
+    height: 37px
+`
