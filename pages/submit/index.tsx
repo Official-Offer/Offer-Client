@@ -14,7 +14,7 @@ import {
   Instagram,
   Linkedin,
 } from "react-feather";
-import { message, Radio, Select, Space } from "antd";
+import { message, notification, Radio, Select, Space } from "antd";
 import {
   BigButtonSmallText,
   ButtonBlue,
@@ -30,7 +30,7 @@ import useForm from "@utils/hook/useForm";
 import axios from "axios";
 import { URL_API_ADMIN } from "config/index";
 import { Modal } from "antd";
-
+import validateEmail from "@utils/validateEmail";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -44,8 +44,8 @@ const Submit: NextPage = () => {
       { name: "LinkedIn", url: "", image: null },
       { name: "Instagram", url: "", image: null },
     ],
-    category: 1,
-    dappChain: 1,
+    category: "",
+    dappChain: "",
     detailDescription: "",
     email: "",
     hasToken: false,
@@ -54,20 +54,21 @@ const Submit: NextPage = () => {
     isFullyOnChain: false,
     isOnCoingecko: "",
     projectName: "",
-    reviewArticle: "",
+    reviewArticle: "Don't know",
     shortDescription: "",
     status: "",
     tags: [],
-    thumbnail: "",
+    thumbnail: null,
     tokenChain: "",
     tokenContract: "",
     tokenDecimal: "",
     tokenDescription: "",
-    tokenLogo: "",
+    tokenLogo: null,
     tokenSymbol: "",
     website: "",
     referralProgram: "",
   });
+
   const [channelShown, setChannelShown] = useState([
     {
       name: "Facebook",
@@ -176,7 +177,7 @@ const Submit: NextPage = () => {
     handleChange({
       target: {
         name: field,
-        value,
+        value: null, //chnage null to value
         type: "file",
       },
     });
@@ -191,8 +192,7 @@ const Submit: NextPage = () => {
       value = e.target.files[0];
     }
     const newState: Array<any> = input.images;
-    if (value) newState.push(value);
-    console.log(newState);
+    if (value) newState.push(null); //change null value
     handleChange({
       target: {
         name: "images",
@@ -210,16 +210,30 @@ const Submit: NextPage = () => {
 
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
+    const formData = new FormData();
+    const keys = Object.keys(input);
     //validate input data
-    // for (let key in Object.keys(input)) {
-    //   if (!input[key] || input[key] == "") {
-    //     message.error(`Field ${key} cannot be empty`);
-    //     return;
-    //   }
-    // }
+    let flag = false;
+    for (let i = 0; i < keys.length; i++) {
+      if (input[keys[i]] == "") {
+        message.error(`Field ${keys[i]} cannot be empty`);
+        flag = true;
+      } else if (keys[i] == "email" && !validateEmail(input[keys[i]])) {
+        message.error("Must be an email");
+        flag = true;
+      }
+      formData.append(keys[i], input[keys[i]]);
+    }
+    if (flag) return;
     const res = await axios
-      .post(`${URL_API_ADMIN}/submit-dapps`, { data: input })
-      .then((res) => console.log("success"))
+      .post(`${URL_API_ADMIN}/submit-dapps`, { data: input }) //change {data: input} to formdata
+      .then((res) => {
+        notification.open({
+          message: "Success 🥳",
+          description: "Your Dapp has been successfully submitted! ",
+          duration: 3,
+        });
+      })
       .catch((err) => console.log(err));
   };
 
@@ -265,10 +279,10 @@ const Submit: NextPage = () => {
           <h5 className="mb-3">Are You the Owner/Admin?</h5>
           <Radio.Group
             onChange={handleChange}
-            value={input.isAdminOrOwner}
+            value={input.isOwnerOrAdmin}
             className="mb-4"
             disabled={notLogin}
-            name="isAdminOrOwner"
+            name="isOwnerOrAdmin"
           >
             <Radio value={true}>Yes I’m the admin/owner.</Radio>
             <Radio value={false}>No. I’m just a supporter.</Radio>
@@ -494,7 +508,9 @@ const Submit: NextPage = () => {
             </div>
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
-                <label className="label-input mb-0">Product Status</label>
+                <label className="label-input mb-0">
+                  Product Review Article
+                </label>
                 <span className="ms-lg-4 ms-0 text-green">
                   Suggested E.g.
                   https://www.dappverse-tokenplay.com/article/beginners-guide-for-my-crypto-heroes
@@ -638,9 +654,9 @@ const Submit: NextPage = () => {
                 </span>
               </BoxALignItemsCenter>
               <input
-                value={input.isOnCoinGecko}
+                value={input.isOnCoingecko}
                 onChange={handleChange}
-                name="isOnCoinGecko"
+                name="isOnCoingecko"
                 disabled={notLogin}
                 className="main-submit-global"
                 type={"text"}
@@ -672,15 +688,13 @@ const Submit: NextPage = () => {
           </Radio.Group>
           <div className="row">
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <h5>Product Status</h5>
+              <h5>On which blockchain did you build your on-chain function</h5>
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
                 onChange={(e) =>
                   handleChange({
-                    value: e,
-                    name: "dappChain",
-                    type: "select",
+                    target: { value: e, name: "dappChain", type: "select" },
                   })
                 }
                 value={input.dappChain}
