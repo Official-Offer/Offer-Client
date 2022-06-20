@@ -16,6 +16,12 @@
     .hover-underline:hover {
         // text-decoration: underline;
     }
+    .loadmore{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .table-header,
     .table-body {
         width: 100%;

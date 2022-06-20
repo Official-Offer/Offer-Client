@@ -6,13 +6,13 @@ import {
 } from "@styles/styled-components/styledBox";
 import { URL_API_SSO, URL_NFTs } from "@config/index";
 import { useRouter } from "next/router";
-const LoginPopup = ({ isVisible, setVisible, setUser }) => {
+const LoginPopup = ({ isVisible, setVisible, onExit=()=>{}}) => {
   const loginMethods = [
     { name: "Google", icon: "login_gg_icon.png" },
     { name: "Facebook", icon: "login_fb_icon.png" },
     { name: "Twitter", icon: "login_tw_icon.png" },
   ];
-  const onCancel = () => setVisible(false);
+  const onCancel = () => {setVisible(false);onExit()};
   const pathName = useRouter().pathname;
   const slug = useRouter().query.slug;
   const onLogin = async (meth) => {

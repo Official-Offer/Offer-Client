@@ -5,7 +5,7 @@
     .label-input {
         display: block;
         font-size: 1.2rem;
-        color: $white-color;
+        color: $black-color;
     }
     &-email {
         width: 50%;
@@ -89,5 +89,10 @@
             padding: 0 !important;
             width: 100%;
         }
+    }
+    &-channel-wrap {
+        display: flex;
+        column-gap: 60px;
+        margin: 30px 0 44px 0;
     }
 }
