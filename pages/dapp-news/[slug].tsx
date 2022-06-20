@@ -37,6 +37,13 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const [popularNews, setPopularNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [liked, setLiked] = useState(false);
+  const indexNews = [
+    "/img/1.png",
+    "/img/2.png",
+    "/img/3.png",
+    "/img/4.png",
+    "/img/5.png",
+  ];
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -134,11 +141,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           name="twitter:description"
           content={newsData[0]?.attributes.description}
         />
-        {/* <meta
-          property="twitter:image"
-          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
-        /> */}
-        {/* <meta property="og:url" content={newsData[0]?.attributes.slug}/> */}
       </Head>
       <section className="news-details">
         <div className="empty_space_height50" />
@@ -261,13 +263,17 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                           });
                         }}
                       >
-                        <a target="_blank" rel="noopener noreferrer">
-                          <img
-                            className="mw-100 news-details-right-topic-img"
-                            src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
-                          />
-                          <p className="name">{news.attributes.title}</p>
-                        </a>
+                        <div className ="mt-3">
+                          <a target="_blank" rel="noopener noreferrer">
+                            <span>
+                              <img className="" src={`${indexNews[i]}`} />
+                            </span>
+                            &nbsp;&nbsp;
+                            <span className="name">
+                              {news.attributes.title}
+                            </span>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   );

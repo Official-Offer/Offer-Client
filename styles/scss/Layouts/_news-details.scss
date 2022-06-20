@@ -276,6 +276,7 @@
       background-color: #fcfcfd;
       position: sticky;
       top: 450px;
+    //   width: 100%;
       margin-top: 30px;
       @media only screen and (min-width: 600px) {
         top: 250px;
@@ -336,6 +337,7 @@
   }
   &-right {
     &-banner {
+        width: 100%;
       // height: 80px;
       // width: 80px;
       // height

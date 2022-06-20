@@ -50,7 +50,7 @@ export default function BannerSlides({}) {
           return (
             <SwiperSlide key={i}>
               <img
-                className="main-homepage-dappnews-card-header-img"
+                className="main-homepage-dappnews-card-header-banner"
                 src={`${URL_API_IMG}${banner.attributes.Image?.data.attributes.url}`}
                 alt=""
               />

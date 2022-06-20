@@ -15,11 +15,9 @@ import {
   ToggleMain_Sub,
 } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
-import dynamic from "next/dynamic";
 import NewsList from "@components/main/dapp-news/NewsList";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 import LatestNews from "@components/main/dapp-news/LatestNews";
-import Marquee from "react-fast-marquee";
 import RunningPrice from "@components/main/dapp-news/RunningPrice";
 
 const DappNews: FC = () => {
