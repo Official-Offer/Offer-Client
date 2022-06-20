@@ -44,9 +44,9 @@ export const NavMain = styled.div `
     width: auto;
     .active {
         padding: 5px 15px;
-        border: 2px solid #058499;
+        background-color: #058499;
         font-weight: 600;
-        color: #058499;
+        color: #FFF;
         box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.75);
     }
 `;
@@ -67,7 +67,7 @@ export const Nav_Sub = styled.a `
     margin: 8px;
     padding: 5px 10px;
     &:hover {
-        color: #058499;
+        // color: #058499;
     }
 `;
 
