@@ -14,7 +14,7 @@ const SharingSection = ({ newsUpdate }: any) => {
   }, [newsUpdate])
   // console.log(news);
   return (
-    <BoxWhiteShadow className="news-details-social">
+    <div className="news-details-social">
       <h4 className="p-2">Share this article</h4>
       <div className="news-details-social">
         <div className="news-details-social-icons">
@@ -62,7 +62,7 @@ const SharingSection = ({ newsUpdate }: any) => {
         </div>
         <br />
       </div>
-    </BoxWhiteShadow>
+    </div>
   );
 };
 

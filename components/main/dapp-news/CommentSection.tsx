@@ -53,7 +53,7 @@ const CommentSection = ({ news }: any) => {
   }, [comments, viewMore]);
 
   return (
-    <BoxWhiteShadow>
+    <div>
       <BoxALignCenter_Justify_ItemsBetween className="p-4">
         <h3>COMMENTS</h3>
         <ButtonBlue>
@@ -140,7 +140,7 @@ const CommentSection = ({ news }: any) => {
         <br />
         <br />
       </div>
-    </BoxWhiteShadow>
+    </div>
   );
 };
 export default CommentSection;

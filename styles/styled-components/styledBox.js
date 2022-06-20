@@ -68,7 +68,7 @@ export const BoxBlueBold = styled.div `
   border-radius: 10px;
 `;
 export const BoxWhiteShadow = styled.div `
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;
