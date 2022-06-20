@@ -20,17 +20,17 @@ import { Avatar } from "antd";
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
     () => import("@components/main/dapp-news/CommentSection")
-  );
+  ) as any;
   const SharingSection = dynamic(
     () => import("@components/main/dapp-news/SharingSection")
-  );
-  const NewsList = dynamic(() => import("@components/main/dapp-news/NewsList"));
+  ) as any;
+  const NewsList = dynamic(() => import("@components/main/dapp-news/NewsList")) as any;
   const PinnedSlides = dynamic(
     () => import("@components/main/dapp-news/PinnedSlides")
-  );
+  ) as any;
   const BannerSlides = dynamic(
     () => import("@components/main/dapp-news/BannerSlides")
-  );
+  ) as any;
 
   const [news, setNews] = useState<any>([]);
   const [styledContent, setStyledContent] = useState("");

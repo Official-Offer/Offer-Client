@@ -166,3 +166,14 @@ export const SocialLoginBox = styled.button`
   margin-bottom: 13px;
   font-size: 16px;
 `
+
+export const Channel = styled.img`
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  cursor: pointer;
+  :focus {
+    background-color: gray;
+    padding: 5px gray;
+  }
+`

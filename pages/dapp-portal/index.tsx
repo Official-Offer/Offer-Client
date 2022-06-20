@@ -4,24 +4,29 @@ import dynamic from "next/dynamic";
 import qs from "qs";
 import { useEffect, useState } from "react";
 import request from "@services/apiService";
+import {
+  BorderedButtonTransparent,
+  ButtonBlue,
+  ButtonBorderBlueTransparent,
+} from "@styles/styled-components/styledButton";
 
 const DappPortal: NextPage = () => {
   const TabsChain = dynamic(
     () => import("@components/main/dapp-portal/TabsChain")
-  );
+  ) as any;
   const TabsCategory = dynamic(
     () => import("@components/main/dapp-portal/TabsCategory")
-  );
+  ) as any;
   const TableDapp = dynamic(
     () => import("@components/main/dapp-portal/TableDapp")
-  );
+  ) as any;
 
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");
   const [cate, setCate] = useState("All");
   const [viewMore, setNumberViewMore] = useState(8);
   const [sort, setSort] = useState(["socialSignal", "desc"]);
-
+  const loadMore = () => setNumberViewMore(viewMore + 10);
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -40,8 +45,8 @@ const DappPortal: NextPage = () => {
             category: {
               id: {
                 $eq: cate === "All" ? undefined : cate,
-              }
-            }
+              },
+            },
           },
           sort: [`${sort[0]}:${sort[1]}`],
         },
@@ -70,11 +75,14 @@ const DappPortal: NextPage = () => {
           <h1 className="mb-0">Dapp Portal</h1>
         </TitleGlobal>
         <br />
-        <TabsChain setChain={setChain} chain={chain}/>
+        <TabsChain setChain={setChain} chain={chain} />
         <br />
-        <TabsCategory setCate={setCate} cate={cate}/>
+        <TabsCategory setCate={setCate} cate={cate} />
         <br />
-        <TableDapp tokenList={tokenList} sort={sort} setSort={setSort}/>
+        <TableDapp tokenList={tokenList} sort={sort} setSort={setSort} />
+        <div className="loadmore">
+          <BorderedButtonTransparent onClick={loadMore}>Load more</BorderedButtonTransparent>
+        </div>
       </section>
     </>
   );

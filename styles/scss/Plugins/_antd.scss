@@ -101,10 +101,10 @@
         box-shadow: none !important;
     }
     .ant-select-selection-item {
-        color: $white-color;
+        color: $black-color;
     }
     .ant-select-arrow {
-        color: $white-color;
+        color: $black-color;
     }
     .ant-select-multiple {
         .ant-select-selection-item-content {
@@ -119,6 +119,7 @@
     }
 }
 .ant-select-item-option-content {
+    color: $black-color;
     .dot {
         width: 10px;
         height: 10px;
@@ -210,6 +211,9 @@
 .ant-modal-close, .ant-modal-header {
     border-radius: 16px;
 }
+.ant-modal-body {
+    gap: 20px;
+}
 .ant-modal-title {
     font-family: 'Circular Std';
     font-style: normal;
@@ -221,6 +225,7 @@
     color: #223052;
     margin-top: 17px;
 }
+
 .ant-modal-close {
     margin-top: 16px;
 }

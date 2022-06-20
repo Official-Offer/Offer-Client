@@ -16,10 +16,10 @@ export default function LayoutGlobal(props: any): ReactElement {
   // const FooterHome = dynamic(() => import("./FooterHome"));
   const NavbarHome = dynamic(() =>
     import("../navbar").then((mod: any) => mod.NavbarHome)
-  );
+  ) as any;
   const FooterHome = dynamic(() =>
     import("../footer").then((mod: any) => mod.FooterHome)
-  );
+  ) as any;
   const router = useRouter();
   const route = router.asPath.split("/");
   const isDappNews = route[1].slice(0, 9) == "dapp-news";

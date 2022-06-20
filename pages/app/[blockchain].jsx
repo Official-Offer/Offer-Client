@@ -21,7 +21,7 @@ import {
 import { File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
-import { Avatar, Rate } from "antd";
+import { Avatar, notification, Rate, Switch } from "antd";
 // import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -31,6 +31,10 @@ import requestDapp from "@services/apiDapp";
 import { useEffect, useState } from "react";
 import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
+import { updown } from "@utils/numberDecorator";
+import moment from "moment";
+import { Modal } from "antd";
+import useForm from "@utils/hook/useForm";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -47,6 +51,65 @@ const BlockchainDetails = () => {
   const [slug, setSlug] = useState("leonicorn-swap");
   const [stat, setStat] = useState(null);
   const [day, setDay] = useState(7);
+  const [showPrice, setShowPrice] = useState(true);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [review, setReview] = useState({
+    star: 0,
+    comment: "",
+  });
+  const [reviews, setReviews] = useState([{ cur: {}, children: {} }]);
+  const [reviewParent, setReviewParent] = useState(null);
+  const [pagination, setPagination] = useState(3);
+  const [justCommented, setJustCommented] = useState(true);
+  const [showSubcomment, setShowSubcomment] = useState(new Set());
+  const viewSubcomment = (id) => {
+    const newState = showSubcomment;
+    if (newState.has(id)) newState.delete(id);
+    else newState.add(id);
+    setShowSubcomment(newState);
+  };
+  const viewMore = () => setPagination(pagination + 3);
+  const openParentlessReview = () => {
+    setReviewParent(null);
+    setShowReviewPopup(true);
+  };
+  const openChildReview = (id) => {
+    setReviewParent(id);
+    setShowReviewPopup(true);
+  };
+  const onChangeStar = (num) => setReview({ ...review, star: num });
+  const onChangeComment = (e) =>
+    setReview({ ...review, comment: e.target.value });
+  const onSubmitReview = async (e) => {
+    e.preventDefault();
+    const data = reviewParent
+      ? {
+          data: {
+            comment: review.comment,
+            rating: review.star,
+            dapp: parseInt(id),
+            parent: parseInt(reviewParent),
+          },
+        }
+      : {
+          data: {
+            comment: review.comment,
+            rating: review.star,
+            dapp: parseInt(id),
+          },
+        };
+
+    await requestDapp.post(`/dapp/comments`, data).then(() => {
+      setShowReviewPopup(false);
+      notification.open({
+        message: "Success 🥳",
+        description: "Your comment has successfully submitted. ",
+        duration: 3,
+      });
+    });
+    setJustCommented(!justCommented);
+  };
+  useEffect(() => console.log(reviews), [reviews]);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -80,6 +143,70 @@ const BlockchainDetails = () => {
       });
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: ["user", "replies", "replies.user"],
+          pagination: {
+            page: 1,
+            pageSize: pagination,
+          },
+          filters: {
+            dapp: {
+              id: {
+                $eq: id, //id
+              },
+            },
+            parent: {
+              id: {
+                $null: true,
+              },
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await request
+        .get(`/reviews?${query}`)
+        .then((res) => setReviews(res.data.data));
+    })();
+  }, [pagination, justCommented]);
+
+  const ReviewPopUp = (
+    <Modal
+      className="blockchain-details-reivew"
+      title="Write a Reivew"
+      visible={showReviewPopup}
+      onCancel={(e) => {
+        setShowReviewPopup(false);
+      }}
+    >
+      <form onSubmit={onSubmitReview}>
+        <p className="blockchain-details-review-star">
+          How would you rate this dapp?
+        </p>
+        <Rate
+          allowHalf
+          defaultValue={0}
+          value={review.star}
+          onChange={(num) => setReview({ ...review, star: num })}
+        />
+        <p className="blockchain-details-review-star">
+          What would you like to share with us?
+        </p>
+        <textarea
+          className="blockchain-details-review-comment"
+          placeholder="Write your comment..."
+          value={review.comment}
+          onChange={(e) => setReview({ ...review, comment: e.target.value })}
+        ></textarea>
+        <ButtonBlue type="submit">Submit</ButtonBlue>
+      </form>
+    </Modal>
+  );
 
   return (
     <section className="blockchain-details">
@@ -140,7 +267,7 @@ const BlockchainDetails = () => {
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (
               <BoxBlueBorderRounded className="py-2 px-3 me-3" key={i}>
-                <span>{tag.name}</span>
+                <span>{tag.attributes.name}</span>
               </BoxBlueBorderRounded>
             ))}
           </BoxALignItemsCenter>
@@ -284,6 +411,14 @@ const BlockchainDetails = () => {
               <AppStatistical day={stat?.days} data={dapp} />
               <br />
               <div className="row mt-5">
+                <div className="blockchain-details-price">
+                  <Switch
+                    defaultChecked
+                    className="blockchain-details-price-switch"
+                    onChange={() => setShowPrice(!showPrice)}
+                  ></Switch>
+                  Show Price Comparison on Chart
+                </div>
                 {stat?.stats.components.map((comp, i) => {
                   return (
                     <div
@@ -291,9 +426,17 @@ const BlockchainDetails = () => {
                       key={i}
                     >
                       <h5 className="mb-0">{comp.name}</h5>
-                      <SplineChart data={comp} />
+                      <SplineChart
+                        data={comp}
+                        price={stat?.stats.token.chart}
+                        showPrice={showPrice}
+                      />
                       <BoxALignItemsStart>
-                        <div className="dot" />
+                        <div
+                          className={
+                            comp.name == "Social Signal" ? "dot" : "dot-yellow"
+                          }
+                        />
                         <div className="ms-2">
                           <p className="title">{comp.name}</p>
                           <div className="exp-item">
@@ -308,13 +451,23 @@ const BlockchainDetails = () => {
                             <div className="exp-item">
                               <span className="name">Total: </span>
                               <span className="value">{comp.data.total}</span>
-                              <span className="time">{comp.data.total_days} (days)</span>
+                              <span className="time">
+                                {comp.data.total_days} (days)
+                              </span>
                             </div>
                           )}
                           <div className="exp-item">
                             <span className="name">ATH: </span>
-                            <span className="value">{comp.data.all_time_high}</span>
-                            <span className="time">({moment(comp.data.all_time_high_date).format('LL')})</span>
+                            <span className="value">
+                              {comp.data.all_time_high}
+                            </span>
+                            <span className="time">
+                              (
+                              {moment(comp.data.all_time_high_date).format(
+                                "LL"
+                              )}
+                              )
+                            </span>
                           </div>
                         </div>
                       </BoxALignItemsStart>
@@ -330,7 +483,14 @@ const BlockchainDetails = () => {
                       Submit Your Request To Us
                     </p>
                     <div className="mt-auto">
-                      <ButtonBlue className="fw-bold">Submit</ButtonBlue>
+                      <ButtonBlue
+                        className="fw-bold"
+                        onClick={() => {
+                          router.push("/submit");
+                        }}
+                      >
+                        Submit
+                      </ButtonBlue>
                     </div>
                   </div>
                 </div>
@@ -369,7 +529,7 @@ const BlockchainDetails = () => {
             <span className="ms-4">5 Ratings</span>
           </BoxALignItemsCenter>
           <BoxWhiteShadow className="p-4 blockchain-details-comment">
-            {[0, 1, 2, 3].map((comment, i) => {
+            {reviews.map((comment, i) => {
               return (
                 <div className="blockchain-details-comment-box" key={i}>
                   <BoxALignCenter_Justify_ItemsBetween className="mb-4">
@@ -379,39 +539,135 @@ const BlockchainDetails = () => {
                         icon={<UserOutlined />}
                       />
                       <span className="blockchain-details-comment-box-name">
-                        Joseph Reyes
+                        {comment.attributes?.user.data?.attributes.username}
                       </span>
-                      <Rate allowHalf defaultValue={2.5} />
+                      <Rate
+                        allowHalf
+                        defaultValue={comment.attributes?.rating}
+                      />
                     </BoxALignItemsCenter>
                     <span className="blockchain-details-comment-box-time">
-                      Mar 17 , 2021
+                      {moment(comment.attributes?.createdAt).format("LL")}
                     </span>
                   </BoxALignCenter_Justify_ItemsBetween>
                   <p className="blockchain-details-comment-box-description">
-                    {`Don't buy into this scam, I've only lost $100 thankfully. Withdraw button doesn't work. Consider yourself warned.`}
+                    {comment.attributes?.comment}
                   </p>
                   <div>
                     <Button>
                       <BoxALignItemsCenter>
                         <MessageSquare color="#1DBBBD" />
-                        <span className="ms-2 text-green">Comment</span>
+                        <span
+                          className="ms-2 text-green"
+                          onClick={() => openChildReview(comment.id)}
+                        >
+                          Comment
+                        </span>
                       </BoxALignItemsCenter>
                     </Button>
                   </div>
+                  {comment.attributes?.replies.data?.length > 0 && (
+                    <div className="blockchain-details-viewmore">
+                      {showSubcomment.has(i) ? (
+                        <div className="blockchain-details-subcomment-section">
+                          {comment.attributes?.replies.data.map((reply, ri) => (
+                            <div
+                              className="blockchain-details-subcomment-box"
+                              key={ri}
+                            >
+                              <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                                <BoxALignItemsCenter>
+                                  <Avatar
+                                    style={{ backgroundColor: "#1DBBBD" }}
+                                    icon={<UserOutlined />}
+                                  />
+                                  <span className="blockchain-details-comment-box-name">
+                                    {
+                                      reply.attributes.user.data.attributes
+                                        .username
+                                    }
+                                  </span>
+                                </BoxALignItemsCenter>
+                                <span className="blockchain-details-comment-box-time">
+                                  {moment(reply.attributes.createdAt).format(
+                                    "LL"
+                                  )}
+                                </span>
+                              </BoxALignCenter_Justify_ItemsBetween>
+                              <p className="blockchain-details-comment-box-description">
+                                {reply.attributes.comment}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <Button>
+                          <BoxALignItemsCenter>
+                            <span
+                              className="text-green"
+                              onClick={() => {
+                                viewSubcomment(i);
+                                console.log(showSubcomment);
+                              }}
+                            >
+                              View {comment.attributes?.replies.data?.length}{" "}
+                              Comments
+                              <img
+                                src="/img/icons/chevrons-up.png"
+                                className="blockchain-details-chevron"
+                              />
+                            </span>
+                          </BoxALignItemsCenter>
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}
-            <ButtonBorderBlueTransparent className="w-100 rounded-pill py-2">
+            <ButtonBorderBlueTransparent
+              className="w-100 rounded-pill py-2"
+              onClick={viewMore}
+              style={{ cursor: "pointer" }}
+            >
               View more
             </ButtonBorderBlueTransparent>
             <br />
             <br />
             <div>
-              <Button className="text-green">Rating and Reviews</Button>
+              <Button className="text-green" onClick={openParentlessReview}>
+                Rating and Reviews
+              </Button>
             </div>
           </BoxWhiteShadow>
         </div>
       </div>
+      <Modal
+        className="blockchain-details-reivew"
+        title="Write a Reivew"
+        visible={showReviewPopup}
+        onCancel={(e) => {
+          setShowReviewPopup(false);
+        }}
+      >
+        <form onSubmit={onSubmitReview}>
+          <p className="blockchain-details-review-star">
+            How would you rate this dapp?
+          </p>
+          <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
+          <p className="blockchain-details-review-star">
+            What would you like to share with us?
+          </p>
+          <textarea
+            className="blockchain-details-review-comment"
+            placeholder="Write your comment..."
+            value={review.comment}
+            onChange={onChangeComment}
+            name="comment"
+          ></textarea>
+          <ButtonBlue type="submit">Submit</ButtonBlue>
+        </form>
+      </Modal>
     </section>
   );
 };

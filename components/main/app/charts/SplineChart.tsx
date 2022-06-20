@@ -1,15 +1,45 @@
 import { FC } from "react";
 import dynamic from "next/dynamic";
+import moment from "moment";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }) as any;
 
-export const SplineChart: FC = ({ data }: any) => {
-  const series = [
-    {
-      name: data?.name,
-      data: [31, 40, 71, 50],
-    },
-  ];
+export const SplineChart: FC = ({ data, price, showPrice }: any) => {
+  const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
+  const labels = data.data.charts.labels;
+  const datasets = data.data.charts.datasets[data.name];
+  const processPrice = (labels: any, price: any) => {
+    const first = new Date(labels[0]);
+    const last = new Date(labels[labels.length - 1]);
+    const res: Array<any> = price.prices.filter((p: any, i: number) => {
+      const priceDate = new Date(price.labels[i]);
+      return priceDate >= first && priceDate <= last;
+    });
+    const emptyDate = labels.length - res.length;
+    const lastPrice = res[res.length - 1];
+    for (let i = 0; i < emptyDate; i++) {
+      // incase of no data for that date, use the latest date's price
+      res.push(lastPrice);
+    }
+    return res;
+  };
+  const series = showPrice
+    ? [
+        {
+          name: data?.name,
+          data: datasets,
+        },
+        {
+          name: "Price",
+          data: processPrice(labels, price),
+        },
+      ]
+    : [
+        {
+          name: data?.name,
+          data: datasets,
+        },
+      ];
 
   const options: any = {
     series: series,
@@ -32,34 +62,76 @@ export const SplineChart: FC = ({ data }: any) => {
       },
     },
     stroke: {
-      curve: "smooth",
-      width: 2,
+      curve: ["straight", "smooth"],
+      width: [2, 2],
     },
     xaxis: {
       type: "datetime",
-      categories: [
-        "2018-09-19T00:00:00.000Z",
-        "2018-09-22T00:00:00.000Z",
-        "2018-09-23T00:00:00.000Z",
-        "2018-09-27T01:30:00.000Z",
-      ],
+      categories: labels,
       labels: {
         style: {
           colors: "#7d7d7d",
         },
       },
     },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#7652FF",
-        },
-      },
-    },
+    yaxis: showPrice
+      ? [
+          {
+            axisBorder: {
+              show: true,
+              color: color,
+            },
+            labels: {
+              style: {
+                colors: color,
+              },
+            },
+            title: {
+              style: {
+                color: color,
+              },
+            },
+          },
+          {
+            opposite: true,
+            axisBorder: {
+              show: true,
+              color: "black",
+            },
+            labels: {
+              style: {
+                colors: "black",
+              },
+            },
+            title: {
+              style: {
+                color: "black",
+              },
+            },
+          },
+        ]
+      : [
+          {
+            axisBorder: {
+              show: true,
+              color: color,
+            },
+            labels: {
+              style: {
+                colors: color,
+              },
+            },
+            title: {
+              style: {
+                color: color,
+              },
+            },
+          },
+        ],
     tooltip: {
       theme: "dark",
     },
-    colors: ["#7652FF"],
+    colors: [color, "#223052"],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
