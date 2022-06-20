@@ -197,9 +197,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                    onClick={() => {
+                      router.push("/submit");
+                    }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp

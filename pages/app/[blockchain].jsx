@@ -483,7 +483,14 @@ const BlockchainDetails = () => {
                       Submit Your Request To Us
                     </p>
                     <div className="mt-auto">
-                      <ButtonBlue className="fw-bold">Submit</ButtonBlue>
+                      <ButtonBlue
+                        className="fw-bold"
+                        onClick={() => {
+                          router.push("/submit");
+                        }}
+                      >
+                        Submit
+                      </ButtonBlue>
                     </div>
                   </div>
                 </div>
