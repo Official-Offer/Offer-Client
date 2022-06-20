@@ -13,13 +13,13 @@ import {
 const DappPortal: NextPage = () => {
   const TabsChain = dynamic(
     () => import("@components/main/dapp-portal/TabsChain")
-  );
+  ) as any;
   const TabsCategory = dynamic(
     () => import("@components/main/dapp-portal/TabsCategory")
-  );
+  ) as any;
   const TableDapp = dynamic(
     () => import("@components/main/dapp-portal/TableDapp")
-  );
+  ) as any;
 
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");

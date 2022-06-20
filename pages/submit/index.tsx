@@ -152,7 +152,7 @@ const Submit: NextPage = () => {
     <Modal title="Add Channel" visible={channelPopup} onCancel={onCloseChannel}>
       <div className="main-submit-channel-wrap">
         {channelNotShown.map((channel, i) => (
-          <Channel
+          <Channel 
             src={channel.src}
             alt={channel.name}
             key={i}
@@ -307,7 +307,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-2 col-12">
               <div className="main-submit-avatar">
                 {rawImgToBase64(input.thumbnail) ? (
-                  <img src={rawImgToBase64(input.thumbnail)} />
+                  <img src={`${rawImgToBase64(input.thumbnail)}`} alt="" />
                 ) : (
                   <>
                     {" "}

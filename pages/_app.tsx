@@ -8,8 +8,7 @@ import store from "@redux/store";
 import "bootstrap/dist/css/bootstrap.css";
 import "@styles/globals.scss";
 import * as ga from '../utils/ga';
-// import HelmetMetaData from "@components/main/dapp-news/HelmetData";
-// import { Helmet } from "react-helmet";
+
 TopBarProgress.config({
   barColors: {
     "0": "#1DBBBD",
@@ -18,7 +17,7 @@ TopBarProgress.config({
   shadowBlur: 5,
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: any) {
   const [progress, setProgress] = useState(false);
   const router = useRouter();
   useEffect(() => {

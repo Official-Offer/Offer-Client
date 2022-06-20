@@ -2,7 +2,7 @@ import { FC } from "react";
 import dynamic from "next/dynamic";
 import moment from "moment";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }) as any;
 
 export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
@@ -11,7 +11,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
-    const res: Array<any> = price.prices.filter((p, i) => {
+    const res: Array<any> = price.prices.filter((p: any, i: number) => {
       const priceDate = new Date(price.labels[i]);
       return priceDate >= first && priceDate <= last;
     });
