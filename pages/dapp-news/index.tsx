@@ -19,6 +19,8 @@ import dynamic from "next/dynamic";
 import NewsList from "@components/main/dapp-news/NewsList";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 import LatestNews from "@components/main/dapp-news/LatestNews";
+import Marquee from "react-fast-marquee";
+import RunningPrice from "@components/main/dapp-news/RunningPrice";
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -125,11 +127,16 @@ const DappNews: FC = () => {
       <h2 className="text-center mb-5">Dapp News</h2>
       <div className="row">
         <div className="main-homepage-dappnews-pinnedSection-left">
-          <PinnedSlides crit={'createdAt'}/>
+          <PinnedSlides crit={"createdAt"} />
         </div>
         <div className="main-homepage-dappnews-pinnedSection-right ">
-          <LatestNews/>
+          <LatestNews />
         </div>
+      </div>
+      <div style = {{marginTop: '30px', border: 'solid', padding: '20px'}}>
+        <RunningPrice direction={"right"} />
+        <hr />
+        <RunningPrice direction={"left"} />
       </div>
       <div className="block-for-mobile">
         <div className="bar-category">
@@ -156,9 +163,7 @@ const DappNews: FC = () => {
                 <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
                     onClick={() => onChangeTab(cat.attributes.name)}
-                    className={`${
-                      activeIndex === i ? "active" : ""
-                    }`}
+                    className={`${activeIndex === i ? "active" : ""}`}
                   >
                     {cat.attributes.name}
                   </Nav_Sub>
@@ -167,7 +172,7 @@ const DappNews: FC = () => {
             })}
           </NavMain>
         </div>
-        <BoxALignItemsCenter >
+        <BoxALignItemsCenter>
           <ToggleMain className="bar-category-right">
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
