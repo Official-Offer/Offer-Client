@@ -123,14 +123,14 @@ const DappNews: FC = () => {
   return (
     <section className="main-homepage-dappnews px-lg-3">
       <h2 className="text-center mb-5">Dapp News</h2>
-      <BoxWhiteShadow className="row">
-        <div className="fontSize_08 main-homepage-dappnews-pinnedSection-left">
+      <div className="row">
+        <div className="main-homepage-dappnews-pinnedSection-left">
           <PinnedSlides crit={'createdAt'}/>
         </div>
         <div className="main-homepage-dappnews-pinnedSection-right ">
           <LatestNews/>
         </div>
-      </BoxWhiteShadow>
+      </div>
       <div className="block-for-mobile">
         <div className="bar-category">
           <Select
