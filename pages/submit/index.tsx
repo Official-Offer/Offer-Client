@@ -122,7 +122,7 @@ const Submit: NextPage = () => {
   const [channelPopup, setChannelPopup] = useState<boolean>(false);
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
+  const [error, setError] = useState<any>();
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
   };
@@ -220,9 +220,11 @@ const Submit: NextPage = () => {
     for (let i = 0; i < keys.length; i++) {
       if (input[keys[i]] == "") {
         message.error(`Field ${keys[i]} cannot be empty`);
+        setError(keys[i]);
         flag = true;
       } else if (keys[i] == "email" && !validateEmail(input[keys[i]])) {
         message.error("Must be an email");
+        setError(keys[i]);
         flag = true;
       }
       if (flag) return;
@@ -291,10 +293,8 @@ const Submit: NextPage = () => {
           of other users, and unlock more functions on Dapp.com.
         </p>
         <br />
-        <Form onFinish={onSubmitForm} scrollToFirstError>
           <BoxWhiteShadow className="px-4 py-5">
             <h5 className="mb-3">Are You the Owner/Admin?</h5>
-            <Form.Item rules={[{ required: true }]}>
               <Radio.Group
                 onChange={handleChange}
                 value={input.isOwnerOrAdmin}
@@ -305,10 +305,8 @@ const Submit: NextPage = () => {
                 <Radio value={true}>Yes I’m the admin/owner.</Radio>
                 <Radio value={false}>No. I’m just a supporter.</Radio>
               </Radio.Group>
-            </Form.Item>
             <div>
               <label className="label-input mb-3">Your Email Address</label>
-              <Form.Item>
                 <input
                   className="main-submit-email"
                   type={"email"}
@@ -318,7 +316,6 @@ const Submit: NextPage = () => {
                   onChange={handleChange}
                   name="email"
                 />
-              </Form.Item>
             </div>
           </BoxWhiteShadow>
           <br />
@@ -815,7 +812,6 @@ const Submit: NextPage = () => {
               </Space>
             </Radio.Group>
           </BoxWhiteShadow>
-        </Form>
         <br />
         <div className="main-submit-box">
           <ButtonBlue disabled={notLogin} onClick={onSubmitForm}>
