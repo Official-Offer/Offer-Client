@@ -125,6 +125,10 @@
                     margin-left: 10px;
                 }
                 @include sm {
+                    .dapp-name {
+                        font-size: 13px;
+                        white-space: initial;
+                    }
                     .dapp-logo {
                         width: 38px;
                         height: 30px;

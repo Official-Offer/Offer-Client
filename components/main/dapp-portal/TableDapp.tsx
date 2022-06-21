@@ -5,6 +5,7 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import {
+  BoxALignCenter_Justify_ItemsBetween,
   BoxALignCenter_Justify_ItemsEnd,
   BoxALignItemsCenter,
   BoxWhiteShadow,
@@ -84,6 +85,13 @@ export default function TableDapp({
   ];
   const activeItem = (sort: string, query: string) => {
     setSort([query, sort]);
+  };
+  const [headerMobile, setHeaderMobile] = useState(
+    listTitleHeaderMobile[0].title
+  );
+  const onMobileChangeHeader = (e: any) => {
+    setHeaderMobile(e);
+    console.log(e);
   };
   return (
     <>
@@ -339,6 +347,7 @@ export default function TableDapp({
               <Select
                 defaultValue={`${listTitleHeaderMobile[0].title}`}
                 style={{ width: "70%" }}
+                onChange={onMobileChangeHeader}
               >
                 {listTitleHeaderMobile.map((header, i) => {
                   return (
@@ -359,28 +368,41 @@ export default function TableDapp({
             </div>
           </div>
         </div>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e, i) => {
+        {tokenList.map((e: any, i: number) => {
+          const selectedKey = listTitleHeaderMobile.filter(
+            (someshit) => someshit.title === headerMobile
+          )[0].query;
+          const số_trên: string = formatter.format(e.attributes[selectedKey]);
+          const số_dưới: number = e.attributes[`${selectedKey}Diff`];
+          const tăng_giảm: string = số_dưới < 0 ? "decrease" : "increase";
           return (
             <div className="table-body" key={i}>
               <div className="table-body-item table-body-item-number">
-                <img src="/img/icons/tag-ad.png" alt="" />
-                <span>2</span>
+                <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
+                <span>{i + 1}</span>
               </div>
               <div className="table-body-item table-body-item-name">
                 <div className="row m-0 p-0">
                   <div className="col-5">
-                    <BoxALignItemsCenter className="h-100">
-                      <img className="dapp-logo" src="/img/logo.png" alt="" />
-                      <p>TOKENPLAY</p>
-                    </BoxALignItemsCenter>
+                    <BoxALignCenter_Justify_ItemsBetween className="h-100">
+                      <img
+                        className="dapp-logo"
+                        src={e.attributes.crawl.icon}
+                        alt={""}
+                      />
+                      <p className="dapp-name">{e.attributes.crawl.name}</p>
+                    </BoxALignCenter_Justify_ItemsBetween>
                   </div>
                   <div className="col-5">
                     <div className="w-100">
                       <div className="table-body-item-user-number text-end">
-                        <p>0</p>
+                        <p>{số_trên}</p>
                       </div>
                       <div className="table-body-item-user-decrease text-end">
-                        <p>-100.00% ↓</p>
+                        <p>
+                          {(số_dưới * 100).toFixed(2)}%{" "}
+                          {tăng_giảm === "increase" ? "↑" : "↓"}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -389,14 +411,27 @@ export default function TableDapp({
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
                           className="blockchain-logo"
-                          src="/img/coin/bnb-white.png"
-                          alt=""
+                          src={
+                            i < 2
+                              ? e.attributes.crawl.chains[0].color_icon
+                              : e.attributes.chain.data?.attributes.crawl
+                                  .color_icon
+                          }
+                          alt={
+                            i < 2
+                              ? e.attributes.crawl.chains[0].slug
+                              : e.attributes.chain.data?.attributes.crawl.slug
+                          }
                         />
                       </BoxALignCenter_Justify_ItemsEnd>
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
                           className="blockchain-logo"
-                          src="/img/icons/icn-gambling.png"
+                          src={
+                            i < 2
+                              ? e.attributes.crawl.category.icon
+                              : e.attributes.category.data.attributes.crawl.icon
+                          }
                           alt=""
                         />
                       </BoxALignCenter_Justify_ItemsEnd>
