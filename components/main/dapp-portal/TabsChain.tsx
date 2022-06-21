@@ -106,7 +106,6 @@ export default function TabsChain({
         <BoxALignCenter_Justify_ItemsBetween className="w-100">
           <Select
             defaultValue={chain}
-            // value={chainName}
             style={{ width: "45%" }}
             onChange={onChangeChainMobile}
           >
@@ -124,7 +123,6 @@ export default function TabsChain({
           </Select>
           <Select
             className="ms-2"
-            // value={cateName}
             defaultValue={cate}
             style={{ width: "45%" }}
             onChange={onChangeCateMobile}

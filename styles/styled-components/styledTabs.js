@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TabMain = styled.div `
-    background-color: transparent;
+    background-color: white;
     border-radius: 8px;
     display: inline-flex;
     border: 2px solid #058499;
@@ -17,12 +17,12 @@ export const TabMain = styled.div `
     }
 `;
 export const TabMain_Sub = styled.a `
-    color: #A1A1A1;
+    color: black;
     align-items: center;
     border-radius: 6px;
     display: inline-flex;
     font-family: inherit;
-    font-size: 11px;
+    font-size: 10px;
     -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
@@ -30,8 +30,8 @@ export const TabMain_Sub = styled.a `
     opacity: 1;
     outline: 0;
     transition: 0.25s;
-    height: 37px;
-    padding: 0px 10px;
+    height: 30px;
+    padding: 0px 7px;
     &:hover {
         color: #058499;
     }

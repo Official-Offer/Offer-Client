@@ -101,11 +101,11 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
         <BoxALignCenter_Justify_ItemsBetween className="w-100">
           <TabMain>
             <span className="d-inline-flex position-relative">
-              <Link
+              {/* <Link
                 href={`/?time=${
                   !router.query.time ? "0" : router.query.time
                 }&type=0`}
-              >
+              > */}
                 <TabMain_Sub
                   className={
                     !router.query.type || router.query.type === "0"
@@ -115,7 +115,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
                 >
                   All
                 </TabMain_Sub>
-              </Link>
+              {/* </Link> */}
             </span>
             <span className="d-inline-flex position-relative">
               <Link

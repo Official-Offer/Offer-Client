@@ -155,6 +155,9 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 50px;
+    @include sm {
+        margin-top: 20px !important;
+    }
     &-left {
         width: 80%;
         display: inline-flex;
