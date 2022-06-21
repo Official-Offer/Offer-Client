@@ -24,7 +24,7 @@ const DappPortal: NextPage = () => {
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");
   const [cate, setCate] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(8);
+  const [viewMore, setNumberViewMore] = useState(18);
   const [sort, setSort] = useState(["socialSignal", "desc"]);
   const loadMore = () => setNumberViewMore(viewMore + 10);
   useEffect(() => {
