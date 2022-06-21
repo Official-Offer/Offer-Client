@@ -11,20 +11,21 @@ import request from "@services/apiService";
 const { Option } = Select;
 
 export const listCategory = [
-  { name: "All", tag: "all", icon: "", icon_white: "" },
-  { name: "Gambling", tag: "gambling", icon: "/img/icons/icn-gambling.png" },
-  { name: "Game", tag: "game", icon: "/img/icons/icn-game.png" },
-  { name: "Exchange", tag: "exchange", icon: "/img/icons/icn-exchange.png" },
-  { name: "Finance", tag: "finance", icon: "/img/icons/icn-finance.png" },
-  { name: "Social", tag: "social", icon: "/img/icons/icn-social.png" },
+  { name: "All", tag: "all", icon: "", icon_white: "", id:'all' },
+  { name: "Gambling", tag: "gambling", icon: "/img/icons/icn-gambling.png", id: 6},
+  { name: "Game", tag: "game", icon: "/img/icons/icn-game.png",id:7 },
+  { name: "Exchange", tag: "exchange", icon: "/img/icons/icn-exchange.png", id:8 },
+  { name: "Finance", tag: "finance", icon: "/img/icons/icn-finance.png", id: 9 },
+  { name: "Social", tag: "social", icon: "/img/icons/icn-social.png", id: 10 },
   {
     name: "Marketplace",
     tag: "marketplace",
     icon: "/img/icons/icn-marketplace.png",
+    id:11,
   },
-  { name: "Utilities", tag: "utils", icon: "/img/icons/icn-utils.png" },
-  { name: "Others", tag: "others", icon: "/img/icons/icn-others.png" },
-  { name: "High-risk", tag: "high-risk", icon: "/img/icons/icn-high-risk.png" },
+  { name: "Utilities", tag: "utils", icon: "/img/icons/icn-utils.png", id: 12},
+  { name: "Others", tag: "others", icon: "/img/icons/icn-others.png", id:13 },
+  { name: "High-risk", tag: "high-risk", icon: "/img/icons/icn-high-risk.png",id:14 },
 ];
 
 export default function TabsCategory({ setCate, cate }: any): ReactElement {

@@ -67,6 +67,7 @@ const DappPortal: NextPage = () => {
     })();
   }, [chain, viewMore, sort, cate]);
 
+  // useEffect(()=>console.log(chain, cate), [chain, cate]);
   return (
     <>
       <section id="main-portal">
@@ -75,13 +76,20 @@ const DappPortal: NextPage = () => {
           <h1 className="mb-0">Dapp Portal</h1>
         </TitleGlobal>
         <br />
-        <TabsChain setChain={setChain} chain={chain} />
+        <TabsChain
+          setChain={setChain}
+          chain={chain}
+          setCate={setCate}
+          cate={cate}
+        />
         <br />
         <TabsCategory setCate={setCate} cate={cate} />
         <br />
         <TableDapp tokenList={tokenList} sort={sort} setSort={setSort} />
         <div className="loadmore">
-          <BorderedButtonTransparent onClick={loadMore}>Load more</BorderedButtonTransparent>
+          <BorderedButtonTransparent onClick={loadMore}>
+            Load more
+          </BorderedButtonTransparent>
         </div>
       </section>
     </>
