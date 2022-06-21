@@ -24,7 +24,7 @@ export default function NewsList({ data }: any): ReactElement {
                 <div className="main-homepage-dappnews-card">
                   {/* <div className="main-homepage-dappnews-card-header"> */}
                     <img
-                      className="main-homepage-blog-card-header-img"
+                      className="main-homepage-dappnews-card-header-img"
                       src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
                     />
                   {/* </div> */}

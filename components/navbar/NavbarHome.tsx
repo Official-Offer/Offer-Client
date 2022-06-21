@@ -246,20 +246,6 @@ export const NavbarHome: FC = () => {
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
-                {user && (
-                  <Popover
-                    placement="bottom"
-                    content={popoverContent}
-                    // trigger="focus"
-                  >
-                    <button className="navbar_userinfo_wrapper" type="button">
-                      <img
-                        className="navbar_avatar_mobile"
-                        src={user?.avatar || "/img/default.png"}
-                      ></img>
-                    </button>
-                  </Popover>
-                )}
                 <Button
                   type="button"
                   onClick={showDrawer}
@@ -340,10 +326,7 @@ export const NavbarHome: FC = () => {
           )}
         </BoxALignCenter_Justify_ItemsBetween>
       </section>
-      <LoginPopup
-        isVisible={isPopupVisible}
-        setVisible={setPopupVisible}
-      />
+      <LoginPopup isVisible={isPopupVisible} setVisible={setPopupVisible} />
     </>
   );
 };
