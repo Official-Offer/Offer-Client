@@ -424,7 +424,7 @@ export default function TableDapp({
                       </div>
                     </div>
                   </div>
-                  <div className="col-2">
+                  <div className="col-2 ">
                     <div className="w-100">
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
@@ -444,7 +444,7 @@ export default function TableDapp({
                       </BoxALignCenter_Justify_ItemsEnd>
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
-                          className="blockchain-logo"
+                          className="blockchain-logo-two"
                           src={
                             i < 2
                               ? e.attributes.crawl.category.icon
