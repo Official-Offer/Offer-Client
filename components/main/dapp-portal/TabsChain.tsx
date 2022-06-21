@@ -21,36 +21,13 @@ export default function TabsChain({
       });
     })();
   }, []);
-  const chainTagsToBeIncluded = [
-    "Ethereum",
-    "BNB Chain",
-    "Polygon",
-    "TRON",
-    "Neo",
-    "Steem",
-    "TomoChain",
-    "Vexanium",
-    "ICON",
-    "Chiliz",
-    "Hive",
-    "Near Protocol",
-    "ThunderCore",
-    "Ziliqa",
-    "Fuse",
-    "Kardiachain",
-  ];
   const listBlockchain = chainIdArray
-    .filter(
-      (chain: any) =>
-        chain.name === "All" ||
-        chainTagsToBeIncluded.includes(chain.attributes?.name)
-    )
     .map((chain: any) => {
       if (chain.name === "All") return chain;
       return {
         id: chain.id,
         name: chain.attributes.name,
-        tag: chain.attributes.name.substring(0, 3).toLowerCase(), //css background
+        tag: chain.attributes.name.substring(0, 4).toLowerCase(), //css background
         icon: chain.attributes.crawl.color_icon,
         icon_white: chain.attributes.crawl.color_icon,
       };
