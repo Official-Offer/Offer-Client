@@ -30,6 +30,7 @@ export const NavbarHome: FC = () => {
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState<any>(false);
   const [boxSearch, setBoxSearch] = useState<boolean>(false);
+  const [showBox, setShowBox] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   useEffect(() => {
     (async () => {
@@ -54,6 +55,7 @@ export const NavbarHome: FC = () => {
   };
   const handleChangeSearch = (e: any) => {
     setKeyword(e.target.value);
+    setShowBox(true);
   };
   const onShowBoxSearch = () => {
     setBoxSearch(true);
@@ -183,6 +185,7 @@ export const NavbarHome: FC = () => {
                         className="searchTerm"
                         placeholder="Searching..."
                         onChange={handleChangeSearch}
+                        onClick={() => setShowBox(true)}
                       />
                       <button type="button" className="searchButton">
                         <span>

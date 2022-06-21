@@ -84,7 +84,7 @@ const CommentSection = ({ news }: any) => {
                 <p className="news-details-comment-box-description">
                   {cmt.attributes?.comment}
                 </p>
-                <p className="">
+                {/* <p className="">
                   {cmt.attributes?.replies.data.map((reply: any, i: number) => (
                     <span key={i}>
                       <div className="news-details-comment-box-reply">
@@ -108,12 +108,12 @@ const CommentSection = ({ news }: any) => {
                       </div>
                     </span>
                   ))}
-                </p>
+                </p> */}
                 <div>
                   <a target="_blank" rel="noopener noreferrer">
                     <BoxALignItemsCenter>
-                      <MessageSquare color="#1DBBBD" />
-                      <CommentBox
+                      {/* <MessageSquare color="#1DBBBD" /> */}
+                      {/* <CommentBox
                         text="Reply"
                         name={cmt.attributes?.user.data?.attributes.username}
                         commentId={cmt.id}
@@ -121,7 +121,7 @@ const CommentSection = ({ news }: any) => {
                         className="ms-2 text-green"
                       >
                         Reply
-                      </CommentBox>
+                      </CommentBox> */}
                     </BoxALignItemsCenter>
                   </a>
                 </div>
