@@ -357,14 +357,32 @@ export default function TableDapp({
                   );
                 })}
               </Select>
-              {isSorter && (
-                <div className="table-header-item-sorter">
-                  <div className="table-header-item-sorter-inner">
-                    <CaretUpOutlined className="up" />
-                    <CaretDownOutlined className="down" />
-                  </div>
+              <div className="table-header-item-sorter">
+                <div className="table-header-item-sorter-inner">
+                  <CaretUpOutlined
+                    className={`up ${sort[1]==='asc' && 'active'}`}
+                    onClick={() =>
+                      activeItem(
+                        "asc",
+                        listTitleHeaderMobile.filter(
+                          (someshit) => someshit.title === headerMobile
+                        )[0].query
+                      )
+                    }
+                  />
+                  <CaretDownOutlined
+                    className={`down ${sort[1]==='desc' && 'active'}`}
+                    onClick={() =>
+                      activeItem(
+                        "desc",
+                        listTitleHeaderMobile.filter(
+                          (someshit) => someshit.title === headerMobile
+                        )[0].query
+                      )
+                    }
+                  />
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -384,7 +402,7 @@ export default function TableDapp({
               <div className="table-body-item table-body-item-name">
                 <div className="row m-0 p-0">
                   <div className="col-5">
-                    <BoxALignCenter_Justify_ItemsBetween className="h-100">
+                    <BoxALignCenter_Justify_ItemsBetween className="h-100 w-100">
                       <img
                         className="dapp-logo"
                         src={e.attributes.crawl.icon}
