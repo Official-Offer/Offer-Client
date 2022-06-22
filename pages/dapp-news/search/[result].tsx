@@ -63,20 +63,11 @@ const DappNews: FC = () => {
         setNewsList(res.data.data);
       });
     })();
-  }, [categoryKey, viewMore, crit]);
+  }, [router.query, viewMore]);
 
   const onChangeTab = (key: any) => {
     if (viewMore > 18) {
       setNumberViewMore(18);
-    }
-    let index = categories.findIndex((cat: any) => cat.attributes.name === key);
-    setActiveIndex(index);
-    setCategoryKey(key);
-  };
-
-  const onSelect = (key: any) => {
-    if (viewMore > 20) {
-      setNumberViewMore(20);
     }
     let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
