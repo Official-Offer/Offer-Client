@@ -37,25 +37,25 @@ export default function TableDapp({
       title: `${timeKey} Users`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      // query: "dailyUser",
+      query: "dailyUser",
     },
     {
       title: `${timeKey} Transactions`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      // query: "dailyTransaction",
+      query: "dailyTransaction",
     },
     {
       title: `${timeKey} Volume`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      // query: "dailyVolume",
+      query: "dailyVolume",
     },
     {
       title: "Social Signal",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      // query: "socialSignal",
+      query: "socialSignal",
     },
   ];
 
@@ -372,12 +372,19 @@ export default function TableDapp({
           </div>
         </div>
         {tokenList.map((e: any, i: number) => {
-          const selectedKey = listTitleHeaderMobile.filter(
+          let selectedKey = listTitleHeaderMobile.filter(
             (someshit) => someshit.title === headerMobile
           )[0].query;
-          const số_trên: string = formatter.format(e.attributes[selectedKey]);
-          const số_dưới: number = e.attributes[`${selectedKey}Diff`];
-          const tăng_giảm: string = số_dưới < 0 ? "decrease" : "increase";
+          if (selectedKey === "dailyUser") selectedKey = "user";
+          else if (selectedKey === "dailyTransaction") selectedKey = "amount";
+          else selectedKey = "usds";
+          console.log(selectedKey);
+          const số_trên: string = formatter.format(
+            e.attributes.crawl[`${selectedKey}_${timeKey}`]
+          );
+          const số_dưới: number =
+            e.attributes.crawl[`${selectedKey}_${timeKey}_gr`];
+          const tăng_giảm: string = incdec(số_dưới);
           return (
             <div className="table-body" key={i}>
               <div className="table-body-item table-body-item-number">
