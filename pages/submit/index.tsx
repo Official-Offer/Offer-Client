@@ -41,7 +41,7 @@ const Submit: NextPage = () => {
     thumbnail: "",
     projectName: "Baby I m real",
     website: "www.abc.com",
-    images: [],
+    images: [null, null, null, null],
     category: 7,
     tags: [],
     status: "live",
@@ -183,8 +183,7 @@ const Submit: NextPage = () => {
             "Image must be at least 300 pixels high and 300 pixels wide"
           );
           setFailed(name);
-        }
-        else {
+        } else {
           setFailed(null);
         }
       };
@@ -213,7 +212,7 @@ const Submit: NextPage = () => {
     });
   };
 
-  const onUploadImagesToField = (e: ChangeEvent<HTMLInputElement>) => {
+  const onUploadImagesToField = (e: ChangeEvent<HTMLInputElement>, i: any) => {
     //push images to the four boxes
     let value;
     if (!e.target.files || e.target.files.length === 0) {
@@ -224,7 +223,7 @@ const Submit: NextPage = () => {
     //check size image
     if (!checkImage300x300(value, "images")) return;
     const newState: Array<any> = input.images;
-    if (value) newState.push(value); //change null value
+    if (value) newState[i] = value; //change null value
     handleChange({
       target: {
         name: "images",
@@ -249,8 +248,8 @@ const Submit: NextPage = () => {
     //validate input data
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
-      // check unfilled fields
-      if (input[keys[i]] === "") {
+      // check unfilled fields, ignore optional fields
+      if (input[keys[i]] === "" && ["reviewArticle"].includes(keys[i])) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
         flag = true;
@@ -359,6 +358,13 @@ const Submit: NextPage = () => {
     setIsVisible(notLogin);
   }, [notLogin]);
 
+  const countNonNull = (arr: Array<any>) => {
+    let res = 0;
+    for(let i=0;i<arr.length;i++) {
+      if (arr[i]) res++
+    }
+    return res;
+  };
   return (
     <>
       <section className="main-submit">
@@ -465,16 +471,24 @@ const Submit: NextPage = () => {
                 {[0, 1, 2, 3].map((_, i) => (
                   <div className="col-lg-3 col-12" key={i}>
                     <div className="main-submit-avatar-area">
-                      {input.images.length >= i && (
-                        <img
-                          src={
-                            rawImgToBase64(input.images[i]) ||
-                            "/img/icons/icn-upload.png"
-                          }
-                          alt=""
-                        />
+                      {countNonNull(input.images) >= i && (
+                        <>
+                          <img
+                            src={
+                              rawImgToBase64(input.images[i]) ||
+                              "/img/icons/icn-upload.png"
+                            }
+                            alt=""
+                          />
+                          <input
+                            accept="image/png, image/jpeg, image/jpg"
+                            type="file"
+                            disabled={notLogin}
+                            onChange={(e) => onUploadImagesToField(e, i)}
+                          />
+                        </>
                       )}
-                      {input.images.length < i || (
+                      {countNonNull(input.images) < i || (
                         <>
                           {" "}
                           <br />
@@ -482,12 +496,6 @@ const Submit: NextPage = () => {
                             JPG,PNG with ratio of 1:1 300*300 or larger
                             recommended
                           </p>
-                          <input
-                            accept="image/png, image/jpeg, image/jpg"
-                            type="file"
-                            disabled={notLogin}
-                            onChange={onUploadImagesToField}
-                          />
                         </>
                       )}
                     </div>
