@@ -68,7 +68,6 @@ const DappPortal: NextPage = () => {
     })();
   }, [chain, viewMore, sort, cate]);
 
-  // useEffect(()=>console.log(chain, cate), [chain, cate]);
   return (
     <>
       <section id="main-portal">

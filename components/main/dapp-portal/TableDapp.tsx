@@ -15,6 +15,7 @@ import { Select } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
 import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
+import { incdec, updown } from "@utils/numberDecorator";
 
 const { Option } = Select;
 
@@ -93,6 +94,7 @@ export default function TableDapp({
     setHeaderMobile(e);
     console.log(e);
   };
+  const timeKey = "30d";
   return (
     <>
       <div className="block-for-pc">
@@ -134,31 +136,13 @@ export default function TableDapp({
             </div>
           </div>
           {tokenList.map((token: any, i: number) => {
-            let usds_24hr = token.attributes.crawl.usds_24h;
-            let userDiff: string;
-            let transactionsDiff: string;
-            let volumeDiff: string;
-            let socialSignalDiff: string;
-            if (token.attributes.dailyUserDiff < 0) {
-              userDiff = "decrease";
-            } else {
-              userDiff = "increase";
-            }
-            if (token.attributes.dailyTransactionDiff < 0) {
-              transactionsDiff = "decrease";
-            } else {
-              transactionsDiff = "increase";
-            }
-            if (token.attributes.dailyVolumeDiff < 0) {
-              volumeDiff = "decrease";
-            } else {
-              volumeDiff = "increase";
-            }
-            if (token.attributes.crawl.social_signal_gr < 0) {
-              socialSignalDiff = "decrease";
-            } else {
-              socialSignalDiff = "increase";
-            }
+            const user = token.attributes.crawl[`user_${timeKey}`];
+            const transaction = token.attributes.crawl[`amount_${timeKey}`];
+            const volume = token.attributes.crawl[`usds_${timeKey}`];
+            const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
+            const transactionDiff =
+              token.attributes.crawl[`amount_${timeKey}_gr`];
+            const volumeDiff = token.attributes.crawl[`volume_${timeKey}_gr`];
             return (
               <div
                 className="table-body"
@@ -210,14 +194,15 @@ export default function TableDapp({
                 <div className="table-body-item table-body-item-user">
                   <div>
                     <div className="table-body-item-user-number text-end">
-                      <p>{token.attributes.dailyUser}</p>
+                      <p>{user}</p>
                     </div>
                     <div
-                      className={`table-body-item-user-${userDiff} text-end`}
+                      className={`table-body-item-user-${incdec(
+                        userDiff
+                      )} text-end`}
                     >
                       <p>
-                        {(token.attributes.dailyUserDiff * 100).toFixed(2)}%{" "}
-                        {userDiff === "increase" ? "↑" : "↓"}
+                        {(userDiff * 100).toFixed(2)}% {updown(userDiff)}
                       </p>
                     </div>
                   </div>
@@ -225,17 +210,17 @@ export default function TableDapp({
                 <div className="table-body-item table-body-item-transaction">
                   <div>
                     <div className="table-body-item-transaction-number text-end">
-                      <p>{token.attributes.dailyTransaction}</p>
+                      <p>{transaction}</p>
                     </div>
                     <div
-                      className={`table-body-item-transaction-${transactionsDiff} text-end`}
+                      className={`table-body-item-transaction-${incdec(
+                        transactionDiff
+                      )} text-end`}
                     >
                       <p>
                         {" "}
-                        {(token.attributes.dailyTransactionDiff * 100).toFixed(
-                          2
-                        )}
-                        % {transactionsDiff === "increase" ? "↑" : "↓"}
+                        {(transactionDiff * 100).toFixed(2)}%{" "}
+                        {updown(transactionDiff)}
                       </p>
                     </div>
                   </div>
@@ -251,43 +236,43 @@ export default function TableDapp({
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
-                    {usds_24hr.length == 2 ? (
+                    {volume.length == 2 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              usds_24hr[0].ratio == 0
+                              volume[0].ratio == 0
                                 ? "10%"
-                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                                : `${(volume[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                            width: `${`${(volume[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
                         />
                       </>
-                    ) : usds_24hr.length == 3 ? (
+                    ) : volume.length == 3 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              usds_24hr[0].ratio == 0
+                              volume[0].ratio == 0
                                 ? "10%"
-                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                                : `${(volume[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                            width: `${`${(volume[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
@@ -295,7 +280,7 @@ export default function TableDapp({
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[2].ratio * 100).toFixed(
+                            width: `${`${(volume[2].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
@@ -324,7 +309,7 @@ export default function TableDapp({
                         {(
                           token.attributes.crawl.social_signal_gr * 100
                         ).toFixed(2)}
-                        % {socialSignalDiff === "increase" ? "↑" : "↓"}
+                        % {updown(token.attributes.crawl.social_signal_gr)}
                       </p>
                     </div>
                   </div>
@@ -360,7 +345,7 @@ export default function TableDapp({
               <div className="table-header-item-sorter">
                 <div className="table-header-item-sorter-inner">
                   <CaretUpOutlined
-                    className={`up ${sort[1]==='asc' && 'active'}`}
+                    className={`up ${sort[1] === "asc" && "active"}`}
                     onClick={() =>
                       activeItem(
                         "asc",
@@ -371,7 +356,7 @@ export default function TableDapp({
                     }
                   />
                   <CaretDownOutlined
-                    className={`down ${sort[1]==='desc' && 'active'}`}
+                    className={`down ${sort[1] === "desc" && "active"}`}
                     onClick={() =>
                       activeItem(
                         "desc",
