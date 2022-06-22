@@ -38,7 +38,7 @@ const Submit: NextPage = () => {
   const { input, handleChange }: any = useForm({
     isOwnerOrAdmin: true,
     email: "vvnguyen@umass.edu",
-    thumbnail: null,
+    thumbnail: "",
     projectName: "Baby I m real",
     website: "www.abc.com",
     images: [],
@@ -262,7 +262,7 @@ const Submit: NextPage = () => {
             flag = true;
           });
       }
-
+      // flag is raised, return
       if (flag) return;
       if (["thumbnail", "tokenLogo"].includes(keys[i])) {
         if (input[keys[i]])
