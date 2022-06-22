@@ -17,8 +17,9 @@ import {
   Button,
   ButtonBorderBlueTransparent,
   ButtonBlue,
+  ButtonBlueButLessBorder,
 } from "@styles/styled-components/styledButton";
-import { File, Heart, MessageSquare, Share2, User } from "react-feather";
+import { Facebook, File, Heart, MessageSquare, Share2, User } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
 import { Avatar, notification, Rate, Switch } from "antd";
@@ -35,6 +36,7 @@ import { updown } from "@utils/numberDecorator";
 import moment from "moment";
 import { Modal } from "antd";
 import useForm from "@utils/hook/useForm";
+import { FacebookIcon } from "react-share";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -281,8 +283,8 @@ const BlockchainDetails = () => {
             <BoxALignItemsCenter className="ms-5">
               <span className="me-3">Social: </span>
               <a href="#" className="blockchain-details-social-facebook">
-                <FacebookFilled
-                  style={{ fontSize: "2rem" }}
+                <img
+                  src='/img/icons/blockchain_facebook.png'
                   onClick={() =>
                     window.open(
                       dapp?.crawl.socials.filter(
@@ -321,28 +323,28 @@ const BlockchainDetails = () => {
         </div>
         <div className="blockchain-details-right col-lg-3 col-12 p-0">
           <BoxAlignItemsEnd_FlexColumn>
-            <BoxALignItemsCenter className="mb-2">
-              <User color="#1DBBBD" />
-              <span className="ms-2">{dapp?.crawl.follows} Follower(s)</span>
+            <BoxALignItemsCenter className="mb-2 blockchain-details-follower">
+              <User color="#1DBBBD" size={15}/>
+              <span className="ms-2">{dapp?.crawl.follows} Followers</span>
             </BoxALignItemsCenter>
-            <ButtonBlue className="rounded-pill mb-3">Follow</ButtonBlue>
+            <ButtonBlueButLessBorder className="mb-3">Follow</ButtonBlueButLessBorder>
             <BoxALignItemsCenter className="mb-5">
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
-                  <File color="#1DBBBD" />
+                  <File color="black" />
                   <span className="ms-2">Collect</span>
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
-                  <Heart color="#1DBBBD" />
-                  <span className="ms-2">Collect</span>
+                  <Heart color="black" />
+                  <span className="ms-2">Like</span>
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
-                  <Share2 color="#1DBBBD" />
-                  <span className="ms-2">Collect</span>
+                  <Share2 color="black" />
+                  <span className="ms-2">Share</span>
                 </BoxALignItemsCenter>
               </Button>
             </BoxALignItemsCenter>

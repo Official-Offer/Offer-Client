@@ -92,6 +92,13 @@ export const ButtonBlue = styled.button `
         border: none;
     }
 `;
+
+export const ButtonBlueButLessBorder = styled(ButtonBlue)`
+    border-radius: 6px !important;
+    padding: .370rem 1rem;
+    font-size: 14px;
+`
+
 export const ButtonBackgroundBlueBold = styled.div`
     background-color: #FCFCFD;
     padding: .375rem .75rem;
