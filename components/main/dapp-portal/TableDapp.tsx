@@ -26,6 +26,7 @@ export default function TableDapp({
 }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
+  const timeKey = router.query.timeKey || "7d";
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -33,28 +34,28 @@ export default function TableDapp({
     { title: "Category", icon: "", sort: false },
     { title: "Blockchain", icon: "", sort: false },
     {
-      title: "24hr Users",
+      title: `${timeKey} Users`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyUser",
+      // query: "dailyUser",
     },
     {
-      title: "24hr Transactions",
+      title: `${timeKey} Transactions`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyTransaction",
+      // query: "dailyTransaction",
     },
     {
-      title: "24hr Volume",
+      title: `${timeKey} Volume`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyVolume",
+      // query: "dailyVolume",
     },
     {
       title: "Social Signal",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "socialSignal",
+      // query: "socialSignal",
     },
   ];
 
@@ -94,7 +95,6 @@ export default function TableDapp({
     setHeaderMobile(e);
     console.log(e);
   };
-  const timeKey = "30d";
   return (
     <>
       <div className="block-for-pc">
