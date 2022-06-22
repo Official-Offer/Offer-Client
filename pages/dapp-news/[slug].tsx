@@ -16,6 +16,7 @@ import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 import { Avatar } from "antd";
+import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -150,7 +151,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 <div className="row">
                   {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
                     return (
-                      <div
+                      <ButtonBackgroundBlueBold
                         className="news-details-right-tag"
                         key={i}
                         onClick={() =>
@@ -162,7 +163,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                         <a target="_blank" rel="noopener noreferrer">
                           {tag.attributes.name}
                         </a>
-                      </div>
+                      </ButtonBackgroundBlueBold>
                     );
                   })}
                 </div>

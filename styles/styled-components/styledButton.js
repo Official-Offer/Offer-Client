@@ -92,6 +92,35 @@ export const ButtonBlue = styled.button `
         border: none;
     }
 `;
+
+export const ButtonNavy = styled.div `
+    background-color: #223052;
+    padding: .575rem .75rem;
+    margin: 5px;
+    border: none;
+    color: #FFF;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.25s;
+    min-width: 70px;
+    // font-size: 16px;
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    &:hover {
+        background-color: #058399cb;
+        border: none;
+    }
+`;
+
 export const ButtonBackgroundBlueBold = styled.div`
     background-color: #FCFCFD;
     padding: .375rem .75rem;

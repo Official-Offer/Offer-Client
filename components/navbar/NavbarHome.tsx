@@ -9,6 +9,7 @@ import {
   Button,
   ButtonBackgroundBlueBold,
   ButtonBlue,
+  ButtonNavy,
 } from "@styledComponents/styledButton";
 import {
   MenuOutlined,
@@ -36,6 +37,7 @@ export const NavbarHome: FC = () => {
   const [user, setUser] = useState<any>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [tags, setTags] = useState([]);
+  const [curValue, setCurValue] = useState("");
   useEffect(() => {
     (async () => {
       await request
@@ -64,7 +66,7 @@ export const NavbarHome: FC = () => {
       );
       await difRequest.get(`/tags?${query}`).then((res) => {
         console.log(res.data.data);
-        // setTags(res);
+        setTags(res.data.data);
       });
     })();
   }, []);
@@ -83,7 +85,6 @@ export const NavbarHome: FC = () => {
     setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
     router.push(`/dapp-news/search/${keyword}`);
-
   };
   const handleChangeSearch = (e: any) => {
     // console.log(e)
@@ -230,30 +231,35 @@ export const NavbarHome: FC = () => {
                       </button>
                     </BoxALignItemsCenter>
                     <Modal width={1000} visible={isVisible} onCancel={onCancel}>
-                      <form onSubmit={onSearch} className="navbar_home-form">
+                      <form onSubmit={onSearch}>
                         <input
                           type="text"
-                          className="searchTerm"
+                          style={{ border: "none" }}
+                          className="search-input"
                           placeholder="Searching..."
                           onChange={handleChangeSearch}
+                          value={curValue}
                           // onClick={() => setIsVisible(true)}
                         />
                         <hr />
                         <p>
-                          <span>
-                            <button type="button" className="searchButton">
-                              <span>
-                                <Search width={18} height={18} />
-                              </span>
-                            </button>
+                          <button
+                            type="button"
+                            className="search-input-button"
+                            // onClick={onSearch}
+                          >
+                            <span>
+                              <Search width={18} height={18} />
+                            </span>
                             &nbsp;&nbsp; Trending
-                          </span>
+                          </button>
                         </p>
                         {tags.map((tag) => {
+                          console.log(tag);
                           return (
-                            <ButtonBlue>
-                              {tag?.attributes.name}
-                            </ButtonBlue>
+                            <ButtonNavy onClick={() => setCurValue(tag.attributes?.name)}>
+                              # {tag.attributes?.name}
+                            </ButtonNavy>
                           );
                         })}
                       </form>
