@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { numberSeperator } from "@utils/formatCurrency";
 
-const RunningPrice = ({ direction }) => {
+const RunningPrice = ({ direction }: any) => {
   const [tokenList, setTokenList] = useState([]);
   const [viewMore, setNumberViewMore] = useState(10);
   const [sort, setSort] = useState(["market_cap", "desc"]);
@@ -36,13 +36,13 @@ const RunningPrice = ({ direction }) => {
 
   return (
     <Marquee direction={direction} speed={40}>
-      {tokenList.map((token, i) => {
+      {tokenList.map((token: any, i: number) => {
         let oneHourDiff =
           token.price_change_percentage_1h_in_currency > 0
             ? "increase"
             : "decrease";
         return (
-          <BoxALignItemsCenter>
+          <BoxALignItemsCenter key={i}>
             <span className="main-homepage-tokenranking-table-logo">
               <img src={token.image} alt="" />
             </span>
