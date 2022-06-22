@@ -167,6 +167,7 @@ const Submit: NextPage = () => {
     </Modal>
   );
   const [failed, setFailed] = useState<any>();
+  useEffect(() => console.log(failed), [failed]);
   const checkImage300x300 = (value: any, name: any) => {
     var flag = true;
     const reader = new FileReader();
@@ -182,6 +183,9 @@ const Submit: NextPage = () => {
             "Image must be at least 300 pixels high and 300 pixels wide"
           );
           setFailed(name);
+        }
+        else {
+          setFailed(null);
         }
       };
     };
@@ -286,9 +290,14 @@ const Submit: NextPage = () => {
             flag = true;
           });
       }
-      // check images of correct size
-      else if (keys[i] == failed) {
+      // check image of correct size
+      else if (keys[i] === failed) {
         message.error(`${failed} image doesn't meet the standard`);
+        flag = true;
+      }
+      //check images field have at least 1 image
+      else if (keys[i] == "images" && input[keys[i]].length < 1) {
+        message.error("You must submit at least 1 Preview image");
         flag = true;
       }
 
