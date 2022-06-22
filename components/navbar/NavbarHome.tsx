@@ -88,6 +88,7 @@ export const NavbarHome: FC = () => {
   };
   const handleChangeSearch = (e: any) => {
     // console.log(e)
+    setCurValue(e.target.value);
     setKeyword(e.target.value);
   };
   const onShowBoxSearch = () => {
@@ -246,12 +247,12 @@ export const NavbarHome: FC = () => {
                           <button
                             type="button"
                             className="search-input-button"
-                            // onClick={onSearch}
+                            onClick={onSearch}
                           >
                             <span>
                               <Search width={18} height={18} />
                             </span>
-                            &nbsp;&nbsp; Trending
+                            &nbsp;Trending
                           </button>
                         </p>
                         {tags.map((tag) => {
