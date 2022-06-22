@@ -14,8 +14,9 @@ import {
   MenuOutlined,
   SearchOutlined,
   UploadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Drawer, Menu, Popover } from "antd";
+import { AutoComplete, Drawer, Input, Menu, Modal, Popover } from "antd";
 import { Router, useRouter } from "next/router";
 import { Search } from "react-feather";
 import Link from "next/link";
@@ -24,14 +25,17 @@ import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
 import Cookies from "js-cookie";
 import axios from "axios";
+import difRequest from "@services/apiService";
 import { removeVietnameseTones } from "@utils/processTextInput";
+import qs from "qs";
 export const NavbarHome: FC = () => {
   const router: any = useRouter();
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState<any>(false);
   const [boxSearch, setBoxSearch] = useState<boolean>(false);
-  const [showBox, setShowBox] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [tags, setTags] = useState([]);
   useEffect(() => {
     (async () => {
       await request
@@ -43,20 +47,47 @@ export const NavbarHome: FC = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            Pin: {
+              $eq: true,
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await difRequest.get(`/tags?${query}`).then((res) => {
+        console.log(res.data.data);
+        // setTags(res);
+      });
+    })();
+  }, []);
+
   const showDrawer = () => {
     setVisible(true);
   };
   const onClose = () => {
     setVisible(false);
   };
+  const onCancel = () => {
+    setIsVisible(false);
+  };
   const onSearch = (e: any) => {
     e.preventDefault();
+    setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
     router.push(`/dapp-news/search/${keyword}`);
+
   };
   const handleChangeSearch = (e: any) => {
+    // console.log(e)
     setKeyword(e.target.value);
-    setShowBox(true);
   };
   const onShowBoxSearch = () => {
     setBoxSearch(true);
@@ -186,14 +217,47 @@ export const NavbarHome: FC = () => {
                         className="searchTerm"
                         placeholder="Searching..."
                         onChange={handleChangeSearch}
-                        onClick={() => setShowBox(true)}
+                        onClick={() => setIsVisible(true)}
                       />
-                      <button type="button" className="searchButton" onClick={onSearch}>
+                      <button
+                        type="button"
+                        className="searchButton"
+                        onClick={onSearch}
+                      >
                         <span>
                           <Search width={18} height={18} />
                         </span>
                       </button>
                     </BoxALignItemsCenter>
+                    <Modal width={1000} visible={isVisible} onCancel={onCancel}>
+                      <form onSubmit={onSearch} className="navbar_home-form">
+                        <input
+                          type="text"
+                          className="searchTerm"
+                          placeholder="Searching..."
+                          onChange={handleChangeSearch}
+                          // onClick={() => setIsVisible(true)}
+                        />
+                        <hr />
+                        <p>
+                          <span>
+                            <button type="button" className="searchButton">
+                              <span>
+                                <Search width={18} height={18} />
+                              </span>
+                            </button>
+                            &nbsp;&nbsp; Trending
+                          </span>
+                        </p>
+                        {tags.map((tag) => {
+                          return (
+                            <ButtonBlue>
+                              {tag?.attributes.name}
+                            </ButtonBlue>
+                          );
+                        })}
+                      </form>
+                    </Modal>
                   </form>
                 </BoxALignCenter_Justify_ItemsEnd>
               </div>

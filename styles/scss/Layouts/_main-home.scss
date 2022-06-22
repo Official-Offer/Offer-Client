@@ -165,19 +165,18 @@
         }
         &-title {
           text-overflow: ellipsis;
+          // font-family: "Circular Std";
           font-size: 16px;
           @media only screen and (min-width: 1280px) {
             font-size: 1vw;
           }
-          font-weight: bold;
           overflow-wrap: break-word;
         }
         &-author {
           font-size: 13px;
-          @media only screen and (min-width: 1280px) {
-            font-size: 0.9vw;
-          }
-          font-weight: bold;
+          // @media only screen and (min-width: 1280px) {
+          //   font-size: 0.9vw;
+          // }
           color: #7d7d7d;
         }
       }
@@ -214,12 +213,10 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-weight: bold;
             margin-bottom: 5px;
             overflow: hidden;
           }
           &-createdAt {
-            font-weight: bold;
             font-size: 16px;
             color: #7d7d7d;
           }
