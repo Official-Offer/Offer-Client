@@ -9,10 +9,16 @@ export const MarkDown = styled(ReactMarkdown)`
   h2 {
     font-size: 1.2rem;
   }
+  h3 {
+    font-size: 0.8rem;
+  }
   p {
     font-weight: 100;
     //overflow-wrap: normal;
     // font-size: 0.97rem;
+  }
+  b {
+    font-weight: bold;
   }
   img {
     // padding: 20px;

@@ -17,6 +17,8 @@ import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 import { Avatar } from "antd";
 import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
+import ReactMarkdown from 'react-markdown';
+
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -112,6 +114,8 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
 
     setStyledContent(modifiedContent);
   }, [news]);
+
+  // const markdown = marked(modifiedContent);
 
   return (
     <div>
@@ -212,6 +216,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               </BoxALignCenter_Justify_ItemsBetween>
               <br />
               <MarkDown>{styledContent}</MarkDown>
+              {/* <ReactMarkdown>{styledContent}</ReactMarkdown> */}
             </div>
             <div className="news-details-low-section">
               <div className="news-details-commentsection">
