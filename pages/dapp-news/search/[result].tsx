@@ -54,7 +54,9 @@ const DappNews: FC = () => {
               }
             ],
           },
+          sort: [`${crit}:desc`],
         },
+        
         {
           encodeValuesOnly: true,
         }
