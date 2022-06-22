@@ -24,7 +24,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const SharingSection = dynamic(
     () => import("@components/main/dapp-news/SharingSection")
   ) as any;
-  const NewsList = dynamic(() => import("@components/main/dapp-news/NewsList")) as any;
+  const NewsList = dynamic(
+    () => import("@components/main/dapp-news/NewsList")
+  ) as any;
   const PinnedSlides = dynamic(
     () => import("@components/main/dapp-news/PinnedSlides")
   ) as any;
@@ -37,13 +39,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const [popularNews, setPopularNews] = useState<any>([]);
   const [relatedNews, setRelatedNews] = useState([]);
   const [liked, setLiked] = useState(false);
-  const indexNews = [
-    "/img/1.png",
-    "/img/2.png",
-    "/img/3.png",
-    "/img/4.png",
-    "/img/5.png",
-  ];
   const router = useRouter();
   useEffect(() => {
     (async () => {
@@ -155,8 +150,18 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 <div className="row">
                   {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
                     return (
-                      <div className="news-details-right-tag" key={i}>
-                        {tag.attributes.name}
+                      <div
+                        className="news-details-right-tag"
+                        key={i}
+                        onClick={() =>
+                          router.push(
+                            `/dapp-news/search/${tag.attributes.name}`
+                          )
+                        }
+                      >
+                        <a target="_blank" rel="noopener noreferrer">
+                          {tag.attributes.name}
+                        </a>
                       </div>
                     );
                   })}
@@ -263,10 +268,11 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                           });
                         }}
                       >
-                        <div className ="mt-3">
+                        <div className="mt-3">
                           <a target="_blank" rel="noopener noreferrer">
-                            <span>
-                              <img className="" src={`${indexNews[i]}`} />
+                            <span className="news-details-relatedNews-number">
+                              {i + 1}
+                              {/* <img className="" src={`${indexNews[i]}`} /> */}
                             </span>
                             &nbsp;&nbsp;
                             <span className="name">

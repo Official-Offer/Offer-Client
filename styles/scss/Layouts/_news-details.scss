@@ -290,7 +290,7 @@
     }
   }
   &-tag {
-    font-family: "Circular Std";
+    // font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -303,12 +303,18 @@
   }
   &-relatedNews {
     background-color: #fcfcfd;
+    // font-family: '';
     overflow: auto;
     position: sticky;
     top: 100px;
     margin-top: 18px;
     @include sm {
       width: 100%;
+    }
+    &-number {
+      font-family: 'Circular Std';
+      font-size: 46px;
+      font-weight: 700;
     }
   }
   &-commentsection {
@@ -343,6 +349,7 @@
       // height
     }
     &-tag {
+      
       border: 2px solid #058499;
       width: 31px;
       height: 16px;

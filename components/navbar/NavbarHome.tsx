@@ -52,6 +52,7 @@ export const NavbarHome: FC = () => {
   const onSearch = (e: any) => {
     e.preventDefault();
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
+    router.push(`/dapp-news/search/${keyword}`);
   };
   const handleChangeSearch = (e: any) => {
     setKeyword(e.target.value);
@@ -187,7 +188,7 @@ export const NavbarHome: FC = () => {
                         onChange={handleChangeSearch}
                         onClick={() => setShowBox(true)}
                       />
-                      <button type="button" className="searchButton">
+                      <button type="button" className="searchButton" onClick={onSearch}>
                         <span>
                           <Search width={18} height={18} />
                         </span>
