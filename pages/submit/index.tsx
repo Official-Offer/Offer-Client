@@ -381,7 +381,7 @@ const Submit: NextPage = () => {
                 )}
                 <input
                   type="file"
-                  accept="/image/*"
+                  accept="image/png, image/jpeg, image/jpg"
                   disabled={notLogin}
                   name="thumbnail"
                   onChange={(e) => onUploadImageToField(e, "thumbnail")}
@@ -444,6 +444,7 @@ const Submit: NextPage = () => {
                             recommended
                           </p>
                           <input
+                            accept="image/png, image/jpeg, image/jpg"
                             type="file"
                             disabled={notLogin}
                             onChange={onUploadImagesToField}
@@ -616,6 +617,7 @@ const Submit: NextPage = () => {
                 alt=""
               />
               <input
+                accept="image/png, image/jpeg, image/jpg"
                 type="file"
                 disabled={notLogin}
                 onChange={(e) => onUploadImageToField(e, "tokenLogo")}
