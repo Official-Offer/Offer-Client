@@ -249,9 +249,19 @@ const Submit: NextPage = () => {
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
       // check unfilled fields, ignore optional fields
-      if (input[keys[i]] === "" && ["reviewArticle"].includes(keys[i])) {
+      if (input[keys[i]] === "" && ["reviewArticle", "detailDescription"].includes(keys[i])) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
+        flag = true;
+      }
+      // check if detail description, if filled, must be at least 100 and at most 500 chars
+      else if (keys[i]==="detailDescription" && input[keys[i]].length<100 || input[keys[i]].length>500) {
+        message.error(`Detail description must be longer at 100 characters and less than 500 characters`);
+        flag = true;
+      }
+      // check if short description, if filled, must be at least 10 and at most 100 chars
+      else if (keys[i]==="shortDescription" && input[keys[i]].length<10 || input[keys[i]].length>100) {
+        message.error(`Short description must be longer at 10 characters and less than 100 characters`);
         flag = true;
       }
       // check email
