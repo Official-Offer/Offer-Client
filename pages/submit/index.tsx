@@ -166,18 +166,40 @@ const Submit: NextPage = () => {
       <BigButtonSmallText onClick={onAddNewChannel}>Add</BigButtonSmallText>
     </Modal>
   );
+  const [failed, setFailed] = useState<any>();
+  const checkImage300x300 = (value: any, name: any) => {
+    var flag = true;
+    const reader = new FileReader();
+    reader.readAsDataURL(value);
+    reader.onload = (e: any) => {
+      const image: any = new Image();
+      image.src = e.target?.result;
+      image.onload = function () {
+        const height = this.height;
+        const width = this.width;
+        if (width < 300 || height < 300) {
+          message.error(
+            "Image must be at least 300 pixels high and 300 pixels wide"
+          );
+          setFailed(name);
+        }
+      };
+    };
+    return flag;
+  };
 
   const onUploadImageToField = (
     e: ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
-    let value;
+    let value: any;
     if (!e.target.files || e.target.files.length === 0) {
       value = undefined;
     } else {
       value = e.target.files[0];
     }
-    console.log(value);
+    //check image size first
+    if (!checkImage300x300(value, field)) return;
     handleChange({
       target: {
         name: field,
@@ -195,6 +217,8 @@ const Submit: NextPage = () => {
     } else {
       value = e.target.files[0];
     }
+    //check size image
+    if (!checkImage300x300(value, "images")) return;
     const newState: Array<any> = input.images;
     if (value) newState.push(value); //change null value
     handleChange({
@@ -262,6 +286,12 @@ const Submit: NextPage = () => {
             flag = true;
           });
       }
+      // check images of correct size
+      else if (keys[i] == failed) {
+        message.error(`${failed} image doesn't meet the standard`);
+        flag = true;
+      }
+
       // flag is raised, return
       if (flag) return;
       if (["thumbnail", "tokenLogo"].includes(keys[i])) {
