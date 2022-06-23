@@ -190,7 +190,12 @@ const Submit: NextPage = () => {
     </Modal>
   );
   const [failed, setFailed] = useState<any>();
-  const checkImage = (value: any, name: any, minWidth: number, minHeight: number) => {
+  const checkImage = (
+    value: any,
+    name: any,
+    minWidth: number,
+    minHeight: number
+  ) => {
     var flag = true;
     const reader = new FileReader();
     reader.readAsDataURL(value);
@@ -206,9 +211,7 @@ const Submit: NextPage = () => {
           );
           setFailed(name);
         } else if (width !== height) {
-          message.error(
-            `Image must be of ratio 1:1.`
-          );
+          message.error(`Image must be of ratio 1:1.`);
           setFailed(name);
         } else {
           setFailed(null);
@@ -295,9 +298,13 @@ const Submit: NextPage = () => {
       // check unfilled fields, ignore optional fields
       if (
         input[keys[i]] === "" &&
-        !["reviewArticle", "detailDescription", "shortDescription", "dappChain", "tokenChain"].includes(
-          keys[i]
-        )
+        ![
+          "reviewArticle",
+          "detailDescription",
+          "shortDescription",
+          "dappChain",
+          "tokenChain",
+        ].includes(keys[i])
       ) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
@@ -305,8 +312,9 @@ const Submit: NextPage = () => {
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
-        (keys[i] === "detailDescription" && (input[keys[i]].length < 100) ||
-        input[keys[i]].length > 500) && input[keys[i]].length > 0
+        ((keys[i] === "detailDescription" && input[keys[i]].length < 100) ||
+          input[keys[i]].length > 500) &&
+        input[keys[i]].length > 0
       ) {
         message.error(
           `Detail description must be longer at 100 characters and less than 500 characters`
@@ -315,11 +323,22 @@ const Submit: NextPage = () => {
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
-        (keys[i] === "shortDescription" && (input[keys[i]].length < 10) ||
-        input[keys[i]].length > 100) && input[keys[i]].length > 0
+        ((keys[i] === "shortDescription" && input[keys[i]].length < 10) ||
+          input[keys[i]].length > 100) &&
+        input[keys[i]].length > 0
       ) {
         message.error(
           `Short description must be longer at 10 characters and less than 100 characters`
+        );
+        flag = true;
+      }
+      //check token description length
+      else if (
+        keys[i] === "tokenDescription" &&
+        (input[keys[i]].length < 10 || input[keys[i]].length > 200)
+      ) {
+        message.error(
+          `Token description must be longer at 10 characters and less than 200 characters`
         );
         flag = true;
       }
@@ -382,7 +401,8 @@ const Submit: NextPage = () => {
         input[keys[i]].forEach((file: any) => {
           if (file) formData.append(`files.${keys[i]}`, file, file.name);
         });
-      } else if (input[keys[i]]!==" "){ // unchoosen chain id
+      } else if (input[keys[i]] !== " ") {
+        // unchoosen chain id
         data[keys[i]] = input[keys[i]];
       }
     }
@@ -647,60 +667,64 @@ const Submit: NextPage = () => {
               </Select>
             </div>
             <div className="col-lg-6 col-12"></div>
-            <div className="col-12 mt-lg-5 mt-4">
-              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                <label className="label-input">Short Description</label>
-                <span className="text-green">Max of 70 Characters</span>
-              </BoxALignCenter_Justify_ItemsBetween>
-              <textarea
-                disabled={notLogin}
-                style={{ width: "100%" }}
-                maxLength={70}
-                placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
-                value={input.shortDescription}
-                onChange={handleChange}
-                name="shortDescription"
-              />
-              <p
-                className={`main-submit-character-count${
-                  input.shortDescription.length === 0
-                    ? "-hidden"
-                    : input.shortDescription.length > 70 ||
-                      input.shortDescription.length < 10
-                    ? "-error"
-                    : ""
-                }`}
-              >
-                {input.shortDescription.length}/70 Characters
-              </p>
-            </div>
-            <div className="col-12 mt-lg-5 mt-4">
-              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
-                <label className="label-input">Detail Description</label>
-                <span className="text-green">Max of 500 Characters</span>
-              </BoxALignCenter_Justify_ItemsBetween>
-              <textarea
-                disabled={notLogin}
-                style={{ width: "100%" }}
-                maxLength={500}
-                placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
-                value={input.detailDescription}
-                onChange={handleChange}
-                name="detailDescription"
-              />
-              <p
-                className={`main-submit-character-count${
-                  input.detailDescription.length === 0
-                    ? "-hidden"
-                    : input.detailDescription.length > 500 ||
-                      input.detailDescription.length < 100
-                    ? "-error"
-                    : ""
-                }`}
-              >
-                {input.detailDescription.length}/500 Characters
-              </p>
-            </div>
+            {input.isOwnerOrAdmin && (
+              <div className="col-12 mt-lg-5 mt-4">
+                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
+                  <label className="label-input">Short Description</label>
+                  <span className="text-green">Max of 70 Characters</span>
+                </BoxALignCenter_Justify_ItemsBetween>
+                <textarea
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={70}
+                  placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
+                  value={input.shortDescription}
+                  onChange={handleChange}
+                  name="shortDescription"
+                />
+                <p
+                  className={`main-submit-character-count${
+                    input.shortDescription.length === 0
+                      ? "-hidden"
+                      : input.shortDescription.length > 70 ||
+                        input.shortDescription.length < 10
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.shortDescription.length}/70 Characters
+                </p>
+              </div>
+            )}
+            {input.isOwnerOrAdmin && (
+              <div className="col-12 mt-lg-5 mt-4">
+                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
+                  <label className="label-input">Detail Description</label>
+                  <span className="text-green">Max of 500 Characters</span>
+                </BoxALignCenter_Justify_ItemsBetween>
+                <textarea
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={500}
+                  placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                  value={input.detailDescription}
+                  onChange={handleChange}
+                  name="detailDescription"
+                />
+                <p
+                  className={`main-submit-character-count${
+                    input.detailDescription.length === 0
+                      ? "-hidden"
+                      : input.detailDescription.length > 500 ||
+                        input.detailDescription.length < 100
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.detailDescription.length}/500 Characters
+                </p>
+              </div>
+            )}
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
                 <label className="label-input mb-0">
@@ -739,28 +763,32 @@ const Submit: NextPage = () => {
             <Radio value={true}>Yes we do.</Radio>
             <Radio value={false}>No we don’t.</Radio>
           </Radio.Group>
-          <h5 className="mb-3">Token Logo</h5>
-          <BoxALignItemsCenter className="mb-4">
-            <div className="main-submit-avatar-logo">
-              <img
-                src={
-                  rawImgToBase64(input.tokenLogo) ||
-                  "/img/icons/icn-upload-small.png"
-                }
-                alt=""
-              />
-              <input
-                accept="image/png, image/jpeg, image/jpg"
-                type="file"
-                disabled={notLogin}
-                onChange={(e) => onUploadImageToField(e, "tokenLogo")}
-              />
-            </div>
-            <span className="ms-3">
-              JPG,PNG with ratio of 1:1. 48*48px or larger recommended. Must be
-              less than 50.
-            </span>
-          </BoxALignItemsCenter>
+          {input.isOwnerOrAdmin && (
+            <>
+              <h5 className="mb-3">Token Logo</h5>
+              <BoxALignItemsCenter className="mb-4">
+                <div className="main-submit-avatar-logo">
+                  <img
+                    src={
+                      rawImgToBase64(input.tokenLogo) ||
+                      "/img/icons/icn-upload-small.png"
+                    }
+                    alt=""
+                  />
+                  <input
+                    accept="image/png, image/jpeg, image/jpg"
+                    type="file"
+                    disabled={notLogin}
+                    onChange={(e) => onUploadImageToField(e, "tokenLogo")}
+                  />
+                </div>
+                <span className="ms-3">
+                  JPG,PNG with ratio of 1:1. 48*48px or larger recommended. Must
+                  be less than 50.
+                </span>
+              </BoxALignItemsCenter>
+            </>
+          )}
           <br />
           <div className="row">
             <div className="col-lg-6 col-12">
@@ -786,59 +814,79 @@ const Submit: NextPage = () => {
                 <Option value={1}>Ethereum</Option>
               </Select>
             </div>
-            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <BoxALignItemsCenter className="mb-3">
-                <h5 className="mb-0">Ticker of your token.</h5>
-                <span className="ms-3 text-green">E.g. BTC</span>
-              </BoxALignItemsCenter>
-              <input
-                disabled={notLogin}
-                className="main-submit-ticker"
-                onChange={handleChange}
-                value={input.tokenSymbol}
-                type={"text"}
-                name="tokenSymbol"
-              />
-            </div>
-            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <label className="label-input mb-3">Token Contract</label>
-              <input
-                disabled={notLogin}
-                className="main-submit-contract"
-                type={"text"}
-                placeholder="Smart Contract address of your token."
-                name="tokenContract"
-                value={input.tokenContract}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <label className="label-input mb-3">Decimal</label>
-              <input
-                disabled={notLogin}
-                className="main-submit-decimal"
-                type={"text"}
-                placeholder="Decimal of your token."
-                name="tokenDecimal"
-                onChange={handleChange}
-                value={input.tokenDecimal}
-              />
-            </div>
-            <div className="col-12 mt-lg-5 mt-4">
-              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                <label className="label-input">Token Description</label>
-                <span className="text-green">Max of 200 Characters</span>
-              </BoxALignCenter_Justify_ItemsBetween>
-              <textarea
-                disabled={notLogin}
-                style={{ width: "100%" }}
-                maxLength={200}
-                placeholder="Token Description."
-                onChange={handleChange}
-                value={input.tokenDescription}
-                name="tokenDescription"
-              />
-            </div>
+            {input.isOwnerOrAdmin && (
+              <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+                <BoxALignItemsCenter className="mb-3">
+                  <h5 className="mb-0">Ticker of your token.</h5>
+                  <span className="ms-3 text-green">E.g. BTC</span>
+                </BoxALignItemsCenter>
+                <input
+                  disabled={notLogin}
+                  className="main-submit-ticker"
+                  onChange={handleChange}
+                  value={input.tokenSymbol}
+                  type={"text"}
+                  name="tokenSymbol"
+                />
+              </div>
+            )}
+            {input.isOwnerOrAdmin && (
+              <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+                <label className="label-input mb-3">Token Contract</label>
+                <input
+                  disabled={notLogin}
+                  className="main-submit-contract"
+                  type={"text"}
+                  placeholder="Smart Contract address of your token."
+                  name="tokenContract"
+                  value={input.tokenContract}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
+            {input.isOwnerOrAdmin && (
+              <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+                <label className="label-input mb-3">Decimal</label>
+                <input
+                  disabled={notLogin}
+                  className="main-submit-decimal"
+                  type={"text"}
+                  placeholder="Decimal of your token."
+                  name="tokenDecimal"
+                  onChange={handleChange}
+                  value={input.tokenDecimal}
+                />
+              </div>
+            )}
+            {input.isOwnerOrAdmin && (
+              <div className="col-12 mt-lg-5 mt-4">
+                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
+                  <label className="label-input">Token Description</label>
+                  <span className="text-green">Max of 200 Characters</span>
+                </BoxALignCenter_Justify_ItemsBetween>
+                <textarea
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={200}
+                  placeholder="Token Description."
+                  onChange={handleChange}
+                  value={input.tokenDescription}
+                  name="tokenDescription"
+                />
+                <p
+                  className={`main-submit-character-count${
+                    input.tokenDescription.length === 0
+                      ? "-hidden"
+                      : input.tokenDescription.length > 500 ||
+                        input.tokenDescription.length < 100
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.detailDescription.length}/500 Characters
+                </p>
+              </div>
+            )}
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
                 <label className="label-input mb-0">
