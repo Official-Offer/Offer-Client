@@ -259,7 +259,7 @@ const Submit: NextPage = () => {
     if (e.length > 5) {
       message.error("Maximum of 5 tags, bruhhh");
       return;
-    } 
+    }
     handleChange({
       target: {
         name: "tags",
@@ -287,7 +287,9 @@ const Submit: NextPage = () => {
       // check unfilled fields, ignore optional fields
       if (
         input[keys[i]] === "" &&
-        ["reviewArticle", "detailDescription"].includes(keys[i])
+        ["reviewArticle", "detailDescription", "shortDescription"].includes(
+          keys[i]
+        )
       ) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
@@ -651,6 +653,18 @@ const Submit: NextPage = () => {
                 onChange={handleChange}
                 name="shortDescription"
               />
+              <p
+                className={`main-submit-character-count${
+                  input.shortDescription.length === 0
+                    ? "-hidden"
+                    : input.shortDescription.length > 70 ||
+                      input.shortDescription.length < 10
+                    ? "-error"
+                    : ""
+                }`}
+              >
+                {input.shortDescription.length}/70 Characters
+              </p>
             </div>
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
@@ -666,6 +680,18 @@ const Submit: NextPage = () => {
                 onChange={handleChange}
                 name="detailDescription"
               />
+              <p
+                className={`main-submit-character-count${
+                  input.detailDescription.length === 0
+                    ? "-hidden"
+                    : input.detailDescription.length > 500 ||
+                      input.detailDescription.length < 100
+                    ? "-error"
+                    : ""
+                }`}
+              >
+                {input.detailDescription.length}/500 Characters
+              </p>
             </div>
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">

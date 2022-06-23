@@ -1,98 +1,108 @@
 .main-submit {
+  @include sm {
+    padding: 0 5px;
+  }
+  .label-input {
+    display: block;
+    font-size: 1.2rem;
+    color: $black-color;
+  }
+  &-email {
+    width: 50%;
     @include sm {
-        padding: 0 5px;
+      width: 100%;
     }
-    .label-input {
-        display: block;
-        font-size: 1.2rem;
-        color: $black-color;
+  }
+  &-project-name,
+  &-dapp-website,
+  &-product-status,
+  &-ticker,
+  &-contract,
+  &-decimal,
+  &-global {
+    width: 100%;
+  }
+  &-avatar,
+  &-avatar-area,
+  &-avatar-empty,
+  &-avatar-logo {
+    width: 200px;
+    height: 200px;
+    border: 1px dashed #b1b5c4;
+    padding: 10px 10px 20px 10px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    p {
+      font-size: 0.8rem;
+      color: #b1b5c4;
+      margin: 15px 0 0 0;
     }
-    &-email {
-        width: 50%;
-        @include sm {
-            width: 100%;
-        }
+    input[type="file"] {
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: absolute;
+      z-index: 200;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      outline: none;
+      border: none;
+      background: transparent;
+      cursor: pointer;
     }
-    &-project-name,
-    &-dapp-website,
-    &-product-status,
-    &-ticker,
-    &-contract,
-    &-decimal,
-    &-global {
-        width: 100%;
+  }
+  &-avatar-empty {
+    padding: 0;
+  }
+  &-avatar-area,
+  &-avatar-empty {
+    width: 100%;
+    height: 150px;
+    padding: 10px 20px 20px 20px;
+  }
+  &-avatar-logo {
+    width: 65px;
+    height: 65px;
+    padding: 10px;
+    @include sm {
+      width: 130px;
     }
-    &-avatar,
-    &-avatar-area,
-    &-avatar-empty,
-    &-avatar-logo {
-        width: 200px;
-        height: 200px;
-        border: 1px dashed #b1b5c4;
-        padding: 10px 10px 20px 10px;
-        position: relative;
-        border-radius: 8px;
-        overflow: hidden;
-        text-align: center;
-        p {
-            font-size: 0.8rem;
-            color: #b1b5c4;
-            margin: 15px 0 0 0;
-        }
-        input[type="file"] {
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            z-index: 200;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            outline: none;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-        }
+  }
+  &-input-suffix {
+    border: 1.5px solid #b1b5c4;
+    padding: 7px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    &-logo {
+      margin-right: 10px;
+      color: $blue-color;
     }
-    &-avatar-empty {
-        padding: 0;
+    input {
+      background-color: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      width: 100%;
     }
-    &-avatar-area,
-    &-avatar-empty {
-        width: 100%;
-        height: 150px;
-        padding: 10px 20px 20px 20px;
+  }
+  &-channel-wrap {
+    display: flex;
+    column-gap: 60px;
+    margin: 30px 0 44px 0;
+  }
+  &-character-count {
+    color: #1dbbbd;
+    &-hidden {
+      display: none;
+      transition: .2s;
     }
-    &-avatar-logo {
-        width: 65px;
-        height: 65px;
-        padding: 10px;
-        @include sm {
-            width: 130px;
-        }
+    &-error {
+      color: red;
     }
-    &-input-suffix {
-        border: 1.5px solid #b1b5c4;
-        padding: 7px 10px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        &-logo {
-            margin-right: 10px;
-            color: $blue-color;
-        }
-        input {
-            background-color: transparent !important;
-            border: none !important;
-            border-radius: 0 !important;
-            padding: 0 !important;
-            width: 100%;
-        }
-    }
-    &-channel-wrap {
-        display: flex;
-        column-gap: 60px;
-        margin: 30px 0 44px 0;
-    }
+  }
 }
