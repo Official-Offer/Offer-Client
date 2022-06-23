@@ -571,7 +571,9 @@ const BlockchainDetails = () => {
                         <div className="blockchain-details-flex">
                           Market Cap:
                           <BoxAlignItemsCenter_FlexColumn>
-                            <p className="blockchain-details-uni-number">${tokenInfo.mkt_cap}</p>
+                            <p className="blockchain-details-uni-number">
+                              ${tokenInfo.mkt_cap}
+                            </p>
                             <p
                               className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                 tokenInfo.mkt_cap_gr
@@ -601,7 +603,11 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Holders
                           </td>
-                          <td>{formatter.format(tokenInfo.other_five_data.holders)}</td>
+                          <td>
+                            {formatter.format(
+                              tokenInfo.other_five_data.holders
+                            )}
+                          </td>
                           <td>
                             {tokenInfo.other_five_data.holders_gr.toFixed(2)}
                             {weirdLookingArrow(
@@ -613,7 +619,11 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Active Address
                           </td>
-                          <td>{formatter.format(tokenInfo.other_five_data.address)}</td>
+                          <td>
+                            {formatter.format(
+                              tokenInfo.other_five_data.address
+                            )}
+                          </td>
                           <td>
                             {tokenInfo.other_five_data.address_gr.toFixed(2)}
                             {weirdLookingArrow(
@@ -625,19 +635,23 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Txs
                           </td>
-                          <td>{formatter.format(tokenInfo.other_five_data.tx)}</td>
+                          <td>
+                            {formatter.format(tokenInfo.other_five_data.tx)}
+                          </td>
                           <td>
                             {tokenInfo.other_five_data.tx_gr.toFixed(2)}
-                            {weirdLookingArrow(
-                              tokenInfo.other_five_data.tx_gr
-                            )}
+                            {weirdLookingArrow(tokenInfo.other_five_data.tx_gr)}
                           </td>
                         </tr>
                         <tr>
                           <td className="blockchain-details-metrics-row">
                             Token Tx Volume
                           </td>
-                          <td>{formatter.format(tokenInfo.other_five_data.tx_volume)}</td>
+                          <td>
+                            {formatter.format(
+                              tokenInfo.other_five_data.tx_volume
+                            )}
+                          </td>
                           <td>
                             {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
                             {weirdLookingArrow(
@@ -788,7 +802,10 @@ const BlockchainDetails = () => {
             <br />
             <br />
             <div>
-              <Button className="text-green" onClick={openParentlessReview}>
+              <Button
+                className="text-green blockchain-details-bolder"
+                onClick={openParentlessReview}
+              >
                 Rating and Reviews
               </Button>
             </div>
