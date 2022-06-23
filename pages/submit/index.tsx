@@ -255,6 +255,20 @@ const Submit: NextPage = () => {
     });
   };
 
+  const onChangeTags = (e: any) => {
+    if (e.length > 5) {
+      message.error("Maximum of 5 tags, bruhhh");
+      return;
+    } 
+    handleChange({
+      target: {
+        name: "tags",
+        type: "select",
+        value: e,
+      },
+    });
+  };
+
   const rawImgToBase64 = (raw: any) => {
     // convert to b64 to display on input, still send raw file to server
     if (!raw || raw == "") return null;
@@ -578,18 +592,11 @@ const Submit: NextPage = () => {
                 </span>
               </BoxALignItemsCenter>
               <Select
+                value={input.tags}
                 disabled={notLogin}
                 mode="tags"
                 style={{ width: "100%" }}
-                onChange={(e) => {
-                  handleChange({
-                    target: {
-                      name: "tags",
-                      type: "select",
-                      value: e,
-                    },
-                  });
-                }}
+                onChange={onChangeTags}
                 showArrow
                 placeholder="Select one of our categories that best fit your product."
               >
