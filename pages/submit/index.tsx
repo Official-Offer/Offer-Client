@@ -126,6 +126,29 @@ const Submit: NextPage = () => {
   const [notLogin, setNotLogin] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [error, setError] = useState<any>();
+  const [tags, setTags] = useState<any>([]);
+  // user changed category, render corresponding tags
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            id: {
+              $eq: input.category,
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await axios
+        .get(`${URL_API_ADMIN}/app-categories?${query}`)
+        .then((res) => console.log(res.data.data));
+    })();
+  }, [input.category]);
+
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
   };
@@ -167,7 +190,6 @@ const Submit: NextPage = () => {
     </Modal>
   );
   const [failed, setFailed] = useState<any>();
-  useEffect(() => console.log(failed), [failed]);
   const checkImage300x300 = (value: any, name: any) => {
     var flag = true;
     const reader = new FileReader();
@@ -249,19 +271,32 @@ const Submit: NextPage = () => {
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
       // check unfilled fields, ignore optional fields
-      if (input[keys[i]] === "" && ["reviewArticle", "detailDescription"].includes(keys[i])) {
+      if (
+        input[keys[i]] === "" &&
+        ["reviewArticle", "detailDescription"].includes(keys[i])
+      ) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
         flag = true;
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
-      else if (keys[i]==="detailDescription" && input[keys[i]].length<100 || input[keys[i]].length>500) {
-        message.error(`Detail description must be longer at 100 characters and less than 500 characters`);
+      else if (
+        (keys[i] === "detailDescription" && input[keys[i]].length < 100) ||
+        input[keys[i]].length > 500
+      ) {
+        message.error(
+          `Detail description must be longer at 100 characters and less than 500 characters`
+        );
         flag = true;
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
-      else if (keys[i]==="shortDescription" && input[keys[i]].length<10 || input[keys[i]].length>100) {
-        message.error(`Short description must be longer at 10 characters and less than 100 characters`);
+      else if (
+        (keys[i] === "shortDescription" && input[keys[i]].length < 10) ||
+        input[keys[i]].length > 100
+      ) {
+        message.error(
+          `Short description must be longer at 10 characters and less than 100 characters`
+        );
         flag = true;
       }
       // check email
@@ -370,8 +405,8 @@ const Submit: NextPage = () => {
 
   const countNonNull = (arr: Array<any>) => {
     let res = 0;
-    for(let i=0;i<arr.length;i++) {
-      if (arr[i]) res++
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i]) res++;
     }
     return res;
   };
