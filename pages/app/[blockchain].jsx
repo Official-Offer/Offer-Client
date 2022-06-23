@@ -7,11 +7,13 @@ import {
 import {
   BoxALignCenter_Justify_ItemsBetween,
   BoxALignItemsCenter,
+  BoxAlignItemsCenter_FlexColumn,
   BoxAlignItemsEnd_FlexColumn,
   BoxALignItemsStart,
   BoxBlueBold,
   BoxBlueBorderRounded,
   BoxWhiteShadow,
+  DamnBorderedBlackBox,
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -39,11 +41,12 @@ import requestDapp from "@services/apiDapp";
 import { useEffect, useState } from "react";
 import { URL_API_DAPPVERSE, URL_API_IMG } from "@config/index";
 import axios from "axios";
-import { updown } from "@utils/numberDecorator";
+import { incdec, updown } from "@utils/numberDecorator";
 import moment from "moment";
 import { Modal } from "antd";
 import useForm from "@utils/hook/useForm";
 import { FacebookIcon } from "react-share";
+import { formatter } from "@utils/formatCurrency";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -54,6 +57,9 @@ const BlockchainDetails = () => {
   );
   const AppSlide = dynamic(() =>
     import("@components/main/app").then((mod) => mod.AppSlide)
+  );
+  const SmallSplineChart = dynamic(() =>
+    import("@components/main/app").then((mod) => mod.SmallSplineChart)
   );
   const id = router.query.blockchain;
   const [dapp, setDapp] = useState();
@@ -71,6 +77,7 @@ const BlockchainDetails = () => {
   const [pagination, setPagination] = useState(3);
   const [justCommented, setJustCommented] = useState(true);
   const [showSubcomment, setShowSubcomment] = useState(new Set());
+  const [tokenInfo, setTokenInfo] = useState();
   const viewSubcomment = (id) => {
     const newState = showSubcomment;
     if (newState.has(id)) newState.delete(id);
@@ -112,12 +119,13 @@ const BlockchainDetails = () => {
       setShowReviewPopup(false);
       notification.open({
         message: "Success 🥳",
-        description: "Your comment has successfully submitted. ",
+        description: "Your comment has been successfully submitted. ",
         duration: 3,
       });
     });
     setJustCommented(!justCommented);
   };
+
   useEffect(() => console.log(reviews), [reviews]);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
@@ -134,6 +142,19 @@ const BlockchainDetails = () => {
   }, [day, slug]);
   useEffect(() => {
     (async () => {
+      await axios
+        .create({
+          baseURL: URL_API_DAPPVERSE,
+        })
+        .get(`/chart/dapp/${slug}/`)
+        .then((res) => {
+          console.log(res.data.stats.token);
+          setTokenInfo(res.data.stats.token);
+        });
+    })();
+  }, [slug]);
+  useEffect(() => {
+    (async () => {
       const query = qs.stringify(
         {
           populate: "*",
@@ -146,7 +167,7 @@ const BlockchainDetails = () => {
         { encodeValuesOnly: true }
       );
       await request.get(`/dapps?${query}`).then((res) => {
-        // console.log(res.data.data[0].attributes);
+        console.log(res.data.data[0].attributes);
         setDapp(res.data.data[0].attributes);
         setSlug(res.data.data[0].attributes.slug);
       });
@@ -184,7 +205,7 @@ const BlockchainDetails = () => {
     })();
   }, [pagination, justCommented]);
 
-  const ReviewPopUp = (
+  const ReviewPopUp = () => (
     <Modal
       className="blockchain-details-reivew"
       title="Write a Reivew"
@@ -197,12 +218,7 @@ const BlockchainDetails = () => {
         <p className="blockchain-details-review-star">
           How would you rate this dapp?
         </p>
-        <Rate
-          allowHalf
-          defaultValue={0}
-          value={review.star}
-          onChange={(num) => setReview({ ...review, star: num })}
-        />
+        <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
         <p className="blockchain-details-review-star">
           What would you like to share with us?
         </p>
@@ -210,12 +226,18 @@ const BlockchainDetails = () => {
           className="blockchain-details-review-comment"
           placeholder="Write your comment..."
           value={review.comment}
-          onChange={(e) => setReview({ ...review, comment: e.target.value })}
+          onChange={onChangeComment}
+          name="comment"
         ></textarea>
         <ButtonBlue type="submit">Submit</ButtonBlue>
       </form>
     </Modal>
   );
+
+  const weirdLookingArrow = (number) => {
+    if (number > 0) return <img src="/img/icons/chevrons-up.png"></img>;
+    return <img src="/img/icons/chevrons-down.png"></img>;
+  };
 
   return (
     <section className="blockchain-details">
@@ -514,10 +536,124 @@ const BlockchainDetails = () => {
             <img className="mw-100" src="/img/banner/banner_main.png" alt="" />
           </div>
           <br />
-          <div className="blockchain-details-right-topic">
-            <h3 className="mb-3">Token Profile</h3>
-            <div className="row"></div>
-          </div>
+          {tokenInfo && ( //only shows when token has token info
+            <div className="blockchain-details-right-topic">
+              <h3 className="mb-3">Token Profile</h3>
+              <div className="row">
+                <div className="blockchain-details-bordered-top">
+                  <p className="blockchain-details-uni">UNI</p>
+                  <div className="blockchain-details-uni-content">
+                    <div className="row blockchain-details-uni-content-summary">
+                      <div className="col-3 blockchain-details-uni-logo-div">
+                        <img
+                          className="blockchain-details-uni-logo"
+                          src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`}
+                        ></img>
+                      </div>
+                      <div className="col-8">
+                        <div className="blockchain-details-flex">
+                          Token Price:
+                          <BoxAlignItemsCenter_FlexColumn>
+                            {" "}
+                            <p className="blockchain-details-uni-number">
+                              {" "}
+                              ${tokenInfo.price}{" "}
+                            </p>
+                            <p
+                              className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
+                                tokenInfo.price_gr
+                              )}`}
+                            >
+                              {tokenInfo.price_gr.toFixed(2)}%
+                              {updown(tokenInfo.price_gr)}
+                            </p>
+                          </BoxAlignItemsCenter_FlexColumn>
+                        </div>
+
+                        <div className="blockchain-details-flex">
+                          Market Cap:
+                          <BoxAlignItemsCenter_FlexColumn>
+                            <p>${tokenInfo.mkt_cap}</p>
+                            <p
+                              className={`blockchain-details-derivative-${incdec(
+                                tokenInfo.mkt_cap_gr
+                              )}`}
+                            >
+                              {formatter.format(tokenInfo.mkt_cap_gr)}%
+                              {updown(tokenInfo.mkt_cap_gr)}
+                            </p>
+                          </BoxAlignItemsCenter_FlexColumn>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <SmallSplineChart
+                        left={tokenInfo.chart.prices}
+                        right={tokenInfo.chart.mkt_caps}
+                        labels={tokenInfo.chart.labels}
+                      />
+                    </div>
+                    <DamnBorderedBlackBox>
+                      <p className="blockchain-details-metrics">Metrics</p>
+                      <p className="blockchain-details-metrics">Value/Amount</p>
+                    </DamnBorderedBlackBox>
+                    <table className="blockchain-details-metrics-table">
+                      <tbody>
+                        <tr>
+                          <td className="blockchain-details-metrics-row">
+                            Token Holders
+                          </td>
+                          <td>{formatter.format(tokenInfo.other_five_data.holders)}</td>
+                          <td>
+                            {tokenInfo.other_five_data.holders_gr.toFixed(2)}
+                            {weirdLookingArrow(
+                              tokenInfo.other_five_data.holders_gr
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="blockchain-details-metrics-row">
+                            Active Address
+                          </td>
+                          <td>{formatter.format(tokenInfo.other_five_data.address)}</td>
+                          <td>
+                            {tokenInfo.other_five_data.address_gr.toFixed(2)}
+                            {weirdLookingArrow(
+                              tokenInfo.other_five_data.address_gr
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="blockchain-details-metrics-row">
+                            Token Txs
+                          </td>
+                          <td>{formatter.format(tokenInfo.other_five_data.tx)}</td>
+                          <td>
+                            {tokenInfo.other_five_data.tx_gr.toFixed(2)}
+                            {weirdLookingArrow(
+                              tokenInfo.other_five_data.tx_gr
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td className="blockchain-details-metrics-row">
+                            Token Tx Volume
+                          </td>
+                          <td>{formatter.format(tokenInfo.other_five_data.tx_volume)}</td>
+                          <td>
+                            {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
+                            {weirdLookingArrow(
+                              tokenInfo.other_five_data.tx_volume_gr
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="blockchain-details-right-topic">
             <h3 className="mb-3">Related Topic</h3>
             <div className="row">
@@ -661,32 +797,7 @@ const BlockchainDetails = () => {
           </BoxWhiteShadow>
         </div>
       </div>
-      <Modal
-        className="blockchain-details-reivew"
-        title="Write a Reivew"
-        visible={showReviewPopup}
-        onCancel={(e) => {
-          setShowReviewPopup(false);
-        }}
-      >
-        <form onSubmit={onSubmitReview}>
-          <p className="blockchain-details-review-star">
-            How would you rate this dapp?
-          </p>
-          <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
-          <p className="blockchain-details-review-star">
-            What would you like to share with us?
-          </p>
-          <textarea
-            className="blockchain-details-review-comment"
-            placeholder="Write your comment..."
-            value={review.comment}
-            onChange={onChangeComment}
-            name="comment"
-          ></textarea>
-          <ButtonBlue type="submit">Submit</ButtonBlue>
-        </form>
-      </Modal>
+      <ReviewPopUp />
     </section>
   );
 };
