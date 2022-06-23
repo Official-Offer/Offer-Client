@@ -1,6 +1,7 @@
 import { FC } from "react";
 import dynamic from "next/dynamic";
 import moment from "moment";
+import { formatter } from "@utils/formatCurrency";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -85,6 +86,9 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
               style: {
                 colors: color,
               },
+              formatter: function (val, index) {
+                return formatter.format(val);
+              },
             },
             title: {
               style: {
@@ -101,6 +105,9 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
             labels: {
               style: {
                 colors: "black",
+              },
+              formatter: function (val, index) {
+                return val.toFixed(5);
               },
             },
             title: {
@@ -119,6 +126,9 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
             labels: {
               style: {
                 colors: color,
+              },
+              formatter: function (val, index) {
+                return formatter.format(val.toFixed(2));
               },
             },
             title: {

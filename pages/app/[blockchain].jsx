@@ -553,11 +553,9 @@ const BlockchainDetails = () => {
                       <div className="col-8">
                         <div className="blockchain-details-flex">
                           Token Price:
-                          <BoxAlignItemsCenter_FlexColumn>
-                            {" "}
+                          <div>
                             <p className="blockchain-details-uni-number">
-                              {" "}
-                              ${tokenInfo.price}{" "}
+                              ${tokenInfo.price}
                             </p>
                             <p
                               className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
@@ -567,15 +565,15 @@ const BlockchainDetails = () => {
                               {tokenInfo.price_gr.toFixed(2)}%
                               {updown(tokenInfo.price_gr)}
                             </p>
-                          </BoxAlignItemsCenter_FlexColumn>
+                          </div>
                         </div>
 
                         <div className="blockchain-details-flex">
                           Market Cap:
                           <BoxAlignItemsCenter_FlexColumn>
-                            <p>${tokenInfo.mkt_cap}</p>
+                            <p className="blockchain-details-uni-number">${tokenInfo.mkt_cap}</p>
                             <p
-                              className={`blockchain-details-derivative-${incdec(
+                              className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                 tokenInfo.mkt_cap_gr
                               )}`}
                             >

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import dynamic from "next/dynamic";
 import moment from "moment";
+import { formatter } from "@utils/formatCurrency";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -10,7 +11,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
   const series = [
     {
       name: "Price",
-      data: left,
+      data: left.map((val: Number) => val.toFixed(2)),
     },
     {
       name: "Market Cap",
@@ -78,6 +79,10 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           style: {
             colors: "black",
           },
+          formatter: function (val, index) {
+            return formatter.format(val);
+          },
+          forceNiceScale: true,
         },
         title: {
           style: {
