@@ -32,7 +32,7 @@ import { URL_API_ADMIN } from "config/index";
 import { Modal } from "antd";
 import validateEmail from "@utils/validateEmail";
 import { EmailIcon } from "react-share";
-
+import validateAddress from "@utils/validateEmail";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -255,7 +255,7 @@ const Submit: NextPage = () => {
       value = e.target.files[0];
     }
     //check size image
-    if (!checkImage(value, "images")) return;
+    if (!checkImage(value, "images", 300, 300)) return;
     const newState: Array<any> = input.images;
     if (value) newState[i] = value; //change null value
     handleChange({
@@ -379,34 +379,41 @@ const Submit: NextPage = () => {
             flag = true;
           });
       }
-      //check existed contract
+      //check contract
       else if (keys[i] === "tokenContract") {
-        const query = qs.stringify(
-          {
-            populate: "*",
-            filters: {
-              tokenContract: {
-                $eq: input[keys[i]],
+        if (validateAddress(input[keys[i]])) {
+          message.error("Invalid Address");
+          flag = true;
+        }
+        //check existed contract
+        else {
+          const query = qs.stringify(
+            {
+              populate: "*",
+              filters: {
+                tokenContract: {
+                  $eq: input[keys[i]],
+                },
               },
             },
-          },
-          {
-            encodeValuesOnly: true,
-          }
-        );
-        const result = await axios
-          .get(`${URL_API_ADMIN}/submit-dapps?${query}`)
-          .then((res) => {
-            if (res.data.data?.length > 0) {
-              //email already used
-              message.error("Already used contract.");
-              flag = true;
+            {
+              encodeValuesOnly: true,
             }
-          })
-          .catch(() => {
-            message.error("Something is wrong, damn it.");
-            flag = true;
-          });
+          );
+          const result = await axios
+            .get(`${URL_API_ADMIN}/submit-dapps?${query}`)
+            .then((res) => {
+              if (res.data.data?.length > 0) {
+                //email already used
+                message.error("Already used contract.");
+                flag = true;
+              }
+            })
+            .catch(() => {
+              message.error("Something is wrong, damn it.");
+              flag = true;
+            });
+        }
       }
       // check image of correct size
       else if (keys[i] === failed) {
