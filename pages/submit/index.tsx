@@ -45,19 +45,19 @@ const Submit: NextPage = () => {
     category: 7,
     tags: [],
     status: "live",
-    shortDescription: "Short",
-    detailDescription: "18cm",
+    shortDescription: "Shortgggggg",
+    detailDescription: "",
     reviewArticle: "www.abc.com",
     hasToken: false,
     tokenLogo: null,
-    tokenChain: 1,
+    tokenChain: " ",
     tokenSymbol: "BCC",
     tokenContract: "xD",
     tokenDecimal: "xD",
     tokenDescription: "xD",
     isOnCoingecko: "idk",
     isFullyOnChain: "yes",
-    dappChain: 1,
+    dappChain: " ",
     Socials: [
       { name: "Facebook", url: "", image: null },
       { name: "Twitter", url: "", image: null },
@@ -295,7 +295,7 @@ const Submit: NextPage = () => {
       // check unfilled fields, ignore optional fields
       if (
         input[keys[i]] === "" &&
-        ["reviewArticle", "detailDescription", "shortDescription"].includes(
+        !["reviewArticle", "detailDescription", "shortDescription", "dappChain", "tokenChain"].includes(
           keys[i]
         )
       ) {
@@ -305,8 +305,8 @@ const Submit: NextPage = () => {
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
-        (keys[i] === "detailDescription" && input[keys[i]].length < 100) ||
-        input[keys[i]].length > 500
+        (keys[i] === "detailDescription" && (input[keys[i]].length < 100) ||
+        input[keys[i]].length > 500) && input[keys[i]].length > 0
       ) {
         message.error(
           `Detail description must be longer at 100 characters and less than 500 characters`
@@ -315,8 +315,8 @@ const Submit: NextPage = () => {
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
-        (keys[i] === "shortDescription" && input[keys[i]].length < 10) ||
-        input[keys[i]].length > 100
+        (keys[i] === "shortDescription" && (input[keys[i]].length < 10) ||
+        input[keys[i]].length > 100) && input[keys[i]].length > 0
       ) {
         message.error(
           `Short description must be longer at 10 characters and less than 100 characters`
@@ -382,7 +382,7 @@ const Submit: NextPage = () => {
         input[keys[i]].forEach((file: any) => {
           if (file) formData.append(`files.${keys[i]}`, file, file.name);
         });
-      } else {
+      } else if (input[keys[i]]!==" "){ // unchoosen chain id
         data[keys[i]] = input[keys[i]];
       }
     }
