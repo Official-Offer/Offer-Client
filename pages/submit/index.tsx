@@ -190,7 +190,7 @@ const Submit: NextPage = () => {
     </Modal>
   );
   const [failed, setFailed] = useState<any>();
-  const checkImage300x300 = (value: any, name: any) => {
+  const checkImage = (value: any, name: any, minWidth: number, minHeight: number) => {
     var flag = true;
     const reader = new FileReader();
     reader.readAsDataURL(value);
@@ -200,9 +200,14 @@ const Submit: NextPage = () => {
       image.onload = function () {
         const height = this.height;
         const width = this.width;
-        if (width < 300 || height < 300) {
+        if (width < minWidth || height < minHeight) {
           message.error(
-            "Image must be at least 300 pixels high and 300 pixels wide"
+            `Image must be at least ${minHeight} pixels high and ${minWidth} pixels wide.`
+          );
+          setFailed(name);
+        } else if (width !== height) {
+          message.error(
+            `Image must be of ratio 1:1.`
           );
           setFailed(name);
         } else {
@@ -224,7 +229,10 @@ const Submit: NextPage = () => {
       value = e.target.files[0];
     }
     //check image size first
-    if (!checkImage300x300(value, field)) return;
+    //size 48x48 for token logo, 300x300 else
+    const minWidth = field === "tokenLogo" ? 48 : 300;
+    const minHeigth = field === "tokenLogo" ? 48 : 300;
+    if (!checkImage(value, field, minWidth, minHeigth)) return;
     handleChange({
       target: {
         name: field,
@@ -243,7 +251,7 @@ const Submit: NextPage = () => {
       value = e.target.files[0];
     }
     //check size image
-    if (!checkImage300x300(value, "images")) return;
+    if (!checkImage(value, "images")) return;
     const newState: Array<any> = input.images;
     if (value) newState[i] = value; //change null value
     handleChange({
