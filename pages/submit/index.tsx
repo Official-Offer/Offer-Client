@@ -377,6 +377,35 @@ const Submit: NextPage = () => {
             flag = true;
           });
       }
+      //check existed contract
+      else if (keys[i] === "tokenContract") {
+        const query = qs.stringify(
+          {
+            populate: "*",
+            filters: {
+              tokenContract: {
+                $eq: input[keys[i]],
+              },
+            },
+          },
+          {
+            encodeValuesOnly: true,
+          }
+        );
+        const result = await axios
+          .get(`${URL_API_ADMIN}/submit-dapps?${query}`)
+          .then((res) => {
+            if (res.data.data?.length > 0) {
+              //email already used
+              message.error("Already used contract.");
+              flag = true;
+            }
+          })
+          .catch(() => {
+            message.error("Something is wrong, damn it.");
+            flag = true;
+          });
+      }
       // check image of correct size
       else if (keys[i] === failed) {
         message.error(`${failed} image doesn't meet the standard`);
@@ -877,13 +906,13 @@ const Submit: NextPage = () => {
                   className={`main-submit-character-count${
                     input.tokenDescription.length === 0
                       ? "-hidden"
-                      : input.tokenDescription.length > 500 ||
-                        input.tokenDescription.length < 100
+                      : input.tokenDescription.length > 200 ||
+                        input.tokenDescription.length < 10
                       ? "-error"
                       : ""
                   }`}
                 >
-                  {input.detailDescription.length}/500 Characters
+                  {input.tokenDescription.length}/200 Characters
                 </p>
               </div>
             )}
