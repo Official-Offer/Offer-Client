@@ -32,6 +32,7 @@ import { URL_API_ADMIN } from "config/index";
 import { Modal } from "antd";
 import validateEmail from "@utils/validateEmail";
 import { EmailIcon } from "react-share";
+
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -55,7 +56,7 @@ const Submit: NextPage = () => {
     tokenContract: "xD",
     tokenDecimal: "xD",
     tokenDescription: "xD",
-    isOnCoingecko: "idk",
+    isOnCoingecko: "",
     isFullyOnChain: "yes",
     dappChain: " ",
     Socials: [
@@ -304,6 +305,7 @@ const Submit: NextPage = () => {
           "shortDescription",
           "dappChain",
           "tokenChain",
+          "isOnCoingecko",
         ].includes(keys[i])
       ) {
         message.error(`Field ${keys[i]} cannot be empty`);
