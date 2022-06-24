@@ -15,6 +15,10 @@ export const BoxALignItemsCenter = styled.div `
   display: flex;
   align-items: center;
 `;
+export const BoxJustifyContentSpaceBetween = styled.div `
+  display: flex;
+  justify-content: space-around;
+`;
 export const BoxALignItemsCenterNFTItems = styled.div `
   /* display: flex; */
   align-items: center;

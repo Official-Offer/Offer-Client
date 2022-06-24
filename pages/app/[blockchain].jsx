@@ -14,6 +14,7 @@ import {
   BoxBlueBorderRounded,
   BoxWhiteShadow,
   DamnBorderedBlackBox,
+  BoxJustifyContentSpaceBetween
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -31,7 +32,7 @@ import {
 } from "react-feather";
 import { TabMain, TabMain_Sub } from "@styles/styled-components/styledTabs";
 import { useRouter } from "next/router";
-import { Avatar, notification, Rate, Switch } from "antd";
+import { Avatar, message, notification, Rate, Switch } from "antd";
 // import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -45,8 +46,17 @@ import { incdec, updown } from "@utils/numberDecorator";
 import moment from "moment";
 import { Modal } from "antd";
 import useForm from "@utils/hook/useForm";
-import { FacebookIcon } from "react-share";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+} from "react-share";
 import { formatter } from "@utils/formatCurrency";
+import LoginPopup from "@components/navbar/LoginPopup";
+import requestSSO from "@services/apiSSO";
 const BlockchainDetails = () => {
   const router = useRouter();
   const AppStatistical = dynamic(() =>
@@ -125,6 +135,8 @@ const BlockchainDetails = () => {
     });
     setJustCommented(!justCommented);
   };
+  const [login, setLogin] = useState(false);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   useEffect(() => console.log(reviews), [reviews]);
   useEffect(() => setDay(router.query.days || 7), [router]);
@@ -204,7 +216,26 @@ const BlockchainDetails = () => {
         .then((res) => setReviews(res.data.data));
     })();
   }, [pagination, justCommented]);
-
+  useEffect(() => {
+    (async () => {
+      // uncomment when deployed on dev since localhost can't access cookie
+      await requestSSO
+        .get(`/users/me`)
+        .then(() => {
+          setLogin(true);
+        })
+        .catch(() => {
+          setLogin(false);
+        });
+    })();
+  }, []);
+  const onShare = () => {
+    if (!login) {
+      setShowLoginPopup(true);
+    } else {
+      setShowSharePopup(true);
+    }
+  };
   const ReviewPopUp = () => (
     <Modal
       className="blockchain-details-reivew"
@@ -241,6 +272,34 @@ const BlockchainDetails = () => {
   const renderDollar = (name) => {
     return ["Volume", "Transactions"].includes(name) ? "$" : "";
   };
+
+  const [showSharePopup, setShowSharePopup] = useState(false);
+  const SocialSharePopup = () => (
+    <Modal
+      title={`Share ${dapp.name} on Social Media`}
+      visible={showSharePopup}
+      onCancel={() => setShowSharePopup(false)}
+    >
+      <BoxJustifyContentSpaceBetween>
+        <FacebookShareButton url={dapp?.website} quote="Baby I'm real">
+          <FacebookIcon round size={62}></FacebookIcon>
+        </FacebookShareButton>
+        <TwitterShareButton
+          title="Checkout this Dapp"
+          url={dapp?.website}
+        >
+          <TwitterIcon size={62} round />
+        </TwitterShareButton>
+        <TelegramShareButton
+          title="Checkout this Dapp"
+          url={dapp?.website}
+        >
+          <TelegramIcon size={62} round></TelegramIcon>
+        </TelegramShareButton>
+      </BoxJustifyContentSpaceBetween>
+    </Modal>
+  );
+  console.log(dapp);
 
   return (
     <section className="blockchain-details">
@@ -376,7 +435,7 @@ const BlockchainDetails = () => {
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter>
+                <BoxALignItemsCenter onClick={onShare}>
                   <Share2 color="black" />
                   <span className="ms-2">Share</span>
                 </BoxALignItemsCenter>
@@ -817,6 +876,8 @@ const BlockchainDetails = () => {
         </div>
       </div>
       <ReviewPopUp />
+      <LoginPopup isVisible={showLoginPopup} setVisible={setShowLoginPopup} />
+      <SocialSharePopup />
     </section>
   );
 };
