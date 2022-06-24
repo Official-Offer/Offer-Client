@@ -450,9 +450,10 @@ const BlockchainDetails = () => {
                     className="blockchain-details-price-switch"
                     onChange={() => setShowPrice(!showPrice)}
                   ></Switch>
-                  Show Price Comparison on Chart
+                  Show Price Comparison On Chart
                 </div>
                 {stat?.stats.components.map((comp, i) => {
+                  console.log(comp);
                   return (
                     <div
                       className="col-lg-6 col-12 blockchain-details-dashboard-users"

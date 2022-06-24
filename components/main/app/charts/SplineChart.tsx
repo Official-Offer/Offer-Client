@@ -8,7 +8,8 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
-  const datasets = data.data.charts.datasets[data.name];
+  const datasets =
+    data.data.charts.datasets[Object.keys(data.data.charts.datasets)[0]];
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
@@ -24,6 +25,11 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     }
     return res;
   };
+  const primitivePrice = data.data.charts.price?.data;
+  const damnPrice = processPrice(labels, price);
+  const finalPrice = primitivePrice || damnPrice;
+  const first = labels[0];
+  const last = labels[1];
   const series = showPrice
     ? [
         {
@@ -32,7 +38,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
         },
         {
           name: "Price",
-          data: processPrice(labels, price),
+          data: finalPrice,
         },
       ]
     : [
@@ -86,7 +92,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
               style: {
                 colors: color,
               },
-              formatter: function (val, index) {
+              formatter: function (val: any) {
                 return formatter.format(val);
               },
             },
@@ -106,8 +112,8 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
               style: {
                 colors: "black",
               },
-              formatter: function (val, index) {
-                return val.toFixed(5);
+              formatter: function (val: any) {
+                return val.toFixed(3);
               },
             },
             title: {
@@ -127,7 +133,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
               style: {
                 colors: color,
               },
-              formatter: function (val, index) {
+              formatter: function (val: any) {
                 return formatter.format(val.toFixed(2));
               },
             },
@@ -139,7 +145,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
           },
         ],
     tooltip: {
-      theme: "dark",
+      theme: "light",
     },
     colors: [color, "#223052"],
     legend: {

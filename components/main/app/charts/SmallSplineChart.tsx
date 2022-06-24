@@ -92,13 +92,16 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
       },
     ],
     tooltip: {
-      theme: "dark",
+      theme: "light",
     },
     colors: [color, "#223052"],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
     },
+    markers: {
+      colors: ['#FFF']
+    }
   };
 
   return <Chart options={options} series={series} type="line" height={180} />;
