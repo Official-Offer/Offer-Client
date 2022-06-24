@@ -99,6 +99,7 @@ const BlockchainDetails = () => {
   const openParentlessReview = () => {
     if (!login) {
       setShowLoginPopup(true);
+      return;
     }
     setReviewParent(null);
     setShowReviewPopup(true);
@@ -106,6 +107,7 @@ const BlockchainDetails = () => {
   const openChildReview = (id) => {
     if (!login) {
       setShowLoginPopup(true);
+      return;
     }
     setReviewParent(id);
     setShowReviewPopup(true);
@@ -250,39 +252,6 @@ const BlockchainDetails = () => {
     }
   };
   const [reviewError, setReviewError] = useState(false);
-  const ReviewPopUp = () => (
-    <Modal
-      className="blockchain-details-reivew"
-      title="Write a Reivew"
-      visible={showReviewPopup}
-      onCancel={(e) => {
-        setShowReviewPopup(false);
-      }}
-    >
-      <form onSubmit={onSubmitReview}>
-        <p className="blockchain-details-review-star">
-          How would you rate this dapp?
-        </p>
-        <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
-        <p className="blockchain-details-review-star">
-          What would you like to share with us?
-        </p>
-        <textarea
-          className="blockchain-details-review-comment"
-          placeholder="Write your comment..."
-          value={review.comment}
-          onChange={onChangeComment}
-          name="comment"
-        ></textarea>
-        {reviewError && (
-          <p className="blockchain-details-error">
-            {"Your comment can't be empty."}
-          </p>
-        )}
-        <ButtonBlue type="submit">Submit</ButtonBlue>
-      </form>
-    </Modal>
-  );
 
   const weirdLookingArrow = (number) => {
     if (number > 0) return <img src="/img/icons/chevrons-up.png"></img>;
