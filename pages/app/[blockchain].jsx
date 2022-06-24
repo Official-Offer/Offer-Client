@@ -238,6 +238,9 @@ const BlockchainDetails = () => {
     if (number > 0) return <img src="/img/icons/chevrons-up.png"></img>;
     return <img src="/img/icons/chevrons-down.png"></img>;
   };
+  const renderDollar = (name) => {
+    return ["Volume", "Transactions"].includes(name) ? "$" : "";
+  };
 
   return (
     <section className="blockchain-details">
@@ -453,7 +456,6 @@ const BlockchainDetails = () => {
                   Show Price Comparison On Chart
                 </div>
                 {stat?.stats.components.map((comp, i) => {
-                  console.log(comp);
                   return (
                     <div
                       className="col-lg-6 col-12 blockchain-details-dashboard-users"
@@ -466,34 +468,35 @@ const BlockchainDetails = () => {
                         showPrice={showPrice}
                       />
                       <BoxALignItemsStart>
-                        <div
-                          className={
-                            comp.name == "Social Signal" ? "dot" : "dot-yellow"
-                          }
-                        />
                         <div className="ms-2">
-                          <p className="title">{comp.name}</p>
                           <div className="exp-item">
                             <span className="name">24h: </span>
-                            <span className="value">{comp.data["24h"]}</span>
+                            <span className="value">
+                              {renderDollar(comp.name)}
+                              {formatter.format(comp.data["24h"])}
+                            </span>
                             <span className="increase">
-                              {comp.data["24h_gr"]}%
+                              {comp.data["24h_gr"].toFixed(2)}%
                               {updown(comp.data["24h_gr"])}
                             </span>
                           </div>
                           {comp.data.total && (
                             <div className="exp-item">
                               <span className="name">Total: </span>
-                              <span className="value">{comp.data.total}</span>
+                              <span className="value">
+                                {renderDollar(comp.name)}
+                                {formatter.format(comp.data.total)}
+                              </span>
                               <span className="time">
-                                {comp.data.total_days} (days)
+                                ({comp.data.total_days} days)
                               </span>
                             </div>
                           )}
                           <div className="exp-item">
                             <span className="name">ATH: </span>
                             <span className="value">
-                              {comp.data.all_time_high}
+                              {renderDollar(comp.name)}
+                              {formatter.format(comp.data.all_time_high)}
                             </span>
                             <span className="time">
                               (
