@@ -48,7 +48,8 @@
     "remark-html": "^15.0.1",
     "sass": "^1.50.0",
     "styled-components": "^5.3.5",
-    "swiper": "^8.1.4"
+    "swiper": "^8.1.4",
+    "web3-react": "^5.0.5"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.2",

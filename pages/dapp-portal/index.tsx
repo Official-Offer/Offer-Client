@@ -24,7 +24,7 @@ const DappPortal: NextPage = () => {
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");
   const [cate, setCate] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(8);
+  const [viewMore, setNumberViewMore] = useState(18);
   const [sort, setSort] = useState(["socialSignal", "desc"]);
   const loadMore = () => setNumberViewMore(viewMore + 10);
   useEffect(() => {
@@ -61,6 +61,7 @@ const DappPortal: NextPage = () => {
       });
       await request.get(`/dapps?${query}`).then((res) => {
         // console.log(query);
+        console.log(res.data.data);
         display = [...display, ...res.data.data];
       });
       setTokenList(display);
@@ -75,13 +76,20 @@ const DappPortal: NextPage = () => {
           <h1 className="mb-0">Dapp Portal</h1>
         </TitleGlobal>
         <br />
-        <TabsChain setChain={setChain} chain={chain} />
+        <TabsChain
+          setChain={setChain}
+          chain={chain}
+          setCate={setCate}
+          cate={cate}
+        />
         <br />
         <TabsCategory setCate={setCate} cate={cate} />
         <br />
         <TableDapp tokenList={tokenList} sort={sort} setSort={setSort} />
         <div className="loadmore">
-          <BorderedButtonTransparent onClick={loadMore}>Load more</BorderedButtonTransparent>
+          <BorderedButtonTransparent onClick={loadMore}>
+            Load more
+          </BorderedButtonTransparent>
         </div>
       </section>
     </>

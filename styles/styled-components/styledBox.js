@@ -15,6 +15,10 @@ export const BoxALignItemsCenter = styled.div `
   display: flex;
   align-items: center;
 `;
+export const BoxJustifyContentSpaceBetween = styled.div `
+  display: flex;
+  justify-content: space-around;
+`;
 export const BoxALignItemsCenterNFTItems = styled.div `
   /* display: flex; */
   align-items: center;
@@ -32,11 +36,31 @@ export const BoxAlignItemsEnd_FlexColumn = styled.div `
   align-items: end;
   flex-direction: column;
 `;
+export const BoxAlignItemsCenter_FlexColumn = styled.div `
+display: flex;
+align-items: center;
+flex-direction: column;
+`;
+
 export const BoxALignCenter_Justify_ItemsCenter = styled.div `
   display: flex;
   align-items: center;
   justify-content: center;
 `;
+
+export const DamnBorderedBlackBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #0A222B;
+  border-radius: 8px;
+  color: #fff;
+  align-items: center;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 12px;
+`
+
 export const BoxALignCenter_Justify_ItemsBetween = styled.div `
   display: flex;
   align-items: center;
@@ -68,7 +92,7 @@ export const BoxBlueBold = styled.div `
   border-radius: 10px;
 `;
 export const BoxWhiteShadow = styled.div `
-  border-radius: 8px;
+  border-radius: 0px;
   box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;

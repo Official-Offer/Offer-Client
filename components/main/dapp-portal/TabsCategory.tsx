@@ -11,20 +11,41 @@ import request from "@services/apiService";
 const { Option } = Select;
 
 export const listCategory = [
-  { name: "All", tag: "all", icon: "", icon_white: "" },
-  { name: "Gambling", tag: "gambling", icon: "/img/icons/icn-gambling.png" },
-  { name: "Game", tag: "game", icon: "/img/icons/icn-game.png" },
-  { name: "Exchange", tag: "exchange", icon: "/img/icons/icn-exchange.png" },
-  { name: "Finance", tag: "finance", icon: "/img/icons/icn-finance.png" },
-  { name: "Social", tag: "social", icon: "/img/icons/icn-social.png" },
+  { name: "All", tag: "all", icon: "", icon_white: "", id: "all" },
+  {
+    name: "Gambling",
+    tag: "gambling",
+    icon: "/img/icons/icn-gambling.png",
+    id: 6,
+  },
+  { name: "Game", tag: "game", icon: "/img/icons/icn-game.png", id: 7 },
+  {
+    name: "Exchange",
+    tag: "exchange",
+    icon: "/img/icons/icn-exchange.png",
+    id: 8,
+  },
+  {
+    name: "Finance",
+    tag: "finance",
+    icon: "/img/icons/icn-finance.png",
+    id: 9,
+  },
+  { name: "Social", tag: "social", icon: "/img/icons/icn-social.png", id: 10 },
   {
     name: "Marketplace",
     tag: "marketplace",
     icon: "/img/icons/icn-marketplace.png",
+    id: 11,
   },
-  { name: "Utilities", tag: "utils", icon: "/img/icons/icn-utils.png" },
-  { name: "Others", tag: "others", icon: "/img/icons/icn-others.png" },
-  { name: "High-risk", tag: "high-risk", icon: "/img/icons/icn-high-risk.png" },
+  { name: "Utilities", tag: "utils", icon: "/img/icons/icn-utils.png", id: 12 },
+  { name: "Others", tag: "others", icon: "/img/icons/icn-others.png", id: 13 },
+  {
+    name: "High-risk",
+    tag: "high-risk",
+    icon: "/img/icons/icn-high-risk.png",
+    id: 14,
+  },
 ];
 
 export default function TabsCategory({ setCate, cate }: any): ReactElement {
@@ -84,15 +105,70 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
           })}
         </div>
         <BoxALignItemsCenter className="tab-bar-category-right">
-          <Select defaultValue="all" style={{ width: 90 }}>
-            <Option value="all">All</Option>
+          <Select
+            defaultValue={router.query.type || "all"}
+            style={{ width: 90 }}
+          >
+            <Option value="all">
+              <Link
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=all`}
+              >
+                All
+              </Link>
+            </Option>
+            <Option value="new">
+              <Link
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=new`}
+              >
+                New
+              </Link>
+            </Option>
+            <Option value="token">
+              <Link
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=token`}
+              >
+                Token
+              </Link>
+            </Option>
           </Select>
           <Select
             className="ms-2"
-            defaultValue="24hours"
+            defaultValue={router.query.timeKey || "24hours"}
             style={{ width: 100 }}
           >
-            <Option value="24hours">24 hours</Option>
+            <Option value="24hours">
+              <Link
+                href={`dapp-portal/?timeKey=24h&type=${
+                  !router.query.type ? "all" : router.query.type
+                }`}
+              >
+                24 hours
+              </Link>
+            </Option>
+            <Option value="7d">
+              <Link
+                href={`dapp-portal/?timeKey=7d&type=${
+                  !router.query.type ? "all" : router.query.type
+                }`}
+              >
+                7 days
+              </Link>
+            </Option>
+            <Option value="30d">
+              <Link
+                href={`dapp-portal/?timeKey=30d&type=${
+                  !router.query.type ? "all" : router.query.type
+                }`}
+              >
+                30 days
+              </Link>
+            </Option>
           </Select>
         </BoxALignItemsCenter>
       </div>
@@ -101,13 +177,13 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
           <TabMain>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=${
-                  !router.query.time ? "0" : router.query.time
-                }&type=0`}
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=all`}
               >
                 <TabMain_Sub
                   className={
-                    !router.query.type || router.query.type === "0"
+                    !router.query.type || router.query.type === "all"
                       ? "active"
                       : ""
                   }
@@ -118,12 +194,12 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             </span>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=${
-                  !router.query.time ? "0" : router.query.time
-                }&type=1`}
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=new`}
               >
                 <TabMain_Sub
-                  className={router.query.type === "1" ? "active" : ""}
+                  className={router.query.type === "new" ? "active" : ""}
                 >
                   New
                 </TabMain_Sub>
@@ -131,12 +207,12 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             </span>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=${
-                  !router.query.time ? "0" : router.query.time
-                }&type=2`}
+                href={`dapp-portal/?timeKey=${
+                  !router.query.timeKey ? "24h" : router.query.timeKey
+                }&type=token`}
               >
                 <TabMain_Sub
-                  className={router.query.type === "2" ? "active" : ""}
+                  className={router.query.type === "token" ? "active" : ""}
                 >
                   Token
                 </TabMain_Sub>
@@ -146,13 +222,13 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
           <TabMain>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=0&type=${
-                  !router.query.type ? "0" : router.query.type
+                href={`dapp-portal/?timeKey=24h&type=${
+                  !router.query.type ? "all" : router.query.type
                 }`}
               >
                 <TabMain_Sub
                   className={
-                    !router.query.time || router.query.time === "0"
+                    !router.query.timeKey || router.query.timeKey === "24h"
                       ? "active"
                       : ""
                   }
@@ -163,12 +239,12 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             </span>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=1&type=${
-                  !router.query.type ? "0" : router.query.type
+                href={`dapp-portal/?timeKey=7d&type=${
+                  !router.query.type ? "all" : router.query.type
                 }`}
               >
                 <TabMain_Sub
-                  className={router.query.time === "1" ? "active" : ""}
+                  className={router.query.timeKey === "7d" ? "active" : ""}
                 >
                   7 Days
                 </TabMain_Sub>
@@ -176,12 +252,12 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             </span>
             <span className="d-inline-flex position-relative">
               <Link
-                href={`/?time=2&type=${
-                  !router.query.type ? "0" : router.query.type
+                href={`dapp-portal/?timeKey=30d&type=${
+                  !router.query.type ? "all" : router.query.type
                 }`}
               >
                 <TabMain_Sub
-                  className={router.query.time === "2" ? "active" : ""}
+                  className={router.query.timeKey === "30d" ? "active" : ""}
                 >
                   30 Days
                 </TabMain_Sub>

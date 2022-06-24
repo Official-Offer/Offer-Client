@@ -73,44 +73,77 @@
                 &.all {
                     background: $blue-color;
                 }
-                &.eth {
+                &.ethe {
                     background: linear-gradient(45deg, #8991b1, #454a74);
                 }
                 &.bnb {
                     background: linear-gradient(45deg, #ede0b6, #f0b90b);
                 }
-                &.mat {
-                    background: linear-gradient(45deg, #8247e5, #b87df4);
+                &.poly {
+                    background: linear-gradient(45deg, #d7cbeb, #b87df4);
                 }
-                &.tro {
-                    background: linear-gradient(45deg, #e36159, #c3322d);
+                &.tron {
+                    background: linear-gradient(45deg, #e2b1ae, #c3322d);
                 }
                 &.neo {
                     background: linear-gradient(45deg, #85e359, #109110);
                 }
-                &.ste {
+                &.stee {
                     background: linear-gradient(45deg, #598ee3, #162cd1);
                 }
-                &.tom {
+                &.tomo {
                     background: linear-gradient(45deg, #b4e3af, #2c900d);
                 }
-                &.vex {
+                &.vexa {
                     background: linear-gradient(45deg, #cfd8cf, #515350);
                 }
-                &.ico {
+                &.icon {
                     background: linear-gradient(45deg, #59cee3, #07515e);
                 }
-                &.chi {
+                &.chil {
                     background: linear-gradient(45deg, #e36159, #c3322d);
                 }
-                &.hiv {
-                    background: linear-gradient(45deg, #e36159, #c3322d);
+                &.hive {
+                    background: linear-gradient(45deg, #d49b98, #c3322d);
                 }
-                &.nea {
+                &.near {
                     background: linear-gradient(45deg, #ededed, #464646);
                 }
-                &.thu {
+                &.thun {
                     background: linear-gradient(45deg, #e6edb6, #e1f03b);
+                }
+                &.polk{
+                    background: linear-gradient(45deg, #bbbbbb, #cc3232);
+                }
+                &.kusa {
+                    background: linear-gradient(45deg, #f0f0f0, #4f4f4f);
+                }
+                &.bitc {
+                    background: linear-gradient(45deg, #ffd5b9, #fd9a0e);
+                }
+                &.moon {
+                    background: linear-gradient(45deg, #f4b9ce, #81fd6d);
+                }
+                &.wanc {
+                    background: linear-gradient(45deg, #ccfaff, #1a95b4);
+                }
+                &.celo {
+                    background: linear-gradient(45deg, #ecf186, #2fb51d);
+                }
+                &.klay, &.bloc{
+                    background: linear-gradient(45deg, #f6f6f6, #676767);
+                }
+                &.obyt {
+                    background: linear-gradient(45deg, #ffffff, #66deff);
+                }
+                &.zill {
+                    background: linear-gradient(45deg, #ffffff, #098000);
+                }
+                &.othe {
+                    background: linear-gradient(45deg, #ffffff, #505050);
+                }
+                &.tezo {
+                    background: linear-gradient(45deg, #ffffff, #66ccff);
                 }
             }
             &.eth {
@@ -155,6 +188,9 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 50px;
+    @include sm {
+        margin-top: 20px !important;
+    }
     &-left {
         width: 80%;
         display: inline-flex;
