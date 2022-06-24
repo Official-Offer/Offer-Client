@@ -295,6 +295,7 @@ const BlockchainDetails = () => {
     }
   };
 
+  console.log(dapp);
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -599,7 +600,9 @@ const BlockchainDetails = () => {
           <br />
           {tokenInfo && ( //only shows when token has token info
             <div className="blockchain-details-right-topic">
-              <h3 className="mb-3">Token Profile</h3>
+              <h3 className="mb-3 blockchain-details-section-title">
+                Token Profile
+              </h3>
               <div className="row">
                 <div className="blockchain-details-bordered-top">
                   <p className="blockchain-details-uni">UNI</p>
@@ -728,7 +731,9 @@ const BlockchainDetails = () => {
             </div>
           )}
           <div className="blockchain-details-right-topic">
-            <h3 className="mb-3">Related Topic</h3>
+            <h3 className="mb-3 blockchain-details-section-title">
+              Related Topic
+            </h3>
             <div className="row">
               <div className="col-lg-6 col-12 blockchain-details-right-topic-item">
                 <a href="#" className="">
@@ -745,8 +750,24 @@ const BlockchainDetails = () => {
             </div>
           </div>
           <div className="blockchain-details-right-topic">
-            <h3 className="mb-3">Related Topic</h3>
-            <div className="row"></div>
+            <h3 className="mb-3 blockchain-details-section-title">
+              More About {dapp?.name}
+            </h3>
+            <div className="row">
+              <div className="blockchain-details-bordered-top">
+                <img
+                  className="blockchain-details-media"
+                  src="/img/unicorn.png"
+                ></img>
+                <div className="blockchain-details-wrapper">
+                  <p className="blockchain-details-title">
+                    Whales Tend To Stay In Uniswap V3 Than V2? How's Its
+                    Performance Compared To V2?
+                  </p>
+                  <p className="blockchain-details-date">May 10 . 3671 Views</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="empty_space_height50" />
