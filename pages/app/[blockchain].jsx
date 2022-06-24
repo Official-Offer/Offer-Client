@@ -97,10 +97,12 @@ const BlockchainDetails = () => {
   };
   const viewMore = () => setPagination(pagination + 3);
   const openParentlessReview = () => {
+    if (!login) {setShowLoginPopup(true);}
     setReviewParent(null);
     setShowReviewPopup(true);
   };
   const openChildReview = (id) => {
+    if (!login) {setShowLoginPopup(true);}
     setReviewParent(id);
     setShowReviewPopup(true);
   };
