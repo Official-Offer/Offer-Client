@@ -1,5 +1,6 @@
 import {
   FacebookFilled,
+  HeartFilled,
   TwitterOutlined,
   UserOutlined,
   YoutubeFilled,
@@ -14,7 +15,7 @@ import {
   BoxBlueBorderRounded,
   BoxWhiteShadow,
   DamnBorderedBlackBox,
-  BoxJustifyContentSpaceBetween
+  BoxJustifyContentSpaceBetween,
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -276,7 +277,7 @@ const BlockchainDetails = () => {
   const [showSharePopup, setShowSharePopup] = useState(false);
   const SocialSharePopup = () => (
     <Modal
-      title={`Share ${dapp.name} on Social Media`}
+      title={`Share ${dapp?.name} on Social Media`}
       visible={showSharePopup}
       onCancel={() => setShowSharePopup(false)}
     >
@@ -284,22 +285,29 @@ const BlockchainDetails = () => {
         <FacebookShareButton url={dapp?.website} quote="Baby I'm real">
           <FacebookIcon round size={62}></FacebookIcon>
         </FacebookShareButton>
-        <TwitterShareButton
-          title="Checkout this Dapp"
-          url={dapp?.website}
-        >
+        <TwitterShareButton title="Checkout this Dapp" url={dapp?.website}>
           <TwitterIcon size={62} round />
         </TwitterShareButton>
-        <TelegramShareButton
-          title="Checkout this Dapp"
-          url={dapp?.website}
-        >
+        <TelegramShareButton title="Checkout this Dapp" url={dapp?.website}>
           <TelegramIcon size={62} round></TelegramIcon>
         </TelegramShareButton>
       </BoxJustifyContentSpaceBetween>
     </Modal>
   );
   console.log(dapp);
+
+  const [like, setLike] = useState(false);
+  const onLike = async () => {
+    if (!login) {
+      setShowLoginPopup(true);
+    } else {
+      //post and change button's
+      await requestDapp
+        .post("/dapp/favorites", { data: { dapp: id } })
+        .then(() => setLike(!like))
+        .catch(() => message.error("Something is wrong, damn it!"));
+    }
+  };
 
   return (
     <section className="blockchain-details">
@@ -429,8 +437,12 @@ const BlockchainDetails = () => {
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter>
-                  <Heart color="black" />
+                <BoxALignItemsCenter onClick={onLike}>
+                  {!like ? (
+                    <Heart color="black" />
+                  ) : (
+                    <img src="/img/icons/heart.png" />
+                  )}
                   <span className="ms-2">Like</span>
                 </BoxALignItemsCenter>
               </Button>
