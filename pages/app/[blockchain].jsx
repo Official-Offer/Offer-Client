@@ -97,12 +97,16 @@ const BlockchainDetails = () => {
   };
   const viewMore = () => setPagination(pagination + 3);
   const openParentlessReview = () => {
-    if (!login) {setShowLoginPopup(true);}
+    if (!login) {
+      setShowLoginPopup(true);
+    }
     setReviewParent(null);
     setShowReviewPopup(true);
   };
   const openChildReview = (id) => {
-    if (!login) {setShowLoginPopup(true);}
+    if (!login) {
+      setShowLoginPopup(true);
+    }
     setReviewParent(id);
     setShowReviewPopup(true);
   };
@@ -111,6 +115,11 @@ const BlockchainDetails = () => {
     setReview({ ...review, comment: e.target.value });
   const onSubmitReview = async (e) => {
     e.preventDefault();
+    if (review.comment.length === 0) {
+      setReviewError(true);
+      return;
+    }
+    setReviewError(false);
     const data = reviewParent
       ? {
           data: {
@@ -239,6 +248,7 @@ const BlockchainDetails = () => {
       setShowSharePopup(true);
     }
   };
+  const [reviewError, setReviewError] = useState(false);
   const ReviewPopUp = () => (
     <Modal
       className="blockchain-details-reivew"
@@ -263,7 +273,10 @@ const BlockchainDetails = () => {
           onChange={onChangeComment}
           name="comment"
         ></textarea>
-        <ButtonBlue type="submit">Submit</ButtonBlue>
+        {reviewError && <p className="blockchain-details-error">{"Your comment can't be empty."}</p>}
+        <ButtonBlue type="submit">
+          Submit
+        </ButtonBlue>
       </form>
     </Modal>
   );
@@ -296,7 +309,6 @@ const BlockchainDetails = () => {
       </BoxJustifyContentSpaceBetween>
     </Modal>
   );
-  console.log(dapp);
 
   const [like, setLike] = useState(false);
   const onLike = async () => {
