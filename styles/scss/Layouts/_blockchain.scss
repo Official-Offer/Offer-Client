@@ -385,11 +385,13 @@
   &-media {
     width: 100%;
     padding: 15px;
+    border-radius: 30px;
   }
   &-wrapper {
     display: flex;
     flex-direction: column;
     padding: 0 15px;
+    width: 100%;
   }
   &-section-title {
     font-family: "Circular Std";

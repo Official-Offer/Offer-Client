@@ -295,6 +295,30 @@ const BlockchainDetails = () => {
     }
   };
 
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            dapp: {
+              id: {
+                $eq: id,
+              },
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await request.get(`/posts?${query}`).then((res) => {
+        setPosts(res.data.data.map((post) => post.attributes));
+      });
+    })();
+  }, [dapp]);
+
   console.log(dapp);
   return (
     <section className="blockchain-details">
@@ -753,21 +777,27 @@ const BlockchainDetails = () => {
             <h3 className="mb-3 blockchain-details-section-title">
               More About {dapp?.name}
             </h3>
-            <div className="row">
-              <div className="blockchain-details-bordered-top">
-                <img
-                  className="blockchain-details-media"
-                  src="/img/unicorn.png"
-                ></img>
-                <div className="blockchain-details-wrapper">
-                  <p className="blockchain-details-title">
-                    Whales Tend To Stay In Uniswap V3 Than V2? How's Its
-                    Performance Compared To V2?
-                  </p>
-                  <p className="blockchain-details-date">May 10 . 3671 Views</p>
+            {posts.map((post, i) => {
+              console.log(post);
+              return (
+                <div className="row" key={i} onClick={()=>window.open(`${window.location.origin}/dapp-news/${post.slug}`)}>
+                  <div className="blockchain-details-bordered-top">
+                    <div>
+                    <img
+                      className="blockchain-details-media"
+                      src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                    ></img>
+                    </div>
+                    <div className="blockchain-details-wrapper">
+                      <p className="blockchain-details-title">{post?.title}</p>
+                      <p className="blockchain-details-date">
+                        {moment(post?.publishedAt).format("LL")}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
         <div className="empty_space_height50" />
