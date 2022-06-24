@@ -223,9 +223,10 @@ const BlockchainDetails = () => {
           encodeValuesOnly: true,
         }
       );
-      await request
-        .get(`/reviews?${query}`)
-        .then((res) => {setReviews(res.data.data); console.log(res.data.data)});
+      await request.get(`/reviews?${query}`).then((res) => {
+        setReviews(res.data.data);
+        console.log(res.data.data);
+      });
     })();
   }, [pagination, justCommented]);
   useEffect(() => {
@@ -273,10 +274,12 @@ const BlockchainDetails = () => {
           onChange={onChangeComment}
           name="comment"
         ></textarea>
-        {reviewError && <p className="blockchain-details-error">{"Your comment can't be empty."}</p>}
-        <ButtonBlue type="submit">
-          Submit
-        </ButtonBlue>
+        {reviewError && (
+          <p className="blockchain-details-error">
+            {"Your comment can't be empty."}
+          </p>
+        )}
+        <ButtonBlue type="submit">Submit</ButtonBlue>
       </form>
     </Modal>
   );
@@ -901,7 +904,37 @@ const BlockchainDetails = () => {
           </BoxWhiteShadow>
         </div>
       </div>
-      <ReviewPopUp />
+      <Modal
+        className="blockchain-details-reivew"
+        title="Write a Reivew"
+        visible={showReviewPopup}
+        onCancel={(e) => {
+          setShowReviewPopup(false);
+        }}
+      >
+        <form onSubmit={onSubmitReview}>
+          <p className="blockchain-details-review-star">
+            How would you rate this dapp?
+          </p>
+          <Rate defaultValue={1} value={review.star} onChange={onChangeStar} />
+          <p className="blockchain-details-review-star">
+            What would you like to share with us?
+          </p>
+          <textarea
+            className="blockchain-details-review-comment"
+            placeholder="Write your comment..."
+            value={review.comment}
+            onChange={onChangeComment}
+            name="comment"
+          ></textarea>
+          {reviewError && (
+            <p className="blockchain-details-error">
+              {"Your comment can't be empty."}
+            </p>
+          )}
+          <ButtonBlue type="submit">Submit</ButtonBlue>
+        </form>
+      </Modal>
       <LoginPopup isVisible={showLoginPopup} setVisible={setShowLoginPopup} />
       <SocialSharePopup />
     </section>
