@@ -13,11 +13,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
-<<<<<<< HEAD
-    const res: Array<any> = price.prices.filter((p: any, i: number) => {
-=======
     const res: Array<any> = price.prices.filter((p:any, i:any) => {
->>>>>>> origin/steve
       const priceDate = new Date(price.labels[i]);
       return priceDate >= first && priceDate <= last;
     });
