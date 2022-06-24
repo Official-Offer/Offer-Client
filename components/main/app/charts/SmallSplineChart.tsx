@@ -79,7 +79,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           style: {
             colors: "black",
           },
-          formatter: function (val, index) {
+          formatter: function (val:any) {
             return formatter.format(val);
           },
           forceNiceScale: true,

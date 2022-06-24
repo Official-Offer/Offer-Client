@@ -225,7 +225,7 @@ const BlockchainDetails = () => {
       );
       await request
         .get(`/reviews?${query}`)
-        .then((res) => setReviews(res.data.data));
+        .then((res) => {setReviews(res.data.data); console.log(res.data.data)});
     })();
   }, [pagination, justCommented]);
   useEffect(() => {
