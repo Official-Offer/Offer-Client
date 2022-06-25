@@ -14,6 +14,7 @@ export const MarkDown = styled(ReactMarkdown)`
   }
   p {
     font-weight: 100;
+    font-family: "Circular Std";
     //overflow-wrap: normal;
     // font-size: 0.97rem;
   }

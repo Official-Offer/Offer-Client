@@ -6,8 +6,16 @@
     &-icons {
       padding-left: 20px;
     }
+    &-title {
+      margin-left: 1rem;
+      font-size: 24px;
+      color: #223052;
+    }
     &-icon {
-      width: 40px;
+      width: 32px;
+      // &-fb {
+      //   width: 60px;
+      // }
       padding-bottom: 20px;
     }
   }
@@ -17,6 +25,8 @@
   &-createdAt {
     color: gray;
     font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 18px;
     &-left {
       color: gray;
       font-size: 14px;
@@ -119,7 +129,7 @@
       }
     }
     &-center {
-      flex: 0 0 auto;
+      // flex: 0 0 auto;
       width: 64%;
       margin: 10px;
       &-paragraph {
@@ -303,7 +313,7 @@
   }
   &-relatedNews {
     background-color: #fcfcfd;
-    // font-family: '';
+    color: #223052;
     overflow: auto;
     position: sticky;
     top: 100px;
@@ -322,11 +332,8 @@
   }
   &-posts {
     &-desk {
-      // flex-direction: row;
       margin-top: 60px;
-      text-align: center;
       @include md {
-        // display: block;
         width: 100%;
       }
       @include sm {
@@ -349,7 +356,6 @@
       // height
     }
     &-tag {
-
       border: 2px solid #058499;
       width: 31px;
       height: 16px;

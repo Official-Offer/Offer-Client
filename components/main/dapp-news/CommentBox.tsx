@@ -9,7 +9,6 @@ import router from "next/router";
 import LoginPopup from "@components/navbar/LoginPopup";
 
 const CommentBox = ({ text, name, commentId, postId }: any) => {
-  // console.log(commentId);
   const [replyTo, setReplyTo] = useState(name ? name : "");
   const [user, setUser] = useState<any>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -21,7 +20,6 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    //console.log(e);
     e.preventDefault();
     const data = commentId ?
       {

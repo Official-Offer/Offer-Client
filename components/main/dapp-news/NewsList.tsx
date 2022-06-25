@@ -22,12 +22,12 @@ export default function NewsList({ data }: any): ReactElement {
             >
               <a target="_blank" rel="noopener noreferrer">
                 <div className="main-homepage-dappnews-card">
-                  {/* <div className="main-homepage-dappnews-card-header"> */}
+                  <div className="main-homepage-dappnews-card-header">
                     <img
                       className="main-homepage-dappnews-card-header-img"
                       src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
                     />
-                  {/* </div> */}
+                  </div>
                   <div className="main-homepage-dappnews-card-body">
                     <p className="main-homepage-dappnews-card-body-title">
                       {blog.attributes.title}

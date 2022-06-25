@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { Empty, Tabs } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
-import { Button, LoadMore } from "@styles/styled-components/styledButton";
+import { Button, ButtonGradientBlue, LoadMore, LoadMoreBlue } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
 import {
   BoxALignItemsCenter,
@@ -131,7 +131,7 @@ const DappNews: FC = () => {
           <LatestNews />
         </div>
       </div>
-      <div style = {{marginTop: '30px', border: 'solid', padding: '20px'}}>
+      <div style = {{marginTop: '30px', border: 'solid', borderWidth: '1px', padding: '20px'}}>
         <RunningPrice direction={"right"} />
         <hr />
         <RunningPrice direction={"left"} />
@@ -200,14 +200,14 @@ const DappNews: FC = () => {
         <br />
         <div className="text-center mb-5">
           {newsList.length !== 0 && (
-            <LoadMore
-              className="text-green fw-bold fontSize_1-1"
+            <LoadMoreBlue
+              className="fw-bold"
               onClick={() => {
                 setNumberViewMore(viewMore + 18);
               }}
             >
               Load more
-            </LoadMore>
+            </LoadMoreBlue>
           )}
         </div>
       </div>

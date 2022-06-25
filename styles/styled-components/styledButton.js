@@ -18,8 +18,22 @@ export const LoadMore = styled.button `
     -webkit-box-pack: center;
     padding: 8px 15px;
     background-color: transparent;
+`
+
+export const LoadMoreBlue = styled.button `
+    border-radius: 10px;
+    font-family: "Circular Std";
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #058499;
+    -webkit-box-pack: center;
+    padding: 6px 12px;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    background-color: #058499;
+    color: white;
     
 `
+
 export const ButtonGradientBlue = styled.button `
     background-image: linear-gradient(to right, #058499 0%, #12d8fa 51%, #058499 100%);
     padding: 10px 25px;

@@ -178,7 +178,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
             </div>
           </div>
           <div className="news-details-row-center">
-            {/* <div> */}
             <div className="news-details-row-center-paragraph mt-2 p-3">
               <h2>{`${news[0]?.attributes.title}`}</h2>
               <BoxALignCenter_Justify_ItemsBetween className="news-details-createdAt">
@@ -250,7 +249,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 </div>
               </div>
               <div className="news-details-posts-desk row">
-                <h2>Popular</h2>
+                <h2 style={{textAlign: 'center'}}>Popular</h2>
                 <NewsList data={popularNews} />
               </div>
             </div>
@@ -261,8 +260,8 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           </div>
           <br />
           <div className="news-details-row-side-desktop">
-            <div className="p-3 news-details-relatedNews">
-              <h3 className="mb-3">Related News</h3>
+            <div className="p-2 news-details-relatedNews">
+              <h3 style= {{color: "#223052"}} >Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
                   return (
@@ -274,7 +273,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                           });
                         }}
                       >
-                        <div className="mt-3">
+                        <div className="">
                           <a target="_blank" rel="noopener noreferrer">
                             <span className="news-details-relatedNews-number">
                               {i + 1}

@@ -87,7 +87,6 @@ export const NavbarHome: FC = () => {
     router.push(`/dapp-news/search/${keyword}`);
   };
   const handleChangeSearch = (e: any) => {
-    // console.log(e)
     setCurValue(e.target.value);
     setKeyword(e.target.value);
   };
@@ -231,6 +230,7 @@ export const NavbarHome: FC = () => {
                         </span>
                       </button>
                     </BoxALignItemsCenter>
+                    {/* <Drawer placement="top"/> */}
                     <Modal width={1000} visible={isVisible} onCancel={onCancel}>
                       <form onSubmit={onSearch}>
                         <input

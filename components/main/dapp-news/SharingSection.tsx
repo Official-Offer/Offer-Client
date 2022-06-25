@@ -1,3 +1,4 @@
+import { FacebookFilled, TwitterSquareFilled } from "@ant-design/icons";
 import { URL_SITE } from "@config/index";
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import { useEffect, useState } from "react";
@@ -15,7 +16,7 @@ const SharingSection = ({ newsUpdate }: any) => {
   // console.log(news);
   return (
     <div className="news-details-social">
-      <h4 className="p-2">Share this article</h4>
+      <p className="news-details-social-title">Share This Article</p>
       <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton
@@ -25,25 +26,23 @@ const SharingSection = ({ newsUpdate }: any) => {
             ${news[0]?.attributes.description}`}
             hashtag={`${news[0]?.attributes.tags[0]}`}
           >
-            <img
+            {/* <img
               src="/img/icons/social-facebook.png"
-              className="news-details-social-icon"
-            />
+              style={{height: '40px'}}
+              // className="news-details-social-icon"
+            /> */}
+            <FacebookFilled style = {{fontSize: '32px', color: '#4267B2'}}/>
           </FacebookShareButton>
         </div>
         <div className="news-details-social-icons">
           <TwitterShareButton
-            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
-            // title={`${news[0]?.attributes.title}
-          
-            // ${news[0]?.attributes.description}`}
-            // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
           >
             <img
               src="/img/icons/social-twitter.png"
               className="news-details-social-icon"
             />
+            {/* <TwitterSquareFilled style = {{fontSize: '40px', color: '#1DA1F2'}}/> */}
           </TwitterShareButton>
         </div>
         <div className="news-details-social-icons">
