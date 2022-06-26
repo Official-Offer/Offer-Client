@@ -46,7 +46,10 @@ export const NavMain = styled.div `
         padding: 5px 15px;
         background-color: #058499;
         font-weight: 600;
-        color: white;
+        color: #FFF;
+        &:hover {
+            color: white;
+        }
         box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.75);
     }
 `;
