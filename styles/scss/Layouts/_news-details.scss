@@ -1,4 +1,6 @@
 .news-details {
+  max-width: 1800px;
+  margin: auto;
   &-social {
     display: flex;
     flex-wrap: wrap;
@@ -375,7 +377,6 @@
     }
     &-mobile {
       display: none;
-      margin: 10px;
       @include sm {
         display: block;
       }
