@@ -5,6 +5,7 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import {
+  BoxALignCenter_Justify_ItemsBetween,
   BoxALignCenter_Justify_ItemsEnd,
   BoxALignItemsCenter,
   BoxWhiteShadow,
@@ -14,6 +15,7 @@ import { Select } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
 import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
+import { incdec, updown } from "@utils/numberDecorator";
 
 const { Option } = Select;
 
@@ -24,6 +26,7 @@ export default function TableDapp({
 }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
+  const timeKey = router.query.timeKey || "7d";
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -31,19 +34,19 @@ export default function TableDapp({
     { title: "Category", icon: "", sort: false },
     { title: "Blockchain", icon: "", sort: false },
     {
-      title: "24hr Users",
+      title: `${timeKey} Users`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
       query: "dailyUser",
     },
     {
-      title: "24hr Transactions",
+      title: `${timeKey} Transactions`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
       query: "dailyTransaction",
     },
     {
-      title: "24hr Volume",
+      title: `${timeKey} Volume`,
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
       query: "dailyVolume",
@@ -84,6 +87,13 @@ export default function TableDapp({
   ];
   const activeItem = (sort: string, query: string) => {
     setSort([query, sort]);
+  };
+  const [headerMobile, setHeaderMobile] = useState(
+    listTitleHeaderMobile[0].title
+  );
+  const onMobileChangeHeader = (e: any) => {
+    setHeaderMobile(e);
+    console.log(e);
   };
   return (
     <>
@@ -126,31 +136,13 @@ export default function TableDapp({
             </div>
           </div>
           {tokenList.map((token: any, i: number) => {
-            let usds_24hr = token.attributes.crawl.usds_24h;
-            let userDiff: string;
-            let transactionsDiff: string;
-            let volumeDiff: string;
-            let socialSignalDiff: string;
-            if (token.attributes.dailyUserDiff < 0) {
-              userDiff = "decrease";
-            } else {
-              userDiff = "increase";
-            }
-            if (token.attributes.dailyTransactionDiff < 0) {
-              transactionsDiff = "decrease";
-            } else {
-              transactionsDiff = "increase";
-            }
-            if (token.attributes.dailyVolumeDiff < 0) {
-              volumeDiff = "decrease";
-            } else {
-              volumeDiff = "increase";
-            }
-            if (token.attributes.crawl.social_signal_gr < 0) {
-              socialSignalDiff = "decrease";
-            } else {
-              socialSignalDiff = "increase";
-            }
+            const user = token.attributes.crawl[`user_${timeKey}`];
+            const transaction = token.attributes.crawl[`amount_${timeKey}`];
+            const volume = token.attributes.crawl[`usds_${timeKey}`];
+            const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
+            const transactionDiff =
+              token.attributes.crawl[`amount_${timeKey}_gr`];
+            const volumeDiff = token.attributes.crawl[`volume_${timeKey}_gr`];
             return (
               <div
                 className="table-body"
@@ -202,14 +194,15 @@ export default function TableDapp({
                 <div className="table-body-item table-body-item-user">
                   <div>
                     <div className="table-body-item-user-number text-end">
-                      <p>{token.attributes.dailyUser}</p>
+                      <p>{user}</p>
                     </div>
                     <div
-                      className={`table-body-item-user-${userDiff} text-end`}
+                      className={`table-body-item-user-${incdec(
+                        userDiff
+                      )} text-end`}
                     >
                       <p>
-                        {(token.attributes.dailyUserDiff * 100).toFixed(2)}%{" "}
-                        {userDiff === "increase" ? "↑" : "↓"}
+                        {(userDiff * 100).toFixed(2)}% {updown(userDiff)}
                       </p>
                     </div>
                   </div>
@@ -217,17 +210,17 @@ export default function TableDapp({
                 <div className="table-body-item table-body-item-transaction">
                   <div>
                     <div className="table-body-item-transaction-number text-end">
-                      <p>{token.attributes.dailyTransaction}</p>
+                      <p>{transaction}</p>
                     </div>
                     <div
-                      className={`table-body-item-transaction-${transactionsDiff} text-end`}
+                      className={`table-body-item-transaction-${incdec(
+                        transactionDiff
+                      )} text-end`}
                     >
                       <p>
                         {" "}
-                        {(token.attributes.dailyTransactionDiff * 100).toFixed(
-                          2
-                        )}
-                        % {transactionsDiff === "increase" ? "↑" : "↓"}
+                        {(transactionDiff * 100).toFixed(2)}%{" "}
+                        {updown(transactionDiff)}
                       </p>
                     </div>
                   </div>
@@ -243,43 +236,43 @@ export default function TableDapp({
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
-                    {usds_24hr.length == 2 ? (
+                    {volume.length == 2 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              usds_24hr[0].ratio == 0
+                              volume[0].ratio == 0
                                 ? "10%"
-                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                                : `${(volume[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                            width: `${`${(volume[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
                         />
                       </>
-                    ) : usds_24hr.length == 3 ? (
+                    ) : volume.length == 3 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              usds_24hr[0].ratio == 0
+                              volume[0].ratio == 0
                                 ? "10%"
-                                : `${(usds_24hr[0].ratio * 100).toFixed(1)}%`
+                                : `${(volume[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[1].ratio * 100).toFixed(
+                            width: `${`${(volume[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
@@ -287,7 +280,7 @@ export default function TableDapp({
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds_24hr[2].ratio * 100).toFixed(
+                            width: `${`${(volume[2].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
@@ -316,7 +309,7 @@ export default function TableDapp({
                         {(
                           token.attributes.crawl.social_signal_gr * 100
                         ).toFixed(2)}
-                        % {socialSignalDiff === "increase" ? "↑" : "↓"}
+                        % {updown(token.attributes.crawl.social_signal_gr)}
                       </p>
                     </div>
                   </div>
@@ -339,6 +332,7 @@ export default function TableDapp({
               <Select
                 defaultValue={`${listTitleHeaderMobile[0].title}`}
                 style={{ width: "70%" }}
+                onChange={onMobileChangeHeader}
               >
                 {listTitleHeaderMobile.map((header, i) => {
                   return (
@@ -348,55 +342,106 @@ export default function TableDapp({
                   );
                 })}
               </Select>
-              {isSorter && (
-                <div className="table-header-item-sorter">
-                  <div className="table-header-item-sorter-inner">
-                    <CaretUpOutlined className="up" />
-                    <CaretDownOutlined className="down" />
-                  </div>
+              <div className="table-header-item-sorter">
+                <div className="table-header-item-sorter-inner">
+                  <CaretUpOutlined
+                    className={`up ${sort[1] === "asc" && "active"}`}
+                    onClick={() =>
+                      activeItem(
+                        "asc",
+                        listTitleHeaderMobile.filter(
+                          (someshit) => someshit.title === headerMobile
+                        )[0].query
+                      )
+                    }
+                  />
+                  <CaretDownOutlined
+                    className={`down ${sort[1] === "desc" && "active"}`}
+                    onClick={() =>
+                      activeItem(
+                        "desc",
+                        listTitleHeaderMobile.filter(
+                          (someshit) => someshit.title === headerMobile
+                        )[0].query
+                      )
+                    }
+                  />
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e, i) => {
+        {tokenList.map((e: any, i: number) => {
+          let selectedKey = listTitleHeaderMobile.filter(
+            (someshit) => someshit.title === headerMobile
+          )[0].query;
+          if (selectedKey === "dailyUser") selectedKey = "user";
+          else if (selectedKey === "dailyTransaction") selectedKey = "amount";
+          else selectedKey = "usds";
+          console.log(selectedKey);
+          const số_trên: string = formatter.format(
+            e.attributes.crawl[`${selectedKey}_${timeKey}`]
+          );
+          const số_dưới: number =
+            e.attributes.crawl[`${selectedKey}_${timeKey}_gr`];
+          const tăng_giảm: string = incdec(số_dưới);
           return (
             <div className="table-body" key={i}>
               <div className="table-body-item table-body-item-number">
-                <img src="/img/icons/tag-ad.png" alt="" />
-                <span>2</span>
+                <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
+                <span>{i + 1}</span>
               </div>
               <div className="table-body-item table-body-item-name">
                 <div className="row m-0 p-0">
                   <div className="col-5">
-                    <BoxALignItemsCenter className="h-100">
-                      <img className="dapp-logo" src="/img/logo.png" alt="" />
-                      <p>TOKENPLAY</p>
-                    </BoxALignItemsCenter>
+                    <BoxALignCenter_Justify_ItemsBetween className="h-100 w-100">
+                      <img
+                        className="dapp-logo"
+                        src={e.attributes.crawl.icon}
+                        alt={""}
+                      />
+                      <p className="dapp-name">{e.attributes.crawl.name}</p>
+                    </BoxALignCenter_Justify_ItemsBetween>
                   </div>
                   <div className="col-5">
                     <div className="w-100">
                       <div className="table-body-item-user-number text-end">
-                        <p>0</p>
+                        <p>{số_trên}</p>
                       </div>
                       <div className="table-body-item-user-decrease text-end">
-                        <p>-100.00% ↓</p>
+                        <p>
+                          {(số_dưới * 100).toFixed(2)}%{" "}
+                          {tăng_giảm === "increase" ? "↑" : "↓"}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div className="col-2">
+                  <div className="col-2 ">
                     <div className="w-100">
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
                           className="blockchain-logo"
-                          src="/img/coin/bnb-white.png"
-                          alt=""
+                          src={
+                            i < 2
+                              ? e.attributes.crawl.chains[0].color_icon
+                              : e.attributes.chain.data?.attributes.crawl
+                                  .color_icon
+                          }
+                          alt={
+                            i < 2
+                              ? e.attributes.crawl.chains[0].slug
+                              : e.attributes.chain.data?.attributes.crawl.slug
+                          }
                         />
                       </BoxALignCenter_Justify_ItemsEnd>
                       <BoxALignCenter_Justify_ItemsEnd>
                         <img
-                          className="blockchain-logo"
-                          src="/img/icons/icn-gambling.png"
+                          className="blockchain-logo-two"
+                          src={
+                            i < 2
+                              ? e.attributes.crawl.category.icon
+                              : e.attributes.category.data.attributes.crawl.icon
+                          }
                           alt=""
                         />
                       </BoxALignCenter_Justify_ItemsEnd>

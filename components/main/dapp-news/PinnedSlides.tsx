@@ -68,7 +68,7 @@ export default function PinnedSlides({ crit }: any) {
         }}
         // pagination={true}
         loop={true}
-        autoplay={{ delay: 2000 }}
+        autoplay={{ delay: 1000 }}
         navigation={{
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,

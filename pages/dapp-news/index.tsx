@@ -29,16 +29,6 @@ const DappNews: FC = () => {
   const [viewMore, setNumberViewMore] = useState(18);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // const NewsList = dynamic(
-  //   () => import("@components/main/dapp-news/NewsList")
-  // );
-  // const PinnedSlides = dynamic(
-  //   () => import("@components/main/dapp-news/PinnedSlides")
-  // );
-  // const LatestNews = dynamic(
-  //   () => import("@components/main/dapp-news/LatestNews")
-  // );
-
   useEffect(() => {
     (async () => {
       const query = qs.stringify(

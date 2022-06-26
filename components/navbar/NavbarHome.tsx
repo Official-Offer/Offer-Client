@@ -253,10 +253,10 @@ export const NavbarHome: FC = () => {
                             &nbsp;Trending
                           </button>
                         </p>
-                        {tags.map((tag) => {
+                        {tags.map((tag: any, i) => {
                           console.log(tag);
                           return (
-                            <ButtonNavy onClick={() => setCurValue(tag.attributes?.name)}>
+                            <ButtonNavy onClick={() => setCurValue(tag.attributes?.name)} key={i}>
                               # {tag.attributes?.name}
                             </ButtonNavy>
                           );
