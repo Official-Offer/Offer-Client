@@ -11,6 +11,7 @@ import {
 import {
   NavMain,
   Nav_Sub,
+  TabMain,
   ToggleMain,
   ToggleMain_Sub,
 } from "@styles/styled-components/styledTabs";
