@@ -230,7 +230,6 @@ export const NavbarHome: FC = () => {
                         </span>
                       </button>
                     </BoxALignItemsCenter>
-                    {/* <Drawer placement="top"/> */}
                     <Modal width={1000} visible={isVisible} onCancel={onCancel}>
                       <form onSubmit={onSearch}>
                         <input
@@ -240,7 +239,6 @@ export const NavbarHome: FC = () => {
                           placeholder="Searching..."
                           onChange={handleChangeSearch}
                           value={curValue}
-                          // onClick={() => setIsVisible(true)}
                         />
                         <hr />
                         <p>

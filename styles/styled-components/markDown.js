@@ -15,7 +15,7 @@ export const MarkDown = styled(ReactMarkdown)`
   }
   h2 {
     width: 185px;
-    height: 33px;
+    height: 28px;
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
@@ -25,7 +25,7 @@ export const MarkDown = styled(ReactMarkdown)`
   }
   h3 {
     width: 185px;
-    height: 33px;
+    height: 24px;
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
@@ -35,7 +35,7 @@ export const MarkDown = styled(ReactMarkdown)`
   }
   h4 {
     width: 185px;
-    height: 33px;
+    height: 20px;
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
@@ -56,7 +56,7 @@ export const MarkDown = styled(ReactMarkdown)`
   img {
     width: 100%;
     margin: 20px auto;
-    border-radius: 20px;
+    // border-radius: 20px;
     display: block;
   }
   pre {

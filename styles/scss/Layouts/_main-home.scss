@@ -133,16 +133,11 @@
           transform: scale(1.05);
         }
         &-title {
-          overflow: hidden;
-          // overflow-wrap: break-word;
-          // height: 80px;
           font-family: "Circular Std";
           font-style: normal;
           font-weight: 700;
           font-size: 32px;
           line-height: 40px;
-          display: flex;
-          // align-items: center;
           text-transform: capitalize;
           color: #223052;
         }
@@ -157,7 +152,7 @@
           font-size: 20px;
           line-height: 150.6%;
           display: flex;
-          align-items: center;
+          // align-items: center;
           color: rgba(34, 48, 82, 0.65);
         }
       }

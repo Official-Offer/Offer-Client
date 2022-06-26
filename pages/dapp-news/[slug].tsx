@@ -17,8 +17,7 @@ import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 import { Avatar } from "antd";
 import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
-import ReactMarkdown from 'react-markdown';
-
+import ReactMarkdown from "react-markdown";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
@@ -249,7 +248,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 </div>
               </div>
               <div className="news-details-posts-desk row">
-                <h2 style={{textAlign: 'center', color: "#223052"}}>Popular</h2>
+                <h2 style={{ textAlign: "center", color: "#223052" }}>
+                  Popular
+                </h2>
                 <NewsList data={popularNews} />
               </div>
             </div>
@@ -260,8 +261,8 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           </div>
           <br />
           <div className="news-details-row-side-desktop">
-            <div className="p-2 news-details-relatedNews">
-              <h3 style= {{color: "#223052"}} >Related News</h3>
+            <div className="news-details-relatedNews p-2">
+              <h3 className="news-details-relatedNews-title">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
                   return (
@@ -273,16 +274,17 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                           });
                         }}
                       >
-                        <div className="">
+                        <div className="row">
                           <a target="_blank" rel="noopener noreferrer">
-                            <span className="news-details-relatedNews-number">
-                              {i + 1}
-                              {/* <img className="" src={`${indexNews[i]}`} /> */}
-                            </span>
-                            &nbsp;&nbsp;
-                            <span className="name">
-                              {news.attributes.title}
-                            </span>
+                            <div className="news-details-relatedNews-content">
+                              <p className="news-details-relatedNews-number">
+                                {i + 1}
+                              </p>
+                              &nbsp;&nbsp;
+                              <p className="news-details-relatedNews-text">
+                                {news.attributes.title}
+                              </p>
+                            </div>
                           </a>
                         </div>
                       </div>

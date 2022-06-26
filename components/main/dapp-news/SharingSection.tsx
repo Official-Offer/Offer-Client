@@ -15,7 +15,7 @@ const SharingSection = ({ newsUpdate }: any) => {
   }, [newsUpdate])
   // console.log(news);
   return (
-    <div className="news-details-social">
+    <div className="">
       <p className="news-details-social-title">Share This Article</p>
       <div className="news-details-social">
         <div className="news-details-social-icons">

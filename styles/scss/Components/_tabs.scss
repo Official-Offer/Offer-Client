@@ -258,7 +258,7 @@
     margin-top: 50px;
     font-size: 0.8em;
     &-left {
-        font-family: "Circular Std";
+        // font-family: "Circular Std";
         margin-right: 80px;
         display: inline-flex;
         flex-wrap: wrap;
@@ -303,7 +303,7 @@
                 align-items: center;
                 span {
                     transition: all 0.3s ease-in-out;
-                    color: rgba(34, 48, 82, 0.65);
+                    // color: rgba(34, 48, 82, 0.65);
                     z-index: 1;
                 }
                 .icon,
@@ -324,7 +324,7 @@
                 }
                 &.active {
                     span {
-                        color: $black-color;
+                        // color: $black-color;
                         font-weight: bold;
                     }
                 }

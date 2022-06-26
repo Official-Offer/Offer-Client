@@ -111,7 +111,7 @@ const DappNews: FC = () => {
         <div className="text-center mb-5">
           {newsList.length !== 0 && (
             <LoadMore
-              className="text-green fw-bold fontSize_1-1"
+              className="fontSize_1-1"
               onClick={() => {
                 setNumberViewMore(viewMore + 18);
               }}

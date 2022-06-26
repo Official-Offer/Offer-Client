@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
 import { Navigation, Pagination, A11y } from "swiper";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import { ArrowLeftCircle, ArrowRightCircle, ChevronLeft, ChevronRight } from "react-feather";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@styles/styled-components/styledButton";
 import "swiper/css";
@@ -12,9 +12,7 @@ import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { Carousel } from "react-responsive-carousel";
 // import { Pagination } from "swiper";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function PinnedSlides({ crit }: any) {
   const navigationPrevRef = React.useRef(null);
@@ -42,61 +40,47 @@ export default function PinnedSlides({ crit }: any) {
       });
     })();
   }, []);
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
   return (
-    <div>
-      <Carousel
-        autoPlay
-        infiniteLoop
-        showArrows={false}
-        renderIndicator={(onClickHandler, isSelected, index, label) => {
-          const defStyle = {
-            // marginLeft: 20,
-            lineHeight: 28,
-            padding: 2,
-            color: "white",
-            cursor: "pointer",
-          };
-          const style = isSelected
-            ? { ...defStyle, color: "red" }
-            : { ...defStyle };
-          return (
-            <span
-              style={style}
-              onClick={onClickHandler}
-              onKeyDown={onClickHandler}
-              // value={index}
-              key={index}
-              role="button"
-              tabIndex={0}
-              aria-label={`${label} ${index + 1}`}
-            >
-              {"cust " + index}
-            </span>
-          );
+    <BoxALignCenter_Justify_ItemsCenter>
+      <Button className="p-0 me-2" ref={navigationPrevRef}>
+        <ArrowLeftCircle color="#058499" width={"40"} height={"40"} />
+      </Button>
+      <Swiper
+        modules={[Navigation, Pagination, A11y]}
+        observeParents={true}
+        observer={true}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+          },
+          480: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 1,
+          },
+          1440: {
+            slidesPerView: 1,
+          },
+          1920: {
+            slidesPerView: 1,
+          },
+        }}
+        // pagination={true}
+        loop={true}
+        autoplay={{ delay: 2000 }}
+        navigation={{
+          prevEl: navigationPrevRef.current,
+          nextEl: navigationNextRef.current,
+        }}
+        effect="fade"
+        fadeEffect={{
+          crossFade: true,
         }}
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
-            <div
+            <SwiperSlide
               key={i}
               className="main-homepage-dappnews-pinnedSlides"
               onClick={() => {
@@ -118,10 +102,13 @@ export default function PinnedSlides({ crit }: any) {
                 {moment(pinnedPost.attributes.createdAt).format("LL")}
               </p>
               &nbsp;
-            </div>
+            </SwiperSlide>
           );
         })}
-      </Carousel>
-    </div>
+      </Swiper>
+      <Button className="p-0 ms-2" ref={navigationNextRef}>
+        <ArrowRightCircle color="#058499" width={"40"} height={"40"} />
+      </Button>
+    </BoxALignCenter_Justify_ItemsCenter>
   );
 }
