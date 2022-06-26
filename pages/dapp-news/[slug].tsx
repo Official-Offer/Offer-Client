@@ -212,7 +212,6 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   {news[0]?.attributes.viewer}
                 </div>
               </BoxALignCenter_Justify_ItemsBetween>
-              <br />
               <MarkDown>{styledContent}</MarkDown>
               {/* <ReactMarkdown>{styledContent}</ReactMarkdown> */}
             </div>
