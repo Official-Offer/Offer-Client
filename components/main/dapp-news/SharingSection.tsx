@@ -26,12 +26,11 @@ const SharingSection = ({ newsUpdate }: any) => {
             ${news[0]?.attributes.description}`}
             hashtag={`${news[0]?.attributes.tags[0]}`}
           >
-            {/* <img
-              src="/img/icons/social-facebook.png"
-              style={{height: '40px'}}
-              // className="news-details-social-icon"
-            /> */}
-            <FacebookFilled style = {{fontSize: '32px', color: '#4267B2'}}/>
+            <img
+              src="/img/facebook.png"
+              className="news-details-social-icon"
+            />
+            {/* <FacebookFilled style = {{fontSize: '32px', color: '#4267B2'}}/> */}
           </FacebookShareButton>
         </div>
         <div className="news-details-social-icons">
@@ -39,10 +38,9 @@ const SharingSection = ({ newsUpdate }: any) => {
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
           >
             <img
-              src="/img/icons/social-twitter.png"
+              src="/img/twitter.png"
               className="news-details-social-icon"
             />
-            {/* <TwitterSquareFilled style = {{fontSize: '40px', color: '#1DA1F2'}}/> */}
           </TwitterShareButton>
         </div>
         <div className="news-details-social-icons">
@@ -54,7 +52,7 @@ const SharingSection = ({ newsUpdate }: any) => {
           ${news[0]?.attributes.description}`}
           >
             <img
-              src="/img/icons/social-telegram.png"
+              src="/img/telegram.png"
               className="news-details-social-icon"
             />
           </TelegramShareButton>

@@ -133,10 +133,6 @@
           transform: scale(1.05);
         }
         &-title {
-          // margin-top: 20px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          // -webkit-box-orient: vertical;
           overflow: hidden;
           // overflow-wrap: break-word;
           // height: 80px;
@@ -146,7 +142,7 @@
           font-size: 32px;
           line-height: 40px;
           display: flex;
-          align-items: center;
+          // align-items: center;
           text-transform: capitalize;
           color: #223052;
         }

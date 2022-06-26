@@ -249,7 +249,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 </div>
               </div>
               <div className="news-details-posts-desk row">
-                <h2 style={{textAlign: 'center'}}>Popular</h2>
+                <h2 style={{textAlign: 'center', color: "#223052"}}>Popular</h2>
                 <NewsList data={popularNews} />
               </div>
             </div>

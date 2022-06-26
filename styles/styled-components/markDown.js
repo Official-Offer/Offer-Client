@@ -1,37 +1,68 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 
 export const MarkDown = styled(ReactMarkdown)`
   overflow-wrap: break-word;
   h1 {
-    font-size: 3rem;
+    width: 185px;
+    height: 33px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 33px;
+    color: #223052;
   }
   h2 {
-    font-size: 1.2rem;
+    width: 185px;
+    height: 33px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 33px;
+    color: #223052;
   }
   h3 {
-    font-size: 0.8rem;
+    width: 185px;
+    height: 33px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 33px;
+    color: #223052;
+  }
+  h4 {
+    width: 185px;
+    height: 33px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 33px;
+    color: #223052;
+  }
   }
   p {
-    font-weight: 100;
+    font-weight: 400;
     font-family: "Circular Std";
-    //overflow-wrap: normal;
-    // font-size: 0.97rem;
+    font-size: 16px;
+    color: rgba(34, 48, 82, 0.65);
   }
   b {
     font-weight: bold;
   }
   img {
-    // padding: 20px;
     width: 100%;
-    margin: auto;
+    margin: 20px auto;
     border-radius: 20px;
     display: block;
   }
   pre {
     color: #ccc;
     background: #2d2d2d;
-    //font-size: 0.8em;
+    color: rgba(34, 48, 82, 0.65);
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -71,4 +102,3 @@ export const MarkDown = styled(ReactMarkdown)`
 `;
 
 //    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-
