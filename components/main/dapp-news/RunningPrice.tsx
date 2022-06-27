@@ -35,14 +35,14 @@ const RunningPrice = ({ direction }: any) => {
   }, [viewMore, sort]);
 
   return (
-    <Marquee direction={direction} speed={40}>
+    <Marquee direction={direction} speed={40} gradientWidth={70}>
       {tokenList.map((token: any, i: number) => {
         let oneHourDiff =
           token.price_change_percentage_1h_in_currency > 0
             ? "increase"
             : "decrease";
         return (
-          <BoxALignItemsCenter key={i}>
+          <BoxALignItemsCenter className="main-homepage-dappnews-runningprice" key={i}>
             <span className="main-homepage-tokenranking-table-logo">
               <img src={token.image} alt="" />
             </span>

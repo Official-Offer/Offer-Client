@@ -152,7 +152,7 @@ const DappNews: FC = () => {
                 <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
                     onClick={() => onChangeTab(cat.attributes.name)}
-                    className={`${activeIndex === i ? "active" : ""} fontSize_08 `}
+                    className={`${activeIndex === i ? "active" : ""} bar-category-left-text`}
                   >
                     {cat.attributes.name}
                   </Nav_Sub>
@@ -166,7 +166,7 @@ const DappNews: FC = () => {
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
                 onClick={() => setCrit("viewer")}
-                className={`fontSize_08 ${crit === "viewer" ? "active" : ""}`}
+                className={`${crit === "viewer" ? "active" : ""}`}
               >
                 Popular
               </ToggleMain_Sub>
@@ -174,7 +174,7 @@ const DappNews: FC = () => {
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
                 onClick={() => setCrit("createdAt")}
-                className={`fontSize_08 ${
+                className={`${
                   crit === "createdAt" ? "active" : ""
                 }`}
               >

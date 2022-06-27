@@ -35,7 +35,7 @@ export const MarkDown = styled(ReactMarkdown)`
     font-weight: 450;
     font-family: "Circular Std";
     font-size: 16px;
-    color: rgba(34, 48, 82, 0.65);
+    color: #223052;
   }
   b {
     font-weight: bold;

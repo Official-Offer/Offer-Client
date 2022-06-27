@@ -116,6 +116,15 @@
           margin-bottom: 20px;
         }
       }
+      &-runningprice {
+        font-family: "Circular Std";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 16px;
+        /* identical to box height, or 89% */
+        text-align: right;
+      }
       &-pinnedSlides {
         width: 100%;
         height: auto;
@@ -246,7 +255,7 @@
             font-family: "Circular Std";
             line-height: 18px;
             font-weight: 450;
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(34, 48, 82, 0.65);
             // color: #7d7d7d;
           }

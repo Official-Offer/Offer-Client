@@ -28,16 +28,16 @@
     background-color: #fcfcfd;
   }
   &-createdAt {
-    color: gray;
+    color: #223052;
     font-size: 14px;
     margin-top: 30px;
     margin-bottom: 30px;
     &-left {
-      color: gray;
+      
       font-size: 14px;
     }
     &-right {
-      color: gray;
+      
       font-size: 14px;
     }
   }
@@ -311,6 +311,13 @@
       }
       &-mobile {
         margin-bottom: 30px;
+        h3 {
+          font-family: "Circular Std";
+          font-style: normal;
+          font-size: 26px;
+          font-weight: 700;
+          color: #223052;
+        }
       }
     }
   }
@@ -344,11 +351,13 @@
       font-weight: 700;
       font-size: 26px;
       line-height: 35px;
+      color: #223052;
     }
     &-text {
       font-family: "Circular Std";
       font-style: normal;
       margin-top: 15px;
+      color: #223052;
       margin-left: 10px;
       font-size: 15px;
       text-transform: capitalize;
@@ -376,6 +385,14 @@
       }
     }
     &-mobile {
+      h2 {
+          font-family: "Circular Std";
+          font-style: normal;
+          font-size: 26px;
+          padding: 8px;
+          font-weight: 700;
+          color: #223052;
+      }
       display: none;
       @include sm {
         display: block;

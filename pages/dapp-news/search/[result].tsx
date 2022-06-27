@@ -36,27 +36,13 @@ const DappNews: FC = () => {
         {
           populate: "*",
           filters: {
-            $or: [
-              {
-                category: {
-                  name: router.query.result,
-                },
-              },
-              {
-                title: {
-                  $contains: router.query.result,
-                },
-              },
-              {
-                content: {
-                  $contains: router.query.result,
-                },
-              }
-            ],
+            title: {
+              $contains: router.query.result,
+            },
           },
           sort: [`${crit}:desc`],
         },
-        
+
         {
           encodeValuesOnly: true,
         }
