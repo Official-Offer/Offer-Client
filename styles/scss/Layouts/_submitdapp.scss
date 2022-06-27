@@ -13,7 +13,29 @@
       width: 100%;
     }
   }
-  &-text-description{
+
+  &-text-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1.5px solid #223052;
+    border-radius: 8px;
+  }
+  &-char-counter {
+    padding-right: 10px;
+    padding-left: 10px;
+    &-error {
+      padding-right: 10px;
+      padding-left: 10px;
+      color: red;
+    }
+  }
+  &-trans-text {
+    border: none;
+    width: 80%;
+  }
+
+  &-text-description {
     height: 150px;
   }
   &-section-header {
@@ -107,7 +129,7 @@
     color: #1dbbbd;
     &-hidden {
       display: none;
-      transition: .2s;
+      transition: 0.2s;
     }
     &-error {
       color: red;

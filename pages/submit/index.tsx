@@ -709,28 +709,29 @@ const Submit: NextPage = () => {
                   <label className="label-input">Detail Description</label>
                   <span className="text-green">Max of 500 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
-                <textarea
-                  className="main-submit-text-description"
-                  disabled={notLogin}
-                  style={{ width: "100%" }}
-                  maxLength={500}
-                  placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
-                  value={input.detailDescription}
-                  onChange={handleChange}
-                  name="detailDescription"
-                />
-                <p
-                  className={`main-submit-character-count${
-                    input.detailDescription.length === 0
-                      ? "-hidden"
-                      : input.detailDescription.length > 500 ||
-                        input.detailDescription.length < 100
-                      ? "-error"
-                      : ""
-                  }`}
-                >
-                  {input.detailDescription.length}/500 Characters
-                </p>
+                <div className="main-submit-text-wrapper">
+                  <textarea
+                    className="main-submit-text-description main-submit-trans-text"
+                    disabled={notLogin}
+                    style={{ width: "100%" }}
+                    maxLength={500}
+                    placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                    value={input.detailDescription}
+                    onChange={handleChange}
+                    name="detailDescription"
+                  />
+                  <div
+                    className={`main-submit-char-counter${
+                      (input.detailDescription.length < 100 ||
+                        input.detailDescription.length > 500) &&
+                      input.detailDescription.length > 0
+                        ? "-error"
+                        : ""
+                    }`}
+                  >
+                    {input.detailDescription.length}/500
+                  </div>
+                </div>
               </div>
             )}
             <div className="col-12 mt-lg-5 mt-4">
@@ -962,7 +963,9 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3 className="main-submit-section-header">Social Media ( optional )</h3>
+        <h3 className="main-submit-section-header">
+          Social Media ( optional )
+        </h3>
         <p className="text-secondary">
           We track the growth of your product’s social media communities.
           Providing a full detail of your social media channels will improve
@@ -1018,7 +1021,9 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3 className="main-submit-section-header mb-3">Affiliate/Referral Program</h3>
+        <h3 className="main-submit-section-header mb-3">
+          Affiliate/Referral Program
+        </h3>
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">
             Do you have an affiliate or referral program?
