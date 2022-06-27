@@ -148,10 +148,9 @@ a {
     text-align: center;
     transition: 300ms opacity;
     transform: translate3d(0, 0, 0);
-    // z-index: 20;
     top: 0 !important;
     @include sm {
-      margin-top: 55vw;
+      margin-top: 45vw;
     }
     @media only screen and (min-width: 760px) and (max-width: 1060px) {
       margin-top: 45vw;
