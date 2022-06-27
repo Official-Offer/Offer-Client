@@ -230,7 +230,7 @@ export const NavbarHome: FC = () => {
                         </span>
                       </button>
                     </BoxALignItemsCenter>
-                    <Modal width={1000} visible={isVisible} onCancel={onCancel}>
+                    <Modal style={{top: '5rem'}} zIndex = {100} width={1000} visible={isVisible} onCancel={onCancel}>
                       <form onSubmit={onSearch}>
                         <input
                           type="text"

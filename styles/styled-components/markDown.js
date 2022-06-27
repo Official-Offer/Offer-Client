@@ -2,7 +2,6 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 
 export const MarkDown = styled(ReactMarkdown)`
-  // overflow-wrap: break-word;
   h1 {
     font-family: "Circular Std";
     font-style: normal;

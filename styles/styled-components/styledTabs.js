@@ -42,6 +42,7 @@ export const NavMain = styled.div `
     border-radius: 8px;
     display: inline-flex;
     width: auto;
+    
     .active {
         padding: 5px 15px;
         background-color: #058499;
@@ -102,6 +103,11 @@ export const ToggleMain_Sub = styled.a `
     opacity: 1;
     outline: 0;
     width: 110px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    color: #223052;
     @media screen and (max-width: 766px) {
         width: 46vw;
     }
