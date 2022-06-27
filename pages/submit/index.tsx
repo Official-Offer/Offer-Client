@@ -32,7 +32,7 @@ import { URL_API_ADMIN } from "config/index";
 import { Modal } from "antd";
 import validateEmail from "@utils/validateEmail";
 import { EmailIcon } from "react-share";
-import validateAddress from "@utils/validateEmail";
+import validateAddress from "@utils/validateAddress";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -197,7 +197,7 @@ const Submit: NextPage = () => {
     minWidth: number,
     minHeight: number
   ) => {
-    var flag = true;
+    let flag = true;
     const reader = new FileReader();
     reader.readAsDataURL(value);
     reader.onload = (e: any) => {
@@ -310,7 +310,7 @@ const Submit: NextPage = () => {
       ) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
-        flag = true;
+        return;
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
@@ -321,7 +321,7 @@ const Submit: NextPage = () => {
         message.error(
           `Detail description must be longer at 100 characters and less than 500 characters`
         );
-        flag = true;
+        return;
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
@@ -332,7 +332,7 @@ const Submit: NextPage = () => {
         message.error(
           `Short description must be longer at 10 characters and less than 100 characters`
         );
-        flag = true;
+        return;
       }
       //check token description length
       else if (
@@ -343,13 +343,13 @@ const Submit: NextPage = () => {
         message.error(
           `Token description must be longer at 10 characters and less than 200 characters`
         );
-        flag = true;
+        return;
       }
       // check email
       else if (keys[i] == "email" && !validateEmail(input[keys[i]])) {
         message.error("Must be an email");
         setError(keys[i]);
-        flag = true;
+        return;
       }
       //check existed email
       else if (keys[i] == "email") {
@@ -384,7 +384,7 @@ const Submit: NextPage = () => {
       else if (keys[i] === "tokenContract") {
         if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
-          flag = true;
+          return;
         }
         //check existed contract
         else {
@@ -419,12 +419,12 @@ const Submit: NextPage = () => {
       // check image of correct size
       else if (keys[i] === failed) {
         message.error(`${failed} image doesn't meet the standard`);
-        flag = true;
+        return;
       }
       //check images field have at least 1 image
       else if (keys[i] == "images" && input[keys[i]].length < 1) {
         message.error("You must submit at least 1 Preview image");
-        flag = true;
+        return;
       }
 
       // flag is raised, return
