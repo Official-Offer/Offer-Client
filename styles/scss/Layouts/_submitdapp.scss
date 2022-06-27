@@ -13,6 +13,14 @@
       width: 100%;
     }
   }
+  &-text-description{
+    height: 150px;
+  }
+  &-section-header {
+    margin-top: 40px;
+    font-weight: bold;
+    color: #223052;
+  }
   &-project-name,
   &-dapp-website,
   &-product-status,

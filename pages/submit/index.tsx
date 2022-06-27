@@ -43,17 +43,17 @@ const Submit: NextPage = () => {
     projectName: "",
     website: "",
     images: [null, null, null, null],
-    category: 7,
+    category: "",
     tags: [],
     status: "live",
     shortDescription: "",
     detailDescription: "",
     reviewArticle: "",
-    hasToken: false,
+    hasToken: true,
     tokenLogo: null,
     tokenChain: " ",
     tokenSymbol: "",
-    tokenContract: "",
+    tokenContract: "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     tokenDecimal: "",
     tokenDescription: "",
     isOnCoingecko: "",
@@ -68,7 +68,7 @@ const Submit: NextPage = () => {
       { name: "LinkedIn", url: "", image: null },
       { name: "Instagram", url: "", image: null },
     ],
-    referralProgram: "Yes, but you will have to apply separately.",
+    referralProgram: "Sorry, we don’t.",
   });
 
   const setMockInput = () => {};
@@ -128,28 +128,6 @@ const Submit: NextPage = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [error, setError] = useState<any>();
   const [tags, setTags] = useState<any>([]);
-  // user changed category, render corresponding tags
-  useEffect(() => {
-    (async () => {
-      const query = qs.stringify(
-        {
-          populate: "*",
-          filters: {
-            id: {
-              $eq: input.category,
-            },
-          },
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      await axios
-        .get(`${URL_API_ADMIN}/app-categories?${query}`)
-        .then((res) => console.log(res.data.data));
-    })();
-  }, [input.category]);
-
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
   };
@@ -501,7 +479,7 @@ const Submit: NextPage = () => {
           <h1 className="mb-0">Submit Dapp</h1>
         </TitleGlobal>
         <br />
-        <h3>Identification</h3>
+        <h3 className="main-submit-section-header">Identification</h3>
         <p className="text-secondary">
           Using an official email address within your organization will allow us
           to verify your admin role of your product. A verified admin will be
@@ -526,7 +504,7 @@ const Submit: NextPage = () => {
             <input
               className="main-submit-email"
               type={"email"}
-              placeholder="example@gmail.com"
+              placeholder="phamhoanghung001@gmail.com"
               disabled={notLogin}
               value={input.email}
               onChange={handleChange}
@@ -535,7 +513,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Basic Information</h3>
+        <h3 className="main-submit-section-header">Basic Information</h3>
         <BoxWhiteShadow className="px-4 py-5">
           <div className="row">
             <div className="col-lg-2 col-12">
@@ -616,16 +594,6 @@ const Submit: NextPage = () => {
                           />
                         </>
                       )}
-                      {countNonNull(input.images) < i || (
-                        <>
-                          {" "}
-                          <br />
-                          <p>
-                            JPG,PNG with ratio of 1:1 300*300 or larger
-                            recommended
-                          </p>
-                        </>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -646,7 +614,7 @@ const Submit: NextPage = () => {
                     },
                   })
                 }
-                value={input.category}
+                // value={input.category}
               >
                 <Option value={7}>Game</Option>
                 <Option value={8}>Exchange</Option>
@@ -742,6 +710,7 @@ const Submit: NextPage = () => {
                   <span className="text-green">Max of 500 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <textarea
+                  className="main-submit-text-description"
                   disabled={notLogin}
                   style={{ width: "100%" }}
                   maxLength={500}
@@ -787,7 +756,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Token Info</h3>
+        <h3 className="main-submit-section-header">Token Info</h3>
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">
             Does your product has its tokens or cryptocurrencies?
@@ -830,8 +799,8 @@ const Submit: NextPage = () => {
           )}
           <br />
           <div className="row">
-            <div className="col-lg-6 col-12">
-              <h5 className="mb-3">
+            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+              <h5 className="label-input mb-3">
                 On which blockchain do you issue your token?
               </h5>
               <Select
@@ -846,7 +815,7 @@ const Submit: NextPage = () => {
                     },
                   })
                 }
-                value={input.tokenChain}
+                // value={input.tokenChain}
                 placeholder="Choose blockchain"
               >
                 <Option value={2}>BNB Chain</Option>
@@ -866,6 +835,7 @@ const Submit: NextPage = () => {
                   value={input.tokenSymbol}
                   type={"text"}
                   name="tokenSymbol"
+                  placeholder="phamhoanghung@gmail.com"
                 />
               </div>
             )}
@@ -904,6 +874,7 @@ const Submit: NextPage = () => {
                   <span className="text-green">Max of 200 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <textarea
+                  className="main-submit-text-description"
                   disabled={notLogin}
                   style={{ width: "100%" }}
                   maxLength={200}
@@ -949,7 +920,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Token Info</h3>
+        <h3 className="main-submit-section-header">Smart Contracts Info</h3>
         <p className="text-secondary">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
@@ -980,7 +951,7 @@ const Submit: NextPage = () => {
                     target: { value: e, name: "dappChain", type: "select" },
                   })
                 }
-                value={input.dappChain}
+                // value={input.dappChain}
                 placeholder="On which blockchain did you build your on-chain function?"
               >
                 <Option value={2}>BNB Chain</Option>
@@ -991,7 +962,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Social Media ( optional )</h3>
+        <h3 className="main-submit-section-header">Social Media ( optional )</h3>
         <p className="text-secondary">
           We track the growth of your product’s social media communities.
           Providing a full detail of your social media channels will improve
@@ -1047,7 +1018,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3 className="mb-3">Affiliate/Referral Program</h3>
+        <h3 className="main-submit-section-header mb-3">Affiliate/Referral Program</h3>
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">
             Do you have an affiliate or referral program?
