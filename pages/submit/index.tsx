@@ -382,7 +382,7 @@ const Submit: NextPage = () => {
       }
       //check contract
       else if (keys[i] === "tokenContract") {
-        if (validateAddress(input[keys[i]])) {
+        if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
           flag = true;
         }
