@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
-import { Navigation, Pagination, A11y } from "swiper";
-import { ArrowLeftCircle, ArrowRightCircle, ChevronLeft, ChevronRight } from "react-feather";
+import SwiperCore, {Navigation, Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@styles/styled-components/styledButton";
 import "swiper/css";
@@ -12,13 +11,16 @@ import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
-// import { Pagination } from "swiper";
+// import { Carousel } from "react-bootstrap";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function PinnedSlides({ crit }: any) {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
+  SwiperCore.use([Pagination]);
   const router = useRouter();
   const [pinnedPosts, setPinned] = useState([]);
+
   useEffect(() => {
     (async () => {
       const pinQuery = qs.stringify(
@@ -41,10 +43,7 @@ export default function PinnedSlides({ crit }: any) {
     })();
   }, []);
   return (
-    <BoxALignCenter_Justify_ItemsCenter>
-      <Button className="p-0 me-2" ref={navigationPrevRef}>
-        <ArrowLeftCircle color="#058499" width={"40"} height={"40"} />
-      </Button>
+    <div className='sliderWrapper'>
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
@@ -69,16 +68,20 @@ export default function PinnedSlides({ crit }: any) {
         // pagination={true}
         loop={true}
         autoplay={{ delay: 1000 }}
+        pagination={{
+          clickable: true,
+          type: 'bullets'
+       }}
         navigation={{
-          prevEl: navigationPrevRef.current,
-          nextEl: navigationNextRef.current,
+          prevEl: ".swiper-button-next",
+          nextEl: ".swiper-button-prev",
         }}
         effect="fade"
         fadeEffect={{
           crossFade: true,
         }}
       >
-        {pinnedPosts.map((pinnedPost: any, i: number) => {
+      {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
             <SwiperSlide
               key={i}
@@ -105,10 +108,7 @@ export default function PinnedSlides({ crit }: any) {
             </SwiperSlide>
           );
         })}
-      </Swiper>
-      <Button className="p-0 ms-2" ref={navigationNextRef}>
-        <ArrowRightCircle color="#058499" width={"40"} height={"40"} />
-      </Button>
-    </BoxALignCenter_Justify_ItemsCenter>
+        </Swiper>
+    </div>
   );
 }

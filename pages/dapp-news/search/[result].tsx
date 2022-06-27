@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { Empty, Tabs } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
-import { Button, LoadMore } from "@styles/styled-components/styledButton";
+import { Button, LoadMore, LoadMoreBlue } from '@styles/styled-components/styledButton';
 import { useRouter } from "next/router";
 import {
   BoxALignItemsCenter,
@@ -96,14 +96,14 @@ const DappNews: FC = () => {
         <br />
         <div className="text-center mb-5">
           {newsList.length !== 0 && (
-            <LoadMore
+            <LoadMoreBlue
               className="fontSize_1-1"
               onClick={() => {
                 setNumberViewMore(viewMore + 18);
               }}
             >
               Load more
-            </LoadMore>
+            </LoadMoreBlue>
           )}
         </div>
       </div>
