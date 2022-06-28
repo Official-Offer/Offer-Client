@@ -31,7 +31,7 @@ function LatestNews() {
   return (
     <div>
       {latestNews.map((news: any, i: number) => (
-        <div>
+        <div key={i}>
           <div
             className="main-homepage-dappnews-pinnedCard"
             onClick={() => {

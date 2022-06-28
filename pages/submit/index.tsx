@@ -38,24 +38,24 @@ const { Option } = Select;
 const Submit: NextPage = () => {
   const { input, handleChange }: any = useForm({
     isOwnerOrAdmin: true,
-    email: "vvnguyen@umass.edu",
+    email: "",
     thumbnail: "",
-    projectName: "Baby I m real",
-    website: "www.abc.com",
+    projectName: "",
+    website: "",
     images: [null, null, null, null],
     category: 7,
     tags: [],
     status: "live",
-    shortDescription: "Shortgggggg",
+    shortDescription: "",
     detailDescription: "",
-    reviewArticle: "www.abc.com",
+    reviewArticle: "",
     hasToken: false,
     tokenLogo: null,
     tokenChain: " ",
-    tokenSymbol: "BCC",
-    tokenContract: "xD",
-    tokenDecimal: "xD",
-    tokenDescription: "xD",
+    tokenSymbol: "",
+    tokenContract: "",
+    tokenDecimal: "",
+    tokenDescription: "",
     isOnCoingecko: "",
     isFullyOnChain: "yes",
     dappChain: " ",
@@ -314,8 +314,8 @@ const Submit: NextPage = () => {
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
-        ((keys[i] === "detailDescription" && input[keys[i]].length < 100) ||
-          input[keys[i]].length > 500) &&
+        keys[i] === "detailDescription" &&
+        (input[keys[i]].length < 100 || input[keys[i]].length > 500) &&
         input[keys[i]].length > 0
       ) {
         message.error(
@@ -325,8 +325,8 @@ const Submit: NextPage = () => {
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
-        ((keys[i] === "shortDescription" && input[keys[i]].length < 10) ||
-          input[keys[i]].length > 100) &&
+        keys[i] === "shortDescription" &&
+        (input[keys[i]].length < 10 || input[keys[i]].length > 100) &&
         input[keys[i]].length > 0
       ) {
         message.error(
@@ -337,7 +337,8 @@ const Submit: NextPage = () => {
       //check token description length
       else if (
         keys[i] === "tokenDescription" &&
-        (input[keys[i]].length < 10 || input[keys[i]].length > 200)
+        (input[keys[i]].length < 10 || input[keys[i]].length > 200) &&
+        input[keys[i]].length > 0
       ) {
         message.error(
           `Token description must be longer at 10 characters and less than 200 characters`
@@ -381,7 +382,7 @@ const Submit: NextPage = () => {
       }
       //check contract
       else if (keys[i] === "tokenContract") {
-        if (validateAddress(input[keys[i]])) {
+        if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
           flag = true;
         }
