@@ -443,7 +443,7 @@ const BlockchainDetails = () => {
             <BoxALignItemsCenter className="mb-5">
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
-                  <File color="black" />
+                  <img src="/img/icons/briefcase.png"></img>
                   <span className="ms-2">Collect</span>
                 </BoxALignItemsCenter>
               </Button>
