@@ -89,6 +89,8 @@ export const NavbarHome: FC = () => {
   const handleChangeSearch = (e: any) => {
     setCurValue(e.target.value);
     setKeyword(e.target.value);
+    console.log(curValue);
+    // console.log(keyword);
   };
   const onShowBoxSearch = () => {
     setBoxSearch(true);
@@ -230,7 +232,13 @@ export const NavbarHome: FC = () => {
                         </span>
                       </button>
                     </BoxALignItemsCenter>
-                    <Modal style={{top: '5rem'}} zIndex = {100} width={1000} visible={isVisible} onCancel={onCancel}>
+                    <Modal
+                      style={{ top: "5rem" }}
+                      zIndex={100}
+                      width={1000}
+                      visible={isVisible}
+                      onCancel={onCancel}
+                    >
                       <form onSubmit={onSearch}>
                         <input
                           type="text"
@@ -254,9 +262,17 @@ export const NavbarHome: FC = () => {
                           </button>
                         </p>
                         {tags.map((tag: any, i) => {
-                          console.log(tag);
+                          // console.log(tag);
                           return (
-                            <ButtonNavy onClick={() => setCurValue(tag.attributes?.name)} key={i}>
+                            <ButtonNavy
+                              onClick={(e) => {
+                                // console.log(e)
+                                setCurValue(tag.attributes?.name);
+                                setKeyword(tag.attributes?.name);
+                                // handleChangeSearch(e)
+                              }}
+                              key={i}
+                            >
                               # {tag.attributes?.name}
                             </ButtonNavy>
                           );
