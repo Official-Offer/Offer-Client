@@ -152,9 +152,15 @@ export default function TableDapp({
             </div>
           </div>
           {tokenList.map((token: any, i: number) => {
-            const user = token.attributes.crawl[`user_${timeKey}`];
-            const transaction = token.attributes.crawl[`amount_${timeKey}`];
-            const volume = token.attributes.crawl[`usds_${timeKey}`];
+            const user = formatter.format(
+              token.attributes.crawl[`user_${timeKey}`]
+            );
+            const transaction = formatter.format(
+              token.attributes.crawl[`amount_${timeKey}`]
+            );
+            const volume = (
+              token.attributes.crawl[`usds_${timeKey}`]
+            );
             const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
             const transactionDiff =
               token.attributes.crawl[`amount_${timeKey}_gr`];
@@ -245,10 +251,10 @@ export default function TableDapp({
                   <div className="table-body-item-volume-bar-top">
                     <p>{formatter.format(token.attributes.dailyVolume)}</p>
                     <p
-                      className={`table-body-item-volume-bar-top-${volumeDiff} ms-2`}
+                      className={`table-body-item-volume-bar-top-${incdec(volumeDiff)} ms-2`}
                     >
                       {(token.attributes.dailyVolumeDiff * 100).toFixed(2)}%{" "}
-                      {volumeDiff === "increase" ? "↑" : "↓"}
+                      {updown(volumeDiff)}
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
@@ -314,13 +320,14 @@ export default function TableDapp({
                         <img src="/img/icons/fire.png" alt="" />
                       )}
                       <span>
-                        {isExistAndFormatCurrency(
-                          token.attributes.crawl.social_signal,
-                          0
-                        )}
+                        {formatter.format(token.attributes.crawl.social_signal)}
                       </span>
                     </div>
-                    <div className="table-body-item-ranking-increase text-end">
+                    <div
+                      className={`table-body-item-ranking-${incdec(
+                        token.attributes.crawl.social_signal_gr
+                      )} text-end`}
+                    >
                       <p>
                         {(
                           token.attributes.crawl.social_signal_gr * 100
@@ -424,7 +431,9 @@ export default function TableDapp({
                       <div className="table-body-item-user-number text-end">
                         <p>{số_trên}</p>
                       </div>
-                      <div className="table-body-item-user-decrease text-end">
+                      <div
+                        className={`table-body-item-user-${tăng_giảm} text-end`}
+                      >
                         <p>
                           {(số_dưới * 100).toFixed(2)}%{" "}
                           {tăng_giảm === "increase" ? "↑" : "↓"}
