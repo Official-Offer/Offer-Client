@@ -37,7 +37,6 @@
       font-size: 16px;
     }
     &-right {
-      
       font-size: 16px;
     }
   }
@@ -367,8 +366,11 @@
     }
     &-number {
       font-family: "Circular Std";
+      color: white;
       font-size: 46px;
       font-weight: 700;
+      text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000,
+        -1px -1px 0 #000;
     }
   }
   &-commentsection {
@@ -386,12 +388,12 @@
     }
     &-mobile {
       h2 {
-          font-family: "Circular Std";
-          font-style: normal;
-          font-size: 26px;
-          padding: 8px;
-          font-weight: 700;
-          color: #223052;
+        font-family: "Circular Std";
+        font-style: normal;
+        font-size: 26px;
+        padding: 8px;
+        font-weight: 700;
+        color: #223052;
       }
       display: none;
       @include sm {
