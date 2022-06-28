@@ -11,7 +11,7 @@ import {
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
 import { useRouter } from "next/router";
-import { Select } from "antd";
+import { Select, Tooltip } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
 import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
@@ -26,7 +26,15 @@ export default function TableDapp({
 }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
-  const timeKey = router.query.timeKey || "7d";
+  const timeKey = router.query.timeKey || "24h";
+
+  const hoverableQuestionMark = (message: string) => {
+    return (
+      <Tooltip placement="top" title={message} color="#fff">
+        <QuestionCircleOutlined style={{ color: "#000" }} />
+      </Tooltip>
+    );
+  };
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -35,25 +43,33 @@ export default function TableDapp({
     { title: "Blockchain", icon: "", sort: false },
     {
       title: `${timeKey} Users`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "The number of wallets that had interacted (transactions) with a dapp's smart contracts."
+      ),
       sort: true,
       query: "dailyUser",
     },
     {
       title: `${timeKey} Transactions`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "The amount of transaction represents the numbers of actions between users and dapps that involved smart contract interactions."
+      ),
       sort: true,
       query: "dailyTransaction",
     },
     {
       title: `${timeKey} Volume`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "Transaction volume of tokens to a dapp's smart contracts, which is the amount of tokens spent in the dapp."
+      ),
       sort: true,
       query: "dailyVolume",
     },
     {
       title: "Social Signal",
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "Social Signal is a new metric that reflects the general popularity of the crypto community in a certain project. A project with a higher Social Singal has captured more interest in the social network. The Social Signal updates once every 3 days."
+      ),
       sort: true,
       query: "socialSignal",
     },
