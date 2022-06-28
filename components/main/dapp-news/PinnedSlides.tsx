@@ -11,13 +11,9 @@ import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
-// import { Carousel } from "react-bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function PinnedSlides({ crit }: any) {
   const [index, setIndex] = useState(6);
-  // let index = 0;
-  // SwiperCore.use([Pagination]);
   const router = useRouter();
   const [pinnedPosts, setPinned] = useState([]);
 
@@ -45,7 +41,6 @@ export default function PinnedSlides({ crit }: any) {
   return (
     <div className="sliderWrapper">
       <Swiper
-        // onChange = {() => setIndex(i+1)}
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
         observer={true}
@@ -66,19 +61,13 @@ export default function PinnedSlides({ crit }: any) {
             slidesPerView: 1,
           },
         }}
-        // pagination={true}
         loop={true}
         autoplay={{ delay: 1000 }}
-        // pagination={{
-        //   clickable: true,
-        //   type: "bullets",
-        // }}
         pagination={true}
         onSlideChange={(e) => {
-          // console.log(e.activeIndex - 1);
-          // setIndex(index == 6 ? 0 : index == 2? 1 : index + 1);
-          // console.log(e)
-          setIndex(e.activeIndex == 8 ? 0 : e.activeIndex - 1)
+          setIndex(
+            e.activeIndex == pinnedPosts.length + 1 ? 0 : e.activeIndex - 1
+          );
         }}
         effect="fade"
         fadeEffect={{
@@ -86,9 +75,6 @@ export default function PinnedSlides({ crit }: any) {
         }}
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
-          // index = i;
-          // console.log(navigationPrevRef);
-          // console.log(navigationNextRef);
           return (
             <div>
               <SwiperSlide
