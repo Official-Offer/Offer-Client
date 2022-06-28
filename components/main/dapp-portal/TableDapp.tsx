@@ -159,7 +159,7 @@ export default function TableDapp({
               token.attributes.crawl[`amount_${timeKey}`]
             );
             const volume = (
-              token.attributes.crawl[`usds_${timeKey}`]
+              token.attributes.crawl[`volume_${timeKey}`]
             );
             const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
             const transactionDiff =
@@ -249,11 +249,11 @@ export default function TableDapp({
                 </div>
                 <div className="table-body-item table-body-item-volume">
                   <div className="table-body-item-volume-bar-top">
-                    <p>{formatter.format(token.attributes.dailyVolume)}</p>
+                    <p>{formatter.format(volume)}</p>
                     <p
                       className={`table-body-item-volume-bar-top-${incdec(volumeDiff)} ms-2`}
                     >
-                      {(token.attributes.dailyVolumeDiff * 100).toFixed(2)}%{" "}
+                      {(volumeDiff * 100).toFixed(2)}%{" "}
                       {updown(volumeDiff)}
                     </p>
                   </div>
@@ -400,7 +400,7 @@ export default function TableDapp({
           )[0].query;
           if (selectedKey === "dailyUser") selectedKey = "user";
           else if (selectedKey === "dailyTransaction") selectedKey = "amount";
-          else selectedKey = "usds";
+          else selectedKey = "volume";
           // console.log(selectedKey);
           const số_trên: string = formatter.format(
             e.attributes.crawl[`${selectedKey}_${timeKey}`]
