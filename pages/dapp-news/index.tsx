@@ -168,7 +168,7 @@ const DappNews: FC = () => {
                 onClick={() => setCrit("viewer")}
                 className={`${crit === "viewer" ? "active" : ""}`}
               >
-                <strong>Popular</strong>
+                Popular
               </ToggleMain_Sub>
             </span>
             <span className="d-inline-flex position-relative bar-category-right-toggle">
