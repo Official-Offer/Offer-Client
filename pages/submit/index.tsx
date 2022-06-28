@@ -32,7 +32,7 @@ import { URL_API_ADMIN } from "config/index";
 import { Modal } from "antd";
 import validateEmail from "@utils/validateEmail";
 import { EmailIcon } from "react-share";
-import validateAddress from "@utils/validateEmail";
+import validateAddress from "@utils/validateAddress";
 const { Option } = Select;
 
 const Submit: NextPage = () => {
@@ -43,17 +43,17 @@ const Submit: NextPage = () => {
     projectName: "",
     website: "",
     images: [null, null, null, null],
-    category: 7,
+    category: "",
     tags: [],
     status: "live",
     shortDescription: "",
     detailDescription: "",
     reviewArticle: "",
-    hasToken: false,
+    hasToken: true,
     tokenLogo: null,
     tokenChain: " ",
     tokenSymbol: "",
-    tokenContract: "",
+    tokenContract: "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     tokenDecimal: "",
     tokenDescription: "",
     isOnCoingecko: "",
@@ -68,7 +68,7 @@ const Submit: NextPage = () => {
       { name: "LinkedIn", url: "", image: null },
       { name: "Instagram", url: "", image: null },
     ],
-    referralProgram: "Yes, but you will have to apply separately.",
+    referralProgram: "Sorry, we don’t.",
   });
 
   const setMockInput = () => {};
@@ -128,28 +128,6 @@ const Submit: NextPage = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [error, setError] = useState<any>();
   const [tags, setTags] = useState<any>([]);
-  // user changed category, render corresponding tags
-  useEffect(() => {
-    (async () => {
-      const query = qs.stringify(
-        {
-          populate: "*",
-          filters: {
-            id: {
-              $eq: input.category,
-            },
-          },
-        },
-        {
-          encodeValuesOnly: true,
-        }
-      );
-      await axios
-        .get(`${URL_API_ADMIN}/app-categories?${query}`)
-        .then((res) => console.log(res.data.data));
-    })();
-  }, [input.category]);
-
   const loginError = () => {
     if (notLogin) message.error("Please log in to continue");
   };
@@ -197,7 +175,7 @@ const Submit: NextPage = () => {
     minWidth: number,
     minHeight: number
   ) => {
-    var flag = true;
+    let flag = true;
     const reader = new FileReader();
     reader.readAsDataURL(value);
     reader.onload = (e: any) => {
@@ -310,7 +288,7 @@ const Submit: NextPage = () => {
       ) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
-        flag = true;
+        return;
       }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
@@ -321,7 +299,7 @@ const Submit: NextPage = () => {
         message.error(
           `Detail description must be longer at 100 characters and less than 500 characters`
         );
-        flag = true;
+        return;
       }
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
@@ -332,7 +310,7 @@ const Submit: NextPage = () => {
         message.error(
           `Short description must be longer at 10 characters and less than 100 characters`
         );
-        flag = true;
+        return;
       }
       //check token description length
       else if (
@@ -343,13 +321,13 @@ const Submit: NextPage = () => {
         message.error(
           `Token description must be longer at 10 characters and less than 200 characters`
         );
-        flag = true;
+        return;
       }
       // check email
       else if (keys[i] == "email" && !validateEmail(input[keys[i]])) {
         message.error("Must be an email");
         setError(keys[i]);
-        flag = true;
+        return;
       }
       //check existed email
       else if (keys[i] == "email") {
@@ -384,7 +362,7 @@ const Submit: NextPage = () => {
       else if (keys[i] === "tokenContract") {
         if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
-          flag = true;
+          return;
         }
         //check existed contract
         else {
@@ -419,12 +397,12 @@ const Submit: NextPage = () => {
       // check image of correct size
       else if (keys[i] === failed) {
         message.error(`${failed} image doesn't meet the standard`);
-        flag = true;
+        return;
       }
       //check images field have at least 1 image
       else if (keys[i] == "images" && input[keys[i]].length < 1) {
         message.error("You must submit at least 1 Preview image");
-        flag = true;
+        return;
       }
 
       // flag is raised, return
@@ -501,7 +479,7 @@ const Submit: NextPage = () => {
           <h1 className="mb-0">Submit Dapp</h1>
         </TitleGlobal>
         <br />
-        <h3>Identification</h3>
+        <h3 className="main-submit-section-header">Identification</h3>
         <p className="text-secondary">
           Using an official email address within your organization will allow us
           to verify your admin role of your product. A verified admin will be
@@ -526,7 +504,7 @@ const Submit: NextPage = () => {
             <input
               className="main-submit-email"
               type={"email"}
-              placeholder="example@gmail.com"
+              placeholder="phamhoanghung001@gmail.com"
               disabled={notLogin}
               value={input.email}
               onChange={handleChange}
@@ -535,7 +513,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Basic Information</h3>
+        <h3 className="main-submit-section-header">Basic Information</h3>
         <BoxWhiteShadow className="px-4 py-5">
           <div className="row">
             <div className="col-lg-2 col-12">
@@ -616,16 +594,6 @@ const Submit: NextPage = () => {
                           />
                         </>
                       )}
-                      {countNonNull(input.images) < i || (
-                        <>
-                          {" "}
-                          <br />
-                          <p>
-                            JPG,PNG with ratio of 1:1 300*300 or larger
-                            recommended
-                          </p>
-                        </>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -646,7 +614,7 @@ const Submit: NextPage = () => {
                     },
                   })
                 }
-                value={input.category}
+                // value={input.category}
               >
                 <Option value={7}>Game</Option>
                 <Option value={8}>Exchange</Option>
@@ -741,27 +709,29 @@ const Submit: NextPage = () => {
                   <label className="label-input">Detail Description</label>
                   <span className="text-green">Max of 500 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
-                <textarea
-                  disabled={notLogin}
-                  style={{ width: "100%" }}
-                  maxLength={500}
-                  placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
-                  value={input.detailDescription}
-                  onChange={handleChange}
-                  name="detailDescription"
-                />
-                <p
-                  className={`main-submit-character-count${
-                    input.detailDescription.length === 0
-                      ? "-hidden"
-                      : input.detailDescription.length > 500 ||
-                        input.detailDescription.length < 100
-                      ? "-error"
-                      : ""
-                  }`}
-                >
-                  {input.detailDescription.length}/500 Characters
-                </p>
+                <div className="main-submit-text-wrapper">
+                  <textarea
+                    className="main-submit-text-description main-submit-trans-text"
+                    disabled={notLogin}
+                    style={{ width: "100%" }}
+                    maxLength={500}
+                    placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                    value={input.detailDescription}
+                    onChange={handleChange}
+                    name="detailDescription"
+                  />
+                  <div
+                    className={`main-submit-char-counter${
+                      (input.detailDescription.length < 100 ||
+                        input.detailDescription.length > 500) &&
+                      input.detailDescription.length > 0
+                        ? "-error"
+                        : ""
+                    }`}
+                  >
+                    {input.detailDescription.length}/500
+                  </div>
+                </div>
               </div>
             )}
             <div className="col-12 mt-lg-5 mt-4">
@@ -787,7 +757,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Token Info</h3>
+        <h3 className="main-submit-section-header">Token Info</h3>
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">
             Does your product has its tokens or cryptocurrencies?
@@ -830,8 +800,8 @@ const Submit: NextPage = () => {
           )}
           <br />
           <div className="row">
-            <div className="col-lg-6 col-12">
-              <h5 className="mb-3">
+            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+              <h5 className="label-input mb-3">
                 On which blockchain do you issue your token?
               </h5>
               <Select
@@ -846,7 +816,7 @@ const Submit: NextPage = () => {
                     },
                   })
                 }
-                value={input.tokenChain}
+                // value={input.tokenChain}
                 placeholder="Choose blockchain"
               >
                 <Option value={2}>BNB Chain</Option>
@@ -866,6 +836,7 @@ const Submit: NextPage = () => {
                   value={input.tokenSymbol}
                   type={"text"}
                   name="tokenSymbol"
+                  placeholder="phamhoanghung@gmail.com"
                 />
               </div>
             )}
@@ -904,6 +875,7 @@ const Submit: NextPage = () => {
                   <span className="text-green">Max of 200 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <textarea
+                  className="main-submit-text-description"
                   disabled={notLogin}
                   style={{ width: "100%" }}
                   maxLength={200}
@@ -949,7 +921,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Token Info</h3>
+        <h3 className="main-submit-section-header">Smart Contracts Info</h3>
         <p className="text-secondary">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
@@ -980,7 +952,7 @@ const Submit: NextPage = () => {
                     target: { value: e, name: "dappChain", type: "select" },
                   })
                 }
-                value={input.dappChain}
+                // value={input.dappChain}
                 placeholder="On which blockchain did you build your on-chain function?"
               >
                 <Option value={2}>BNB Chain</Option>
@@ -991,7 +963,9 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3>Social Media ( optional )</h3>
+        <h3 className="main-submit-section-header">
+          Social Media ( optional )
+        </h3>
         <p className="text-secondary">
           We track the growth of your product’s social media communities.
           Providing a full detail of your social media channels will improve
@@ -1047,7 +1021,9 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteShadow>
         <br />
-        <h3 className="mb-3">Affiliate/Referral Program</h3>
+        <h3 className="main-submit-section-header mb-3">
+          Affiliate/Referral Program
+        </h3>
         <BoxWhiteShadow className="px-4 py-5">
           <h5 className="mb-3">
             Do you have an affiliate or referral program?
