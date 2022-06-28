@@ -234,13 +234,15 @@ const BlockchainDetails = () => {
       });
     })();
   }, [pagination, justCommented]);
+  const [userId, setUserId] = useState();
   useEffect(() => {
     (async () => {
       // uncomment when deployed on dev since localhost can't access cookie
       await requestSSO
         .get(`/users/me`)
-        .then(() => {
+        .then((res) => {
           setLogin(true);
+          setUserId(res.data.userApiId);
         })
         .catch(() => {
           setLogin(false);
@@ -293,6 +295,34 @@ const BlockchainDetails = () => {
 
   console.log(`${window.location.origin}/app/${id}`);
   const [like, setLike] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            dapp: {
+              id: {
+                $eq:id,
+              },
+            },
+            user: {
+              id: {
+                $eq: userId,
+              }
+            }
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await request.get(`/favorites?${query}`).then((res) => {
+        console.log(res.data.data);
+        setLike(res.data.data.length > 0); // this user did like this dapp
+      });
+    })();
+  }, [userId])
   const onLike = async () => {
     if (!login) {
       setShowLoginPopup(true);
@@ -300,7 +330,7 @@ const BlockchainDetails = () => {
       //post and change button's
       await requestDapp
         .post("/dapp/favorites", { data: { dapp: id } })
-        .then(() => setLike(!like))
+        .then(() => setLike(true))
         .catch(() => message.error("Something is wrong, damn it!"));
     }
   };
@@ -328,6 +358,8 @@ const BlockchainDetails = () => {
       });
     })();
   }, [dapp]);
+
+
 
   // console.log(dapp);
   return (
