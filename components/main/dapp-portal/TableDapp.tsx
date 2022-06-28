@@ -109,7 +109,7 @@ export default function TableDapp({
   );
   const onMobileChangeHeader = (e: any) => {
     setHeaderMobile(e);
-    console.log(e);
+    // console.log(e);
   };
   return (
     <>
@@ -401,7 +401,7 @@ export default function TableDapp({
           if (selectedKey === "dailyUser") selectedKey = "user";
           else if (selectedKey === "dailyTransaction") selectedKey = "amount";
           else selectedKey = "usds";
-          console.log(selectedKey);
+          // console.log(selectedKey);
           const số_trên: string = formatter.format(
             e.attributes.crawl[`${selectedKey}_${timeKey}`]
           );

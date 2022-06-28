@@ -49,6 +49,8 @@ const DappPortal: NextPage = () => {
             },
           },
           sort: [`${sort[0]}:${sort[1]}`],
+          // sort: [`category:asc`],
+
         },
         {
           encodeValuesOnly: true,
@@ -56,11 +58,11 @@ const DappPortal: NextPage = () => {
       );
       let display: any;
       await request.get(`/dapp-ads?populate=*`).then((res) => {
-        // console.log(query)
+        // console.log(query);
         display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
-        // console.log(query);
+        console.log(query);
         console.log(res.data.data);
         display = [...display, ...res.data.data];
       });

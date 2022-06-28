@@ -174,7 +174,7 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/`)
         .then((res) => {
-          console.log(res.data.stats.token);
+          // console.log(res.data.stats.token);
           setTokenInfo(res.data.stats.token);
         });
     })();
@@ -193,7 +193,7 @@ const BlockchainDetails = () => {
         { encodeValuesOnly: true }
       );
       await request.get(`/dapps?${query}`).then((res) => {
-        console.log(res.data.data[0].attributes);
+        // console.log(res.data.data[0].attributes);
         setDapp(res.data.data[0].attributes);
         setSlug(res.data.data[0].attributes.slug);
       });
@@ -227,7 +227,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/reviews?${query}`).then((res) => {
         setReviews(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       });
     })();
   }, [pagination, justCommented]);
@@ -319,7 +319,7 @@ const BlockchainDetails = () => {
     })();
   }, [dapp]);
 
-  console.log(dapp);
+  // console.log(dapp);
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -778,7 +778,7 @@ const BlockchainDetails = () => {
               More About {dapp?.name}
             </h3>
             {posts.map((post, i) => {
-              console.log(post);
+              // console.log(post);
               return (
                 <div className="row" key={i} onClick={()=>window.open(`${window.location.origin}/dapp-news/${post.slug}`)}>
                   <div className="blockchain-details-bordered-top">
@@ -886,7 +886,7 @@ const BlockchainDetails = () => {
                               className="text-green"
                               onClick={() => {
                                 viewSubcomment(i);
-                                console.log(showSubcomment);
+                                // console.log(showSubcomment);
                               }}
                             >
                               View {comment.attributes?.replies.data?.length}{" "}
