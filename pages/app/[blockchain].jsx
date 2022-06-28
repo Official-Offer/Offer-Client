@@ -397,42 +397,51 @@ const BlockchainDetails = () => {
             </ButtonBlue>
             <BoxALignItemsCenter className="ms-5">
               <span className="me-3">Social: </span>
-              <a href="#" className="blockchain-details-social-facebook">
-                <img
-                  src="/img/icons/blockchain_facebook.png"
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Facebook"
-                      )[0].url || "https://facebook.com"
-                    )
-                  }
-                />
-              </a>
-              <a href="#" className="blockchain-details-social-twitter">
-                <TwitterOutlined
-                  style={{ fontSize: "2rem" }}
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Twitter"
-                      )[0].url || "https://twitter.com"
-                    )
-                  }
-                />
-              </a>
-              <a href="#" className="blockchain-details-social-youtube">
-                <YoutubeFilled
-                  style={{ fontSize: "1.5rem" }}
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Youtube"
-                      )[0]?.url || "https://youtube.com"
-                    )
-                  }
-                />
-              </a>
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-facebook">
+                  <img
+                    src="/img/icons/blockchain_facebook.png"
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Facebook"
+                        )[0].url
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Twitter")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-twitter">
+                  <TwitterOutlined
+                    style={{ fontSize: "2rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Twitter"
+                        )[0].url || "https://twitter.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Youtube")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-youtube">
+                  <YoutubeFilled
+                    style={{ fontSize: "1.5rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Youtube"
+                        )[0]?.url || "https://youtube.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
         </div>
@@ -769,59 +778,44 @@ const BlockchainDetails = () => {
               </div>
             </div>
           )}
-          <div className="blockchain-details-right-topic">
-            <h3 className="mb-3 blockchain-details-section-title">
-              Related Topic
-            </h3>
-            <div className="row">
-              <div className="col-lg-6 col-12 blockchain-details-right-topic-item">
-                <a href="#" className="">
-                  <p className="name">High-risk</p>
-                  <p className="count">{`536 Apps >`}</p>
-                </a>
-              </div>
-              <div className="col-lg-6 col-12 blockchain-details-right-topic-item">
-                <a href="#" className="">
-                  <p className="name">BNB Chain</p>
-                  <p className="count">{`536 Apps >`}</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="blockchain-details-right-topic">
-            <h3 className="mb-3 blockchain-details-section-title">
-              More About {dapp?.name}
-            </h3>
-            {posts.map((post, i) => {
-              // console.log(post);
-              return (
-                <div
-                  className="row"
-                  key={i}
-                  onClick={() =>
-                    window.open(
-                      `${window.location.origin}/dapp-news/${post.slug}`
-                    )
-                  }
-                >
-                  <div className="blockchain-details-bordered-top">
-                    <div>
-                      <img
-                        className="blockchain-details-media"
-                        src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
-                      ></img>
-                    </div>
-                    <div className="blockchain-details-wrapper">
-                      <p className="blockchain-details-title">{post?.title}</p>
-                      <p className="blockchain-details-date">
-                        {moment(post?.publishedAt).format("LL")}
-                      </p>
+          {posts.length > 0 && (
+            <div className="blockchain-details-right-topic">
+              <h3 className="mb-3 blockchain-details-section-title">
+                More About {dapp?.name}
+              </h3>
+              {posts.map((post, i) => {
+                // console.log(post);
+                return (
+                  <div
+                    className="row"
+                    key={i}
+                    onClick={() =>
+                      window.open(
+                        `${window.location.origin}/dapp-news/${post.slug}`
+                      )
+                    }
+                  >
+                    <div className="blockchain-details-bordered-top">
+                      <div>
+                        <img
+                          className="blockchain-details-media"
+                          src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                        ></img>
+                      </div>
+                      <div className="blockchain-details-wrapper">
+                        <p className="blockchain-details-title">
+                          {post?.title}
+                        </p>
+                        <p className="blockchain-details-date">
+                          {moment(post?.publishedAt).format("LL")}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         <div className="empty_space_height50" />
         <div className="blockchain-details-left col-lg-9 col-12">
