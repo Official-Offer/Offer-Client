@@ -680,27 +680,29 @@ const Submit: NextPage = () => {
                   <label className="label-input">Short Description</label>
                   <span className="text-green">Max of 70 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
-                <textarea
-                  disabled={notLogin}
-                  style={{ width: "100%" }}
-                  maxLength={70}
-                  placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
-                  value={input.shortDescription}
-                  onChange={handleChange}
-                  name="shortDescription"
-                />
-                <p
-                  className={`main-submit-character-count${
-                    input.shortDescription.length === 0
-                      ? "-hidden"
-                      : input.shortDescription.length > 70 ||
-                        input.shortDescription.length < 10
-                      ? "-error"
-                      : ""
-                  }`}
-                >
-                  {input.shortDescription.length}/70 Characters
-                </p>
+                <div className="main-submit-text-wrapper ">
+                  <textarea
+                    className="main-submit-trans-text"
+                    disabled={notLogin}
+                    style={{ width: "100%" }}
+                    maxLength={70}
+                    placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
+                    value={input.shortDescription}
+                    onChange={handleChange}
+                    name="shortDescription"
+                  />
+                  <div
+                    className={`main-submit-char-counter${
+                      (input.shortDescription.length < 10 ||
+                        input.shortDescription.length > 100) &&
+                      input.shortDescription.length > 0
+                        ? "-error"
+                        : ""
+                    }`}
+                  >
+                    {input.shortDescription.length}/100
+                  </div>
+                </div>
               </div>
             )}
             {input.isOwnerOrAdmin && (
@@ -874,28 +876,29 @@ const Submit: NextPage = () => {
                   <label className="label-input">Token Description</label>
                   <span className="text-green">Max of 200 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
-                <textarea
-                  className="main-submit-text-description"
-                  disabled={notLogin}
-                  style={{ width: "100%" }}
-                  maxLength={200}
-                  placeholder="Token Description."
-                  onChange={handleChange}
-                  value={input.tokenDescription}
-                  name="tokenDescription"
-                />
-                <p
-                  className={`main-submit-character-count${
-                    input.tokenDescription.length === 0
-                      ? "-hidden"
-                      : input.tokenDescription.length > 200 ||
-                        input.tokenDescription.length < 10
-                      ? "-error"
-                      : ""
-                  }`}
-                >
-                  {input.tokenDescription.length}/200 Characters
-                </p>
+                <div className="main-submit-text-wrapper">
+                  <textarea
+                    className="main-submit-text-description main-submit-trans-text"
+                    disabled={notLogin}
+                    style={{ width: "100%" }}
+                    maxLength={500}
+                    placeholder="Token Description."
+                    onChange={handleChange}
+                    value={input.tokenDescription}
+                    name="tokenDescription"
+                  />
+                  <div
+                    className={`main-submit-char-counter${
+                      (input.tokenDescription.length < 10 ||
+                        input.tokenDescription.length > 200) &&
+                      input.tokenDescription.length > 0
+                        ? "-error"
+                        : ""
+                    }`}
+                  >
+                    {input.tokenDescription.length}/500
+                  </div>
+                </div>
               </div>
             )}
             <div className="col-12 mt-lg-5 mt-4">
