@@ -146,24 +146,8 @@ a {
   .swiper-pagination {
     position: absolute;
     text-align: center;
-    // transition: 300ms opacity;
-    // transform: translate3d(0, 0, 0);
     top: 0 !important;
-    // @include sm {
-    //   margin-top: 45vw;
-    // }
-    @media only screen and (min-width: 460px) {
-      margin-top: 45vw;
-    }
-    @media only screen and (min-width: 1060px) and (max-width: 1460px){
-      margin-top: 25vw;
-    }
-    @media only screen and (min-width: 1460px){
-      margin-top: 19vw !important; 
-    }
-    @media only screen and (min-width: 2160px) {
-      margin-top: 12vw !important; 
-    }
+    margin-top: 50%;
   }
   .swiper-pagination-bullet {
     padding: 2px 2px;
