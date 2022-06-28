@@ -152,7 +152,7 @@ const BlockchainDetails = () => {
   const [login, setLogin] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  useEffect(() => console.log(reviews), [reviews]);
+  // useEffect(() => console.log(reviews), [reviews]);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -194,6 +194,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/dapps?${query}`).then((res) => {
         // console.log(res.data.data[0].attributes);
+
         setDapp(res.data.data[0].attributes);
         setSlug(res.data.data[0].attributes.slug);
       });
@@ -465,7 +466,7 @@ const BlockchainDetails = () => {
               </Button>
             </BoxALignItemsCenter>
             <div className="w-100">
-              <AppSlide />
+              <AppSlide imgArr={dapp?.images.data}/>
             </div>
           </BoxAlignItemsEnd_FlexColumn>
         </div>
