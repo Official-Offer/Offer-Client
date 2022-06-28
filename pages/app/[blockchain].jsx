@@ -272,19 +272,26 @@ const BlockchainDetails = () => {
       onCancel={() => setShowSharePopup(false)}
     >
       <BoxJustifyContentSpaceBetween>
-        <FacebookShareButton url={dapp?.website} quote="Baby I'm real">
+        <FacebookShareButton url={`${window.location.origin}/app/${id}`}>
           <FacebookIcon round size={62}></FacebookIcon>
         </FacebookShareButton>
-        <TwitterShareButton title="Checkout this Dapp" url={dapp?.website}>
+        <TwitterShareButton
+          title="Checkout this Dapp"
+          url={`${window.location.origin}/app/${id}`}
+        >
           <TwitterIcon size={62} round />
         </TwitterShareButton>
-        <TelegramShareButton title="Checkout this Dapp" url={dapp?.website}>
+        <TelegramShareButton
+          title="Checkout this Dapp"
+          url={`${window.location.origin}/app/${id}`}
+        >
           <TelegramIcon size={62} round></TelegramIcon>
         </TelegramShareButton>
       </BoxJustifyContentSpaceBetween>
     </Modal>
   );
 
+  console.log(`${window.location.origin}/app/${id}`);
   const [like, setLike] = useState(false);
   const onLike = async () => {
     if (!login) {
