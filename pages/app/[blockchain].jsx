@@ -374,7 +374,7 @@ const BlockchainDetails = () => {
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
           <div className="blockchain-details-description">
-            <p>{dapp?.description}</p>
+            <p className="blockchain-details-bc-description">{dapp?.description}</p>
           </div>
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (

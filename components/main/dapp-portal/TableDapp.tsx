@@ -102,6 +102,8 @@ export default function TableDapp({
     },
   ];
   const activeItem = (sort: string, query: string) => {
+    //look at mobile header and sort accordingly
+    console.log(query);
     setSort([query, sort]);
   };
   const [headerMobile, setHeaderMobile] = useState(
@@ -109,6 +111,7 @@ export default function TableDapp({
   );
   const onMobileChangeHeader = (e: any) => {
     setHeaderMobile(e);
+    
     // console.log(e);
   };
   return (
