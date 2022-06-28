@@ -57,7 +57,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const options: any = {
     series: series,
     chart: {
-      height: 150,
+      height: 200,
       type: "line",
       toolbar: {
         show: false,
@@ -119,7 +119,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
                 colors: "black",
               },
               formatter: function (val: any) {
-                return val.toFixed(3);
+                return `$${val.toFixed(3)}`;
               },
             },
             title: {
@@ -160,5 +160,5 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     },
   };
 
-  return <Chart options={options} series={series} type="line" height={180} />;
+  return <Chart options={options} series={series} type="line" height={220} />;
 };

@@ -579,7 +579,7 @@ const BlockchainDetails = () => {
                         <BoxALignItemsStart>
                           <div className="ms-2">
                             <div className="exp-item">
-                              <span className="name">24h: </span>
+                              <span className="time">24h: </span>
                               <span className="value">
                                 {renderDollar(comp.name)}
                                 {comp.data["24h"]}
@@ -591,7 +591,7 @@ const BlockchainDetails = () => {
                             </div>
                             {comp.data.total && (
                               <div className="exp-item">
-                                <span className="name">Total: </span>
+                                <span className="time">Total: </span>
                                 <span className="value">
                                   {renderDollar(comp.name)}
                                   {comp.data.total}
@@ -602,7 +602,7 @@ const BlockchainDetails = () => {
                               </div>
                             )}
                             <div className="exp-item">
-                              <span className="name">ATH: </span>
+                              <span className="time">ATH: </span>
                               <span className="value">
                                 {renderDollar(comp.name)}
                                 {comp.data.all_time_high?.toFixed(2)}
