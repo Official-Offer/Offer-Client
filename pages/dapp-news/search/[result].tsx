@@ -14,12 +14,7 @@ import {
   ToggleMain,
   ToggleMain_Sub,
 } from "@styles/styled-components/styledTabs";
-import { Select } from "antd";
 import NewsList from "@components/main/dapp-news/NewsList";
-import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
-import LatestNews from "@components/main/dapp-news/LatestNews";
-import RunningPrice from "@components/main/dapp-news/RunningPrice";
-
 const DappNews: FC = () => {
   const router = useRouter();
   console.log(router);
@@ -37,7 +32,7 @@ const DappNews: FC = () => {
           populate: "*",
           filters: {
             title: {
-              $contains: router.query.result,
+              $containsi: router.query.result,
             },
           },
           sort: [`${crit}:desc`],

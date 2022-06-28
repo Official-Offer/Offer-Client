@@ -122,7 +122,7 @@ const DappNews: FC = () => {
           <LatestNews />
         </div>
       </div>
-      <div style = {{marginTop: '30px', border: 'solid', borderWidth: '0.5px', padding: '20px'}}>
+      <div style = {{marginTop: '30px', border: 'solid', borderWidth: '0.2px', padding: '20px'}}>
         <RunningPrice direction={"right"} />
         <hr />
         <RunningPrice direction={"left"} />

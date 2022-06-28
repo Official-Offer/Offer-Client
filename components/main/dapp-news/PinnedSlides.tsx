@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
-import SwiperCore, {Navigation, Pagination, A11y } from "swiper";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@styles/styled-components/styledButton";
 import "swiper/css";
@@ -15,9 +15,9 @@ import { useRouter } from "next/router";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function PinnedSlides({ crit }: any) {
-  const navigationPrevRef = React.useRef(null);
-  const navigationNextRef = React.useRef(null);
-  SwiperCore.use([Pagination]);
+  const [index, setIndex] = useState(6);
+  // let index = 0;
+  // SwiperCore.use([Pagination]);
   const router = useRouter();
   const [pinnedPosts, setPinned] = useState([]);
 
@@ -43,8 +43,9 @@ export default function PinnedSlides({ crit }: any) {
     })();
   }, []);
   return (
-    <div className='sliderWrapper'>
+    <div className="sliderWrapper">
       <Swiper
+        // onChange = {() => setIndex(i+1)}
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
         observer={true}
@@ -68,47 +69,64 @@ export default function PinnedSlides({ crit }: any) {
         // pagination={true}
         loop={true}
         autoplay={{ delay: 1000 }}
-        pagination={{
-          clickable: true,
-          type: 'bullets'
-       }}
-        navigation={{
-          prevEl: ".swiper-button-next",
-          nextEl: ".swiper-button-prev",
+        // pagination={{
+        //   clickable: true,
+        //   type: "bullets",
+        // }}
+        pagination={true}
+        onSlideChange={(e) => {
+          // console.log(e.activeIndex - 1);
+          // setIndex(index == 6 ? 0 : index == 2? 1 : index + 1);
+          // console.log(e)
+          setIndex(e.activeIndex == 8 ? 0 : e.activeIndex - 1)
         }}
         effect="fade"
         fadeEffect={{
           crossFade: true,
         }}
       >
-      {pinnedPosts.map((pinnedPost: any, i: number) => {
+        {pinnedPosts.map((pinnedPost: any, i: number) => {
+          // index = i;
+          // console.log(navigationPrevRef);
+          // console.log(navigationNextRef);
           return (
-            <SwiperSlide
-              key={i}
-              className="main-homepage-dappnews-pinnedSlides"
-              onClick={() => {
-                router.push({
-                  pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
-                });
-              }}
-            >
-              <img
-                className="main-homepage-dappnews-pinnedSlides-img"
-                src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
-                alt=""
-              />
-              <p className="main-homepage-dappnews-pinnedSlides-title mt-2">
-                {pinnedPost.attributes.title}
-              </p>
-              <p className="main-homepage-dappnews-pinnedSlides-author">
-                By {pinnedPost.attributes.Author} |{" "}
-                {moment(pinnedPost.attributes.createdAt).format("LL")}
-              </p>
-              &nbsp;
-            </SwiperSlide>
+            <div>
+              <SwiperSlide
+                key={i}
+                className="main-homepage-dappnews-pinnedSlides"
+                onClick={() => {
+                  router.push({
+                    pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
+                  });
+                }}
+              >
+                <img
+                  className="main-homepage-dappnews-pinnedSlides-img"
+                  src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
+                  alt=""
+                />
+              </SwiperSlide>
+            </div>
           );
         })}
-        </Swiper>
+      </Swiper>
+      <div
+        // key={i}
+        className="main-homepage-dappnews-pinnedSlides"
+        onClick={() => {
+          router.push({
+            pathname: `/dapp-news/${pinnedPosts[index]?.attributes.slug}`,
+          });
+        }}
+      >
+        <p className="main-homepage-dappnews-pinnedSlides-title mt-2">
+          {pinnedPosts[index]?.attributes.title}
+        </p>
+        <p className="main-homepage-dappnews-pinnedSlides-author">
+          By {pinnedPosts[index]?.attributes.Author} |{" "}
+          {moment(pinnedPosts[index]?.attributes.createdAt).format("LL")}
+        </p>
+      </div>
     </div>
   );
 }

@@ -46,7 +46,7 @@ const RunningPrice = ({ direction }: any) => {
             <span className="main-homepage-tokenranking-table-logo">
               <img src={token.image} alt="" />
             </span>
-            <span className="main-homepage-tokenranking-table-name ms-2">
+            <span style ={{color: '#223052'}} className="main-homepage-tokenranking-table-name ms-2">
               {`${token.name} (${token.symbol.toUpperCase()})`}
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;

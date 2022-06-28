@@ -146,21 +146,29 @@ a {
   .swiper-pagination {
     position: absolute;
     text-align: center;
-    transition: 300ms opacity;
-    transform: translate3d(0, 0, 0);
+    // transition: 300ms opacity;
+    // transform: translate3d(0, 0, 0);
     top: 0 !important;
-    @include sm {
+    // @include sm {
+    //   margin-top: 45vw;
+    // }
+    @media only screen and (min-width: 460px) {
       margin-top: 45vw;
     }
-    @media only screen and (min-width: 760px) and (max-width: 1060px) {
-      margin-top: 45vw;
+    @media only screen and (min-width: 1060px) and (max-width: 1460px){
+      margin-top: 25vw;
     }
-    margin-top: 25vw;
+    @media only screen and (min-width: 1460px){
+      margin-top: 19vw !important; 
+    }
+    @media only screen and (min-width: 2160px) {
+      margin-top: 12vw !important; 
+    }
   }
   .swiper-pagination-bullet {
     padding: 2px 2px;
     background: #777e90;
-    width: 5rem;
+    width: 4rem;
     height: 0.05rem;
     border-radius: 0rem;
     opacity: 1;
