@@ -158,9 +158,7 @@ export default function TableDapp({
             const transaction = formatter.format(
               token.attributes.crawl[`amount_${timeKey}`]
             );
-            const volume = (
-              token.attributes.crawl[`volume_${timeKey}`]
-            );
+            const volume = token.attributes.crawl[`volume_${timeKey}`];
             const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
             const transactionDiff =
               token.attributes.crawl[`amount_${timeKey}_gr`];
@@ -249,12 +247,13 @@ export default function TableDapp({
                 </div>
                 <div className="table-body-item table-body-item-volume">
                   <div className="table-body-item-volume-bar-top">
-                    <p>{formatter.format(volume)}</p>
+                    <p>${formatter.format(volume)}</p>
                     <p
-                      className={`table-body-item-volume-bar-top-${incdec(volumeDiff)} ms-2`}
+                      className={`table-body-item-volume-bar-top-${incdec(
+                        volumeDiff
+                      )} ms-2`}
                     >
-                      {(volumeDiff * 100).toFixed(2)}%{" "}
-                      {updown(volumeDiff)}
+                      {(volumeDiff * 100).toFixed(2)}% {updown(volumeDiff)}
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
@@ -400,13 +399,20 @@ export default function TableDapp({
           )[0].query;
           if (selectedKey === "dailyUser") selectedKey = "user";
           else if (selectedKey === "dailyTransaction") selectedKey = "amount";
-          else selectedKey = "volume";
-          // console.log(selectedKey);
-          const số_trên: string = formatter.format(
-            e.attributes.crawl[`${selectedKey}_${timeKey}`]
-          );
+          else if (selectedKey === "dailyVolume") selectedKey = "volume";
+          else if (selectedKey === "socialSignal")
+            selectedKey = "social_signal";
+          console.log(selectedKey);
+          const số_trên: string =
+            selectedKey === "social_signal"
+              ? formatter.format(e.attributes.crawl.social_signal)
+              : formatter.format(
+                  e.attributes.crawl[`${selectedKey}_${timeKey}`]
+                );
           const số_dưới: number =
-            e.attributes.crawl[`${selectedKey}_${timeKey}_gr`];
+            selectedKey === "social_signal"
+              ? e.attributes.crawl.social_signal_gr
+              : e.attributes.crawl[`${selectedKey}_${timeKey}_gr`];
           const tăng_giảm: string = incdec(số_dưới);
           return (
             <div className="table-body" key={i}>
@@ -429,7 +435,10 @@ export default function TableDapp({
                   <div className="col-5">
                     <div className="w-100">
                       <div className="table-body-item-user-number text-end">
-                        <p>{số_trên}</p>
+                        <p>
+                          {["amount", "volume"].includes(selectedKey) && "$"}
+                          {số_trên}
+                        </p>
                       </div>
                       <div
                         className={`table-body-item-user-${tăng_giảm} text-end`}
