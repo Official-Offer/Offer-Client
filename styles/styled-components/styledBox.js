@@ -201,3 +201,16 @@ export const Channel = styled.img`
     padding: 5px gray;
   }
 `
+export const OrangeJuice = styled.div`
+  background: rgba(246, 137, 34, 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  height: 30px;
+  align-items: center;
+  color: #F68922;
+  font-family: 'Circular Std';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+margin-right: 12px;
+`

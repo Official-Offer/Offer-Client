@@ -203,6 +203,23 @@
       }
     }
   }
+  &-chart-wrapper {
+ 
+    padding: 20px;
+    padding-right: 20%;
+    background: #ffffff;
+    /* Old/Neutrals/6 */
+
+    border: 1px solid #e6e8ec;
+    border-radius: 16px;
+  }
+  &-chart-name {
+    margin-left: 12px;
+  }
+  &-flex {
+    display: flex;
+    justify-content: space-between;
+  }
   &-dashboard {
     h3 {
       text-transform: uppercase;
@@ -216,6 +233,7 @@
         text-decoration: underline;
       }
     }
+
     &-users,
     &-volume,
     &-transactions {

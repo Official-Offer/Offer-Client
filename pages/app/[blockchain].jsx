@@ -16,6 +16,7 @@ import {
   BoxWhiteShadow,
   DamnBorderedBlackBox,
   BoxJustifyContentSpaceBetween,
+  OrangeJuice,
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -162,6 +163,7 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/${day}`)
         .then((res) => {
+          console.log(res.data);
           setStat(res.data);
         });
     })();
@@ -174,7 +176,7 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/`)
         .then((res) => {
-          // console.log(res.data.stats.token);
+          console.log(res.data.stats.token);
           setTokenInfo(res.data.stats.token);
         });
     })();
@@ -375,7 +377,9 @@ const BlockchainDetails = () => {
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
           <div className="blockchain-details-description">
-            <p className="blockchain-details-bc-description">{dapp?.description}</p>
+            <p className="blockchain-details-bc-description">
+              {dapp?.description}
+            </p>
           </div>
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (
@@ -466,7 +470,7 @@ const BlockchainDetails = () => {
               </Button>
             </BoxALignItemsCenter>
             <div className="w-100">
-              <AppSlide imgArr={dapp?.images.data}/>
+              <AppSlide imgArr={dapp?.images.data} />
             </div>
           </BoxAlignItemsEnd_FlexColumn>
         </div>
@@ -539,58 +543,72 @@ const BlockchainDetails = () => {
                   Show Price Comparison On Chart
                 </div>
                 {stat?.stats.components.map((comp, i) => {
+                  const isAdvanced = ![
+                    "Social Signal",
+                    "Volume",
+                    "Transactions",
+                    "Users",
+                  ].includes(comp.name);
+                  if (comp.data.charts.labels.length === 0) return null;
                   return (
                     <div
                       className="col-lg-6 col-12 blockchain-details-dashboard-users"
                       key={i}
                     >
-                      <h5 className="mb-0">{comp.name}</h5>
-                      <SplineChart
-                        data={comp}
-                        price={stat?.stats.token.chart}
-                        showPrice={showPrice}
-                      />
-                      <BoxALignItemsStart>
-                        <div className="ms-2">
-                          <div className="exp-item">
-                            <span className="name">24h: </span>
-                            <span className="value">
-                              {renderDollar(comp.name)}
-                              {formatter.format(comp.data["24h"])}
-                            </span>
-                            <span className="increase">
-                              {comp.data["24h_gr"].toFixed(2)}%
-                              {updown(comp.data["24h_gr"])}
-                            </span>
-                          </div>
-                          {comp.data.total && (
+                      <div className="blockchain-details-chart-wrapper">
+                        <div className="blockchain-details-flex">
+                          <h5 className="mb-0 blockchain-details-chart-name">
+                            {comp.name}
+                          </h5>
+                          {isAdvanced && <OrangeJuice>Advanced</OrangeJuice>}
+                        </div>
+                        <SplineChart
+                          data={comp}
+                          price={stat?.stats.token.chart}
+                          showPrice={showPrice}
+                        />
+                        <BoxALignItemsStart>
+                          <div className="ms-2">
                             <div className="exp-item">
-                              <span className="name">Total: </span>
+                              <span className="name">24h: </span>
                               <span className="value">
                                 {renderDollar(comp.name)}
-                                {formatter.format(comp.data.total)}
+                                {comp.data["24h"]}
                               </span>
-                              <span className="time">
-                                ({comp.data.total_days} days)
+                              <span className="increase">
+                                {comp.data["24h_gr"].toFixed(2)}%
+                                {updown(comp.data["24h_gr"])}
                               </span>
                             </div>
-                          )}
-                          <div className="exp-item">
-                            <span className="name">ATH: </span>
-                            <span className="value">
-                              {renderDollar(comp.name)}
-                              {formatter.format(comp.data.all_time_high)}
-                            </span>
-                            <span className="time">
-                              (
-                              {moment(comp.data.all_time_high_date).format(
-                                "LL"
-                              )}
-                              )
-                            </span>
+                            {comp.data.total && (
+                              <div className="exp-item">
+                                <span className="name">Total: </span>
+                                <span className="value">
+                                  {renderDollar(comp.name)}
+                                  {comp.data.total}
+                                </span>
+                                <span className="time">
+                                  ({comp.data.total_days} days)
+                                </span>
+                              </div>
+                            )}
+                            <div className="exp-item">
+                              <span className="name">ATH: </span>
+                              <span className="value">
+                                {renderDollar(comp.name)}
+                                {comp.data.all_time_high?.toFixed(2)}
+                              </span>
+                              <span className="time">
+                                (
+                                {moment(comp.data.all_time_high_date).format(
+                                  "LL"
+                                )}
+                                )
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </BoxALignItemsStart>
+                        </BoxALignItemsStart>
+                      </div>
                     </div>
                   );
                 })}
@@ -619,10 +637,6 @@ const BlockchainDetails = () => {
           </div>
         </div>
         <div className="blockchain-details-right col-lg-3 col-12 p-0 mt-lg-5 mt-2">
-          <div className="blockchain-details-right-banner">
-            <img className="mw-100" src="/img/banner/banner_main.png" alt="" />
-          </div>
-          <br />
           {tokenInfo && ( //only shows when token has token info
             <div className="blockchain-details-right-topic">
               <h3 className="mb-3 blockchain-details-section-title">
@@ -677,8 +691,8 @@ const BlockchainDetails = () => {
                     </div>
                     <div>
                       <SmallSplineChart
-                        left={tokenInfo.chart.prices}
-                        right={tokenInfo.chart.mkt_caps}
+                        right={tokenInfo.chart.prices}
+                        left={tokenInfo.chart.mkt_caps}
                         labels={tokenInfo.chart.labels}
                       />
                     </div>
@@ -781,13 +795,21 @@ const BlockchainDetails = () => {
             {posts.map((post, i) => {
               // console.log(post);
               return (
-                <div className="row" key={i} onClick={()=>window.open(`${window.location.origin}/dapp-news/${post.slug}`)}>
+                <div
+                  className="row"
+                  key={i}
+                  onClick={() =>
+                    window.open(
+                      `${window.location.origin}/dapp-news/${post.slug}`
+                    )
+                  }
+                >
                   <div className="blockchain-details-bordered-top">
                     <div>
-                    <img
-                      className="blockchain-details-media"
-                      src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
-                    ></img>
+                      <img
+                        className="blockchain-details-media"
+                        src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                      ></img>
                     </div>
                     <div className="blockchain-details-wrapper">
                       <p className="blockchain-details-title">{post?.title}</p>

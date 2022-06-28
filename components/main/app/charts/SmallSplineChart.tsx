@@ -11,11 +11,11 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
   const series = [
     {
       name: "Price",
-      data: left.map((val: Number) => val.toFixed(2)),
+      data: right.map((val: Number) => val.toFixed(2)),
     },
     {
       name: "Market Cap",
-      data: right,
+      data: left.map((val: Number) => val.toFixed(2)),
     },
   ];
 
@@ -62,6 +62,10 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           style: {
             colors: color,
           },
+          formatter: function (val: any) {
+            return `$${val.toFixed(2)}`;
+          },
+          forceNiceScale: true,
         },
         title: {
           style: {
@@ -79,7 +83,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           style: {
             colors: "black",
           },
-          formatter: function (val:any) {
+          formatter: function (val: any) {
             return formatter.format(val);
           },
           forceNiceScale: true,
@@ -100,9 +104,10 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
       horizontalAlign: "left",
     },
     markers: {
-      colors: ['#FFF']
-    }
+      colors: ["#FFF"],
+    },
   };
+  
 
   return <Chart options={options} series={series} type="line" height={180} />;
 };
