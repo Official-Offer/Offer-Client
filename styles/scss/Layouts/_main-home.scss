@@ -120,6 +120,7 @@
         font-family: "Circular Std";
         font-style: normal;
         font-weight: 700;
+        color: #223052;
         font-size: 18px;
         line-height: 16px;
         /* identical to box height, or 89% */
@@ -169,6 +170,7 @@
         display: flex;
         text-overflow: ellipsis;
         cursor: pointer;
+        color: #223052;
         &-desc {
           padding-left: 10px;
         }
@@ -186,6 +188,7 @@
           font-family: "Circular Std";
           font-size: 16px;
           display: -webkit-box;
+          color: #223052;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           // @media only screen and (min-width: 1280px) {

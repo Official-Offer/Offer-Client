@@ -247,14 +247,22 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 </div>
               </div>
               <div className="news-details-posts-desk row">
-                <h2 style={{ textAlign: "center", color: "#223052" }}>
-                  Popular
+                <h2
+                  style={{
+                    fontSize: "26px",
+                    textAlign: "center",
+                    color: "#223052",
+                  }}
+                >
+                  <strong>Popular</strong>
                 </h2>
                 <NewsList data={popularNews} />
               </div>
             </div>
             <div className="news-details-posts-mobile">
-              <h2>Popular</h2>
+              <h2 style={{ fontSize: "26px", color: "#223052" }}>
+                <strong>Popular</strong>
+              </h2>
               <PinnedSlides crit={"viewer"} />
             </div>
           </div>
