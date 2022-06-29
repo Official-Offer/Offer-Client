@@ -38,7 +38,7 @@ export default function PinnedSlides({ crit }: any) {
     })();
   }, []);
 
-  const [index, setIndex] = useState(pinnedPosts.length);
+  const [index, setIndex] = useState(pinnedPosts.length-1);
 
   return (
     <div className="sliderWrapper p-2">
