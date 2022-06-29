@@ -162,7 +162,6 @@ export const CategoryBox = styled.div`
   align-items: center;
   padding: 6px 8px;
   gap: 12px;
-
   width: 69px;
   height: 28px;
 
@@ -177,6 +176,9 @@ export const CategoryBox = styled.div`
 flex: none;
 order: 0;
 flex-grow: 0;
+`
+export const CategoryUnbox = styled.div`
+color: #1d8c9a;
 `
 
 export const SocialLoginBox = styled.button`
