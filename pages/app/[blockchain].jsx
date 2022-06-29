@@ -232,7 +232,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/reviews?${query}`).then((res) => {
         const revArr = res.data.data;
-        for(let i=0;i<revArr.length;i++) {
+        for (let i = 0; i < revArr.length; i++) {
           revArr[i].showReply = false;
         }
         setReviews(revArr);
@@ -303,6 +303,7 @@ const BlockchainDetails = () => {
   };
 
   const [like, setLike] = useState(false);
+  const [likeId, setLikeId] = useState();
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -326,16 +327,18 @@ const BlockchainDetails = () => {
         }
       );
       await request.get(`/favorites?${query}`).then((res) => {
-        console.log(res.data.data);
+        // console.log("Like:", res.data.data);
         setLike(res.data.data.length > 0); // this user did like this dapp
+        setLikeId(res.data.data[0]?.id);
       });
     })();
-  }, [userId]);
+  }, [userId, like]);
   const onLike = async () => {
     if (!login) {
       setShowLoginPopup(true);
     } else {
       //post and change button's
+      console.log(likeId);
       await requestDapp
         .post("/dapp/favorites", { data: { dapp: id } })
         .then(() => setLike(true))
@@ -348,12 +351,16 @@ const BlockchainDetails = () => {
       setShowLoginPopup(true);
     } else {
       //post and change button's
+      console.log(likeId);
+      const data = {
+        data: { id: likeId },
+      };
       await requestDapp
-        .delete(`/dapp/favorites/${id}`, { data: { id } })
+        .delete(`/dapp/favorites/${likeId}`, { data: data })
         .then(() => setLike(false))
         .catch(() => message.error("Something is wrong, damn it!"));
     }
-  }
+  };
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -654,7 +661,7 @@ const BlockchainDetails = () => {
                                 {renderDollar(comp.name)}
                                 {comp.data["24h"]}
                               </span>
-                              <span className="increase">
+                              <span className={incdec(comp.data["24h_gr"])}>
                                 {comp.data["24h_gr"].toFixed(2)}%
                                 {updown(comp.data["24h_gr"])}
                               </span>
@@ -685,6 +692,7 @@ const BlockchainDetails = () => {
                                 )
                               </span>
                             </div>
+                            {!comp.data.total && <br/>}
                           </div>
                         </BoxALignItemsStart>
                       </div>

@@ -28,12 +28,14 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
           comment: e.target[0].value,
           parent: commentId,
           post: postId,
+          publishedAt: null
         },
       }
       : {
         data: {
           comment: e.target[0].value,
           post: postId,
+          publishedAt: null
         },
       };
 
