@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { ArrowLeftCircle, ArrowRightCircle } from "react-feather";
 import SwiperCore, { Navigation, Pagination, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { BoxALignCenter_Justify_ItemsCenter, BoxALignItemsCenter, CategoryBox } from "@styles/styled-components/styledBox";
+import { BoxALignCenter_Justify_ItemsCenter, BoxALignItemsCenter, CategoryBox, CategoryUnbox } from "@styles/styled-components/styledBox";
 import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import { Button } from '@styles/styled-components/styledButton';
 import moment from "moment";
@@ -54,10 +54,15 @@ export default function BlogSlides({ data }: any): ReactElement {
                 fadeEffect={{
                     crossFade: true
                 }}
-            // onSwiper={setSwiper}
             >
                 {data.map((blog: any, i: number) => {
                     // console.log(blog)
+                    const onClick = (data: any) => {
+                        const slug = data.attributes.slug;
+                        window.open(
+                          `${window.location.origin}/dapp-news/${slug}`
+                        );
+                    };
                     return (
                         <SwiperSlide key={i}>
                             <div className="main-homepage-blog-card">
@@ -69,10 +74,10 @@ export default function BlogSlides({ data }: any): ReactElement {
                                     />
                                 </div>
                                 <div className="main-homepage-blog-card-body">
-                                    <CategoryBox>
+                                    <CategoryUnbox>
                                         {blog.attributes.category.data?.attributes.name}
-                                    </CategoryBox>
-                                    <a href="#" className="main-homepage-blog-card-body-title">
+                                    </CategoryUnbox>
+                                    <a onClick={()=>onClick(blog)} className="main-homepage-blog-card-body-title">
                                         {blog.attributes.title}
                                     </a>
                                     <p className="main-homepage-blog-card-body-description">

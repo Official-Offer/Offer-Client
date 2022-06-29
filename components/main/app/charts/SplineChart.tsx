@@ -6,14 +6,20 @@ import { formatter } from "@utils/formatCurrency";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }) as any;
 
 export const SplineChart: FC = ({ data, price, showPrice }: any) => {
-  const color = data.name == "Social Signal" ? "#7652FF" : "#F68922";
+  const isAdvanced = ![
+    "Social Signal",
+    "Volume",
+    "Transactions",
+    "Users",
+  ].includes(data.name);
+  const color = !isAdvanced ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
   const datasets =
     data.data.charts.datasets[Object.keys(data.data.charts.datasets)[0]];
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
-    const res: Array<any> = price.prices.filter((p:any, i:any) => {
+    const res: Array<any> = price.prices.filter((p: any, i: any) => {
       const priceDate = new Date(price.labels[i]);
       return priceDate >= first && priceDate <= last;
     });
@@ -51,7 +57,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const options: any = {
     series: series,
     chart: {
-      height: 150,
+      height: 200,
       type: "line",
       toolbar: {
         show: false,
@@ -113,7 +119,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
                 colors: "black",
               },
               formatter: function (val: any) {
-                return val.toFixed(3);
+                return `$${val.toFixed(3)}`;
               },
             },
             title: {
@@ -154,5 +160,5 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     },
   };
 
-  return <Chart options={options} series={series} type="line" height={180} />;
+  return <Chart options={options} series={series} type="line" height={220} />;
 };

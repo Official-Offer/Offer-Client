@@ -11,11 +11,11 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
   const series = [
     {
       name: "Price",
-      data: left.map((val: Number) => val.toFixed(2)),
+      data: right.map((val: Number) => val.toFixed(2)),
     },
     {
       name: "Market Cap",
-      data: right,
+      data: left.map((val: Number) => val.toFixed(2)),
     },
   ];
 
@@ -56,31 +56,14 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
       {
         axisBorder: {
           show: true,
-          color: color,
-        },
-        labels: {
-          style: {
-            colors: color,
-          },
-        },
-        title: {
-          style: {
-            color: color,
-          },
-        },
-      },
-      {
-        opposite: true,
-        axisBorder: {
-          show: true,
           color: "black",
         },
         labels: {
           style: {
-            colors: "black",
+            colors:"black",
           },
-          formatter: function (val:any) {
-            return formatter.format(val);
+          formatter: function (val: any) {
+            return `$${val.toFixed(2)}`;
           },
           forceNiceScale: true,
         },
@@ -90,19 +73,41 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           },
         },
       },
+      {
+        opposite: true,
+        axisBorder: {
+          show: true,
+          color: color,
+        },
+        labels: {
+          style: {
+            colors:  color,
+          },
+          formatter: function (val: any) {
+            return formatter.format(val);
+          },
+          forceNiceScale: true,
+        },
+        title: {
+          style: {
+            color:  color,
+          },
+        },
+      },
     ],
     tooltip: {
       theme: "light",
     },
-    colors: [color, "#223052"],
+    colors: ["#223052",color],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
     },
     markers: {
-      colors: ['#FFF']
-    }
+      colors: ["#FFF"],
+    },
   };
+  
 
   return <Chart options={options} series={series} type="line" height={180} />;
 };

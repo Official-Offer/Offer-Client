@@ -16,6 +16,7 @@ import {
   BoxWhiteShadow,
   DamnBorderedBlackBox,
   BoxJustifyContentSpaceBetween,
+  OrangeJuice,
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -87,13 +88,13 @@ const BlockchainDetails = () => {
   const [reviewParent, setReviewParent] = useState(null);
   const [pagination, setPagination] = useState(3);
   const [justCommented, setJustCommented] = useState(true);
-  const [showSubcomment, setShowSubcomment] = useState(new Set());
   const [tokenInfo, setTokenInfo] = useState();
+  // useEffect(()=> console.log(showSubcomment), [showSubcomment]);
   const viewSubcomment = (id) => {
-    const newState = showSubcomment;
-    if (newState.has(id)) newState.delete(id);
-    else newState.add(id);
-    setShowSubcomment(newState);
+    const newState = [...reviews];
+    newState[id].showReply = !newState[id].showReply;
+    setReviews(newState);
+    console.log(newState[id].showReply);
   };
   const viewMore = () => setPagination(pagination + 3);
   const openParentlessReview = () => {
@@ -129,6 +130,7 @@ const BlockchainDetails = () => {
             rating: review.star,
             dapp: parseInt(id),
             parent: parseInt(reviewParent),
+            publishedAt: null,
           },
         }
       : {
@@ -136,6 +138,7 @@ const BlockchainDetails = () => {
             comment: review.comment,
             rating: review.star,
             dapp: parseInt(id),
+            publishedAt: null,
           },
         };
 
@@ -152,7 +155,7 @@ const BlockchainDetails = () => {
   const [login, setLogin] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  useEffect(() => console.log(reviews), [reviews]);
+  // useEffect(() => console.log(reviews), [reviews]);
   useEffect(() => setDay(router.query.days || 7), [router]);
   useEffect(() => {
     (async () => {
@@ -162,6 +165,7 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/${day}`)
         .then((res) => {
+          console.log(res.data);
           setStat(res.data);
         });
     })();
@@ -193,7 +197,8 @@ const BlockchainDetails = () => {
         { encodeValuesOnly: true }
       );
       await request.get(`/dapps?${query}`).then((res) => {
-        console.log(res.data.data[0].attributes);
+        // console.log(res.data.data[0].attributes);
+
         setDapp(res.data.data[0].attributes);
         setSlug(res.data.data[0].attributes.slug);
       });
@@ -220,24 +225,31 @@ const BlockchainDetails = () => {
               },
             },
           },
+          sort: ["id:desc"],
         },
         {
           encodeValuesOnly: true,
         }
       );
       await request.get(`/reviews?${query}`).then((res) => {
-        setReviews(res.data.data);
-        console.log(res.data.data);
+        const revArr = res.data.data;
+        for(let i=0;i<revArr.length;i++) {
+          revArr[i].showReply = false;
+        }
+        setReviews(revArr);
+        console.log(revArr);
       });
     })();
   }, [pagination, justCommented]);
+  const [userId, setUserId] = useState();
   useEffect(() => {
     (async () => {
       // uncomment when deployed on dev since localhost can't access cookie
       await requestSSO
         .get(`/users/me`)
-        .then(() => {
+        .then((res) => {
           setLogin(true);
+          setUserId(res.data.userApiId);
         })
         .catch(() => {
           setLogin(false);
@@ -262,27 +274,64 @@ const BlockchainDetails = () => {
   };
 
   const [showSharePopup, setShowSharePopup] = useState(false);
-  const SocialSharePopup = () => (
-    <Modal
-      title={`Share ${dapp?.name} on Social Media`}
-      visible={showSharePopup}
-      onCancel={() => setShowSharePopup(false)}
-    >
-      <BoxJustifyContentSpaceBetween>
-        <FacebookShareButton url={dapp?.website} quote="Baby I'm real">
-          <FacebookIcon round size={62}></FacebookIcon>
-        </FacebookShareButton>
-        <TwitterShareButton title="Checkout this Dapp" url={dapp?.website}>
-          <TwitterIcon size={62} round />
-        </TwitterShareButton>
-        <TelegramShareButton title="Checkout this Dapp" url={dapp?.website}>
-          <TelegramIcon size={62} round></TelegramIcon>
-        </TelegramShareButton>
-      </BoxJustifyContentSpaceBetween>
-    </Modal>
-  );
+  const SocialSharePopup = () => {
+    if (typeof window !== "undefined")
+      return (
+        <Modal
+          title={`Share ${dapp?.name} on Social Media`}
+          visible={showSharePopup}
+          onCancel={() => setShowSharePopup(false)}
+        >
+          <BoxJustifyContentSpaceBetween>
+            <FacebookShareButton url={`${window.location.origin}/app/${id}`}>
+              <FacebookIcon round size={62}></FacebookIcon>
+            </FacebookShareButton>
+            <TwitterShareButton
+              title="Checkout this Dapp"
+              url={`${window.location.origin}/app/${id}`}
+            >
+              <TwitterIcon size={62} round />
+            </TwitterShareButton>
+            <TelegramShareButton
+              title="Checkout this Dapp"
+              url={`${window.location.origin}/app/${id}`}
+            >
+              <TelegramIcon size={62} round></TelegramIcon>
+            </TelegramShareButton>
+          </BoxJustifyContentSpaceBetween>
+        </Modal>
+      );
+  };
 
   const [like, setLike] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            dapp: {
+              id: {
+                $eq: id,
+              },
+            },
+            user: {
+              id: {
+                $eq: userId,
+              },
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await request.get(`/favorites?${query}`).then((res) => {
+        console.log(res.data.data);
+        setLike(res.data.data.length > 0); // this user did like this dapp
+      });
+    })();
+  }, [userId]);
   const onLike = async () => {
     if (!login) {
       setShowLoginPopup(true);
@@ -290,7 +339,7 @@ const BlockchainDetails = () => {
       //post and change button's
       await requestDapp
         .post("/dapp/favorites", { data: { dapp: id } })
-        .then(() => setLike(!like))
+        .then(() => setLike(true))
         .catch(() => message.error("Something is wrong, damn it!"));
     }
   };
@@ -318,8 +367,21 @@ const BlockchainDetails = () => {
       });
     })();
   }, [dapp]);
+  const [appStat, setAppStat] = useState();
+  useEffect(() => {
+    (async () => {
+      await axios
+        .create({
+          baseURL: URL_API_DAPPVERSE,
+        })
+        .get(`/chart/dapp/${slug}/${day}`)
+        .then((res) => {
+          setAppStat(res.data.extract_stats);
+        });
+    })();
+  }, [day]);
 
-  console.log(dapp);
+  // console.log(dapp);
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -374,7 +436,9 @@ const BlockchainDetails = () => {
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
           <div className="blockchain-details-description">
-            <p>{dapp?.description}</p>
+            <p className="blockchain-details-bc-description">
+              {dapp?.description}
+            </p>
           </div>
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (
@@ -392,42 +456,51 @@ const BlockchainDetails = () => {
             </ButtonBlue>
             <BoxALignItemsCenter className="ms-5">
               <span className="me-3">Social: </span>
-              <a href="#" className="blockchain-details-social-facebook">
-                <img
-                  src="/img/icons/blockchain_facebook.png"
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Facebook"
-                      )[0].url || "https://facebook.com"
-                    )
-                  }
-                />
-              </a>
-              <a href="#" className="blockchain-details-social-twitter">
-                <TwitterOutlined
-                  style={{ fontSize: "2rem" }}
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Twitter"
-                      )[0].url || "https://twitter.com"
-                    )
-                  }
-                />
-              </a>
-              <a href="#" className="blockchain-details-social-youtube">
-                <YoutubeFilled
-                  style={{ fontSize: "1.5rem" }}
-                  onClick={() =>
-                    window.open(
-                      dapp?.crawl.socials.filter(
-                        (soc) => soc.name === "Youtube"
-                      )[0]?.url || "https://youtube.com"
-                    )
-                  }
-                />
-              </a>
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-facebook">
+                  <img
+                    src="/img/icons/blockchain_facebook.png"
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Facebook"
+                        )[0].url
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Twitter")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-twitter">
+                  <TwitterOutlined
+                    style={{ fontSize: "2rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Twitter"
+                        )[0].url || "https://twitter.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Youtube")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-youtube">
+                  <YoutubeFilled
+                    style={{ fontSize: "1.5rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Youtube"
+                        )[0]?.url || "https://youtube.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
         </div>
@@ -443,7 +516,7 @@ const BlockchainDetails = () => {
             <BoxALignItemsCenter className="mb-5">
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
-                  <File color="black" />
+                  <img src="/img/icons/briefcase.png"></img>
                   <span className="ms-2">Collect</span>
                 </BoxALignItemsCenter>
               </Button>
@@ -465,7 +538,7 @@ const BlockchainDetails = () => {
               </Button>
             </BoxALignItemsCenter>
             <div className="w-100">
-              <AppSlide />
+              <AppSlide imgArr={dapp?.images.data} />
             </div>
           </BoxAlignItemsEnd_FlexColumn>
         </div>
@@ -526,7 +599,7 @@ const BlockchainDetails = () => {
                 </TabMain>
               </div>
               <br />
-              <AppStatistical day={stat?.days} data={dapp} />
+              <AppStatistical day={stat?.days} data={dapp} appStat={appStat} />
               <br />
               <div className="row mt-5">
                 <div className="blockchain-details-price">
@@ -538,58 +611,72 @@ const BlockchainDetails = () => {
                   Show Price Comparison On Chart
                 </div>
                 {stat?.stats.components.map((comp, i) => {
+                  const isAdvanced = ![
+                    "Social Signal",
+                    "Volume",
+                    "Transactions",
+                    "Users",
+                  ].includes(comp.name);
+                  if (comp.data.charts.labels.length === 0) return null;
                   return (
                     <div
                       className="col-lg-6 col-12 blockchain-details-dashboard-users"
                       key={i}
                     >
-                      <h5 className="mb-0">{comp.name}</h5>
-                      <SplineChart
-                        data={comp}
-                        price={stat?.stats.token.chart}
-                        showPrice={showPrice}
-                      />
-                      <BoxALignItemsStart>
-                        <div className="ms-2">
-                          <div className="exp-item">
-                            <span className="name">24h: </span>
-                            <span className="value">
-                              {renderDollar(comp.name)}
-                              {formatter.format(comp.data["24h"])}
-                            </span>
-                            <span className="increase">
-                              {comp.data["24h_gr"].toFixed(2)}%
-                              {updown(comp.data["24h_gr"])}
-                            </span>
-                          </div>
-                          {comp.data.total && (
+                      <div className="blockchain-details-chart-wrapper">
+                        <div className="blockchain-details-flex">
+                          <h5 className="mb-0 blockchain-details-chart-name">
+                            {comp.name}
+                          </h5>
+                          {isAdvanced && <OrangeJuice>Advanced</OrangeJuice>}
+                        </div>
+                        <SplineChart
+                          data={comp}
+                          price={stat?.stats.token.chart}
+                          showPrice={showPrice}
+                        />
+                        <BoxALignItemsStart>
+                          <div className="ms-2">
                             <div className="exp-item">
-                              <span className="name">Total: </span>
+                              <span className="time">24h: </span>
                               <span className="value">
                                 {renderDollar(comp.name)}
-                                {formatter.format(comp.data.total)}
+                                {comp.data["24h"]}
                               </span>
-                              <span className="time">
-                                ({comp.data.total_days} days)
+                              <span className="increase">
+                                {comp.data["24h_gr"].toFixed(2)}%
+                                {updown(comp.data["24h_gr"])}
                               </span>
                             </div>
-                          )}
-                          <div className="exp-item">
-                            <span className="name">ATH: </span>
-                            <span className="value">
-                              {renderDollar(comp.name)}
-                              {formatter.format(comp.data.all_time_high)}
-                            </span>
-                            <span className="time">
-                              (
-                              {moment(comp.data.all_time_high_date).format(
-                                "LL"
-                              )}
-                              )
-                            </span>
+                            {comp.data.total && (
+                              <div className="exp-item">
+                                <span className="time">Total: </span>
+                                <span className="value">
+                                  {renderDollar(comp.name)}
+                                  {comp.data.total}
+                                </span>
+                                <span className="time">
+                                  ({comp.data.total_days} days)
+                                </span>
+                              </div>
+                            )}
+                            <div className="exp-item">
+                              <span className="time">ATH: </span>
+                              <span className="value">
+                                {renderDollar(comp.name)}
+                                {comp.data.all_time_high?.toFixed(2)}
+                              </span>
+                              <span className="time">
+                                (
+                                {moment(comp.data.all_time_high_date).format(
+                                  "LL"
+                                )}
+                                )
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </BoxALignItemsStart>
+                        </BoxALignItemsStart>
+                      </div>
                     </div>
                   );
                 })}
@@ -616,12 +703,131 @@ const BlockchainDetails = () => {
               </div>
             </BoxWhiteShadow>
           </div>
+
+          <div className="empty_space_height50" />
+          <BoxALignItemsCenter>
+            <h3>Reviews</h3>
+            <span className="ms-4">4.2/5.0</span>
+            <span className="ms-4">5 Ratings</span>
+          </BoxALignItemsCenter>
+          <BoxWhiteShadow className="p-4 blockchain-details-comment">
+            {reviews.map((comment, i) => {
+              return (
+                <div className="blockchain-details-comment-box" key={i}>
+                  <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                    <BoxALignItemsCenter>
+                      <Avatar
+                        style={{ backgroundColor: "#1DBBBD" }}
+                        icon={<UserOutlined />}
+                      />
+                      <span className="blockchain-details-comment-box-name">
+                        {comment.attributes?.user.data?.attributes.username}
+                      </span>
+                      <Rate
+                        allowHalf
+                        defaultValue={comment.attributes?.rating}
+                      />
+                    </BoxALignItemsCenter>
+                    <span className="blockchain-details-comment-box-time">
+                      {moment(comment.attributes?.createdAt).format("LL")}
+                    </span>
+                  </BoxALignCenter_Justify_ItemsBetween>
+                  <p className="blockchain-details-comment-box-description">
+                    {comment.attributes?.comment}
+                  </p>
+                  <div>
+                    <Button>
+                      <BoxALignItemsCenter>
+                        <MessageSquare color="#1DBBBD" />
+                        <span
+                          className="ms-2 text-green"
+                          onClick={() => openChildReview(comment.id)}
+                        >
+                          Comment
+                        </span>
+                      </BoxALignItemsCenter>
+                    </Button>
+                  </div>
+                  {comment.attributes?.replies.data?.length > 0 && (
+                    <div className="blockchain-details-viewmore">
+                      {reviews[i].showReply ? (
+                        <div className="blockchain-details-subcomment-section">
+                          {comment.attributes?.replies.data.map((reply, ri) => (
+                            <div
+                              className="blockchain-details-subcomment-box"
+                              key={ri}
+                            >
+                              <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                                <BoxALignItemsCenter>
+                                  <Avatar
+                                    style={{ backgroundColor: "#1DBBBD" }}
+                                    icon={<UserOutlined />}
+                                  />
+                                  <span className="blockchain-details-comment-box-name">
+                                    {
+                                      reply.attributes.user.data.attributes
+                                        .username
+                                    }
+                                  </span>
+                                </BoxALignItemsCenter>
+                                <span className="blockchain-details-comment-box-time">
+                                  {moment(reply.attributes.createdAt).format(
+                                    "LL"
+                                  )}
+                                </span>
+                              </BoxALignCenter_Justify_ItemsBetween>
+                              <p className="blockchain-details-comment-box-description">
+                                {reply.attributes.comment}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <Button>
+                          <BoxALignItemsCenter>
+                            <span
+                              className="text-green"
+                              onClick={() => {
+                                viewSubcomment(i);
+                                // console.log(showSubcomment);
+                              }}
+                            >
+                              View {comment.attributes?.replies.data?.length}{" "}
+                              Comments
+                              <img
+                                src="/img/icons/chevrons-up.png"
+                                className="blockchain-details-chevron"
+                              />
+                            </span>
+                          </BoxALignItemsCenter>
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            <ButtonBorderBlueTransparent
+              className="w-100 rounded-pill py-2"
+              onClick={viewMore}
+              style={{ cursor: "pointer" }}
+            >
+              View more
+            </ButtonBorderBlueTransparent>
+            <br />
+            <br />
+            <div>
+              <Button
+                className="text-green blockchain-details-bolder"
+                onClick={openParentlessReview}
+              >
+                Rating and Reviews
+              </Button>
+            </div>
+          </BoxWhiteShadow>
         </div>
+
         <div className="blockchain-details-right col-lg-3 col-12 p-0 mt-lg-5 mt-2">
-          <div className="blockchain-details-right-banner">
-            <img className="mw-100" src="/img/banner/banner_main.png" alt="" />
-          </div>
-          <br />
           {tokenInfo && ( //only shows when token has token info
             <div className="blockchain-details-right-topic">
               <h3 className="mb-3 blockchain-details-section-title">
@@ -676,8 +882,8 @@ const BlockchainDetails = () => {
                     </div>
                     <div>
                       <SmallSplineChart
-                        left={tokenInfo.chart.prices}
-                        right={tokenInfo.chart.mkt_caps}
+                        right={tokenInfo.chart.prices}
+                        left={tokenInfo.chart.mkt_caps}
                         labels={tokenInfo.chart.labels}
                       />
                     </div>
@@ -691,12 +897,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Holders
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.holders
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.holders_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.holders_gr
@@ -707,12 +913,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Active Address
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.address
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.address_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.address_gr
@@ -723,10 +929,10 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Txs
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(tokenInfo.other_five_data.tx)}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.tx_gr.toFixed(2)}
                             {weirdLookingArrow(tokenInfo.other_five_data.tx_gr)}
                           </td>
@@ -735,12 +941,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Tx Volume
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.tx_volume
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.tx_volume_gr
@@ -754,174 +960,45 @@ const BlockchainDetails = () => {
               </div>
             </div>
           )}
-          <div className="blockchain-details-right-topic">
-            <h3 className="mb-3 blockchain-details-section-title">
-              Related Topic
-            </h3>
-            <div className="row">
-              <div className="col-lg-6 col-12 blockchain-details-right-topic-item">
-                <a href="#" className="">
-                  <p className="name">High-risk</p>
-                  <p className="count">{`536 Apps >`}</p>
-                </a>
-              </div>
-              <div className="col-lg-6 col-12 blockchain-details-right-topic-item">
-                <a href="#" className="">
-                  <p className="name">BNB Chain</p>
-                  <p className="count">{`536 Apps >`}</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="blockchain-details-right-topic">
-            <h3 className="mb-3 blockchain-details-section-title">
-              More About {dapp?.name}
-            </h3>
-            {posts.map((post, i) => {
-              console.log(post);
-              return (
-                <div className="row" key={i} onClick={()=>window.open(`${window.location.origin}/dapp-news/${post.slug}`)}>
-                  <div className="blockchain-details-bordered-top">
-                    <div>
-                    <img
-                      className="blockchain-details-media"
-                      src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
-                    ></img>
-                    </div>
-                    <div className="blockchain-details-wrapper">
-                      <p className="blockchain-details-title">{post?.title}</p>
-                      <p className="blockchain-details-date">
-                        {moment(post?.publishedAt).format("LL")}
-                      </p>
+
+          {posts.length > 0 && (
+            <div className="blockchain-details-right-topic">
+              <h3 className="mb-3 blockchain-details-section-title">
+                More About {dapp?.name}
+              </h3>
+              {posts.map((post, i) => {
+                // console.log(post);
+                return (
+                  <div
+                    className="row"
+                    key={i}
+                    onClick={() =>
+                      window.open(
+                        `${window.location.origin}/dapp-news/${post.slug}`
+                      )
+                    }
+                  >
+                    <div className="blockchain-details-bordered-top">
+                      <div>
+                        <img
+                          className="blockchain-details-media"
+                          src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                        ></img>
+                      </div>
+                      <div className="blockchain-details-wrapper">
+                        <p className="blockchain-details-title">
+                          {post?.title}
+                        </p>
+                        <p className="blockchain-details-date">
+                          {moment(post?.publishedAt).format("LL")}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="empty_space_height50" />
-        <div className="blockchain-details-left col-lg-9 col-12">
-          <BoxALignItemsCenter>
-            <h3>Reviews</h3>
-            <span className="ms-4">4.2/5.0</span>
-            <span className="ms-4">5 Ratings</span>
-          </BoxALignItemsCenter>
-          <BoxWhiteShadow className="p-4 blockchain-details-comment">
-            {reviews.map((comment, i) => {
-              return (
-                <div className="blockchain-details-comment-box" key={i}>
-                  <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                    <BoxALignItemsCenter>
-                      <Avatar
-                        style={{ backgroundColor: "#1DBBBD" }}
-                        icon={<UserOutlined />}
-                      />
-                      <span className="blockchain-details-comment-box-name">
-                        {comment.attributes?.user.data?.attributes.username}
-                      </span>
-                      <Rate
-                        allowHalf
-                        defaultValue={comment.attributes?.rating}
-                      />
-                    </BoxALignItemsCenter>
-                    <span className="blockchain-details-comment-box-time">
-                      {moment(comment.attributes?.createdAt).format("LL")}
-                    </span>
-                  </BoxALignCenter_Justify_ItemsBetween>
-                  <p className="blockchain-details-comment-box-description">
-                    {comment.attributes?.comment}
-                  </p>
-                  <div>
-                    <Button>
-                      <BoxALignItemsCenter>
-                        <MessageSquare color="#1DBBBD" />
-                        <span
-                          className="ms-2 text-green"
-                          onClick={() => openChildReview(comment.id)}
-                        >
-                          Comment
-                        </span>
-                      </BoxALignItemsCenter>
-                    </Button>
-                  </div>
-                  {comment.attributes?.replies.data?.length > 0 && (
-                    <div className="blockchain-details-viewmore">
-                      {showSubcomment.has(i) ? (
-                        <div className="blockchain-details-subcomment-section">
-                          {comment.attributes?.replies.data.map((reply, ri) => (
-                            <div
-                              className="blockchain-details-subcomment-box"
-                              key={ri}
-                            >
-                              <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                                <BoxALignItemsCenter>
-                                  <Avatar
-                                    style={{ backgroundColor: "#1DBBBD" }}
-                                    icon={<UserOutlined />}
-                                  />
-                                  <span className="blockchain-details-comment-box-name">
-                                    {
-                                      reply.attributes.user.data.attributes
-                                        .username
-                                    }
-                                  </span>
-                                </BoxALignItemsCenter>
-                                <span className="blockchain-details-comment-box-time">
-                                  {moment(reply.attributes.createdAt).format(
-                                    "LL"
-                                  )}
-                                </span>
-                              </BoxALignCenter_Justify_ItemsBetween>
-                              <p className="blockchain-details-comment-box-description">
-                                {reply.attributes.comment}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <Button>
-                          <BoxALignItemsCenter>
-                            <span
-                              className="text-green"
-                              onClick={() => {
-                                viewSubcomment(i);
-                                console.log(showSubcomment);
-                              }}
-                            >
-                              View {comment.attributes?.replies.data?.length}{" "}
-                              Comments
-                              <img
-                                src="/img/icons/chevrons-up.png"
-                                className="blockchain-details-chevron"
-                              />
-                            </span>
-                          </BoxALignItemsCenter>
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <ButtonBorderBlueTransparent
-              className="w-100 rounded-pill py-2"
-              onClick={viewMore}
-              style={{ cursor: "pointer" }}
-            >
-              View more
-            </ButtonBorderBlueTransparent>
-            <br />
-            <br />
-            <div>
-              <Button
-                className="text-green blockchain-details-bolder"
-                onClick={openParentlessReview}
-              >
-                Rating and Reviews
-              </Button>
+                );
+              })}
             </div>
-          </BoxWhiteShadow>
+          )}
         </div>
       </div>
       <Modal

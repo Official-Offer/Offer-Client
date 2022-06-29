@@ -31,7 +31,7 @@ export const TabMain_Sub = styled.a `
     outline: 0;
     transition: 0.25s;
     height: 30px;
-    padding: 0px 7px;
+    padding: 0px 15px;
     &:hover {
         color: #058499;
     }

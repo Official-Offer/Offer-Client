@@ -20,7 +20,7 @@ const FavoriteDapps = ({ data }: any) => {
         .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=${data.id}`)
         // .get(`/favorites?populate=user,dapp&filters[user][id][$eq]=5`)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setDapps(
             res.data.data.map((dapp: any) => {
               return {

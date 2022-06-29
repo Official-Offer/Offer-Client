@@ -21,8 +21,8 @@ class MyDocument extends Document {
   }
   render() {
     const { styleTags }: any = this.props;
-    console.log(this.props);
-
+    // console.log(this.props)
+    
     return (
       <Html>
         <Head>
