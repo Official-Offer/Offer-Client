@@ -18,8 +18,11 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
   const onClick = (data: any) => {
     const id = data.id;
     const cate = data.attributes.category.data.attributes.name;
+    const slug = data.attributes.slug;
+    console.log(data);
     window.open(
-      `${window.location.origin}/dapp-news/${id}?id=${id}&category=${cate}`
+      // `${window.location.origin}/dapp-news/${id}?id=${id}&category=${cate}`
+      `${window.location.origin}/dapp-news/${slug}`
     );
   };
   return (
