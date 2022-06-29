@@ -54,10 +54,15 @@ export default function BlogSlides({ data }: any): ReactElement {
                 fadeEffect={{
                     crossFade: true
                 }}
-            // onSwiper={setSwiper}
             >
                 {data.map((blog: any, i: number) => {
                     // console.log(blog)
+                    const onClick = (data: any) => {
+                        const slug = data.attributes.slug;
+                        window.open(
+                          `${window.location.origin}/dapp-news/${slug}`
+                        );
+                    };
                     return (
                         <SwiperSlide key={i}>
                             <div className="main-homepage-blog-card">
@@ -72,7 +77,7 @@ export default function BlogSlides({ data }: any): ReactElement {
                                     <CategoryBox>
                                         {blog.attributes.category.data?.attributes.name}
                                     </CategoryBox>
-                                    <a href="#" className="main-homepage-blog-card-body-title">
+                                    <a onClick={()=>onClick(blog)} className="main-homepage-blog-card-body-title">
                                         {blog.attributes.title}
                                     </a>
                                     <p className="main-homepage-blog-card-body-description">
