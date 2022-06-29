@@ -12,7 +12,7 @@ export const AppStatistical: FC = ({ data, day }: any) => {
   const user = data?.crawl[`user_${day}d`];
   const volume = formatter.format(data?.crawl[`volume_${day}d`]);
   const trans = formatter.format(data?.crawl[`amount_${day}d`]);
-
+  console.log(data);
   return (
     <div className="row app-statistical">
       <div className="col-lg-4 col-12 my-lg-0 my-2">

@@ -130,6 +130,7 @@ const BlockchainDetails = () => {
             rating: review.star,
             dapp: parseInt(id),
             parent: parseInt(reviewParent),
+            publishedAt: null,
           },
         }
       : {
@@ -137,6 +138,7 @@ const BlockchainDetails = () => {
             comment: review.comment,
             rating: review.star,
             dapp: parseInt(id),
+            publishedAt: null,
           },
         };
 
@@ -293,7 +295,6 @@ const BlockchainDetails = () => {
     </Modal>
   );
 
-  console.log(`${window.location.origin}/app/${id}`);
   const [like, setLike] = useState(false);
   useEffect(() => {
     (async () => {
