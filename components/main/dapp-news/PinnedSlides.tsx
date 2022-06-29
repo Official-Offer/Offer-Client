@@ -39,7 +39,7 @@ export default function PinnedSlides({ crit }: any) {
     })();
   }, []);
   return (
-    <div className="sliderWrapper">
+    <div className="sliderWrapper p-2">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
