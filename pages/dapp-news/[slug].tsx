@@ -42,6 +42,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const [relatedNews, setRelatedNews] = useState([]);
   const [liked, setLiked] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
