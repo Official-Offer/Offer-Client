@@ -344,6 +344,18 @@ const BlockchainDetails = () => {
     }
   };
 
+  const onUnLike = async () => {
+    if (!login) {
+      setShowLoginPopup(true);
+    } else {
+      //post and change button's
+      await requestDapp
+        .delete(`/dapp/favorites/${id}`, { data: { id } })
+        .then(() => setLike(false))
+        .catch(() => message.error("Something is wrong, damn it!"));
+    }
+  }
+
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     (async () => {
@@ -521,7 +533,7 @@ const BlockchainDetails = () => {
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
-                <BoxALignItemsCenter onClick={onLike}>
+                <BoxALignItemsCenter onClick={like ? onUnLike : onLike}>
                   {!like ? (
                     <Heart color="black" />
                   ) : (
