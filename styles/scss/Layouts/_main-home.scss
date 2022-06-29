@@ -139,7 +139,7 @@
           // width: 727px;
         }
         &-img:hover {
-          transition: 0.2s all ease-in-out;
+          transition: transform 0.01s all;
           transform: scale(1.05);
         }
         &-title {
