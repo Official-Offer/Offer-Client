@@ -275,7 +275,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           </div>
           <div className="news-details-row-side-desktop">
             <div className="news-details-relatedNews p-2">
-              <h3 className="news-details-relatedNews-title">Related News</h3>
+              <h3 className="news-details-relatedNews-title mt-2">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
                   return (
