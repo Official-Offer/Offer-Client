@@ -755,12 +755,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Holders
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.holders
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.holders_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.holders_gr
@@ -771,12 +771,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Active Address
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.address
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.address_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.address_gr
@@ -787,10 +787,10 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Txs
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(tokenInfo.other_five_data.tx)}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.tx_gr.toFixed(2)}
                             {weirdLookingArrow(tokenInfo.other_five_data.tx_gr)}
                           </td>
@@ -799,12 +799,12 @@ const BlockchainDetails = () => {
                           <td className="blockchain-details-metrics-row">
                             Token Tx Volume
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {formatter.format(
                               tokenInfo.other_five_data.tx_volume
                             )}
                           </td>
-                          <td>
+                          <td className="idontknowwhat">
                             {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data.tx_volume_gr
