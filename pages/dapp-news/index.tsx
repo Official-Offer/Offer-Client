@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { Empty, Tabs } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
-import { Button, LoadMore } from "@styles/styled-components/styledButton";
+import { Button, ButtonGradientBlue, LoadMore, LoadMoreBlue } from "@styles/styled-components/styledButton";
 import { useRouter } from "next/router";
 import {
   BoxALignItemsCenter,
@@ -11,14 +11,15 @@ import {
 import {
   NavMain,
   Nav_Sub,
+  TabMain,
   ToggleMain,
   ToggleMain_Sub,
 } from "@styles/styled-components/styledTabs";
 import { Select } from "antd";
-import dynamic from "next/dynamic";
 import NewsList from "@components/main/dapp-news/NewsList";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 import LatestNews from "@components/main/dapp-news/LatestNews";
+import RunningPrice from "@components/main/dapp-news/RunningPrice";
 
 const DappNews: FC = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const DappNews: FC = () => {
   const [crit, setCrit] = useState("viewer");
   const [categories, setCategories] = useState<any>([]);
   const [categoryKey, setCategoryKey] = useState("All");
-  const [viewMore, setNumberViewMore] = useState(20);
+  const [viewMore, setNumberViewMore] = useState(18);
   const [activeIndex, setActiveIndex] = useState(0);
 
   // const NewsList = dynamic(
@@ -103,8 +104,8 @@ const DappNews: FC = () => {
   }, [categoryKey, viewMore, crit]);
 
   const onChangeTab = (key: any) => {
-    if (viewMore > 20) {
-      setNumberViewMore(20);
+    if (viewMore > 18) {
+      setNumberViewMore(18);
     }
     let index = categories.findIndex((cat: any) => cat.attributes.name === key);
     setActiveIndex(index);
@@ -121,16 +122,21 @@ const DappNews: FC = () => {
   };
 
   return (
-    <section className="main-homepage-dappnews px-lg-3">
+    <section className="main-homepage-dappnews">
       <h2 className="text-center mb-5">Dapp News</h2>
-      <BoxWhiteShadow className="row">
-        <div className="fontSize_08 main-homepage-dappnews-pinnedSection-left">
-          <PinnedSlides crit={'createdAt'}/>
+      <div className="row">
+        <div className="main-homepage-dappnews-pinnedSection-left">
+          <PinnedSlides crit={"createdAt"} />
         </div>
-        <div className="main-homepage-dappnews-pinnedSection-right">
-          <LatestNews/>
+        <div className="main-homepage-dappnews-pinnedSection-right ">
+          <LatestNews />
         </div>
-      </BoxWhiteShadow>
+      </div>
+      <div style = {{marginTop: '30px', border: 'solid', borderWidth: '0.2px', padding: '20px'}}>
+        <RunningPrice direction={"right"} />
+        <hr />
+        <RunningPrice direction={"left"} />
+      </div>
       <div className="block-for-mobile">
         <div className="bar-category">
           <Select
@@ -156,9 +162,7 @@ const DappNews: FC = () => {
                 <span className="d-inline-flex position-relative" key={i}>
                   <Nav_Sub
                     onClick={() => onChangeTab(cat.attributes.name)}
-                    className={`fontSize_08 ${
-                      activeIndex === i ? "active" : ""
-                    }`}
+                    className={`${activeIndex === i ? "active" : ""} bar-category-left-text`}
                   >
                     {cat.attributes.name}
                   </Nav_Sub>
@@ -167,12 +171,12 @@ const DappNews: FC = () => {
             })}
           </NavMain>
         </div>
-        <BoxALignItemsCenter className="bar-category-right">
-          <ToggleMain>
+        <BoxALignItemsCenter>
+          <ToggleMain className="bar-category-right">
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
                 onClick={() => setCrit("viewer")}
-                className={`fontSize_08 ${crit === "viewer" ? "active" : ""}`}
+                className={`${crit === "viewer" ? "active" : ""}`}
               >
                 Popular
               </ToggleMain_Sub>
@@ -180,7 +184,7 @@ const DappNews: FC = () => {
             <span className="d-inline-flex position-relative bar-category-right-toggle">
               <ToggleMain_Sub
                 onClick={() => setCrit("createdAt")}
-                className={`fontSize_08 ${
+                className={`${
                   crit === "createdAt" ? "active" : ""
                 }`}
               >
@@ -191,20 +195,20 @@ const DappNews: FC = () => {
         </BoxALignItemsCenter>
       </div>
       <div>
-        <div className="row">
+        <div className="mt-5 row">
           <NewsList data={newsList} />
         </div>
         <br />
-        <div className="text-center">
+        <div className="text-center mb-5">
           {newsList.length !== 0 && (
-            <LoadMore
-              className="text-green fw-bold fontSize_1-1"
+            <LoadMoreBlue
+              className="fw-bold"
               onClick={() => {
-                setNumberViewMore(viewMore + 20);
+                setNumberViewMore(viewMore + 18);
               }}
             >
               Load more
-            </LoadMore>
+            </LoadMoreBlue>
           )}
         </div>
       </div>

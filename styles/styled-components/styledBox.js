@@ -15,6 +15,10 @@ export const BoxALignItemsCenter = styled.div `
   display: flex;
   align-items: center;
 `;
+export const BoxJustifyContentSpaceBetween = styled.div `
+  display: flex;
+  justify-content: space-around;
+`;
 export const BoxALignItemsCenterNFTItems = styled.div `
   /* display: flex; */
   align-items: center;
@@ -32,11 +36,31 @@ export const BoxAlignItemsEnd_FlexColumn = styled.div `
   align-items: end;
   flex-direction: column;
 `;
+export const BoxAlignItemsCenter_FlexColumn = styled.div `
+display: flex;
+align-items: center;
+flex-direction: column;
+`;
+
 export const BoxALignCenter_Justify_ItemsCenter = styled.div `
   display: flex;
   align-items: center;
   justify-content: center;
 `;
+
+export const DamnBorderedBlackBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #0A222B;
+  border-radius: 8px;
+  color: #fff;
+  align-items: center;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 12px;
+`
+
 export const BoxALignCenter_Justify_ItemsBetween = styled.div `
   display: flex;
   align-items: center;
@@ -68,7 +92,7 @@ export const BoxBlueBold = styled.div `
   border-radius: 10px;
 `;
 export const BoxWhiteShadow = styled.div `
-  border-radius: 10px;
+  border-radius: 0px;
   box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;
@@ -135,6 +159,8 @@ export const CategoryBox = styled.div`
   display: inline;
   padding: 6px 8px;
   gap: 12px;
+  width: 69px;
+  height: 28px;
 
   /* Button */
 
@@ -148,6 +174,9 @@ export const CategoryBox = styled.div`
   order: 0;
   flex-grow: 0;
 `
+export const CategoryUnbox = styled.div`
+color: #1d8c9a;
+`
 
 export const SocialLoginBox = styled.button`
   background: #223052;
@@ -159,4 +188,28 @@ export const SocialLoginBox = styled.button`
   text-align: left;
   margin-bottom: 13px;
   font-size: 16px;
+`
+
+export const Channel = styled.img`
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  cursor: pointer;
+  :focus {
+    background-color: gray;
+    padding: 5px gray;
+  }
+`
+export const OrangeJuice = styled.div`
+  background: rgba(246, 137, 34, 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  height: 30px;
+  align-items: center;
+  color: #F68922;
+  font-family: 'Circular Std';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+margin-right: 12px;
 `

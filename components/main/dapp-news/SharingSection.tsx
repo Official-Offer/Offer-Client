@@ -1,3 +1,4 @@
+import { FacebookFilled, TwitterSquareFilled } from "@ant-design/icons";
 import { URL_SITE } from "@config/index";
 import { BoxWhiteShadow } from "@styles/styled-components/styledBox";
 import { useEffect, useState } from "react";
@@ -12,36 +13,32 @@ const SharingSection = ({ newsUpdate }: any) => {
   useEffect(() => {
     setNews(newsUpdate)
   }, [newsUpdate])
-  console.log(news);
+  // console.log(news);
   return (
-    <BoxWhiteShadow className="p-3">
-      <h4>Share this article</h4>
+    <div className="">
+      <p className="news-details-social-title">Share This Article</p>
       <div className="news-details-social">
         <div className="news-details-social-icons">
           <FacebookShareButton
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           
-          ${news[0]?.attributes.description}`}
+            ${news[0]?.attributes.description}`}
             hashtag={`${news[0]?.attributes.tags[0]}`}
           >
             <img
-              src="/img/icons/social-facebook.png"
+              src="/img/facebook.png"
               className="news-details-social-icon"
             />
+            {/* <FacebookFilled style = {{fontSize: '32px', color: '#4267B2'}}/> */}
           </FacebookShareButton>
         </div>
         <div className="news-details-social-icons">
           <TwitterShareButton
-            // url={`${URL_SITE}/dapp-news/${news[0]?.id}?id=${news[0]?.id}&category=${category}`}
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
-            title={`${news[0]?.attributes.title}
-          
-            ${news[0]?.attributes.description}`}
-            // hashtags={news?.attributes.tags.map(tag => `#${tag}`)}
           >
             <img
-              src="/img/icons/social-twitter.png"
+              src="/img/twitter.png"
               className="news-details-social-icon"
             />
           </TwitterShareButton>
@@ -55,14 +52,14 @@ const SharingSection = ({ newsUpdate }: any) => {
           ${news[0]?.attributes.description}`}
           >
             <img
-              src="/img/icons/social-telegram.png"
+              src="/img/telegram.png"
               className="news-details-social-icon"
             />
           </TelegramShareButton>
         </div>
         <br />
       </div>
-    </BoxWhiteShadow>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TabMain = styled.div `
-    background-color: transparent;
+    background-color: white;
     border-radius: 8px;
     display: inline-flex;
     border: 2px solid #058499;
@@ -17,12 +17,12 @@ export const TabMain = styled.div `
     }
 `;
 export const TabMain_Sub = styled.a `
-    color: #A1A1A1;
+    color: black;
     align-items: center;
     border-radius: 6px;
     display: inline-flex;
     font-family: inherit;
-    font-size: 11px;
+    font-size: 10px;
     -webkit-box-pack: center;
     justify-content: center;
     letter-spacing: 0.03em;
@@ -30,8 +30,8 @@ export const TabMain_Sub = styled.a `
     opacity: 1;
     outline: 0;
     transition: 0.25s;
-    height: 37px;
-    padding: 0px 10px;
+    height: 30px;
+    padding: 0px 15px;
     &:hover {
         color: #058499;
     }
@@ -42,11 +42,15 @@ export const NavMain = styled.div `
     border-radius: 8px;
     display: inline-flex;
     width: auto;
+    
     .active {
         padding: 5px 15px;
-        border: 2px solid #058499;
+        background-color: #058499;
         font-weight: 600;
-        color: #058499;
+        color: #FFF;
+        &:hover {
+            color: white;
+        }
         box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.75);
     }
 `;
@@ -99,8 +103,13 @@ export const ToggleMain_Sub = styled.a `
     opacity: 1;
     outline: 0;
     width: 110px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    color: #223052;
     @media screen and (max-width: 766px) {
-        width: 45vw;
+        width: 46vw;
     }
     transition: 0.25s;
     height: 37px;

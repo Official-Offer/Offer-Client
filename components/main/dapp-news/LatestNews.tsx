@@ -27,34 +27,35 @@ function LatestNews() {
       });
     })();
   }, []);
-  console.log(latestNews);
+  // console.log(latestNews);
   return (
     <div>
       {latestNews.map((news: any, i: number) => (
-        <div
-          className="fontSize_08 main-homepage-dappnews-pinnedCard"
-          onClick={() => {
-            router.push(
-              {
+        <div key={i}>
+          <div
+            className="main-homepage-dappnews-pinnedCard"
+            onClick={() => {
+              router.push({
                 pathname: `/dapp-news/${news.attributes.slug}`,
-              }
-            );
-          }}
-          key={i}
-        >
-          <img
-            className="main-homepage-dappnews-pinnedCard-img"
-            src={`${URL_API_IMG}${news?.attributes.thumbnail.data.attributes.url}`}
-          />
-          <div className="main-homepage-dappnews-pinnedCard-desc">
-            <span className="main-homepage-dappnews-pinnedCard-author">
-              By {news?.attributes.Author}
-            </span>
-            &nbsp;
-            <p className="main-homepage-dappnews-pinnedCard-title">
-              {news?.attributes.title}
-            </p>
+              });
+            }}
+            key={i}
+          >
+            <img
+              className="main-homepage-dappnews-pinnedCard-img"
+              src={`${URL_API_IMG}${news?.attributes.thumbnail.data.attributes.url}`}
+            />
+            <div className="main-homepage-dappnews-pinnedCard-desc">
+              <span className="main-homepage-dappnews-pinnedCard-author">
+                By {news?.attributes.Author}
+              </span>
+              {/* &nbsp; */}
+              <span className="main-homepage-dappnews-pinnedCard-title ">
+                {news?.attributes.title}
+              </span>
+            </div>
           </div>
+          {i != 4 && <hr />}
         </div>
       ))}
     </div>

@@ -1,205 +1,248 @@
 #main-portal {
-    @include sm {
-        padding: 0 20px;
-    }
-    .table-header-outer {
-        position: sticky;
-        top: 79px;
-        z-index: 3;
-    }
-    .table-header {
-        background-color: #F4F5F6;
-    }
-    .table-body {
-        background-color: transparent;
-    }
-    .hover-underline:hover {
-        // text-decoration: underline;
-    }
-    .table-header,
-    .table-body {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 15px;
-        border-radius: 8px;
-        &-item {
-            flex: 0 0 auto;
-            width: 14%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            @include sm {
-                width: 47.5%;
-            }
-            &:first-child {
-                width: 2%;
-                justify-content: start;
-                @include sm {
-                    width: 5%;
-                }
-            }
-            &-title {
-                color: $black-color;
-                font-size: 0.9rem;
-                margin-left: 5px;
-            }
+  @include sm {
+    padding: 0 7px;
+  }
+  
+  .table-header-outer {
+    position: sticky;
+    top: 79px;
+    z-index: 3;
+    margin: 10px;
+  }
+  .table-header {
+    background-color: #f4f5f6;
+  }
+  .table-body {
+    background-color: transparent;
+  }
+  .hover-underline:hover {
+    // text-decoration: underline;
+  }
+  .loadmore {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .table-header,
+  .table-body {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    border-radius: 8px;
+    &-item {
+      flex: 0 0 auto;
+      width: 14%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include sm {
+        width: 47.5%;
+      }
+      &:first-child {
+        width: 2%;
+        justify-content: start;
+        @include sm {
+          width: 5%;
         }
-       
-        &-item-sorter {
-            display: inherit;
-            margin-left: 5px;
-            &-inner {
-                display: inline-flex;
-                flex-direction: column;
-                align-items: center;
-                .up,
-                .down {
-                    font-size: 15px;
-                    color: #223052;
-                    cursor: pointer;
-                    transition: 0.25s;
-                    &:hover {
-                        color: $blue-color;
-                    }
-                }
-                .active.up,
-                .active.down {
-                    color: $blue-color;
-                }
-            }
-        }
+      }
+      &-title {
+        color: $black-color;
+        font-size: 0.9rem;
+        margin-left: 5px;
+      }
     }
-    .table-body {
-        margin: 20px 0;
-        cursor: pointer;
-        &-item {
-            @include sm {
-                width: 90%;
-                &:first-child {
-                    width: 10%;
-                }
-            }
-            p {
-                margin: 0;
-                color: $black-color;
-                font-size: 0.9rem;
-            }
-            &-number {
-                align-items: end;
-                justify-content: center !important;
-                position: relative;
-                font-size: 15px;
-                img {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 32p;
-                }
-                span {
-                    color: $black-color;
-                }
-            }
-            &-name {
-                justify-content: start;
-                overflow: hidden;
-                padding-left: 5px;
-                .dapp-logo {
-                    width: 48px;
-                    height: 40px;
-                    border-radius: 8px;
-                    box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
-                    -webkit-backface-visibility: hidden;
-                    -moz-backface-visibility: hidden;
-                    -webkit-transform: translateZ(0);
-                    -moz-transform: translateZ(0);
-                }
-                p {
-                    white-space: nowrap;
-                    margin-left: 10px;
-                }
-                @include sm {
-                    .dapp-logo {
-                        width: 38px;
-                        height: 30px;
-                    }
-                    .blockchain-logo {
-                        width: 18px;
-                        height: 18px;
-                        border-radius: 8px;
-                        box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
-                        -webkit-backface-visibility: hidden;
-                        -moz-backface-visibility: hidden;
-                        -webkit-transform: translateZ(0);
-                        -moz-transform: translateZ(0);
-                        margin: 2px 0;
-                    }
-                }
-            }
-            &-category {
-                p {
-                    text-align: center;
-                }
-            }
-            &-blockchain {
-                img {
-                    display: block;
-                    width: 16px;
-                    height: 16px;
-                    vertical-align: middle;
-                }
-            }
-            &-user,
-            &-transaction,
-            &-ranking {
-                &-social {
-                    display: flex;
-                    align-items: center;
-                    justify-content: end;
-                    span {
-                        color: $black-color;
-                        margin-left: 5px;
-                    }
-                }
-                &-number {
-                    p {
-                        font-size: 1rem;
-                    }
-                }
-                &-decrease {
-                    p {
-                        color: #ef466f;
-                    }
-                }
-                &-increase {
-                    p {
-                        color: #45b36b;
-                    }
-                }
-            }
-            &-volume {
-                display: block;
-                &-bar-top {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: 5px;
-                    &-decrease {
-                        color: #ef466f !important;
-                    }
-                    &-increase {
-                        color: #45b36b !important;
-                    }
-                }
-                &-bar-bottom {
-                    width: 100%;
-                    height: 8px;
-                    border-radius: 4px;
-                    background: $blue-color;
-                }
-            }
-        }
-    }
-}
 
+    &-item-sorter {
+      display: inherit;
+      margin-left: 5px;
+      &-inner {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        .up,
+        .down {
+          font-size: 15px;
+          color: #223052;
+          cursor: pointer;
+          transition: 0.25s;
+          &:hover {
+            color: $blue-color;
+          }
+        }
+        .active.up,
+        .active.down {
+          color: $blue-color;
+        }
+      }
+    }
+  }
+  .table-body {
+    margin: 20px 0;
+    cursor: pointer;
+    &-item {
+      @include sm {
+        width: 90%;
+        &:first-child {
+          width: 10%;
+        }
+      }
+      p {
+        margin: 0;
+        color: $black-color;
+        font-size: 0.9rem;
+      }
+      &-number {
+        align-items: end;
+        justify-content: center !important;
+        position: relative;
+        font-size: 15px;
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 32p;
+        }
+        span {
+          color: $black-color;
+        }
+      }
+      &-name {
+        justify-content: start;
+        overflow: hidden;
+        padding-left: 5px;
+        .dapp-logo {
+          width: 48px;
+          height: 40px;
+          border-radius: 8px;
+          box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -webkit-transform: translateZ(0);
+          -moz-transform: translateZ(0);
+        }
+        p {
+          white-space: nowrap;
+          margin-left: 10px;
+        }
+        @include sm {
+          .dapp-name {
+            font-size: 13px;
+            white-space: initial;
+            width: 200px;
+          }
+          .dapp-logo {
+            width: 38px;
+            height: 30px;
+          }
+          .blockchain-logo {
+            width: 18px;
+            height: 18px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            margin: 0;
+            &-two {
+              width: 18px;
+              height: 18px;
+              border-radius: 8px;
+              box-shadow: 0 0 20px 0 rgb(0 0 0 / 10%);
+              -webkit-backface-visibility: hidden;
+              -moz-backface-visibility: hidden;
+              -webkit-transform: translateZ(0);
+              -moz-transform: translateZ(0);
+              margin-top: 15px;
+            }
+          }
+        }
+      }
+      &-category {
+        p {
+          text-align: center;
+        }
+      }
+      &-blockchain {
+        img {
+          display: block;
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
+        }
+      }
+      &-user,
+      &-transaction,
+      &-ranking {
+        &-social {
+          display: flex;
+          align-items: center;
+          justify-content: end;
+          span {
+            color: $black-color;
+            margin-left: 5px;
+          }
+        }
+        &-number {
+          p {
+            font-size: 1rem;
+          }
+        }
+        &-decrease {
+          p {
+            color: #ef466f;
+          }
+        }
+        &-increase {
+          p {
+            color: #45b36b;
+          }
+        }
+      }
+      &-volume {
+        display: block;
+        &-bar-top {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 5px;
+          &-decrease {
+            color: #ef466f !important;
+          }
+          &-increase {
+            color: #45b36b !important;
+          }
+        }
+        &-bar-bottom {
+          width: 100%;
+          height: 8px;
+          border-radius: 4px;
+          background: $blue-color;
+        }
+      }
+    }
+  }
+  .block-for-mobile {
+    background-color: $white-color;
+    box-shadow: 0px 0px 40px rgba(5, 132, 153, 0.25);
+    border-radius: 8px;
+    padding-top: 2px;
+  }
+  .tab-bar-combination .ant-select {
+    &-selector {
+      height: 40px;
+      background-color: $white-color !important;
+      border: none !important;
+      box-shadow: 0px 0px 40px rgba(5, 132, 153, 0.25);
+      border-radius: 8px;
+      padding: 5px 0 10px 10px;
+    }
+    &-selection-item {
+      color: $black-color !important;
+      font-weight: bold !important;
+    }
+  }
+}

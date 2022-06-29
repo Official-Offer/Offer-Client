@@ -115,7 +115,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
-  
 }
 
 .navbar_popover_content {
@@ -137,5 +136,35 @@
 }
 .ant-popover-inner-content {
   padding-bottom: 0 !important;
+}
+
+.search-input {
+  width: 100%;
+  // outline: none;
+  font-size: 18px;
+  @include sm {
+    width: 80%;
+  }
+  &-button {
+    // width: 40px;
+    // height: 40px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 17px;
+    span {
+      background-color: #058499;
+      color: $white-color;
+      border-radius: 50%;
+      padding: 7px 8px;
+      // margin-left: -5px;
+      svg {
+        margin-top: -4px;
+      }
+      @include sm {
+        margin-left: -13px;
+      }
+    }
+  }
 }
 

@@ -9,13 +9,15 @@ import {
   Button,
   ButtonBackgroundBlueBold,
   ButtonBlue,
+  ButtonNavy,
 } from "@styledComponents/styledButton";
 import {
   MenuOutlined,
   SearchOutlined,
   UploadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Drawer, Menu, Popover } from "antd";
+import { AutoComplete, Drawer, Input, Menu, Modal, Popover } from "antd";
 import { Router, useRouter } from "next/router";
 import { Search } from "react-feather";
 import Link from "next/link";
@@ -24,23 +26,48 @@ import getUserInfo from "@utils/getUserInfo";
 import request from "@services/apiSSO";
 import Cookies from "js-cookie";
 import axios from "axios";
+import difRequest from "@services/apiService";
 import { removeVietnameseTones } from "@utils/processTextInput";
+import qs from "qs";
 export const NavbarHome: FC = () => {
   const router: any = useRouter();
   const [keyword, setKeyword] = useState("");
   const [visible, setVisible] = useState<any>(false);
   const [boxSearch, setBoxSearch] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [tags, setTags] = useState([]);
+  const [curValue, setCurValue] = useState("");
   useEffect(() => {
     (async () => {
-      //uncomment when deployed on dev since localhost can't access cookie
       await request
         .get(`/users/me`)
         .then((res: any) => {
-          // console.log(res.data);
           setUser(res.data);
         })
         .catch(() => null);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const query = qs.stringify(
+        {
+          populate: "*",
+          filters: {
+            Pin: {
+              $eq: true,
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true,
+        }
+      );
+      await difRequest.get(`/tags?${query}`).then((res) => {
+        console.log(res.data.data);
+        setTags(res.data.data);
+      });
     })();
   }, []);
 
@@ -50,12 +77,20 @@ export const NavbarHome: FC = () => {
   const onClose = () => {
     setVisible(false);
   };
+  const onCancel = () => {
+    setIsVisible(false);
+  };
   const onSearch = (e: any) => {
     e.preventDefault();
+    setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
+    router.push(`/dapp-news/search/${keyword}`);
   };
   const handleChangeSearch = (e: any) => {
+    setCurValue(e.target.value);
     setKeyword(e.target.value);
+    console.log(curValue);
+    // console.log(keyword);
   };
   const onShowBoxSearch = () => {
     setBoxSearch(true);
@@ -185,13 +220,65 @@ export const NavbarHome: FC = () => {
                         className="searchTerm"
                         placeholder="Searching..."
                         onChange={handleChangeSearch}
+                        onClick={() => setIsVisible(true)}
                       />
-                      <button type="button" className="searchButton">
+                      <button
+                        type="button"
+                        className="searchButton"
+                        onClick={onSearch}
+                      >
                         <span>
                           <Search width={18} height={18} />
                         </span>
                       </button>
                     </BoxALignItemsCenter>
+                    <Modal
+                      style={{ top: "5rem" }}
+                      zIndex={100}
+                      width={1000}
+                      visible={isVisible}
+                      onCancel={onCancel}
+                    >
+                      <form onSubmit={onSearch}>
+                        <input
+                          type="text"
+                          style={{ border: "none" }}
+                          className="search-input"
+                          placeholder="Searching..."
+                          onChange={handleChangeSearch}
+                          value={curValue}
+                        />
+                        <hr />
+                        <p>
+                          <button
+                            type="button"
+                            className="search-input-button"
+                            onClick={onSearch}
+                          >
+                            <span>
+                              <Search width={18} height={18} />
+                            </span>
+                            &nbsp;Trending
+                          </button>
+                        </p>
+                        {tags.map((tag: any, i) => {
+                          // console.log(tag);
+                          return (
+                            <ButtonNavy
+                              onClick={(e) => {
+                                // console.log(e)
+                                setCurValue(tag.attributes?.name);
+                                setKeyword(tag.attributes?.name);
+                                // handleChangeSearch(e)
+                              }}
+                              key={i}
+                            >
+                              # {tag.attributes?.name}
+                            </ButtonNavy>
+                          );
+                        })}
+                      </form>
+                    </Modal>
                   </form>
                 </BoxALignCenter_Justify_ItemsEnd>
               </div>
@@ -199,9 +286,9 @@ export const NavbarHome: FC = () => {
                 <div className="d-flex align-items-center display_none_res">
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
-                    // onClick={() => {
-                    //   router.push("/submit");
-                    // }}
+                    onClick={() => {
+                      router.push("/submit");
+                    }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
                     Submit Dapp
@@ -248,20 +335,6 @@ export const NavbarHome: FC = () => {
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
-                {user && (
-                  <Popover
-                    placement="bottom"
-                    content={popoverContent}
-                    // trigger="focus"
-                  >
-                    <button className="navbar_userinfo_wrapper" type="button">
-                      <img
-                        className="navbar_avatar_mobile"
-                        src={user?.avatar || "/img/default.png"}
-                      ></img>
-                    </button>
-                  </Popover>
-                )}
                 <Button
                   type="button"
                   onClick={showDrawer}
@@ -342,11 +415,7 @@ export const NavbarHome: FC = () => {
           )}
         </BoxALignCenter_Justify_ItemsBetween>
       </section>
-      <LoginPopup
-        setUser={setUser}
-        isVisible={isPopupVisible}
-        setVisible={setPopupVisible}
-      />
+      <LoginPopup isVisible={isPopupVisible} setVisible={setPopupVisible} />
     </>
   );
 };

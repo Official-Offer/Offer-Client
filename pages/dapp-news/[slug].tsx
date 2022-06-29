@@ -9,32 +9,32 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import * as qs from "qs";
 import request from "@services/apiService";
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { HeartFilled, HeartOutlined, UserOutlined } from "@ant-design/icons";
 import { URL_API_ADMIN, URL_API_IMG, URL_SITE } from "@config/index";
 import moment from "moment";
 import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
-// import {
-//   FacebookShareButton,
-//   TelegramShareButton,
-//   TwitterShareButton,
-// } from "react-share";
+import { Avatar } from "antd";
+import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
+import ReactMarkdown from "react-markdown";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
     () => import("@components/main/dapp-news/CommentSection")
-  );
+  ) as any;
   const SharingSection = dynamic(
     () => import("@components/main/dapp-news/SharingSection")
-  );
-  const NewsList = dynamic(() => import("@components/main/dapp-news/NewsList"));
+  ) as any;
+  const NewsList = dynamic(
+    () => import("@components/main/dapp-news/NewsList")
+  ) as any;
   const PinnedSlides = dynamic(
     () => import("@components/main/dapp-news/PinnedSlides")
-  );
+  ) as any;
   const BannerSlides = dynamic(
     () => import("@components/main/dapp-news/BannerSlides")
-  );
+  ) as any;
 
   const [news, setNews] = useState<any>([]);
   const [styledContent, setStyledContent] = useState("");
@@ -62,7 +62,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
           populate: "*",
           pagination: {
             page: 1,
-            pageSize: 6,
+            pageSize: 9,
           },
           sort: [`viewer:desc`],
         },
@@ -114,18 +114,30 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
     setStyledContent(modifiedContent);
   }, [news]);
 
+  // const markdown = marked(modifiedContent);
+
   return (
     <div>
       <Head>
         <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
-        <meta property="og:url" content={newsData[0]?.attributes.slug} />
+        {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
         <meta
           property="og:image"
           content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
         />
         <meta
           property="og:description"
+          content={newsData[0]?.attributes.description}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+        />
+        <meta name="twitter:title" content={newsData[0]?.attributes.title} />
+        <meta
+          name="twitter:description"
           content={newsData[0]?.attributes.description}
         />
       </Head>
@@ -137,113 +149,133 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               <SharingSection newsUpdate={news} />
             </div>
             <div className="news-details-sharing-bottom">
-              <BoxWhiteShadow className="p-2">
+              <div className="p-2">
                 <h3 className="mb-3">Tags</h3>
                 <div className="row">
                   {news[0]?.attributes.tags.data.map((tag: any, i: number) => {
                     return (
-                      <BoxWhiteShadow
+                      <ButtonBackgroundBlueBold
                         className="news-details-right-tag"
                         key={i}
+                        onClick={() =>
+                          router.push(
+                            `/dapp-news/search/${tag.attributes.name}`
+                          )
+                        }
                       >
-                        {tag.attributes.name}
-                      </BoxWhiteShadow>
+                        <a target="_blank" rel="noopener noreferrer">
+                          {tag.attributes.name}
+                        </a>
+                      </ButtonBackgroundBlueBold>
                     );
                   })}
                 </div>
                 <div className="news-details-right-banner">
                   <BannerSlides />
                 </div>
-              </BoxWhiteShadow>
+              </div>
             </div>
           </div>
           <div className="news-details-row-center">
-            <BoxWhiteShadow>
-              <div className="col-12 mt-2 p-3">
-                <BoxALignItemsCenter>
-                  <h2>{`${news[0]?.attributes.title}`}</h2>
-                </BoxALignItemsCenter>
-                {/* <BoxALignCenter_Justify_ItemsBetween> */}
-                <div className="news-details-createdAt">
-                  <span className="news-details-createdAt-left">
-                    {news[0]?.attributes.Author}
-                    &nbsp; | &nbsp;
-                    {moment(news[0]?.attributes.createdAt).format("LL")}
-                  </span>
-                  <span className="news-details-createdAt-right">
-                    <span
-                      className="news-details-createdAt"
-                      onClick={() => {
-                        setLiked(!liked);
-                      }}
-                    >
-                      <a target="_blank" rel="noopener noreferrer">
-                        {liked ? (
-                          <HeartFilled
-                            style={{ color: "#1DBBBD", marginLeft: "30vw" }}
-                          />
-                        ) : (
-                          <HeartOutlined style={{ marginLeft: "30vw" }} />
-                        )}
-                      </a>
-                    </span>
-                    &nbsp;
-                    <span className="news-details-createdAt">
-                      {liked ? 2 : 1}
-                    </span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Eye size={15} />
-                    &nbsp;
-                    {news[0]?.attributes.viewer}
-                  </span>
+            <div className="news-details-row-center-paragraph mt-2 p-3">
+              <h2>{`${news[0]?.attributes.title}`}</h2>
+              <BoxALignCenter_Justify_ItemsBetween className="news-details-createdAt">
+                <div className="news-details-createdAt-left">
+                  <Avatar
+                    style={{ backgroundColor: "#1DBBBD" }}
+                    icon={<UserOutlined />}
+                  />
+                  &nbsp;&nbsp;
+                  {news[0]?.attributes.Author}
+                  &nbsp; | &nbsp;
+                  {moment(news[0]?.attributes.createdAt).format("LL")}
                 </div>
-                <br />
-                <MarkDown>{styledContent}</MarkDown>
-              </div>
-            </BoxWhiteShadow>
-            <div className="news-details-commentsection">
-              <CommentSection news={news} />
-            </div>
-            <div className="news-details-row-side-mobile">
-              {/* <p>asdasdads</p> */}
-              <div className="news-details-sharing-top-mobile">
-                <SharingSection newsUpdate={news} />
-              </div>
-              <div className="news-details-sharing-bottom-mobile">
-                <BoxWhiteShadow className="p-2">
-                  <h3 className="mb-3">Tags</h3>
-                  <div className="row">
-                    {news[0]?.attributes.tags.data.map(
-                      (tag: any, i: number) => {
-                        return (
-                          <BoxWhiteShadow
-                            className="news-details-right-tag"
-                            key={i}
-                          >
-                            {tag.attributes.name}
-                          </BoxWhiteShadow>
-                        );
-                      }
+                <div className="news-details-createdAt-right">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      setLiked(!liked);
+                    }}
+                  >
+                    {liked ? (
+                      <HeartFilled style={{ color: "#1DBBBD" }} />
+                    ) : (
+                      <HeartOutlined />
                     )}
-                  </div>
-                  <div className="news-details-right-banner">
-                    <BannerSlides />
-                  </div>
-                </BoxWhiteShadow>
-              </div>
+                  </a>
+                  &nbsp;
+                  {liked ? 2 : 1}
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Eye size={15} />
+                  &nbsp;
+                  {news[0]?.attributes.viewer}
+                </div>
+              </BoxALignCenter_Justify_ItemsBetween>
+              <MarkDown>{styledContent}</MarkDown>
+              {/* <ReactMarkdown>{styledContent}</ReactMarkdown> */}
             </div>
-            <div className="news-details-posts-desk row">
-              <h2>Popular</h2>
-              <NewsList data={popularNews} />
+            <div className="news-details-low-section">
+              <div className="news-details-commentsection">
+                <CommentSection news={news} />
+              </div>
+              <div className="news-details-row-side-mobile">
+                <div className="news-details-sharing-top-mobile">
+                  <SharingSection newsUpdate={news} />
+                </div>
+                <div className="news-details-sharing-bottom-mobile">
+                  <div className="p-2">
+                    <h3 className="mb-3">Tags</h3>
+                    <div className="row">
+                      {news[0]?.attributes.tags.data.map(
+                        (tag: any, i: number) => {
+                          return (
+                            <BoxWhiteShadow
+                              className="news-details-right-tag"
+                              key={i}
+                            >
+                              {tag.attributes.name}
+                            </BoxWhiteShadow>
+                          );
+                        }
+                      )}
+                    </div>
+                    <div className="news-details-right-banner">
+                      <BannerSlides />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="news-details-posts-desk row">
+                <h2
+                  style={{
+                    fontSize: "26px",
+                    textAlign: "center",
+                    color: "#223052",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Popular
+                </h2>
+                <NewsList data={popularNews} />
+              </div>
             </div>
             <div className="news-details-posts-mobile">
+              <h2
+                style={{
+                  fontSize: "26px",
+                  color: "#223052",
+                  fontWeight: "bold",
+                }}
+              >
+                Popular
+              </h2>
               <PinnedSlides crit={"viewer"} />
             </div>
           </div>
-          <br />
           <div className="news-details-row-side-desktop">
-            <BoxWhiteShadow className="p-3 news-details-relatedNews">
-              <h3 className="mb-3">Related News</h3>
+            <div className="news-details-relatedNews p-2">
+              <h3 className="news-details-relatedNews-title">Related News</h3>
               <div className="row">
                 {relatedNews.map((news: any, i: number) => {
                   return (
@@ -255,19 +287,25 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                           });
                         }}
                       >
-                        <a target="_blank" rel="noopener noreferrer">
-                          <img
-                            className="mw-100 news-details-right-topic-img"
-                            src={`${URL_API_IMG}${news.attributes.thumbnail.data.attributes.url}`}
-                          />
-                          <p className="name">{news.attributes.title}</p>
-                        </a>
+                        <div className="row">
+                          <a target="_blank" rel="noopener noreferrer">
+                            <div className="news-details-relatedNews-content">
+                              <p className="news-details-relatedNews-number">
+                                {i + 1}
+                              </p>
+                              &nbsp;&nbsp;
+                              <p className="news-details-relatedNews-text">
+                                {news.attributes.title}
+                              </p>
+                            </div>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </BoxWhiteShadow>
+            </div>
           </div>
         </div>
       </section>

@@ -16,14 +16,14 @@ export default function LayoutGlobal(props: any): ReactElement {
   // const FooterHome = dynamic(() => import("./FooterHome"));
   const NavbarHome = dynamic(() =>
     import("../navbar").then((mod: any) => mod.NavbarHome)
-  );
+  ) as any;
   const FooterHome = dynamic(() =>
     import("../footer").then((mod: any) => mod.FooterHome)
-  );
+  ) as any;
   const router = useRouter();
   const route = router.asPath.split("/");
-  const isDappNews = route[1].slice(0,9) == "dapp-news";
-  const isDappNewsDetails = route[1].slice(0,9) == "dapp-news" && route[1].slice(9,10) == "/";
+  const isDappNews = route[1].slice(0, 9) == "dapp-news";
+  const isDappNewsDetails = route[1].slice(0, 9) == "dapp-news" && route[1].slice(9, 10) == "/";
   const [banners, setBanners] = useState<any>([]);
   useEffect(() => {
     (async () => {
@@ -45,14 +45,13 @@ export default function LayoutGlobal(props: any): ReactElement {
   return (
     <>
       <Head>
-        
         <meta
           name="viewport"
           content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
         />
+        <title>Tokenplay</title>
         {!isDappNews && (
           <>
-            <title>Tokenplay</title>
             <meta
               property="og:image"
               content="https://data-nft.tokenplay.app/NFTmarket.jpg"

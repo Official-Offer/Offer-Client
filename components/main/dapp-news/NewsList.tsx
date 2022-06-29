@@ -3,7 +3,7 @@ import { URL_API_ADMIN, URL_API_IMG } from "@config/index";
 import moment from "moment";
 import router from "next/router";
 
-export default function NewsLists({ data }: any): ReactElement {
+export default function NewsList({ data }: any): ReactElement {
   return (
     <>
       {data &&
@@ -11,7 +11,7 @@ export default function NewsLists({ data }: any): ReactElement {
           return (
             <div
               key={i}
-              className="mt-5 main-homepage-dappnews-layout p-4"
+              className="main-homepage-dappnews-layout p-4"
               onClick={() => {
                 router.push(
                   {
@@ -24,7 +24,7 @@ export default function NewsLists({ data }: any): ReactElement {
                 <div className="main-homepage-dappnews-card">
                   <div className="main-homepage-dappnews-card-header">
                     <img
-                      className="main-homepage-blog-card-header-img"
+                      className="main-homepage-dappnews-card-header-img"
                       src={`${URL_API_IMG}${blog.attributes.thumbnail.data.attributes.url}`}
                     />
                   </div>

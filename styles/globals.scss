@@ -136,3 +136,38 @@ a {
     display: flex;
   }
 }
+
+.sliderWrapper {
+  // padding-bottom: 30px;
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-pagination {
+    position: absolute;
+    text-align: center;
+    top: 0 !important;
+    margin-top: 50%;
+  }
+  .swiper-pagination-bullet {
+    padding: 2px 2px;
+    background: #777e90;
+    width: 4rem;
+    height: 0.05rem;
+    border-radius: 0rem;
+    opacity: 1;
+    @include sm {
+      width: 1rem;
+    }
+
+  }
+  .swiper-pagination-bullet-active {
+    background: #fcfcfd;
+    // color: white;
+    @include sm {
+      width: 3rem;
+    }
+    width: 5rem;
+    height: 0.1rem;
+  }
+}

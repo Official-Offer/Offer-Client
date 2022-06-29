@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
-import { Navigation, Pagination, A11y } from "swiper";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import SwiperCore, { Navigation, Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@styles/styled-components/styledButton";
 import "swiper/css";
@@ -12,13 +11,12 @@ import request from "@services/apiService";
 import qs from "qs";
 import moment from "moment";
 import { useRouter } from "next/router";
-// import { Pagination } from "swiper";
 
-export default function PinnedSlides({crit}: any) {
-  const navigationPrevRef = React.useRef(null);
-  const navigationNextRef = React.useRef(null);
+export default function PinnedSlides({ crit }: any) {
+  const [index, setIndex] = useState(6);
   const router = useRouter();
-  const [pinnedPosts, setPinned] = useState([]);
+  const [pinnedPosts, setPinned] = useState<any>([]);
+
   useEffect(() => {
     (async () => {
       const pinQuery = qs.stringify(
@@ -29,7 +27,7 @@ export default function PinnedSlides({crit}: any) {
               $eq: true,
             },
           },
-          sort: [`${crit}:desc`]
+          sort: [`${crit}:desc`],
         },
         {
           encodeValuesOnly: true,
@@ -41,7 +39,7 @@ export default function PinnedSlides({crit}: any) {
     })();
   }, []);
   return (
-    <div className='sliderWrapper'>
+    <div className="sliderWrapper p-2">
       <Swiper
         modules={[Navigation, Pagination, A11y]}
         observeParents={true}
@@ -63,18 +61,13 @@ export default function PinnedSlides({crit}: any) {
             slidesPerView: 1,
           },
         }}
-        pagination={true}
-        // pagination={{
-        //   clickable: true,
-        //   renderBullet: function (index, className) {
-        //     return '<span className="my-custom-pagination-div">'  + (index + 1) + "</span>";
-        //   },
-        // }}
         loop={true}
-        autoplay={{ delay: 2000 }}
-        navigation={{
-          prevEl: navigationPrevRef.current,
-          nextEl: navigationNextRef.current,
+        autoplay={{ delay: 1000 }}
+        pagination={true}
+        onSlideChange={(e) => {
+          setIndex(
+            e.activeIndex == pinnedPosts.length + 1 ? 0 : e.activeIndex - 1
+          );
         }}
         effect="fade"
         fadeEffect={{
@@ -83,35 +76,43 @@ export default function PinnedSlides({crit}: any) {
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
-            <SwiperSlide 
-              key={i}
-              className="main-homepage-dappnews-pinnedSlides"
-              onClick={() => {
-                router.push(
-                  {
+            <div key={i}>
+              <SwiperSlide
+                key={i}
+                className="main-homepage-dappnews-pinnedSlides"
+                onClick={() => {
+                  router.push({
                     pathname: `/dapp-news/${pinnedPost.attributes.slug}`,
-                  },
-                );
-              }}>
-              <img
-                className="main-homepage-dappnews-pinnedSlides-img"
-                src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
-                alt=""
-              />
-              <p className="main-homepage-dappnews-pinnedSlides-title mt-4">
-                {pinnedPost.attributes.title}
-              </p>
-              <div>
-                <span className="main-homepage-dappnews-pinnedSlides-author">
-                  By {pinnedPost.attributes.Author} |{" "}
-                  {moment(pinnedPost.attributes.createdAt).format("LL")}
-                </span>
-                &nbsp;
-              </div>
-            </SwiperSlide>
+                  });
+                }}
+              >
+                <img
+                  className="main-homepage-dappnews-pinnedSlides-img"
+                  src={`${URL_API_IMG}${pinnedPost.attributes.thumbnail.data.attributes.url}`}
+                  alt=""
+                />
+              </SwiperSlide>
+            </div>
           );
         })}
       </Swiper>
+      <div
+        // key={i}
+        className="main-homepage-dappnews-pinnedSlides"
+        onClick={() => {
+          router.push({
+            pathname: `/dapp-news/${pinnedPosts[index]?.attributes.slug}`,
+          });
+        }}
+      >
+        <p className="main-homepage-dappnews-pinnedSlides-title mt-2">
+          {pinnedPosts[index]?.attributes.title}
+        </p>
+        <p className="main-homepage-dappnews-pinnedSlides-author">
+          By {pinnedPosts[index]?.attributes.Author} |{" "}
+          {moment(pinnedPosts[index]?.attributes.createdAt).format("LL")}
+        </p>
+      </div>
     </div>
   );
 }

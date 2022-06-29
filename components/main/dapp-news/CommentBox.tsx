@@ -21,39 +21,36 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    //console.log(e);
     e.preventDefault();
-    const data = commentId ? 
-    {
-      data: {
-        comment: e.target[0].value,
-        parent: commentId,
-        post: postId,
-      },
-    }
-    : {
-      data: {
-        comment: e.target[0].value,
-        post: postId,
-      },
-    };
-    
+    const data = commentId ?
+      {
+        data: {
+          comment: e.target[0].value,
+          parent: commentId,
+          post: postId,
+        },
+      }
+      : {
+        data: {
+          comment: e.target[0].value,
+          post: postId,
+        },
+      };
+
     try {
       await request
         .post(`/dapp/comments`, data)
         .then((res) => {
-            message.success("Comment created");
-            e.target.reset();
-            handleClose();
+          message.success("Comment created");
+          e.target.reset();
+          handleClose();
         })
-        .then(() => router.reload())
-
-      } catch (err) {
-            setPopupVisible(true);
-            message.error("Please Log In");
-            e.target.reset();
-            handleClose();
-      }
+    } catch (err) {
+      setPopupVisible(true);
+      message.error("Please Log In");
+      e.target.reset();
+      handleClose();
+    }
   };
 
   return (
@@ -62,9 +59,9 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
         {text}
       </span>
       <LoginPopup
-              setUser={setUser}
-              isVisible={isPopupVisible}
-              setVisible={() => setPopupVisible(true)}
+        // setUser={setUser}
+        isVisible={isPopupVisible}
+        setVisible={() => setPopupVisible(true)}
       />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
