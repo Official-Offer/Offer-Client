@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1.5px solid #223052;
+    border: 1.5px solid #b1b5c4;
     border-radius: 8px;
   }
   &-char-counter {
@@ -33,6 +33,11 @@
   &-trans-text {
     border: none;
     width: 80%;
+    &:focus {
+      box-shadow: none;
+      outline: none;
+      border: none!important;
+    }
   }
 
   &-text-description {

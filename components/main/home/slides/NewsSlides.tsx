@@ -10,17 +10,15 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import moment from "moment";
 import { Empty } from "antd";
-
+import { useRouter } from "next/router";
 export default function NewsSlides({ data, tag }: any): ReactElement {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   SwiperCore.use([Autoplay]);
+  const router = useRouter();
   const onClick = (data: any) => {
-    const id = data.id;
-    const cate = data.attributes.category.data.attributes.name;
-    window.open(
-      `${window.location.origin}/dapp-news/${id}?id=${id}&category=${cate}`
-    );
+    const slug = data.attributes.slug;
+    router.push(`/dapp-news/${slug}`);
   };
   return (
     <BoxALignCenter_Justify_ItemsCenter>
@@ -63,7 +61,7 @@ export default function NewsSlides({ data, tag }: any): ReactElement {
       >
         {data.map((blog: any, i: number) => {
           return (
-            <SwiperSlide key={i} onClick={()=>onClick(blog)}>
+            <SwiperSlide key={i} onClick={() => onClick(blog)}>
               <div className="main-homepage-news-card">
                 <div className="main-homepage-news-card-header">
                   <img

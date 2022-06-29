@@ -1,282 +1,300 @@
 .ant-popover {
-    position: fixed !important;
-    @include md {
-        width: 37% !important;
+  position: fixed !important;
+  @include md {
+    width: 37% !important;
+  }
+  @include sx {
+    .ant-popover {
+      width: 75% !important;
     }
-    @include sx {
-        .ant-popover {
-            width: 75% !important;
-        }
-    }
+  }
 }
 .ant-popover-inner {
-    border-radius: 15px !important;
+  border-radius: 15px !important;
 }
 #navbar_home,
 .navbar_drawer {
-    .ant-menu-vertical .ant-menu-item:not(:last-child),
-    .ant-menu-vertical-left .ant-menu-item:not(:last-child),
-    .ant-menu-vertical-right .ant-menu-item:not(:last-child),
-    .ant-menu-inline .ant-menu-item:not(:last-child) {
-        margin-bottom: 0px;
-    }
-    .ant-menu {
-        background-color: transparent;
-        border: none;
-        .ant-menu-item {
-            a {
-                color: $black-color;
-                text-decoration: none;
-                transition: 0.25s;
-                &:hover {
-                    color: $blue-color;
-                }
-            }
+  .ant-menu-vertical .ant-menu-item:not(:last-child),
+  .ant-menu-vertical-left .ant-menu-item:not(:last-child),
+  .ant-menu-vertical-right .ant-menu-item:not(:last-child),
+  .ant-menu-inline .ant-menu-item:not(:last-child) {
+    margin-bottom: 0px;
+  }
+  .ant-menu {
+    background-color: transparent;
+    border: none;
+    .ant-menu-item {
+      a {
+        color: $black-color;
+        text-decoration: none;
+        transition: 0.25s;
+        &:hover {
+          color: $blue-color;
         }
-        .ant-menu-item-selected {
-            margin: 0;
-            font-weight: bold;
-            a {
-                color: $blue-color;
-            }
-            background-color: transparent !important;
-            transition: 0.25s;
-        }
+      }
     }
+    .ant-menu-item-selected {
+      margin: 0;
+      font-weight: bold;
+      a {
+        color: $blue-color;
+      }
+      background-color: transparent !important;
+      transition: 0.25s;
+    }
+  }
 }
 .navbar_drawer {
-    .ant-drawer-content {
-        // background-color: $green-bold-color !important;
-        background-color: $white-color !important;
-    }
-    .ant-drawer-content-wrapper {
-        width: 200px !important;
-    }
-    .ant-select-selector {
-        padding: 0 !important;
-    }
+  .ant-drawer-content {
+    // background-color: $green-bold-color !important;
+    background-color: $white-color !important;
+  }
+  .ant-drawer-content-wrapper {
+    width: 200px !important;
+  }
+  .ant-select-selector {
+    padding: 0 !important;
+  }
 }
 .tab-bar-combination {
-    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-        background: transparent !important;
-        border: 1.5px solid $blue-color;
-        border-radius: 8px !important;
-    }
-    .ant-select-selection-item {
-        color: #A1A1A1;
-    }
-    .ant-select-arrow {
-        color: #A1A1A1;
-    }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background: transparent !important;
+    border: 1.5px solid $blue-color;
+    border-radius: 8px !important;
+  }
+  .ant-select-selection-item {
+    color: #a1a1a1;
+  }
+  .ant-select-arrow {
+    color: #a1a1a1;
+  }
 }
 .tab-bar-category {
-    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-        background: linear-gradient(95.79deg, #642b73 0.9%, #c5426e 99.55%) !important;
-        border: none;
-        border-radius: 8px !important;
-    }
-    .ant-select-selection-item {
-        color: $white-color;
-    }
-    .ant-select-arrow {
-        color: $white-color;
-    }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background: linear-gradient(
+      95.79deg,
+      #642b73 0.9%,
+      #c5426e 99.55%
+    ) !important;
+    border: none;
+    border-radius: 8px !important;
+  }
+  .ant-select-selection-item {
+    color: $white-color;
+  }
+  .ant-select-arrow {
+    color: $white-color;
+  }
 }
 .main-submit {
-    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-        background: transparent !important;
-        border: 1.5px solid #b1b5c4 !important;
-        border-radius: 8px !important;
-        height: 37px;
-        &:hover {
-            border: 1.5px solid $blue-color !important;
-        }
-        &:focus {
-            border: 1.5px solid $blue-color !important;
-            box-shadow: none;
-        }
+  .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background: transparent !important;
+    border: 1.5px solid #b1b5c4 !important;
+    border-radius: 8px !important;
+    height: 37px;
+    &:hover {
+      border: 1.5px solid $blue-color !important;
     }
-    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-        outline: none !important;
-        box-shadow: none !important;
+    &:focus {
+      border: 1.5px solid $blue-color !important;
+      box-shadow: none;
     }
-    .ant-select-selection-item {
-        color: $black-color;
+  }
+
+  .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+    .ant-select-selector {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .ant-select-selection-item {
+    color: $black-color;
+  }
+  .ant-select-arrow {
+    color: $black-color;
+  }
+  .ant-select-multiple {
+    .ant-select-selection-item-content {
+      color: $black-color !important;
     }
-    .ant-select-arrow {
-        color: $black-color;
-    }
-    .ant-select-multiple {
-        .ant-select-selection-item-content {
-            color: $black-color !important;
-        }
-    }
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
-        height: 37px;
-    }
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-        height: 37px;
-    }
+  }
+  .ant-select-single:not(.ant-select-customize-input)
+    .ant-select-selector
+    .ant-select-selection-search-input {
+    height: 37px;
+  }
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    height: 37px;
+  }
 }
 .ant-select-item-option-content {
-    color: $black-color;
-    .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(29, 187, 189, 0.5);
-        &.live {
-            background: #45b36b;
-        }
-        &.work {
-            background: #3772ff;
-        }
+  color: $black-color;
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(29, 187, 189, 0.5);
+    &.live {
+      background: #45b36b;
     }
-    span {
-        color: $black-color !important;
+    &.work {
+      background: #3772ff;
     }
+  }
+  span {
+    color: $black-color !important;
+  }
 }
 #main-portal {
-    .table-header {
-        &-item {
-            .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-                background: transparent !important;
-                border: none;
-            }
-            .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
-                .ant-select-selector {
-                outline: none !important;
-                box-shadow: none !important;
-                border-color: transparent !important;
-            }
-            .ant-select-selection-item {
-                color: $blue-color;
-                font-weight: 700;
-                text-align: center;
-            }
-            .ant-select-arrow {
-                color: $blue-color;
-            }
-        }
+  .table-header {
+    &-item {
+      .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        background: transparent !important;
+        border: none;
+      }
+      .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+        .ant-select-selector {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+      }
+      .ant-select-selection-item {
+        color: $blue-color;
+        font-weight: 700;
+        text-align: center;
+      }
+      .ant-select-arrow {
+        color: $blue-color;
+      }
     }
+  }
+}
+.ant-tooltip-inner {
+  color: black;
+  background-color: #fff;
+  font-size: 11px;
+}
+.ant-tooltip-arrow {
+  display: none;
 }
 .ant-menu-inline,
 .ant-menu-vertical,
 .ant-menu-vertical-left {
-    border-right: none !important;
+  border-right: none !important;
 }
 .ant-tabs-ink-bar {
-    display: none;
+  display: none;
 }
 .ant-tabs-nav::before {
-    border: 0px !important;
+  border: 0px !important;
 }
 .ant-tabs-tab {
-    &-btn {
-        padding: 8px 18px;
-        margin: 0px 5px;
-        color: #223052 !important;
-        font-size: 15px;
-        border-radius: 10px;
-        &:focus {
-            color: #223052 !important;
-        }
+  &-btn {
+    padding: 8px 18px;
+    margin: 0px 5px;
+    color: #223052 !important;
+    font-size: 15px;
+    border-radius: 10px;
+    &:focus {
+      color: #223052 !important;
     }
+  }
 }
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: white !important;
-    background-color: #058499;
+  color: white !important;
+  background-color: #058499;
 }
 .ant-tabs-tab-btn {
-    min-width: 120px;
-    text-align: center;
+  min-width: 120px;
+  text-align: center;
 }
-.ant-menu-horizontal > .ant-menu-item::after, .ant-menu-horizontal > .ant-menu-submenu::after {
-    content: none !important;
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+  content: none !important;
 }
 .ant-menu-title-content {
-    a {
-        &:hover {
-            color: $blue-color !important;
-        }
+  a {
+    &:hover {
+      color: $blue-color !important;
     }
+  }
 }
 
 // login popup modal, may conflict with your modal, idk :)))
 .ant-modal-content {
-    background: #FCFCFD;
-    box-shadow: 0px 0px 60px rgba(34, 48, 82, 0.25);
-    border-radius: 16px;
+  background: #fcfcfd;
+  box-shadow: 0px 0px 60px rgba(34, 48, 82, 0.25);
+  border-radius: 16px;
 }
-.ant-modal-close, .ant-modal-header {
-    border-radius: 16px;
+.ant-modal-close,
+.ant-modal-header {
+  border-radius: 16px;
 }
 .ant-modal-body {
-    gap: 20px;
+  gap: 20px;
 }
 .ant-modal-title {
-    font-family: 'Circular Std';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 40px;
-    letter-spacing: -0.01em;
-    text-transform: capitalize;
-    color: #223052;
-    margin-top: 17px;
+  font-family: "Circular Std";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: #223052;
+  margin-top: 17px;
 }
 
 .ant-modal-close {
-    margin-top: 16px;
+  margin-top: 16px;
 }
 
 .login-social-icon {
-    width: 12%;
-    padding-right: 15px;
-    @media screen and (max-width: 992px) {
-        width: 15%;
-    }
+  width: 12%;
+  padding-right: 15px;
+  @media screen and (max-width: 992px) {
+    width: 15%;
+  }
 }
 
 .login-popup-heart {
-    justify-content: center;
-    display: flex;
-    margin-bottom: 30px;
-    margin-top: 15px;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 30px;
+  margin-top: 15px;
 }
 
 .ant-modal-footer {
-    display: none;
+  display: none;
 }
 
 .anticon.anticon-close.ant-modal-close-icon {
-    border: 1.5px solid;
-    border-radius: 50%;
-    padding: 5px;
-    margin-right: 19px;
+  border: 1.5px solid;
+  border-radius: 50%;
+  padding: 5px;
+  margin-right: 19px;
 }
-
-
 
 .swiper-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
-    // top: 95%;
-    // z-index: 10;
-    .swiper-pagination-bullet.swiper-pagination-bullet-active {
-        // background: #058499;
-    }
+  top: 95%;
+  z-index: 10;
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #058499;
+  }
 }
 
-div.col-lg-9.col-12.mt-lg-0.mt-4.px-lg-2.px-0>div>.swiper.swiper-initialized.swiper-horizontal {
-    // padding:0 0 30px 0;
+div.col-lg-9.col-12.mt-lg-0.mt-4.px-lg-2.px-0
+  > div
+  > .swiper.swiper-initialized.swiper-horizontal {
+  padding: 0 0 30px 0;
 }
 
 .ant-popover {
-    position: fixed !important;
-    padding-top: 0 !important;
+  position: fixed !important;
+  padding-top: 0 !important;
 }
 .ant-popover-inner {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 .ant-popover-arrow {
-    display: none;
+  display: none;
 }

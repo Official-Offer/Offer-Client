@@ -162,7 +162,6 @@ export const CategoryBox = styled.div`
   align-items: center;
   padding: 6px 8px;
   gap: 12px;
-
   width: 69px;
   height: 28px;
 
@@ -177,6 +176,9 @@ export const CategoryBox = styled.div`
 flex: none;
 order: 0;
 flex-grow: 0;
+`
+export const CategoryUnbox = styled.div`
+color: #1d8c9a;
 `
 
 export const SocialLoginBox = styled.button`
@@ -200,4 +202,17 @@ export const Channel = styled.img`
     background-color: gray;
     padding: 5px gray;
   }
+`
+export const OrangeJuice = styled.div`
+  background: rgba(246, 137, 34, 0.5);
+  border-radius: 8px;
+  padding: 6px 10px;
+  height: 30px;
+  align-items: center;
+  color: #F68922;
+  font-family: 'Circular Std';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+margin-right: 12px;
 `

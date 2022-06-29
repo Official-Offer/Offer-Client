@@ -1,4 +1,5 @@
 .blockchain-details {
+  word-spacing: -5px !important;
   .status-label {
     margin-left: 12px;
     padding: 1px 12px;
@@ -202,6 +203,25 @@
       }
     }
   }
+  &-chart-wrapper {
+    padding: 20px;
+    padding-right: 20%;
+    @media screen and (max-width: 992px) {
+      padding-right: 0;
+    }
+    background: #ffffff;
+    /* Old/Neutrals/6 */
+
+    border: 1px solid #e6e8ec;
+    border-radius: 16px;
+  }
+  &-chart-name {
+    margin-left: 12px;
+  }
+  &-flex {
+    display: flex;
+    justify-content: space-between;
+  }
   &-dashboard {
     h3 {
       text-transform: uppercase;
@@ -215,6 +235,7 @@
         text-decoration: underline;
       }
     }
+
     &-users,
     &-volume,
     &-transactions {
@@ -242,14 +263,17 @@
         margin: 3px 0;
         .value {
           margin: 0 10px 0 5px;
+          color: $grey-color;
         }
         .time {
           color: $grey-color;
         }
         .decrease {
+          font-weight: bold;
           color: #ef466f;
         }
         .increase {
+          font-weight: bold;
           color: #45b36b;
         }
       }
@@ -274,6 +298,8 @@
       &-users,
       &-volume,
       &-transactions {
+        font-weight: bold;
+        font-size: 20px;
         span {
           &.decrease {
             color: #ef466f !important;
@@ -282,6 +308,9 @@
             color: #45b36b !important;
           }
         }
+      }
+      &-title {
+        font-size: 20px;
       }
     }
   }
@@ -420,5 +449,21 @@
     text-align: left;
     text-transform: capitalize;
     color: rgba(34, 48, 82, 0.65);
+  }
+  .apexcharts-legend-text {
+    margin-left: 5px;
+    font-size: 15px !important;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: bold !important;
+  }
+  .apexcharts-legend-series {
+    margin-right: 25px !important;
+  }
+  .apexcharts-canvas {
+    margin-bottom: 100px !important;
+  }
+  .idontknowwhat {
+    text-align: right;
   }
 }

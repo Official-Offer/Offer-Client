@@ -27,7 +27,7 @@ function LatestNews() {
       });
     })();
   }, []);
-  console.log(latestNews);
+  // console.log(latestNews);
   return (
     <div>
       {latestNews.map((news: any, i: number) => (

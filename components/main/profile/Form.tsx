@@ -76,7 +76,7 @@ const Form = ({ data, reload, setReload }: any) => {
   };
 
   const onSuccessfullyEdit = (err: any) => {
-    console.log(err);
+    // console.log(err);
     notification.open({
       message: "Success 🥳",
       description:

@@ -11,7 +11,7 @@ import {
   BoxWhiteShadow,
 } from "@styles/styled-components/styledBox";
 import { useRouter } from "next/router";
-import { Select } from "antd";
+import { Select, Tooltip } from "antd";
 import request from "@services/apiService";
 import * as qs from "qs";
 import { formatter, isExistAndFormatCurrency } from "@utils/formatCurrency";
@@ -26,7 +26,18 @@ export default function TableDapp({
 }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
-  const timeKey = router.query.timeKey || "7d";
+  const timeKey = router.query.timeKey || "24h";
+
+  const hoverableQuestionMark = (message: string) => {
+    return (
+      <Tooltip placement="top" title={message} color="#fff">
+        <QuestionCircleOutlined style={{ color: "#000" }} />
+      </Tooltip>
+    );
+  };
+
+  useEffect(() => console.log("sort[0]", sort[0]), [sort]);
+  useEffect(() => console.log("headermobile", headerMobile), []);
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -35,25 +46,33 @@ export default function TableDapp({
     { title: "Blockchain", icon: "", sort: false },
     {
       title: `${timeKey} Users`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "The number of wallets that had interacted (transactions) with a dapp's smart contracts."
+      ),
       sort: true,
-      query: "dailyUser",
+      query: "User",
     },
     {
       title: `${timeKey} Transactions`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "The amount of transaction represents the numbers of actions between users and dapps that involved smart contract interactions."
+      ),
       sort: true,
-      query: "dailyTransaction",
+      query: "Transaction",
     },
     {
       title: `${timeKey} Volume`,
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "Transaction volume of tokens to a dapp's smart contracts, which is the amount of tokens spent in the dapp."
+      ),
       sort: true,
-      query: "dailyVolume",
+      query: "Volume",
     },
     {
       title: "Social Signal",
-      icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
+      icon: hoverableQuestionMark(
+        "Social Signal is a new metric that reflects the general popularity of the crypto community in a certain project. A project with a higher Social Singal has captured more interest in the social network. The Social Signal updates once every 3 days."
+      ),
       sort: true,
       query: "socialSignal",
     },
@@ -64,19 +83,19 @@ export default function TableDapp({
       title: "Users",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyUser",
+      query: "User",
     },
     {
       title: "Transactions",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyTransaction",
+      query: "Transaction",
     },
     {
       title: "Volume",
       icon: <QuestionCircleOutlined style={{ color: "#000" }} />,
       sort: true,
-      query: "dailyVolume",
+      query: "Volume",
     },
     {
       title: "Social Signal",
@@ -86,14 +105,36 @@ export default function TableDapp({
     },
   ];
   const activeItem = (sort: string, query: string) => {
-    setSort([query, sort]);
+    //look at mobile header and sort accordingly
+    let timeQuery;
+    if (timeKey === "24h") timeQuery = `daily${query}`;
+    else if (timeKey === "7d") timeQuery = `weekly${query}`;
+    else timeQuery = `monthly${query}`;
+    if (query === "socialSignal") setSort([query, sort]);
+    else setSort([timeQuery, sort]);
+    setHeaderMobile(activeHeader());
   };
   const [headerMobile, setHeaderMobile] = useState(
     listTitleHeaderMobile[0].title
   );
+  useEffect(() => setHeaderMobile(activeHeader()), [sort]);
   const onMobileChangeHeader = (e: any) => {
     setHeaderMobile(e);
     console.log(e);
+  };
+
+  const activeHeader = () => {
+    if (sort[0].includes("User")) return "Users";
+    if (sort[0].includes("Transaction")) return "Transactions";
+    if (sort[0].includes("Volume")) return "Volume";
+    return "Social Signal";
+  };
+
+  const activeSorter = () => {
+    if (headerMobile === "Users" && sort[0].includes("User")) return true;
+    if (headerMobile === "Social Signal" && sort[0] === "socialSignal") return true;
+    if (sort[0].includes(activeHeader())) return true;
+    return false;
   };
   return (
     <>
@@ -113,7 +154,8 @@ export default function TableDapp({
                         <div className="table-header-item-sorter-inner">
                           <CaretUpOutlined
                             className={`up ${
-                              sort[0] === header.query && sort[1] === "asc"
+                              sort[0].includes(header.query) &&
+                              sort[1] === "asc"
                                 ? "active"
                                 : ""
                             }`}
@@ -121,7 +163,8 @@ export default function TableDapp({
                           />
                           <CaretDownOutlined
                             className={`down ${
-                              sort[0] === header.query && sort[1] === "desc"
+                              sort[0].includes(header.query) &&
+                              sort[1] === "desc"
                                 ? "active"
                                 : ""
                             }`}
@@ -136,13 +179,22 @@ export default function TableDapp({
             </div>
           </div>
           {tokenList.map((token: any, i: number) => {
-            const user = token.attributes.crawl[`user_${timeKey}`];
-            const transaction = token.attributes.crawl[`amount_${timeKey}`];
-            const volume = token.attributes.crawl[`usds_${timeKey}`];
-            const userDiff = token.attributes.crawl[`user_${timeKey}_gr`];
+            let timeQuery;
+            if (timeKey === "24h") timeQuery = `daily`;
+            else if (timeKey === "7d") timeQuery = `weekly`;
+            else timeQuery = `monthly`;
+            const user = formatter.format(token.attributes[`${timeQuery}User`]);
+            const transaction = formatter.format(
+              token.attributes[`${timeQuery}Transaction`]
+            );
+            const volume = token.attributes[`${timeQuery}Volume`];
+            const userDiff = token.attributes[`${timeQuery}UserDiff`];
             const transactionDiff =
-              token.attributes.crawl[`amount_${timeKey}_gr`];
-            const volumeDiff = token.attributes.crawl[`volume_${timeKey}_gr`];
+              token.attributes[`${timeQuery}TransactionDiff`];
+            const volumeDiff = token.attributes[`${timeQuery}VolumeDiff`];
+            const socialSignal = token.attributes.socialSignal;
+            const socialSignalDiff = token.attributes.socialSignalDiff;
+
             return (
               <div
                 className="table-body"
@@ -227,12 +279,13 @@ export default function TableDapp({
                 </div>
                 <div className="table-body-item table-body-item-volume">
                   <div className="table-body-item-volume-bar-top">
-                    <p>{formatter.format(token.attributes.dailyVolume)}</p>
+                    <p>${formatter.format(volume)}</p>
                     <p
-                      className={`table-body-item-volume-bar-top-${volumeDiff} ms-2`}
+                      className={`table-body-item-volume-bar-top-${incdec(
+                        volumeDiff
+                      )} ms-2`}
                     >
-                      {(token.attributes.dailyVolumeDiff * 100).toFixed(2)}%{" "}
-                      {volumeDiff === "increase" ? "↑" : "↓"}
+                      {(volumeDiff * 100).toFixed(2)}% {updown(volumeDiff)}
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
@@ -297,19 +350,16 @@ export default function TableDapp({
                       {token.attributes.crawl.social_top100 && (
                         <img src="/img/icons/fire.png" alt="" />
                       )}
-                      <span>
-                        {isExistAndFormatCurrency(
-                          token.attributes.crawl.social_signal,
-                          0
-                        )}
-                      </span>
+                      <span>{formatter.format(socialSignal)}</span>
                     </div>
-                    <div className="table-body-item-ranking-increase text-end">
+                    <div
+                      className={`table-body-item-ranking-${incdec(
+                        socialSignalDiff
+                      )} text-end`}
+                    >
                       <p>
-                        {(
-                          token.attributes.crawl.social_signal_gr * 100
-                        ).toFixed(2)}
-                        % {updown(token.attributes.crawl.social_signal_gr)}
+                        {(socialSignalDiff * 100).toFixed(2)}%{" "}
+                        {updown(socialSignalDiff)}
                       </p>
                     </div>
                   </div>
@@ -330,7 +380,7 @@ export default function TableDapp({
             </div>
             <div className="table-header-item justify-content-start">
               <Select
-                defaultValue={`${listTitleHeaderMobile[0].title}`}
+                defaultValue={`${activeHeader()}`}
                 style={{ width: "70%" }}
                 onChange={onMobileChangeHeader}
               >
@@ -345,23 +395,27 @@ export default function TableDapp({
               <div className="table-header-item-sorter">
                 <div className="table-header-item-sorter-inner">
                   <CaretUpOutlined
-                    className={`up ${sort[1] === "asc" && "active"}`}
+                    className={`up ${
+                      sort[1] === "asc" && activeSorter() && "active"
+                    }`}
                     onClick={() =>
                       activeItem(
                         "asc",
-                        listTitleHeaderMobile.filter(
-                          (someshit) => someshit.title === headerMobile
+                        listTitleHeaderMobile.filter((someshit) =>
+                          someshit.title.includes(headerMobile)
                         )[0].query
                       )
                     }
                   />
                   <CaretDownOutlined
-                    className={`down ${sort[1] === "desc" && "active"}`}
+                    className={`down ${
+                      sort[1] === "desc" && activeSorter() && "active"
+                    }`}
                     onClick={() =>
                       activeItem(
                         "desc",
-                        listTitleHeaderMobile.filter(
-                          (someshit) => someshit.title === headerMobile
+                        listTitleHeaderMobile.filter((someshit) =>
+                          someshit.title.includes(headerMobile)
                         )[0].query
                       )
                     }
@@ -372,19 +426,24 @@ export default function TableDapp({
           </div>
         </div>
         {tokenList.map((e: any, i: number) => {
+          let timeQuery;
+          if (timeKey === "24h") timeQuery = `daily`;
+          else if (timeKey === "7d") timeQuery = `weekly`;
+          else timeQuery = `monthly`;
           let selectedKey = listTitleHeaderMobile.filter(
             (someshit) => someshit.title === headerMobile
           )[0].query;
-          if (selectedKey === "dailyUser") selectedKey = "user";
-          else if (selectedKey === "dailyTransaction") selectedKey = "amount";
-          else selectedKey = "usds";
-          console.log(selectedKey);
-          const số_trên: string = formatter.format(
-            e.attributes.crawl[`${selectedKey}_${timeKey}`]
-          );
+
+          const số_trên: string =
+            selectedKey === "socialSignal"
+              ? formatter.format(e.attributes.socialSignal)
+              : formatter.format(e.attributes[`${timeQuery}${selectedKey}`]);
           const số_dưới: number =
-            e.attributes.crawl[`${selectedKey}_${timeKey}_gr`];
+            selectedKey === "socialSignal"
+              ? e.attributes.socialSignalDiff
+              : e.attributes[`${timeQuery}${selectedKey}Diff`];
           const tăng_giảm: string = incdec(số_dưới);
+
           return (
             <div className="table-body" key={i}>
               <div className="table-body-item table-body-item-number">
@@ -406,9 +465,14 @@ export default function TableDapp({
                   <div className="col-5">
                     <div className="w-100">
                       <div className="table-body-item-user-number text-end">
-                        <p>{số_trên}</p>
+                        <p>
+                          {["amount", "volume"].includes(selectedKey) && "$"}
+                          {số_trên}
+                        </p>
                       </div>
-                      <div className="table-body-item-user-decrease text-end">
+                      <div
+                        className={`table-body-item-user-${tăng_giảm} text-end`}
+                      >
                         <p>
                           {(số_dưới * 100).toFixed(2)}%{" "}
                           {tăng_giảm === "increase" ? "↑" : "↓"}
