@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 export default function PinnedSlides({ crit }: any) {
   const [index, setIndex] = useState(6);
   const router = useRouter();
-  const [pinnedPosts, setPinned] = useState([]);
+  const [pinnedPosts, setPinned] = useState<any>([]);
 
   useEffect(() => {
     (async () => {
@@ -76,7 +76,7 @@ export default function PinnedSlides({ crit }: any) {
       >
         {pinnedPosts.map((pinnedPost: any, i: number) => {
           return (
-            <div>
+            <div key={i}>
               <SwiperSlide
                 key={i}
                 className="main-homepage-dappnews-pinnedSlides"
