@@ -269,31 +269,34 @@ const BlockchainDetails = () => {
   };
 
   const [showSharePopup, setShowSharePopup] = useState(false);
-  const SocialSharePopup = () => (
-    <Modal
-      title={`Share ${dapp?.name} on Social Media`}
-      visible={showSharePopup}
-      onCancel={() => setShowSharePopup(false)}
-    >
-      <BoxJustifyContentSpaceBetween>
-        <FacebookShareButton url={`${window.location.origin}/app/${id}`}>
-          <FacebookIcon round size={62}></FacebookIcon>
-        </FacebookShareButton>
-        <TwitterShareButton
-          title="Checkout this Dapp"
-          url={`${window.location.origin}/app/${id}`}
+  const SocialSharePopup = () => {
+    if (typeof window !== 'undefined')
+      return (
+        <Modal
+          title={`Share ${dapp?.name} on Social Media`}
+          visible={showSharePopup}
+          onCancel={() => setShowSharePopup(false)}
         >
-          <TwitterIcon size={62} round />
-        </TwitterShareButton>
-        <TelegramShareButton
-          title="Checkout this Dapp"
-          url={`${window.location.origin}/app/${id}`}
-        >
-          <TelegramIcon size={62} round></TelegramIcon>
-        </TelegramShareButton>
-      </BoxJustifyContentSpaceBetween>
-    </Modal>
-  );
+          <BoxJustifyContentSpaceBetween>
+            <FacebookShareButton url={`${window.location.origin}/app/${id}`}>
+              <FacebookIcon round size={62}></FacebookIcon>
+            </FacebookShareButton>
+            <TwitterShareButton
+              title="Checkout this Dapp"
+              url={`${window.location.origin}/app/${id}`}
+            >
+              <TwitterIcon size={62} round />
+            </TwitterShareButton>
+            <TelegramShareButton
+              title="Checkout this Dapp"
+              url={`${window.location.origin}/app/${id}`}
+            >
+              <TelegramIcon size={62} round></TelegramIcon>
+            </TelegramShareButton>
+          </BoxJustifyContentSpaceBetween>
+        </Modal>
+      );
+  };
 
   const [like, setLike] = useState(false);
   useEffect(() => {
@@ -591,7 +594,7 @@ const BlockchainDetails = () => {
                 </TabMain>
               </div>
               <br />
-              <AppStatistical day={stat?.days} data={dapp} appStat={appStat}/>
+              <AppStatistical day={stat?.days} data={dapp} appStat={appStat} />
               <br />
               <div className="row mt-5">
                 <div className="blockchain-details-price">
