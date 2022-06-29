@@ -304,14 +304,14 @@ const BlockchainDetails = () => {
           filters: {
             dapp: {
               id: {
-                $eq:id,
+                $eq: id,
               },
             },
             user: {
               id: {
                 $eq: userId,
-              }
-            }
+              },
+            },
           },
         },
         {
@@ -323,7 +323,7 @@ const BlockchainDetails = () => {
         setLike(res.data.data.length > 0); // this user did like this dapp
       });
     })();
-  }, [userId])
+  }, [userId]);
   const onLike = async () => {
     if (!login) {
       setShowLoginPopup(true);
@@ -359,8 +359,19 @@ const BlockchainDetails = () => {
       });
     })();
   }, [dapp]);
-
-
+  const [appStat, setAppStat] = useState();
+  useEffect(() => {
+    (async () => {
+      await axios
+        .create({
+          baseURL: URL_API_DAPPVERSE,
+        })
+        .get(`/chart/dapp/${slug}/${day}`)
+        .then((res) => {
+          setAppStat(res.data.extract_stats);
+        });
+    })();
+  }, [day]);
 
   // console.log(dapp);
   return (
@@ -580,7 +591,7 @@ const BlockchainDetails = () => {
                 </TabMain>
               </div>
               <br />
-              <AppStatistical day={stat?.days} data={dapp} />
+              <AppStatistical day={stat?.days} data={dapp} appStat={appStat}/>
               <br />
               <div className="row mt-5">
                 <div className="blockchain-details-price">
