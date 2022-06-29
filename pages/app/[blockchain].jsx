@@ -328,7 +328,7 @@ const BlockchainDetails = () => {
         }
       );
       await request.get(`/favorites?${query}`).then((res) => {
-        console.log("Like:", res.data.data);
+        // console.log("Like:", res.data.data);
         setLike(res.data.data.length > 0); // this user did like this dapp
         setLikeId(res.data.data[0]?.id);
       });
@@ -662,7 +662,7 @@ const BlockchainDetails = () => {
                                 {renderDollar(comp.name)}
                                 {comp.data["24h"]}
                               </span>
-                              <span className="increase">
+                              <span className={incdec(comp.data["24h_gr"])}>
                                 {comp.data["24h_gr"].toFixed(2)}%
                                 {updown(comp.data["24h_gr"])}
                               </span>
@@ -693,6 +693,7 @@ const BlockchainDetails = () => {
                                 )
                               </span>
                             </div>
+                            {!comp.data.total && <br/>}
                           </div>
                         </BoxALignItemsStart>
                       </div>
