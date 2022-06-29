@@ -191,7 +191,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   {moment(news[0]?.attributes.createdAt).format("LL")}
                 </div>
                 <div className="news-details-createdAt-right">
-                  <a
+                  {/* <a
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {
@@ -203,9 +203,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     ) : (
                       <HeartOutlined />
                     )}
-                  </a>
-                  &nbsp;
-                  {liked ? 2 : 1}
+                  </a> */}
+                  {/* &nbsp;
+                  {liked ? 2 : 1} */}
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <Eye size={15} />
                   &nbsp;
@@ -230,12 +230,19 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                       {news[0]?.attributes.tags.data.map(
                         (tag: any, i: number) => {
                           return (
-                            <BoxWhiteShadow
+                            <ButtonBackgroundBlueBold
                               className="news-details-right-tag"
                               key={i}
+                              onClick={() =>
+                                router.push(
+                                  `/dapp-news/search/${tag.attributes.name}`
+                                )
+                              }
                             >
-                              {tag.attributes.name}
-                            </BoxWhiteShadow>
+                              <a target="_blank" rel="noopener noreferrer">
+                                {tag.attributes.name}
+                              </a>
+                            </ButtonBackgroundBlueBold>
                           );
                         }
                       )}
