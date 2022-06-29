@@ -206,6 +206,9 @@
   &-chart-wrapper {
     padding: 20px;
     padding-right: 20%;
+    @media screen and (max-width: 992px) {
+      padding-right: 0;
+    }
     background: #ffffff;
     /* Old/Neutrals/6 */
 
@@ -452,13 +455,13 @@
     font-size: 15px !important;
     font-family: "Circular Std";
     font-style: normal;
-    font-weight: bold!important;
+    font-weight: bold !important;
   }
   .apexcharts-legend-series {
-    margin-right: 25px!important;
+    margin-right: 25px !important;
   }
-  .apexcharts-canvas{
-    margin-bottom: 100px!important;
+  .apexcharts-canvas {
+    margin-bottom: 100px !important;
   }
   .idontknowwhat {
     text-align: right;

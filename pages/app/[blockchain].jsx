@@ -225,6 +225,7 @@ const BlockchainDetails = () => {
               },
             },
           },
+          sort: ['id:desc'],
         },
         {
           encodeValuesOnly: true,
