@@ -105,7 +105,7 @@ export const NavbarHome: FC = () => {
     { name: "Farm", link: "#", newTab: false, routeSelected: "/farm" },
     {
       name: "Dapp News",
-      link: "#",
+      link: "/dapp-news",
       newTab: false,
       routeSelected: "/dapp-news",
     },
@@ -287,7 +287,7 @@ export const NavbarHome: FC = () => {
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
                     onClick={() => {
-                      router.push("/submit");
+                      // router.push("/submit");
                     }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
