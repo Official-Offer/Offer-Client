@@ -88,13 +88,13 @@ const BlockchainDetails = () => {
   const [reviewParent, setReviewParent] = useState(null);
   const [pagination, setPagination] = useState(3);
   const [justCommented, setJustCommented] = useState(true);
-  const [showSubcomment, setShowSubcomment] = useState(new Set());
   const [tokenInfo, setTokenInfo] = useState();
+  // useEffect(()=> console.log(showSubcomment), [showSubcomment]);
   const viewSubcomment = (id) => {
-    const newState = showSubcomment;
-    if (newState.has(id)) newState.delete(id);
-    else newState.add(id);
-    setShowSubcomment(newState);
+    const newState = [...reviews];
+    newState[id].showReply = !newState[id].showReply;
+    setReviews(newState);
+    console.log(newState[id].showReply);
   };
   const viewMore = () => setPagination(pagination + 3);
   const openParentlessReview = () => {
@@ -232,8 +232,12 @@ const BlockchainDetails = () => {
         }
       );
       await request.get(`/reviews?${query}`).then((res) => {
-        setReviews(res.data.data);
-        // console.log(res.data.data);
+        const revArr = res.data.data;
+        for(let i=0;i<revArr.length;i++) {
+          revArr[i].showReply = false;
+        }
+        setReviews(revArr);
+        console.log(revArr);
       });
     })();
   }, [pagination, justCommented]);
@@ -746,7 +750,7 @@ const BlockchainDetails = () => {
                   </div>
                   {comment.attributes?.replies.data?.length > 0 && (
                     <div className="blockchain-details-viewmore">
-                      {showSubcomment.has(i) ? (
+                      {reviews[i].showReply ? (
                         <div className="blockchain-details-subcomment-section">
                           {comment.attributes?.replies.data.map((reply, ri) => (
                             <div
