@@ -56,35 +56,14 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
       {
         axisBorder: {
           show: true,
-          color: color,
-        },
-        labels: {
-          style: {
-            colors: color,
-          },
-          formatter: function (val: any) {
-            return `$${val.toFixed(2)}`;
-          },
-          forceNiceScale: true,
-        },
-        title: {
-          style: {
-            color: color,
-          },
-        },
-      },
-      {
-        opposite: true,
-        axisBorder: {
-          show: true,
           color: "black",
         },
         labels: {
           style: {
-            colors: "black",
+            colors:"black",
           },
           formatter: function (val: any) {
-            return formatter.format(val);
+            return `$${val.toFixed(2)}`;
           },
           forceNiceScale: true,
         },
@@ -94,11 +73,32 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
           },
         },
       },
+      {
+        opposite: true,
+        axisBorder: {
+          show: true,
+          color: color,
+        },
+        labels: {
+          style: {
+            colors:  color,
+          },
+          formatter: function (val: any) {
+            return formatter.format(val);
+          },
+          forceNiceScale: true,
+        },
+        title: {
+          style: {
+            color:  color,
+          },
+        },
+      },
     ],
     tooltip: {
       theme: "light",
     },
-    colors: [color, "#223052"],
+    colors: ["#223052",color],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
