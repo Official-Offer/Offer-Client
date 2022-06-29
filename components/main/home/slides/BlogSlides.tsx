@@ -10,12 +10,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Empty } from "antd";
+import { useRouter } from "next/router";
 
 export default function BlogSlides({ data }: any): ReactElement {
     const navigationPrevRef = React.useRef(null);
     const navigationNextRef = React.useRef(null);
     SwiperCore.use([Autoplay]);
-
+    const router = useRouter();
     return (
         <BoxALignCenter_Justify_ItemsCenter>
             <Button className="p-0 me-2" ref={navigationPrevRef}>
@@ -59,9 +60,10 @@ export default function BlogSlides({ data }: any): ReactElement {
                     // console.log(blog)
                     const onClick = (data: any) => {
                         const slug = data.attributes.slug;
-                        window.open(
-                          `${window.location.origin}/dapp-news/${slug}`
-                        );
+                        router.push(`/dapp-news/${slug}`);
+                        // window.open(
+                        //   `${window.location.origin}/dapp-news/${slug}`
+                        // );
                     };
                     return (
                         <SwiperSlide key={i}>
