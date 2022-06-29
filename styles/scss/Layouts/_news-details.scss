@@ -161,7 +161,7 @@
       width: 18px;
       height: 18px;
       margin-right: 5px;
-      transition: all 0.3s ease-in-out;
+      transition: transform all 0.3s ease-in-out;
       z-index: 1;
     }
   }
@@ -388,6 +388,7 @@
       }
     }
     &-mobile {
+      padding: 7px;
       h2 {
         font-family: "Circular Std";
         font-style: normal;
