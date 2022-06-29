@@ -230,12 +230,19 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                       {news[0]?.attributes.tags.data.map(
                         (tag: any, i: number) => {
                           return (
-                            <BoxWhiteShadow
+                            <ButtonBackgroundBlueBold
                               className="news-details-right-tag"
                               key={i}
+                              onClick={() =>
+                                router.push(
+                                  `/dapp-news/search/${tag.attributes.name}`
+                                )
+                              }
                             >
-                              {tag.attributes.name}
-                            </BoxWhiteShadow>
+                              <a target="_blank" rel="noopener noreferrer">
+                                {tag.attributes.name}
+                              </a>
+                            </ButtonBackgroundBlueBold>
                           );
                         }
                       )}
