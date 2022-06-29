@@ -85,7 +85,7 @@ export const NavbarHome: FC = () => {
     setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
     if (keyword === '') {
-      router.push(`/dapp-news/search/No Result`);
+      router.push(`/dapp-news/search/No result`);
     } else {
     router.push(`/dapp-news/search/${keyword}`);
     }
