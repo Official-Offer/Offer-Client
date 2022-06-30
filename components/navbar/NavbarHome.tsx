@@ -84,7 +84,11 @@ export const NavbarHome: FC = () => {
     e.preventDefault();
     setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
+    if (keyword === '') {
+      router.push(`/dapp-news/search/No result`);
+    } else {
     router.push(`/dapp-news/search/${keyword}`);
+    }
   };
   const handleChangeSearch = (e: any) => {
     setCurValue(e.target.value);

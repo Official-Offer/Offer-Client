@@ -13,7 +13,6 @@ import moment from "moment";
 import { useRouter } from "next/router";
 
 export default function PinnedSlides({ crit }: any) {
-  const [index, setIndex] = useState(6);
   const router = useRouter();
   const [pinnedPosts, setPinned] = useState<any>([]);
 
@@ -38,6 +37,9 @@ export default function PinnedSlides({ crit }: any) {
       });
     })();
   }, []);
+
+  const [index, setIndex] = useState(pinnedPosts.length-1);
+
   return (
     <div className="sliderWrapper p-2">
       <Swiper
