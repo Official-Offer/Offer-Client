@@ -16,6 +16,8 @@ import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 import { Avatar } from "antd";
+import BannerSlides from "@components/main/dapp-news/BannerSlides";
+import SharingSection from "@components/main/dapp-news/SharingSection";
 import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
 import ReactMarkdown from "react-markdown";
 
@@ -23,18 +25,18 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   const CommentSection = dynamic(
     () => import("@components/main/dapp-news/CommentSection")
   ) as any;
-  const SharingSection = dynamic(
-    () => import("@components/main/dapp-news/SharingSection")
-  ) as any;
+  // const SharingSection = dynamic(
+  //   () => import("@components/main/dapp-news/SharingSection")
+  // ) as any;
   const NewsList = dynamic(
     () => import("@components/main/dapp-news/NewsList")
   ) as any;
   const PinnedSlides = dynamic(
     () => import("@components/main/dapp-news/PinnedSlides")
   ) as any;
-  const BannerSlides = dynamic(
-    () => import("@components/main/dapp-news/BannerSlides")
-  ) as any;
+  // const BannerSlides = dynamic(
+  //   () => import("@components/main/dapp-news/BannerSlides")
+  // ) as any;
 
   const [news, setNews] = useState<any>([]);
   const [styledContent, setStyledContent] = useState("");
@@ -116,6 +118,9 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
 
   // const markdown = marked(modifiedContent);
 
+  const imgLink = newsData[0]?.attributes.thumbnail.data.attributes.url;
+  console.log(`${URL_API_IMG}${imgLink}`);
+
   return (
     <div>
       <Head>
@@ -124,7 +129,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
         <meta
           property="og:image"
-          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+          content={`${URL_API_IMG}${imgLink}`}
         />
         <meta
           property="og:description"
@@ -133,8 +138,10 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
+          content={`${URL_API_IMG}${imgLink}`}
         />
+        <meta name="twitter:image:width" content= "1200" />
+        <meta name="twitter:image:height" content= "628" />
         <meta name="twitter:title" content={newsData[0]?.attributes.title} />
         <meta
           name="twitter:description"
