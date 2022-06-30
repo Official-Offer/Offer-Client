@@ -132,7 +132,8 @@ export default function TableDapp({
 
   const activeSorter = () => {
     if (headerMobile === "Users" && sort[0].includes("User")) return true;
-    if (headerMobile === "Social Signal" && sort[0] === "socialSignal") return true;
+    if (headerMobile === "Social Signal" && sort[0] === "socialSignal")
+      return true;
     if (sort[0].includes(activeHeader())) return true;
     return false;
   };
@@ -183,17 +184,19 @@ export default function TableDapp({
             if (timeKey === "24h") timeQuery = `daily`;
             else if (timeKey === "7d") timeQuery = `weekly`;
             else timeQuery = `monthly`;
-            const user = formatter.format(token.attributes[`${timeQuery}User`]);
-            const transaction = formatter.format(
-              token.attributes[`${timeQuery}Transaction`]
+            const user = formatter.format(
+              token.attributes[`${timeQuery}User`] || 0
             );
-            const volume = token.attributes[`${timeQuery}Volume`];
-            const userDiff = token.attributes[`${timeQuery}UserDiff`];
+            const transaction = formatter.format(
+              token.attributes[`${timeQuery}Transaction`] || 0
+            );
+            const volume = token.attributes[`${timeQuery}Volume`] || 0;
+            const userDiff = token.attributes[`${timeQuery}UserDiff`] || 0;
             const transactionDiff =
-              token.attributes[`${timeQuery}TransactionDiff`];
-            const volumeDiff = token.attributes[`${timeQuery}VolumeDiff`];
-            const socialSignal = token.attributes.socialSignal;
-            const socialSignalDiff = token.attributes.socialSignalDiff;
+              token.attributes[`${timeQuery}TransactionDiff`] || 0;
+            const volumeDiff = token.attributes[`${timeQuery}VolumeDiff`] || 0;
+            const socialSignal = token.attributes.socialSignal || 0;
+            const socialSignalDiff = token.attributes.socialSignalDiff || 0;
 
             return (
               <div
@@ -436,12 +439,14 @@ export default function TableDapp({
 
           const số_trên: string =
             selectedKey === "socialSignal"
-              ? formatter.format(e.attributes.socialSignal)
-              : formatter.format(e.attributes[`${timeQuery}${selectedKey}`]);
+              ? formatter.format(e.attributes.socialSignal || 0)
+              : formatter.format(
+                  e.attributes[`${timeQuery}${selectedKey}`] || 0
+                );
           const số_dưới: number =
             selectedKey === "socialSignal"
-              ? e.attributes.socialSignalDiff
-              : e.attributes[`${timeQuery}${selectedKey}Diff`];
+              ? e.attributes.socialSignalDiff || 0
+              : e.attributes[`${timeQuery}${selectedKey}Diff`] || 0;
           const tăng_giảm: string = incdec(số_dưới);
 
           return (
