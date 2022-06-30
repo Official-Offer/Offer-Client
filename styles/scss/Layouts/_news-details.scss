@@ -1,6 +1,13 @@
 .news-details {
   max-width: 1800px;
   margin: auto;
+  &-content {
+    font-family: 'Circular Std Light';
+    a {
+      // color: #223052;
+      color: #058499;
+    }
+  }
   &-social {
     display: flex;
     flex-wrap: wrap;

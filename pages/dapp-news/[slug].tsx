@@ -23,8 +23,9 @@ import ReactMarkdown from "react-markdown";
 import CommentSection from "@components/main/dapp-news/CommentSection";
 import NewsList from "@components/main/dapp-news/NewsList";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
-// import { Prose } from "@nikolovlazar/chakra-ui-prose";
-// import DOMPurify from 'dompurify';
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import TweetEmbed from "react-tweet-embed";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
   // const CommentSection = dynamic(
@@ -195,39 +196,31 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   {moment(news[0]?.attributes.createdAt).format("LL")}
                 </div>
                 <div className="news-details-createdAt-right">
-                  {/* <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      setLiked(!liked);
-                    }}
-                  >
-                    {liked ? (
-                      <HeartFilled style={{ color: "#1DBBBD" }} />
-                    ) : (
-                      <HeartOutlined />
-                    )}
-                  </a> */}
-                  {/* &nbsp;
-                  {liked ? 2 : 1} */}
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <Eye size={15} />
                   &nbsp;
                   {news[0]?.attributes.viewer}
                 </div>
               </BoxALignCenter_Justify_ItemsBetween>
-              <MarkDown>{styledContent}</MarkDown>
-              {/* <div dangerouslySetInnerHTML={{ __html: styledContent }} /> */}
-              {/* <Prose>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(content),
-                  }}
-                />
-              </Prose> */}
-              {/* <Prose>
-                <div dangerouslySetInnerHTML={{ _html: styledContent }} />
-              </Prose> */}
+              {/* <MarkDown>{styledContent}</MarkDown> */}
+              <ReactMarkdown
+                className="news-details-content"
+                rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                allowDangerousHtml={true}
+                components={{
+                  a: (props) => {
+                    let tweetID = props.href?.split("/").slice(-1)[0];
+                    console.log(tweetID);
+                    return props.href?.startsWith("https://twitter.com") ? (
+                        <TweetEmbed tweetId={`${tweetID}`} />
+                    ) : (
+                      <a href={props.href}>{props.children}</a> // All other links
+                    );
+                  },
+                }}
+              >
+                {styledContent}
+              </ReactMarkdown>
             </div>
             <div className="news-details-low-section">
               <div className="news-details-commentsection">
