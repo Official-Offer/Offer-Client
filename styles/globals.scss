@@ -22,9 +22,16 @@
 @font-face {
   font-family: "Circular Std";
   src: url("../public/fonts/CircularStd-Book.otf") format("opentype"),
-    url("../public/fonts/CircularStd-Medium.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
+    url("../public/fonts/CircularStd-Medium.otf") format("opentype"),
+    url("../public/fonts/CircularStd-Light.otf") format("opentype");
+  // font-weight: normal;
+  // font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular Std Light";
+  src: url("../public/fonts/CircularStd-Light.otf") format("opentype");
+  // font-weight: light;
 }
 
 html,

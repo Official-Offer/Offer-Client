@@ -2,45 +2,6 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 
 export const MarkDown = styled(ReactMarkdown)`
-  h1 {
-    font-family: "Circular Std";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    color: #223052;
-  }
-  h2 {
-    font-family: "Circular Std";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    color: #223052;
-  }
-  h3 {
-    font-family: "Circular Std";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    color: #223052;
-  }
-  h4 {
-    font-family: "Circular Std";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    color: #223052;
-  }
-  p {
-    font-weight: 450;
-    font-family: "Circular Std";
-    font-size: 16px;
-    color: #223052;
-  }
-  b {
-    font-weight: bold;
-    font-family: "Circular Std";
-    color: rgba(34, 48, 82, 0.65);
-  }
   img {
     width: 100%;
     margin: 20px auto;
@@ -66,6 +27,12 @@ export const MarkDown = styled(ReactMarkdown)`
     padding: 1em;
     margin: 35px 0;
     overflow: auto;
+  }
+  * {
+    font-family: Circular Std Light;
+    font-style: Light;
+    font-weight: light;
+    color: #223052;
   }
   code {
     color: #ccc;
