@@ -881,7 +881,7 @@ const Submit: NextPage = () => {
                     className="main-submit-text-description main-submit-trans-text"
                     disabled={notLogin}
                     style={{ width: "100%" }}
-                    maxLength={500}
+                    maxLength={200}
                     placeholder="Token Description."
                     onChange={handleChange}
                     value={input.tokenDescription}
@@ -896,7 +896,7 @@ const Submit: NextPage = () => {
                         : ""
                     }`}
                   >
-                    {input.tokenDescription.length}/500
+                    {input.tokenDescription.length}/200
                   </div>
                 </div>
               </div>
