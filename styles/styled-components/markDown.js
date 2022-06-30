@@ -28,6 +28,10 @@ export const MarkDown = styled(ReactMarkdown)`
     margin: 35px 0;
     overflow: auto;
   }
+  u {
+    text-decoration: 'underline';
+    font-weight: bold;
+  }
   * {
     font-family: Circular Std Light;
     font-style: Light;

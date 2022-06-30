@@ -20,20 +20,23 @@ import BannerSlides from "@components/main/dapp-news/BannerSlides";
 import SharingSection from "@components/main/dapp-news/SharingSection";
 import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
 import ReactMarkdown from "react-markdown";
+import CommentSection from "@components/main/dapp-news/CommentSection";
+import NewsList from "@components/main/dapp-news/NewsList";
+import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
+// import { Prose } from "@nikolovlazar/chakra-ui-prose";
+// import DOMPurify from 'dompurify';
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
-  const CommentSection = dynamic(
-    () => import("@components/main/dapp-news/CommentSection")
-  ) as any;
+  // const CommentSection = dynamic(
+  //   () => import("@components/main/dapp-news/CommentSection")
+  // ) as any;
   // const SharingSection = dynamic(
   //   () => import("@components/main/dapp-news/SharingSection")
   // ) as any;
-  const NewsList = dynamic(
-    () => import("@components/main/dapp-news/NewsList")
-  ) as any;
-  const PinnedSlides = dynamic(
-    () => import("@components/main/dapp-news/PinnedSlides")
-  ) as any;
+  // const NewsList = dynamic(
+  //   () => import("@components/main/dapp-news/NewsList")
+  // ) as any;
+  // g
   // const BannerSlides = dynamic(
   //   () => import("@components/main/dapp-news/BannerSlides")
   // ) as any;
@@ -127,21 +130,15 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
         <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
         {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
-        <meta
-          property="og:image"
-          content={`${URL_API_IMG}${imgLink}`}
-        />
+        <meta property="og:image" content={`${URL_API_IMG}${imgLink}`} />
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:image"
-          content={`${URL_API_IMG}${imgLink}`}
-        />
-        <meta name="twitter:image:width" content= "1200" />
-        <meta name="twitter:image:height" content= "628" />
+        <meta name="twitter:image" content={`${URL_API_IMG}${imgLink}`} />
+        <meta name="twitter:image:width" content="1200" />
+        <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={newsData[0]?.attributes.title} />
         <meta
           name="twitter:description"
@@ -220,7 +217,17 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 </div>
               </BoxALignCenter_Justify_ItemsBetween>
               <MarkDown>{styledContent}</MarkDown>
-              {/* <ReactMarkdown>{styledContent}</ReactMarkdown> */}
+              {/* <div dangerouslySetInnerHTML={{ __html: styledContent }} /> */}
+              {/* <Prose>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(content),
+                  }}
+                />
+              </Prose> */}
+              {/* <Prose>
+                <div dangerouslySetInnerHTML={{ _html: styledContent }} />
+              </Prose> */}
             </div>
             <div className="news-details-low-section">
               <div className="news-details-commentsection">
