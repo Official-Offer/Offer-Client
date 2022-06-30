@@ -210,7 +210,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                 components={{
                   a: (props) => {
                     let tweetID = props.href?.split("/").slice(-1)[0];
-                    console.log(tweetID);
+                    // console.log(tweetID);
                     return props.href?.startsWith("https://twitter.com") ? (
                         <TweetEmbed tweetId={`${tweetID}`} />
                     ) : (
