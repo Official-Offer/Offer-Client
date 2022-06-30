@@ -202,17 +202,16 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   {news[0]?.attributes.viewer}
                 </div>
               </BoxALignCenter_Justify_ItemsBetween>
-              {/* <MarkDown>{styledContent}</MarkDown> */}
               <ReactMarkdown
                 className="news-details-content"
-                rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                rehypePlugins={[rehypeRaw]}
                 allowDangerousHtml={true}
                 components={{
                   a: (props) => {
                     let tweetID = props.href?.split("/").slice(-1)[0];
                     // console.log(tweetID);
                     return props.href?.startsWith("https://twitter.com") ? (
-                        <TweetEmbed tweetId={`${tweetID}`} />
+                        <TweetEmbed className="news-details-content-tweet" tweetId={`${tweetID}`} />
                     ) : (
                       <a href={props.href}>{props.children}</a> // All other links
                     );
