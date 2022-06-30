@@ -125,7 +125,7 @@ export const NavbarHome: FC = () => {
       newTab: false,
       routeSelected: "/price-board",
     },
-    { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
+    { name: "INO", link: "https://nft.tokenplay.app/ino", newTab: true, routeSelected: "/ino" },
     {
       name: "Login",
       link: "#",
