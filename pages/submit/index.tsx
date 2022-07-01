@@ -307,8 +307,8 @@ const Submit: NextPage = () => {
           "reviewArticle",
           "detailDescription",
           "shortDescription",
-          "dappChain",
-          "tokenChain",
+          // "dappChain",
+          // "tokenChain",
           "isOnCoingecko",
         ].includes(keys[i])
       ) {
@@ -324,6 +324,11 @@ const Submit: NextPage = () => {
       ) {
         message.error("Wrong Decimal");
         return;
+      } else if (
+        keys[i] === "isOnCoingecko" &&
+        input.isOnCoingecko.includes(" ")
+      ) {
+        message.error("Your Dapp can only have 1 URL");
       }
       //don't allow empty tags
       else if (keys[i] === "tags" && input.tags.length === 0) {
@@ -444,6 +449,15 @@ const Submit: NextPage = () => {
       else if (keys[i] == "images" && input[keys[i]].length < 1) {
         message.error("You must submit at least 1 Preview image");
         return;
+      }
+      //check only 1 url each social
+      else if (keys[i] === "Socials") {
+        for (let i = 0; i < 7; i++) {
+          if (input.Socials[i].url.includes(" ")) {
+            message.error("You can only enter 1 url for each social channel");
+            return;
+          }
+        }
       }
 
       // flag is raised, return
