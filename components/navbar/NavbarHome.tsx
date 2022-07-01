@@ -153,7 +153,7 @@ export const NavbarHome: FC = () => {
             setUser(res.data);
             setPopupVisible(false);
           })
-          .catch(() => {});
+          .catch(() => { });
       });
   };
 
@@ -253,13 +253,12 @@ export const NavbarHome: FC = () => {
                           value={curValue}
                         />
                         <hr />
-                        <p className="py-1">
+                        <p>
                           <button
                             type="button"
-                            className="search-input-button"
+                            className="search-input-button py-2"
                             onClick={onSearch}
                           >
-                            
                             <span>
                               <Search width={18} height={18} />
                             </span>
