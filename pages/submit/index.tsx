@@ -4,7 +4,7 @@ import {
   BoxAlignItemsStart_FlexColumn,
   BoxWhiteShadow,
   Channel,
-  BoxWhiteGreenShadow
+  BoxWhiteGreenShadow,
 } from "@styles/styled-components/styledBox";
 import {
   Facebook,
@@ -72,47 +72,46 @@ const Submit: NextPage = () => {
     referralProgram: "Sorry, we don’t.",
   });
 
-
   const [channelShown, setChannelShown] = useState([
     {
       name: "Facebook",
-      icon: <Facebook />,
+      icon: <img src="/img/media/facebook.png" className="main-submit-media"/>,
       placeholder: "E.g. https://www.facebook.com/dappverse.com/",
       shown: true,
     },
     {
       name: "Twitter",
-      icon: <Twitter />,
+      icon: <img src="/img/media/twitter.png" className="main-submit-media"/>,
       shown: true,
       placeholder: "Add your product's Twitter URL",
     },
     {
       name: "Telegram",
-      icon: <Send />,
+      icon: <img src="/img/media/telegram.png" className="main-submit-media"/>,
       shown: true,
       placeholder: "Add your product's Telegram URL",
     },
     {
       name: "Medium",
-      icon: <Send />,
+      icon: <img src="/img/media/telegram.png" className="main-submit-media"/>,
       shown: false,
       placeholder: "Add your product's Medium URL",
     },
     {
       name: "Youtube",
-      icon: <Youtube />,
+      icon: <Youtube fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
       shown: false,
       placeholder: "Add your product's Youtube URL",
     },
     {
       name: "LinkedIn",
-      icon: <Linkedin />,
+      icon: <Linkedin fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
       shown: false,
       placeholder: "Add your product's Linkedin URL",
     },
     {
       name: "Instagram",
-      icon: <Instagram />,
+      icon: <Instagram fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
       shown: false,
       placeholder: "Add your product's Instagram URL",
     },
@@ -475,7 +474,7 @@ const Submit: NextPage = () => {
     <>
       <section className="main-submit">
         <div className="empty_space_height50" />
-          <h1 className="mb-0 super-title">Submit Dapp</h1>
+        <h1 className="mb-0 super-title">Submit Dapp</h1>
         <br />
         <h3 className="main-submit-section-header">Identification</h3>
         <p className="text-secondary top">
@@ -494,11 +493,13 @@ const Submit: NextPage = () => {
             disabled={notLogin}
             name="isOwnerOrAdmin"
           >
-            <Radio value={true} >Yes I’m the admin/owner.</Radio>
+            <Radio value={true}>Yes I’m the admin/owner.</Radio>
             <Radio value={false}>No. I’m just a supporter.</Radio>
           </Radio.Group>
           <div>
-            <label className="label-input mb-3 kindoftitle">Your Email Address</label>
+            <label className="label-input mb-3 kindoftitle">
+              Your Email Address
+            </label>
             <input
               className="main-submit-email"
               type={"email"}
@@ -540,7 +541,9 @@ const Submit: NextPage = () => {
             <div className="col-lg-10 col-12 mt-lg-0 mt-4">
               <BoxAlignItemsStart_FlexColumn className="justify-content-center h-100">
                 <div className="w-100 mb-lg-4 mb-3">
-                  <label className="label-input mb-3 kindoftitle">Project Name</label>
+                  <label className="label-input mb-3 kindoftitle">
+                    Project Name
+                  </label>
                   <input
                     className="main-submit-project-name"
                     type={"text"}
@@ -552,7 +555,9 @@ const Submit: NextPage = () => {
                   />
                 </div>
                 <div className="w-100">
-                  <label className="label-input mb-3 kindoftitle">Dapp Website</label>
+                  <label className="label-input mb-3 kindoftitle">
+                    Dapp Website
+                  </label>
                   <input
                     className="main-submit-project-name"
                     type={"text"}
@@ -675,7 +680,9 @@ const Submit: NextPage = () => {
             {input.isOwnerOrAdmin && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                  <label className="label-input kindoftitle">Short Description</label>
+                  <label className="label-input kindoftitle">
+                    Short Description
+                  </label>
                   <span className="text-green green">Max of 70 Characters</span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <div className="main-submit-text-wrapper ">
@@ -706,8 +713,12 @@ const Submit: NextPage = () => {
             {input.isOwnerOrAdmin && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
-                  <label className="label-input kindoftitle">Detail Description</label>
-                  <span className="text-green green">Max of 500 Characters</span>
+                  <label className="label-input kindoftitle">
+                    Detail Description
+                  </label>
+                  <span className="text-green green">
+                    Max of 500 Characters
+                  </span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <div className="main-submit-text-wrapper">
                   <textarea
@@ -842,7 +853,9 @@ const Submit: NextPage = () => {
             )}
             {input.isOwnerOrAdmin && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-                <label className="label-input mb-3 kindoftitle">Token Contract</label>
+                <label className="label-input mb-3 kindoftitle">
+                  Token Contract
+                </label>
                 <input
                   disabled={notLogin}
                   className="main-submit-contract"
@@ -871,8 +884,12 @@ const Submit: NextPage = () => {
             {input.isOwnerOrAdmin && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                  <label className="label-input kindoftitle">Token Description</label>
-                  <span className="text-green green">Max of 200 Characters</span>
+                  <label className="label-input kindoftitle">
+                    Token Description
+                  </label>
+                  <span className="text-green green">
+                    Max of 200 Characters
+                  </span>
                 </BoxALignCenter_Justify_ItemsBetween>
                 <div className="main-submit-text-wrapper">
                   <textarea
@@ -922,7 +939,9 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteGreenShadow>
         <br />
-        <h3 className="main-submit-section-header kindoftitle">Smart Contracts Info</h3>
+        <h3 className="main-submit-section-header kindoftitle">
+          Smart Contracts Info
+        </h3>
         <p className="text-secondary">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
@@ -944,7 +963,9 @@ const Submit: NextPage = () => {
           </Radio.Group>
           <div className="row">
             <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <h5 className="kindoftitle">On which blockchain did you build your on-chain function</h5>
+              <h5 className="kindoftitle">
+                On which blockchain did you build your on-chain function
+              </h5>
               <Select
                 disabled={notLogin}
                 style={{ width: "100%" }}
@@ -1009,7 +1030,8 @@ const Submit: NextPage = () => {
                   onClick={() => setChannelPopup(true)}
                 >
                   <span className="main-submit-input-suffix-logo">
-                    <PlusCircle className="green"/>
+                    {/* <PlusCircle className="green" fill="#058499" color="#fff" /> */}
+                    <img src="/img/media/plus-circle.png" className="main-submit-media"/>
                   </span>
                   <input
                     disabled={true}
