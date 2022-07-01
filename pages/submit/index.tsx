@@ -52,7 +52,7 @@ const Submit: NextPage = () => {
     detailDescription: "",
     reviewArticle: "",
     hasToken: true,
-    tokenLogo: null,
+    tokenLogo: "",
     tokenChain: " ",
     tokenSymbol: "",
     tokenContract: "",
@@ -332,7 +332,7 @@ const Submit: NextPage = () => {
       // check if short description, if filled, must be at least 10 and at most 100 chars
       else if (
         keys[i] === "shortDescription" &&
-        (input[keys[i]].length < 10 || input[keys[i]].length > 100) &&
+        (input[keys[i]].length < 10 || input[keys[i]].length > 70) &&
         input[keys[i]].length > 0
       ) {
         message.error(
@@ -787,13 +787,13 @@ const Submit: NextPage = () => {
                   <div
                     className={`main-submit-char-counter${
                       (input.shortDescription.length < 10 ||
-                        input.shortDescription.length > 100) &&
+                        input.shortDescription.length > 70) &&
                       input.shortDescription.length > 0
                         ? "-error"
                         : ""
                     }`}
                   >
-                    {input.shortDescription.length}/100
+                    {input.shortDescription.length}/70
                   </div>
                 </div>
               </div>
