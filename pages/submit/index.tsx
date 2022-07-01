@@ -503,7 +503,7 @@ const Submit: NextPage = () => {
             <input
               className="main-submit-email"
               type={"email"}
-              placeholder="phamhoanghung001@gmail.com"
+              placeholder="name@gmail.com"
               disabled={notLogin}
               value={input.email}
               onChange={handleChange}
@@ -847,7 +847,7 @@ const Submit: NextPage = () => {
                   value={input.tokenSymbol}
                   type={"text"}
                   name="tokenSymbol"
-                  placeholder="phamhoanghung@gmail.com"
+                  placeholder="BNB"
                 />
               </div>
             )}
