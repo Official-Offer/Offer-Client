@@ -5,6 +5,7 @@ import {
   BoxWhiteShadow,
   Channel,
   BoxWhiteGreenShadow,
+  BoxALignCenter_Justify_ItemsEnd,
 } from "@styles/styled-components/styledBox";
 import {
   Facebook,
@@ -75,43 +76,64 @@ const Submit: NextPage = () => {
   const [channelShown, setChannelShown] = useState([
     {
       name: "Facebook",
-      icon: <img src="/img/media/facebook.png" className="main-submit-media"/>,
+      icon: <img src="/img/media/facebook.png" className="main-submit-media" />,
       placeholder: "E.g. https://www.facebook.com/dappverse.com/",
       shown: true,
     },
     {
       name: "Twitter",
-      icon: <img src="/img/media/twitter.png" className="main-submit-media"/>,
+      icon: <img src="/img/media/twitter.png" className="main-submit-media" />,
       shown: true,
       placeholder: "Add your product's Twitter URL",
     },
     {
       name: "Telegram",
-      icon: <img src="/img/media/telegram.png" className="main-submit-media"/>,
+      icon: <img src="/img/media/telegram.png" className="main-submit-media" />,
       shown: true,
       placeholder: "Add your product's Telegram URL",
     },
     {
       name: "Medium",
-      icon: <img src="/img/media/telegram.png" className="main-submit-media"/>,
+      icon: <img src="/img/media/telegram.png" className="main-submit-media" />,
       shown: false,
       placeholder: "Add your product's Medium URL",
     },
     {
       name: "Youtube",
-      icon: <Youtube fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
+      icon: (
+        <Youtube
+          fill="#058499"
+          color="#fff"
+          size={34}
+          className="main-submit-media"
+        />
+      ),
       shown: false,
       placeholder: "Add your product's Youtube URL",
     },
     {
       name: "LinkedIn",
-      icon: <Linkedin fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
+      icon: (
+        <Linkedin
+          fill="#058499"
+          color="#fff"
+          size={34}
+          className="main-submit-media"
+        />
+      ),
       shown: false,
       placeholder: "Add your product's Linkedin URL",
     },
     {
       name: "Instagram",
-      icon: <Instagram fill="#058499" color="#fff" size={34} className="main-submit-media"/>,
+      icon: (
+        <Instagram
+          fill="#058499"
+          color="#fff"
+          size={34}
+          className="main-submit-media"
+        />
+      ),
       shown: false,
       placeholder: "Add your product's Instagram URL",
     },
@@ -176,6 +198,7 @@ const Submit: NextPage = () => {
   ) => {
     let flag = true;
     const reader = new FileReader();
+    if (!(value instanceof Blob)) return false;
     reader.readAsDataURL(value);
     reader.onload = (e: any) => {
       const image: any = new Image();
@@ -470,6 +493,33 @@ const Submit: NextPage = () => {
     }
     return res;
   };
+
+  const onDeleteImage = (name: string) => {
+    handleChange({
+      target: {
+        name,
+        value: null,
+        type: "file",
+      },
+    });
+  };
+  const onDeleteLastImage = () => {
+    const newState: Array<any> = [...input.images];
+    const findFirstNonNullIndex = (arr: Array<any>) => {
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] !== null) return i;
+      }
+      return -1;
+    };
+    newState[findFirstNonNullIndex(newState)] = null;
+    handleChange({
+      target: {
+        name: "images",
+        value: newState,
+        type: "images",
+      },
+    });
+  };
   return (
     <>
       <section className="main-submit">
@@ -518,7 +568,20 @@ const Submit: NextPage = () => {
             <div className="col-lg-2 col-12">
               <div className="main-submit-avatar">
                 {rawImgToBase64(input.thumbnail) ? (
-                  <img src={rawImgToBase64(input.thumbnail)} />
+                  <div className="img-wrapper">
+                    <BoxALignCenter_Justify_ItemsEnd>
+                      <span
+                        className="x"
+                        onClick={() => onDeleteImage("thumbnail")}
+                      >
+                        x
+                      </span>
+                    </BoxALignCenter_Justify_ItemsEnd>
+                    <img
+                      className="upload-img"
+                      src={`${rawImgToBase64(input.thumbnail)}`}
+                    />
+                  </div>
                 ) : (
                   <>
                     {" "}
@@ -527,15 +590,15 @@ const Submit: NextPage = () => {
                     <p>
                       JPG,PNG with ratio of 1:1 300*300 or larger recommended
                     </p>
+                    <input
+                      type="file"
+                      accept="image/png, image/jpeg, image/jpg"
+                      disabled={notLogin}
+                      name="thumbnail"
+                      onChange={(e) => onUploadImageToField(e, "thumbnail")}
+                    />
                   </>
                 )}
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg, image/jpg"
-                  disabled={notLogin}
-                  name="thumbnail"
-                  onChange={(e) => onUploadImageToField(e, "thumbnail")}
-                />
               </div>
             </div>
             <div className="col-lg-10 col-12 mt-lg-0 mt-4">
@@ -582,19 +645,38 @@ const Submit: NextPage = () => {
                     <div className="main-submit-avatar-area">
                       {countNonNull(input.images) >= i && (
                         <>
-                          <img
-                            src={
-                              rawImgToBase64(input.images[i]) ||
-                              "/img/icons/icn-upload.png"
-                            }
-                            alt=""
-                          />
-                          <input
-                            accept="image/png, image/jpeg, image/jpg"
-                            type="file"
-                            disabled={notLogin}
-                            onChange={(e) => onUploadImagesToField(e, i)}
-                          />
+                          {rawImgToBase64(input.images[i]) ? (
+                            <div className="img-wrapper">
+                              {countNonNull(input.images) == i + 1 && (
+                                <BoxALignCenter_Justify_ItemsEnd>
+                                  <span
+                                    className="x"
+                                    onClick={onDeleteLastImage}
+                                  >
+                                    x
+                                  </span>
+                                </BoxALignCenter_Justify_ItemsEnd>
+                              )}
+                              <img
+                                src={
+                                  rawImgToBase64(input.images[i]) ||
+                                  "/img/icons/icn-upload.png"
+                                }
+                                className="upload-img-wide"
+                                alt=""
+                              />
+                            </div>
+                          ) : (
+                            <>
+                              <img src={"/img/icons/icn-upload.png"} alt="" />
+                              <input
+                                accept="image/png, image/jpeg, image/jpg"
+                                type="file"
+                                disabled={notLogin}
+                                onChange={(e) => onUploadImagesToField(e, i)}
+                              />
+                            </>
+                          )}
                         </>
                       )}
                     </div>
@@ -788,19 +870,34 @@ const Submit: NextPage = () => {
               <h5 className="mb-3 kindoftitle">Token Logo</h5>
               <BoxALignItemsCenter className="mb-4">
                 <div className="main-submit-avatar-logo">
-                  <img
-                    src={
-                      rawImgToBase64(input.tokenLogo) ||
-                      "/img/icons/icn-upload-small.png"
-                    }
-                    alt=""
-                  />
-                  <input
-                    accept="image/png, image/jpeg, image/jpg"
-                    type="file"
-                    disabled={notLogin}
-                    onChange={(e) => onUploadImageToField(e, "tokenLogo")}
-                  />
+                  {rawImgToBase64(input.tokenLogo) ? (
+                    <div className="img-wrapper">
+                      <BoxALignCenter_Justify_ItemsEnd>
+                        <span
+                          className="x"
+                          onClick={() => onDeleteImage("tokenLogo")}
+                        >
+                          x
+                        </span>
+                      </BoxALignCenter_Justify_ItemsEnd>
+                      <img
+                        src={`${rawImgToBase64(input.tokenLogo)}`}
+                        alt=""
+                        className="upload-img"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      {" "}
+                      <img src="/img/icons/icn-upload-small.png" alt="" />
+                      <input
+                        accept="image/png, image/jpeg, image/jpg"
+                        type="file"
+                        disabled={notLogin}
+                        onChange={(e) => onUploadImageToField(e, "tokenLogo")}
+                      />
+                    </>
+                  )}
                 </div>
                 <span className="ms-3">
                   JPG,PNG with ratio of 1:1. 48*48px or larger recommended. Must
@@ -1031,7 +1128,10 @@ const Submit: NextPage = () => {
                 >
                   <span className="main-submit-input-suffix-logo">
                     {/* <PlusCircle className="green" fill="#058499" color="#fff" /> */}
-                    <img src="/img/media/plus-circle.png" className="main-submit-media"/>
+                    <img
+                      src="/img/media/plus-circle.png"
+                      className="main-submit-media"
+                    />
                   </span>
                   <input
                     disabled={true}
