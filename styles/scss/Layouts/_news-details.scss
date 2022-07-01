@@ -1,6 +1,21 @@
 .news-details {
   max-width: 1800px;
   margin: auto;
+  &-content {
+    font-family: 'Circular Std Light';
+    color: #223052;
+    img {
+      width: 100%;
+      margin: 15px 0px;
+    }
+    &-tweet {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    a {
+      color: #058499;
+    }
+  }
   &-social {
     display: flex;
     flex-wrap: wrap;

@@ -16,25 +16,31 @@ import Head from "next/head";
 import { Calendar, Eye } from "react-feather";
 import dynamic from "next/dynamic";
 import { Avatar } from "antd";
+import BannerSlides from "@components/main/dapp-news/BannerSlides";
+import SharingSection from "@components/main/dapp-news/SharingSection";
 import { ButtonBackgroundBlueBold } from "@styles/styled-components/styledButton";
 import ReactMarkdown from "react-markdown";
+import CommentSection from "@components/main/dapp-news/CommentSection";
+import NewsList from "@components/main/dapp-news/NewsList";
+import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+import TweetEmbed from "react-tweet-embed";
 
 const NewsDetails: NextPage = ({ newsData }: any) => {
-  const CommentSection = dynamic(
-    () => import("@components/main/dapp-news/CommentSection")
-  ) as any;
-  const SharingSection = dynamic(
-    () => import("@components/main/dapp-news/SharingSection")
-  ) as any;
-  const NewsList = dynamic(
-    () => import("@components/main/dapp-news/NewsList")
-  ) as any;
-  const PinnedSlides = dynamic(
-    () => import("@components/main/dapp-news/PinnedSlides")
-  ) as any;
-  const BannerSlides = dynamic(
-    () => import("@components/main/dapp-news/BannerSlides")
-  ) as any;
+  // const CommentSection = dynamic(
+  //   () => import("@components/main/dapp-news/CommentSection")
+  // ) as any;
+  // const SharingSection = dynamic(
+  //   () => import("@components/main/dapp-news/SharingSection")
+  // ) as any;
+  // const NewsList = dynamic(
+  //   () => import("@components/main/dapp-news/NewsList")
+  // ) as any;
+  // g
+  // const BannerSlides = dynamic(
+  //   () => import("@components/main/dapp-news/BannerSlides")
+  // ) as any;
 
   const [news, setNews] = useState<any>([]);
   const [styledContent, setStyledContent] = useState("");
@@ -117,25 +123,24 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
 
   // const markdown = marked(modifiedContent);
 
+  const imgLink = newsData[0]?.attributes.thumbnail.data.attributes.url;
+  console.log(`${URL_API_IMG}${imgLink}`);
+
   return (
     <div>
       <Head>
         <meta property="title" content={newsData[0]?.attributes.title} />
         <meta property="og:title" content={newsData[0]?.attributes.title} />
         {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
-        <meta
-          property="og:image"
-          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
-        />
+        <meta property="og:image" content={`${URL_API_IMG}${imgLink}`} />
         <meta
           property="og:description"
           content={newsData[0]?.attributes.description}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:image"
-          content={`${URL_API_IMG}${newsData[0]?.attributes.thumbnail.data.attributes.url}`}
-        />
+        <meta name="twitter:image" content={`${URL_API_IMG}${imgLink}`} />
+        <meta name="twitter:image:width" content="1200" />
+        <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={newsData[0]?.attributes.title} />
         <meta
           name="twitter:description"
@@ -192,29 +197,30 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                   {moment(news[0]?.attributes.createdAt).format("LL")}
                 </div>
                 <div className="news-details-createdAt-right">
-                  {/* <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      setLiked(!liked);
-                    }}
-                  >
-                    {liked ? (
-                      <HeartFilled style={{ color: "#1DBBBD" }} />
-                    ) : (
-                      <HeartOutlined />
-                    )}
-                  </a> */}
-                  {/* &nbsp;
-                  {liked ? 2 : 1} */}
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <Eye size={15} />
                   &nbsp;
                   {news[0]?.attributes.viewer}
                 </div>
               </BoxALignCenter_Justify_ItemsBetween>
-              <MarkDown>{styledContent}</MarkDown>
-              {/* <ReactMarkdown>{styledContent}</ReactMarkdown> */}
+              <ReactMarkdown
+                className="news-details-content"
+                rehypePlugins={[rehypeRaw]}
+                // allowDangerousHtml={true} không có trong react-markdown nên a bỏ do không build được
+                components={{
+                  a: (props) => {
+                    let tweetID = props.href?.split("/").slice(-1)[0];
+                    // console.log(tweetID);
+                    return props.href?.startsWith("https://twitter.com") ? (
+                        <TweetEmbed className="news-details-content-tweet" tweetId={`${tweetID}`} />
+                    ) : (
+                      <a href={props.href}>{props.children}</a> // All other links
+                    );
+                  },
+                }}
+              >
+                {styledContent}
+              </ReactMarkdown>
             </div>
             <div className="news-details-low-section">
               <div className="news-details-commentsection">

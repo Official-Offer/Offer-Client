@@ -22,9 +22,15 @@
 @font-face {
   font-family: "Circular Std";
   src: url("../public/fonts/CircularStd-Book.otf") format("opentype"),
-    url("../public/fonts/CircularStd-Medium.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
+    url("../public/fonts/CircularStd-Medium.otf") format("opentype"),
+  // font-weight: normal;
+  // font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular Std Light";
+  src: url("../public/fonts/CircularStd-Light.otf") format("opentype");
+  // font-weight: light;
 }
 
 html,
@@ -56,17 +62,17 @@ body {
   height: 100%;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-strong {
-  color: $black-color;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6,
+// p,
+// span,
+// strong {
+//   color: $black-color;
+// }
 
 a {
   color: inherit;

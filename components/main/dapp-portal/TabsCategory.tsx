@@ -105,38 +105,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
           })}
         </div>
         <BoxALignItemsCenter className="tab-bar-category-right">
-          <Select
-            defaultValue={router.query.type || "all"}
-            style={{ width: 90 }}
-          >
-            <Option value="all">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=all`}
-              >
-                All
-              </Link>
-            </Option>
-            <Option value="new">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=new`}
-              >
-                New
-              </Link>
-            </Option>
-            <Option value="token">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=token`}
-              >
-                Token
-              </Link>
-            </Option>
-          </Select>
+          
           <Select
             className="ms-2"
             defaultValue={router.query.timeKey || "24hours"}
@@ -174,51 +143,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
       </div>
       <div className="tab-bar-category flex-for-mobile">
         <BoxALignCenter_Justify_ItemsBetween className="w-100">
-          <TabMain>
-            <span className="d-inline-flex position-relative">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=all`}
-              >
-                <TabMain_Sub
-                  className={
-                    !router.query.type || router.query.type === "all"
-                      ? "active"
-                      : ""
-                  }
-                >
-                  All
-                </TabMain_Sub>
-              </Link>
-            </span>
-            <span className="d-inline-flex position-relative">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=new`}
-              >
-                <TabMain_Sub
-                  className={router.query.type === "new" ? "active" : ""}
-                >
-                  New
-                </TabMain_Sub>
-              </Link>
-            </span>
-            <span className="d-inline-flex position-relative">
-              <Link
-                href={`dapp-portal/?timeKey=${
-                  !router.query.timeKey ? "24h" : router.query.timeKey
-                }&type=token`}
-              >
-                <TabMain_Sub
-                  className={router.query.type === "token" ? "active" : ""}
-                >
-                  Token
-                </TabMain_Sub>
-              </Link>
-            </span>
-          </TabMain>
+          
           <TabMain>
             <span className="d-inline-flex position-relative">
               <Link

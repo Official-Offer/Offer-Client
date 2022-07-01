@@ -84,10 +84,10 @@ export const NavbarHome: FC = () => {
     e.preventDefault();
     setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
-    if (keyword === '') {
-      router.push(`/dapp-news/search/No Result`);
+    if (keyword === "") {
+      router.push(`/dapp-news/search/No result`);
     } else {
-    router.push(`/dapp-news/search/${keyword}`);
+      router.push(`/dapp-news/search/${keyword}`);
     }
   };
   const handleChangeSearch = (e: any) => {
@@ -153,7 +153,7 @@ export const NavbarHome: FC = () => {
             setUser(res.data);
             setPopupVisible(false);
           })
-          .catch(() => {});
+          .catch(() => { });
       });
   };
 
@@ -256,7 +256,7 @@ export const NavbarHome: FC = () => {
                         <p>
                           <button
                             type="button"
-                            className="search-input-button"
+                            className="search-input-button py-2"
                             onClick={onSearch}
                           >
                             <span>
@@ -335,7 +335,8 @@ export const NavbarHome: FC = () => {
                 <Button
                   className="d-flex align-items-center p-2 rounded-circle"
                   style={{ border: "1px solid #000", fontSize: "1rem" }}
-                  onClick={onShowBoxSearch}
+                  // onClick={onShowBoxSearch}
+                  onClick={() => setIsVisible(true)}
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
@@ -393,7 +394,27 @@ export const NavbarHome: FC = () => {
               className="w-100"
               style={{ height: "63px" }}
             >
-              <form onSubmit={onSearch}>
+              <form onSubmit={onSearch} className="navbar_home-form">
+                <BoxALignItemsCenter>
+                  <input
+                    type="text"
+                    className="searchTerm"
+                    placeholder="Searching..."
+                    onChange={handleChangeSearch}
+                    onClick={() => setIsVisible(true)}
+                  />
+                  <button
+                    type="button"
+                    className="searchButton"
+                    onClick={onSearch}
+                  >
+                    <span>
+                      <Search width={18} height={18} />
+                    </span>
+                  </button>
+                </BoxALignItemsCenter>
+              </form>
+              {/* <form onSubmit={onSearch}>
                 <BoxALignItemsCenter>
                   <input
                     type="text"
@@ -407,7 +428,7 @@ export const NavbarHome: FC = () => {
                     </span>
                   </button>
                 </BoxALignItemsCenter>
-              </form>
+              </form> */}
               <Button
                 className="ms-2"
                 type="button"

@@ -156,13 +156,13 @@
       background-color: #058499;
       color: $white-color;
       border-radius: 50%;
-      padding: 7px 8px;
+      padding: 4px 6px;
       // margin-left: -5px;
       svg {
         margin-top: -4px;
       }
       @include sm {
-        margin-left: -13px;
+        // margin-left: 3px;
       }
     }
   }
