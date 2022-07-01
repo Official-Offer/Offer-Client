@@ -288,6 +288,10 @@ const Submit: NextPage = () => {
     return URL.createObjectURL(raw);
   };
 
+  const validateDecimal = (sth: any) => {
+    return typeof sth === "number";
+  };
+
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
@@ -311,14 +315,19 @@ const Submit: NextPage = () => {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
         return;
-      }
-      else if (keys[i]==="tokenSymbol" && input.tokenSymbol.includes(" ")) {
+      } else if (keys[i] === "tokenSymbol" && input.tokenSymbol.includes(" ")) {
         message.error("Your Dapp can only have 1 symbol");
-        return
+        return;
+      } else if (
+        keys[i] === "tokenDecimal" &&
+        validateDecimal(input.tokenDecimal)
+      ) {
+        message.error("Wrong Decimal");
+        return;
       }
       //don't allow empty tags
       else if (keys[i] === "tags" && input.tags.length === 0) {
-        message.error(`You need to enter at least 1 tag`) 
+        message.error(`You need to enter at least 1 tag`);
         setError(keys[i]);
         return;
       }
@@ -753,7 +762,6 @@ const Submit: NextPage = () => {
                 }
                 showArrow
                 placeholder="Select your product status"
-                
               >
                 <Option value="live">
                   <BoxALignItemsCenter>
