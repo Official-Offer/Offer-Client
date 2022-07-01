@@ -259,6 +259,7 @@ export const NavbarHome: FC = () => {
                             className="search-input-button"
                             onClick={onSearch}
                           >
+                            
                             <span>
                               <Search width={18} height={18} />
                             </span>
@@ -335,7 +336,8 @@ export const NavbarHome: FC = () => {
                 <Button
                   className="d-flex align-items-center p-2 rounded-circle"
                   style={{ border: "1px solid #000", fontSize: "1rem" }}
-                  onClick={onShowBoxSearch}
+                  // onClick={onShowBoxSearch}
+                  onClick={() => setIsVisible(true)}
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
