@@ -312,6 +312,12 @@ const Submit: NextPage = () => {
         setError(keys[i]);
         return;
       }
+      //don't allow empty tags
+      else if (keys[i] === "tags" && input.tags.length === 0) {
+        message.error(`You need to enter at least 1 tag`) 
+        setError(keys[i]);
+        return;
+      }
       // check if detail description, if filled, must be at least 100 and at most 500 chars
       else if (
         keys[i] === "detailDescription" &&
