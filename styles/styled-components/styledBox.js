@@ -96,6 +96,11 @@ export const BoxWhiteShadow = styled.div `
   box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
 `;
+export const BoxWhiteGreenShadow =  styled.div `
+background: #FCFCFD;
+box-shadow: 0px 0px 40px rgba(5, 132, 153, 0.25);
+border-radius: 8px;
+`;
 export const BoxWhiteShadowItem = styled.div `
   border-radius: 20px;
   background-color: #FFF;

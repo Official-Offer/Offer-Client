@@ -1,11 +1,72 @@
 .main-submit {
+  h3,
+  h5,
+  p,
+  label,
+  .ant-radio-wrapper > span {
+    color: #223052;
+  }
+  .ant-radio-wrapper > span {
+    font-size: 18px;
+  }
+  input,
+  textarea {
+    border: 1.5px solid #223052;
+    border-radius: 8px ;
+  }
+  input.ant-select-selection-search-input {
+    border: 1.5px solid #223052 !important;
+    border-radius: 8px !important;
+  }
+  .super-title {
+    text-align: center;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
+  p.top {
+    color: #6f788f !important;
+  }
+  .suggested {
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    /* Old/Old_style/Button */
+    color: #058499;
+  }
+  .green {
+    color: #058499;
+  }
+  .light-grey {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    color: #b1b5c3 !important;
+  }
+  .kindoftitle {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
   @include sm {
     padding: 0 5px;
   }
   .label-input {
     display: block;
     font-size: 1.2rem;
-    color: $black-color;
   }
   &-email {
     width: 50%;
@@ -18,7 +79,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1.5px solid #b1b5c4;
+    border: 1.5px solid #223052;
     border-radius: 8px;
   }
   &-char-counter {
@@ -31,12 +92,12 @@
     }
   }
   &-trans-text {
-    border: none;
+    border: none !important;
     width: 80%;
     &:focus {
       box-shadow: none;
       outline: none;
-      border: none!important;
+      border: none !important;
     }
   }
 
@@ -47,6 +108,9 @@
     margin-top: 40px;
     font-weight: bold;
     color: #223052;
+    font-size: 28px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
   }
   &-project-name,
   &-dapp-website,
@@ -107,7 +171,7 @@
     }
   }
   &-input-suffix {
-    border: 1.5px solid #b1b5c4;
+    border: 1.5px solid #223052;
     padding: 7px 10px;
     border-radius: 8px;
     display: flex;
