@@ -47,7 +47,7 @@ const Submit: NextPage = () => {
     images: [null, null, null, null],
     category: "",
     tags: [],
-    status: "live",
+    status: "",
     shortDescription: "",
     detailDescription: "",
     reviewArticle: "",
