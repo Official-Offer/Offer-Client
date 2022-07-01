@@ -253,7 +253,7 @@ export const NavbarHome: FC = () => {
                           value={curValue}
                         />
                         <hr />
-                        <p>
+                        <p className="py-1">
                           <button
                             type="button"
                             className="search-input-button"
