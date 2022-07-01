@@ -205,7 +205,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
               <ReactMarkdown
                 className="news-details-content"
                 rehypePlugins={[rehypeRaw]}
-                allowDangerousHtml={true}
+                // allowDangerousHtml={true} không có trong react-markdown nên a bỏ do không build được
                 components={{
                   a: (props) => {
                     let tweetID = props.href?.split("/").slice(-1)[0];
