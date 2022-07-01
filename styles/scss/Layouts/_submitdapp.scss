@@ -12,7 +12,7 @@
   input,
   textarea {
     border: 1.5px solid #223052;
-    border-radius: 8px ;
+    border-radius: 8px;
   }
   input.ant-select-selection-search-input {
     border: 1.5px solid #223052 !important;
@@ -78,17 +78,40 @@
   &-text-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     border: 1.5px solid #223052;
     border-radius: 8px;
   }
   &-char-counter {
     padding-right: 10px;
     padding-left: 10px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 450;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+
     &-error {
       padding-right: 10px;
       padding-left: 10px;
       color: red;
+      font-family: "Circular Std";
+      font-style: normal;
+      font-weight: 450;
+      font-size: 16px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+
+      /* Old/Old_style/cl-text */
     }
   }
   &-trans-text {
@@ -127,7 +150,7 @@
   &-avatar-logo {
     width: 200px;
     height: 200px;
-    border: 1px dashed #b1b5c4;
+    border: 1.5px dashed #223052;
     padding: 10px 10px 20px 10px;
     position: relative;
     border-radius: 8px;

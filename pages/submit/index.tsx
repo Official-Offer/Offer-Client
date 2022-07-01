@@ -54,7 +54,7 @@ const Submit: NextPage = () => {
     tokenLogo: null,
     tokenChain: " ",
     tokenSymbol: "",
-    tokenContract: "0x06012c8cf97bead5deae237070f9587f8e7a266d",
+    tokenContract: "",
     tokenDecimal: "",
     tokenDescription: "",
     isOnCoingecko: "",
@@ -72,7 +72,6 @@ const Submit: NextPage = () => {
     referralProgram: "Sorry, we don’t.",
   });
 
-  const setMockInput = () => {};
 
   const [channelShown, setChannelShown] = useState([
     {

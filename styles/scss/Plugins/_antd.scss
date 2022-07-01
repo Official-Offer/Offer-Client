@@ -100,6 +100,20 @@
       box-shadow: none;
     }
   }
+  .ant-select-selection-placeholder {
+    color: rgba(34, 48, 82, 0.65);
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 450;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+  }
+  .ant-select-selection-search-input {
+    opacity: 0;
+  }
 
   .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
     .ant-select-selector {
@@ -125,6 +139,10 @@
   .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 37px;
   }
+  .ant-radio-inner:after {
+    background-color: #058499 !important;;
+  }
+  
 }
 .ant-select-item-option-content {
   color: $black-color;
