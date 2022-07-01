@@ -84,10 +84,10 @@ export const NavbarHome: FC = () => {
     e.preventDefault();
     setIsVisible(false);
     // router.push(`/search/${keyword}`, `/search/${keyword}`, { shallow: true });
-    if (keyword === '') {
+    if (keyword === "") {
       router.push(`/dapp-news/search/No result`);
     } else {
-    router.push(`/dapp-news/search/${keyword}`);
+      router.push(`/dapp-news/search/${keyword}`);
     }
   };
   const handleChangeSearch = (e: any) => {
@@ -393,7 +393,27 @@ export const NavbarHome: FC = () => {
               className="w-100"
               style={{ height: "63px" }}
             >
-              <form onSubmit={onSearch}>
+              <form onSubmit={onSearch} className="navbar_home-form">
+                <BoxALignItemsCenter>
+                  <input
+                    type="text"
+                    className="searchTerm"
+                    placeholder="Searching..."
+                    onChange={handleChangeSearch}
+                    onClick={() => setIsVisible(true)}
+                  />
+                  <button
+                    type="button"
+                    className="searchButton"
+                    onClick={onSearch}
+                  >
+                    <span>
+                      <Search width={18} height={18} />
+                    </span>
+                  </button>
+                </BoxALignItemsCenter>
+              </form>
+              {/* <form onSubmit={onSearch}>
                 <BoxALignItemsCenter>
                   <input
                     type="text"
@@ -407,7 +427,7 @@ export const NavbarHome: FC = () => {
                     </span>
                   </button>
                 </BoxALignItemsCenter>
-              </form>
+              </form> */}
               <Button
                 className="ms-2"
                 type="button"
