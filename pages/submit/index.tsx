@@ -312,6 +312,10 @@ const Submit: NextPage = () => {
         setError(keys[i]);
         return;
       }
+      else if (keys[i]==="tokenSymbol" && input.tokenSymbol.includes(" ")) {
+        message.error("Your Dapp can only have 1 symbol");
+        return
+      }
       //don't allow empty tags
       else if (keys[i] === "tags" && input.tags.length === 0) {
         message.error(`You need to enter at least 1 tag`) 
@@ -749,6 +753,7 @@ const Submit: NextPage = () => {
                 }
                 showArrow
                 placeholder="Select your product status"
+                
               >
                 <Option value="live">
                   <BoxALignItemsCenter>
