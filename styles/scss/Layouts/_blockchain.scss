@@ -216,6 +216,22 @@
   }
   &-chart-name {
     margin-left: 12px;
+    font-family: 'Circular Std';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: capitalize;
+
+/* Old/Old_style/cl-text */
+
+color: #223052;
+
   }
   &-flex {
     display: flex;
@@ -481,12 +497,14 @@
   }
   .apexcharts-legend-text {
     margin-left: 5px;
-    font-size: 13px !important;
+    font-size: 16px !important;
     font-family: "Circular Std";
     font-style: normal;
-    font-weight: bold !important;
+    font-weight: 500 !important;
     width: 100px;
     word-spacing: normal!important;
+    list-style: 24px;
+
   }
   .apexcharts-legend-series {
     width: 100;
