@@ -16,6 +16,7 @@ import {
   BoxWhiteShadow,
   DamnBorderedBlackBox,
   BoxJustifyContentSpaceBetween,
+  BoxBlackBorderRounded ,
   OrangeJuice,
 } from "@styles/styled-components/styledBox";
 import {
@@ -398,7 +399,7 @@ const BlockchainDetails = () => {
           setAppStat(res.data.extract_stats);
         });
     })();
-  }, [day,router]);
+  }, [day, router]);
 
   // console.log(dapp);
   return (
@@ -416,10 +417,10 @@ const BlockchainDetails = () => {
             </div>
             <div className="blockchain-details-combine-right">
               <BoxALignItemsCenter className="blockchain-details-combine-right-name">
-                <h3 className="mb-0">{dapp?.name}</h3>
+                <h3 className="mb-0 title">{dapp?.name}</h3>
                 <BoxALignItemsCenter className="status-label main">
                   <div className="dot" />
-                  <span className="ms-2">Main network</span>
+                  <span className="main-network">Main network</span>
                 </BoxALignItemsCenter>
               </BoxALignItemsCenter>
               <BoxALignItemsCenter className="blockchain-details-combine-right-rating">
@@ -431,7 +432,7 @@ const BlockchainDetails = () => {
               </BoxALignItemsCenter>
               <div>
                 <Link href={"#"}>
-                  <a>Edit This App</a>
+                  <a className="edit">Edit This App</a>
                 </Link>
               </div>
             </div>
@@ -468,13 +469,14 @@ const BlockchainDetails = () => {
           </BoxALignItemsCenter>
           <BoxALignItemsCenter className="blockchain-details-social">
             <ButtonBlue
+              className="view-website"
               type="button"
               onClick={() => window.open(dapp?.website)}
             >
               View Website
             </ButtonBlue>
             <BoxALignItemsCenter className="ms-5">
-              <span className="me-3">Social: </span>
+              <span className=" social">Social: </span>
               {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
                 ?.url && (
                 <a href="#" className="blockchain-details-social-facebook">
@@ -536,23 +538,23 @@ const BlockchainDetails = () => {
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter>
                   <img src="/img/icons/briefcase.png"></img>
-                  <span className="ms-2">Collect</span>
+                  <span className="colliksha">Collect</span>
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter onClick={like ? onUnLike : onLike}>
                   {!like ? (
-                    <Heart color="black" />
+                    <img src="/img/icons/heart_unfilled.png" />
                   ) : (
                     <img src="/img/icons/heart.png" />
                   )}
-                  <span className="ms-2">Like</span>
+                  <span className="colliksha">Like</span>
                 </BoxALignItemsCenter>
               </Button>
               <Button className="blockchain-details-right-follow">
                 <BoxALignItemsCenter onClick={onShare}>
                   <Share2 color="black" />
-                  <span className="ms-2">Share</span>
+                  <span className="colliksha">Share</span>
                 </BoxALignItemsCenter>
               </Button>
             </BoxALignItemsCenter>
@@ -565,9 +567,9 @@ const BlockchainDetails = () => {
         <div className="blockchain-details-left col-lg-9 col-12 mt-lg-5 mt-2">
           <div className="blockchain-details-dashboard">
             <BoxALignItemsCenter>
-              <h3>{`${dapp?.name}'s`} Dashboards</h3>
+              <h3 className="lower-title">{`${dapp?.name}'s`} Dashboards</h3>
               <BoxALignItemsCenter className="status-label main ms-4">
-                <span>On-Chain</span>
+                <span className="on-chain">On-Chain</span>
               </BoxALignItemsCenter>
               <a
                 href="#"
@@ -693,7 +695,7 @@ const BlockchainDetails = () => {
                                 )
                               </span>
                             </div>
-                            {!comp.data.total && <br/>}
+                            {!comp.data.total && <div className="br" />}
                           </div>
                         </BoxALignItemsStart>
                       </div>

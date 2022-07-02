@@ -87,6 +87,11 @@ export const BoxBlueBorderRounded = styled.div `
   background: #FCFCFD;
   box-shadow: 5px 0px 20px rgba(34, 48, 82, 0.25);
 `;
+export const BoxBlackBorderRounded = styled.div`
+  border: 1.5px solid #223052;
+  border-radius: 10px;
+  background: #FCFCFD;
+`
 export const BoxBlueBold = styled.div `
   background-color: #0A222B;
   border-radius: 10px;
