@@ -16,7 +16,7 @@ import {
   BoxWhiteShadow,
   DamnBorderedBlackBox,
   BoxJustifyContentSpaceBetween,
-  BoxBlackBorderRounded ,
+  BoxBlackBorderRounded,
   OrangeJuice,
 } from "@styles/styled-components/styledBox";
 import {
@@ -147,7 +147,8 @@ const BlockchainDetails = () => {
       setShowReviewPopup(false);
       notification.open({
         message: "Success 🥳",
-        description: "Your comment has been successfully submitted. ",
+        description:
+          "Your comment has been successfully submitted. It will appear here if approved by our coordinators",
         duration: 3,
       });
     });
