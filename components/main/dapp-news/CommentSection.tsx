@@ -50,7 +50,7 @@ const CommentSection = ({ news }: any) => {
         setComments(res.data.data);
       });
     })();
-  }, [viewMore]);
+  }, [news, viewMore]);
 
   return (
     <div>

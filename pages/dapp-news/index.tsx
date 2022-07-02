@@ -20,8 +20,21 @@ import NewsList from "@components/main/dapp-news/NewsList";
 import PinnedSlides from "@components/main/dapp-news/PinnedSlides";
 import LatestNews from "@components/main/dapp-news/LatestNews";
 import RunningPrice from "@components/main/dapp-news/RunningPrice";
+import dynamic from "next/dynamic";
 
 const DappNews: FC = () => {
+  //   const PinnedSlides = dynamic(
+  //   () => import("@components/main/dapp-news/PinnedSlides")
+  // ) as any;
+  // const LatestNews = dynamic(
+  //   () => import("@components/main/dapp-news/LatestNews")
+  // ) as any;
+  // const RunningPrice = dynamic(
+  //   () => import("@components/main/dapp-news/RunningPrice")
+  // ) as any;
+  // const BannerSlides = dynamic(
+  //   () => import("@components/main/dapp-news/BannerSlides")
+  // ) as any;
   const router = useRouter();
   const [newsList, setNewsList] = useState([]);
   const [crit, setCrit] = useState("viewer");
