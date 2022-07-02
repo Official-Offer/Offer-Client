@@ -1,9 +1,16 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { BoxALignCenter_Justify_ItemsCenter } from "@styles/styled-components/styledBox";
 import { URL_API_IMG } from "@config/dev.config";
+import { useRouter } from "next/router";
 
 export function BannerLeft({ img }: any): ReactElement {
   // console.log(img);
+  const router = useRouter();
+  const [showBanner, setShowBanner] = useState(false);
+  useEffect(() => {
+    setShowBanner(!router.pathname.includes("/app/"));
+  }, [router]);
+  if (!showBanner) return <></>;
   return (
     <img
       style={{ maxWidth: "70%" }}
@@ -15,6 +22,12 @@ export function BannerLeft({ img }: any): ReactElement {
 }
 
 export function BannerRight({ img }: any): ReactElement {
+  const router = useRouter();
+  const [showBanner, setShowBanner] = useState(false);
+  useEffect(() => {
+    setShowBanner(!router.pathname.includes("/app/"));
+  }, [router]);
+  if (!showBanner) return <></>;
   return (
     <img
       style={{ maxWidth: "70%" }}
