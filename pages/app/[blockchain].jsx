@@ -169,7 +169,7 @@ const BlockchainDetails = () => {
           setStat(res.data);
         });
     })();
-  }, [day, slug]);
+  }, [day, slug, router]);
   useEffect(() => {
     (async () => {
       await axios
@@ -182,7 +182,7 @@ const BlockchainDetails = () => {
           setTokenInfo(res.data.stats.token);
         });
     })();
-  }, [slug]);
+  }, [slug, router]);
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -203,7 +203,7 @@ const BlockchainDetails = () => {
         setSlug(res.data.data[0].attributes.slug);
       });
     })();
-  }, []);
+  }, [router]);
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -240,7 +240,7 @@ const BlockchainDetails = () => {
         console.log(revArr);
       });
     })();
-  }, [pagination, justCommented]);
+  }, [pagination, justCommented, router]);
   const [userId, setUserId] = useState();
   useEffect(() => {
     (async () => {
@@ -255,7 +255,7 @@ const BlockchainDetails = () => {
           setLogin(false);
         });
     })();
-  }, []);
+  }, [router]);
   const onShare = () => {
     if (!login) {
       setShowLoginPopup(true);
@@ -333,7 +333,7 @@ const BlockchainDetails = () => {
         setLikeId(res.data.data[0]?.id);
       });
     })();
-  }, [userId, like]);
+  }, [userId, like, router]);
   const onLike = async () => {
     if (!login) {
       setShowLoginPopup(true);
@@ -385,7 +385,7 @@ const BlockchainDetails = () => {
         setPosts(res.data.data.map((post) => post.attributes));
       });
     })();
-  }, [dapp]);
+  }, [dapp, router]);
   const [appStat, setAppStat] = useState();
   useEffect(() => {
     (async () => {
@@ -398,7 +398,7 @@ const BlockchainDetails = () => {
           setAppStat(res.data.extract_stats);
         });
     })();
-  }, [day]);
+  }, [day,router]);
 
   // console.log(dapp);
   return (
