@@ -12,6 +12,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     "Transactions",
     "Users",
   ].includes(data.name);
+  console.log(data);
   const color = !isAdvanced ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
   const datasets =
@@ -19,12 +20,12 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const processPrice = (labels: any, price: any) => {
     const first = new Date(labels[0]);
     const last = new Date(labels[labels.length - 1]);
-    const res: Array<any> = price.prices.filter((p: any, i: any) => {
+    const res: Array<any> = price?.prices.filter((p: any, i: any) => {
       const priceDate = new Date(price.labels[i]);
       return priceDate >= first && priceDate <= last;
     });
-    const emptyDate = labels.length - res.length;
-    const lastPrice = res[res.length - 1];
+    const emptyDate = labels?.length - res?.length;
+    const lastPrice = res && res[res?.length - 1];
     for (let i = 0; i < emptyDate; i++) {
       // incase of no data for that date, use the latest date's price
       res.push(lastPrice);
@@ -36,6 +37,8 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const finalPrice = primitivePrice || damnPrice;
   const first = labels[0];
   const last = labels[1];
+  //null data
+  if (!datasets) return null;
   const series = showPrice
     ? [
         {

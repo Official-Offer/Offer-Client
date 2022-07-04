@@ -413,7 +413,7 @@ const BlockchainDetails = () => {
             <div className="blockchain-details-combine-left">
               <img
                 className="app-logo"
-                src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`}
+                src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                 alt=""
               />
             </div>
@@ -865,7 +865,7 @@ const BlockchainDetails = () => {
                       <div className="col-3 blockchain-details-uni-logo-div">
                         <img
                           className="blockchain-details-uni-logo"
-                          src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`}
+                          src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                         ></img>
                       </div>
                       <div className="col-8">
@@ -906,9 +906,9 @@ const BlockchainDetails = () => {
                     </div>
                     <div>
                       <SmallSplineChart
-                        right={tokenInfo.chart.prices}
-                        left={tokenInfo.chart.mkt_caps}
-                        labels={tokenInfo.chart.labels}
+                        right={tokenInfo.chart?.prices}
+                        left={tokenInfo.chart?.mkt_caps}
+                        labels={tokenInfo.chart?.labels}
                       />
                     </div>
                     <DamnBorderedBlackBox>

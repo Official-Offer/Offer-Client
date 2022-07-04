@@ -7,15 +7,16 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
   const color = "#7652FF";
-
+  const leftData = left?.map((val: Number) => val?.toFixed(2))
+  if (!leftData) return null;
   const series = [
     {
       name: "Price",
-      data: right.map((val: Number) => val.toFixed(2)),
+      data: right?.map((val: Number) => val?.toFixed(2)),
     },
     {
       name: "Market Cap",
-      data: left.map((val: Number) => val.toFixed(2)),
+      data: leftData
     },
   ];
 
@@ -63,7 +64,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
             colors:"black",
           },
           formatter: function (val: any) {
-            return `$${val.toFixed(2)}`;
+            return `$${val?.toFixed(2)}`;
           },
           forceNiceScale: true,
         },
@@ -84,7 +85,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
             colors:  color,
           },
           formatter: function (val: any) {
-            return formatter.format(val);
+            return formatter?.format(val);
           },
           forceNiceScale: true,
         },
