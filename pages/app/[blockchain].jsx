@@ -390,6 +390,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/posts?${query}`).then((res) => {
         setPosts(res.data.data.map((post) => post.attributes));
+        console.log(res.data)
       });
     })();
   }, [dapp, router]);
@@ -410,6 +411,7 @@ const BlockchainDetails = () => {
   if (!router.query.blockchain || slug === "leonicorn-swap") {
     return <Loading></Loading>;
   }
+
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
