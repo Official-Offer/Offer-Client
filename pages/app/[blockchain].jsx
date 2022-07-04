@@ -172,7 +172,7 @@ const BlockchainDetails = () => {
         });
     })();
   }, [day, slug, router]);
-  useEffect(() => {
+  useEffect(() => { 
     (async () => {
       await axios
         .create({
@@ -180,11 +180,11 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/`)
         .then((res) => {
-          console.log(res.data.stats.token);
           setTokenInfo(res.data.stats.token);
         });
     })();
   }, [slug, router]);
+  
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -403,7 +403,7 @@ const BlockchainDetails = () => {
     })();
   }, [day, router]);
 
-  // console.log(dapp);
+  console.log(dapp);
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -859,7 +859,7 @@ const BlockchainDetails = () => {
               </h3>
               <div className="row">
                 <div className="blockchain-details-bordered-top">
-                  <p className="blockchain-details-uni">UNI</p>
+                  <p className="blockchain-details-uni">{tokenInfo?.name}</p>
                   <div className="blockchain-details-uni-content">
                     <div className="row blockchain-details-uni-content-summary">
                       <div className="col-3 blockchain-details-uni-logo-div">
