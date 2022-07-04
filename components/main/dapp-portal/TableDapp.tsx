@@ -199,7 +199,7 @@ export default function TableDapp({
             const volumeDiff = token.attributes[`${timeQuery}VolumeDiff`] || 0;
             const socialSignal = token.attributes.socialSignal || 0;
             const socialSignalDiff = token.attributes.socialSignalDiff || 0;
-
+            const usds = token.attributes.crawl[`usds_${timeKey}`];
             return (
               <div
                 className="table-body"
@@ -297,43 +297,43 @@ export default function TableDapp({
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
-                    {volume.length == 2 ? (
+                    {usds.length == 2 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              volume[0].ratio == 0
+                              usds[0].ratio == 0
                                 ? "10%"
-                                : `${(volume[0].ratio * 100).toFixed(1)}%`
+                                : `${(usds[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[1].ratio * 100).toFixed(
+                            width: `${`${(usds[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
                         />
                       </>
-                    ) : volume.length == 3 ? (
+                    ) : usds.length == 3 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              volume[0].ratio == 0
+                              usds[0].ratio == 0
                                 ? "10%"
-                                : `${(volume[0].ratio * 100).toFixed(1)}%`
+                                : `${(usds[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[1].ratio * 100).toFixed(
+                            width: `${`${(usds[1].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
@@ -341,7 +341,7 @@ export default function TableDapp({
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[2].ratio * 100).toFixed(
+                            width: `${`${(usds[2].ratio * 100).toFixed(
                               1
                             )}%`}`,
                           }}
