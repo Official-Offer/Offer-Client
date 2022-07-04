@@ -21,38 +21,38 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       ? "news-details-comment-popup-popup-1"
       : "news-details-comment-popup-popup-2";
   const onSubmitMessage = async (e: any) => {
-    //console.log(e);
     e.preventDefault();
-    const data = commentId ? 
-    {
-      data: {
-        comment: e.target[0].value,
-        parent: commentId,
-        post: postId,
-      },
-    }
-    : {
-      data: {
-        comment: e.target[0].value,
-        post: postId,
-      },
-    };
-    await request
-      .post(`/dapp/comments`, data)
-      .then((res) => {
-        if (res.status == 200) {
+    const data = commentId ?
+      {
+        data: {
+          comment: e.target[0].value,
+          parent: commentId,
+          post: postId,
+          publishedAt: null
+        },
+      }
+      : {
+        data: {
+          comment: e.target[0].value,
+          post: postId,
+          publishedAt: null
+        },
+      };
+
+    try {
+      await request
+        .post(`/dapp/comments`, data)
+        .then((res) => {
           message.success("Comment created");
           e.target.reset();
-        } else {
-          message.success("Please Log In");
-          <LoginPopup
-            setUser={setUser}
-            isVisible={isPopupVisible}
-            setVisible={setPopupVisible}
-          />;
-        }
-      })
-      .then(() => router.reload()); //force api refetch;
+          handleClose();
+        })
+    } catch (err) {
+      setPopupVisible(true);
+      message.error("Please Log In");
+      e.target.reset();
+      handleClose();
+    }
   };
 
   return (
@@ -60,7 +60,11 @@ const CommentBox = ({ text, name, commentId, postId }: any) => {
       <span onClick={handleShow} className={className}>
         {text}
       </span>
-
+      <LoginPopup
+        // setUser={setUser}
+        isVisible={isPopupVisible}
+        setVisible={() => setPopupVisible(true)}
+      />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Write Comment</Modal.Title>

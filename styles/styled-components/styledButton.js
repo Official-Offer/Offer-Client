@@ -11,15 +11,29 @@ export const Button = styled.button `
 `;
 
 export const LoadMore = styled.button `
-    border-radius: 25px;
+    border-radius: 13px;
     font-size: 13px;
     font-weight: bold;
     border: 2px solid #058499;
     -webkit-box-pack: center;
     padding: 8px 15px;
     background-color: transparent;
+`
+
+export const LoadMoreBlue = styled.button `
+    border-radius: 10px;
+    font-family: "Circular Std";
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #058499;
+    -webkit-box-pack: center;
+    padding: 6px 12px;
+    box-shadow: 5px 10px 20px rgba(5, 132, 153, 0.25);
+    background-color: #058499;
+    color: white;
     
 `
+
 export const ButtonGradientBlue = styled.button `
     background-image: linear-gradient(to right, #058499 0%, #12d8fa 51%, #058499 100%);
     padding: 10px 25px;
@@ -93,6 +107,33 @@ export const ButtonBlue = styled.button `
     }
 `;
 
+export const ButtonNavy = styled.div `
+    background-color: #223052;
+    padding: .575rem .75rem;
+    margin: 5px;
+    border: none;
+    color: #FFF;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    transition: 0.25s;
+    min-width: 70px;
+    // font-size: 16px;
+    &:focus {
+        box-shadow: none;
+        outline: none;
+    }
+    &:hover {
+        background-color: #058399cb;
+        border: none;
+    }
+`;
 export const ButtonBlueButLessBorder = styled(ButtonBlue)`
     border-radius: 6px !important;
     padding: .370rem 1rem;

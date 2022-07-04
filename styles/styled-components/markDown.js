@@ -1,35 +1,22 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 
 export const MarkDown = styled(ReactMarkdown)`
-  h1 {
-    font-size: 3rem;
-  }
-  h2 {
-    font-size: 1.2rem;
-  }
-  p {
-    font-weight: 100;
-    overflow-wrap: normal;
-    // font-size: 0.97rem;
-  }
   img {
-    // padding: 20px;
     width: 100%;
-    margin: auto;
-    border-radius: 20px;
+    margin: 20px auto;
     display: block;
   }
   pre {
     color: #ccc;
     background: #2d2d2d;
-    //font-size: 0.8em;
+    color: rgba(34, 48, 82, 0.65);
     text-align: left;
     white-space: pre;
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;
-    line-height: 1.5;
+    line-height: 2;
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
@@ -41,17 +28,25 @@ export const MarkDown = styled(ReactMarkdown)`
     margin: 35px 0;
     overflow: auto;
   }
+  u {
+    text-decoration: 'underline';
+    font-weight: bold;
+  }
+  * {
+    font-family: Circular Std Light;
+    font-style: Light;
+    font-weight: light;
+    color: #223052;
+  }
   code {
     color: #ccc;
     background: none;
-    //font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-    //font-size: 0.8em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;
-    line-height: 1.5;
+    line-height: 2;
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
@@ -60,7 +55,10 @@ export const MarkDown = styled(ReactMarkdown)`
     -ms-hyphens: none;
     hyphens: none;
   }
+  a {
+    font-weight: bold;
+    color: #058499;
+  }
 `;
 
 //    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-

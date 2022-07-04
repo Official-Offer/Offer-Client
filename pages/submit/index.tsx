@@ -178,7 +178,7 @@ const Submit: NextPage = () => {
     <Modal title="Add Channel" visible={channelPopup} onCancel={onCloseChannel}>
       <div className="main-submit-channel-wrap">
         {channelNotShown.map((channel, i) => (
-          <Channel
+          <Channel 
             src={channel.src}
             alt={channel.name}
             key={i}

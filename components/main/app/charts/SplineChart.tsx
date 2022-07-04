@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import moment from "moment";
 import { formatter } from "@utils/formatCurrency";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }) as any;
 
 export const SplineChart: FC = ({ data, price, showPrice }: any) => {
   const isAdvanced = ![
