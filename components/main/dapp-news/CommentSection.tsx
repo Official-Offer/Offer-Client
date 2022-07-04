@@ -32,7 +32,7 @@ const CommentSection = ({ news }: any) => {
           },
           filters: {
             post: {
-              title: news[0]?.attributes.title,
+              slug: news[0]?.attributes.slug,
             },
             parent: {
               id: {
@@ -50,7 +50,7 @@ const CommentSection = ({ news }: any) => {
         setComments(res.data.data);
       });
     })();
-  }, [viewMore]);
+  }, [news, viewMore]);
 
   return (
     <div>
