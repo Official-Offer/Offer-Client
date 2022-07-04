@@ -38,8 +38,8 @@ export default function TableDapp({
     );
   };
 
-  useEffect(() => console.log("sort[0]", sort[0]), [sort]);
-  useEffect(() => console.log("headermobile", headerMobile), []);
+  // useEffect(() => console.log("sort[0]", sort[0]), [sort]);
+  // useEffect(() => console.log("headermobile", headerMobile), []);
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -122,7 +122,7 @@ export default function TableDapp({
   useEffect(() => setHeaderMobile(activeHeader()), [sort]);
   const onMobileChangeHeader = (e: any) => {
     setHeaderMobile(e);
-    console.log(e);
+    // console.log(e);
   };
 
   const activeHeader = () => {

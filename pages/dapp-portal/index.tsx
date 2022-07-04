@@ -61,8 +61,8 @@ const DappPortal: NextPage = () => {
         display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
-        console.log(query);
-        console.log(res.data.data);
+        // console.log(query);
+        // console.log(res.data.data);
         display = [...display, ...res.data.data];
       });
       setTokenList(display);

@@ -12,7 +12,6 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     "Transactions",
     "Users",
   ].includes(data.name);
-  console.log(data);
   const color = !isAdvanced ? "#7652FF" : "#F68922";
   const labels = data.data.charts.labels;
   const datasets =
