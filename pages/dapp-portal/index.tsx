@@ -50,7 +50,6 @@ const DappPortal: NextPage = () => {
           },
           sort: [`${sort[0]}:${sort[1]}`],
           // sort: [`category:asc`],
-
         },
         {
           encodeValuesOnly: true,
@@ -73,6 +72,16 @@ const DappPortal: NextPage = () => {
   return (
     <>
       <section id="main-portal">
+        <div className="empty_space_height100" />
+        <h1 className="mb-0 super-title">Dapp Portal</h1>
+        <div className="empty_space_height100" />
+        <TabsChain
+          setChain={setChain}
+          chain={chain}
+          setCate={setCate}
+          cate={cate}
+        />
+        <br />
         <TabsCategory setCate={setCate} cate={cate} />
         <br />
         <TableDapp tokenList={tokenList} sort={sort} setSort={setSort} />

@@ -1,5 +1,4 @@
 .blockchain-details {
-  word-spacing: -5px !important;
   .status-label {
     margin-left: 12px;
     padding: 1px 12px;
@@ -140,11 +139,11 @@
       &-rating {
         p {
           font-weight: bold;
-          font-size: 1.1rem;
+          font-size: 16px;
         }
         span {
-          font-size: 0.9rem;
-          font-weight: normal;
+          font-size: 16;
+          font-weight: 450;
           color: #b1b5c4;
           height: 20px;
         }
@@ -217,6 +216,22 @@
   }
   &-chart-name {
     margin-left: 12px;
+    font-family: 'Circular Std';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: capitalize;
+
+/* Old/Old_style/cl-text */
+
+color: #223052;
+
   }
   &-flex {
     display: flex;
@@ -230,8 +245,34 @@
     &-viewContract {
       transition: 0.25s;
       color: $blue-color;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 24px;
+      /* identical to box height, or 171% */
+
+      display: flex;
+      align-items: center;
+      text-transform: capitalize;
+
+      /* Old/Old_style/Button */
+
+      color: #058499;
       &:hover {
         color: $blue-color;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 24px;
+        /* identical to box height, or 171% */
+
+        display: flex;
+        align-items: center;
+        text-transform: capitalize;
+
+        /* Old/Old_style/Button */
+
+        color: #058499;
         text-decoration: underline;
       }
     }
@@ -428,7 +469,6 @@
     font-weight: 700;
     font-size: 28px;
     line-height: 24px;
-    margin-top: 50px;
   }
   &-title {
     font-family: "Circular Std";
@@ -450,14 +490,24 @@
     text-transform: capitalize;
     color: rgba(34, 48, 82, 0.65);
   }
+  .apexcharts-legend.apexcharts-align-left.apx-legend-position-bottom {
+    display: flex;
+    // justify-content: space-between;
+    gap: 10px;
+  }
   .apexcharts-legend-text {
     margin-left: 5px;
-    font-size: 15px !important;
+    font-size: 16px !important;
     font-family: "Circular Std";
     font-style: normal;
-    font-weight: bold !important;
+    font-weight: 500 !important;
+    width: 100px;
+    word-spacing: normal!important;
+    list-style: 24px;
+
   }
   .apexcharts-legend-series {
+    width: 100;
     margin-right: 25px !important;
   }
   .apexcharts-canvas {
@@ -465,5 +515,128 @@
   }
   .idontknowwhat {
     text-align: right;
+  }
+  .title {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 16px;
+
+    text-align: center;
+
+    color: #223052;
+  }
+  .main-network {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 25px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+    text-transform: capitalize;
+    margin-left: 8px;
+    color: #ffffff;
+  }
+  .edit {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+
+    /* Old/Old_style/Button */
+
+    color: #058499;
+  }
+  &-bc-description {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 450;
+    font-size: 14px;
+    line-height: 24px;
+    /* or 171% */
+    word-spacing: -3px;
+    color: rgba(34, 48, 82, 0.65);
+  }
+  .view-website {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 25px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+    text-transform: capitalize;
+
+    color: #ffffff;
+  }
+  .social {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+    text-transform: capitalize;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
+  .colliksha {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+    text-transform: capitalize;
+
+    /* Old/Old_style/cl-text */
+    margin-left: 8px;
+    color: #223052;
+  }
+  .lower-title {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height, or 120% */
+
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
+  .on-chain {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 28px;
+    /* identical to box height, or 114% */
+
+    text-align: center;
+    text-transform: capitalize;
+
+    color: #ffffff;
+  }
+  .br {
+    height: 25px;
   }
 }

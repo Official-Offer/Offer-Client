@@ -87,6 +87,11 @@ export const BoxBlueBorderRounded = styled.div `
   background: #FCFCFD;
   box-shadow: 5px 0px 20px rgba(34, 48, 82, 0.25);
 `;
+export const BoxBlackBorderRounded = styled.div`
+  border: 1.5px solid #223052;
+  border-radius: 10px;
+  background: #FCFCFD;
+`
 export const BoxBlueBold = styled.div `
   background-color: #0A222B;
   border-radius: 10px;
@@ -95,6 +100,11 @@ export const BoxWhiteShadow = styled.div `
   border-radius: 0px;
   box-shadow: 0px 5px 12px -1px rgba(0,0,0,0.20);
   background-color: #FFF;
+`;
+export const BoxWhiteGreenShadow =  styled.div `
+background: #FCFCFD;
+box-shadow: 0px 0px 40px rgba(5, 132, 153, 0.25);
+border-radius: 8px;
 `;
 export const BoxWhiteShadowItem = styled.div `
   border-radius: 20px;

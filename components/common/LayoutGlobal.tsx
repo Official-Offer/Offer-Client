@@ -41,6 +41,7 @@ export default function LayoutGlobal(props: any): ReactElement {
       });
     })();
   }, []);
+  
 
   return (
     <>

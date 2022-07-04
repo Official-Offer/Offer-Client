@@ -104,8 +104,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             );
           })}
         </div>
-        <BoxALignItemsCenter className="tab-bar-category-right">
-          
+        <div className="tab-bar-category-right">
           <Select
             className="ms-2"
             defaultValue={router.query.timeKey || "24hours"}
@@ -139,11 +138,10 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
               </Link>
             </Option>
           </Select>
-        </BoxALignItemsCenter>
+        </div>
       </div>
       <div className="tab-bar-category flex-for-mobile">
         <BoxALignCenter_Justify_ItemsBetween className="w-100">
-          
           <TabMain>
             <span className="d-inline-flex position-relative">
               <Link

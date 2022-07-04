@@ -9,6 +9,7 @@ import {
   BoxALignCenter_Justify_ItemsEnd,
   BoxALignItemsCenter,
   BoxWhiteShadow,
+  BoxWhiteGreenShadow
 } from "@styles/styled-components/styledBox";
 import { useRouter } from "next/router";
 import { Select, Tooltip } from "antd";
@@ -140,7 +141,7 @@ export default function TableDapp({
   return (
     <>
       <div className="block-for-pc">
-        <BoxWhiteShadow className="p-4">
+        <BoxWhiteGreenShadow className="p-4">
           <div className="table-header-outer">
             <div className="table-header">
               {listTitleHeader.map((header: any, i: number) => {
@@ -370,7 +371,7 @@ export default function TableDapp({
               </div>
             );
           })}
-        </BoxWhiteShadow>
+        </BoxWhiteGreenShadow>
       </div>
       <div className="block-for-mobile">
         <div className="table-header-outer">

@@ -1,11 +1,72 @@
 .main-submit {
+  h3,
+  h5,
+  p,
+  label,
+  .ant-radio-wrapper > span {
+    color: #223052;
+  }
+  .ant-radio-wrapper > span {
+    font-size: 18px;
+  }
+  input,
+  textarea {
+    border: 1.5px solid #223052;
+    border-radius: 8px;
+  }
+  input.ant-select-selection-search-input {
+    border: 1.5px solid #223052 !important;
+    border-radius: 8px !important;
+  }
+  .super-title {
+    text-align: center;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
+  p.top {
+    color: #6f788f !important;
+  }
+  .suggested {
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    /* Old/Old_style/Button */
+    color: #058499;
+  }
+  .green {
+    color: #058499;
+  }
+  .light-grey {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 25px;
+    color: #b1b5c3 !important;
+  }
+  .kindoftitle {
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+  }
   @include sm {
     padding: 0 5px;
   }
   .label-input {
     display: block;
     font-size: 1.2rem;
-    color: $black-color;
   }
   &-email {
     width: 50%;
@@ -17,29 +78,54 @@
   &-text-wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border: 1.5px solid #b1b5c4;
+    align-items: flex-end;
+    border: 1.5px solid #223052;
     border-radius: 8px;
   }
   &-char-counter {
     padding-right: 10px;
     padding-left: 10px;
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 450;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.01em;
+
+    /* Old/Old_style/cl-text */
+
+    color: #223052;
+
     &-error {
       padding-right: 10px;
       padding-left: 10px;
       color: red;
+      font-family: "Circular Std";
+      font-style: normal;
+      font-weight: 450;
+      font-size: 16px;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+
+      /* Old/Old_style/cl-text */
     }
   }
   &-trans-text {
-    border: none;
+    border: none !important;
     width: 80%;
     &:focus {
       box-shadow: none;
       outline: none;
-      border: none!important;
+      border: none !important;
     }
   }
-
+  &-media {
+    margin: 2px 10px;
+  }
   &-text-description {
     height: 150px;
   }
@@ -47,6 +133,9 @@
     margin-top: 40px;
     font-weight: bold;
     color: #223052;
+    font-size: 28px;
+    line-height: 48px;
+    letter-spacing: -0.01em;
   }
   &-project-name,
   &-dapp-website,
@@ -63,7 +152,7 @@
   &-avatar-logo {
     width: 200px;
     height: 200px;
-    border: 1px dashed #b1b5c4;
+    border: 1.5px dashed #223052;
     padding: 10px 10px 20px 10px;
     position: relative;
     border-radius: 8px;
@@ -94,6 +183,7 @@
   }
   &-avatar-area,
   &-avatar-empty {
+    
     width: 100%;
     height: 150px;
     padding: 10px 20px 20px 20px;
@@ -107,7 +197,7 @@
     }
   }
   &-input-suffix {
-    border: 1.5px solid #b1b5c4;
+    border: 1.5px solid #223052;
     padding: 7px 10px;
     border-radius: 8px;
     display: flex;
@@ -139,5 +229,22 @@
     &-error {
       color: red;
     }
+  }
+  .img-wrapper {
+    .x {
+      position: absolute;
+      z-index: 99;
+      color: #223052;
+      cursor: pointer;
+    }
+  }
+  .upload-img {
+    width: 100%;
+    display: block;
+  }
+  .upload-img-wide {
+    height: 100%;
+    width: 100%;
+    display: block;
   }
 }
