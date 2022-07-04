@@ -60,8 +60,10 @@ import {
 import { formatter } from "@utils/formatCurrency";
 import LoginPopup from "@components/navbar/LoginPopup";
 import requestSSO from "@services/apiSSO";
+import { Loading } from "@components/common/Loading";
 const BlockchainDetails = () => {
   const router = useRouter();
+
   const AppStatistical = dynamic(() =>
     import("@components/main/app").then((mod) => mod.AppStatistical)
   );
@@ -75,6 +77,7 @@ const BlockchainDetails = () => {
     import("@components/main/app").then((mod) => mod.SmallSplineChart)
   );
   const id = router.query.blockchain;
+  if (!id) return <Loading></Loading>;
   const [dapp, setDapp] = useState();
   const [slug, setSlug] = useState("leonicorn-swap");
   const [stat, setStat] = useState(null);
@@ -91,6 +94,7 @@ const BlockchainDetails = () => {
   const [justCommented, setJustCommented] = useState(true);
   const [tokenInfo, setTokenInfo] = useState();
   // useEffect(()=> console.log(showSubcomment), [showSubcomment]);
+
   const viewSubcomment = (id) => {
     const newState = [...reviews];
     newState[id].showReply = !newState[id].showReply;
@@ -180,11 +184,11 @@ const BlockchainDetails = () => {
         })
         .get(`/chart/dapp/${slug}/`)
         .then((res) => {
-          console.log(res.data.stats.token);
           setTokenInfo(res.data.stats.token);
         });
     })();
   }, [slug, router]);
+
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -385,6 +389,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/posts?${query}`).then((res) => {
         setPosts(res.data.data.map((post) => post.attributes));
+        console.log(res.data)
       });
     })();
   }, [dapp, router]);
@@ -402,7 +407,10 @@ const BlockchainDetails = () => {
     })();
   }, [day, router]);
 
-  // console.log(dapp);
+  if (!router.query.blockchain || slug === "leonicorn-swap") {
+    return <Loading></Loading>;
+  }
+
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -412,7 +420,7 @@ const BlockchainDetails = () => {
             <div className="blockchain-details-combine-left">
               <img
                 className="app-logo"
-                src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`}
+                src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                 alt=""
               />
             </div>
@@ -858,13 +866,13 @@ const BlockchainDetails = () => {
               </h3>
               <div className="row">
                 <div className="blockchain-details-bordered-top">
-                  <p className="blockchain-details-uni">UNI</p>
+                  <p className="blockchain-details-uni">{tokenInfo?.name}</p>
                   <div className="blockchain-details-uni-content">
                     <div className="row blockchain-details-uni-content-summary">
                       <div className="col-3 blockchain-details-uni-logo-div">
                         <img
                           className="blockchain-details-uni-logo"
-                          src={`${URL_API_IMG}${dapp?.logo.data.attributes.url}`}
+                          src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                         ></img>
                       </div>
                       <div className="col-8">
@@ -905,9 +913,9 @@ const BlockchainDetails = () => {
                     </div>
                     <div>
                       <SmallSplineChart
-                        right={tokenInfo.chart.prices}
-                        left={tokenInfo.chart.mkt_caps}
-                        labels={tokenInfo.chart.labels}
+                        right={tokenInfo.chart?.prices}
+                        left={tokenInfo.chart?.mkt_caps}
+                        labels={tokenInfo.chart?.labels}
                       />
                     </div>
                     <DamnBorderedBlackBox>
@@ -922,13 +930,13 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.holders
+                              tokenInfo?.other_five_data?.holders
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.holders_gr.toFixed(2)}
+                            {tokenInfo?.other_five_data?.holders_gr?.toFixed(2)}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.holders_gr
+                              tokenInfo.other_five_data?.holders_gr
                             )}
                           </td>
                         </tr>
@@ -938,13 +946,13 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.address
+                              tokenInfo?.other_five_data?.address
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.address_gr.toFixed(2)}
+                            {tokenInfo.other_five_data?.address_gr?.toFixed(2)}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.address_gr
+                              tokenInfo.other_five_data?.address_gr
                             )}
                           </td>
                         </tr>
@@ -953,11 +961,13 @@ const BlockchainDetails = () => {
                             Token Txs
                           </td>
                           <td className="idontknowwhat">
-                            {formatter.format(tokenInfo.other_five_data.tx)}
+                            {formatter.format(tokenInfo.other_five_data?.tx)}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.tx_gr.toFixed(2)}
-                            {weirdLookingArrow(tokenInfo.other_five_data.tx_gr)}
+                            {tokenInfo.other_five_data?.tx_gr?.toFixed(2)}
+                            {weirdLookingArrow(
+                              tokenInfo?.other_five_data?.tx_gr
+                            )}
                           </td>
                         </tr>
                         <tr>
@@ -966,13 +976,15 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.tx_volume
+                              tokenInfo.other_five_data?.tx_volume
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
+                            {tokenInfo.other_five_data?.tx_volume_gr?.toFixed(
+                              2
+                            )}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.tx_volume_gr
+                              tokenInfo.other_five_data?.tx_volume_gr
                             )}
                           </td>
                         </tr>
@@ -1005,7 +1017,7 @@ const BlockchainDetails = () => {
                       <div>
                         <img
                           className="blockchain-details-media"
-                          src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                          src={`${URL_API_IMG}${post?.thumbnail?.data?.attributes?.url}`}
                         ></img>
                       </div>
                       <div className="blockchain-details-wrapper">
