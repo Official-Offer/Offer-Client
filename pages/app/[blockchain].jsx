@@ -923,13 +923,13 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.holders
+                              tokenInfo?.other_five_data?.holders
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.holders_gr.toFixed(2)}
+                            {tokenInfo?.other_five_data?.holders_gr?.toFixed(2)}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.holders_gr
+                              tokenInfo.other_five_data?.holders_gr
                             )}
                           </td>
                         </tr>
@@ -939,13 +939,13 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.address
+                              tokenInfo?.other_five_data?.address
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.address_gr.toFixed(2)}
+                            {tokenInfo.other_five_data?.address_gr?.toFixed(2)}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.address_gr
+                              tokenInfo.other_five_data?.address_gr
                             )}
                           </td>
                         </tr>
@@ -954,11 +954,11 @@ const BlockchainDetails = () => {
                             Token Txs
                           </td>
                           <td className="idontknowwhat">
-                            {formatter.format(tokenInfo.other_five_data.tx)}
+                            {formatter.format(tokenInfo.other_five_data?.tx)}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.tx_gr.toFixed(2)}
-                            {weirdLookingArrow(tokenInfo.other_five_data.tx_gr)}
+                            {tokenInfo.other_five_data?.tx_gr?.toFixed(2)}
+                            {weirdLookingArrow(tokenInfo?.other_five_data?.tx_gr)}
                           </td>
                         </tr>
                         <tr>
@@ -967,13 +967,13 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {formatter.format(
-                              tokenInfo.other_five_data.tx_volume
+                              tokenInfo.other_five_data?.tx_volume
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data.tx_volume_gr.toFixed(2)}
+                            {tokenInfo.other_five_data?.tx_volume_gr?.toFixed(2)}
                             {weirdLookingArrow(
-                              tokenInfo.other_five_data.tx_volume_gr
+                              tokenInfo.other_five_data?.tx_volume_gr
                             )}
                           </td>
                         </tr>
@@ -1006,7 +1006,7 @@ const BlockchainDetails = () => {
                       <div>
                         <img
                           className="blockchain-details-media"
-                          src={`${URL_API_IMG}${post?.thumbnail.data.attributes.url}`}
+                          src={`${URL_API_IMG}${post?.thumbnail?.data?.attributes?.url}`}
                         ></img>
                       </div>
                       <div className="blockchain-details-wrapper">
