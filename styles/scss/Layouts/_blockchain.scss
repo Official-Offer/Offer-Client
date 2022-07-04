@@ -115,7 +115,8 @@
   }
 
   &-follower {
-    font-size: 15px;
+    font-size: 14px;
+    color: #223052
   }
   &-combine {
     &-left {
@@ -144,7 +145,7 @@
         span {
           font-size: 16;
           font-weight: 450;
-          color: #b1b5c4;
+          color: #69778C;
           height: 20px;
         }
       }
@@ -562,7 +563,7 @@ color: #223052;
     line-height: 24px;
     /* or 171% */
     word-spacing: -3px;
-    color: rgba(34, 48, 82, 0.65);
+    color:  #6F788F;
   }
   .view-website {
     font-family: "Circular Std";
@@ -621,7 +622,11 @@ color: #223052;
 
     /* Old/Old_style/cl-text */
 
+    color: #223152;
+  }
+  .filter {
     color: #223052;
+    font-size: 16px;
   }
   .on-chain {
     font-family: "Circular Std";
@@ -638,5 +643,13 @@ color: #223052;
   }
   .br {
     height: 25px;
+  }
+  .under-logo {
+    color: #223052;
+    font-size: 14px;
+  }
+  .hashtag {
+    color: #058499;
+    font-size: 14px;font-weight: 700;
   }
 }

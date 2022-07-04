@@ -454,7 +454,7 @@ const BlockchainDetails = () => {
                 src={dapp?.chain.data.attributes.crawl.color_icon}
                 alt=""
               />
-              <strong>{dapp?.chain.data.attributes.name}</strong>
+              <strong className="under-logo">{dapp?.chain.data.attributes.name}</strong>
             </BoxALignItemsCenter>
             <BoxALignItemsCenter className="me-3">
               <img
@@ -462,7 +462,7 @@ const BlockchainDetails = () => {
                 src={dapp?.category.data.attributes.crawl.icon}
                 alt=""
               />
-              <strong>{dapp?.category.data.attributes.name}</strong>
+              <strong className="under-logo">{dapp?.category.data.attributes.name}</strong>
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
           <div className="blockchain-details-description">
@@ -473,7 +473,7 @@ const BlockchainDetails = () => {
           <BoxALignItemsCenter className="blockchain-details-tags flex-wrap">
             {dapp?.tags.data.map((tag, i) => (
               <BoxBlueBorderRounded className="py-2 px-3 me-3" key={i}>
-                <span>{tag.attributes.name}</span>
+                <span className="hashtag">{tag.attributes.name}</span>
               </BoxBlueBorderRounded>
             ))}
           </BoxALignItemsCenter>
@@ -595,11 +595,11 @@ const BlockchainDetails = () => {
                   <span className="d-inline-flex position-relative">
                     <Link href={`/app/${router.query.blockchain}?days=7`}>
                       <TabMain_Sub
-                        className={`fontSize_08 ${
+                        className={` ${
                           !router.query.days || router.query.days === "7"
                             ? "active"
                             : ""
-                        }`}
+                        } filter`}
                       >
                         7D
                       </TabMain_Sub>
@@ -608,9 +608,9 @@ const BlockchainDetails = () => {
                   <span className="d-inline-flex position-relative">
                     <Link href={`/app/${router.query.blockchain}?days=30`}>
                       <TabMain_Sub
-                        className={`fontSize_08 ${
+                        className={` ${
                           router.query.days === "30" ? "active" : ""
-                        }`}
+                        } filter`}
                       >
                         30D
                       </TabMain_Sub>
@@ -619,9 +619,9 @@ const BlockchainDetails = () => {
                   <span className="d-inline-flex position-relative">
                     <Link href={`/app/${router.query.blockchain}?days=90`}>
                       <TabMain_Sub
-                        className={`fontSize_08 ${
+                        className={` ${
                           router.query.days === "90" ? "active" : ""
-                        }`}
+                        } filter`}
                       >
                         90D
                       </TabMain_Sub>
