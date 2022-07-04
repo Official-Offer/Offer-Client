@@ -232,19 +232,23 @@ export default function TableDapp({
                     src={
                       i < 2
                         ? token.attributes.crawl.chains[0].color_icon
-                        : chainIcon.img
+                        : chainIcon.img ||
+                          token.attributes.chain.data?.attributes.crawl
+                            .color_icon
                     }
                     alt={
                       i < 2
                         ? token.attributes.crawl.chains[0].slug
-                        : chainIcon.name
+                        : chainIcon.name ||
+                          token.attributes.chain.data?.attributes.crawl.slug
                     }
                   />
                   <p className="ms-2">
                     {" "}
                     {i < 2
                       ? token.attributes.crawl.chains[0].name
-                      : chainIcon.name}
+                      : chainIcon.name ||
+                        token.attributes.chain.data?.attributes.crawl.name}
                   </p>
                 </div>
                 <div className="table-body-item table-body-item-user">
