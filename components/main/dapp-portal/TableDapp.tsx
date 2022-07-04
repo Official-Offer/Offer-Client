@@ -9,7 +9,7 @@ import {
   BoxALignCenter_Justify_ItemsEnd,
   BoxALignItemsCenter,
   BoxWhiteShadow,
-  BoxWhiteGreenShadow
+  BoxWhiteGreenShadow,
 } from "@styles/styled-components/styledBox";
 import { useRouter } from "next/router";
 import { Select, Tooltip } from "antd";
@@ -24,6 +24,7 @@ export default function TableDapp({
   tokenList,
   setSort,
   sort,
+  chainIcon,
 }: any): ReactElement {
   const router = useRouter();
   const [isSorter, setSorter] = useState(true);
@@ -231,20 +232,19 @@ export default function TableDapp({
                     src={
                       i < 2
                         ? token.attributes.crawl.chains[0].color_icon
-                        : token.attributes.chain.data?.attributes.crawl
-                            .color_icon
+                        : chainIcon.img
                     }
                     alt={
                       i < 2
                         ? token.attributes.crawl.chains[0].slug
-                        : token.attributes.chain.data?.attributes.crawl.slug
+                        : chainIcon.name
                     }
                   />
                   <p className="ms-2">
                     {" "}
                     {i < 2
                       ? token.attributes.crawl.chains[0].name
-                      : token.attributes.chain.data?.attributes.crawl.name}
+                      : chainIcon.name}
                   </p>
                 </div>
                 <div className="table-body-item table-body-item-user">

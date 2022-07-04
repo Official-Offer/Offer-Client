@@ -10,6 +10,7 @@ export default function TabsChain({
   chain,
   setCate,
   cate,
+  setChainIcon,
 }: any): ReactElement {
   const [chainIdArray, setChainIdArray] = useState([
     { id: "All", name: "All", tag: "all", icon: "", icon_white: "" },
@@ -53,6 +54,10 @@ export default function TabsChain({
               key={i}
               onClick={() => {
                 setChain(blockchain.id);
+                setChainIcon({
+                  img: blockchain.icon,
+                  name: blockchain.name,
+                });
               }}
             >
               <div

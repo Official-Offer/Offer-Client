@@ -69,6 +69,7 @@ const DappPortal: NextPage = () => {
     })();
   }, [chain, viewMore, sort, cate]);
 
+  const [chainIcon, setChainIcon] = useState({img: null, name: null});
   return (
     <>
       <section id="main-portal">
@@ -80,11 +81,17 @@ const DappPortal: NextPage = () => {
           chain={chain}
           setCate={setCate}
           cate={cate}
+          setChainIcon={setChainIcon}
         />
         <br />
         <TabsCategory setCate={setCate} cate={cate} />
         <br />
-        <TableDapp tokenList={tokenList} sort={sort} setSort={setSort} />
+        <TableDapp
+          tokenList={tokenList}
+          sort={sort}
+          setSort={setSort}
+          chainIcon={chainIcon}
+        />
         <div className="loadmore">
           <BorderedButtonTransparent onClick={loadMore}>
             Load more

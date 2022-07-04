@@ -234,6 +234,7 @@ const BlockchainDetails = () => {
         }
       );
       await request.get(`/reviews?${query}`).then((res) => {
+        console.log(query);
         const revArr = res.data.data;
         for (let i = 0; i < revArr.length; i++) {
           revArr[i].showReply = false;
