@@ -60,8 +60,10 @@ import {
 import { formatter } from "@utils/formatCurrency";
 import LoginPopup from "@components/navbar/LoginPopup";
 import requestSSO from "@services/apiSSO";
+import { Loading } from "@components/common/Loading";
 const BlockchainDetails = () => {
   const router = useRouter();
+
   const AppStatistical = dynamic(() =>
     import("@components/main/app").then((mod) => mod.AppStatistical)
   );
@@ -75,6 +77,7 @@ const BlockchainDetails = () => {
     import("@components/main/app").then((mod) => mod.SmallSplineChart)
   );
   const id = router.query.blockchain;
+  if (!id) return <Loading></Loading>;
   const [dapp, setDapp] = useState();
   const [slug, setSlug] = useState("leonicorn-swap");
   const [stat, setStat] = useState(null);
@@ -91,6 +94,7 @@ const BlockchainDetails = () => {
   const [justCommented, setJustCommented] = useState(true);
   const [tokenInfo, setTokenInfo] = useState();
   // useEffect(()=> console.log(showSubcomment), [showSubcomment]);
+
   const viewSubcomment = (id) => {
     const newState = [...reviews];
     newState[id].showReply = !newState[id].showReply;
@@ -172,7 +176,7 @@ const BlockchainDetails = () => {
         });
     })();
   }, [day, slug, router]);
-  useEffect(() => { 
+  useEffect(() => {
     (async () => {
       await axios
         .create({
@@ -184,7 +188,7 @@ const BlockchainDetails = () => {
         });
     })();
   }, [slug, router]);
-  
+
   useEffect(() => {
     (async () => {
       const query = qs.stringify(
@@ -403,7 +407,9 @@ const BlockchainDetails = () => {
     })();
   }, [day, router]);
 
-  console.log(dapp);
+  if (!router.query.blockchain || slug === "leonicorn-swap") {
+    return <Loading></Loading>;
+  }
   return (
     <section className="blockchain-details">
       <div className="empty_space_height50" />
@@ -958,7 +964,9 @@ const BlockchainDetails = () => {
                           </td>
                           <td className="idontknowwhat">
                             {tokenInfo.other_five_data?.tx_gr?.toFixed(2)}
-                            {weirdLookingArrow(tokenInfo?.other_five_data?.tx_gr)}
+                            {weirdLookingArrow(
+                              tokenInfo?.other_five_data?.tx_gr
+                            )}
                           </td>
                         </tr>
                         <tr>
@@ -971,7 +979,9 @@ const BlockchainDetails = () => {
                             )}
                           </td>
                           <td className="idontknowwhat">
-                            {tokenInfo.other_five_data?.tx_volume_gr?.toFixed(2)}
+                            {tokenInfo.other_five_data?.tx_volume_gr?.toFixed(
+                              2
+                            )}
                             {weirdLookingArrow(
                               tokenInfo.other_five_data?.tx_volume_gr
                             )}
