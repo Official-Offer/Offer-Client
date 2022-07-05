@@ -32,7 +32,8 @@
     color: #223052;
   }
   p.top {
-    color: #6f788f !important;
+    color: #788096 !important;
+    font-size: 20px;
   }
   .suggested {
     font-size: 16px;
@@ -54,12 +55,25 @@
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 20px !important;
     letter-spacing: -0.01em;
 
     /* Old/Old_style/cl-text */
 
     color: #223052;
+  }
+  .maximum {
+    font-size: 16px;
+  }
+  .highquality {
+    font-size: 18px;
+  }
+  .jpgpng {
+    color: #6E778E;
+  }
+  .dappdotcom {
+    color :#6F788F;
+    font-size: 20px;
   }
   @include sm {
     padding: 0 5px;

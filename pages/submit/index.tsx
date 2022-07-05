@@ -629,7 +629,7 @@ const Submit: NextPage = () => {
                     {" "}
                     <img src="/img/icons/icn-upload.png" alt="" />
                     <br />
-                    <p>
+                    <p className="jpgpng">
                       JPG,PNG with ratio of 1:1 300*300 or larger recommended
                     </p>
                     <input
@@ -677,7 +677,7 @@ const Submit: NextPage = () => {
             </div>
             <div className="col-12 my-5">
               <h5 className="kindoftitle">Preview Image</h5>
-              <p className="text-secondary light-grey">
+              <p className="text-secondary light-grey highquality">
                 High quality screenshot or preview image will attract more users
                 and be featured by our editors. 4 Product Images Max
               </p>
@@ -751,7 +751,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-6 col-12 mt-lg-0 mt-4">
               <BoxALignItemsCenter className="mb-2">
                 <h5 className="mb-0 kindoftitle">Tags</h5>
-                <span className="ms-3 text-green green fontSize_09">
+                <span className="ms-3 text-green green maximum">
                   Maximum 5 Tags
                 </span>
               </BoxALignItemsCenter>
@@ -977,7 +977,7 @@ const Submit: NextPage = () => {
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <BoxALignItemsCenter className="mb-3">
                   <h5 className="mb-0 kindoftitle">Ticker of your token.</h5>
-                  <span className="ms-3 text-green">E.g. BTC</span>
+                  <span className="ms-3 green">E.g. BTC</span>
                 </BoxALignItemsCenter>
                 <input
                   disabled={notLogin}
@@ -1078,10 +1078,10 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteGreenShadow>
         <br />
-        <h3 className="main-submit-section-header kindoftitle">
+        <h3 className="main-submit-section-header">
           Smart Contracts Info
         </h3>
-        <p className="text-secondary">
+        <p className="text-secondary dappdotcom">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
         </p>
@@ -1127,7 +1127,7 @@ const Submit: NextPage = () => {
         <h3 className="main-submit-section-header">
           Social Media ( optional )
         </h3>
-        <p className="text-secondary">
+        <p className="text-secondary dappdotcom">
           We track the growth of your product’s social media communities.
           Providing a full detail of your social media channels will improve
           your Dapp.com score and get a higher rank.
