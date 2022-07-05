@@ -99,7 +99,7 @@ export const SmallSplineChart: FC = ({ left, right, labels }: any) => {
     tooltip: {
       theme: "light",
     },
-    colors: ["#223052",color],
+    colors: ["#344563",color],
     legend: {
       position: "bottom",
       horizontalAlign: "left",

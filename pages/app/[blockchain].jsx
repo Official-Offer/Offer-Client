@@ -290,7 +290,11 @@ const BlockchainDetails = () => {
           onCancel={() => setShowSharePopup(false)}
         >
           <BoxJustifyContentSpaceBetween>
-            <FacebookShareButton url={`${window.location.origin}/app/${id}`}>
+            <FacebookShareButton
+              url={`${window.location.origin}/app/${id}`}
+              quote={`Check out ${dapp?.name} at Tokenplay!`}
+              hashtag={`#tokenplay #${dapp?.name?.toLowerCase}`}
+            >
               <FacebookIcon round size={62}></FacebookIcon>
             </FacebookShareButton>
             <TwitterShareButton
@@ -390,7 +394,7 @@ const BlockchainDetails = () => {
       );
       await request.get(`/posts?${query}`).then((res) => {
         setPosts(res.data.data.map((post) => post.attributes));
-        console.log(res.data)
+        console.log(res.data);
       });
     })();
   }, [dapp, router]);
@@ -407,10 +411,6 @@ const BlockchainDetails = () => {
         });
     })();
   }, [day, router]);
-
-  if (!router.query.blockchain || slug === "leonicorn-swap") {
-    return <Loading></Loading>;
-  }
 
   return (
     <section className="blockchain-details">
@@ -454,7 +454,9 @@ const BlockchainDetails = () => {
                 src={dapp?.chain.data.attributes.crawl.color_icon}
                 alt=""
               />
-              <strong className="under-logo">{dapp?.chain.data.attributes.name}</strong>
+              <strong className="under-logo">
+                {dapp?.chain.data.attributes.name}
+              </strong>
             </BoxALignItemsCenter>
             <BoxALignItemsCenter className="me-3">
               <img
@@ -462,7 +464,9 @@ const BlockchainDetails = () => {
                 src={dapp?.category.data.attributes.crawl.icon}
                 alt=""
               />
-              <strong className="under-logo">{dapp?.category.data.attributes.name}</strong>
+              <strong className="under-logo">
+                {dapp?.category.data.attributes.name}
+              </strong>
             </BoxALignItemsCenter>
           </BoxALignItemsCenter>
           <div className="blockchain-details-description">
@@ -738,9 +742,13 @@ const BlockchainDetails = () => {
 
           <div className="empty_space_height50" />
           <BoxALignItemsCenter>
-            <h3>Reviews</h3>
-            <span className="ms-4">4.2/5.0</span>
-            <span className="ms-4">5 Ratings</span>
+            <h3 style={{ fontSize: 20 }}>REVIEWS</h3>
+            <span className="ms-4" style={{ color: "#6E788F" }}>
+              4.2/5.0
+            </span>
+            <span className="ms-4" style={{ color: "#6E788F" }}>
+              5 Ratings
+            </span>
           </BoxALignItemsCenter>
           <BoxWhiteShadow className="p-4 blockchain-details-comment">
             {reviews.map((comment, i) => {
@@ -852,6 +860,7 @@ const BlockchainDetails = () => {
               <Button
                 className="text-green blockchain-details-bolder"
                 onClick={openParentlessReview}
+                style={{ color: "#058499" }}
               >
                 Rating and Reviews
               </Button>

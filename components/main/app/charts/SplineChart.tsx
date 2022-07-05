@@ -155,7 +155,7 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     tooltip: {
       theme: "light",
     },
-    colors: [color, "#223052"],
+    colors: [color, "#344563"],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
