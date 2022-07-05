@@ -53,14 +53,14 @@ const Submit: NextPage = () => {
     reviewArticle: "",
     hasToken: true,
     tokenLogo: "",
-    tokenChain: " ",
+    tokenChain: "",
     tokenSymbol: "",
     tokenContract: "",
     tokenDecimal: "",
     tokenDescription: "",
     isOnCoingecko: "",
     isFullyOnChain: "yes",
-    dappChain: " ",
+    dappChain: "",
     Socials: [
       { name: "Facebook", url: "", image: null },
       { name: "Twitter", url: "", image: null },
@@ -289,7 +289,7 @@ const Submit: NextPage = () => {
   };
 
   const validateDecimal = (sth: any) => {
-    return typeof sth === "number";
+    return !isNaN(sth);
   };
 
   const onSubmitForm = async (e: any) => {
@@ -320,7 +320,7 @@ const Submit: NextPage = () => {
         return;
       } else if (
         keys[i] === "tokenDecimal" &&
-        validateDecimal(input.tokenDecimal)
+        !validateDecimal(input.tokenDecimal)
       ) {
         message.error("Wrong Decimal");
         return;
