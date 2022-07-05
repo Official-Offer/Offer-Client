@@ -292,6 +292,15 @@ const Submit: NextPage = () => {
     return !isNaN(sth);
   };
 
+  useEffect(()=> {
+    handleChange({
+      target: {
+        value: [],
+        name: "tags",
+        type: "idk",
+      }
+    })
+  }, [input.category]);
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
