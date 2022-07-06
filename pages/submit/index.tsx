@@ -617,7 +617,7 @@ const Submit: NextPage = () => {
         <h3 className="main-submit-section-header">Basic Information</h3>
         <BoxWhiteGreenShadow className="px-4 py-5">
           <div className="row">
-            <div className="col-lg-2 col-12">
+            <div className="col-xl-2 col-12">
               <div className="main-submit-avatar">
                 {rawImgToBase64(input.thumbnail) ? (
                   <div className="img-wrapper">
@@ -653,7 +653,7 @@ const Submit: NextPage = () => {
                 )}
               </div>
             </div>
-            <div className="col-lg-10 col-12 mt-lg-0 mt-4">
+            <div className="col-xl-10 col-12 mt-lg-0 mt-4">
               <BoxAlignItemsStart_FlexColumn className="justify-content-center h-100">
                 <div className="w-100 mb-lg-4 mb-3">
                   <label className="label-input mb-3 kindoftitle">

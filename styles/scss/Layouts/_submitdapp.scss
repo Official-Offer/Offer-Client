@@ -72,7 +72,7 @@
     color: #6E778E;
   }
   .dappdotcom {
-    color :#6F788F;
+    color :#6F788F !important;
     font-size: 20px;
   }
   @include sm {
@@ -164,8 +164,6 @@
   &-avatar-area,
   &-avatar-empty,
   &-avatar-logo {
-    width: 200px;
-    height: 200px;
     border: 1.5px dashed #223052;
     padding: 10px 10px 20px 10px;
     position: relative;
