@@ -20,7 +20,7 @@ export const AppStatistical: FC = ({ data, day, appStat }: any) => {
               <p className="app-statistical-title">{title}</p>
               <p className="app-statistical-users">
                 {formatter.format(số_trái)}
-                <span className={`ms-3 ${incdec(số_phải)}`}>
+                <span className={`ms-3 ${incdec(số_phải)} appstatpercent`}>
                   {số_phải?.toFixed(2)}% {updown(số_phải)}
                 </span>
               </p>

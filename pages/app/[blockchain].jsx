@@ -766,7 +766,7 @@ const BlockchainDetails = () => {
 
             <div className="empty_space_height50" />
             <BoxALignItemsCenter>
-              <h3 style={{ fontSize: 20 }}>REVIEWS</h3>
+              <h3 style={{ fontSize: 20, color: '#223052' }}>REVIEWS</h3>
               <span className="ms-4" style={{ color: "#6E788F" }}>
                 4.2/5.0
               </span>
@@ -789,7 +789,7 @@ const BlockchainDetails = () => {
                         </span>
                         <Rate
                           allowHalf
-                          defaultValue={comment.attributes?.rating}
+                          value={comment.attributes?.rating}
                         />
                       </BoxALignItemsCenter>
                       <span className="blockchain-details-comment-box-time">
@@ -802,10 +802,11 @@ const BlockchainDetails = () => {
                     <div>
                       <Button>
                         <BoxALignItemsCenter>
-                          <MessageSquare color="#1DBBBD" />
+                          <MessageSquare color="#058499" />
                           <span
-                            className="ms-2 text-green"
+                            className="ms-2 text-green green"
                             onClick={() => openChildReview(comment.id)}
+                            style={{color: "#058499"}}
                           >
                             Comment
                           </span>
