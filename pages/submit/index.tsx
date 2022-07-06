@@ -313,8 +313,10 @@ const Submit: NextPage = () => {
           "detailDescription",
           "shortDescription",
           "isOnCoingecko",
+          "dappChain",
         ]
       : [
+          "dappChain",
           "reviewArticle",
           "detailDescription",
           "shortDescription",
