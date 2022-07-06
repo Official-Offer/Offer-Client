@@ -415,7 +415,7 @@ const BlockchainDetails = () => {
   return (
     <div>
       <Head>
-        <meta property="title" content={dapp?.name} />
+        {/* <meta property="title" content={dapp?.name} />
         <meta property="og:title" content={dapp?.name} />
         <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
         <meta property="og:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} />
@@ -431,7 +431,43 @@ const BlockchainDetails = () => {
         <meta
           name="twitter:description"
           content={dapp?.description}
+        /> */}
+        <title>Meta Tags — Preview, Edit and Generate</title>
+        <meta name="title" content="Meta Tags — Preview, Edit and Generate" />
+        <meta
+          name="description"
+          content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!"
         />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://metatags.io/" />
+        <meta
+          property="og:title"
+          content="Meta Tags — Preview, Edit and Generate"
+        />
+        <meta
+          property="og:description"
+          content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!"
+        />
+        <meta
+          property="og:image"
+          content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
+        />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://metatags.io/" />
+        <meta
+          property="twitter:title"
+          content="Meta Tags — Preview, Edit and Generate"
+        />
+        <meta
+          property="twitter:description"
+          content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!"
+        />
+        <meta
+          property="twitter:image"
+          content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
+        ></meta>
       </Head>
       <section className="blockchain-details">
         <div className="empty_space_height50" />
@@ -766,7 +802,7 @@ const BlockchainDetails = () => {
 
             <div className="empty_space_height50" />
             <BoxALignItemsCenter>
-              <h3 style={{ fontSize: 20, color: '#223052' }}>REVIEWS</h3>
+              <h3 style={{ fontSize: 20, color: "#223052" }}>REVIEWS</h3>
               <span className="ms-4" style={{ color: "#6E788F" }}>
                 4.2/5.0
               </span>
@@ -787,10 +823,7 @@ const BlockchainDetails = () => {
                         <span className="blockchain-details-comment-box-name">
                           {comment.attributes?.user.data?.attributes.username}
                         </span>
-                        <Rate
-                          allowHalf
-                          value={comment.attributes?.rating}
-                        />
+                        <Rate allowHalf value={comment.attributes?.rating} />
                       </BoxALignItemsCenter>
                       <span className="blockchain-details-comment-box-time">
                         {moment(comment.attributes?.createdAt).format("LL")}
@@ -806,7 +839,7 @@ const BlockchainDetails = () => {
                           <span
                             className="ms-2 text-green green"
                             onClick={() => openChildReview(comment.id)}
-                            style={{color: "#058499"}}
+                            style={{ color: "#058499" }}
                           >
                             Comment
                           </span>
