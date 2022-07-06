@@ -417,7 +417,7 @@ const BlockchainDetails = () => {
       <Head>
         <meta property="title" content={dapp?.name} />
         <meta property="og:title" content={dapp?.name} />
-        {/* <meta property="og:url" content={newsData[0]?.attributes.slug} /> */}
+        <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
         <meta property="og:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} />
         <meta
           property="og:description"
