@@ -52,7 +52,7 @@ const Submit: NextPage = () => {
     detailDescription: "",
     reviewArticle: "",
     hasToken: true,
-    tokenLogo: "",
+    tokenLogo: null,
     tokenChain: "",
     tokenSymbol: "",
     tokenContract: "",
@@ -178,7 +178,7 @@ const Submit: NextPage = () => {
     <Modal title="Add Channel" visible={channelPopup} onCancel={onCloseChannel}>
       <div className="main-submit-channel-wrap">
         {channelNotShown.map((channel, i) => (
-          <Channel 
+          <Channel
             src={channel.src}
             alt={channel.name}
             key={i}
@@ -292,35 +292,45 @@ const Submit: NextPage = () => {
     return !isNaN(sth);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     handleChange({
       target: {
         value: [],
         name: "tags",
         type: "idk",
-      }
-    })
+      },
+    });
   }, [input.category]);
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
     const data: any = {};
     const keys = Object.keys(input);
+    //if product doesnt have its own token, allow these fields to hold empty data
+    const optionalFields = input.hasToken
+      ? [
+          "reviewArticle",
+          "detailDescription",
+          "shortDescription",
+          "isOnCoingecko",
+        ]
+      : [
+          "reviewArticle",
+          "detailDescription",
+          "shortDescription",
+          "isOnCoingecko",
+          "tokenContract",
+          "tokenDecimal",
+          "tokenChain",
+          "tokenDescription",
+          "tokenSymbol",
+        ];
+    console.log(optionalFields);
     //validate input data
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
       // check unfilled fields, ignore optional fields
-      if (
-        input[keys[i]] === "" &&
-        ![
-          "reviewArticle",
-          "detailDescription",
-          "shortDescription",
-          // "dappChain",
-          // "tokenChain",
-          "isOnCoingecko",
-        ].includes(keys[i])
-      ) {
+      if (input[keys[i]] === "" && !optionalFields.includes(keys[i])) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
         return;
@@ -414,7 +424,7 @@ const Submit: NextPage = () => {
           });
       }
       //check contract
-      else if (keys[i] === "tokenContract") {
+      else if (keys[i] === "tokenContract" && input.hasToken) {
         if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
           return;
@@ -801,74 +811,71 @@ const Submit: NextPage = () => {
               </Select>
             </div>
             <div className="col-lg-6 col-12"></div>
-            {input.isToken && (
-              <div className="col-12 mt-lg-5 mt-4">
-                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                  <label className="label-input kindoftitle">
-                    Short Description
-                  </label>
-                  <span className="text-green green">Max of 70 Characters</span>
-                </BoxALignCenter_Justify_ItemsBetween>
-                <div className="main-submit-text-wrapper ">
-                  <textarea
-                    className="main-submit-trans-text"
-                    disabled={notLogin}
-                    style={{ width: "100%" }}
-                    maxLength={70}
-                    placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
-                    value={input.shortDescription}
-                    onChange={handleChange}
-                    name="shortDescription"
-                  />
-                  <div
-                    className={`main-submit-char-counter${
-                      (input.shortDescription.length < 10 ||
-                        input.shortDescription.length > 70) &&
-                      input.shortDescription.length > 0
-                        ? "-error"
-                        : ""
-                    }`}
-                  >
-                    {input.shortDescription.length}/70
-                  </div>
+
+            <div className="col-12 mt-lg-5 mt-4">
+              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
+                <label className="label-input kindoftitle">
+                  Short Description
+                </label>
+                <span className="text-green green">Max of 70 Characters</span>
+              </BoxALignCenter_Justify_ItemsBetween>
+              <div className="main-submit-text-wrapper ">
+                <textarea
+                  className="main-submit-trans-text"
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={70}
+                  placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
+                  value={input.shortDescription}
+                  onChange={handleChange}
+                  name="shortDescription"
+                />
+                <div
+                  className={`main-submit-char-counter${
+                    (input.shortDescription.length < 10 ||
+                      input.shortDescription.length > 70) &&
+                    input.shortDescription.length > 0
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.shortDescription.length}/70
                 </div>
               </div>
-            )}
-            {input.hasToken && (
-              <div className="col-12 mt-lg-5 mt-4">
-                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
-                  <label className="label-input kindoftitle">
-                    Detail Description
-                  </label>
-                  <span className="text-green green">
-                    Max of 500 Characters
-                  </span>
-                </BoxALignCenter_Justify_ItemsBetween>
-                <div className="main-submit-text-wrapper">
-                  <textarea
-                    className="main-submit-text-description main-submit-trans-text"
-                    disabled={notLogin}
-                    style={{ width: "100%" }}
-                    maxLength={500}
-                    placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
-                    value={input.detailDescription}
-                    onChange={handleChange}
-                    name="detailDescription"
-                  />
-                  <div
-                    className={`main-submit-char-counter${
-                      (input.detailDescription.length < 100 ||
-                        input.detailDescription.length > 500) &&
-                      input.detailDescription.length > 0
-                        ? "-error"
-                        : ""
-                    }`}
-                  >
-                    {input.detailDescription.length}/500
-                  </div>
+            </div>
+
+            <div className="col-12 mt-lg-5 mt-4">
+              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
+                <label className="label-input kindoftitle">
+                  Detail Description
+                </label>
+                <span className="text-green green">Max of 500 Characters</span>
+              </BoxALignCenter_Justify_ItemsBetween>
+              <div className="main-submit-text-wrapper">
+                <textarea
+                  className="main-submit-text-description main-submit-trans-text"
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={500}
+                  placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                  value={input.detailDescription}
+                  onChange={handleChange}
+                  name="detailDescription"
+                />
+                <div
+                  className={`main-submit-char-counter${
+                    (input.detailDescription.length < 100 ||
+                      input.detailDescription.length > 500) &&
+                    input.detailDescription.length > 0
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.detailDescription.length}/500
                 </div>
               </div>
-            )}
+            </div>
+
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
                 <label className="label-input mb-0 kindoftitle">
@@ -1078,9 +1085,7 @@ const Submit: NextPage = () => {
           </div>
         </BoxWhiteGreenShadow>
         <br />
-        <h3 className="main-submit-section-header">
-          Smart Contracts Info
-        </h3>
+        <h3 className="main-submit-section-header">Smart Contracts Info</h3>
         <p className="text-secondary dappdotcom">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
