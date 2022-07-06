@@ -136,7 +136,8 @@ export default function TableDapp({
     if (headerMobile === "Users" && sort[0].includes("User")) return true;
     if (headerMobile === "Social Signal" && sort[0] === "socialSignal")
       return true;
-    if (sort[0].includes(activeHeader())) return true;
+    if (headerMobile === "Transactions" && sort[0].includes("Transaction")) return true;
+    if (headerMobile === "Volume" && sort[0].includes("Volume")) return true;
     return false;
   };
   return (
@@ -312,9 +313,7 @@ export default function TableDapp({
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds[1].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[1].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                       </>
@@ -333,17 +332,13 @@ export default function TableDapp({
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds[1].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[1].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(usds[2].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[2].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                       </>
@@ -455,7 +450,9 @@ export default function TableDapp({
           const tăng_giảm: string = incdec(số_dưới);
 
           return (
-            <div className="table-body" key={i}>
+            <div className="table-body" key={i} onClick={() => {
+              router.push(`/app/${e.id}`);
+            }}>
               <div className="table-body-item table-body-item-number">
                 <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
                 <span>{i + 1}</span>
