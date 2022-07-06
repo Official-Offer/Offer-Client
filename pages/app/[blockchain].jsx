@@ -423,15 +423,15 @@ const BlockchainDetails = () => {
           property="og:description"
           content={dapp?.description}
         />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} />
-        <meta name="twitter:image:width" content="1200" />
+        {/* <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} /> */}
+        {/* <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={dapp?.name} />
         <meta
           name="twitter:description"
           content={dapp?.description}
-        />
+        /> */}
       </Head>
       <section className="blockchain-details">
         <div className="empty_space_height50" />
