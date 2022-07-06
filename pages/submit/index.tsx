@@ -801,7 +801,7 @@ const Submit: NextPage = () => {
               </Select>
             </div>
             <div className="col-lg-6 col-12"></div>
-            {input.isOwnerOrAdmin && (
+            {input.isToken && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
                   <label className="label-input kindoftitle">
@@ -834,7 +834,7 @@ const Submit: NextPage = () => {
                 </div>
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
                   <label className="label-input kindoftitle">
@@ -907,7 +907,7 @@ const Submit: NextPage = () => {
             <Radio value={true}>Yes we do.</Radio>
             <Radio value={false}>No we don’t.</Radio>
           </Radio.Group>
-          {input.isOwnerOrAdmin && (
+          {input.hasToken && (
             <>
               <h5 className="mb-3 kindoftitle">Token Logo</h5>
               <BoxALignItemsCenter className="mb-4">
@@ -973,7 +973,7 @@ const Submit: NextPage = () => {
                 <Option value={1}>Ethereum</Option>
               </Select>
             </div>
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <BoxALignItemsCenter className="mb-3">
                   <h5 className="mb-0 kindoftitle">Ticker of your token.</h5>
@@ -990,7 +990,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <label className="label-input mb-3 kindoftitle">
                   Token Contract
@@ -1006,7 +1006,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <label className="label-input mb-3 kindoftitle">Decimal</label>
                 <input
@@ -1020,7 +1020,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
                   <label className="label-input kindoftitle">
