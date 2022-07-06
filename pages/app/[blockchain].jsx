@@ -418,13 +418,13 @@ const BlockchainDetails = () => {
         <meta property="title" content={dapp?.name} />
         <meta property="og:title" content={dapp?.name} />
         <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
-        <meta property="og:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} />
+        <meta property="og:image" content={`https://dev-api-admin.tokenplay.app/uploads/1_Cy_NG_Cj_W_Jg_Y_lv_Ec_U_Gklyy_Q_afd578adca.png`} />
         <meta
           property="og:description"
           content={dapp?.description}
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`} />
+        <meta name="twitter:image" content={`https://dev-api-admin.tokenplay.app/uploads/1_Cy_NG_Cj_W_Jg_Y_lv_Ec_U_Gklyy_Q_afd578adca.png`} />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={dapp?.name} />
