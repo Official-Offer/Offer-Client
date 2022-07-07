@@ -6,6 +6,7 @@ import {
   YoutubeFilled,
 } from "@ant-design/icons";
 import Head from "next/head";
+import { Empty, Slider, Tabs } from "antd";
 import {
   BoxALignCenter_Justify_ItemsBetween,
   BoxALignItemsCenter,
@@ -64,9 +65,14 @@ import requestSSO from "@services/apiSSO";
 import { Loading } from "@components/common/Loading";
 import { ArrowRightCircle } from "react-feather";
 import { useRef } from "react";
+import Swiper from "swiper";
+const { TabPane } = Tabs;
+
 const BlockchainDetails = () => {
   const router = useRouter();
-
+  const ChartSlider = dynamic(() =>
+    import("@components/main/app").then((mod) => mod.ChartSlider)
+  );
   const AppStatistical = dynamic(() =>
     import("@components/main/app").then((mod) => mod.AppStatistical)
   );
@@ -417,66 +423,80 @@ const BlockchainDetails = () => {
 
   //mobile slides
   const [slide, setSlide] = useState(0);
-  const slider = useRef();
+
   const MobileSlider = () => {
-    const onChange = (num) => {
-      setSlide(num);
-      console.log(num);
-      slider.current.goTo(num);
-    };
+    const onChange = (key) => setSlide(key);
     return (
-      <>
-        <div className="mobile-carousel-header">
-          <p
-            className={`mobile-carousel-title ${slide === 0 ? "active" : ""}`}
-            onClick={() => onChange(0)}
-            value={0}
-          >
-            Detail
-          </p>
-          <p
-            className={`mobile-carousel-title ${slide === 1 ? "active" : ""}`}
-            onClick={() => onChange(1)}
-            value={1}
-          >
-            Description
-          </p>
-          <p
-            className={`mobile-carousel-title ${slide === 2 ? "active" : ""}`}
-            onClick={() => onChange(2)}
-            value={2}
-          >
-            Social
-          </p>
-        </div>
-        <div className="mobile-carousel">
-          <Carousel
-            dots={false}
-            ref={(ref) => {
-              console.log(ref);
-              slider.current = ref;
-            }}
-          >
-            <div>
-              <div className="blockchain-details-description">
-                <p className="blockchain-details-bc-description">
-                  {dapp?.description}
-                </p>
-              </div>
-            </div>
-            <div>
-              {" "}
-              <h3>2</h3>
-            </div>
-            <div>
-              <h3>3</h3>
-            </div>
-          </Carousel>
-        </div>
-      </>
+      <Tabs
+        defaultActiveKey={slide}
+        onChange={onChange}
+        tabBarGutter={1}
+        centered
+      >
+        <TabPane key={0} tab="Detail">
+          <div className="blockchain-details-description">
+            <p className="blockchain-details-bc-description">
+              {dapp?.description}
+            </p>
+          </div>
+        </TabPane>
+        <TabPane key={1} tab="Screenshot"></TabPane>
+        <TabPane key={2} tab="Social">
+          <div className="slide-social">
+            <BoxALignItemsCenter>
+              <span className=" social">Social: </span>
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-facebook">
+                  <img
+                    src="/img/icons/blockchain_facebook.png"
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Facebook"
+                        )[0].url
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Twitter")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-twitter">
+                  <TwitterOutlined
+                    style={{ fontSize: "2rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Twitter"
+                        )[0].url || "https://twitter.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
+              {dapp?.crawl.socials.filter((soc) => soc.name === "Youtube")[0]
+                ?.url && (
+                <a href="#" className="blockchain-details-social-youtube">
+                  <YoutubeFilled
+                    style={{ fontSize: "1.5rem" }}
+                    onClick={() =>
+                      window.open(
+                        dapp?.crawl.socials.filter(
+                          (soc) => soc.name === "Youtube"
+                        )[0]?.url || "https://youtube.com"
+                      )
+                    }
+                  />
+                </a>
+              )}
+            </BoxALignItemsCenter>
+          </div>
+        </TabPane>
+      </Tabs>
     );
   };
-  
+
   return (
     <div>
       <Head>
@@ -1289,6 +1309,7 @@ const BlockchainDetails = () => {
                         color=" #223052"
                         width={"25"}
                         height={"25"}
+                        onClick={() => window.open(dapp?.website)}
                       />
                       <span className="colliksha">Website</span>
                     </BoxALignItemsCenter>
@@ -1316,10 +1337,6 @@ const BlockchainDetails = () => {
                     </BoxALignItemsCenter>
                   </Button>
                 </BoxALignItemsCenter>
-
-                <div className="w-100">
-                  <AppSlide imgArr={dapp?.images.data} />
-                </div>
               </BoxAlignItemsCenter_FlexColumn>
             </div>
 
@@ -1342,155 +1359,12 @@ const BlockchainDetails = () => {
                 </BoxALignItemsCenter>
                 <br />
                 <BoxWhiteShadow className="p-4">
-                  <div>
-                    <TabMain>
-                      <span className="d-inline-flex position-relative">
-                        <Link href={`/app/${router.query.blockchain}?days=7`}>
-                          <TabMain_Sub
-                            className={` ${
-                              !router.query.days || router.query.days === "7"
-                                ? "active"
-                                : ""
-                            } filter`}
-                          >
-                            7D
-                          </TabMain_Sub>
-                        </Link>
-                      </span>
-                      <span className="d-inline-flex position-relative">
-                        <Link href={`/app/${router.query.blockchain}?days=30`}>
-                          <TabMain_Sub
-                            className={` ${
-                              router.query.days === "30" ? "active" : ""
-                            } filter`}
-                          >
-                            30D
-                          </TabMain_Sub>
-                        </Link>
-                      </span>
-                      <span className="d-inline-flex position-relative">
-                        <Link href={`/app/${router.query.blockchain}?days=90`}>
-                          <TabMain_Sub
-                            className={` ${
-                              router.query.days === "90" ? "active" : ""
-                            } filter`}
-                          >
-                            90D
-                          </TabMain_Sub>
-                        </Link>
-                      </span>
-                    </TabMain>
-                  </div>
-                  <br />
-                  <AppStatistical
-                    day={stat?.days}
-                    data={dapp}
-                    appStat={appStat}
+                  
+                  <ChartSlider
+                    stat={stat}
+                    setShowPrice={setShowPrice}
+                    showPrice={showPrice}
                   />
-                  <br />
-                  <div className="row mt-5">
-                    <div className="blockchain-details-price">
-                      <Switch
-                        defaultChecked
-                        className="blockchain-details-price-switch"
-                        onChange={() => setShowPrice(!showPrice)}
-                      ></Switch>
-                      Show Price Comparison On Chart
-                    </div>
-                    {stat?.stats.components.map((comp, i) => {
-                      const isAdvanced = ![
-                        "Social Signal",
-                        "Volume",
-                        "Transactions",
-                        "Users",
-                      ].includes(comp.name);
-                      if (comp.data.charts.labels.length === 0) return null;
-                      return (
-                        <div
-                          className="col-lg-6 col-12 blockchain-details-dashboard-users"
-                          key={i}
-                        >
-                          <div className="blockchain-details-chart-wrapper">
-                            <div className="blockchain-details-flex">
-                              <h5 className="mb-0 blockchain-details-chart-name">
-                                {comp.name}
-                              </h5>
-                              {isAdvanced && (
-                                <OrangeJuice>Advanced</OrangeJuice>
-                              )}
-                            </div>
-                            <SplineChart
-                              data={comp}
-                              price={stat?.stats.token.chart}
-                              showPrice={showPrice}
-                            />
-                            <BoxALignItemsStart>
-                              <div className="ms-2">
-                                <div className="exp-item">
-                                  <span className="time">24h: </span>
-                                  <span className="value">
-                                    {renderDollar(comp.name)}
-                                    {comp.data["24h"]}
-                                  </span>
-                                  <span className={incdec(comp.data["24h_gr"])}>
-                                    {comp.data["24h_gr"].toFixed(2)}%
-                                    {updown(comp.data["24h_gr"])}
-                                  </span>
-                                </div>
-                                {comp.data.total && (
-                                  <div className="exp-item">
-                                    <span className="time">Total: </span>
-                                    <span className="value">
-                                      {renderDollar(comp.name)}
-                                      {comp.data.total.toFixed(3)}
-                                    </span>
-                                    <span className="time">
-                                      ({comp.data.total_days} days)
-                                    </span>
-                                  </div>
-                                )}
-                                <div className="exp-item ath">
-                                  <span className="time">ATH: </span>
-                                  <span className="value">
-                                    {renderDollar(comp.name)}
-                                    {comp.data.all_time_high?.toFixed(2)}
-                                  </span>
-                                  <span className="time">
-                                    (
-                                    {moment(
-                                      comp.data.all_time_high_date
-                                    ).format("LL")}
-                                    )
-                                  </span>
-                                </div>
-                                {!comp.data.total && <div className="br" />}
-                              </div>
-                            </BoxALignItemsStart>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <div className="col-lg-6 col-12 blockchain-details-dashboard-submit">
-                      <div className="blockchain-details-dashboard-submit-img">
-                        <p className="fw-bold mb-1 fontSize_1-1">
-                          Want More Dashboards
-                        </p>
-                        <p className="mb-0 fontSize_09">
-                          Submit Your Request To Us
-                        </p>
-                        <div className="mt-auto">
-                          <ButtonBlue
-                            className="fw-bold"
-                            onClick={() => {
-                              router.push("/submit");
-                            }}
-                          >
-                            Submit
-                          </ButtonBlue>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </BoxWhiteShadow>
               </div>
 

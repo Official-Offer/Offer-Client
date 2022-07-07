@@ -103,8 +103,8 @@
     width: 100%;
     border: 1.5px solid #058499;
     border-radius: 10px;
-    font-size: 12px!important;
-    font-weight: bold!important;
+    font-size: 12px !important;
+    font-weight: bold !important;
   }
 
   &-metrics {
@@ -445,6 +445,10 @@
     .ant-switch-checked {
       background-color: #223052;
     }
+    .mobile {
+      margin-left: 0;
+      padding-left: 0;
+    }
   }
   &-review {
     &-star {
@@ -499,7 +503,7 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    color: #223052
+    color: #223052;
   }
   &-title {
     font-family: "Circular Std";
@@ -683,11 +687,10 @@
     font-size: 14px;
     font-weight: 700;
   }
-  .ant-rate 
-  {
-  @media screen and (max-width: 992px) {
-    font-size: 12px;
-  }
+  .ant-rate {
+    @media screen and (max-width: 992px) {
+      font-size: 12px;
+    }
   }
   .mobile-carousel {
     &-header {
@@ -697,7 +700,46 @@
       column-gap: 10px;
     }
   }
-  .slick-active, .slick-dots {
-    color: black;
+
+  .ant-tabs-content-holder {
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+  .slide {
+    &-social {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #058499 !important;
+    background-color: transparent !important;
+  }
+  .abc {
+    height: "160px";
+    color: "black";
+    line-height: "160px";
+    text-align: "center";
+    background: "#364d79";
+  }
+  .chart-slider {
+    padding: 5px 10px;
+    border: 1.5px solid #058499;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  .dont-display {
+    display: none;
+  }
+  .vertical-divider {
+    color: #058499;
+    height: 100%;
+    width: 1px;
+    padding: 10px;
+  }
+  .ant-divider-vertical {
+    border-left: 1.5px solid #058499;
+    margin: 0 12px 0 4px;
   }
 }
