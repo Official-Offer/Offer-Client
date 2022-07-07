@@ -38,16 +38,16 @@ const ChartSlider = ({ stat, setShowPrice, showPrice }) => {
   };
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
-  const chartCount = stat?.stats.components.length;
+  
   useEffect(() => console.log(chart), [chart]);
   const router = useRouter();
   const [showAll, setShowAll] = useState(false);
-  const chartTitle = stat?.stats.components
+  const chartTitle = [...(stat?.stats.components
     .filter(
       (comp) =>
         comp?.data?.charts.datasets[Object.keys(comp?.data.charts.datasets)[0]].length     
-    )
-    
+    ) || []), {name: "More to come!"}]
+    const chartCount = chartTitle?.length;
     return(
       <div className="row">
         <div className="chart-slider">
@@ -61,7 +61,7 @@ const ChartSlider = ({ stat, setShowPrice, showPrice }) => {
                     style={{ marginBottom: 3 }}
                   />
                 </Button>{" "}
-                {[...chartTitle, {name: "More to come!"}]?.map((comp, i) => (
+                {chartTitle?.map((comp, i) => (
                   <div
                     key={i}
                     className={i !== chart ? "dont-display" : ""}

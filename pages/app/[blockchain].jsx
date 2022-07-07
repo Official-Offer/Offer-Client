@@ -1583,7 +1583,7 @@ const BlockchainDetails = () => {
                           <Avatar
                             style={{
                               backgroundColor: "#1DBBBD",
-                              width: 45,
+                              width: 38,
                               height: 30,
                             }}
                             icon={<UserOutlined />}
