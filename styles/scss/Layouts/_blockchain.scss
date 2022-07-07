@@ -182,6 +182,9 @@
   &-bolder {
     font-weight: bold;
   }
+  &-tags {
+    row-gap: 10px;
+  }
   &-description,
   &-tags,
   &-social {
@@ -685,5 +688,16 @@
   @media screen and (max-width: 992px) {
     font-size: 12px;
   }
+  }
+  .mobile-carousel {
+    &-header {
+      display: flex;
+      justify-content: space-around;
+      color: #058499;
+      column-gap: 10px;
+    }
+  }
+  .slick-active, .slick-dots {
+    color: black;
   }
 }
