@@ -418,20 +418,20 @@ const BlockchainDetails = () => {
         <meta property="title" content={dapp?.name} />
         <meta property="og:title" content={dapp?.name} />
         <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
-        <meta property="og:image" content={`https://dev-api-admin.tokenplay.app/uploads/1_Cy_NG_Cj_W_Jg_Y_lv_Ec_U_Gklyy_Q_afd578adca.png`} />
         <meta
-          property="og:description"
-          content={dapp?.description}
+          property="og:image"
+          content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
         />
+        <meta property="og:description" content={dapp?.description} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content={`https://dev-api-admin.tokenplay.app/uploads/1_Cy_NG_Cj_W_Jg_Y_lv_Ec_U_Gklyy_Q_afd578adca.png`} />
+        <meta
+          name="twitter:image"
+          content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
+        />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={dapp?.name} />
-        <meta
-          name="twitter:description"
-          content={dapp?.description}
-        />
+        <meta name="twitter:description" content={dapp?.description} />
       </Head>
       <section className="blockchain-details">
         <div className="empty_space_height50" />
@@ -448,22 +448,47 @@ const BlockchainDetails = () => {
               <div className="blockchain-details-combine-right">
                 <BoxALignItemsCenter className="blockchain-details-combine-right-name">
                   <h3 className="mb-0 title">{dapp?.name}</h3>
-                  <BoxALignItemsCenter className="status-label main">
-                    <div className="dot" />
-                    <span className="main-network">Main network</span>
-                  </BoxALignItemsCenter>
+                  <div className="block-for-pc">
+                    <BoxALignItemsCenter className="status-label main ">
+                      <div className="dot" />
+                      <span className="main-network">Main network</span>
+                    </BoxALignItemsCenter>
+                  </div>
                 </BoxALignItemsCenter>
+
                 <BoxALignItemsCenter className="blockchain-details-combine-right-rating">
-                  <Rate allowHalf defaultValue={2.5} />
-                  <p className="ms-3 mb-0">
+                  <Rate allowHalf value={5} />
+                  <p className="ms-3 mb-0 block-for-pc">
                     2.5
                     <span className="ms-2">5 Ratings</span>
                   </p>
+                  <p className="ms-2 mb-0 block-for-mobile">
+                    2.5
+                    <span className="ms-3">5 Ratings</span>
+                  </p>
                 </BoxALignItemsCenter>
-                <div>
+                <div className="block-for-pc">
                   <Link href={"#"}>
                     <a className="edit">Edit This App</a>
                   </Link>
+                </div>
+
+                <div className="block-for-mobile">
+                  <BoxALignItemsCenter
+                    className=" status-label main "
+                    style={{ marginLeft: 0, display: "inline-block" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div className="dot" />
+                      <span className="main-network">Main network</span>
+                    </div>
+                  </BoxALignItemsCenter>
                 </div>
               </div>
             </BoxALignItemsCenter>
@@ -766,7 +791,7 @@ const BlockchainDetails = () => {
 
             <div className="empty_space_height50" />
             <BoxALignItemsCenter>
-              <h3 style={{ fontSize: 20, color: '#223052' }}>REVIEWS</h3>
+              <h3 style={{ fontSize: 20, color: "#223052" }}>REVIEWS</h3>
               <span className="ms-4" style={{ color: "#6E788F" }}>
                 4.2/5.0
               </span>
@@ -787,10 +812,7 @@ const BlockchainDetails = () => {
                         <span className="blockchain-details-comment-box-name">
                           {comment.attributes?.user.data?.attributes.username}
                         </span>
-                        <Rate
-                          allowHalf
-                          value={comment.attributes?.rating}
-                        />
+                        <Rate allowHalf value={comment.attributes?.rating} />
                       </BoxALignItemsCenter>
                       <span className="blockchain-details-comment-box-time">
                         {moment(comment.attributes?.createdAt).format("LL")}
@@ -806,7 +828,7 @@ const BlockchainDetails = () => {
                           <span
                             className="ms-2 text-green green"
                             onClick={() => openChildReview(comment.id)}
-                            style={{color: "#058499"}}
+                            style={{ color: "#058499" }}
                           >
                             Comment
                           </span>
@@ -1079,6 +1101,7 @@ const BlockchainDetails = () => {
             )}
           </div>
         </div>
+
         <Modal
           className="blockchain-details-reivew"
           title="Write a Reivew"
