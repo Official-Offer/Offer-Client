@@ -20,6 +20,7 @@ import {
   BoxJustifyContentSpaceBetween,
   BoxBlackBorderRounded,
   OrangeJuice,
+  BoxALignCenter_Justify_ItemsStart,
 } from "@styles/styled-components/styledBox";
 import {
   Button,
@@ -1176,7 +1177,10 @@ const BlockchainDetails = () => {
                           )
                         }
                       >
-                        <div className="blockchain-details-bordered-top">
+                        <div
+                          className="blockchain-details-bordered-top"
+                          style={{ margin: 0 }}
+                        >
                           <div>
                             <img
                               className="blockchain-details-media"
@@ -1359,7 +1363,6 @@ const BlockchainDetails = () => {
                 </BoxALignItemsCenter>
                 <br />
                 <BoxWhiteShadow className="p-4">
-                  
                   <ChartSlider
                     stat={stat}
                     setShowPrice={setShowPrice}
@@ -1367,144 +1370,18 @@ const BlockchainDetails = () => {
                   />
                 </BoxWhiteShadow>
               </div>
-
               <div className="empty_space_height50" />
-              <BoxALignItemsCenter>
-                <h3 style={{ fontSize: 20, color: "#223052" }}>REVIEWS</h3>
-                <span className="ms-4" style={{ color: "#6E788F" }}>
-                  4.2/5.0
-                </span>
-                <span className="ms-4" style={{ color: "#6E788F" }}>
-                  5 Ratings
-                </span>
-              </BoxALignItemsCenter>
-              <BoxWhiteShadow className="p-4 blockchain-details-comment">
-                {reviews.map((comment, i) => {
-                  return (
-                    <div className="blockchain-details-comment-box" key={i}>
-                      <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                        <BoxALignItemsCenter>
-                          <Avatar
-                            style={{ backgroundColor: "#1DBBBD" }}
-                            icon={<UserOutlined />}
-                          />
-                          <span className="blockchain-details-comment-box-name">
-                            {comment.attributes?.user.data?.attributes.username}
-                          </span>
-                          <Rate allowHalf value={comment.attributes?.rating} />
-                        </BoxALignItemsCenter>
-                        <span className="blockchain-details-comment-box-time">
-                          {moment(comment.attributes?.createdAt).format("LL")}
-                        </span>
-                      </BoxALignCenter_Justify_ItemsBetween>
-                      <p className="blockchain-details-comment-box-description">
-                        {comment.attributes?.comment}
-                      </p>
-                      <div>
-                        <Button>
-                          <BoxALignItemsCenter>
-                            <MessageSquare color="#058499" />
-                            <span
-                              className="ms-2 text-green green"
-                              onClick={() => openChildReview(comment.id)}
-                              style={{ color: "#058499" }}
-                            >
-                              Comment
-                            </span>
-                          </BoxALignItemsCenter>
-                        </Button>
-                      </div>
-                      {comment.attributes?.replies.data?.length > 0 && (
-                        <div className="blockchain-details-viewmore">
-                          {reviews[i].showReply ? (
-                            <div className="blockchain-details-subcomment-section">
-                              {comment.attributes?.replies.data.map(
-                                (reply, ri) => (
-                                  <div
-                                    className="blockchain-details-subcomment-box"
-                                    key={ri}
-                                  >
-                                    <BoxALignCenter_Justify_ItemsBetween className="mb-4">
-                                      <BoxALignItemsCenter>
-                                        <Avatar
-                                          style={{ backgroundColor: "#1DBBBD" }}
-                                          icon={<UserOutlined />}
-                                        />
-                                        <span className="blockchain-details-comment-box-name">
-                                          {
-                                            reply.attributes.user.data
-                                              .attributes.username
-                                          }
-                                        </span>
-                                      </BoxALignItemsCenter>
-                                      <span className="blockchain-details-comment-box-time">
-                                        {moment(
-                                          reply.attributes.createdAt
-                                        ).format("LL")}
-                                      </span>
-                                    </BoxALignCenter_Justify_ItemsBetween>
-                                    <p className="blockchain-details-comment-box-description">
-                                      {reply.attributes.comment}
-                                    </p>
-                                  </div>
-                                )
-                              )}
-                            </div>
-                          ) : (
-                            <Button>
-                              <BoxALignItemsCenter>
-                                <span
-                                  className="text-green"
-                                  onClick={() => {
-                                    viewSubcomment(i);
-                                    // console.log(showSubcomment);
-                                  }}
-                                >
-                                  View{" "}
-                                  {comment.attributes?.replies.data?.length}{" "}
-                                  Comments
-                                  <img
-                                    src="/img/icons/chevrons-up.png"
-                                    className="blockchain-details-chevron"
-                                  />
-                                </span>
-                              </BoxALignItemsCenter>
-                            </Button>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-                <ButtonBorderBlueTransparent
-                  className="w-100 rounded-pill py-2"
-                  onClick={viewMore}
-                  style={{ cursor: "pointer" }}
-                >
-                  View more
-                </ButtonBorderBlueTransparent>
-                <br />
-                <br />
-                <div>
-                  <Button
-                    className="text-green blockchain-details-bolder"
-                    onClick={openParentlessReview}
-                    style={{ color: "#058499" }}
-                  >
-                    Rating and Reviews
-                  </Button>
-                </div>
-              </BoxWhiteShadow>
-            </div>
 
-            <div className="blockchain-details-right col-lg-3 col-12 p-0 mt-lg-5 mt-2">
               {tokenInfo && ( //only shows when token has token info
                 <div className="blockchain-details-right-topic">
                   <h3 className="mb-3 blockchain-details-section-title">
                     Token Profile
                   </h3>
                   <div className="row">
-                    <div className="blockchain-details-bordered-top">
+                    <div
+                      className="blockchain-details-bordered-top"
+                      style={{ margin: 0 }}
+                    >
                       <p className="blockchain-details-uni">
                         {tokenInfo?.name}
                       </p>
@@ -1644,6 +1521,7 @@ const BlockchainDetails = () => {
                   </div>
                 </div>
               )}
+              <div className="empty_space_height50" />
 
               {posts.length > 0 && (
                 <div className="blockchain-details-right-topic">
@@ -1662,7 +1540,10 @@ const BlockchainDetails = () => {
                           )
                         }
                       >
-                        <div className="blockchain-details-bordered-top">
+                        <div
+                          className="blockchain-details-bordered-top"
+                          style={{ margin: 0, marginBottom: 15 }}
+                        >
                           <div>
                             <img
                               className="blockchain-details-media"
@@ -1683,7 +1564,155 @@ const BlockchainDetails = () => {
                   })}
                 </div>
               )}
+              <div className="empty_space_height50" />
+              <BoxALignItemsCenter>
+                <h3 style={{ fontSize: 20, color: "#223052" }}>REVIEWS</h3>
+                <span className="ms-4" style={{ color: "#6E788F" }}>
+                  4.2/5.0
+                </span>
+                <span className="ms-4" style={{ color: "#6E788F" }}>
+                  5 Ratings
+                </span>
+              </BoxALignItemsCenter>
+              <BoxWhiteShadow className="p-3 blockchain-details-comment">
+                {reviews.map((comment, i) => {
+                  return (
+                    <div className="blockchain-details-comment-box" key={i}>
+                      <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                        <BoxALignCenter_Justify_ItemsStart>
+                          <Avatar
+                            style={{
+                              backgroundColor: "#1DBBBD",
+                              width: 45,
+                              height: 30,
+                            }}
+                            icon={<UserOutlined />}
+                          />
+                          <div>
+                            <span
+                              className="blockchain-details-comment-box-name"
+                              style={{ fontSize: 11 }}
+                            >
+                              {
+                                comment.attributes?.user.data?.attributes
+                                  .username
+                              }
+                            </span>
+                            <Rate
+                              className="rate"
+                              allowHalf
+                              value={comment.attributes?.rating}
+                            />
+                          </div>
+                        </BoxALignCenter_Justify_ItemsStart>
+                        <span
+                          className="blockchain-details-comment-box-time"
+                          style={{ fontSize: 11, width: 130, textAlign: "end" }}
+                        >
+                          {moment(comment.attributes?.createdAt).format("LL")}
+                        </span>
+                      </BoxALignCenter_Justify_ItemsBetween>
+                      <p className="blockchain-details-comment-box-description">
+                        {comment.attributes?.comment}
+                      </p>
+                      <div>
+                        <Button>
+                          <BoxALignItemsCenter>
+                            <MessageSquare color="#058499" />
+                            <span
+                              className="ms-2 text-green green"
+                              onClick={() => openChildReview(comment.id)}
+                              style={{ color: "#058499" }}
+                            >
+                              Comment
+                            </span>
+                          </BoxALignItemsCenter>
+                        </Button>
+                      </div>
+                      {comment.attributes?.replies.data?.length > 0 && (
+                        <div className="blockchain-details-viewmore">
+                          {reviews[i].showReply ? (
+                            <div className="blockchain-details-subcomment-section">
+                              {comment.attributes?.replies.data.map(
+                                (reply, ri) => (
+                                  <div
+                                    className="blockchain-details-subcomment-box"
+                                    key={ri}
+                                  >
+                                    <BoxALignCenter_Justify_ItemsBetween className="mb-4">
+                                      <BoxALignItemsCenter>
+                                        <Avatar
+                                          style={{ backgroundColor: "#1DBBBD" }}
+                                          icon={<UserOutlined />}
+                                        />
+                                        <span className="blockchain-details-comment-box-name">
+                                          {
+                                            reply.attributes.user.data
+                                              .attributes.username
+                                          }
+                                        </span>
+                                      </BoxALignItemsCenter>
+                                      <span className="blockchain-details-comment-box-time">
+                                        {moment(
+                                          reply.attributes.createdAt
+                                        ).format("LL")}
+                                      </span>
+                                    </BoxALignCenter_Justify_ItemsBetween>
+                                    <p className="blockchain-details-comment-box-description">
+                                      {reply.attributes.comment}
+                                    </p>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                          ) : (
+                            <Button>
+                              <BoxALignItemsCenter>
+                                <span
+                                  className="text-green"
+                                  onClick={() => {
+                                    viewSubcomment(i);
+                                    // console.log(showSubcomment);
+                                  }}
+                                >
+                                  View{" "}
+                                  {comment.attributes?.replies.data?.length}{" "}
+                                  Comments
+                                  <img
+                                    src="/img/icons/chevrons-up.png"
+                                    className="blockchain-details-chevron"
+                                  />
+                                </span>
+                              </BoxALignItemsCenter>
+                            </Button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                <ButtonBorderBlueTransparent
+                  className="w-100 rounded-pill py-2"
+                  onClick={viewMore}
+                  style={{ cursor: "pointer" }}
+                >
+                  View more
+                </ButtonBorderBlueTransparent>
+                <br />
+                <br />
+                <div>
+                  <Button
+                    className="text-green blockchain-details-bolder"
+                    onClick={openParentlessReview}
+                    style={{ color: "#058499" }}
+                  >
+                    Rating and Reviews
+                  </Button>
+                </div>
+              </BoxWhiteShadow>
             </div>
+
+            <div className="blockchain-details-right col-lg-3 col-12 p-0 mt-lg-5 mt-2"></div>
           </div>
         </div>
         <Modal
