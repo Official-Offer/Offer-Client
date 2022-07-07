@@ -428,73 +428,89 @@ const BlockchainDetails = () => {
   const MobileSlider = () => {
     const onChange = (key) => setSlide(key);
     return (
-      <Tabs
-        defaultActiveKey={slide}
-        onChange={onChange}
-        tabBarGutter={1}
-        centered
-      >
-        <TabPane key={0} tab="Detail">
-          <div className="blockchain-details-description">
-            <p className="blockchain-details-bc-description">
-              {dapp?.description}
-            </p>
-          </div>
-        </TabPane>
-        <TabPane key={1} tab="Screenshot"></TabPane>
-        <TabPane key={2} tab="Social">
-          <div className="slide-social">
-            <BoxALignItemsCenter>
-              <span className=" social">Social: </span>
-              {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
-                ?.url && (
-                <a href="#" className="blockchain-details-social-facebook">
+      <>
+        <Tabs
+          defaultActiveKey={slide}
+          onChange={onChange}
+          tabBarGutter={1}
+          centered
+        >
+          <TabPane key={0} tab="Detail">
+            <div className="blockchain-details-description">
+              <p className="blockchain-details-bc-description">
+                {dapp?.description}
+              </p>
+            </div>
+          </TabPane>
+          <TabPane key={1} tab="Screenshot">
+            <div style={{marginBottom: 20}}>
+            <Carousel>
+              {dapp?.images.data.map((img, i) => (
+                <div key={i}>
                   <img
-                    src="/img/icons/blockchain_facebook.png"
-                    onClick={() =>
-                      window.open(
-                        dapp?.crawl.socials.filter(
-                          (soc) => soc.name === "Facebook"
-                        )[0].url
-                      )
-                    }
+                    className="w-100"
+                    src={`${URL_API_IMG}${img?.attributes?.url}`}
+                    alt=""
                   />
-                </a>
-              )}
-              {dapp?.crawl.socials.filter((soc) => soc.name === "Twitter")[0]
-                ?.url && (
-                <a href="#" className="blockchain-details-social-twitter">
-                  <TwitterOutlined
-                    style={{ fontSize: "2rem" }}
-                    onClick={() =>
-                      window.open(
-                        dapp?.crawl.socials.filter(
-                          (soc) => soc.name === "Twitter"
-                        )[0].url || "https://twitter.com"
-                      )
-                    }
-                  />
-                </a>
-              )}
-              {dapp?.crawl.socials.filter((soc) => soc.name === "Youtube")[0]
-                ?.url && (
-                <a href="#" className="blockchain-details-social-youtube">
-                  <YoutubeFilled
-                    style={{ fontSize: "1.5rem" }}
-                    onClick={() =>
-                      window.open(
-                        dapp?.crawl.socials.filter(
-                          (soc) => soc.name === "Youtube"
-                        )[0]?.url || "https://youtube.com"
-                      )
-                    }
-                  />
-                </a>
-              )}
-            </BoxALignItemsCenter>
-          </div>
-        </TabPane>
-      </Tabs>
+                </div>
+              ))}
+            </Carousel>
+            </div>
+          </TabPane>
+          <TabPane key={2} tab="Social">
+            <div className="slide-social">
+              <BoxALignItemsCenter>
+                <span className=" social">Social: </span>
+                {dapp?.crawl.socials.filter((soc) => soc.name === "Facebook")[0]
+                  ?.url && (
+                  <a href="#" className="blockchain-details-social-facebook">
+                    <img
+                      src="/img/icons/blockchain_facebook.png"
+                      onClick={() =>
+                        window.open(
+                          dapp?.crawl.socials.filter(
+                            (soc) => soc.name === "Facebook"
+                          )[0].url
+                        )
+                      }
+                    />
+                  </a>
+                )}
+                {dapp?.crawl.socials.filter((soc) => soc.name === "Twitter")[0]
+                  ?.url && (
+                  <a href="#" className="blockchain-details-social-twitter">
+                    <TwitterOutlined
+                      style={{ fontSize: "2rem" }}
+                      onClick={() =>
+                        window.open(
+                          dapp?.crawl.socials.filter(
+                            (soc) => soc.name === "Twitter"
+                          )[0].url || "https://twitter.com"
+                        )
+                      }
+                    />
+                  </a>
+                )}
+                {dapp?.crawl.socials.filter((soc) => soc.name === "Youtube")[0]
+                  ?.url && (
+                  <a href="#" className="blockchain-details-social-youtube">
+                    <YoutubeFilled
+                      style={{ fontSize: "1.5rem" }}
+                      onClick={() =>
+                        window.open(
+                          dapp?.crawl.socials.filter(
+                            (soc) => soc.name === "Youtube"
+                          )[0]?.url || "https://youtube.com"
+                        )
+                      }
+                    />
+                  </a>
+                )}
+              </BoxALignItemsCenter>
+            </div>
+          </TabPane>
+        </Tabs>
+      </>
     );
   };
 
@@ -1177,10 +1193,7 @@ const BlockchainDetails = () => {
                           )
                         }
                       >
-                        <div
-                          className="blockchain-details-bordered-top"
-                          
-                        >
+                        <div className="blockchain-details-bordered-top">
                           <div>
                             <img
                               className="blockchain-details-media"
@@ -1294,7 +1307,7 @@ const BlockchainDetails = () => {
                 ))}
               </BoxALignItemsCenter>
 
-              <BoxAlignItemsCenter_FlexColumn style={{ marginTop: 10 }}>
+              <div className="slider-wrapper">
                 <BoxALignItemsCenter className="mb-2 blockchain-details-follower">
                   <User color="#1DBBBD" size={15} />
                   <span className="ms-2">{dapp?.crawl.follows} Followers</span>
@@ -1341,7 +1354,7 @@ const BlockchainDetails = () => {
                     </BoxALignItemsCenter>
                   </Button>
                 </BoxALignItemsCenter>
-              </BoxAlignItemsCenter_FlexColumn>
+              </div>
             </div>
 
             {/* <div className="empty_space_height50" /> */}

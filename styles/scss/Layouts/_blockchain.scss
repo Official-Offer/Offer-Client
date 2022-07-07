@@ -745,4 +745,22 @@
     border-left: 1.5px solid #058499;
     margin: 0 12px 0 4px;
   }
+  .slider-wrapper {
+    flex-direction: column;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    .slick-dots-bottom {
+      bottom: -25px;
+    }
+  }
+  li.slick-active button {
+    background: #058499;
+  }
+  .slick-dots li button {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 1px solid #058499;
+  }
 }
