@@ -1179,7 +1179,7 @@ const BlockchainDetails = () => {
                       >
                         <div
                           className="blockchain-details-bordered-top"
-                          style={{ margin: 0 }}
+                          
                         >
                           <div>
                             <img
