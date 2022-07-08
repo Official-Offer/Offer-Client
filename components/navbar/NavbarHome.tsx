@@ -29,6 +29,7 @@ import axios from "axios";
 import difRequest from "@services/apiService";
 import { removeVietnameseTones } from "@utils/processTextInput";
 import qs from "qs";
+import requestSSO from "@services/apiSSO";
 export const NavbarHome: FC = () => {
   const router: any = useRouter();
   const [keyword, setKeyword] = useState("");
@@ -99,7 +100,43 @@ export const NavbarHome: FC = () => {
   const onShowBoxSearch = () => {
     setBoxSearch(true);
   };
-  const listMenu = [
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const openLoginPopup = () => setPopupVisible(true);
+  const onLogout = async () => {
+    Cookies.remove("accessToken");
+    await request
+      .get("/logout", { withCredentials: true })
+      .then(async (res) => {
+        // window.history.replaceState(null, '','/');
+        window.location.href = window.location.origin;
+        await request
+          .get(`/users/me`)
+          .then((res: any) => {
+            setUser(res.data);
+            setPopupVisible(false);
+          })
+          .catch(() =>
+            console.log(
+              "Something is wrong, I can feel it. Just a feeling I've got, like something's about to happen, but I don't know what. If that means what I think it means, we're in trouble, big trouble. And if he is as bananas as you say, I'm not taking any chances"
+            )
+          );
+      });
+  };
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    (async () => {
+      // uncomment when deployed on dev since localhost can't access cookie
+      await requestSSO
+        .get(`/users/me`)
+        .then((res) => {
+          setLogin(true);
+        })
+        .catch(() => {
+          setLogin(false);
+        });
+    })();
+  }, [router]);
+  const listMenuInitial = [
     {
       name: "NFT Marketplace",
       link: "#",
@@ -126,37 +163,58 @@ export const NavbarHome: FC = () => {
       routeSelected: "/price-board",
     },
     { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
-    {
-      name: "Login",
+  ];
+
+  const [listMenu, setListMenu] = useState(listMenuInitial);
+  useEffect(() => {
+    const newLog: any = {
+      name: login ? "Logout" : "Login",
       link: "#",
       newTab: false,
       routeSelected: "/",
-      action: () => {
-        setPopupVisible(true);
-        onClose();
+      action: !login
+        ? () => {
+            setPopupVisible(true);
+            onClose();
+          }
+        : onLogout,
+    };
+    setListMenu([
+      {
+        name: "NFT Marketplace",
+        link: "#",
+        newTab: false,
+        routeSelected: "/nft",
       },
-    },
-  ];
-
-  const [isPopupVisible, setPopupVisible] = useState(false);
-  const openLoginPopup = () => setPopupVisible(true);
-  const onLogout = async () => {
-    Cookies.remove("accessToken");
-    await request
-      .get("/logout", { withCredentials: true })
-      .then(async (res) => {
-        // window.history.replaceState(null, '','/');
-        window.location.href = window.location.origin;
-        await request
-          .get(`/users/me`)
-          .then((res: any) => {
-            setUser(res.data);
-            setPopupVisible(false);
-          })
-          .catch(() => { });
-      });
-  };
-
+      { name: "Farm", link: "#", newTab: false, routeSelected: "/farm" },
+      {
+        name: "Dapp News",
+        link: "/dapp-news",
+        newTab: false,
+        routeSelected: "/dapp-news",
+      },
+      {
+        name: "Dapp Portal",
+        link: "/dapp-portal",
+        newTab: false,
+        routeSelected: "/dapp-portal",
+      },
+      {
+        name: "PriceBoard",
+        link: "#",
+        newTab: false,
+        routeSelected: "/price-board",
+      },
+      { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
+      {
+        name: "Submit Dapp",
+        link: "/submit",
+        newTab: false,
+        routeSelected: "/submit",
+      },
+      newLog,
+    ]);
+  }, [login]);
   const popoverContent = (
     <div className="navbar_popover">
       <p className="navbar_popover_content" onClick={onLogout}>
@@ -340,6 +398,20 @@ export const NavbarHome: FC = () => {
                 >
                   <SearchOutlined style={{ color: "#000" }} />
                 </Button>
+                {user && (
+                  <Popover
+                    placement="bottom"
+                    content={popoverContent}
+                    // trigger="focus"
+                  >
+                    <button className="navbar_userinfo_wrapper" type="button">
+                      <img
+                        className="navbar_avatar_mobile"
+                        src={user?.avatar || "/img/default.png"}
+                      ></img>
+                    </button>
+                  </Popover>
+                )}
                 <Button
                   type="button"
                   onClick={showDrawer}
@@ -347,6 +419,7 @@ export const NavbarHome: FC = () => {
                 >
                   <MenuOutlined style={{ color: "#000" }} />
                 </Button>
+                
                 <Drawer
                   placement="right"
                   closable={false}
