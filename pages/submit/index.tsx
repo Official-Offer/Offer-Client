@@ -16,6 +16,7 @@ import {
   Instagram,
   Linkedin,
 } from "react-feather";
+import { MediumOutlined } from "@ant-design/icons";
 import { Form, message, notification, Radio, Select, Space } from "antd";
 import {
   BigButtonSmallText,
@@ -94,7 +95,7 @@ const Submit: NextPage = () => {
     },
     {
       name: "Medium",
-      icon: <img src="/img/media/telegram.png" className="main-submit-media" />,
+      icon: <MediumOutlined size={35} style={{ color: "#058499", fontSize: 34, marginLeft:10 }} />,
       shown: false,
       placeholder: "Add your product's Medium URL",
     },
@@ -959,29 +960,31 @@ const Submit: NextPage = () => {
           )}
           <br />
           <div className="row">
-            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <h5 className="label-input mb-3 kindoftitle">
-                On which blockchain do you issue your token?
-              </h5>
-              <Select
-                disabled={notLogin}
-                style={{ width: "100%" }}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      value: e,
-                      name: "tokenChain",
-                      type: "select",
-                    },
-                  })
-                }
-                // value={input.tokenChain}
-                placeholder="Choose blockchain"
-              >
-                <Option value={2}>BNB Chain</Option>
-                <Option value={1}>Ethereum</Option>
-              </Select>
-            </div>
+            {input.hasToken && (
+              <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+                <h5 className="label-input mb-3 kindoftitle">
+                  On which blockchain do you issue your token?
+                </h5>
+                <Select
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  onChange={(e) =>
+                    handleChange({
+                      target: {
+                        value: e,
+                        name: "tokenChain",
+                        type: "select",
+                      },
+                    })
+                  }
+                  // value={input.tokenChain}
+                  placeholder="Choose blockchain"
+                >
+                  <Option value={2}>BNB Chain</Option>
+                  <Option value={1}>Ethereum</Option>
+                </Select>
+              </div>
+            )}
             {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <BoxALignItemsCenter className="mb-3">
@@ -1064,26 +1067,28 @@ const Submit: NextPage = () => {
                 </div>
               </div>
             )}
-            <div className="col-12 mt-lg-5 mt-4">
-              <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
-                <label className="label-input mb-0 kindoftitle">
-                  Is your token listed on Coingecko?
-                </label>
-                <span className="ms-lg-4 ms-0 text-green green">
-                  Suggested E.g.
-                  https://www.dappverse-tokenplay.com/article/beginners-guide-for-my-crypto-heroes
-                </span>
-              </BoxALignItemsCenter>
-              <input
-                value={input.isOnCoingecko}
-                onChange={handleChange}
-                name="isOnCoingecko"
-                disabled={notLogin}
-                className="main-submit-global"
-                type={"text"}
-                placeholder="Please provide the link to your token’s Coingecko profile."
-              />
-            </div>
+            {input.hasToken && (
+              <div className="col-12 mt-lg-5 mt-4">
+                <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
+                  <label className="label-input mb-0 kindoftitle">
+                    Is your token listed on Coingecko?
+                  </label>
+                  <span className="ms-lg-4 ms-0 text-green green">
+                    Suggested E.g.
+                    https://www.dappverse-tokenplay.com/article/beginners-guide-for-my-crypto-heroes
+                  </span>
+                </BoxALignItemsCenter>
+                <input
+                  value={input.isOnCoingecko}
+                  onChange={handleChange}
+                  name="isOnCoingecko"
+                  disabled={notLogin}
+                  className="main-submit-global"
+                  type={"text"}
+                  placeholder="Please provide the link to your token’s Coingecko profile."
+                />
+              </div>
+            )}
           </div>
         </BoxWhiteGreenShadow>
         <br />
@@ -1139,13 +1144,16 @@ const Submit: NextPage = () => {
           Providing a full detail of your social media channels will improve
           your Dapp.com score and get a higher rank.
         </p>
-        <BoxWhiteGreenShadow className="px-4 py-5">
+        <BoxWhiteGreenShadow
+          className="px-4"
+          style={{ paddingTop: 5, marginTop: 5, paddingBottom: 30 }}
+        >
           <div className="row">
             <>
               {channelShown
                 .filter((channel) => channel.shown)
                 .map((channel, i) => (
-                  <div className={`col-lg-6 col-12 ${i > 1 && "mt-4"}`} key={i}>
+                  <div className={`col-lg-6 col-12  mt-4`} key={i}>
                     <div className="main-submit-input-suffix">
                       <span className="main-submit-input-suffix-logo green">
                         {channel.icon}

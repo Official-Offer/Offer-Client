@@ -15,15 +15,16 @@ const LoginPopup = ({ isVisible, setVisible, onExit=()=>{}}) => {
   const onCancel = () => {setVisible(false);onExit()};
   const pathName = useRouter().pathname;
   const slug = useRouter().query.slug;
+  const blockchain = useRouter().query.blockchain;
   const onLogin = async (meth) => {
     if(pathName=="/dapp-news/[slug]"){
       const falseURL = `${window.location.origin}/dapp-news/${slug}%2F%3Flogin%3Dfalse`;
       const successURL = `${window.location.origin}/dapp-news/${slug}%2F%3Flogin%3Dsuccess`;
       location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
     }
-    else {
-      const falseURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dfalse`;
-      const successURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dsuccess`;
+    else if (pathName=="/app/[blockchain]"){
+      const falseURL = `${window.location.origin}/app/${blockchain}%2F%3Flogin%3Dfalse`;
+      const successURL = `${window.location.origin}/app/${blockchain}%2F%3Flogin%3Dsuccess`;
       location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
     }
   };
