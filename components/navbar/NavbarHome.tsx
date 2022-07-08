@@ -434,7 +434,7 @@ export const NavbarHome: FC = () => {
                   </div>
                   <br />
                   <Menu defaultSelectedKeys={[`${router.route}`]}>
-                    {listMenu.map((menu, i) => {
+                    {listMenu.map((menu: any, i) => {
                       return (
                         <Menu.Item key={menu.routeSelected} className="m-0">
                           {menu.newTab ? (
