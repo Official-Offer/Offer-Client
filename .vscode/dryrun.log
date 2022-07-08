@@ -1,0 +1,4 @@
+make: Entering directory `/Users/hungtran/Documents/Fiona/tokenplay-dapp-fe'
+rm -rf .next/** && yarn build
+make: Leaving directory `/Users/hungtran/Documents/Fiona/tokenplay-dapp-fe'
+ 
