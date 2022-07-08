@@ -1324,7 +1324,7 @@ const BlockchainDetails = () => {
                   Follow
                 </ButtonBlue>
                 <MobileSlider />
-                <BoxALignItemsCenter className="mb-5">
+                <BoxALignItemsCenter className="mb-5" style={{display: "inline-block"}}>
                   <Button className="blockchain-details-right-follow">
                     <BoxALignItemsCenter>
                       <ArrowRightCircle
@@ -1364,20 +1364,15 @@ const BlockchainDetails = () => {
 
             {/* <div className="empty_space_height50" /> */}
             <div className="blockchain-details-left col-lg-9 col-12 mt-lg-5 mt-2">
-              <div className="blockchain-details-dashboard">
+              <div className="blockchain-details-dashboard" >
+                
                 <BoxALignItemsCenter>
                   <h3 className="lower-title">
                     {`${dapp?.name}'s`} Dashboards
                   </h3>
-                  <BoxALignItemsCenter className="status-label main ms-4">
-                    <span className="on-chain">On-Chain</span>
+                  <BoxALignItemsCenter className="status-label main" style={{marginLeft: 10, padding: 0, width: "90px"}}>
+                    <span className="on-chain mobile-onchain">On-Chain</span>
                   </BoxALignItemsCenter>
-                  <a
-                    href="#"
-                    className="blockchain-details-dashboard-viewContract ms-4"
-                  >
-                    View {dapp?.crawl.contract_count} Smart contracts
-                  </a>
                 </BoxALignItemsCenter>
                 <br />
                 <BoxWhiteShadow className="p-4">
