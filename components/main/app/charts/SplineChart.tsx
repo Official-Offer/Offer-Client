@@ -163,5 +163,5 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     },
   };
 
-  return <Chart options={options} series={series} type="line" height={220} />;
+  return <Chart options={options} series={series} type="line" height={220} style={{marginBottom: 0}}/>;
 };

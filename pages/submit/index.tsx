@@ -1137,7 +1137,7 @@ const Submit: NextPage = () => {
         </BoxWhiteGreenShadow>
         <br />
         <h3 className="main-submit-section-header">
-          Social Media ( optional )
+          Social Media (optional)
         </h3>
         <p className="text-secondary dappdotcom">
           We track the growth of your product’s social media communities.
