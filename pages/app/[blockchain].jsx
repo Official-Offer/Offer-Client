@@ -1547,7 +1547,7 @@ const BlockchainDetails = () => {
                     More About {dapp?.name}
                   </h3>
                   {posts.map((post, i) => {
-                    // console.log(post);
+                    console.log(post);
                     return (
                       <div
                         className="row"

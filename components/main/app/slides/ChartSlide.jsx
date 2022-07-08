@@ -39,7 +39,6 @@ const ChartSlider = ({ stat, setShowPrice, showPrice }) => {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
   
-  useEffect(() => console.log(chart), [chart]);
   const router = useRouter();
   const [showAll, setShowAll] = useState(false);
   const chartTitle = [...(stat?.stats.components

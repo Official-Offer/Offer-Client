@@ -328,7 +328,7 @@ const Submit: NextPage = () => {
           "tokenDescription",
           "tokenSymbol",
         ];
-    console.log(optionalFields);
+    // console.log(optionalFields);
     //validate input data
     let flag = false;
     for (let i = 0; i < keys.length; i++) {

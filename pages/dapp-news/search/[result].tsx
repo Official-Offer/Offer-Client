@@ -17,7 +17,7 @@ import {
 import NewsList from "@components/main/dapp-news/NewsList";
 const DappNews: FC = () => {
   const router = useRouter();
-  console.log(router);
+  // console.log(router);
   const [newsList, setNewsList] = useState([]);
   const [crit, setCrit] = useState("viewer");
   const [categories, setCategories] = useState<any>([]);

@@ -6,7 +6,6 @@ import {
 import { formatter } from "@utils/formatCurrency";
 import { updown, incdec } from "@utils/numberDecorator";
 export const AppStatistical: FC = ({ data, day, appStat }: any) => {
-  console.log(appStat);
 
   return (
     <div className="row app-statistical">

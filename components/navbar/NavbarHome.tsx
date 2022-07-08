@@ -17,7 +17,7 @@ import {
   UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { AutoComplete, Drawer, Input, Menu, Modal, Popover } from "antd";
+import { AutoComplete, Drawer, Input, Menu, message, Modal, Popover } from "antd";
 import { Router, useRouter } from "next/router";
 import { Search } from "react-feather";
 import Link from "next/link";
@@ -66,7 +66,7 @@ export const NavbarHome: FC = () => {
         }
       );
       await difRequest.get(`/tags?${query}`).then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setTags(res.data.data);
       });
     })();
@@ -94,7 +94,7 @@ export const NavbarHome: FC = () => {
   const handleChangeSearch = (e: any) => {
     setCurValue(e.target.value);
     setKeyword(e.target.value);
-    console.log(curValue);
+    // console.log(curValue);
     // console.log(keyword);
   };
   const onShowBoxSearch = () => {
@@ -116,7 +116,7 @@ export const NavbarHome: FC = () => {
             setPopupVisible(false);
           })
           .catch(() =>
-            console.log(
+            message.error(
               "Something is wrong, I can feel it. Just a feeling I've got, like something's about to happen, but I don't know what. If that means what I think it means, we're in trouble, big trouble. And if he is as bananas as you say, I'm not taking any chances"
             )
           );
