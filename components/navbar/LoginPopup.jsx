@@ -26,6 +26,11 @@ const LoginPopup = ({ isVisible, setVisible, onExit=()=>{}}) => {
       const falseURL = `${window.location.origin}/app/${blockchain}%2F%3Flogin%3Dfalse`;
       const successURL = `${window.location.origin}/app/${blockchain}%2F%3Flogin%3Dsuccess`;
       location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
+    } 
+    else {
+      const falseURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dfalse`;
+      const successURL = `${window.location.origin}${pathName}%2F%3Flogin%3Dsuccess`;
+      location.href = `${URL_API_SSO}/login/${meth.name.toLowerCase()}?redirectFalse=${falseURL}&redirectSuccess=${successURL}`;
     }
   };
   return (
