@@ -123,7 +123,7 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
   // const markdown = marked(modifiedContent);
 
   const imgLink = newsData[0]?.attributes.thumbnail.data.attributes.url;
-  console.log(`${URL_API_IMG}${imgLink}`);
+  // console.log(`${URL_API_IMG}${imgLink}`);
 
   return (
     <div>

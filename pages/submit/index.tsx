@@ -328,7 +328,7 @@ const Submit: NextPage = () => {
           "tokenDescription",
           "tokenSymbol",
         ];
-    console.log(optionalFields);
+    // console.log(optionalFields);
     //validate input data
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
@@ -1137,7 +1137,7 @@ const Submit: NextPage = () => {
         </BoxWhiteGreenShadow>
         <br />
         <h3 className="main-submit-section-header">
-          Social Media ( optional )
+          Social Media (optional)
         </h3>
         <p className="text-secondary dappdotcom">
           We track the growth of your product’s social media communities.

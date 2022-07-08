@@ -443,18 +443,18 @@ const BlockchainDetails = () => {
             </div>
           </TabPane>
           <TabPane key={1} tab="Screenshot">
-            <div style={{marginBottom: 20}}>
-            <Carousel>
-              {dapp?.images.data.map((img, i) => (
-                <div key={i}>
-                  <img
-                    className="w-100"
-                    src={`${URL_API_IMG}${img?.attributes?.url}`}
-                    alt=""
-                  />
-                </div>
-              ))}
-            </Carousel>
+            <div style={{ marginBottom: 20 }}>
+              <Carousel>
+                {dapp?.images.data.map((img, i) => (
+                  <div key={i}>
+                    <img
+                      className="w-100"
+                      src={`${URL_API_IMG}${img?.attributes?.url}`}
+                      alt=""
+                    />
+                  </div>
+                ))}
+              </Carousel>
             </div>
           </TabPane>
           <TabPane key={2} tab="Social">
@@ -1047,12 +1047,12 @@ const BlockchainDetails = () => {
                               src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                             ></img>
                           </div>
-                          <div className="col-8">
+                          <div className="col-8" style={{ paddingLeft: 0 }}>
                             <div className="blockchain-details-flex">
                               Token Price:
-                              <div>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.price}
+                                  ${tokenInfo.price.toFixed(2)}
                                 </p>
                                 <p
                                   className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
@@ -1067,19 +1067,24 @@ const BlockchainDetails = () => {
 
                             <div className="blockchain-details-flex">
                               Market Cap:
-                              <BoxAlignItemsCenter_FlexColumn>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.mkt_cap}
+                                  $
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap.toFixed(2)
+                                  )}
                                 </p>
                                 <p
                                   className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                     tokenInfo.mkt_cap_gr
                                   )}`}
                                 >
-                                  {formatter.format(tokenInfo.mkt_cap_gr)}%
-                                  {updown(tokenInfo.mkt_cap_gr)}
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap_gr.toFixed(2)
+                                  )}
+                                  %{updown(tokenInfo.mkt_cap_gr)}
                                 </p>
-                              </BoxAlignItemsCenter_FlexColumn>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1319,8 +1324,11 @@ const BlockchainDetails = () => {
                   Follow
                 </ButtonBlue>
                 <MobileSlider />
-                <BoxALignItemsCenter className="mb-5">
-                  <Button className="blockchain-details-right-follow">
+                <BoxALignItemsCenter
+                  className="mb-5"
+                  style={{ display: "inline-block" }}
+                >
+                  <Button className="blockchain-details-right-follow" style={{marginRight: 5}}>
                     <BoxALignItemsCenter>
                       <ArrowRightCircle
                         color=" #223052"
@@ -1364,15 +1372,12 @@ const BlockchainDetails = () => {
                   <h3 className="lower-title">
                     {`${dapp?.name}'s`} Dashboards
                   </h3>
-                  <BoxALignItemsCenter className="status-label main ms-4">
-                    <span className="on-chain">On-Chain</span>
-                  </BoxALignItemsCenter>
-                  <a
-                    href="#"
-                    className="blockchain-details-dashboard-viewContract ms-4"
+                  <BoxALignItemsCenter
+                    className="status-label main"
+                    style={{ marginLeft: 10, paddingLeft: 3, paddingRight: 3, width: "90px" }}
                   >
-                    View {dapp?.crawl.contract_count} Smart contracts
-                  </a>
+                    <span className="on-chain mobile-onchain">On-Chain</span>
+                  </BoxALignItemsCenter>
                 </BoxALignItemsCenter>
                 <br />
                 <BoxWhiteShadow className="p-4">
@@ -1406,12 +1411,12 @@ const BlockchainDetails = () => {
                               src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                             ></img>
                           </div>
-                          <div className="col-8">
+                          <div className="col-8" style={{ paddingLeft: 0 }}>
                             <div className="blockchain-details-flex">
                               Token Price:
-                              <div>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.price}
+                                  ${tokenInfo.price.toFixed(2)}
                                 </p>
                                 <p
                                   className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
@@ -1426,19 +1431,24 @@ const BlockchainDetails = () => {
 
                             <div className="blockchain-details-flex">
                               Market Cap:
-                              <BoxAlignItemsCenter_FlexColumn>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.mkt_cap}
+                                  $
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap.toFixed(2)
+                                  )}
                                 </p>
                                 <p
                                   className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                     tokenInfo.mkt_cap_gr
                                   )}`}
                                 >
-                                  {formatter.format(tokenInfo.mkt_cap_gr)}%
-                                  {updown(tokenInfo.mkt_cap_gr)}
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap_gr.toFixed(2)
+                                  )}
+                                  %{updown(tokenInfo.mkt_cap_gr)}
                                 </p>
-                              </BoxAlignItemsCenter_FlexColumn>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1542,7 +1552,6 @@ const BlockchainDetails = () => {
                     More About {dapp?.name}
                   </h3>
                   {posts.map((post, i) => {
-                    // console.log(post);
                     return (
                       <div
                         className="row"
@@ -1589,6 +1598,7 @@ const BlockchainDetails = () => {
               </BoxALignItemsCenter>
               <BoxWhiteShadow className="p-3 blockchain-details-comment">
                 {reviews.map((comment, i) => {
+                  console.log(comment);
                   return (
                     <div className="blockchain-details-comment-box" key={i}>
                       <BoxALignCenter_Justify_ItemsBetween className="mb-4">
@@ -1606,10 +1616,10 @@ const BlockchainDetails = () => {
                               className="blockchain-details-comment-box-name"
                               style={{ fontSize: 11 }}
                             >
-                              {
+                              {comment.attributes?.user.data?.attributes
+                                .displayName ||
                                 comment.attributes?.user.data?.attributes
-                                  .username
-                              }
+                                  .username}
                             </span>
                             <Rate
                               className="rate"
