@@ -1324,7 +1324,10 @@ const BlockchainDetails = () => {
                   Follow
                 </ButtonBlue>
                 <MobileSlider />
-                <BoxALignItemsCenter className="mb-5" style={{display: "inline-block"}}>
+                <BoxALignItemsCenter
+                  className="mb-5"
+                  style={{ display: "inline-block" }}
+                >
                   <Button className="blockchain-details-right-follow">
                     <BoxALignItemsCenter>
                       <ArrowRightCircle
@@ -1364,13 +1367,15 @@ const BlockchainDetails = () => {
 
             {/* <div className="empty_space_height50" /> */}
             <div className="blockchain-details-left col-lg-9 col-12 mt-lg-5 mt-2">
-              <div className="blockchain-details-dashboard" >
-                
+              <div className="blockchain-details-dashboard">
                 <BoxALignItemsCenter>
                   <h3 className="lower-title">
                     {`${dapp?.name}'s`} Dashboards
                   </h3>
-                  <BoxALignItemsCenter className="status-label main" style={{marginLeft: 10, padding: 0, width: "90px"}}>
+                  <BoxALignItemsCenter
+                    className="status-label main"
+                    style={{ marginLeft: 10, padding: 0, width: "90px" }}
+                  >
                     <span className="on-chain mobile-onchain">On-Chain</span>
                   </BoxALignItemsCenter>
                 </BoxALignItemsCenter>
@@ -1547,7 +1552,6 @@ const BlockchainDetails = () => {
                     More About {dapp?.name}
                   </h3>
                   {posts.map((post, i) => {
-                    console.log(post);
                     return (
                       <div
                         className="row"
@@ -1594,6 +1598,7 @@ const BlockchainDetails = () => {
               </BoxALignItemsCenter>
               <BoxWhiteShadow className="p-3 blockchain-details-comment">
                 {reviews.map((comment, i) => {
+                  console.log(comment);
                   return (
                     <div className="blockchain-details-comment-box" key={i}>
                       <BoxALignCenter_Justify_ItemsBetween className="mb-4">
@@ -1611,10 +1616,10 @@ const BlockchainDetails = () => {
                               className="blockchain-details-comment-box-name"
                               style={{ fontSize: 11 }}
                             >
-                              {
+                              {comment.attributes?.user.data?.attributes
+                                .displayName ||
                                 comment.attributes?.user.data?.attributes
-                                  .username
-                              }
+                                  .username}
                             </span>
                             <Rate
                               className="rate"

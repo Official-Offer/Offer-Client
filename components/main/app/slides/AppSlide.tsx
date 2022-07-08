@@ -12,7 +12,7 @@ import { URL_API_IMG } from "@config/dev.config";
 export const AppSlide: FC = ({ imgArr }: any) => {
   const navigationPrevRef = React.useRef(null);
   const navigationNextRef = React.useRef(null);
-  console.log(imgArr);
+  // console.log(imgArr);
   return (
     <>
       <Swiper
