@@ -1328,7 +1328,7 @@ const BlockchainDetails = () => {
                   className="mb-5"
                   style={{ display: "inline-block" }}
                 >
-                  <Button className="blockchain-details-right-follow">
+                  <Button className="blockchain-details-right-follow" style={{marginRight: 5}}>
                     <BoxALignItemsCenter>
                       <ArrowRightCircle
                         color=" #223052"
@@ -1374,7 +1374,7 @@ const BlockchainDetails = () => {
                   </h3>
                   <BoxALignItemsCenter
                     className="status-label main"
-                    style={{ marginLeft: 10, padding: 0, width: "90px" }}
+                    style={{ marginLeft: 10, paddingLeft: 3, paddingRight: 3, width: "90px" }}
                   >
                     <span className="on-chain mobile-onchain">On-Chain</span>
                   </BoxALignItemsCenter>
