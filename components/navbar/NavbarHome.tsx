@@ -206,13 +206,13 @@ export const NavbarHome: FC = () => {
         routeSelected: "/price-board",
       },
       { name: "INO", link: "#", newTab: false, routeSelected: "/ino" },
-      newLog,
       {
         name: "Submit Dapp",
         link: "/submit",
         newTab: false,
         routeSelected: "/submit",
       },
+      newLog,
     ]);
   }, [login]);
   const popoverContent = (
