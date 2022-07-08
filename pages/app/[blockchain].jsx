@@ -920,7 +920,10 @@ const BlockchainDetails = () => {
                             icon={<UserOutlined />}
                           />
                           <span className="blockchain-details-comment-box-name">
-                            {comment.attributes?.user.data?.attributes.username}
+                          {comment.attributes?.user.data?.attributes
+                                .displayName ||
+                                comment.attributes?.user.data?.attributes
+                                  .username}
                           </span>
                           <Rate allowHalf value={comment.attributes?.rating} />
                         </BoxALignItemsCenter>
