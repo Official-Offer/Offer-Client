@@ -443,18 +443,18 @@ const BlockchainDetails = () => {
             </div>
           </TabPane>
           <TabPane key={1} tab="Screenshot">
-            <div style={{marginBottom: 20}}>
-            <Carousel>
-              {dapp?.images.data.map((img, i) => (
-                <div key={i}>
-                  <img
-                    className="w-100"
-                    src={`${URL_API_IMG}${img?.attributes?.url}`}
-                    alt=""
-                  />
-                </div>
-              ))}
-            </Carousel>
+            <div style={{ marginBottom: 20 }}>
+              <Carousel>
+                {dapp?.images.data.map((img, i) => (
+                  <div key={i}>
+                    <img
+                      className="w-100"
+                      src={`${URL_API_IMG}${img?.attributes?.url}`}
+                      alt=""
+                    />
+                  </div>
+                ))}
+              </Carousel>
             </div>
           </TabPane>
           <TabPane key={2} tab="Social">
@@ -1047,12 +1047,12 @@ const BlockchainDetails = () => {
                               src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                             ></img>
                           </div>
-                          <div className="col-8">
+                          <div className="col-8" style={{ paddingLeft: 0 }}>
                             <div className="blockchain-details-flex">
                               Token Price:
-                              <div>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.price}
+                                  ${tokenInfo.price.toFixed(2)}
                                 </p>
                                 <p
                                   className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
@@ -1067,19 +1067,24 @@ const BlockchainDetails = () => {
 
                             <div className="blockchain-details-flex">
                               Market Cap:
-                              <BoxAlignItemsCenter_FlexColumn>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.mkt_cap}
+                                  $
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap.toFixed(2)
+                                  )}
                                 </p>
                                 <p
                                   className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                     tokenInfo.mkt_cap_gr
                                   )}`}
                                 >
-                                  {formatter.format(tokenInfo.mkt_cap_gr)}%
-                                  {updown(tokenInfo.mkt_cap_gr)}
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap_gr.toFixed(2)
+                                  )}
+                                  %{updown(tokenInfo.mkt_cap_gr)}
                                 </p>
-                              </BoxAlignItemsCenter_FlexColumn>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1406,12 +1411,12 @@ const BlockchainDetails = () => {
                               src={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
                             ></img>
                           </div>
-                          <div className="col-8">
+                          <div className="col-8" style={{ paddingLeft: 0 }}>
                             <div className="blockchain-details-flex">
                               Token Price:
-                              <div>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.price}
+                                  ${tokenInfo.price.toFixed(2)}
                                 </p>
                                 <p
                                   className={` blockchain-details-uni-number blockchain-details-derivative-${incdec(
@@ -1426,19 +1431,24 @@ const BlockchainDetails = () => {
 
                             <div className="blockchain-details-flex">
                               Market Cap:
-                              <BoxAlignItemsCenter_FlexColumn>
+                              <div style={{ display: "flex", columnGap: 5 }}>
                                 <p className="blockchain-details-uni-number">
-                                  ${tokenInfo.mkt_cap}
+                                  $
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap.toFixed(2)
+                                  )}
                                 </p>
                                 <p
                                   className={`blockchain-details-uni-number blockchain-details-derivative-${incdec(
                                     tokenInfo.mkt_cap_gr
                                   )}`}
                                 >
-                                  {formatter.format(tokenInfo.mkt_cap_gr)}%
-                                  {updown(tokenInfo.mkt_cap_gr)}
+                                  {formatter.format(
+                                    tokenInfo.mkt_cap_gr.toFixed(2)
+                                  )}
+                                  %{updown(tokenInfo.mkt_cap_gr)}
                                 </p>
-                              </BoxAlignItemsCenter_FlexColumn>
+                              </div>
                             </div>
                           </div>
                         </div>
