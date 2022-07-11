@@ -106,6 +106,7 @@ export default function TableDapp({
       query: "socialSignal",
     },
   ];
+  const [squery, setSquery] = useState("User");
   const activeItem = (sort: string, query: string) => {
     //look at mobile header and sort accordingly
     let timeQuery;
@@ -114,8 +115,23 @@ export default function TableDapp({
     else timeQuery = `monthly${query}`;
     if (query === "socialSignal") setSort([query, sort]);
     else setSort([timeQuery, sort]);
+
     setHeaderMobile(activeHeader());
   };
+  useEffect(() => {
+    if (router.query && router.query.timeKey) {
+      let timeQuery;
+      const query = activeQuery();
+      if (timeKey === "24h") timeQuery = `daily${query}`;
+      else if (timeKey === "7d") timeQuery = `weekly${query}`;
+      else timeQuery = `monthly${query}`;
+      // if (query === "socialSignal") setSort([query, sort[1]]);
+      // else setSort([timeQuery, sort[1]]);
+      console.log(timeQuery);
+      console.log(sort[1]);
+    }
+  }, [router]);
+
   const [headerMobile, setHeaderMobile] = useState(
     listTitleHeaderMobile[0].title
   );
@@ -132,11 +148,19 @@ export default function TableDapp({
     return "Social Signal";
   };
 
+  const activeQuery = () => {
+    if (sort[0].includes("User")) return "User";
+    if (sort[0].includes("Transaction")) return "Transaction";
+    if (sort[0].includes("Volume")) return "Volume";
+    return "socialSignal";
+  };
+
   const activeSorter = () => {
     if (headerMobile === "Users" && sort[0].includes("User")) return true;
     if (headerMobile === "Social Signal" && sort[0] === "socialSignal")
       return true;
-    if (headerMobile === "Transactions" && sort[0].includes("Transaction")) return true;
+    if (headerMobile === "Transactions" && sort[0].includes("Transaction"))
+      return true;
     if (headerMobile === "Volume" && sort[0].includes("Volume")) return true;
     return false;
   };
@@ -450,9 +474,13 @@ export default function TableDapp({
           const tăng_giảm: string = incdec(số_dưới);
 
           return (
-            <div className="table-body" key={i} onClick={() => {
-              router.push(`/app/${e.id}`);
-            }}>
+            <div
+              className="table-body"
+              key={i}
+              onClick={() => {
+                router.push(`/app/${e.id}`);
+              }}
+            >
               <div className="table-body-item table-body-item-number">
                 <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
                 <span>{i + 1}</span>

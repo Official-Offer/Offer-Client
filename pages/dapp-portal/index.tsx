@@ -9,6 +9,7 @@ import {
   ButtonBlue,
   ButtonBorderBlueTransparent,
 } from "@styles/styled-components/styledButton";
+import { useRouter } from "next/router";
 
 const DappPortal: NextPage = () => {
   const TabsChain = dynamic(
@@ -20,7 +21,7 @@ const DappPortal: NextPage = () => {
   const TableDapp = dynamic(
     () => import("@components/main/dapp-portal/TableDapp")
   ) as any;
-
+  const router = useRouter();
   const [tokenList, setTokenList] = useState([]);
   const [chain, setChain] = useState("All");
   const [cate, setCate] = useState("All");
@@ -61,7 +62,7 @@ const DappPortal: NextPage = () => {
         display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
       });
       await request.get(`/dapps?${query}`).then((res) => {
-        // console.log(query);
+        console.log(query);
         // console.log(res.data.data);
         display = [...display, ...res.data.data];
       });
