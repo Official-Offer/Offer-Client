@@ -69,7 +69,7 @@ import { useRef } from "react";
 import Swiper from "swiper";
 const { TabPane } = Tabs;
 
-const BlockchainDetails = () => {
+const BlockchainDetails = ({dapp}) => {
   const router = useRouter();
   const ChartSlider = dynamic(() =>
     import("@components/main/app").then((mod) => mod.ChartSlider)
@@ -88,7 +88,7 @@ const BlockchainDetails = () => {
   );
   const id = router.query.blockchain;
   if (!id) return <Loading></Loading>;
-  const [dapp, setDapp] = useState();
+  // const [dapp, setDapp] = useState();
   const [slug, setSlug] = useState("leonicorn-swap");
   const [stat, setStat] = useState(null);
   const [day, setDay] = useState(7);
@@ -215,7 +215,7 @@ const BlockchainDetails = () => {
       await request.get(`/dapps?${query}`).then((res) => {
         // console.log(res.data.data[0].attributes);
 
-        setDapp(res.data.data[0].attributes);
+        // setDapp(res.data.data[0].attributes);
         setSlug(res.data.data[0].attributes.slug);
       });
     })();
@@ -513,7 +513,7 @@ const BlockchainDetails = () => {
       </>
     );
   };
-
+  const imgLink = `${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`;
   return (
     <div>
       <Head>
@@ -522,13 +522,13 @@ const BlockchainDetails = () => {
         <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
         <meta
           property="og:image"
-          content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
+          content={imgLink}
         />
         <meta property="og:description" content={dapp?.description} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:image"
-          content={`${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`}
+          content={imgLink}
         />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="628" />
@@ -920,7 +920,10 @@ const BlockchainDetails = () => {
                             icon={<UserOutlined />}
                           />
                           <span className="blockchain-details-comment-box-name">
-                            {comment.attributes?.user.data?.attributes.username}
+                          {comment.attributes?.user.data?.attributes
+                                .displayName ||
+                                comment.attributes?.user.data?.attributes
+                                  .username}
                           </span>
                           <Rate allowHalf value={comment.attributes?.rating} />
                         </BoxALignItemsCenter>
@@ -1779,5 +1782,27 @@ const BlockchainDetails = () => {
     </div>
   );
 };
-
+export async function getServerSideProps(context) {
+  const query = qs.stringify(
+    {
+      populate: "*",
+      filters: {
+        id: {
+          $eq: context.query.blockchain,
+        },
+      },
+    },
+    { encodeValuesOnly: true }
+  );
+  let dapp = null;
+  await request.get(`/dapps?${query}`).then((res) => {
+    // console.log(res.data.data[0].attributes);
+    dapp = res.data.data[0].attributes;
+  });
+  return {
+    props: {
+      dapp,
+    }
+  }
+}
 export default BlockchainDetails;
