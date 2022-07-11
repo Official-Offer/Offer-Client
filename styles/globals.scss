@@ -22,7 +22,7 @@
 @font-face {
   font-family: "Circular Std";
   src: url("../public/fonts/CircularStd-Book.otf") format("opentype"),
-    url("../public/fonts/CircularStd-Medium.otf") format("opentype"),
+    url("../public/fonts/CircularStd-Medium.otf") format("opentype");
   // font-weight: normal;
   // font-style: normal;
 }
@@ -32,7 +32,19 @@
   src: url("../public/fonts/CircularStd-Light.otf") format("opentype");
   // font-weight: light;
 }
-
+@font-face {
+  font-family: "Circular Std Light";
+  src: url("../public/fonts/CircularStd-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: "Nunito";
+  src: url("../public/fonts/Nunito-VariableFont_wght.ttf") format("opentype");
+}
+@font-face {
+  font-family: "Nunito Italic";
+  src: url("../public/fonts/Nunito-Italic-VariableFont_wght.ttf")
+    format("opentype");
+}
 html,
 body {
   padding: 0;
@@ -120,7 +132,7 @@ a {
   display: block;
 }
 .block-for-mobile {
-  display: none;
+  display: none ;
 }
 .flex-for-pc {
   display: flex;
@@ -165,7 +177,6 @@ a {
     @include sm {
       width: 1rem;
     }
-
   }
   .swiper-pagination-bullet-active {
     background: #fcfcfd;

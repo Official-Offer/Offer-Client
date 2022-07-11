@@ -365,7 +365,7 @@
         color: #058499;
       }
       &-decrease {
-        color: #ef466f;
+        color: #F05178;
         @include lg {
           font-size: 0.9rem;
         }
@@ -441,14 +441,14 @@
           color: $white-color;
         }
         &-decrease {
-          color: #ef466f;
+          color: #F05178;
         }
         &-increase {
           color: #45b36b;
         }
         &-decrease {
           p {
-            color: #ef466f;
+            color: #F05178;
           }
         }
         &-increase {
@@ -530,7 +530,7 @@
         }
         &-decrease {
           p {
-            color: #ef466f;
+            color: #F05178;
           }
         }
         &-increase {

@@ -2,7 +2,7 @@ import { FC } from "react";
 import dynamic from "next/dynamic";
 import moment from "moment";
 import { formatter } from "@utils/formatCurrency";
-
+import fixDateForAllBrowsers from "@utils/fixDateForAllBrowsers";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }) as any;
 
 export const SplineChart: FC = ({ data, price, showPrice }: any) => {
@@ -13,7 +13,8 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     "Users",
   ].includes(data.name);
   const color = !isAdvanced ? "#7652FF" : "#F68922";
-  const labels = data.data.charts.labels;
+  const labels = data.data.charts.labels.map(fixDateForAllBrowsers);
+  console.log(labels);
   const datasets =
     data.data.charts.datasets[Object.keys(data.data.charts.datasets)[0]];
   const processPrice = (labels: any, price: any) => {
@@ -155,12 +156,12 @@ export const SplineChart: FC = ({ data, price, showPrice }: any) => {
     tooltip: {
       theme: "light",
     },
-    colors: [color, "#223052"],
+    colors: [color, "#344563"],
     legend: {
       position: "bottom",
       horizontalAlign: "left",
     },
   };
 
-  return <Chart options={options} series={series} type="line" height={220} />;
+  return <Chart options={options} series={series} type="line" height={220} style={{marginBottom: 0}}/>;
 };

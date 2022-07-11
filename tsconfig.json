@@ -33,6 +33,6 @@
       "@styledComponents/*": ["styles/styled-components/*"],
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss", "components/navbar/LoginPopup.jsx", "utils/processTextInput.js", "pages/app/[blockchain].jsx", "components/main/dapp-news/PinnedSlide.js", "components/main/dapp-news/PinnedSlides.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index.tss", "components/navbar/LoginPopup.jsx", "utils/processTextInput.js", "pages/app/[blockchain].jsx", "components/main/dapp-news/PinnedSlide.js", "components/main/dapp-news/PinnedSlides.tsx", "components/main/app/slides/ChartSlide.jsx"],
   "exclude": ["node_modules"]
 }

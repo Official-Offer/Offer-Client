@@ -16,6 +16,7 @@ import {
   Instagram,
   Linkedin,
 } from "react-feather";
+import { MediumOutlined } from "@ant-design/icons";
 import { Form, message, notification, Radio, Select, Space } from "antd";
 import {
   BigButtonSmallText,
@@ -52,15 +53,15 @@ const Submit: NextPage = () => {
     detailDescription: "",
     reviewArticle: "",
     hasToken: true,
-    tokenLogo: "",
-    tokenChain: " ",
+    tokenLogo: null,
+    tokenChain: "",
     tokenSymbol: "",
     tokenContract: "",
     tokenDecimal: "",
     tokenDescription: "",
     isOnCoingecko: "",
     isFullyOnChain: "yes",
-    dappChain: " ",
+    dappChain: "",
     Socials: [
       { name: "Facebook", url: "", image: null },
       { name: "Twitter", url: "", image: null },
@@ -94,7 +95,7 @@ const Submit: NextPage = () => {
     },
     {
       name: "Medium",
-      icon: <img src="/img/media/telegram.png" className="main-submit-media" />,
+      icon: <MediumOutlined size={35} style={{ color: "#058499", fontSize: 34, marginLeft:10 }} />,
       shown: false,
       placeholder: "Add your product's Medium URL",
     },
@@ -178,7 +179,7 @@ const Submit: NextPage = () => {
     <Modal title="Add Channel" visible={channelPopup} onCancel={onCloseChannel}>
       <div className="main-submit-channel-wrap">
         {channelNotShown.map((channel, i) => (
-          <Channel 
+          <Channel
             src={channel.src}
             alt={channel.name}
             key={i}
@@ -289,29 +290,50 @@ const Submit: NextPage = () => {
   };
 
   const validateDecimal = (sth: any) => {
-    return typeof sth === "number";
+    return !isNaN(sth);
   };
 
+  useEffect(() => {
+    handleChange({
+      target: {
+        value: [],
+        name: "tags",
+        type: "idk",
+      },
+    });
+  }, [input.category]);
   const onSubmitForm = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
     const data: any = {};
     const keys = Object.keys(input);
+    //if product doesnt have its own token, allow these fields to hold empty data
+    const optionalFields = input.hasToken
+      ? [
+          "reviewArticle",
+          "detailDescription",
+          "shortDescription",
+          "isOnCoingecko",
+          "dappChain",
+        ]
+      : [
+          "dappChain",
+          "reviewArticle",
+          "detailDescription",
+          "shortDescription",
+          "isOnCoingecko",
+          "tokenContract",
+          "tokenDecimal",
+          "tokenChain",
+          "tokenDescription",
+          "tokenSymbol",
+        ];
+    // console.log(optionalFields);
     //validate input data
     let flag = false;
     for (let i = 0; i < keys.length; i++) {
       // check unfilled fields, ignore optional fields
-      if (
-        input[keys[i]] === "" &&
-        ![
-          "reviewArticle",
-          "detailDescription",
-          "shortDescription",
-          // "dappChain",
-          // "tokenChain",
-          "isOnCoingecko",
-        ].includes(keys[i])
-      ) {
+      if (input[keys[i]] === "" && !optionalFields.includes(keys[i])) {
         message.error(`Field ${keys[i]} cannot be empty`);
         setError(keys[i]);
         return;
@@ -320,7 +342,7 @@ const Submit: NextPage = () => {
         return;
       } else if (
         keys[i] === "tokenDecimal" &&
-        validateDecimal(input.tokenDecimal)
+        !validateDecimal(input.tokenDecimal)
       ) {
         message.error("Wrong Decimal");
         return;
@@ -405,7 +427,7 @@ const Submit: NextPage = () => {
           });
       }
       //check contract
-      else if (keys[i] === "tokenContract") {
+      else if (keys[i] === "tokenContract" && input.hasToken) {
         if (!validateAddress(input[keys[i]])) {
           message.error("Invalid Address");
           return;
@@ -598,7 +620,7 @@ const Submit: NextPage = () => {
         <h3 className="main-submit-section-header">Basic Information</h3>
         <BoxWhiteGreenShadow className="px-4 py-5">
           <div className="row">
-            <div className="col-lg-2 col-12">
+            <div className="col-xl-2 col-12">
               <div className="main-submit-avatar">
                 {rawImgToBase64(input.thumbnail) ? (
                   <div className="img-wrapper">
@@ -620,7 +642,7 @@ const Submit: NextPage = () => {
                     {" "}
                     <img src="/img/icons/icn-upload.png" alt="" />
                     <br />
-                    <p>
+                    <p className="jpgpng">
                       JPG,PNG with ratio of 1:1 300*300 or larger recommended
                     </p>
                     <input
@@ -634,7 +656,7 @@ const Submit: NextPage = () => {
                 )}
               </div>
             </div>
-            <div className="col-lg-10 col-12 mt-lg-0 mt-4">
+            <div className="col-xl-10 col-12 mt-lg-0 mt-4">
               <BoxAlignItemsStart_FlexColumn className="justify-content-center h-100">
                 <div className="w-100 mb-lg-4 mb-3">
                   <label className="label-input mb-3 kindoftitle">
@@ -668,7 +690,7 @@ const Submit: NextPage = () => {
             </div>
             <div className="col-12 my-5">
               <h5 className="kindoftitle">Preview Image</h5>
-              <p className="text-secondary light-grey">
+              <p className="text-secondary light-grey highquality">
                 High quality screenshot or preview image will attract more users
                 and be featured by our editors. 4 Product Images Max
               </p>
@@ -742,7 +764,7 @@ const Submit: NextPage = () => {
             <div className="col-lg-6 col-12 mt-lg-0 mt-4">
               <BoxALignItemsCenter className="mb-2">
                 <h5 className="mb-0 kindoftitle">Tags</h5>
-                <span className="ms-3 text-green green fontSize_09">
+                <span className="ms-3 text-green green maximum">
                   Maximum 5 Tags
                 </span>
               </BoxALignItemsCenter>
@@ -792,74 +814,71 @@ const Submit: NextPage = () => {
               </Select>
             </div>
             <div className="col-lg-6 col-12"></div>
-            {input.isOwnerOrAdmin && (
-              <div className="col-12 mt-lg-5 mt-4">
-                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
-                  <label className="label-input kindoftitle">
-                    Short Description
-                  </label>
-                  <span className="text-green green">Max of 70 Characters</span>
-                </BoxALignCenter_Justify_ItemsBetween>
-                <div className="main-submit-text-wrapper ">
-                  <textarea
-                    className="main-submit-trans-text"
-                    disabled={notLogin}
-                    style={{ width: "100%" }}
-                    maxLength={70}
-                    placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
-                    value={input.shortDescription}
-                    onChange={handleChange}
-                    name="shortDescription"
-                  />
-                  <div
-                    className={`main-submit-char-counter${
-                      (input.shortDescription.length < 10 ||
-                        input.shortDescription.length > 70) &&
-                      input.shortDescription.length > 0
-                        ? "-error"
-                        : ""
-                    }`}
-                  >
-                    {input.shortDescription.length}/70
-                  </div>
+
+            <div className="col-12 mt-lg-5 mt-4">
+              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
+                <label className="label-input kindoftitle">
+                  Short Description
+                </label>
+                <span className="text-green green">Max of 70 Characters</span>
+              </BoxALignCenter_Justify_ItemsBetween>
+              <div className="main-submit-text-wrapper ">
+                <textarea
+                  className="main-submit-trans-text"
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={70}
+                  placeholder="This is to provide an idea of what does your product do. A good short summary will entice users to click and visit your page."
+                  value={input.shortDescription}
+                  onChange={handleChange}
+                  name="shortDescription"
+                />
+                <div
+                  className={`main-submit-char-counter${
+                    (input.shortDescription.length < 10 ||
+                      input.shortDescription.length > 70) &&
+                    input.shortDescription.length > 0
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.shortDescription.length}/70
                 </div>
               </div>
-            )}
-            {input.isOwnerOrAdmin && (
-              <div className="col-12 mt-lg-5 mt-4">
-                <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
-                  <label className="label-input kindoftitle">
-                    Detail Description
-                  </label>
-                  <span className="text-green green">
-                    Max of 500 Characters
-                  </span>
-                </BoxALignCenter_Justify_ItemsBetween>
-                <div className="main-submit-text-wrapper">
-                  <textarea
-                    className="main-submit-text-description main-submit-trans-text"
-                    disabled={notLogin}
-                    style={{ width: "100%" }}
-                    maxLength={500}
-                    placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
-                    value={input.detailDescription}
-                    onChange={handleChange}
-                    name="detailDescription"
-                  />
-                  <div
-                    className={`main-submit-char-counter${
-                      (input.detailDescription.length < 100 ||
-                        input.detailDescription.length > 500) &&
-                      input.detailDescription.length > 0
-                        ? "-error"
-                        : ""
-                    }`}
-                  >
-                    {input.detailDescription.length}/500
-                  </div>
+            </div>
+
+            <div className="col-12 mt-lg-5 mt-4">
+              <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-3">
+                <label className="label-input kindoftitle">
+                  Detail Description
+                </label>
+                <span className="text-green green">Max of 500 Characters</span>
+              </BoxALignCenter_Justify_ItemsBetween>
+              <div className="main-submit-text-wrapper">
+                <textarea
+                  className="main-submit-text-description main-submit-trans-text"
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  maxLength={500}
+                  placeholder="A detailed summary will better explain your products to the audiences. Our users will see this in your dedicated product page."
+                  value={input.detailDescription}
+                  onChange={handleChange}
+                  name="detailDescription"
+                />
+                <div
+                  className={`main-submit-char-counter${
+                    (input.detailDescription.length < 100 ||
+                      input.detailDescription.length > 500) &&
+                    input.detailDescription.length > 0
+                      ? "-error"
+                      : ""
+                  }`}
+                >
+                  {input.detailDescription.length}/500
                 </div>
               </div>
-            )}
+            </div>
+
             <div className="col-12 mt-lg-5 mt-4">
               <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
                 <label className="label-input mb-0 kindoftitle">
@@ -898,7 +917,7 @@ const Submit: NextPage = () => {
             <Radio value={true}>Yes we do.</Radio>
             <Radio value={false}>No we don’t.</Radio>
           </Radio.Group>
-          {input.isOwnerOrAdmin && (
+          {input.hasToken && (
             <>
               <h5 className="mb-3 kindoftitle">Token Logo</h5>
               <BoxALignItemsCenter className="mb-4">
@@ -941,34 +960,36 @@ const Submit: NextPage = () => {
           )}
           <br />
           <div className="row">
-            <div className="col-lg-6 col-12 mt-lg-5 mt-4">
-              <h5 className="label-input mb-3 kindoftitle">
-                On which blockchain do you issue your token?
-              </h5>
-              <Select
-                disabled={notLogin}
-                style={{ width: "100%" }}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      value: e,
-                      name: "tokenChain",
-                      type: "select",
-                    },
-                  })
-                }
-                // value={input.tokenChain}
-                placeholder="Choose blockchain"
-              >
-                <Option value={2}>BNB Chain</Option>
-                <Option value={1}>Ethereum</Option>
-              </Select>
-            </div>
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
+              <div className="col-lg-6 col-12 mt-lg-5 mt-4">
+                <h5 className="label-input mb-3 kindoftitle">
+                  On which blockchain do you issue your token?
+                </h5>
+                <Select
+                  disabled={notLogin}
+                  style={{ width: "100%" }}
+                  onChange={(e) =>
+                    handleChange({
+                      target: {
+                        value: e,
+                        name: "tokenChain",
+                        type: "select",
+                      },
+                    })
+                  }
+                  // value={input.tokenChain}
+                  placeholder="Choose blockchain"
+                >
+                  <Option value={2}>BNB Chain</Option>
+                  <Option value={1}>Ethereum</Option>
+                </Select>
+              </div>
+            )}
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <BoxALignItemsCenter className="mb-3">
                   <h5 className="mb-0 kindoftitle">Ticker of your token.</h5>
-                  <span className="ms-3 text-green">E.g. BTC</span>
+                  <span className="ms-3 green">E.g. BTC</span>
                 </BoxALignItemsCenter>
                 <input
                   disabled={notLogin}
@@ -981,7 +1002,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <label className="label-input mb-3 kindoftitle">
                   Token Contract
@@ -997,7 +1018,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-lg-6 col-12 mt-lg-5 mt-4">
                 <label className="label-input mb-3 kindoftitle">Decimal</label>
                 <input
@@ -1011,7 +1032,7 @@ const Submit: NextPage = () => {
                 />
               </div>
             )}
-            {input.isOwnerOrAdmin && (
+            {input.hasToken && (
               <div className="col-12 mt-lg-5 mt-4">
                 <BoxALignCenter_Justify_ItemsBetween className="flex-lg-row flex-column align-items-start mb-4">
                   <label className="label-input kindoftitle">
@@ -1046,33 +1067,33 @@ const Submit: NextPage = () => {
                 </div>
               </div>
             )}
-            <div className="col-12 mt-lg-5 mt-4">
-              <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
-                <label className="label-input mb-0 kindoftitle">
-                  Is your token listed on Coingecko?
-                </label>
-                <span className="ms-lg-4 ms-0 text-green green">
-                  Suggested E.g.
-                  https://www.dappverse-tokenplay.com/article/beginners-guide-for-my-crypto-heroes
-                </span>
-              </BoxALignItemsCenter>
-              <input
-                value={input.isOnCoingecko}
-                onChange={handleChange}
-                name="isOnCoingecko"
-                disabled={notLogin}
-                className="main-submit-global"
-                type={"text"}
-                placeholder="Please provide the link to your token’s Coingecko profile."
-              />
-            </div>
+            {input.hasToken && (
+              <div className="col-12 mt-lg-5 mt-4">
+                <BoxALignItemsCenter className="flex-lg-row flex-column align-items-start mb-3">
+                  <label className="label-input mb-0 kindoftitle">
+                    Is your token listed on Coingecko?
+                  </label>
+                  <span className="ms-lg-4 ms-0 text-green green">
+                    Suggested E.g.
+                    https://www.dappverse-tokenplay.com/article/beginners-guide-for-my-crypto-heroes
+                  </span>
+                </BoxALignItemsCenter>
+                <input
+                  value={input.isOnCoingecko}
+                  onChange={handleChange}
+                  name="isOnCoingecko"
+                  disabled={notLogin}
+                  className="main-submit-global"
+                  type={"text"}
+                  placeholder="Please provide the link to your token’s Coingecko profile."
+                />
+              </div>
+            )}
           </div>
         </BoxWhiteGreenShadow>
         <br />
-        <h3 className="main-submit-section-header kindoftitle">
-          Smart Contracts Info
-        </h3>
-        <p className="text-secondary">
+        <h3 className="main-submit-section-header">Smart Contracts Info</h3>
+        <p className="text-secondary dappdotcom">
           Dapp.com’s user will be able to see your product’s onchain stats via
           your smart contracts info if your product is blockchain based.
         </p>
@@ -1116,20 +1137,23 @@ const Submit: NextPage = () => {
         </BoxWhiteGreenShadow>
         <br />
         <h3 className="main-submit-section-header">
-          Social Media ( optional )
+          Social Media (optional)
         </h3>
-        <p className="text-secondary">
+        <p className="text-secondary dappdotcom">
           We track the growth of your product’s social media communities.
           Providing a full detail of your social media channels will improve
           your Dapp.com score and get a higher rank.
         </p>
-        <BoxWhiteGreenShadow className="px-4 py-5">
+        <BoxWhiteGreenShadow
+          className="px-4"
+          style={{ paddingTop: 5, marginTop: 5, paddingBottom: 30 }}
+        >
           <div className="row">
             <>
               {channelShown
                 .filter((channel) => channel.shown)
                 .map((channel, i) => (
-                  <div className={`col-lg-6 col-12 ${i > 1 && "mt-4"}`} key={i}>
+                  <div className={`col-lg-6 col-12  mt-4`} key={i}>
                     <div className="main-submit-input-suffix">
                       <span className="main-submit-input-suffix-logo green">
                         {channel.icon}

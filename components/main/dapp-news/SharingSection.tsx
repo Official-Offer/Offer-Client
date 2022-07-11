@@ -19,7 +19,7 @@ const SharingSection = ({ newsUpdate }: any) => {
       <p className="news-details-social-title">Share This Article</p>
       <div className="news-details-social">
         <div className="news-details-social-icons">
-          <FacebookShareButton
+          <FacebookShareButton 
             url={`${URL_SITE}/dapp-news/${news[0]?.attributes.slug}`}
             quote={`${news[0]?.attributes.title}
           

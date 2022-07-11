@@ -136,7 +136,8 @@ export default function TableDapp({
     if (headerMobile === "Users" && sort[0].includes("User")) return true;
     if (headerMobile === "Social Signal" && sort[0] === "socialSignal")
       return true;
-    if (sort[0].includes(activeHeader())) return true;
+    if (headerMobile === "Transactions" && sort[0].includes("Transaction")) return true;
+    if (headerMobile === "Volume" && sort[0].includes("Volume")) return true;
     return false;
   };
   return (
@@ -199,7 +200,7 @@ export default function TableDapp({
             const volumeDiff = token.attributes[`${timeQuery}VolumeDiff`] || 0;
             const socialSignal = token.attributes.socialSignal || 0;
             const socialSignalDiff = token.attributes.socialSignalDiff || 0;
-
+            const usds = token.attributes.crawl[`usds_${timeKey}`];
             return (
               <div
                 className="table-body"
@@ -297,53 +298,47 @@ export default function TableDapp({
                     </p>
                   </div>
                   <div className="main-homepage-highestsocial-table-24volume-bar-bottom">
-                    {volume.length == 2 ? (
+                    {usds.length == 2 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              volume[0].ratio == 0
+                              usds[0].ratio == 0
                                 ? "10%"
-                                : `${(volume[0].ratio * 100).toFixed(1)}%`
+                                : `${(usds[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[1].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[1].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                       </>
-                    ) : volume.length == 3 ? (
+                    ) : usds.length == 3 ? (
                       <>
                         <div
                           className="volume-bar"
                           style={{
                             width: `${
-                              volume[0].ratio == 0
+                              usds[0].ratio == 0
                                 ? "10%"
-                                : `${(volume[0].ratio * 100).toFixed(1)}%`
+                                : `${(usds[0].ratio * 100).toFixed(1)}%`
                             }`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[1].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[1].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                         <div
                           className="volume-bar"
                           style={{
-                            width: `${`${(volume[2].ratio * 100).toFixed(
-                              1
-                            )}%`}`,
+                            width: `${`${(usds[2].ratio * 100).toFixed(1)}%`}`,
                           }}
                         />
                       </>
@@ -455,7 +450,9 @@ export default function TableDapp({
           const tăng_giảm: string = incdec(số_dưới);
 
           return (
-            <div className="table-body" key={i}>
+            <div className="table-body" key={i} onClick={() => {
+              router.push(`/app/${e.id}`);
+            }}>
               <div className="table-body-item table-body-item-number">
                 <img src={`img/icons/${i < 2 ? "ad" : "token"}.png`} alt="" />
                 <span>{i + 1}</span>

@@ -40,7 +40,7 @@ export default function useForm(initial = {}) {
         !arr.includes(key) ? [key, value] : [key, null]
       )
     );
-    console.log(blankState);
+    // console.log(blankState);
     setInputs(blankState);
   }
   return {

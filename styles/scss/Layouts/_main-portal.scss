@@ -17,7 +17,8 @@
   }
   .hover-underline {
     font-weight: normal;
-    color: #223052;font-size: 14px!important;
+    color: #223052;
+    font-size: 14px !important;
   }
   .loadmore {
     width: 100%;
@@ -27,6 +28,8 @@
   }
   .table-header,
   .table-body {
+    font-family: "Nunito";
+    font-style: normal;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -91,9 +94,11 @@
         }
       }
       p {
+        font-family: "Nunito";
+        font-style: normal;
         margin: 0;
         color: $black-color;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 700;
       }
       &-number {
@@ -268,7 +273,8 @@
 
     color: #223052;
   }
-  .table-body-item-volume-bar-top-decrease, .table-body-item-volume-bar-top-increase {
+  .table-body-item-volume-bar-top-decrease,
+  .table-body-item-volume-bar-top-increase {
     font-size: 14px !important;
   }
 }

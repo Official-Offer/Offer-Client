@@ -23,7 +23,9 @@ export default function LayoutGlobal(props: any): ReactElement {
   const router = useRouter();
   const route = router.asPath.split("/");
   const isDappNews = route[1].slice(0, 9) == "dapp-news";
-  const isDappNewsDetails = route[1].slice(0, 9) == "dapp-news" && route[1].slice(9, 10) == "/";
+  const isDappPortal = route[1].slice(0, 3) == "app";
+  const isDappNewsDetails =
+    route[1].slice(0, 9) == "dapp-news" && route[1].slice(9, 10) == "/";
   const [banners, setBanners] = useState<any>([]);
   useEffect(() => {
     (async () => {
@@ -41,7 +43,6 @@ export default function LayoutGlobal(props: any): ReactElement {
       });
     })();
   }, []);
-  
 
   return (
     <>
@@ -51,7 +52,7 @@ export default function LayoutGlobal(props: any): ReactElement {
           content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
         />
         <title>Tokenplay</title>
-        {!isDappNews && (
+        {!isDappNews && !isDappPortal && (
           <>
             <meta
               property="og:image"

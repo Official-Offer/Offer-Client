@@ -32,7 +32,8 @@
     color: #223052;
   }
   p.top {
-    color: #6f788f !important;
+    color: #788096 !important;
+    font-size: 20px;
   }
   .suggested {
     font-size: 16px;
@@ -54,12 +55,25 @@
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 20px !important;
     letter-spacing: -0.01em;
 
     /* Old/Old_style/cl-text */
 
     color: #223052;
+  }
+  .maximum {
+    font-size: 16px;
+  }
+  .highquality {
+    font-size: 18px;
+  }
+  .jpgpng {
+    color: #6E778E;
+  }
+  .dappdotcom {
+    color :#6F788F !important;
+    font-size: 20px;
   }
   @include sm {
     padding: 0 5px;
@@ -150,7 +164,6 @@
   &-avatar-area,
   &-avatar-empty,
   &-avatar-logo {
-    width: 200px;
     height: 200px;
     border: 1.5px dashed #223052;
     padding: 10px 10px 20px 10px;
@@ -219,6 +232,9 @@
     display: flex;
     column-gap: 60px;
     margin: 30px 0 44px 0;
+    @media screen and (max-width: 992px) {
+      column-gap: 35px;
+    }
   }
   &-character-count {
     color: #1dbbbd;

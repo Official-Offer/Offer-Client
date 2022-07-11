@@ -18,6 +18,9 @@
       }
     }
   }
+  .appstatpercent {
+    font-size: 16px !important;
+  }
   &-error {
     color: red;
     font-size: 12px;
@@ -41,7 +44,7 @@
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 24px;
     /* identical to box height, or 120% */
     padding: 12px;
@@ -59,28 +62,35 @@
   }
   &-uni-number {
     margin-bottom: 0;
+    font-size: 12px;
+    color: #223052;
   }
   &-uni-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 15px;
     gap: 15px;
     width: 100%;
   }
   &-flex {
+    font-size: 12px !important;
     display: flex;
     flex-direction: row;
     gap: 5px;
     font-size: 13px;
+    color: #223052;
   }
   &-derivative {
     &-increase {
       color: #45b26b;
     }
     &-decrease {
-      color: #ef466f;
+      color: #f05178;
     }
+  }
+  .ath {
+    height: 42px;
   }
   &-uni-content-summary {
     display: flex;
@@ -93,6 +103,8 @@
     width: 100%;
     border: 1.5px solid #058499;
     border-radius: 10px;
+    font-size: 12px !important;
+    font-weight: bold !important;
   }
 
   &-metrics {
@@ -115,12 +127,15 @@
   }
 
   &-follower {
-    font-size: 15px;
+    font-size: 14px;
+    color: #223052;
+    display: flex;
+    justify-content: center;
   }
   &-combine {
     &-left {
-      width: 80px;
-      height: 80px;
+      width: 85px;
+      height: 85px;
       border-radius: 8px;
       position: relative;
       overflow: hidden;
@@ -137,6 +152,9 @@
     &-right {
       margin-left: 20px;
       &-rating {
+        div {
+          margin-top: 5px;
+        }
         p {
           font-weight: bold;
           font-size: 16px;
@@ -144,7 +162,7 @@
         span {
           font-size: 16;
           font-weight: 450;
-          color: #b1b5c4;
+          color: #69778c;
           height: 20px;
         }
       }
@@ -165,6 +183,9 @@
   }
   &-bolder {
     font-weight: bold;
+  }
+  &-tags {
+    row-gap: 10px;
   }
   &-description,
   &-tags,
@@ -216,28 +237,28 @@
   }
   &-chart-name {
     margin-left: 12px;
-    font-family: 'Circular Std';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 24px;
-/* identical to box height, or 133% */
+    font-family: "Circular Std";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    /* identical to box height, or 133% */
 
-display: flex;
-align-items: center;
-text-align: center;
-text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
 
-/* Old/Old_style/cl-text */
+    /* Old/Old_style/cl-text */
 
-color: #223052;
-
+    color: #223052;
   }
   &-flex {
     display: flex;
     justify-content: space-between;
   }
   &-dashboard {
+
     h3 {
       text-transform: uppercase;
       margin: 0;
@@ -300,27 +321,28 @@ color: #223052;
         margin-bottom: 10px;
       }
       .exp-item {
-        font-size: 0.9rem;
+        font-size: 14px !important;
         margin: 3px 0;
         .value {
           margin: 0 10px 0 5px;
-          color: $grey-color;
+          color: #6f788f;
         }
         .time {
-          color: $grey-color;
+          color: #6f788f;
         }
         .decrease {
           font-weight: bold;
-          color: #ef466f;
+          color: #f05178;
+          font-size: 14px !important;
         }
         .increase {
           font-weight: bold;
           color: #45b36b;
+          font-size: 14px !important;
         }
       }
     }
     &-submit-img {
-      width: 341px;
       height: 234px;
       background-image: url(/img/banner/banner_submit.png);
       background-repeat: no-repeat;
@@ -340,10 +362,10 @@ color: #223052;
       &-volume,
       &-transactions {
         font-weight: bold;
-        font-size: 20px;
+        font-size: 18px;
         span {
           &.decrease {
-            color: #ef466f !important;
+            color: #f05178 !important;
           }
           &.increase {
             color: #45b36b !important;
@@ -351,8 +373,12 @@ color: #223052;
         }
       }
       &-title {
-        font-size: 20px;
+        font-size: 16px;
+        color: #223052;
       }
+    }
+    .decrease {
+      font-size: 16px;
     }
   }
   &-right {
@@ -400,6 +426,8 @@ color: #223052;
       }
       &-name {
         margin: 0 10px;
+        font-size: 18px;
+        font-weight: bold;
       }
       &-time {
         font-size: 0.9rem;
@@ -408,12 +436,24 @@ color: #223052;
       &-description {
         font-size: 0.9rem;
       }
+      .rate {
+        margin: 0 10px;
+      }
     }
   }
   &-price {
+    color: #223052;
+    font-size: 18px;
     margin-bottom: 20px;
     &-switch {
       margin-right: 20px;
+    }
+    .ant-switch-checked {
+      background-color: #223052;
+    }
+    .mobile {
+      margin-left: 0;
+      padding-left: 0;
     }
   }
   &-review {
@@ -467,8 +507,9 @@ color: #223052;
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 20px;
     line-height: 24px;
+    color: #223052;
   }
   &-title {
     font-family: "Circular Std";
@@ -497,21 +538,21 @@ color: #223052;
   }
   .apexcharts-legend-text {
     margin-left: 5px;
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-family: "Circular Std";
     font-style: normal;
     font-weight: 500 !important;
     width: 100px;
-    word-spacing: normal!important;
+    word-spacing: normal !important;
     list-style: 24px;
-
+    color: #223052 !important;
   }
   .apexcharts-legend-series {
     width: 100;
     margin-right: 25px !important;
   }
   .apexcharts-canvas {
-    margin-bottom: 100px !important;
+    // margin-bottom: 100px !important;
   }
   .idontknowwhat {
     text-align: right;
@@ -562,7 +603,7 @@ color: #223052;
     line-height: 24px;
     /* or 171% */
     word-spacing: -3px;
-    color: rgba(34, 48, 82, 0.65);
+    color: #6f788f;
   }
   .view-website {
     font-family: "Circular Std";
@@ -621,7 +662,11 @@ color: #223052;
 
     /* Old/Old_style/cl-text */
 
+    color: #223152;
+  }
+  .filter {
     color: #223052;
+    font-size: 16px;
   }
   .on-chain {
     font-family: "Circular Std";
@@ -639,4 +684,95 @@ color: #223052;
   .br {
     height: 25px;
   }
+  .under-logo {
+    color: #223052;
+    font-size: 14px;
+  }
+  .hashtag {
+    color: #058499;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .ant-rate {
+    @media screen and (max-width: 992px) {
+      font-size: 12px;
+    }
+  }
+  .mobile-carousel {
+    &-header {
+      display: flex;
+      justify-content: space-around;
+      color: #058499;
+      column-gap: 10px;
+    }
+  }
+
+  .ant-tabs-content-holder {
+    margin-bottom: 20px;
+    padding: 0 10px;
+  }
+  .slide {
+    &-social {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #058499 !important;
+    background-color: transparent !important;
+  }
+  .abc {
+    height: "160px";
+    color: "black";
+    line-height: "160px";
+    text-align: "center";
+    background: "#364d79";
+  }
+  .chart-slider {
+    padding: 5px 10px;
+    border: 1.5px solid #058499;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  .dont-display {
+    display: none;
+  }
+  .vertical-divider {
+    color: #058499;
+    height: 100%;
+    width: 1px;
+    padding: 10px;
+  }
+  .ant-divider-vertical {
+    border-left: 1.5px solid #058499;
+    margin: 0 12px 0 4px;
+  }
+  .slider-wrapper {
+    flex-direction: column;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    .slick-dots-bottom {
+      bottom: -25px;
+    }
+  }
+  li.slick-active button {
+    background: #058499 !important;
+    color: #058499;
+  }
+  .slick-dots li button {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 1px solid #058499;
+  }
+  .ant-tabs-tab-btn {
+    margin: 0!important;
+    padding: 8px
+  }
+  .mobile-onchain {
+    width: 100%
+  }
+  
 }
