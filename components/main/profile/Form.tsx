@@ -25,7 +25,7 @@ import { BoxALignCenter_Justify_ItemsBetween } from "@styles/styled-components/s
 import { Divider } from "antd";
 import { XCircle } from "react-feather";
 import request from "@services/apiSSO";
-import { URL_API_IMG, URL_API_SSO } from "@config/dev.config";
+import { URL_API_IMG, URL_API_SSO } from "@config/index";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";

@@ -7,7 +7,7 @@ import { Button } from "@styles/styled-components/styledButton";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { URL_API_IMG } from "@config/dev.config";
+import { URL_API_IMG } from "@config/index";
 
 export const AppSlide: FC = ({ imgArr }: any) => {
   const navigationPrevRef = React.useRef(null);
