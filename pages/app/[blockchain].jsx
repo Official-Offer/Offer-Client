@@ -69,7 +69,7 @@ import { useRef } from "react";
 import Swiper from "swiper";
 const { TabPane } = Tabs;
 
-const BlockchainDetails = ({dapp}) => {
+const BlockchainDetails = ({ dapp }) => {
   const router = useRouter();
   const ChartSlider = dynamic(() =>
     import("@components/main/app").then((mod) => mod.ChartSlider)
@@ -308,13 +308,12 @@ const BlockchainDetails = ({dapp}) => {
               <FacebookIcon round size={62}></FacebookIcon>
             </FacebookShareButton>
             <TwitterShareButton
-              title="Checkout this Dapp"
               url={`${URL_SITE}/app/${id}`}
             >
               <TwitterIcon size={62} round />
             </TwitterShareButton>
             <TelegramShareButton
-              title="Checkout this Dapp"
+              title={dapp?.description}
               url={`${URL_SITE}/app/${id}`}
             >
               <TelegramIcon size={62} round></TelegramIcon>
@@ -513,23 +512,17 @@ const BlockchainDetails = ({dapp}) => {
       </>
     );
   };
-  const imgLink = `${URL_API_IMG}${dapp?.logo?.data?.attributes?.url}`;
+  const imgLink = dapp?.logo?.data?.attributes?.url;
   return (
     <div>
       <Head>
         <meta property="title" content={dapp?.name} />
         <meta property="og:title" content={dapp?.name} />
-        <meta property="og:url" content={`${URL_SITE}/app/${id}`} />
-        <meta
-          property="og:image"
-          content={imgLink}
-        />
+        {/* <meta property="og:url" content={`${URL_SITE}/app/${id}`} /> */}
+        <meta property="og:image" content={`${URL_API_IMG}${imgLink}`} />
         <meta property="og:description" content={dapp?.description} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:image"
-          content={imgLink}
-        />
+        <meta name="twitter:image" content={`${URL_API_IMG}${imgLink}`} />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="628" />
         <meta name="twitter:title" content={dapp?.name} />
@@ -920,10 +913,10 @@ const BlockchainDetails = ({dapp}) => {
                             icon={<UserOutlined />}
                           />
                           <span className="blockchain-details-comment-box-name">
-                          {comment.attributes?.user.data?.attributes
-                                .displayName ||
-                                comment.attributes?.user.data?.attributes
-                                  .username}
+                            {comment.attributes?.user.data?.attributes
+                              .displayName ||
+                              comment.attributes?.user.data?.attributes
+                                .username}
                           </span>
                           <Rate allowHalf value={comment.attributes?.rating} />
                         </BoxALignItemsCenter>
@@ -1331,7 +1324,10 @@ const BlockchainDetails = ({dapp}) => {
                   className="mb-5"
                   style={{ display: "inline-block" }}
                 >
-                  <Button className="blockchain-details-right-follow" style={{marginRight: 5}}>
+                  <Button
+                    className="blockchain-details-right-follow"
+                    style={{ marginRight: 5 }}
+                  >
                     <BoxALignItemsCenter>
                       <ArrowRightCircle
                         color=" #223052"
@@ -1377,7 +1373,12 @@ const BlockchainDetails = ({dapp}) => {
                   </h3>
                   <BoxALignItemsCenter
                     className="status-label main"
-                    style={{ marginLeft: 10, paddingLeft: 3, paddingRight: 3, width: "90px" }}
+                    style={{
+                      marginLeft: 10,
+                      paddingLeft: 3,
+                      paddingRight: 3,
+                      width: "90px",
+                    }}
                   >
                     <span className="on-chain mobile-onchain">On-Chain</span>
                   </BoxALignItemsCenter>
@@ -1802,7 +1803,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       dapp,
-    }
-  }
+    },
+  };
 }
 export default BlockchainDetails;

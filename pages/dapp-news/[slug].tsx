@@ -211,7 +211,10 @@ const NewsDetails: NextPage = ({ newsData }: any) => {
                     let tweetID = props.href?.split("/").slice(-1)[0];
                     // console.log(tweetID);
                     return props.href?.startsWith("https://twitter.com") ? (
-                        <TweetEmbed className="news-details-content-tweet" tweetId={`${tweetID}`} />
+                      <TweetEmbed
+                        className="news-details-content-tweet"
+                        tweetId={`${tweetID}`}
+                      />
                     ) : (
                       <a href={props.href}>{props.children}</a> // All other links
                     );
