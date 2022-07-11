@@ -26,7 +26,7 @@ const DappPortal: NextPage = () => {
   const [chain, setChain] = useState("All");
   const [cate, setCate] = useState("All");
   const [viewMore, setNumberViewMore] = useState(18);
-  const [sort, setSort] = useState(["socialSignal", "desc"]);
+  const [sort, setSort] = useState(["Volume", "desc"]);
   const loadMore = () => setNumberViewMore(viewMore + 10);
   const [changedTimeQuery, setChangedTimeQuery] = useState(false);
 
@@ -47,7 +47,7 @@ const DappPortal: NextPage = () => {
       if (activeQuery() === "socialSignal") sort0 = "socialSignal";
       else sort0 = `${activeTimeQuery(router.query.timeKey)}${activeQuery()}`;
 
-      console.log(sort0);
+      
       const query = qs.stringify(
         {
           populate: "*",

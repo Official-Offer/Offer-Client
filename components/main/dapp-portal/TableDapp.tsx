@@ -27,7 +27,6 @@ export default function TableDapp({
   chainIcon,
 }: any): ReactElement {
   const router = useRouter();
-  const [isSorter, setSorter] = useState(true);
   const timeKey = router.query.timeKey || "24h";
 
   const hoverableQuestionMark = (message: string) => {
@@ -37,9 +36,6 @@ export default function TableDapp({
       </Tooltip>
     );
   };
-
-  // useEffect(() => console.log("sort[0]", sort[0]), [sort]);
-  // useEffect(() => console.log("headermobile", headerMobile), []);
 
   const listTitleHeader = [
     { title: "#", icon: "", sort: false },
@@ -106,7 +102,6 @@ export default function TableDapp({
       query: "socialSignal",
     },
   ];
-  const [squery, setSquery] = useState("User");
   const activeItem = (sort: string, query: string) => {
     //look at mobile header and sort accordingly
     let timeQuery;
@@ -115,22 +110,8 @@ export default function TableDapp({
     else timeQuery = `monthly${query}`;
     if (query === "socialSignal") setSort([query, sort]);
     else setSort([timeQuery, sort]);
-
     setHeaderMobile(activeHeader());
   };
-  useEffect(() => {
-    if (router.query && router.query.timeKey) {
-      let timeQuery;
-      const query = activeQuery();
-      if (timeKey === "24h") timeQuery = `daily${query}`;
-      else if (timeKey === "7d") timeQuery = `weekly${query}`;
-      else timeQuery = `monthly${query}`;
-      // if (query === "socialSignal") setSort([query, sort[1]]);
-      // else setSort([timeQuery, sort[1]]);
-      // console.log(timeQuery);
-      // console.log(sort[1]);
-    }
-  }, [router]);
 
   const [headerMobile, setHeaderMobile] = useState(
     listTitleHeaderMobile[0].title
@@ -138,7 +119,6 @@ export default function TableDapp({
   useEffect(() => setHeaderMobile(activeHeader()), [sort]);
   const onMobileChangeHeader = (e: any) => {
     setHeaderMobile(e);
-    // console.log(e);
   };
 
   const activeHeader = () => {
@@ -146,13 +126,6 @@ export default function TableDapp({
     if (sort[0].includes("Transaction")) return "Transactions";
     if (sort[0].includes("Volume")) return "Volume";
     return "Social Signal";
-  };
-
-  const activeQuery = () => {
-    if (sort[0].includes("User")) return "User";
-    if (sort[0].includes("Transaction")) return "Transaction";
-    if (sort[0].includes("Volume")) return "Volume";
-    return "socialSignal";
   };
 
   const activeSorter = () => {
