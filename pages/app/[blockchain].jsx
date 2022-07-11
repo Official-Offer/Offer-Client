@@ -307,9 +307,7 @@ const BlockchainDetails = ({ dapp }) => {
             >
               <FacebookIcon round size={62}></FacebookIcon>
             </FacebookShareButton>
-            <TwitterShareButton
-              url={`${URL_SITE}/app/${id}`}
-            >
+            <TwitterShareButton url={`${URL_SITE}/app/${id}`}>
               <TwitterIcon size={62} round />
             </TwitterShareButton>
             <TelegramShareButton
@@ -861,7 +859,13 @@ const BlockchainDetails = ({ dapp }) => {
                                     )
                                   </span>
                                 </div>
-                                {!comp.data.total && <div className="br" />}
+                                {!comp.data.total && (
+                                  <div className="exp-item">
+                                    <span className="time"></span>
+                                    <span className="value"></span>
+                                    <span className="time"></span>
+                                  </div>
+                                )}
                               </div>
                             </BoxALignItemsStart>
                           </div>

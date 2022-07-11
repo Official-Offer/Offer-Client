@@ -349,7 +349,7 @@ export const NavbarHome: FC = () => {
                   <ButtonBackgroundBlueBold
                     className="d-flex align-items-center me-3"
                     onClick={() => {
-                      // router.push("/submit");
+                      router.push("/submit");
                     }}
                   >
                     <UploadOutlined className="me-2 fontSize_1-2" />
