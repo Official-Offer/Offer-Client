@@ -127,8 +127,8 @@ export default function TableDapp({
       else timeQuery = `monthly${query}`;
       // if (query === "socialSignal") setSort([query, sort[1]]);
       // else setSort([timeQuery, sort[1]]);
-      console.log(timeQuery);
-      console.log(sort[1]);
+      // console.log(timeQuery);
+      // console.log(sort[1]);
     }
   }, [router]);
 

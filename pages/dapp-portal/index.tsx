@@ -28,8 +28,26 @@ const DappPortal: NextPage = () => {
   const [viewMore, setNumberViewMore] = useState(18);
   const [sort, setSort] = useState(["socialSignal", "desc"]);
   const loadMore = () => setNumberViewMore(viewMore + 10);
+  const [changedTimeQuery, setChangedTimeQuery] = useState(false);
+
+  const activeQuery = () => {
+    if (sort[0].includes("User")) return "User";
+    if (sort[0].includes("Transaction")) return "Transaction";
+    if (sort[0].includes("Volume")) return "Volume";
+    return "socialSignal";
+  };
+  const activeTimeQuery = (timeKey: any) => {
+    if (timeKey === "24h") return "daily";
+    if (timeKey === "7d") return "weekly";
+    return "monthly";
+  };
   useEffect(() => {
     (async () => {
+      let sort0;
+      if (activeQuery() === "socialSignal") sort0 = "socialSignal";
+      else sort0 = `${activeTimeQuery(router.query.timeKey)}${activeQuery()}`;
+
+      console.log(sort0);
       const query = qs.stringify(
         {
           populate: "*",
@@ -49,7 +67,7 @@ const DappPortal: NextPage = () => {
               },
             },
           },
-          sort: [`${sort[0]}:${sort[1]}`],
+          sort: [`${sort0}:${sort[1]}`],
           // sort: [`category:asc`],
         },
         {
@@ -57,6 +75,7 @@ const DappPortal: NextPage = () => {
         }
       );
       let display: any;
+
       await request.get(`/dapp-ads?populate=*`).then((res) => {
         // console.log(query);
         display = [...res.data.data.map((e: any) => e.attributes.dapp.data)];
@@ -68,9 +87,9 @@ const DappPortal: NextPage = () => {
       });
       setTokenList(display);
     })();
-  }, [chain, viewMore, sort, cate]);
+  }, [chain, viewMore, sort, cate, router, changedTimeQuery]);
 
-  const [chainIcon, setChainIcon] = useState({img: null, name: null});
+  const [chainIcon, setChainIcon] = useState({ img: null, name: null });
   return (
     <>
       <section id="main-portal">
@@ -85,7 +104,12 @@ const DappPortal: NextPage = () => {
           setChainIcon={setChainIcon}
         />
         <br />
-        <TabsCategory setCate={setCate} cate={cate} />
+        <TabsCategory
+          setCate={setCate}
+          cate={cate}
+          setChanged={setChangedTimeQuery}
+          changed={changedTimeQuery}
+        />
         <br />
         <TableDapp
           tokenList={tokenList}

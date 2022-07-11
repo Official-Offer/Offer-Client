@@ -48,7 +48,12 @@ export const listCategory = [
   },
 ];
 
-export default function TabsCategory({ setCate, cate }: any): ReactElement {
+export default function TabsCategory({
+  setCate,
+  cate,
+  setChanged,
+  changed,
+}: any): ReactElement {
   const router = useRouter();
   const [cateIdArray, setCateIdArray] = useState([{ name: "All", id: "All" }]);
   useEffect(() => {
@@ -109,6 +114,7 @@ export default function TabsCategory({ setCate, cate }: any): ReactElement {
             className="ms-2"
             defaultValue={router.query.timeKey || "24hours"}
             style={{ width: 100 }}
+            onChange={() => setChanged(!changed)}
           >
             <Option value="24hours">
               <Link
