@@ -7,3 +7,10 @@ export const Box = styled.div `
     flex-direction: column;
   }
 `;
+
+export const Card = styled.div`
+  ${border}
+  ${color}
+  ${layout}
+  ${space}
+`;
