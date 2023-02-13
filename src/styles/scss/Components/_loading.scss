@@ -1,0 +1,40 @@
+.preloader {
+  background-color: $green-bold-color;
+  .lds-ripple {
+    div {
+      border: 4px solid $white-color;
+    }
+  }
+  &.preloader-five {
+    background-color: $green-bold-color;
+  }
+}
+.lds-ripple div {
+  border: 5px solid $white-color;
+}
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 1000px;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #058499;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
