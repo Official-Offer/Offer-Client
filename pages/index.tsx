@@ -7,18 +7,20 @@ import { StyledSystemExample } from "@components/examples/styled-system";
 import { TestingLibraryExample } from "@components/examples/testing-library";
 import { I18NExample } from "@components/examples/translate";
 const Home: NextPage = () => {
-  const Header = dynamic(() => import("@components").then((mod: any) => mod.Header)) as any;
+  const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
+  // const Header = dynamic(() => import("@components").then((mod: any) => mod.Header)) as any;
   const Main = dynamic(() => import("@components").then((mod: any) => mod.Main)) as any;
-  const Cards = dynamic(() => import("@components").then((mod: any) => mod.Cards)) as any;
-  const Footer = dynamic(() => import("@components").then((mod: any) => mod.Footer)) as any;
+  // const Cards = dynamic(() => import("@components").then((mod: any) => mod.Cards)) as any;
+  // const Footer = dynamic(() => import("@components").then((mod: any) => mod.Footer)) as any;
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
-      <Header />
-      <Main />
-      <Cards />
-      <Footer />
+      {/* <Header /> */}
+      <Navbar />
+      <Main /> 
+      {/* <Cards /> */}
+      {/* <Footer /> */}
       {/* <Counter /> */}
     </div>
     // <Counter />
