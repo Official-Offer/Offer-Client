@@ -8,6 +8,12 @@ export const Navbar: React.FC = () => {
 
   const listMenu = [
     {
+        name: "Home",
+        link: "#",
+        newTab: false,
+        routeSelected: "#",
+      },
+    {
       name: "Thông báo",
       link: "/student/notification",
       newTab: false,
@@ -21,15 +27,15 @@ export const Navbar: React.FC = () => {
     },
     {
       name: "Tin nhắn",
-      link: "/student/text",
+      link: "/student/messages",
       newTab: false,
-      routeSelected: "/student/text",
+      routeSelected: "/student/messages",
     },
     {
       name: "Công việc",
-      link: "/student/job",
+      link: "/student/chat",
       newTab: false,
-      routeSelected: "/student/text",
+      routeSelected: "/student/chat",
     },
     {
       name: "Đăng kí",
