@@ -9,9 +9,9 @@ export const Navbar: React.FC = () => {
   const listMenu = [
     {
         name: "Home",
-        link: "#",
+        link: "/student/home",
         newTab: false,
-        routeSelected: "#",
+        routeSelected: "/student/home",
       },
     {
       name: "Thông báo",
@@ -33,9 +33,9 @@ export const Navbar: React.FC = () => {
     },
     {
       name: "Công việc",
-      link: "/student/chat",
+      link: "/student/job",
       newTab: false,
-      routeSelected: "/student/chat",
+      routeSelected: "/student/job",
     },
     {
       name: "Đăng kí",

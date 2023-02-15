@@ -7,7 +7,7 @@ import { StyledSystemExample } from "@components/examples/styled-system";
 import { TestingLibraryExample } from "@components/examples/testing-library";
 import { I18NExample } from "@components/examples/translate";
 const Home: NextPage = () => {
-  const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
+  // const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
   // const Header = dynamic(() => import("@components").then((mod: any) => mod.Header)) as any;
   const Main = dynamic(() => import("@components").then((mod: any) => mod.Main)) as any;
   // const Cards = dynamic(() => import("@components").then((mod: any) => mod.Cards)) as any;
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       {/* <Header /> */}
-      <Navbar />
+      {/* <Navbar /> */}
       <Main /> 
       {/* <Cards /> */}
       {/* <Footer /> */}
