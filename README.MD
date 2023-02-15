@@ -1,13 +1,15 @@
 # Offer
 
-
-This project was generated with [superplate](https://github.com/pankod/superplate).
-
-## Project Organization
-- `components`
-- `pages`
-- `config`
-- `src`
+## Development Rules (PLEASE PAY ATTENTION!):
+1. **Image**: Use next/image for SEO optimization.
+2. **Component imports**: Use dynamic import by next (next/dynamic) for lazy loading.
+3. **Font**: Use next/font for font optimization.
+4. **Config**: Configure environment variables into 2 stages: dev and prod.
+5. **Custom URLs**: if you want to use custom url,  name files in the form of: /app/[slug].jsx 
+6. **Styling**:
+* Primarily use styled-components (preferred) & scss. Don't mix these two in the same components.
+* ALWAYS: use global font & color.
+* DONT: use in-line styling & built-in css (antd, bootstrap, tailwind).
 
 ## Available Scripts
 
