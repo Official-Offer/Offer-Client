@@ -10,6 +10,8 @@
 * Primarily use styled-components (preferred) & scss. Don't mix these two in the same components.
 * ALWAYS: use global font & color.
 * DONT: use in-line styling & built-in css (antd, bootstrap, tailwind).
+7. Adhere to Typescript rules.
+8. Import global packages before local packages.
 
 ## Available Scripts
 
