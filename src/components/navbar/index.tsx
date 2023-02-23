@@ -41,7 +41,7 @@ export const Navbar: React.FC = () => {
       name: "Đăng kí",
       link: "/registration/student",
       newTab: false,
-      routeSelected: "/registration/student",
+      routeSelected: "/student/registration",
     },
   ];
 
