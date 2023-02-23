@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 
 //create a next page for the student home page, code below
-const StudentNotification: NextPage = () => {
+const StudentAdvisors: NextPage = () => {
   return (
     <div>
-      <h1>StudentNotification</h1>
+      <h1>StudentAdvisors</h1>
     </div>
   );
 };
 
-export default StudentNotification;
+export default StudentAdvisors;

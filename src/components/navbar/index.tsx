@@ -9,21 +9,21 @@ export const Navbar: React.FC = () => {
   const listMenu = [
     {
         name: "Home",
-        link: "/student/home",
+        link: "/student",
         newTab: false,
-        routeSelected: "/student/home",
+        routeSelected: "/student",
       },
     {
       name: "Thông báo",
-      link: "/student/notification",
+      link: "/student/notifications",
       newTab: false,
-      routeSelected: "/student/notification",
+      routeSelected: "/student/notifications",
     },
     {
       name: "Sự kiện",
-      link: "/student/event",
+      link: "/student/events",
       newTab: false,
-      routeSelected: "/student/event",
+      routeSelected: "/student/events",
     },
     {
       name: "Tin nhắn",
@@ -33,13 +33,13 @@ export const Navbar: React.FC = () => {
     },
     {
       name: "Công việc",
-      link: "/student/job",
+      link: "/student/jobs",
       newTab: false,
-      routeSelected: "/student/job",
+      routeSelected: "/student/jobs",
     },
     {
       name: "Đăng kí",
-      link: "/registration/student",
+      link: "/student/registration",
       newTab: false,
       routeSelected: "/student/registration",
     },
