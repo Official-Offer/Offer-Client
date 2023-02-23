@@ -17,19 +17,3 @@
     color: #5B5B5B;
   }
 }
-
-.ant-input-search {
-  max-width: 300px;
-
-  .ant-input {
-    background-color: #F1F1F1;
-    border-radius: 40px;
-    &::placeholder {
-      color: #5B5B5B;
-      font-weight: 500;
-    }
-  }
-  .ant-input-search-button {
-    border-radius: 0 40px 40px 0 !important;
-  }
-}
