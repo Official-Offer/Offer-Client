@@ -10,6 +10,7 @@ export default function LayoutGlobal(props: any): ReactElement {
   return (
     <>
       <Navbar />
+      {/* Stupid shit */}
       <div>{props.children}</div>
     </>
   );
