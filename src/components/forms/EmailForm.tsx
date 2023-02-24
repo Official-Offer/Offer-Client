@@ -25,6 +25,7 @@ function EmailForm({ onSubmit }: IEmailForm) {
         <b> Nhập email của bạn: </b>
       </label>
       <br />
+      <br />
       <FormInput
         width="250px"
         type="email"

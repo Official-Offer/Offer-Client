@@ -1,0 +1,17 @@
+.register-student {
+    display: flex;
+    &-sideBar {
+      flex: 1;
+    }
+    &-content {
+      flex: 2;
+      display: flex;
+      align-items: center; /* center vertically */
+      justify-content: center; /* center horizontally */
+      height: 100vh;
+      &-form {
+          
+      }
+    }
+  }
+  
