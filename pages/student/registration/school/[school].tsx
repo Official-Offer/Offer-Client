@@ -4,7 +4,7 @@ import SchoolForm from "@components/forms/SchoolForm";
 import { useRouter } from "next/router";
 
 //create a next page for the student home page, code below
-const RegisterStudent: NextPage = () => {
+const RegisterStudentSchool: NextPage = () => {
   const router = useRouter();
 
   return (
@@ -14,15 +14,11 @@ const RegisterStudent: NextPage = () => {
       </div>
       <div className="register-student-content">
         <div className="register-student-content-form">
-          <SchoolForm
-            onSubmit={(school) => {
-              router.push(`/student/registration/school/${school}`);
-            }}
-          />
+          <h1>{router.query.school}</h1>
         </div>
       </div>
     </div>
   );
 };
 
-export default RegisterStudent;
+export default RegisterStudentSchool;

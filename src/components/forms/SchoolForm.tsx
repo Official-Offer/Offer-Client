@@ -21,46 +21,57 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <b> Kết nối với trường của bạn: </b>
-      </label>
+    <div>
+      <h1>
+        Bắt đầu sự nghiệp ngay khi <br /> ngồi trên ghế nhà trường với Offer
+      </h1>
       <br />
       <br />
-      <FormInput
-        width="250px"
-        list="mySuggestions"
-        value={school}
-        onChange={handleSchoolChange}
-        required
-      />
-      <datalist id="mySuggestions">
-        <option value="Bách Khoa" />
-        <option value="Sư Phạm" />
-        <option value="Ngoại Thương" />
-        <option value="Kinh Tế Quốc Dân" />
-        <option value="FPT" />
-        <option value="VinUniversity" />
-        <option value="RMIT" />
-        <option value="UMass" />
-      </datalist>
-      <br />
-      <br />
-      <SubmitButton type="submit">Tiếp tục</SubmitButton>
-      <br />
-      <br />
-      <hr />
-      <Typography.Text type="secondary">
-        Đã có tài khoản? <br />
-        <Typography.Text underline><Link href="/student/login">Đăng nhập tại đây</Link></Typography.Text>
-      </Typography.Text>
-      <br />
-      <br />
-      <Typography.Text type="secondary">
-        Bạn là nhà tuyển dụng? <br />
-        <Typography.Text underline><Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link></Typography.Text>
-      </Typography.Text>
-    </form>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <b> Kết nối với trường của bạn: </b>
+        </label>
+        <br />
+        <br />
+        <FormInput
+          width="250px"
+          list="mySuggestions"
+          value={school}
+          onChange={handleSchoolChange}
+          required
+        />
+        <datalist id="mySuggestions">
+          <option value="Bách Khoa" />
+          <option value="Sư Phạm" />
+          <option value="Ngoại Thương" />
+          <option value="Kinh Tế Quốc Dân" />
+          <option value="FPT" />
+          <option value="VinUniversity" />
+          <option value="RMIT" />
+          <option value="UMass" />
+        </datalist>
+        <br />
+        <br />
+        <SubmitButton type="submit">Tiếp tục</SubmitButton>
+        <br />
+        <br />
+        <hr />
+        <Typography.Text type="secondary">
+          Đã có tài khoản? <br />
+          <Typography.Text underline>
+            <Link href="/student/login">Đăng nhập tại đây</Link>
+          </Typography.Text>
+        </Typography.Text>
+        <br />
+        <br />
+        <Typography.Text type="secondary">
+          Bạn là nhà tuyển dụng? <br />
+          <Typography.Text underline>
+            <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
+          </Typography.Text>
+        </Typography.Text>
+      </form>
+    </div>
   );
 }
 
