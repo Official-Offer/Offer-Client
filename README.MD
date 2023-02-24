@@ -12,7 +12,7 @@
 * DONT: use in-line styling & built-in css (antd, bootstrap, tailwind).
 7. Adhere to Typescript rules.
 8. Import global packages before local packages.
-9. 
+
 ## Github Commit rules:
 1. Git branch: #(issue-number)-task-description
 2. Modular code: 
