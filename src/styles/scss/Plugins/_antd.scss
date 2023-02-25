@@ -1,2 +1,19 @@
-.ant-popover {
+.ant-menu {
+  align-items: center;
+}
+
+.ant-menu-item {
+  padding: 20px !important;
+  .anticon {
+    font-size: 20px;
+  }
+}
+
+.search-bar {
+  border-radius: 40px;
+  min-width: 200px;
+  max-width: 300px;
+  .anticon {
+    color: #5B5B5B;
+  }
 }
