@@ -14,9 +14,9 @@ export const Navbar: React.FC = () => {
   const listMenu = [
     {
       name: "Công việc",
-      link: "/student/job",
+      link: "/student/jobs",
       newTab: false,
-      routeSelected: "/student/job",
+      routeSelected: "/student/jobs",
     },
     {
       name: "CLB",
@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <Nav>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>: <Nav>
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"

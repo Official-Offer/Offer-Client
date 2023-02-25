@@ -1,0 +1,19 @@
+.form {
+  &-basic-info {
+    // padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    &-left {
+      flex: 1;
+      padding-right: 20px;
+    }
+    &-right {
+      flex: 1;
+      padding-right: 20px;
+    }
+    &-button {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+  }
+}
