@@ -1,17 +1,27 @@
 /* Global */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "./scss/Helper/variables";
 
 body {
   font-family: 'Inter', sans-serif;
- }
 
-/* Components */
-@import "./scss/Plugins/antd";
+  h2,h3,h4,h5 {
+    font-weight: 700;
+    margin: 0;
+  }
+}
+ 
+a {
+  text-decoration: none;
+}
+
+/* Plugins */
+@import "./scss/Plugins/antd"; 
+
+/* Layouts */
 @import "./scss/Layouts/student-email";
 @import "./scss/Layouts/main-home";
 @import "./scss/Layouts/register-student";
-@import "./scss/Components/forms";
 
-a {
-    text-decoration: none;
-}
+/* Components */
+@import "./scss/Components/forms";

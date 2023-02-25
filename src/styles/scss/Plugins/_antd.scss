@@ -1,4 +1,4 @@
-.ant-menu {
+.ant-menu.navbar {
   align-items: center;
 }
 
@@ -9,11 +9,36 @@
   }
 }
 
-.search-bar {
+.ant-input-affix-wrapper.search-bar {
   border-radius: 40px;
   min-width: 200px;
   max-width: 300px;
+  background-color: $grey-light;
+
   .anticon {
-    color: #5B5B5B;
+    color: $grey-dark;
+  }
+
+  input {
+    background-color: $grey-light;
+    &::placeholder {
+      color: $grey-dark;
+    }
+  }
+}
+
+.ant-card {
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+
+  .ant-card-body {
+    .horizontal {
+      display: flex;
+      flex-direction: row;
+    }
+    .vertical {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
