@@ -22,11 +22,6 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
 
   return (
     <div>
-      <h1>
-        Bắt đầu sự nghiệp ngay khi <br /> ngồi trên ghế nhà trường với Offer
-      </h1>
-      <br />
-      <br />
       <form onSubmit={handleSubmit}>
         <label>
           <b> Kết nối với trường của bạn: </b>
