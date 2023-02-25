@@ -4,11 +4,11 @@ import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
 import Link from "next/link";
 
-interface ISchoolForm {
+interface IPasswordForm {
   onSubmit: (email: string) => void;
 }
 
-function SchoolForm({ onSubmit }: ISchoolForm) {
+function PasswordForm({ onSubmit }: IPasswordForm) {
   const [password, setPassword] = useState("");
   const [reenteredPassword, setReenteredPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -54,7 +54,7 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
         <br />
         <br />
         <label>
-          <b> Nhập laị mật khẩu: </b>
+          <b> Nhập lại mật khẩu: </b>
         </label>
         <br />
         <br />
@@ -91,4 +91,4 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
   );
 }
 
-export default SchoolForm;
+export default PasswordForm;

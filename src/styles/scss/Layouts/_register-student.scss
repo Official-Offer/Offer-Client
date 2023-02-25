@@ -10,7 +10,9 @@
       justify-content: center; /* center horizontally */
       height: 100vh;
       &-form {
-          
+          h1 {
+            text-align: center;
+          }
       }
     }
   }

@@ -3,10 +3,12 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import PasswordForm from "@components/forms/PasswordForm";
 import Image from "next/image";
+import { useState } from "react";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
   const router = useRouter();
+  const [password, setPassword] = useState("");
 
   return (
     <div className="register-student">
@@ -20,8 +22,11 @@ const RegisterPassword: NextPage = () => {
           <br />
           <br />
           <PasswordForm
-            onSubmit={function (email: string): void {
-                
+            onSubmit={function (password: string): void {
+                setPassword(password);
+                router.push({
+                    pathname: "/student/registration/basic-information",
+                });
             }}
           />
         </div>
