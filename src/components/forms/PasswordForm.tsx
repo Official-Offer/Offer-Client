@@ -39,7 +39,7 @@ function PasswordForm({ onSubmit }: IPasswordForm) {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          <b> Nhập mật khẩu cho lần đăng nhập sau: </b>
+          <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
         </label>
         <br />
         <br />
@@ -54,7 +54,7 @@ function PasswordForm({ onSubmit }: IPasswordForm) {
         <br />
         <br />
         <label>
-          <b> Nhập lại mật khẩu: </b>
+          <b> Nhập lại mật khẩu *</b>
         </label>
         <br />
         <br />
