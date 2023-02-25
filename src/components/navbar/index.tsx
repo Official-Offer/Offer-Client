@@ -5,7 +5,7 @@ import React from "react";
 
 export const Navbar: React.FC = () => {
   const router: any = useRouter();
-
+  // console.log(router.pathname);
   const listMenu = [
     {
         name: "Home",
@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <div>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>: <div>
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"

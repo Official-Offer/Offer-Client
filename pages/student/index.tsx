@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 //create a next page for the student home page, code below
-const Student: NextPage = () => {
+const StudentHome: NextPage = () => {
   return (
     <div>
       <h1>StudentHome</h1>
@@ -9,4 +9,4 @@ const Student: NextPage = () => {
   );
 };
 
-export default Student;
+export default StudentHome;

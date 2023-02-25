@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
+import SchoolForm from "@components/forms/SchoolForm";
 import { useRouter } from "next/router";
-import BasicInfoForm from "@components/forms/BasicInfoForm";
 
 //create a next page for the student home page, code below
-const RegisterBasicInfo: NextPage = () => {
+const RegisterStudentSchool: NextPage = () => {
   const router = useRouter();
 
   return (
@@ -14,16 +14,11 @@ const RegisterBasicInfo: NextPage = () => {
       </div>
       <div className="register-student-content">
         <div className="register-student-content-form">
-          <h1>Xác nhận thông tin cơ bản</h1>
-          <br />
-          <BasicInfoForm
-            onSubmit={function (email: string): void {
-            }}
-          />
+          <h1>{router.query.school}</h1>
         </div>
       </div>
     </div>
   );
 };
 
-export default RegisterBasicInfo;
+export default RegisterStudentSchool;
