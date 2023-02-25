@@ -40,18 +40,18 @@ export const Navbar: React.FC = () => {
         className="w-100"
         style={{ justifyContent: "flex-start" }}
       >
-        <Menu.Item key={"/student/home"} className="m-0">
+        <Menu.Item key={"/student/"} className="m-0">
           {false ? (
             <a
               target="_blank"
               rel="noopener noreferrer"
               className="m-0"
-              href={"/student/home"}
+              href={"/student/"}
             >
               {"Home"}
             </a>
           ) : (
-            <Link href={"/student/home"}>
+            <Link href={"/student/"}>
               <a className="m-0">{"Home"}</a>
             </Link>
           )}
