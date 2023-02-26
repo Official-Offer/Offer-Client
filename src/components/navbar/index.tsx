@@ -43,8 +43,7 @@ export const Navbar: React.FC = () => {
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
-        className="navbar"
-        style={{ width: "20%" }}
+        className="navbar left-menu"
       >
         <Menu.Item key={"/student/"} className="m-0">
           {false ? (
@@ -66,17 +65,13 @@ export const Navbar: React.FC = () => {
           className="search-bar"
           placeholder="Tìm Kiếm"
           prefix={<SearchOutlined />}
-          style={{
-            
-          }}
           onSearch={onSearch}
         />
         </Menu>
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="navbar"
-          style={{ justifyContent: "center", width: "50%" }}
+          className="navbar center-menu"
         >
           {listMenu.map((menu, i) => {
             return (
@@ -104,28 +99,25 @@ export const Navbar: React.FC = () => {
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="navbar"
-          style={{ justifyContent: "flex-end", width: "20%" }}
+          className="navbar right-menu"
         >    
           <Menu.Item>
             <Button
               type="text"
               icon={<MessageOutlined />}
-              style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
           <Menu.Item>
             <Button
               type="text"
               icon={<BellOutlined />}
-              style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
           <Menu.Item>
             <Button
+              className="avatar-btn"
               type="primary"
               icon={<SmileFilled />}
-              style={{ borderRadius: '40px', width: '40px', height: '40px' }}
             />
           </Menu.Item>
       </Menu>

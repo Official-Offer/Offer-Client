@@ -1,34 +1,5 @@
-.ant-menu.navbar {
-  align-items: center;
-}
-
-.ant-menu-item {
-  padding: 20px !important;
-  .anticon {
-    font-size: 20px;
-  }
-}
-
-.ant-input-affix-wrapper.search-bar {
-  border-radius: 40px;
-  min-width: 200px;
-  max-width: 300px;
-  background-color: $grey-light;
-
-  .anticon {
-    color: $grey-dark;
-  }
-
-  input {
-    background-color: $grey-light;
-    &::placeholder {
-      color: $grey-dark;
-    }
-  }
-}
-
 .ant-card {
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 
   .ant-card-body {
@@ -40,5 +11,11 @@
       display: flex;
       flex-direction: column;
     }
+  }
+
+  .ant-card-meta-title {
+    font-weight: 700;
+    font-size: 1.5em;
+    white-space: normal;
   }
 }

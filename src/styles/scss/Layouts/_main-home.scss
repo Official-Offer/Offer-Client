@@ -3,47 +3,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 32px;
 
     background-color: $grey-light-background;
 
     .main__content {
       padding: 0;
-      width: 50%;
-
-      .uni-cover {
-        .ant-card-cover > img {
-          height: 240px;
-          width: 100%;
-          object-fit: cover;
-        }
-
-        .card-logo {
-          height: 132px;
-          width: 132px;
-
-          position: absolute;
-          left: 20px;
-          bottom: 20px;
-
-          background-color: #FFF;
-          border: 1px $grey-color solid;
-          border-radius: 4px;
-          padding: 20px 32px;
-
-          img {
-            height: 100%;
-            width: 100%;
-          }
-        }
-
-        .logo-spacing {
-          width: 148px;
-        }
-      }
+      max-width: 1464px;
+      width: 100%;
 
       section {
         margin-bottom: 36px;
-        align-self: left;
+
+        .see-more {
+          text-align: right;
+          a {
+            color: $purple-color;
+            font-weight: 700;
+            text-decoration: underline;
+            &::after {
+              content: " →";
+            }
+          }
+        }
       }
     }
   }
