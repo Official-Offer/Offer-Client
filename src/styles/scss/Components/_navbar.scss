@@ -1,0 +1,82 @@
+.navbar {
+  align-items: center;
+
+  .ant-menu-item {
+    padding: 20px !important;
+    .anticon {
+      font-size: 20px;
+    }
+    .ant-btn {
+      border-radius: 40px; 
+      width: 20px; 
+      height: 20px;
+    }
+    .avatar-btn {
+      border-radius: 40px; 
+      width: 40px; 
+      height: 40px;
+    }
+  }
+
+  &.left-menu {
+    width: 20%;
+  }
+
+  &.center-menu {
+    justify-content: center;
+    width: 50%;
+  }
+
+  &.right-menu {
+    justify-content: flex-end;
+    width: 20%;
+  }
+
+  .ant-input-affix-wrapper.search-bar {
+    border-radius: 40px;
+    min-width: 200px;
+    max-width: 300px;
+    background-color: $grey-light;
+  
+    .anticon {
+      color: $grey-dark;
+    }
+  
+    input {
+      background-color: $grey-light;
+      &::placeholder {
+        color: $grey-dark;
+      }
+    }
+  }
+}
+
+.uni-cover {
+  .ant-card-cover > img {
+    height: 255px;
+    object-fit: cover;
+  }
+
+  .card-logo {
+    height: 132px;
+    width: 132px;
+
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+
+    background-color: #FFF;
+    border: 1px $grey-color solid;
+    border-radius: 4px;
+    padding: 20px 32px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .logo-spacing {
+    width: 148px;
+  }
+}
