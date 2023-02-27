@@ -5,13 +5,16 @@ import { Typography } from "antd";
 import Link from "next/link";
 import FootnoteForm from "./FootnoteForm";
 
-interface IPasswordForm {
-  onSubmit: (email: string) => void;
+interface ILoginForm {
+  onSubmit: (emailAndPassword: {
+    email: React.SetStateAction<string>;
+    password: React.SetStateAction<string>;
+  }) => void;
 }
 
-function LoginForm({ onSubmit }: IPasswordForm) {
+function LoginForm({ onSubmit }: ILoginForm) {
   const [password, setPassword] = useState("");
-  const [reenteredPassword, setReenteredPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handlePasswordChange = (event: {
@@ -20,27 +23,42 @@ function LoginForm({ onSubmit }: IPasswordForm) {
     setPassword(event.target.value);
   };
 
-  const handleReenteredPasswordChange = (event: {
+  const handleEmailChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setReenteredPassword(event.target.value);
+    setEmail(event.target.value);
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     // Passwords match, handle form submission here
-    if (password !== reenteredPassword) {
-      setErrorMessage("Passwords do not match. Please try again.");
-    } else {
-      onSubmit(password);
-    }
+    // if (password !== "123456") {
+    //   setErrorMessage("Password do not match. Please try again.");
+    // } else {
+    onSubmit({ email, password });
+    // }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
+          <b> Email </b>
+        </label>
+        <br />
+        <br />
+        <FormInput
+          width="250px"
+          type="email"
+          id="password"
+          value={email}
+          onChange={handleEmailChange}
+          required
+        />
+        <br />
+        <br />
+        <label>
+          <b> Mật khẩu</b>
         </label>
         <br />
         <br />
@@ -54,25 +72,24 @@ function LoginForm({ onSubmit }: IPasswordForm) {
         />
         <br />
         <br />
-        <label>
-          <b> Nhập lại mật khẩu *</b>
-        </label>
+        <SubmitButton type="submit">Đăng nhập</SubmitButton>
         <br />
         <br />
-        <FormInput
-          width="250px"
-          type="password"
-          id="reentered-password"
-          value={reenteredPassword}
-          onChange={handleReenteredPasswordChange}
-          required
-        />
+        <hr />
+        <Typography.Text type="secondary">
+          Chưa có tài khoản? <br />
+          <Typography.Text underline>
+            <Link href="/student/login">Đăng ký tại đây</Link>
+          </Typography.Text>
+        </Typography.Text>
         <br />
         <br />
-        <SubmitButton type="submit">Tiếp tục</SubmitButton>
-        <br />
-        <br />
-        <FootnoteForm />
+        <Typography.Text type="secondary">
+          Bạn là nhà tuyển dụng? <br />
+          <Typography.Text underline>
+            <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
+          </Typography.Text>
+        </Typography.Text>{" "}
       </form>
     </div>
   );
