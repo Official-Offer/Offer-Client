@@ -3,8 +3,9 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import PinInput from "react-pin-input";
 import { Typography } from "antd";
-import { SubmitButton } from "@styles/styled-components/styledButton";
-import Link from "next/link";
+import { SubmitButton} from "@styles/styled-components/styledButton";
+import FootnoteForm from "@components/forms/FootnoteForm";
+
 const EmailVerify: NextPage = () => {
   const router = useRouter();
 
@@ -23,7 +24,9 @@ const EmailVerify: NextPage = () => {
             <PinInput
               length={4}
               initialValue=""
-              onChange={(value, index) => {}}
+              onChange={(value, index) => {
+                
+              }}
               type="numeric"
               inputMode="number"
               style={{ padding: "20px 0px" }}
@@ -45,21 +48,7 @@ const EmailVerify: NextPage = () => {
             <SubmitButton type="submit">Tiếp tục</SubmitButton>
             <br />
             <br />
-            <hr />
-            <Typography.Text type="secondary">
-              Đã có tài khoản? <br />
-              <Typography.Text underline>
-                <Link href="/student/login">Đăng nhập tại đây</Link>
-              </Typography.Text>
-            </Typography.Text>
-            <br />
-            <br />
-            <Typography.Text type="secondary">
-              Bạn là nhà tuyển dụng? <br />
-              <Typography.Text underline>
-                <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
-              </Typography.Text>
-            </Typography.Text>
+            <FootnoteForm />
           </div>
         </div>
       </div>
