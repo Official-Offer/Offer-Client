@@ -1,0 +1,34 @@
+.uni-cover {
+  .ant-card-cover > img {
+    height: 255px;
+    object-fit: cover;
+  }
+
+  .cover-spacing {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .card-logo {
+    height: 132px;
+    width: 132px;
+
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+
+    background-color: #FFF;
+    border: 1px $grey-color solid;
+    border-radius: 4px;
+    padding: 20px 32px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .logo-spacing {
+    width: 148px;
+  }
+}

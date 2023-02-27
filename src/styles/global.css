@@ -34,32 +34,65 @@ a {
 .card-tray {
   display: flex;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: hidden;
   scroll-snap-type: x mandatory;
   scroll-padding: 0;
-  padding: 20px 8px;
+  padding: 20px;
   gap: 16px;
 }
-
-.tray-item {
-  width: 340px;
+.card-tray .info-card {
+  min-width: 340px;
+  cursor: pointer;
   transition: 0.4s ease-in-out;
 }
-.tray-item:hover {
+.card-tray .info-card:hover {
   scale: 1.05;
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.5);
 }
-.tray-item img {
+.card-tray .info-card img {
   height: 100px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 8px 8px 0 0;
 }
-.tray-item span {
+.card-tray .info-card span {
   font-weight: 700;
 }
-.tray-item .ant-card-body {
+.card-tray .info-card .ant-card-body {
   padding: 16px 24px;
+}
+.card-tray .info-card .date-posted {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #FFFDFD;
+  font-style: italic;
+  background-color: #7277F1;
+}
+.card-tray .info-card .event-card {
+  display: flex;
+  gap: 12px;
+}
+.card-tray .info-card .event-card .event-date {
+  color: white;
+  background-color: #FF4652;
+}
+
+.navbar-splitter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, 0.25);
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-weight: 600;
+  position: sticky;
+  z-index: 999;
 }
 
 .navbar {
@@ -116,6 +149,10 @@ a {
   -o-object-fit: cover;
      object-fit: cover;
 }
+.uni-cover .cover-spacing {
+  display: flex;
+  flex-direction: row;
+}
 .uni-cover .card-logo {
   height: 132px;
   width: 132px;
@@ -137,10 +174,20 @@ a {
 
 /* Helper */
 .scroll-btn {
+  position: absolute;
+  z-index: 2;
   border: 0;
-  border-radius: 20px;
+  border-radius: 40px;
+  width: 36px;
+  height: 36px;
   background-color: #DDDDDD;
   font-weight: 700;
+}
+.scroll-btn.prev-btn {
+  left: 0;
+}
+.scroll-btn.next-btn {
+  right: 0;
 }
 
 /* Plugins */
@@ -148,11 +195,7 @@ a {
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 }
-.ant-card .ant-card-body .horizontal {
-  display: flex;
-  flex-direction: row;
-}
-.ant-card .ant-card-body .vertical {
+.ant-card .ant-card-body {
   display: flex;
   flex-direction: column;
 }
@@ -191,8 +234,15 @@ a {
 .main-home .main__content section {
   margin-bottom: 36px;
 }
+.main-home .main__content section .info-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 44px;
+}
 .main-home .main__content section .see-more {
   text-align: right;
+  margin: 0 60px;
 }
 .main-home .main__content section .see-more a {
   color: #7277F1;

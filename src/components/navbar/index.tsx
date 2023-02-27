@@ -39,7 +39,8 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>: <Nav>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>:
+      <div className="navbar-splitter">
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
@@ -121,6 +122,6 @@ export const Navbar: React.FC = () => {
             />
           </Menu.Item>
       </Menu>
-    </Nav>
+    </div>
   );
 };

@@ -15,8 +15,16 @@
       section {
         margin-bottom: 36px;
 
+        .info-section {
+          display: flex;
+          align-items: center;
+          position: relative;
+          padding: 0 44px;
+        }
+
         .see-more {
           text-align: right;
+          margin: 0 60px;
           a {
             color: $purple-color;
             font-weight: 700;
