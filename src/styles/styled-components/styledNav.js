@@ -13,3 +13,4 @@ export const Nav = styled.nav`
 
   font-weight: 600;
 `;
+

@@ -126,3 +126,4 @@ export const Navbar: React.FC = () => {
     </Nav>
   );
 };
+
