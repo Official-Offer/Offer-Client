@@ -33,7 +33,7 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>: <Nav>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ||  router.pathname.includes("/student/login")? <></>: <Nav>
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
