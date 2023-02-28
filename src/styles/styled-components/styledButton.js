@@ -18,12 +18,12 @@ export const SubmitButton = styled.button`
 
 export const TogglableButton = styled.button`
   width: 100px;
-  height: 35px;
-  line-height: 34px;
+  height: 30px;
+  line-height: 29px;
   text-align: center;
   align-items: center;
   border-radius: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: ${props => props.active ? "none" : "1px solid rgba(0, 0, 0, 0.3)"};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: white;
   color: ${props => props.active ? "white" : "black"} ;

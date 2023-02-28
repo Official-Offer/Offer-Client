@@ -2,6 +2,7 @@ import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { TogglableButton } from "@styles/styled-components/styledButton";
 export const JobFilterNavbar: React.FC = () => {
+  
   return (
     <div className="job-portal-container">
       <Input
