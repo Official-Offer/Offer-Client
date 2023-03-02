@@ -15,6 +15,14 @@ a {
   text-decoration: none;
 }
 
+/* Components */
+@import "./scss/Components/forms";
+@import "./scss/Components/cards";
+@import "./scss/Components/navbar";
+
+/* Helper */
+@import "./scss/Helper/button";
+
 /* Plugins */
 @import "./scss/Plugins/antd"; 
 
@@ -22,6 +30,3 @@ a {
 @import "./scss/Layouts/student-email";
 @import "./scss/Layouts/main-home";
 @import "./scss/Layouts/register-student";
-
-/* Components */
-@import "./scss/Components/forms";
