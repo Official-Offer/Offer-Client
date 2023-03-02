@@ -3,7 +3,6 @@ import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { Nav } from "../../styles/styled-components/styledNav";
 
 export const Navbar: React.FC = () => {
   const router  = useRouter();

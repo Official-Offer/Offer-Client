@@ -3,6 +3,7 @@ import { FormInput } from "@styles/styled-components/styledForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
 import Link from "next/link";
+import FootnoteForm from "./FootnoteForm";
 
 interface IPasswordForm {
   onSubmit: (email: string) => void;
@@ -71,21 +72,7 @@ function PasswordForm({ onSubmit }: IPasswordForm) {
         <SubmitButton type="submit">Tiếp tục</SubmitButton>
         <br />
         <br />
-        <hr />
-        <Typography.Text type="secondary">
-          Đã có tài khoản? <br />
-          <Typography.Text underline>
-            <Link href="/student/login">Đăng nhập tại đây</Link>
-          </Typography.Text>
-        </Typography.Text>
-        <br />
-        <br />
-        <Typography.Text type="secondary">
-          Bạn là nhà tuyển dụng? <br />
-          <Typography.Text underline>
-            <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
-          </Typography.Text>
-        </Typography.Text>
+        <FootnoteForm />
       </form>
     </div>
   );
