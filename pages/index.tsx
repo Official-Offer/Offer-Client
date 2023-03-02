@@ -1,7 +1,7 @@
 import React from "react";
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { Header, Main, Cards, Footer } from "@components";
+import { Header, Main, CardsGrid, Footer } from "@components";
 import Counter from "@components/examples/counter";
 import { StyledSystemExample } from "@components/examples/styled-system";
 import { TestingLibraryExample } from "@components/examples/testing-library";
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   // const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
   // const Header = dynamic(() => import("@components").then((mod: any) => mod.Header)) as any;
   const Main = dynamic(() => import("@components").then((mod: any) => mod.Main)) as any;
-  // const Cards = dynamic(() => import("@components").then((mod: any) => mod.Cards)) as any;
+  // const CardsGrid = dynamic(() => import("@components").then((mod: any) => mod.CardsGrid)) as any;
   // const Footer = dynamic(() => import("@components").then((mod: any) => mod.Footer)) as any;
   return (
     <div
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       {/* <Header /> */}
       {/* <Navbar /> */}
       <Main /> 
-      {/* <Cards /> */}
+      {/* <CardsGrid /> */}
       {/* <Footer /> */}
       {/* <Counter /> */}
     </div>

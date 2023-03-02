@@ -19,6 +19,12 @@ export const Navbar: React.FC = () => {
       routeSelected: "/student/jobs",
     },
     {
+      name: "Sự kiện",
+      link: "/student/events",
+      newTab: false,
+      routeSelected: "/student/events",
+    },
+    {
       name: "CLB",
       link: "/student/clubs",
       newTab: false,
@@ -37,8 +43,8 @@ export const Navbar: React.FC = () => {
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
-        className="w-100"
-        style={{ justifyContent: "flex-start" }}
+        className="navbar"
+        style={{ width: "20%" }}
       >
         <Menu.Item key={"/student/"} className="m-0">
           {false ? (
@@ -69,8 +75,8 @@ export const Navbar: React.FC = () => {
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="w-100"
-          style={{ justifyContent: "center", flexGrow: 2 }}
+          className="navbar"
+          style={{ justifyContent: "center", width: "50%" }}
         >
           {listMenu.map((menu, i) => {
             return (
@@ -98,24 +104,24 @@ export const Navbar: React.FC = () => {
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="w-100"
-          style={{ justifyContent: "flex-end" }}
+          className="navbar"
+          style={{ justifyContent: "flex-end", width: "20%" }}
         >    
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
               type="text"
               icon={<MessageOutlined />}
               style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
               type="text"
               icon={<BellOutlined />}
               style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
               type="primary"
               icon={<SmileFilled />}
