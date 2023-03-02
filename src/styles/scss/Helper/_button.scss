@@ -1,2 +1,20 @@
-.btn {
+.scroll-btn {
+  position: absolute;
+  z-index: 2;
+
+  border: 0;
+  border-radius: 40px;
+  width: 36px;
+  height: 36px;
+
+  background-color: $grey-light;
+  font-weight: 700;
+
+  &.prev-btn {
+    left: 0;
+  }
+
+  &.next-btn {
+    right: 0;
+  }
 }

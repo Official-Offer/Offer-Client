@@ -4,7 +4,7 @@ import { Row, Col } from "antd";
 import { Card } from "@components";
 import data from "@public/meta.json";
 
-export const Cards: React.FC = () => {
+export const CardsGrid: React.FC = () => {
   return (
     <Row style={{ flex: 1 }}>
       {(data?.plugins ?? []).map((plugin) => (

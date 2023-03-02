@@ -3,7 +3,6 @@ import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { Nav } from "../../styles/styled-components/styledNav";
 
 export const Navbar: React.FC = () => {
   const router  = useRouter();
@@ -17,6 +16,12 @@ export const Navbar: React.FC = () => {
       link: "/student/jobs",
       newTab: false,
       routeSelected: "/student/jobs",
+    },
+    {
+      name: "Sự kiện",
+      link: "/student/events",
+      newTab: false,
+      routeSelected: "/student/events",
     },
     {
       name: "CLB",
@@ -33,12 +38,12 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>: <Nav>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>:
+      <div className="navbar-splitter">
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
-        className="w-100"
-        style={{ justifyContent: "flex-start" }}
+        className="navbar left-menu"
       >
         <Menu.Item key={"/student/"} className="m-0">
           {false ? (
@@ -60,17 +65,13 @@ export const Navbar: React.FC = () => {
           className="search-bar"
           placeholder="Tìm Kiếm"
           prefix={<SearchOutlined />}
-          style={{
-            
-          }}
           onSearch={onSearch}
         />
         </Menu>
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="w-100"
-          style={{ justifyContent: "center", flexGrow: 2 }}
+          className="navbar center-menu"
         >
           {listMenu.map((menu, i) => {
             return (
@@ -98,32 +99,29 @@ export const Navbar: React.FC = () => {
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="w-100"
-          style={{ justifyContent: "flex-end" }}
+          className="navbar right-menu"
         >    
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
               type="text"
               icon={<MessageOutlined />}
-              style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
               type="text"
               icon={<BellOutlined />}
-              style={{ borderRadius: '40px', width: '20px', height: '20px' }}
             />
           </Menu.Item>
-          <Menu.Item disabled>
+          <Menu.Item>
             <Button
+              className="avatar-btn"
               type="primary"
               icon={<SmileFilled />}
-              style={{ borderRadius: '40px', width: '40px', height: '40px' }}
             />
           </Menu.Item>
       </Menu>
-    </Nav>
+    </div>
   );
 };
 
