@@ -6,7 +6,6 @@ export default function LayoutGlobal(props: any): ReactElement {
   // const FooterHome = dynamic(() => import("./FooterHome"));
   const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
 
-
   return (
     <>
       <Navbar />

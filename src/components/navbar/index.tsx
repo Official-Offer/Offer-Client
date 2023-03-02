@@ -3,7 +3,6 @@ import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { Nav } from "../../styles/styled-components/styledNav";
 
 export const Navbar: React.FC = () => {
   const router  = useRouter();
@@ -39,7 +38,8 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ||  router.pathname.includes("/student/login")? <></>: <Nav>
+    router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>:
+      <div className="navbar-splitter">
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
@@ -121,6 +121,6 @@ export const Navbar: React.FC = () => {
             />
           </Menu.Item>
       </Menu>
-    </Nav>
+    </div>
   );
 };
