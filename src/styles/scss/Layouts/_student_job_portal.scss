@@ -7,6 +7,13 @@
     gap: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 0 50px;
+    position: fixed;
+    z-index: 100;
+    background: white;
+    width: 100%;
+  }
+  &-fusion {
+    height: 60px;
   }
   &-search-bar {
     width: 250px;
@@ -23,29 +30,64 @@
     }
   }
   &-list {
-  
+    border-right: 1px solid black;
+    // overflow-y: scroll;
+    // /* Hide scrollbar for Chrome, Safari and Opera */
+    // .scrollbar-hidden::-webkit-scrollbar {
+    //   display: none;
+    // }
+
+    // /* Hide scrollbar for IE, Edge add Firefox */
+    // .scrollbar-hidden {
+    //   -ms-overflow-style: none;
+    //   scrollbar-width: none; /* Firefox */
+    // }
     &-result {
-      height: 100px;
-      line-height: 100px;
+      height: 70px;
+      line-height: 70px;
       text-align: left;
       padding-left: 20px;
     }
     &-card {
-      height: 250px;
-      background-color: #D30B81;
+      height: 220px;
+      background-color: white;
       width: 100%;
       margin-bottom: 10px;
-      padding: 25px 15px 15px 15px;
+      padding: 40px 15px 15px 20px;
+      border: 1px solid black;
+      border-right: none;
       &-title {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        padding-bottom: 35px;
+        cursor: pointer;
         button {
-          background: none!important;
-          color: white!important;
-          border: none!important;
-          height: 50px;
-          width: 50px;
+          background: rgb(235, 235, 235) !important;
+          color: black !important;
+          border: none !important;
+          height: 40px;
+          width: 40px;
           border-radius: 100%;
         }
       }
+
+      &-detail {
+        color: black;
+        font-size: x-small;
+      }
+    }
+    &-card.active {
+      background-color: #d30b81;
+      .job-portal-list-card-title {
+        color: white;
+      }
+
+      .job-portal-list-card-detail {
+        color: white;
+        font-size: x-small;
+      }
     }
   }
+  
 }
