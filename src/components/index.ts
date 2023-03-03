@@ -1,6 +1,6 @@
 import Counter from "./examples/counter";
 
-export {Navbar} from "./navbar";
+export { Navbar } from "./navbar";
 export { Header } from "./header";
 export { Logo } from "./logo";
 export { Main } from "./main";
