@@ -1,3 +1,4 @@
+import { InboxOutlined, TagOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 export const JobDescription: React.FC = () => {
   const avatarURL = [
@@ -27,9 +28,44 @@ export const JobDescription: React.FC = () => {
         </div>
       </div>
       <div className="job-portal-description-actions">
-        <Button>Ung tuyen</Button>
-        <Button />
-        <Button>Nhan tin</Button>
+        <Button className="apply">Ung tuyen</Button>
+        <Button className="bookmark" icon={<TagOutlined />} />
+        <Button className="inbox" icon={<InboxOutlined style={{fontSize: 20}}/>}>Nhan tin</Button>
+        
+      </div>
+      <div className="job-portal-description-important">
+        <div className="flex">
+          <div className="left">
+            <div className="title">Mức lương</div>
+            <div className="detail">120k USD</div>
+            <div className="title">Cap bac</div>
+            <div className="detail">Undergrad</div>
+          </div>
+          <div className="right">
+            <div className="title">Company Size</div>
+            <div className="detail">50-100</div>
+            <div className="title">Hinh thuc lam viec</div>
+            <div className="detail">Part-Time</div>
+          </div>
+        </div>
+        <div className="title">Dia diem</div>
+        <div className="detail">
+          - Ha Noi: Tran Duy Hung <br /> - Saigon: Bui Vien
+        </div>
+      </div>
+      <div className="job-portal-description-title">Mo ta</div>
+      <div className="job-portal-description-detail">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium
+        sequi illum perferendis similique perspiciatis quasi ratione, deserunt
+        fuga ducimus rerum deleniti aut tenetur recusandae magnam? Placeat ullam
+        accusantium ex distinctio.
+      </div>
+      <div className="job-portal-description-title">Yeu cau</div>
+      <div className="job-portal-description-detail">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
+        cupiditate, consequuntur fugit illum rerum laudantium. Cumque
+        repudiandae, iusto, velit excepturi dignissimos maiores quisquam, optio
+        labore nobis nisi ducimus possimus tempora.
       </div>
     </div>
   );
