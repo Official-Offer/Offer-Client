@@ -31,17 +31,18 @@
   }
   &-list {
     border-right: 1px solid black;
-    // overflow-y: scroll;
-    // /* Hide scrollbar for Chrome, Safari and Opera */
-    // .scrollbar-hidden::-webkit-scrollbar {
-    //   display: none;
-    // }
-
-    // /* Hide scrollbar for IE, Edge add Firefox */
-    // .scrollbar-hidden {
-    //   -ms-overflow-style: none;
-    //   scrollbar-width: none; /* Firefox */
-    // }
+    height: 90vh;
+    overflow-y: auto;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .scrollbar-hidden::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge add Firefox */
+    .scrollbar-hidden {
+      -ms-overflow-style: none;
+      scrollbar-width: none; /* Firefox */
+    }
+    
     &-result {
       height: 70px;
       line-height: 70px;
@@ -89,5 +90,7 @@
       }
     }
   }
-  
+  &-description {
+    padding: 6% 8% 8% 6%;
+  }
 }

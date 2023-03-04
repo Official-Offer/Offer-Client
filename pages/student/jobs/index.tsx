@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { JobFilterNavbar } from "@components/navbar/JobFilterNavBar";
 import { JobCard } from "@components/cardsGrid/JobCard";
 import { Row, Col } from "antd";
-import { JobContent } from "@components/main/JobContent";
+import { JobDescription } from "@components/main/JobContent";
 import { useState } from "react";
 //create a next page for the student home page, code below
 const StudentJobs: NextPage = () => {
@@ -22,7 +22,7 @@ const StudentJobs: NextPage = () => {
           </div>
         </Col>
         <Col span={18}>
-          <JobContent />
+          <JobDescription />
         </Col>
       </Row>
     </div>
