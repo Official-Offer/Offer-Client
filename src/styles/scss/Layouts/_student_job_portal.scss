@@ -91,6 +91,9 @@
     }
   }
   &-description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     height: 85vh;
     overflow-y: auto;
     padding: 6% 13% 8% 8%;
@@ -102,6 +105,9 @@
     &-detail {
       display: flex;
       flex-direction: row;
+    }
+    &-logo {
+      max-width: 72px;
     }
     &-employees {
       display: flex;

@@ -15,8 +15,12 @@ const jobList = [
     institution: "Samsung",
     location: "TP. Hồ Chí Minh",
     attribute: "Full-Time/Part-Time/Remote",
-    commonSchool: ["Bao Dzai", "Tom Ngo", "Kien To"],
-    datePosted: new Date('2023-2-27'),
+    commonSchool: [
+      {name: "Bao Dzai", avatar: "/images/avatar.png"}, 
+      {name: "Tom Ngo", avatar: "/images/avatar.png"}, 
+      {name: "Kien To", avatar: "/images/avatar.png"}
+    ],
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
   {
@@ -24,26 +28,8 @@ const jobList = [
     institution: "Samsung",
     location: "TP. Hồ Chí Minh",
     attribute: "Full-Time/Part-Time/Remote",
-    commonSchool: ["Thuan Dzai"],
-    datePosted: new Date('2023-2-27'),
-    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
-  },
-  {
-    name: "Thực tập sinh Kỹ sư Phần Mềm",
-    institution: "Samsung",
-    location: "TP. Hồ Chí Minh",
-    attribute: "Full-Time/Part-Time/Remote",
-    commonSchool: [],
-    datePosted: new Date('2023-2-27'),
-    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
-  },
-  {
-    name: "Thực tập sinh Kỹ sư Phần Mềm",
-    institution: "Samsung",
-    location: "TP. Hồ Chí Minh",
-    attribute: "Full-Time/Part-Time/Remote",
-    commonSchool: [],
-    datePosted: new Date('2023-2-27'),
+    commonSchool: [{name: "Thuan Dzai", avatar: "/images/avatar.png"}],
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
   {
@@ -52,7 +38,7 @@ const jobList = [
     location: "TP. Hồ Chí Minh",
     attribute: "Full-Time/Part-Time/Remote",
     commonSchool: [],
-    datePosted: new Date('2023-2-27'),
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
   {
@@ -61,7 +47,25 @@ const jobList = [
     location: "TP. Hồ Chí Minh",
     attribute: "Full-Time/Part-Time/Remote",
     commonSchool: [],
-    datePosted: new Date('2023-2-27'),
+    date: new Date('2023-2-27'),
+    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+  },
+  {
+    name: "Thực tập sinh Kỹ sư Phần Mềm",
+    institution: "Samsung",
+    location: "TP. Hồ Chí Minh",
+    attribute: "Full-Time/Part-Time/Remote",
+    commonSchool: [],
+    date: new Date('2023-2-27'),
+    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+  },
+  {
+    name: "Thực tập sinh Kỹ sư Phần Mềm",
+    institution: "Samsung",
+    location: "TP. Hồ Chí Minh",
+    attribute: "Full-Time/Part-Time/Remote",
+    commonSchool: [],
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
 ];
@@ -73,8 +77,7 @@ const eventList = [
     location: "Amherst",
     attribute: "",
     commonSchool: [],
-    datePosted: new Date('2023-2-27'),
-    cover: "",
+    date: new Date('2023-2-27'),
   },
 ];
 
@@ -85,7 +88,7 @@ const clubList = [
     location: "TP. Hồ Chí Minh",
     attribute: "Full-Time/Part-Time/Remote",
     commonSchool: [],
-    datePosted: new Date('2023-2-27'),
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
 ];
@@ -97,7 +100,7 @@ const scholarshipList = [
     location: "Amherst",
     attribute: "$16,000",
     commonSchool: [],
-    datePosted: new Date('2023-2-27'),
+    date: new Date('2023-2-27'),
     cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
 ];
