@@ -17,3 +17,4 @@ export const Nav = styled.nav`
   position: sticky;
   z-index: 999;
 `;
+
