@@ -13,7 +13,7 @@ const StudentJobs: NextPage = () => {
       <JobFilterNavbar />
       <div className="job-portal-fusion"></div>
       <Row>
-        <Col span={6}>
+        <Col span={7}>
           <div className="job-portal-list">
             <div className="job-portal-list-result">20k kết quả</div>
             {jobsList.map((job, i) => (
@@ -21,7 +21,7 @@ const StudentJobs: NextPage = () => {
             ))}
           </div>
         </Col>
-        <Col span={18}>
+        <Col span={17}>
           <JobDescription />
         </Col>
       </Row>
