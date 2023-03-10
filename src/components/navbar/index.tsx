@@ -2,7 +2,7 @@ import { Menu, Input, Button } from "antd";
 import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 type Navbar = {
   searchBarHidden: boolean
@@ -12,12 +12,14 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
   const { Search } = Input;
 
   const router  = useRouter();
+  const searchBar = useRef();
   const [hideBar, setHideBar] = useState(true);
   const [searchInput, setSearchInput] =  useState("");
 
   const onSearch = () => null;
   const onChange = (event) => {
     setSearchInput(event.target?.value ?? "");
+    console.log(document.activeElement.matches(".ant-input"));
   };
 
   const listMenu = [
@@ -65,18 +67,16 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
               </Link>
             )}
           </Menu.Item>
-          <div
-            onMouseEnter={() => setHideBar(false)}
-            onMouseLeave={() => setHideBar(searchInput === "")}
-          >
-            <Input
-              className={"search-bar" + ((searchBarHidden && hideBar) ? " hide-bar" : "")}
-              placeholder="Tìm Kiếm"
-              prefix={<SearchOutlined />}
-              onSearch={onSearch}
-              onChange={onChange}
-            />
-          </div>
+          <Input
+            ref={searchBar}
+            className={"search-bar" + ((searchBarHidden && hideBar) ? " hide-bar" : "")}
+            placeholder="Tìm Kiếm"
+            prefix={<SearchOutlined />}
+            onSearch={onSearch}
+            onChange={onChange}
+            onFocus={() => setHideBar(false)}
+            onBlur={() => setHideBar(searchInput === "")}
+          />
           </Menu>
           <Menu
             defaultSelectedKeys={[`${router.route}`]}
