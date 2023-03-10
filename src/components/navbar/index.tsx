@@ -2,13 +2,23 @@ import { Menu, Input, Button } from "antd";
 import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
-export const Navbar: React.FC = () => {
-  const router  = useRouter();
+type Navbar = {
+  searchBarHidden: boolean
+};
+
+export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
   const { Search } = Input;
 
+  const router  = useRouter();
+  const [hideBar, setHideBar] = useState(true);
+  const [searchInput, setSearchInput] =  useState("");
+
   const onSearch = () => null;
+  const onChange = (event) => {
+    setSearchInput(event.target?.value ?? "");
+  };
 
   const listMenu = [
     {
@@ -24,28 +34,22 @@ export const Navbar: React.FC = () => {
       routeSelected: "/student/events",
     },
     {
-      name: "CLB",
-      link: "/student/clubs",
+      name: "Dịch Vụ",
+      link: "/student/service",
       newTab: false,
-      routeSelected: "/student/clubs",
-    },
-    {
-      name: "Advisors",
-      link: "/student/advisors",
-      newTab: false,
-      routeSelected: "/student/advisors",
+      routeSelected: "/student/service",
     },
   ];
 
   return (
     router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>:
-      <div className="navbar-splitter">
+      <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")}>
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
           className="navbar left-menu"
         >
-          <Menu.Item key={"/student/"} className="m-0">
+          <Menu.Item key={"/student/"} className="m-0" onMouseEnter={onChange}>
             {false ? (
               <a
                 target="_blank"
@@ -61,12 +65,18 @@ export const Navbar: React.FC = () => {
               </Link>
             )}
           </Menu.Item>
-          <Input
-            className="search-bar"
-            placeholder="Tìm Kiếm"
-            prefix={<SearchOutlined />}
-            onSearch={onSearch}
-          />
+          <div
+            onMouseEnter={() => setHideBar(false)}
+            onMouseLeave={() => setHideBar(searchInput === "")}
+          >
+            <Input
+              className={"search-bar" + ((searchBarHidden && hideBar) ? " hide-bar" : "")}
+              placeholder="Tìm Kiếm"
+              prefix={<SearchOutlined />}
+              onSearch={onSearch}
+              onChange={onChange}
+            />
+          </div>
           </Menu>
           <Menu
             defaultSelectedKeys={[`${router.route}`]}
