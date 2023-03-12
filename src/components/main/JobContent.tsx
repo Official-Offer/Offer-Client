@@ -16,16 +16,14 @@ export const JobDescription: React.FC = () => {
         <p>&emsp;•&emsp;</p>
         <p>Đăng 2 ngày trước</p>
       </div>
-      <img src="/images/samsing.png" />
-      <div className="job-portal-description-employees">
-        <div className="job-portal-description-employees-avatars">
+      <img className="job-portal-description-logo" src="/images/samsing.png" />
+      <div className="avatar-info">
+        <div>
           {avatarURL.map((url) => (
             <img src={url}></img>
           ))}
         </div>
-        <div className="job-portal-description-employees-number">
-          18+ people from your school work here
-        </div>
+        <h4>18+ people from your school work here</h4>
       </div>
       <div className="job-portal-description-actions">
         <Button className="apply">Ung tuyen</Button>

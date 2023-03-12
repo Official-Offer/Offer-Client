@@ -40,87 +40,87 @@ export const Navbar: React.FC = () => {
   return (
     router.pathname.includes("/student/registration") ||  router.pathname.includes("/student/email") ? <></>:
       <div className="navbar-splitter">
-      <Menu
-        defaultSelectedKeys={[`${router.route}`]}
-        mode="horizontal"
-        className="navbar left-menu"
-      >
-        <Menu.Item key={"/student/"} className="m-0">
-          {false ? (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="m-0"
-              href={"/student/"}
-            >
-              {"Home"}
-            </a>
-          ) : (
-            <Link href={"/student/"}>
-              <a className="m-0">{"Home"}</a>
-            </Link>
-          )}
-        </Menu.Item>
-        <Input
-          className="search-bar"
-          placeholder="Tìm Kiếm"
-          prefix={<SearchOutlined />}
-          onSearch={onSearch}
-        />
-        </Menu>
         <Menu
           defaultSelectedKeys={[`${router.route}`]}
           mode="horizontal"
-          className="navbar center-menu"
+          className="navbar left-menu"
         >
-          {listMenu.map((menu, i) => {
-            return (
-              menu.name !== "Login" && (
-                <Menu.Item key={menu.routeSelected} className="m-0">
-                  {menu.newTab ? (
-                    <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="m-0"
-                    href={menu.link}
-                    >
-                      {menu.name}
-                    </a>
-                  ) : (
-                    <Link href={menu.link}>
-                      <a className="m-0">{menu.name}</a>
-                    </Link>
-                  )}
-                </Menu.Item>
-              )
-              );
-            })}
+          <Menu.Item key={"/student/"} className="m-0">
+            {false ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="m-0"
+                href={"/student/"}
+              >
+                {"Home"}
+              </a>
+            ) : (
+              <Link href={"/student/"}>
+                <a className="m-0">{"Home"}</a>
+              </Link>
+            )}
+          </Menu.Item>
+          <Input
+            className="search-bar"
+            placeholder="Tìm Kiếm"
+            prefix={<SearchOutlined />}
+            onSearch={onSearch}
+          />
+          </Menu>
+          <Menu
+            defaultSelectedKeys={[`${router.route}`]}
+            mode="horizontal"
+            className="navbar center-menu"
+          >
+            {listMenu.map((menu, i) => {
+              return (
+                menu.name !== "Login" && (
+                  <Menu.Item key={menu.routeSelected} className="m-0">
+                    {menu.newTab ? (
+                      <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="m-0"
+                      href={menu.link}
+                      >
+                        {menu.name}
+                      </a>
+                    ) : (
+                      <Link href={menu.link}>
+                        <a className="m-0">{menu.name}</a>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                )
+                );
+              })}
+          </Menu>
+          <Menu
+            defaultSelectedKeys={[`${router.route}`]}
+            mode="horizontal"
+            className="navbar right-menu"
+          >    
+            <Menu.Item>
+              <Button
+                type="text"
+                icon={<MessageOutlined />}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              <Button
+                type="text"
+                icon={<BellOutlined />}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              <Button
+                className="avatar-btn"
+                type="primary"
+                icon={<SmileFilled />}
+              />
+            </Menu.Item>
         </Menu>
-        <Menu
-          defaultSelectedKeys={[`${router.route}`]}
-          mode="horizontal"
-          className="navbar right-menu"
-        >    
-          <Menu.Item>
-            <Button
-              type="text"
-              icon={<MessageOutlined />}
-            />
-          </Menu.Item>
-          <Menu.Item>
-            <Button
-              type="text"
-              icon={<BellOutlined />}
-            />
-          </Menu.Item>
-          <Menu.Item>
-            <Button
-              className="avatar-btn"
-              type="primary"
-              icon={<SmileFilled />}
-            />
-          </Menu.Item>
-      </Menu>
     </div>
   );
 };
