@@ -6,7 +6,7 @@ export const JobFilterNavbar: React.FC = () => {
   return (
     <div className="job-portal-container">
       <Input
-        className="job-portal-search-bar"
+        className="search-bar"
         placeholder="Tìm Kiếm"
         prefix={<SearchOutlined />}
       />
