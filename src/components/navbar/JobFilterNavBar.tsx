@@ -4,7 +4,7 @@ import { TogglableButton } from "@styles/styled-components/styledButton";
 export const JobFilterNavbar: React.FC = () => {
   
   return (
-    <div className="job-portal-container">
+    <div className="job-portal-container navbar">
       <Input
         className="search-bar"
         placeholder="Tìm Kiếm"

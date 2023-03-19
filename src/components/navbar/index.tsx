@@ -1,5 +1,6 @@
-import { Menu, Input, Button } from "antd";
-import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined } from "@ant-design/icons";
+import { Menu, Input, Button, Dropdown } from "antd";
+import { Card, NotiBox, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
+import { SearchOutlined, SmileFilled, MessageOutlined, BellOutlined, CloseOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useRef } from "react";
@@ -8,21 +9,45 @@ type Navbar = {
   searchBarHidden: boolean
 };
 
+const notiList = [
+  {seen: true},
+  {seen: false},
+  {seen: true},
+];
+
+const mesList = [
+  {seen: true},
+  {seen: false},
+  {seen: true},
+];
+
 export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
-  const { Search } = Input;
 
   const router  = useRouter();
   const searchBar = useRef();
   const [hideBar, setHideBar] = useState(true);
+  const [hideMesPanel, setHideMesPanel] = useState(true);
   const [searchInput, setSearchInput] =  useState("");
 
-  const onSearch = () => null;
-  const onChange = (event) => {
+  const handleSearch = () => null;
+  const handleSearchChange = (event) => {
+    setSearchInput(event.target?.value ?? "");
+    console.log(document.activeElement.matches(".ant-input"));
+  };
+  const handleMessageSearch = () => null;
+  const handleMesSearchChange = (event) => {
     setSearchInput(event.target?.value ?? "");
     console.log(document.activeElement.matches(".ant-input"));
   };
 
-  const listMenu = [
+  const openMesPanel = () => {
+    setHideMesPanel(!hideMesPanel);
+  }
+  const closeMesPanel = () => {
+    setHideMesPanel(true);
+  }
+
+  const listMenu: MenuMiddleNav['items'] = [
     {
       name: "Công việc",
       link: "/student/jobs",
@@ -51,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
           mode="horizontal"
           className="navbar left-menu"
         >
-          <Menu.Item key={"/student/"} className="m-0" onMouseEnter={onChange}>
+          <Menu.Item key={"/student/"} className="m-0">
             {false ? (
               <a
                 target="_blank"
@@ -72,8 +97,8 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
             className={"search-bar" + ((searchBarHidden && hideBar) ? " hide-bar" : "")}
             placeholder="Tìm Kiếm"
             prefix={<SearchOutlined />}
-            onSearch={onSearch}
-            onChange={onChange}
+            onSearch={handleSearch}
+            onChange={handleSearchChange}
             onFocus={() => setHideBar(false)}
             onBlur={() => setHideBar(searchInput === "")}
           />
@@ -112,24 +137,99 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
             className="navbar right-menu"
           >    
             <Menu.Item>
-              <Button
-                type="text"
-                icon={<MessageOutlined />}
-              />
+              <Button type="text" icon={<MessageOutlined />} onClick={openMesPanel}/>
+              <MessagePanel className={hideMesPanel ? "mes-panel-hidden" : "mes-panel-open"}>
+                <div className="panel-header">
+                  <h2>Tin Nhắn</h2>
+                  <Button type="text" icon={<CloseOutlined />} onClick={closeMesPanel}/>
+                </div>
+                <div className="mes-search-bar">
+                  <Input
+                    className="search-bar"
+                    placeholder="Tìm tên người dùng, nội dung..."
+                    onSearch={handleMessageSearch}
+                    onChange={handleMesSearchChange}
+                  />
+                </div>
+                <div>
+                    {mesList.map((mes) => (
+                      <MessageBox seen={mes.seen}>
+                        <img className="avatar" src="images/avatar.png" />
+                        <div className="mes-preview">
+                          <div className="mes-preview-sender">Nguyễn Văn A</div>
+                          <span className="mes-preview-content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                          </span>
+                        </div>
+                        <div className="dot" />
+                      </MessageBox>
+                    ))}
+                  </div>
+              </MessagePanel>
             </Menu.Item>
-            <Menu.Item>
-              <Button
-                type="text"
-                icon={<BellOutlined />}
-              />
-            </Menu.Item>
-            <Menu.Item>
-              <Button
-                className="avatar-btn"
-                type="primary"
-                icon={<SmileFilled />}
-              />
-            </Menu.Item>
+            <Dropdown
+              trigger="click"
+              overlayClassName="noti-dropdown"
+              overlay={(
+                <Card bg="white" py="20px" border="0px" color="black">
+                  <div className="panel-header">
+                    <h2>Thông Báo</h2>
+                    <a className="noti-header-link" href="/student/notifications">Xem tất cả</a>
+                  </div>
+                  <div>
+                    {mesList.map((noti) => (
+                      <NotiBox seen={noti.seen}>
+                        <img className="avatar" src="images/avatar.png" />
+                        <div className="preview">
+                          <a className="preview-link" href="/student/notifications">
+                            <span>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </span>
+                          </a>
+                        </div>
+                        <div className="dot" />
+                      </NotiBox>
+                    ))}
+                  </div>
+                </Card>
+              )}>
+              <Menu.Item>
+                <Button type="text" icon={<BellOutlined />} />
+              </Menu.Item>
+            </Dropdown>
+            <Dropdown
+              trigger="click"
+              overlayClassName="avatar-dropdown"
+              overlay={(
+                <Menu>
+                  <Menu.Item>
+                    <a href="/student/profile">Hồ Sơ Người Dùng</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/student/profile">Đã Lưu</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/student/profile">Công Việc Đã Ứng Tuyển</a>
+                  </Menu.Item>
+                  <Menu.Divider/>
+                  <Menu.Item>
+                    <a href="/student/profile">Cài Đặt</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/student/profile">Điều Khoản Sử Dụng</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/student/profile">Hỗ Trợ</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a href="/student/profile">Đăng Xuất</a>
+                  </Menu.Item>
+                </Menu>
+              )}>
+              <Menu.Item>
+                  <Button type="primary" icon={<SmileFilled />} />
+              </Menu.Item>
+            </Dropdown>
         </Menu>
     </div>
   );
