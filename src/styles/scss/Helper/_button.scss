@@ -8,7 +8,7 @@
   height: 36px;
 
   background-color: $grey-light;
-  font-weight: 700;
+  font-weight: $fw-bold-1;
 
   &.prev-btn {
     left: 0;
@@ -16,5 +16,21 @@
 
   &.next-btn {
     right: 0;
+  }
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  
+  .anticon {
+    font-size: 20px;
+    border-radius: 50%;
+    padding: 10px;
+    transition: 0.4s;
+
+    &:hover {
+      background-color: $grey-light;
+    }
   }
 }

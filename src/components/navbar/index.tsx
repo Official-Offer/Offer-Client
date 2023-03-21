@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
             className="navbar right-menu"
           >    
             <Menu.Item>
-              <Button type="text" icon={<MessageOutlined />} onClick={openMesPanel}/>
+              <Button type="text" className="icon-btn" icon={<MessageOutlined />} onClick={openMesPanel}/>
               <MessagePanel className={hideMesPanel ? "mes-panel-hidden" : "mes-panel-open"}>
                 <div className="panel-header">
                   <h2>Tin Nhắn</h2>
@@ -154,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
                 <div>
                     {mesList.map((mes) => (
                       <MessageBox seen={mes.seen}>
-                        <img className="avatar" src="images/avatar.png" />
+                        <img className="avatar" src="/images/avatar.png" />
                         <div className="mes-preview">
                           <div className="mes-preview-sender">Nguyễn Văn A</div>
                           <span className="mes-preview-content">
@@ -179,7 +179,7 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
                   <div>
                     {mesList.map((noti) => (
                       <NotiBox seen={noti.seen}>
-                        <img className="avatar" src="images/avatar.png" />
+                        <img className="avatar" src="/images/avatar.png" />
                         <div className="preview">
                           <a className="preview-link" href="/student/notifications">
                             <span>
@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
                 </Card>
               )}>
               <Menu.Item>
-                <Button type="text" icon={<BellOutlined />} />
+                <Button type="text" className="icon-btn" icon={<BellOutlined />} />
               </Menu.Item>
             </Dropdown>
             <Dropdown

@@ -21,14 +21,14 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
   }
 
-  img {
+  .ant-card-cover img {
     height: 100px;
     object-fit: cover;
     border-radius: 8px 8px 0 0;
   }
 
   span {
-    font-weight: 700;
+    font-weight: $fw-bold-1;
   }
 
   .ant-card-body {
@@ -75,7 +75,7 @@
     align-items: center;
     justify-content: center;
 
-    font-weight: 700;
+    font-weight: $fw-bold-1;
     h2,h3 {
       color: white !important;
     }
