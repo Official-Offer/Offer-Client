@@ -1,6 +1,11 @@
-import { InboxOutlined, TagOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { InboxOutlined, TagOutlined, UploadOutlined } from "@ant-design/icons";
+import EmailForm from "@components/forms/EmailForm";
+import ResumeForm from "@components/forms/ResumeForm";
+import { SubmitButton } from "@styles/styled-components/styledButton";
+import { Button, Modal, Upload, UploadProps } from "antd";
+import { useState } from "react";
 export const JobDescription: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
   const avatarURL = [
     "/images/avatar.png",
     "/images/avatar.png",
@@ -26,10 +31,33 @@ export const JobDescription: React.FC = () => {
         <h4>18+ people from your school work here</h4>
       </div>
       <div className="job-portal-description-actions">
-        <Button className="apply">Ung tuyen</Button>
+        <Button
+          className="apply"
+          onClick={() => {
+            isVisible ? setIsVisible(false) : setIsVisible(true);
+          }}
+        >
+          Ứng tuyển
+        </Button>
         <Button className="bookmark" icon={<TagOutlined />} />
-        <Button className="inbox" icon={<InboxOutlined style={{fontSize: 20}}/>}>Nhan tin</Button>
-        
+        <Button
+          className="inbox"
+          icon={<InboxOutlined style={{ fontSize: 20 }} />}
+        >
+          Nhắn tin
+        </Button>
+        <Modal
+          title="Ứng tuyển"
+          visible={isVisible}
+          onOk={() => {setIsVisible(false)}}
+          onCancel={() => {setIsVisible(false)}}
+          footer={[
+            <SubmitButton type="submit">Tiếp tục</SubmitButton>,
+          ]}
+        >
+          <ResumeForm onSubmit={() => {}}/>
+          {/* <EmailForm onSubmit={() => {}}/> */}
+        </Modal>
       </div>
       <div className="job-portal-description-important">
         <div className="flex">

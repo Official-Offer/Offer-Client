@@ -6,4 +6,5 @@ export const FormInput = styled.input`
   border-radius: 8px;
   border: 1px solid #000000;
   margin-bottom: 10px;
+  margin-right: ${(props) => props.marginRight || "10px"};
 `;
