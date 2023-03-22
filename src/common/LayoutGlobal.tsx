@@ -11,7 +11,7 @@ export default function LayoutGlobal(props: any): ReactElement {
 
   return (
     <>
-      <Navbar searchBarHidden={router.pathname === "/student/jobs"}/>
+      <Navbar searchBarHidden={router.pathname === "/student/jobs" || router.pathname === "/student/events"}/>
       <div>{props.children}</div>
     </>
   );
