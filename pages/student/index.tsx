@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { Card as AntdCard, Button } from "antd";
-import { Card, CardsGrid, InfoCardTray } from "@components";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { Card, InfoCardTray } from "@components";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -107,16 +106,13 @@ const scholarshipList = [
 
 //create a next page for the student home page, code below
 const StudentHome: NextPage = () => {
-  const { Meta } = AntdCard;
-  const scrollLeft = () => {};
-  const scrollRight = () => {};
   return (
     <main className="main-home">
       <div className="main__content">
         <section>
           <AntdCard
             className="uni-cover"
-            cover={<img alt={DHBK.name} src={DHBK.cover}/>}
+            cover={<img src={DHBK.cover} alt={DHBK.name}/>}
             children={
               <div className="cover-spacing">
                 <div className="card-logo">

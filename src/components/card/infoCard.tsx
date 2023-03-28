@@ -21,7 +21,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({info}) => {
   return (
     <Card 
       className="info-card"
-      cover={info.cover !== undefined ? <img alt={info.name + " at " + info.institution} src={info.cover}/> : ""}
+      cover={info.cover !== undefined ? <img src={info.cover} alt={info.name + " at " + info.institution} /> : ""}
       children={
           <Meta
             title={info.name}
@@ -31,7 +31,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({info}) => {
                 <h4>{info.institution}</h4>
                 <span>{info.location}</span>
                 <p>{info.attribute}</p>
-                <div className="avatar-info">
+                <div className="avatar-info-mini">
                   <div>
                     {info.commonSchool.map((friend) => (<img src={friend.avatar}></img>))}
                   </div>

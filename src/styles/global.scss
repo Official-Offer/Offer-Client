@@ -3,7 +3,7 @@
 @import "./scss/Helper/variables";
 
 h1,h2,h3,h4,h5 {
-  font-weight: 700;
+  font-weight: $fw-bold-1;
   margin: 0;
 }
 
@@ -23,14 +23,15 @@ a {
 
 /* Helper */
 @import "./scss/Helper/button";
-@import "./scss/Helper/avatar-info";
+@import "./scss/Helper/avatar";
 
 /* Plugins */
 @import "./scss/Plugins/antd"; 
 
 /* Layouts */
-@import "./scss/Layouts/student-email";
 @import "./scss/Layouts/main-home";
+@import "./scss/Layouts/student-email";
+@import "./scss/Layouts/student-profile";
 @import "./scss/Layouts/register-student";
 @import "./scss/Components/forms";
 @import "./scss/Layouts/student_job_portal";

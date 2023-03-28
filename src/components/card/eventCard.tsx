@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
 import { Card as AntdCard, Button } from "antd";
-import { Card } from "@components";
+import { Card } from "./index";
 
 type EventCardProps = {
   info: {

@@ -22,7 +22,7 @@ export const JobDescription: React.FC = () => {
         <p>Đăng 2 ngày trước</p>
       </div>
       <img className="job-portal-description-logo" src="/images/samsing.png" />
-      <div className="avatar-info">
+      <div className="avatar-info-mini">
         <div>
           {avatarURL.map((url) => (
             <img src={url}></img>

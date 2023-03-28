@@ -52,7 +52,7 @@ a {
   scale: 1.05;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
-.info-card img {
+.info-card .ant-card-cover img {
   height: 100px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -149,23 +149,10 @@ a {
   height: 100%;
   padding: 20px !important;
 }
-.navbar .ant-menu-item.ant-dropdown-open .anticon-bell, .navbar .ant-menu-item.ant-dropdown-open .anticon-message {
-  background-color: #DDDDDD;
-}
-.navbar .ant-menu-item .anticon {
-  font-size: 20px;
-}
-.navbar .ant-menu-item .anticon-bell, .navbar .ant-menu-item .anticon-message {
-  border-radius: 50%;
-  padding: 10px;
-  transition: 0.4s;
-}
-.navbar .ant-menu-item .anticon-bell:hover, .navbar .ant-menu-item .anticon-message:hover {
+.navbar .ant-menu-item.ant-dropdown-open .icon-btn .anticon {
   background-color: #DDDDDD;
 }
 .navbar .ant-menu-item .ant-btn {
-  width: 42px;
-  height: 42px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -283,15 +270,29 @@ a {
   right: 0;
 }
 
-.avatar-info {
+.icon-btn {
+  width: 42px;
+  height: 42px;
+}
+.icon-btn .anticon {
+  font-size: 20px;
+  border-radius: 50%;
+  padding: 10px;
+  transition: 0.4s;
+}
+.icon-btn .anticon:hover {
+  background-color: #DDDDDD;
+}
+
+.avatar-info-mini {
   display: flex;
   padding: 0 8px;
   -moz-column-gap: 10px;
        column-gap: 10px;
 }
-.avatar-info img {
+.avatar-info-mini img {
   margin-left: -5px;
-  border-radius: 40px;
+  border-radius: 50%;
   max-width: 20px;
   max-height: 20px;
 }
@@ -312,19 +313,6 @@ a {
 }
 
 /* Layouts */
-.student-email {
-  display: flex;
-}
-.student-email-sideBar {
-  flex: 1;
-}
-.student-email-content {
-  flex: 2;
-  display: flex;
-  align-items: center; /* center vertically */
-  justify-content: center; /* center horizontally */
-  height: 100vh;
-}
 .main-home {
   display: flex;
   flex-direction: column;
@@ -357,6 +345,105 @@ a {
 }
 .main-home .main__content section .see-more a::after {
   content: " →";
+}
+
+.student-email {
+  display: flex;
+}
+.student-email-sideBar {
+  flex: 1;
+}
+.student-email-content {
+  flex: 2;
+  display: flex;
+  align-items: center; /* center vertically */
+  justify-content: center; /* center horizontally */
+  height: 100vh;
+}
+.student-profile {
+  display: flex;
+  align-items: flex-start;
+  padding: 48px 40px;
+  background-color: #F8F8F8;
+}
+.student-profile .sticky-panel {
+  position: sticky;
+  max-height: 0;
+  top: 136px;
+  flex: 1;
+}
+.student-profile .sticky-panel-profile {
+  text-align: center;
+}
+.student-profile .sticky-panel-profile-avatar {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+}
+.student-profile .sticky-panel-profile-header {
+  margin-top: 20px;
+}
+.student-profile .sticky-panel-profile-info {
+  margin-top: 20px;
+}
+.student-profile .sticky-panel-profile .ant-card-cover img {
+  height: 75px;
+  border-radius: 8px 8px 0px 0px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.student-profile .sticky-panel-job {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.student-profile .sticky-panel-job a {
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.student-profile .sticky-panel-job a::after {
+  content: " →";
+}
+.student-profile .sticky-panel-job-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.student-profile .main-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 3;
+  padding: 0px 40px;
+}
+.student-profile .main-panel-card {
+  padding: 20px;
+}
+.student-profile .main-panel-header {
+  display: flex;
+  justify-content: space-between;
+}
+.student-profile .main-panel-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.student-profile .main-panel-info-logo {
+  width: 80px;
+  height: 100px;
+}
+.student-profile .main-panel-info-logo img {
+  width: 100%;
+  height: 100%;
+}
+.student-profile .main-panel-info-center {
+  flex: 2;
 }
 
 .register-student {

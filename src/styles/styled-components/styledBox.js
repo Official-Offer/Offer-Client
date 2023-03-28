@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { border, color, layout, space } from 'styled-system';
 
-export const Box = styled.div `
+export const Box = styled.div`
   display: flex;
   align-items: center;
   @media screen and (max-width: 768px) {
@@ -19,7 +19,7 @@ export const Card = styled.div`
   flex-direction: column;
 `;
 
-export const NotiBox = styled.div `
+export const NotiBox = styled.div`
   display: flex;
   align-items: center;
   padding: 12px;
@@ -71,7 +71,7 @@ export const NotiBox = styled.div `
   }
 `;
 
-export const MessagePanel = styled.div `
+export const MessagePanel = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -103,7 +103,7 @@ export const MessagePanel = styled.div `
   }
 `;
 
-export const MessageBox = styled.div `
+export const MessageBox = styled.div`
   display: flex;
   align-items: center;
   padding: 12px;
