@@ -58,3 +58,4 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
 }
 
 export default SchoolForm;
+ 
