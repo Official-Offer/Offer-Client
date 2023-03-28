@@ -203,26 +203,26 @@ export const Navbar: React.FC<NavbarProps> = ({searchBarHidden}) => {
               overlay={(
                 <Menu>
                   <Menu.Item>
-                    <a href="/student/profile">Hồ Sơ Người Dùng</a>
+                    <Link href="/student/profile">Hồ Sơ Người Dùng</Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <a href="/student/profile">Đã Lưu</a>
+                    <Link href="/student/profile">Đã Lưu</Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <a href="/student/profile">Công Việc Đã Ứng Tuyển</a>
+                    <Link href="/student/profile">Công Việc Đã Ứng Tuyển</Link>
                   </Menu.Item>
                   <Menu.Divider/>
                   <Menu.Item>
-                    <a href="/student/profile">Cài Đặt</a>
+                    <Link href="/student/profile">Cài Đặt</Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <a href="/student/profile">Điều Khoản Sử Dụng</a>
+                    <Link href="/student/profile">Điều Khoản Sử Dụng</Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <a href="/student/profile">Hỗ Trợ</a>
+                    <Link href="/student/profile">Hỗ Trợ</Link>
                   </Menu.Item>
                   <Menu.Item>
-                    <a href="/student/profile">Đăng Xuất</a>
+                    <Link href="/student/profile">Đăng Xuất</Link>
                   </Menu.Item>
                 </Menu>
               )}>

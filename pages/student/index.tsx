@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { Link } from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
@@ -130,28 +131,28 @@ const StudentHome: NextPage = () => {
           <h2>Đề Xuất Công Việc</h2>
           <CardTray cardList={jobList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <a href="student/jobs">Xem thêm công việc</a>
+            <Link href="student/jobs">Xem thêm công việc</Link>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
           <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <a href="student/clubs">Xem thêm câu lạc bộ</a>
+            <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
           </div>
         </section>
         <section>
           <h2>Sự Kiện</h2>
           <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} />
           <div className="see-more">
-            <a href="student/events">Xem thêm sự kiện</a>
+            <Link href="student/events">Xem thêm sự kiện</Link>
           </div>
         </section>
         <section>
           <h2>Học Bổng</h2>
           <CardTray cardList={scholarshipList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <a href="student/scholarships">Xem thêm học bổng</a>
+            <Link href="student/scholarships">Xem thêm học bổng</Link>
           </div>
         </section>
       </div>

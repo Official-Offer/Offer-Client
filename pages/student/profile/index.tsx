@@ -142,11 +142,11 @@ const StudentProfile: NextPage = () => {
       </section>
       <section className="sticky-panel sticky-panel-job">
         <div className="sticky-panel-job-section">
-          <a href="/students/jobs">Jobs Applied</a>
+          <Link href="/students/jobs">Jobs Applied</Link>
           <InfoCard info={info} />
         </div>
         <div className="sticky-panel-job-section">
-          <a href="/students/jobs">Jobs Saved</a>
+          <Link href="/students/jobs">Jobs Saved</Link>
           <InfoCard info={info} />
         </div>
       </section>
