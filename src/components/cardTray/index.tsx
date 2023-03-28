@@ -1,23 +1,15 @@
 import React, { useRef } from "react";
 
 import { Card as AntdCard, Button } from "antd";
-import { EventCard } from "@components/card/eventCard";
-import { InfoCard } from "@components/card/infoCard";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
-type InfoCardProps = {
-  infoList: ({
-    name?: string,
-    institution?: string,
-    location?: string,
-    attribute?: string,
-    commonSchool?: Array<Object>,
-    date?: Date,
-  })[],
-  isEvent: boolean,
+type TrayProps = {
+  cardList: unknown[],
+  cardsDisplayNum: number,
+  isLoading: boolean,
 };
 
-export const InfoCardTray: React.FC<InfoCardProps> = ({infoList, isEvent}) => {
+export const CardTray: React.FC<TrayProps> = ({cardList, cardsDisplayNum, isLoading}) => {
   const cardTrayRef = useRef(null);
   const { Meta } = AntdCard;
 
@@ -37,10 +29,10 @@ export const InfoCardTray: React.FC<InfoCardProps> = ({infoList, isEvent}) => {
   };
 
   return (
-    <div className="info-section">
+    <div className="card-tray-container">
       <Button className="scroll-btn prev-btn" icon={<ArrowLeftOutlined />} onClick={scrollLeft}/>
-      <div className="card-tray" ref={cardTrayRef}>
-        {infoList.map((info) => (isEvent ? (<EventCard info={info} />) : (<InfoCard info={info} />)))}
+      <div className="card-tray-main" ref={cardTrayRef} hidden={isLoading}>
+        {cardList}
       </div>
       <Button className="scroll-btn next-btn" icon={<ArrowRightOutlined />} onClick={scrollRight}/>
     </div>

@@ -1,13 +1,21 @@
 .card-tray {
-  display: flex;
-  align-items: stretch;
-  overflow-x: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0;
+  &-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 44px;
+  }
 
-  padding: 20px;
-  gap: 1.8%;
+  &-main {
+    display: flex;
+    align-items: stretch;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0;
 
+    padding: 20px;
+    gap: 1.8%;
+  }
 }
 
 .info-card {
@@ -88,3 +96,4 @@
     padding: 20px;
   }
 }
+
