@@ -1,4 +1,4 @@
-import { URL_API_ADMIN, TOKEN_BEARER } from '../config/index';
+import { URL_API_ADMIN, TOKEN_BEARER } from '@config/index';
 import axios from 'axios';
 
 export default axios.create({

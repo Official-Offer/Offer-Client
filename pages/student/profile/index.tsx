@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { Card as AntdCard, Button } from "antd";
-import { Card, CardsGrid, InfoCardTray } from "@components";
 import { InfoCard } from "@components/card/infoCard";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 

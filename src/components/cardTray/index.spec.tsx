@@ -1,6 +1,7 @@
 import { render } from "@test";
 
-import { InfoCardTray } from "./index";
+import { InfoCard } from "@components/card/infoCard";
+import { CardTray } from "./index";
 
 describe("InfoCard component testing with testing-library", () => {
   const component = render(<InfoCard />);

@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { Card as AntdCard, Button } from "antd";
-import { Card, InfoCardTray } from "@components";
+import { EventCard } from "@components/card/eventCard";
+import { InfoCard } from "@components/card/infoCard";
+import { CardTray } from "@components/cardTray";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -126,28 +128,28 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Đề Xuất Công Việc</h2>
-          <InfoCardTray infoList={jobList} isEvent={false}/>
+          <CardTray cardList={jobList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
             <a href="student/jobs">Xem thêm công việc</a>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
-          <InfoCardTray infoList={clubList} isEvent={false}/>
+          <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
             <a href="student/clubs">Xem thêm câu lạc bộ</a>
           </div>
         </section>
         <section>
           <h2>Sự Kiện</h2>
-          <InfoCardTray infoList={eventList} isEvent={true}/>
+          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} />
           <div className="see-more">
             <a href="student/events">Xem thêm sự kiện</a>
           </div>
         </section>
         <section>
           <h2>Học Bổng</h2>
-          <InfoCardTray infoList={scholarshipList} isEvent={false}/>
+          <CardTray cardList={scholarshipList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
             <a href="student/scholarships">Xem thêm học bổng</a>
           </div>
