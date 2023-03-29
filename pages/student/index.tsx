@@ -1,9 +1,10 @@
 import { NextPage } from "next";
-import { Link } from "next/link";
+import Link from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
 import { CardTray } from "@components/cardTray";
+import apiService from "@services/apiService";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -107,6 +108,10 @@ const scholarshipList = [
   },
 ];
 
+const fetchJob = async () => {
+  console.log(await apiService.get('jobs/'));
+};
+
 //create a next page for the student home page, code below
 const StudentHome: NextPage = () => {
   return (
@@ -114,6 +119,7 @@ const StudentHome: NextPage = () => {
       <div className="main__content">
         <section>
           <AntdCard
+            onClick={fetchJob}
             className="uni-cover"
             cover={<img src={DHBK.cover} alt={DHBK.name}/>}
             children={
@@ -131,14 +137,14 @@ const StudentHome: NextPage = () => {
           <h2>Đề Xuất Công Việc</h2>
           <CardTray cardList={jobList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <Link href="student/jobs">Xem thêm công việc</Link>
+            <Link href="student/jobs">{typeof Link}</Link>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
           <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
+            <Link href="student/clubs">Xem thêm công việc</Link>
           </div>
         </section>
         <section>
