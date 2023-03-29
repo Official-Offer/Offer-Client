@@ -21,9 +21,9 @@ export default function Counter() {
           -
         </button>
       </div>
-      <a href="https://react-redux.js.org/" target="_blank">
+      <Link href="https://react-redux.js.org/" target="_blank">
         Go To Documentation
-      </a>
+      </Link>
     </div>
   );
 }
