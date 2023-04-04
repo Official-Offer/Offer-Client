@@ -2,9 +2,15 @@ import EmailForm from "@components/forms/EmailForm";
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from 'react-query'
 
 //create a next page for the student home page, code below
 const StudentEmail: NextPage = () => {
+
   const router = useRouter();
   return (
     <div className="student-email">

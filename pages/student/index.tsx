@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Link } from "next/link";
+import  Link  from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
