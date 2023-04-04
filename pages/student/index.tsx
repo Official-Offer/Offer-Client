@@ -143,7 +143,7 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Sự Kiện</h2>
-          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} />
+          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} cardsDisplayNum={0} isLoading={false} />
           <div className="see-more">
             <Link href="student/events">Xem thêm sự kiện</Link>
           </div>

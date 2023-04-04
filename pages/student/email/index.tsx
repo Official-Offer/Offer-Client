@@ -2,14 +2,24 @@ import EmailForm from "@components/forms/EmailForm";
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from 'react-query'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { getUserList } from "services/apiUser";
 
 //create a next page for the student home page, code below
 const StudentEmail: NextPage = () => {
+  const queryClient = useQueryClient();
+
+  // Queries
+  const query = useQuery({ queryKey: ["users"], queryFn: getUserList });
+  console.log(query.data);
+  // Mutations
+  // const mutation = useMutation({
+  //   mutationFn: postTodo,
+  //   onSuccess: () => {
+  //     // Invalidate and refetch
+  //     queryClient.invalidateQueries({ queryKey: ["todos"] });
+  //   },
+  // });
 
   const router = useRouter();
   return (
