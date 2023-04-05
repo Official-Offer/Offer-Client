@@ -11,7 +11,7 @@ const StudentEmail: NextPage = () => {
 
   // Queries
   const query = useQuery({ queryKey: ["users"], queryFn: getUserList });
-  console.log(query.data);
+  // console.log(query.data.Response);
   // Mutations
   // const mutation = useMutation({
   //   mutationFn: postTodo,
@@ -31,9 +31,9 @@ const StudentEmail: NextPage = () => {
         <div className="student-email-content-form">
           <EmailForm
             onSubmit={(email) => {
-              if (email == "kiento0905.hec@gmail.com") {
-                router.push("/student/login");
+              if (query.data.Response.filter((data: { email: string; }) => data.email == email).length > 0) {
                 //if email is in database, navigate to login page
+                router.push("/student/login");
               } else if (email.includes(".edu")) {
                 //if email is not in database but have an .edu suffix, navigate to school page
                 router.push("/student/registration/school");
