@@ -1,12 +1,12 @@
-import axios from 'axios'
-import { URL_API_ADMIN, TOKEN_BEARER } from 'config/index';
+import request from "services/apiService";
 
-// export const createUser = async (body: any) => {
-//   const response = await axios.post(`${URL_API_ADMIN}/account/list/users`, body)
-//   return response.data
-// }
+export const registerUser = async (body: any) => {
+  const response = await request.post(`/accounts/register`, body)
+  return response.data
+}
+
 export const getUserList = async () => {
-  const response = await axios.get(`${URL_API_ADMIN}/api/accounts/list/users`)
+  const response = await request.get(`/accounts/list/users`)
   return response.data
 }
 // export const getUserDetails = async (userId: any) => {

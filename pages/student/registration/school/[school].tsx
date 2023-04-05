@@ -20,7 +20,7 @@ const RegisterStudentSchool: NextPage = () => {
       <div className="register-student-content">
         <div className="register-student-content-form">
           <h1>{router.query.school}</h1>
-          <h2>{context.session}</h2>
+          <h2>{context.registerEmail}</h2>
         </div>
       </div>
     </div>

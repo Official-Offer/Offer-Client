@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 const AppContext = createContext({
-    session: "",
-    setSession: (session: string) => {},
+    registerEmail: "",
+    setRegisterEmail: (registerEmail: string) => {},
 });
 
 export default AppContext;
