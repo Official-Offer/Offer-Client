@@ -5,6 +5,8 @@ const AppContext = createContext({
     setRegisterEmail: (registerEmail: string) => {},
     school: "",
     setSchool: (school: string) => {},
+    token: "",
+    setToken: (token: string) => {},
 });
 
 export default AppContext;

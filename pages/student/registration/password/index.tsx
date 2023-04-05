@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import AppContext from "@components/AppContext";
 import { useMutation, useQueryClient } from "react-query";
 import { registerUser } from "services/apiUser";
+import Cookies from "js-cookie";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
@@ -14,17 +15,19 @@ const RegisterPassword: NextPage = () => {
   const context = useContext(AppContext);
   const [password, setPassword] = useState("");
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate and refetch
-      console.log('success');
-      queryClient.invalidateQueries({ queryKey: ['register'] })
+      Cookies.set("access_token", data.token);
+      // context.setToken(mutation.data.Response);
+      queryClient.invalidateQueries({ queryKey: ["register"] });
     },
-  })
+  });
 
+  // console.log(mutation.data);
 
   return (
     <div className="register-student">
@@ -39,15 +42,13 @@ const RegisterPassword: NextPage = () => {
           <br />
           <PasswordForm
             onSubmit={(password: string): void => {
-                // setPassword(password);
-                mutation.mutate({
-                  email: context.registerEmail,
-                  password: password,
-                })
-                console.log(context.registerEmail, password);
-                // router.push({
-                //     pathname: "/student/registration/basic-information",
-                // });
+              // setPassword(password);
+              mutation.mutate({
+                email: context.registerEmail,
+                password: password,
+              });
+              console.log(context.registerEmail, password);
+              router.push("/student/email/verify");
             }}
           />
         </div>

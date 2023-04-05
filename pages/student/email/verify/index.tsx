@@ -4,9 +4,26 @@ import { useRouter } from "next/router";
 import PinInput from "react-pin-input";
 import { Typography } from "antd";
 import FootnoteForm from "@components/forms/FootnoteForm";
+import AppContext from "@components/AppContext";
+import { useContext, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { verifyEmail } from "services/apiUser";
+
 
 const EmailVerify: NextPage = () => {
   const router = useRouter();
+  const context = useContext(AppContext);
+  const [success, setSuccess] = useState(false);
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: verifyEmail,
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      setSuccess(data.success)
+      queryClient.invalidateQueries({ queryKey: ["verify-email"] });
+    },
+  });
 
   return (
     <div className="register-student">
@@ -17,11 +34,11 @@ const EmailVerify: NextPage = () => {
         <div className="register-student-content-form">
           <h1>Bách Khoa Hà Nội</h1>
           <p>
-            Mã xác nhận đã được gửi tới email <b>kiento0905.hec@gmail.com</b>
+            Mã xác nhận đã được gửi tới email <b>{context.registerEmail}</b>
           </p>
           <div className="register-student-content-form-pincode">
               <PinInput
-                length={4}
+                length={5}
                 initialValue=""
                 onChange={(value, index) => {
 
@@ -36,8 +53,8 @@ const EmailVerify: NextPage = () => {
                 }}
                 inputFocusStyle={{ borderColor: "#D30B81" }}
                 onComplete={(value, index) => {
-                  // if (value !== "1234") return Error("Invalid value");
-                  router.push("/student/registration/password");
+                  if (success) router.push("/student/registration/basic-information");
+                  else console.log("Verification failed");
                 }}
                 autoSelect={true}
                 regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
