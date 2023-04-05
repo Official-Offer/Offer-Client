@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Link } from "next/link";
+import  Link  from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
@@ -143,7 +143,7 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Sự Kiện</h2>
-          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} />
+          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} cardsDisplayNum={0} isLoading={false} />
           <div className="see-more">
             <Link href="student/events">Xem thêm sự kiện</Link>
           </div>
