@@ -5,11 +5,13 @@ import { useRouter } from "next/router";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
+import { useContext } from "react";
+import AppContext from "@components/AppContext";
 
 //create a next page for the student home page, code below
 const StudentEmail: NextPage = () => {
   const queryClient = useQueryClient();
-
+  const context = useContext(AppContext);
   // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
@@ -40,9 +42,11 @@ const StudentEmail: NextPage = () => {
                 const school = "Umass Amherst"
                 // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
+                context.setSession(email);
                 router.push(`/student/registration/school/${school}`);
               } else {
                 //else, navigate to registration page
+                context.setSession(email)
                 router.push("/student/registration");
               }
               return;
