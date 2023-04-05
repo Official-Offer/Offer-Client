@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard } from "@components/card/infoCard";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
+import Link from "next/link";
 import apiService from "@services/apiService";
 
 const profile = {

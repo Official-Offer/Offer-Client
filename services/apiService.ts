@@ -1,9 +1,10 @@
-import { URL_API_ADMIN, TOKEN_BEARER } from '@config/index';
+import { URL_API_ADMIN, TOKEN_BEARER } from 'config/index';
 import axios from 'axios';
 
 export default axios.create({
     baseURL: URL_API_ADMIN,
     headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${TOKEN_BEARER}`
     },
 });

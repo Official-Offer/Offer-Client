@@ -21,21 +21,20 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
   return (
     <Card 
       className="info-card"
-      cover={info.cover !== undefined ? <img src={info.cover} alt={info.name + " at " + info.institution} /> : ""}
+      cover={<img src="https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc" />}
       children={
           <Meta
-            title={info.name}
+            title={info?.title || ""}
             description={
               <div>
-                <span className="date-posted">{(info.date).toDateString()}</span>
-                <h4>{info.institution}</h4>
-                <span>{info.location}</span>
-                <p>{info.attribute}</p>
+                <span className="date-posted">{info?.time_published === undefined ? "Unknown Published Date" : (new Date(Date.parse(info.time_published))).toDateString()}</span>
+                <h4>{ info?.company || "Unknown Company Name" }</h4>
+                <span>{ info?.job_type || "Not Specified Status"}{" | "}{ info?.location || "Unknown Location" }</span>
                 <div className="avatar-info-mini">
                   <div>
-                    {info.commonSchool.map((friend) => (<img src={friend.avatar}></img>))}
+                    {info?.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
                   </div>
-                  {(info.commonSchool).length === 0 ? "" : <h4>{(info.commonSchool).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
+                  {(info?.applicants || []).length === 0 ? "" : <h4>{(info?.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
                 </div>
               </div>
             }

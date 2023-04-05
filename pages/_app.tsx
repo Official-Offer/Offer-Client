@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { AppProps } from "next/app";
 import "antd/dist/antd.css";
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from "antd";
 import { StyledThemeProvider } from "@definitions/styled-components";
 import "@styles/global.scss";
 import { Provider } from "react-redux";
 import store from "@redux/store";
 import { appWithTranslation } from "@i18n";
 import LayoutGlobal from "src/common/LayoutGlobal";
+import { QueryClient, QueryClientProvider } from "react-query";
+import AppContext from "@components/AppContext";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const AntdTheme = {
@@ -16,15 +18,26 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     },
   };
 
+  const queryClient = new QueryClient();
+  const [session, setSession] = useState("");
+  const value = useMemo(
+    () => ({ session, setSession }), 
+    [session]
+  );
+  
   return (
     <ConfigProvider theme={AntdTheme}>
-      <StyledThemeProvider>
-        <Provider store={store}>
-          <LayoutGlobal>
-            <Component {...pageProps} />
-          </LayoutGlobal>
-        </Provider>
-      </StyledThemeProvider>
+      <AppContext.Provider value={{ session, setSession }}>
+        <QueryClientProvider client={queryClient}>
+          <StyledThemeProvider>
+            <Provider store={store}>
+              <LayoutGlobal>
+                <Component {...pageProps} />
+              </LayoutGlobal>
+            </Provider>
+          </StyledThemeProvider>
+        </QueryClientProvider>
+      </AppContext.Provider>
     </ConfigProvider>
   );
 }
