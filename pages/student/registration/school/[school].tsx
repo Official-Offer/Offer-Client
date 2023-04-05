@@ -10,6 +10,7 @@ const RegisterStudentSchool: NextPage = () => {
   const router = useRouter();
   const context = useContext(AppContext);
   // console.log(rout/er.query);
+  // xxx
   return (
     <div className="register-student">
       <div className="register-student-sideBar">
