@@ -14,7 +14,7 @@ type EventCardProps = {
   },
 };
 
-export const EventCard: React.FC<EventCardProps> = ({info}) => {
+export const EventCard: React.FC<EventCardProps> = ({ info, ...rest }) => {
   const cardTrayRef = useRef(null);
   const { Meta } = AntdCard;
 
@@ -37,6 +37,8 @@ export const EventCard: React.FC<EventCardProps> = ({info}) => {
               {(info.commonSchool).length === 0 ? "" : <h4>{(info.commonSchool).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
             </div>
           </div>
-      } />
+      }
+      {...rest}
+    />
   );
 };
