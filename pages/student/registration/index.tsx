@@ -25,7 +25,7 @@ const RegisterStudent: NextPage = () => {
             onSubmit={(school) => {
               setSchool(school);
               router.push({
-                pathname: "/student/email/verify",
+                pathname: "/student/registration/password",
                 // query: { param: school },
               });
             }}
