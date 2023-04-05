@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 //create a next page for the student home page, code below
 const RegisterStudentSchool: NextPage = () => {
   const router = useRouter();
-
+  // console.log(1, router.query)
   return (
     <div className="register-student">
       <div className="register-student-sideBar">
