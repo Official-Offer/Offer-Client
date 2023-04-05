@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
   const queryClient = new QueryClient();
   const [registerEmail, setRegisterEmail] = useState("");
+  const [school, setSchool] = useState("");
   // const value = useMemo(
   //   () => ({ session, setSession }), 
   //   [session]
@@ -27,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   
   return (
     <ConfigProvider theme={AntdTheme}>
-      <AppContext.Provider value={{ registerEmail, setRegisterEmail }}>
+      <AppContext.Provider value={{ registerEmail, setRegisterEmail, school, setSchool }}>
         <QueryClientProvider client={queryClient}>
           <StyledThemeProvider>
             <Provider store={store}>

@@ -34,19 +34,20 @@ const RegisterPassword: NextPage = () => {
       <div className="register-student-content">
         <div className="register-student-content-form">
           {/* <Image src="..;/"/> */}
-          <h1>Bách Khoa Hà Nội</h1>
+          <h1>{context.school}</h1>
           <br />
           <br />
           <PasswordForm
-            onSubmit={function (password: string): void {
+            onSubmit={(password: string): void => {
                 // setPassword(password);
                 mutation.mutate({
                   email: context.registerEmail,
                   password: password,
                 })
-                router.push({
-                    pathname: "/student/registration/basic-information",
-                });
+                console.log(context.registerEmail, password);
+                // router.push({
+                //     pathname: "/student/registration/basic-information",
+                // });
             }}
           />
         </div>
