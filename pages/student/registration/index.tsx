@@ -2,12 +2,15 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import SchoolForm from "@components/forms/SchoolForm";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AppContext from "@components/AppContext";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
   const [school, setSchool] = useState("");
+  const context = useContext(AppContext);
+
 
   return (
     <div className="register-student">
@@ -23,7 +26,8 @@ const RegisterStudent: NextPage = () => {
           <br/>
           <SchoolForm
             onSubmit={(school) => {
-              setSchool(school);
+              // setSchool(school);
+              context.setSchool(school);
               router.push({
                 pathname: "/student/registration/password",
                 // query: { param: school },
