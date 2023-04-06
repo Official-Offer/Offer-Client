@@ -61,6 +61,7 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
     onSubmit(name, dob, gradYear, job, major, school);
   };
 

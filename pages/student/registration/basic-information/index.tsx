@@ -37,10 +37,10 @@ const RegisterBasicInfo: NextPage = () => {
             onSubmit={(name: string, dob: string, gradYear: string, job: string, major: string, school: string): void => {
               mutation.mutate({
                 name,
-                expected_graduation: gradYear,
-                desired_job: job,
+                // expected_graduation: gradYear,
+                // desired_job: job,
                 major,
-                school
+                // school
               });
               router.push("/student");
             }}
