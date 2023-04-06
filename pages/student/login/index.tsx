@@ -3,13 +3,26 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import LoginForm from "@components/forms/LogInForm";
+import { setCookie } from "cookies-next";
+import { useMutation, useQueryClient } from "react-query";
+import { studentLogIn } from "services/apiStudent";
 
 //create a next page for the student home page, code below
 const LoginStudent: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const queryClient = useQueryClient();
 
+  const mutation = useMutation({
+    mutationFn: studentLogIn,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      setCookie("access_token", data.token);
+      router.reload();
+      queryClient.invalidateQueries({ queryKey: ["register"] });
+    },
+  });
 
   return (
     <div className="register-student">
@@ -25,8 +38,12 @@ const LoginStudent: NextPage = () => {
           <br/>
           <LoginForm
             onSubmit={(item) => {
-              setEmail(item.email);
-              setPassword(item.password);
+              mutation.mutate({
+                email: item.email,
+                password: item.password,
+              });
+              // setEmail(item.email);
+              // setPassword(item.password);
               router.push({
                 pathname: "/student",
               });

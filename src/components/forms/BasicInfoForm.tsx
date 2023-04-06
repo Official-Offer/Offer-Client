@@ -6,43 +6,62 @@ import Link from "next/link";
 import FootnoteForm from "./FootnoteForm";
 
 interface IBasicInfoForm {
-  onSubmit: (basicInfo: string) => void;
+  onSubmit: (
+    lastName: string,
+    firstName: string,
+    gradYear: string,
+    job: string,
+    major: string,
+    school: string
+  ) => void;
 }
 
 function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [dob, setDOB] = useState("");
   const [gradYear, setGradYear] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [job, setJob] = useState("");
   const [major, setMajor] = useState("");
   const [school, setSchool] = useState("");
 
   const handleNameChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setName(event.target.value);
+  };
 
   const handleGradYearChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setGradYear(event.target.value);
+  };
 
-  const handleEmailChange = (event: {
+  const handleDOBChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setDOB(event.target.value);
+  };
 
-  const handlePhoneNumberChange = (event: {
+  const handleJobChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setJob(event.target.value);
+  };
 
   const handleMajorChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setMajor(event.target.value);
+  };
 
   const handleSchoolChange = (event: {
     target: { value: React.SetStateAction<string> };
-  }) => {};
+  }) => {
+    setSchool(event.target.value);
+  };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
-    onSubmit(name);
+    onSubmit(name, dob, gradYear, job, major, school);
   };
 
   return (
@@ -51,7 +70,7 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
         <div className="form-basic-info">
           <div className="form-basic-info-left">
             <label>
-              <b> Tên *</b>
+              <b> Họ Tên *</b>
             </label>
             <br />
             <FormInput
@@ -65,15 +84,15 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
           </div>
           <div className="form-basic-info-right">
             <label>
-              <b> Năm tốt nghiệp *</b>
+              <b> Năm sinh *</b>
             </label>
             <br />
             <FormInput
               width="230px"
-              type="number"
-              id="gradYear"
-              value={gradYear}
-              onChange={handleGradYearChange}
+              type="string"
+              id="dob"
+              value={dob}
+              onChange={handleDOBChange}
               required
             />
           </div>
@@ -81,30 +100,41 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
         <div className="form-basic-info">
           <div className="form-basic-info-left">
             <label>
-              <b> Email * </b>
+              <b> Năm tốt nghiệp * </b>
             </label>
             <br />
             <FormInput
               width="230px"
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
+              type="string"
+              id="gradYear"
+              value={gradYear}
+              onChange={handleGradYearChange}
               required
             />
           </div>
           <div className="form-basic-info-right">
             <label>
-              <b> Số Điện Thoại </b>
+              <b> Trường </b>
             </label>
             <br />
             <FormInput
               width="230px"
-              type="number"
-              id="phoneNumber"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
+              type="input"
+              id="school"
+              list="schools"
+              value={school}
+              onChange={handleSchoolChange}
             />
+            <datalist id="schools">
+              <option value="Bách Khoa" />
+              <option value="Sư Phạm" />
+              <option value="Ngoại Thương" />
+              <option value="Kinh Tế Quốc Dân" />
+              <option value="FPT" />
+              <option value="VinUniversity" />
+              <option value="RMIT" />
+              <option value="UMass" />
+            </datalist>
           </div>
         </div>
         <label>
@@ -115,23 +145,37 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
           width="480px"
           type="input"
           id="major"
+          list="majors"
           value={major}
           onChange={handleMajorChange}
           required
         />
+        <datalist id="majors">
+          <option value="CNTT" />
+          <option value="Quản trị kinh doanh" />
+          <option value="Đối ngoại" />
+          <option value="Kế toán " />
+        </datalist>
         <br />
         <label>
-          <b> Trường *</b>
+          <b> Tìm kiếm công việc</b>
         </label>
         <br />
         <FormInput
           width="480px"
           type="input"
           id="school"
-          value={school}
-          onChange={handleSchoolChange}
+          list="jobs"
+          value={job}
+          onChange={handleJobChange}
           required
         />
+        <datalist id="jobs">
+          <option value="Frontend Developer" />
+          <option value="Kế toán" />
+          <option value="ADC" />
+          <option value="Support" />
+        </datalist>
         <br />
         <br />
         <div className="form-basic-info-button">

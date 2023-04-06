@@ -2,32 +2,32 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import PasswordForm from "@components/forms/PasswordForm";
-import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "@components/AppContext";
 import { useMutation, useQueryClient } from "react-query";
-import { registerUser } from "services/apiUser";
-import Cookies from "js-cookie";
+import { setCookie } from "cookies-next";
+import { registerStudent } from "services/apiStudent";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
   const router = useRouter();
   const context = useContext(AppContext);
   const [password, setPassword] = useState("");
-
+  const [email, setEmail] = useState("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: registerUser,
-    onSuccess: (data) => {
+    mutationFn: registerStudent,
+    onSuccess: async (data) => {
       // Invalidate and refetch
-      // Cookies.remove('access_token');
-      Cookies.set("access_token", data.token);
+      // Cookies.set("access_token", data.token);
+      setCookie("access_token", data.token);
       // Cookies.set("email", context.registerEmail);
       router.reload();
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
+
 
   return (
     <div className="register-student">
@@ -43,12 +43,14 @@ const RegisterPassword: NextPage = () => {
           <PasswordForm
             onSubmit={(password: string): void => {
               // setPassword(password);
+              // setEmail(context.registerEmail);
               mutation.mutate({
                 email: context.registerEmail,
                 password: password,
               });
-              router.push("/student/email/verify");
-              // console.log(context.registerEmail, password);
+              // if (!mutation.isLoading)
+              // router.push("/student/email/verify");
+              router.push("/student/registration/basic-information");
             }}
           />
         </div>

@@ -4,6 +4,8 @@ import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
 import { CardTray } from "@components/cardTray";
+import { useQuery } from "react-query";
+import { getStudentDetails } from "services/apiStudent";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -109,6 +111,9 @@ const scholarshipList = [
 
 //create a next page for the student home page, code below
 const StudentHome: NextPage = () => {
+  const studentDetail = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
+  console.log(studentDetail);
+  
   return (
     <main className="main-home">
       <div className="main__content">
