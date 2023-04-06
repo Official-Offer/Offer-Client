@@ -6,8 +6,9 @@ import { Typography } from "antd";
 import FootnoteForm from "@components/forms/FootnoteForm";
 import AppContext from "@components/AppContext";
 import { useContext, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { verifyEmail } from "services/apiUser";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getUserDetails, verifyEmail } from "services/apiUser";
+import Cookies from "js-cookie";
 
 
 const EmailVerify: NextPage = () => {
@@ -15,7 +16,7 @@ const EmailVerify: NextPage = () => {
   const context = useContext(AppContext);
   const [success, setSuccess] = useState(false);
   const queryClient = useQueryClient();
-
+  const userDetail = useQuery({ queryKey: ["user-details"], queryFn: getUserDetails });
   const mutation = useMutation({
     mutationFn: verifyEmail,
     onSuccess: (data) => {
@@ -24,6 +25,9 @@ const EmailVerify: NextPage = () => {
       queryClient.invalidateQueries({ queryKey: ["verify-email"] });
     },
   });
+
+
+  console.log(userDetail);
 
   return (
     <div className="register-student">
@@ -34,7 +38,8 @@ const EmailVerify: NextPage = () => {
         <div className="register-student-content-form">
           <h1>Bách Khoa Hà Nội</h1>
           <p>
-            Mã xác nhận đã được gửi tới email <b>{context.registerEmail}</b>
+            Mã xác nhận đã được gửi tới email của bạn
+            {/* <b>{Cookies.get("email")}</b> */}
           </p>
           <div className="register-student-content-form-pincode">
               <PinInput

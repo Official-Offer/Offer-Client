@@ -21,13 +21,13 @@ const RegisterPassword: NextPage = () => {
     mutationFn: registerUser,
     onSuccess: (data) => {
       // Invalidate and refetch
+      // Cookies.remove('access_token');
       Cookies.set("access_token", data.token);
-      // context.setToken(mutation.data.Response);
+      // Cookies.set("email", context.registerEmail);
+      router.reload();
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
-
-  // console.log(mutation.data);
 
   return (
     <div className="register-student">
@@ -47,8 +47,8 @@ const RegisterPassword: NextPage = () => {
                 email: context.registerEmail,
                 password: password,
               });
-              console.log(context.registerEmail, password);
               router.push("/student/email/verify");
+              // console.log(context.registerEmail, password);
             }}
           />
         </div>
