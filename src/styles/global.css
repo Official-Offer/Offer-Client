@@ -32,7 +32,13 @@ a {
   padding-bottom: 20px;
 }
 
-.card-tray {
+.card-tray-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 44px;
+}
+.card-tray-main {
   display: flex;
   align-items: stretch;
   overflow-x: hidden;
@@ -147,7 +153,7 @@ a {
 }
 .navbar .ant-menu-item {
   height: 100%;
-  padding: 20px !important;
+  padding: 10px 20px !important;
 }
 .navbar .ant-menu-item.ant-dropdown-open .icon-btn .anticon {
   background-color: #DDDDDD;
@@ -312,6 +318,10 @@ a {
   position: fixed !important;
 }
 
+.ant-btn-text:focus {
+  background: transparent !important;
+}
+
 /* Layouts */
 .main-home {
   display: flex;
@@ -327,12 +337,6 @@ a {
 }
 .main-home .main__content section {
   margin-bottom: 36px;
-}
-.main-home .main__content section .info-section {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 0 44px;
 }
 .main-home .main__content section .see-more {
   text-align: right;
@@ -607,6 +611,10 @@ a {
   -moz-column-gap: 30px;
        column-gap: 30px;
   margin-bottom: 20px;
+}
+.job-portal-description-actions .ant-modal-content {
+  border-radius: 20px;
+  background: red !important;
 }
 .job-portal-description-actions button {
   border-radius: 10px;

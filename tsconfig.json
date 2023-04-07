@@ -19,6 +19,18 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@config": [
+        "config"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@services": [
+        "services"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
       "@components/*": [
         "src/components/*"
       ],
