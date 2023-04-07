@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useRef } from "react";
+import { removeCookies } from "cookies-next";
 
 type Navbar = {
   searchBarHidden: boolean;
@@ -258,7 +259,13 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 <Link href="/student/profile">Hỗ Trợ</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Đăng Xuất</Link>
+                <div onClick={()=>{
+                  removeCookies("access_token");
+                  router.push("/student/email");
+                }}>
+                Đăng Xuất
+                </div>
+                {/* <Link href="/student/email">Đăng Xuất</Link> */}
               </Menu.Item>
             </Menu>
           }

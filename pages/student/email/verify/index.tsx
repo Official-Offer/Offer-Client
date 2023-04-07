@@ -21,7 +21,13 @@ const EmailVerify: NextPage = () => {
     mutationFn: verifyEmail,
     onSuccess: (data) => {
       // Invalidate and refetch
-      setSuccess(data.success)
+      // setSuccess(data.success);
+      // console.log(data);
+      if (data.success) {
+        router.push({
+          pathname: "/student",
+        });
+      }
       queryClient.invalidateQueries({ queryKey: ["verify-email"] });
     },
   });
@@ -58,8 +64,10 @@ const EmailVerify: NextPage = () => {
                 }}
                 inputFocusStyle={{ borderColor: "#D30B81" }}
                 onComplete={(value, index) => {
-                  if (success) router.push("/student/registration/basic-information");
-                  else console.log("Verification failed");
+                  mutation.mutate({
+                    email: userDetail.data?.email,
+                    code: value,
+                  });
                 }}
                 autoSelect={true}
                 regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}

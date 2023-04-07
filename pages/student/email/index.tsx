@@ -43,7 +43,8 @@ const StudentEmail: NextPage = () => {
                 // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
                 context.setRegisterEmail(email);
-                router.push(`/student/registration/school/${school}`);
+                context.setSchool(school);
+                router.push(`/student/registration/password`);
               } else {
                 //else, navigate to registration page
                 context.setRegisterEmail(email)

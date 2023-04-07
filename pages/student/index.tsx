@@ -4,6 +4,7 @@ import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
 import { CardTray } from "@components/cardTray";
+import { getStudentDetails } from "services/apiStudent";
 import api from "@services/apiService";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";
@@ -117,6 +118,8 @@ const scholarshipList = [
 
 //create a next page for the student home page, code below
 const StudentHome: NextPage = () => {
+  const studentDetail = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
+  console.log(studentDetail);
   const [jobList, setJobList] = useState([]);
   // Fetching jobs list
   const getJob = useQuery({
