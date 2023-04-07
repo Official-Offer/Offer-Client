@@ -15,7 +15,7 @@ const StudentEmail: NextPage = () => {
   // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  // console.log(query.data.Response);
+  console.log(schools);
   // Mutations
   // const mutation = useMutation({
   //   mutationFn: postTodo,
@@ -42,11 +42,11 @@ const StudentEmail: NextPage = () => {
                 const school = "Umass Amherst"
                 // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
-                context.setSession(email);
+                context.setRegisterEmail(email);
                 router.push(`/student/registration/school/${school}`);
               } else {
                 //else, navigate to registration page
-                context.setSession(email)
+                context.setRegisterEmail(email)
                 router.push("/student/registration");
               }
               return;

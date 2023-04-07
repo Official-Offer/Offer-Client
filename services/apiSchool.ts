@@ -1,7 +1,6 @@
-import axios from 'axios'
-import { URL_API_ADMIN, TOKEN_BEARER } from 'config/index';
+import request from './apiService'
 
 export const getSchoolList = async () => {
-  const response = await axios.get(`${URL_API_ADMIN}/api/schools`)
+  const response = await request.get(`/schools`)
   return response.data
 }

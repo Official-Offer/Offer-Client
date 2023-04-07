@@ -11,6 +11,7 @@ const RegisterStudentSchool: NextPage = () => {
   const context = useContext(AppContext);
   // console.log(rout/er.query);
   // xxx
+  //add shi
   return (
     <div className="register-student">
       <div className="register-student-sideBar">
@@ -19,7 +20,7 @@ const RegisterStudentSchool: NextPage = () => {
       <div className="register-student-content">
         <div className="register-student-content-form">
           <h1>{router.query.school}</h1>
-          <h2>{context.session}</h2>
+          <h2>{context.registerEmail}</h2>
         </div>
       </div>
     </div>
