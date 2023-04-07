@@ -12,3 +12,9 @@
 .ant-dropdown {
   position: fixed !important;
 }
+
+.ant-btn {
+  &-text:focus {
+    background: transparent !important;
+  }
+}
