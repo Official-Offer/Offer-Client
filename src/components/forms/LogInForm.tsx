@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
+import { FootnoteForm } from "./FootnoteForm";
 import Link from "next/link";
-import FootnoteForm from "./FootnoteForm";
 
 interface ILoginForm {
   onSubmit: (emailAndPassword: {
@@ -12,7 +12,7 @@ interface ILoginForm {
   }) => void;
 }
 
-function LoginForm({ onSubmit }: ILoginForm) {
+export const LoginForm:React.FC = ({ onSubmit }: ILoginForm) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,58 +41,38 @@ function LoginForm({ onSubmit }: ILoginForm) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <b> Email </b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          type="email"
-          id="password"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        />
-        <br />
-        <br />
-        <label>
-          <b> Mật khẩu</b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <br />
-        <br />
-        <SubmitButton type="submit">Đăng nhập</SubmitButton>
-        <br />
-        <br />
-        <hr />
-        <Typography.Text type="secondary">
-          Chưa có tài khoản? <br />
-          <Typography.Text underline>
-            <Link href="/student/registration">Đăng ký tại đây</Link>
-          </Typography.Text>
-        </Typography.Text>
-        <br />
-        <br />
-        <Typography.Text type="secondary">
-          Bạn là nhà tuyển dụng? <br />
-          <Typography.Text underline>
-            <Link href="/recruiter/login">Đăng ký/Đăng nhập tại đây</Link>
-          </Typography.Text>
-        </Typography.Text>{" "}
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-flex">
+          <div className="form-input">
+            <label>
+              <b> Email </b>
+            </label>
+            <FormInput
+              width="250px"
+              type="email"
+              id="password"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
+          <div className="form-input">
+            <label>
+              <b> Mật khẩu</b>
+            </label>
+            <FormInput
+              width="250px"
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+          </div>
+        </div>
+        <SubmitButton type="submit" className="form-submit-button">Đăng nhập</SubmitButton>
       </form>
+      <FootnoteForm />
     </div>
   );
 }
-
-export default LoginForm;

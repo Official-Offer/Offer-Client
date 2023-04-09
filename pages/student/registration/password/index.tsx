@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import PasswordForm from "@components/forms/PasswordForm";
+import { PasswordForm } from "@components/forms";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "@components/AppContext";
 import { useMutation, useQueryClient } from "react-query";
@@ -38,8 +38,6 @@ const RegisterPassword: NextPage = () => {
         <div className="register-student-content-form">
           {/* <Image src="..;/"/> */}
           <h1>{context.school}</h1>
-          <br />
-          <br />
           <PasswordForm
             onSubmit={(password: string): void => {
               // setPassword(password);

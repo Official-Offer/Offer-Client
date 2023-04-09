@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
+import { FootnoteForm } from "./FootnoteForm";
 import Link from "next/link";
-import FootnoteForm from "./FootnoteForm";
 
 interface IPasswordForm {
   onSubmit: (email: string) => void;
 }
 
-function PasswordForm({ onSubmit }: IPasswordForm) {
+export const PasswordForm:React.FC = ({ onSubmit }: IPasswordForm) => {
   const [password, setPassword] = useState("");
   const [reenteredPassword, setReenteredPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -38,44 +38,37 @@ function PasswordForm({ onSubmit }: IPasswordForm) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <br />
-        <br />
-        <label>
-          <b> Nhập lại mật khẩu *</b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          type="password"
-          id="reentered-password"
-          value={reenteredPassword}
-          onChange={handleReenteredPasswordChange}
-          required
-        />
-        <br />
-        <br />
-        <SubmitButton type="submit">Tiếp tục</SubmitButton>
-        <br />
-        <br />
-        <FootnoteForm />
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-flex">
+          <div className="form-input">
+            <label>
+              <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
+            </label>
+            <FormInput
+              width="250px"
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+          </div>
+          <div className="form-input">
+            <label>
+              <b> Nhập lại mật khẩu *</b>
+            </label>
+            <FormInput
+              width="250px"
+              type="password"
+              id="reentered-password"
+              value={reenteredPassword}
+              onChange={handleReenteredPasswordChange}
+              required
+            />
+          </div>
+        </div>
       </form>
+      <SubmitButton type="submit">Tiếp tục</SubmitButton>
     </div>
   );
 }
-
-export default PasswordForm;

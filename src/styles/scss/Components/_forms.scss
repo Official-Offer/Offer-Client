@@ -1,22 +1,33 @@
 .form {
-  &-basic-info {
+  margin: 40px 0;
+
+  &-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 
-    &-full-width {
+    .full-width {
       grid-column: 1 / 3;
     }
+  }
 
-    &-button {
-        text-align: center;
-        padding-bottom: 20px;
-    }
+  &-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &-submit-button {
+    margin-top: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 }
 
-.input-form {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}

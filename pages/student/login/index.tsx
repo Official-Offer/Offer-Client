@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import LoginForm from "@components/forms/LogInForm";
+import { LoginForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { studentLogIn } from "services/apiStudent";
@@ -34,8 +34,6 @@ const LoginStudent: NextPage = () => {
           <h1>
             Bách Khoa Hà Nội
           </h1>
-          <br/>
-          <br/>
           <LoginForm
             onSubmit={(item) => {
               mutation.mutate({
