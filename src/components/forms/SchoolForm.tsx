@@ -24,18 +24,18 @@ function SchoolForm({ onSubmit }: ISchoolForm) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          <b> Kết nối với trường của bạn: </b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          list="mySuggestions"
-          value={school}
-          onChange={handleSchoolChange}
-          required
-        />
+        <div className="form">
+          <label>
+            <b> Kết nối với trường của bạn: </b>
+          </label>
+          <FormInput
+            width="250px"
+            list="mySuggestions"
+            value={school}
+            onChange={handleSchoolChange}
+            required
+          />
+        </div>
         <datalist id="mySuggestions">
           <option value="Bách Khoa" />
           <option value="Sư Phạm" />

@@ -69,13 +69,11 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="form-basic-info">
-          <div className="form-basic-info-left">
+          <div className="input-form">
             <label>
               <b> Họ Tên *</b>
             </label>
-            <br />
             <FormInput
-              width="230px"
               type="name"
               id="name"
               value={name}
@@ -83,13 +81,11 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
               required
             />
           </div>
-          <div className="form-basic-info-right">
+          <div className="input-form">
             <label>
               <b> Năm sinh *</b>
             </label>
-            <br />
             <FormInput
-              width="230px"
               type="string"
               id="dob"
               value={dob}
@@ -97,15 +93,11 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
               required
             />
           </div>
-        </div>
-        <div className="form-basic-info">
-          <div className="form-basic-info-left">
+          <div className="input-form">
             <label>
               <b> Năm tốt nghiệp * </b>
             </label>
-            <br />
             <FormInput
-              width="230px"
               type="string"
               id="gradYear"
               value={gradYear}
@@ -113,13 +105,11 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
               required
             />
           </div>
-          <div className="form-basic-info-right">
+          <div className="input-form">
             <label>
               <b> Trường </b>
             </label>
-            <br />
             <FormInput
-              width="230px"
               type="input"
               id="school"
               list="schools"
@@ -137,49 +127,46 @@ function BasicInfoForm({ onSubmit }: IBasicInfoForm) {
               <option value="UMass" />
             </datalist>
           </div>
+          <div className="input-form">
+            <label>
+              <b> Ngành học *</b>
+            </label>
+            <FormInput
+              type="input"
+              id="major"
+              list="majors"
+              value={major}
+              onChange={handleMajorChange}
+              required
+            />
+            <datalist id="majors">
+              <option value="CNTT" />
+              <option value="Quản trị kinh doanh" />
+              <option value="Đối ngoại" />
+              <option value="Kế toán " />
+            </datalist>
+          </div>
+          <div className="input-form">
+            <label>
+              <b> Tìm kiếm công việc</b>
+            </label>
+            <FormInput
+              type="input"
+              id="school"
+              list="jobs"
+              value={job}
+              onChange={handleJobChange}
+              required
+            />
+            <datalist id="jobs">
+              <option value="Frontend Developer" />
+              <option value="Kế toán" />
+              <option value="ADC" />
+              <option value="Support" />
+            </datalist>
+          </div>
         </div>
-        <label>
-          <b> Ngành học *</b>
-        </label>
-        <br />
-        <FormInput
-          width="480px"
-          type="input"
-          id="major"
-          list="majors"
-          value={major}
-          onChange={handleMajorChange}
-          required
-        />
-        <datalist id="majors">
-          <option value="CNTT" />
-          <option value="Quản trị kinh doanh" />
-          <option value="Đối ngoại" />
-          <option value="Kế toán " />
-        </datalist>
-        <br />
-        <label>
-          <b> Tìm kiếm công việc</b>
-        </label>
-        <br />
-        <FormInput
-          width="480px"
-          type="input"
-          id="school"
-          list="jobs"
-          value={job}
-          onChange={handleJobChange}
-          required
-        />
-        <datalist id="jobs">
-          <option value="Frontend Developer" />
-          <option value="Kế toán" />
-          <option value="ADC" />
-          <option value="Support" />
-        </datalist>
-        <br />
-        <br />
-        <div className="form-basic-info-button">
+        <div className="form-submit-button">
           <SubmitButton type="submit">Xác nhận</SubmitButton>
         </div>
         <FootnoteForm />

@@ -79,7 +79,7 @@ function LoginForm({ onSubmit }: ILoginForm) {
         <Typography.Text type="secondary">
           Chưa có tài khoản? <br />
           <Typography.Text underline>
-            <Link href="/student/login">Đăng ký tại đây</Link>
+            <Link href="/student/registration">Đăng ký tại đây</Link>
           </Typography.Text>
         </Typography.Text>
         <br />
@@ -87,7 +87,7 @@ function LoginForm({ onSubmit }: ILoginForm) {
         <Typography.Text type="secondary">
           Bạn là nhà tuyển dụng? <br />
           <Typography.Text underline>
-            <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
+            <Link href="/recruiter/login">Đăng ký/Đăng nhập tại đây</Link>
           </Typography.Text>
         </Typography.Text>{" "}
       </form>
