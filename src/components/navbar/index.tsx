@@ -35,12 +35,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const handleSearch = () => null;
   const handleSearchChange = (event) => {
     setSearchInput(event.target?.value ?? "");
-    console.log(document.activeElement.matches(".ant-input"));
   };
   const handleMessageSearch = () => null;
   const handleMesSearchChange = (event) => {
     setSearchInput(event.target?.value ?? "");
-    console.log(document.activeElement.matches(".ant-input"));
   };
 
   const openMesPanel = () => {

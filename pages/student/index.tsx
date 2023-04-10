@@ -1,14 +1,13 @@
 import { NextPage } from "next";
-import  Link  from "next/link";
+import Link from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard } from "@components/card/eventCard";
 import { InfoCard } from "@components/card/infoCard";
 import { CardTray } from "@components/cardTray";
 import { getStudentDetails } from "services/apiStudent";
-import api from "@services/apiService";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery } from "react-query";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -112,21 +111,15 @@ const scholarshipList = [
   },
 ];
 
-// const fetchJob = async () => {
-//   console.log(await api.get('jobs/'));
-// };
-
 //create a next page for the student home page, code below
 const StudentHome: NextPage = () => {
-  const studentDetail = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
-  console.log(studentDetail);
   const [jobList, setJobList] = useState([]);
   // Fetching jobs list
-  const getJob = useQuery({
+  const jobQuery = useQuery({
     queryKey: "jobs",
     queryFn: getJobList,
     onSuccess: (res) => setJobList(res),
-    onError: (err) => console.log(`Error: ${err}`)
+    onError: (err) => console.log(`Error: ${err}`),
   });
   
   return (
@@ -149,7 +142,7 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Đề Xuất Công Việc</h2>
-          <CardTray cardList={getJob.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info} loading={getJob.isLoading} />)} />
+          <CardTray cardList={jobQuery.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info} loading={jobQuery.isLoading} />)} />
           <div className="see-more">
             <Link href="student/jobs">{typeof Link}</Link>
           </div>

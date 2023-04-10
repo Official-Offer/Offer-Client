@@ -9,7 +9,7 @@ import { getStudentDetails, updateStudent } from "services/apiStudent";
 //create a next page for the student home page, code below
 const RegisterBasicInfo: NextPage = () => {
   const router = useRouter();
-  const studentDetail = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
+  const studentQuery = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -22,7 +22,7 @@ const RegisterBasicInfo: NextPage = () => {
     },
   });
   
-  console.log(studentDetail);
+  console.log(studentDetails);
   
   return (
     <div className="register-student">

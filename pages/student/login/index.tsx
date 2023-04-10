@@ -3,7 +3,7 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { LoginForm } from "@components/forms";
-import { setCookie } from "cookies-next";
+import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { studentLogin } from "services/apiStudent";
 
@@ -37,8 +37,8 @@ const LoginStudent: NextPage = () => {
           <LoginForm
             onSubmit={(item) => {
               mutation.mutate({
-                email: item.email,
-                password: item.password,
+                "email": item.email,
+                "password": item.password,
               });
               // setEmail(item.email);
               // setPassword(item.password);
