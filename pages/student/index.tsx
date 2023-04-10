@@ -125,7 +125,7 @@ const StudentHome: NextPage = () => {
   const getJob = useQuery({
     queryKey: "jobs",
     queryFn: getJobList,
-    onSuccess: (res) => setJobList(Array(8).fill(res[0])),
+    onSuccess: (res) => setJobList(res),
     onError: (err) => console.log(`Error: ${err}`)
   });
   
