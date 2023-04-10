@@ -5,7 +5,7 @@ import { useState } from "react";
 import { LoginForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
-import { studentLogIn } from "services/apiStudent";
+import { studentLogin } from "services/apiStudent";
 
 //create a next page for the student home page, code below
 const LoginStudent: NextPage = () => {
@@ -15,7 +15,7 @@ const LoginStudent: NextPage = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: studentLogIn,
+    mutationFn: studentLogin,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
