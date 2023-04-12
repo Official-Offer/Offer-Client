@@ -7,7 +7,7 @@ interface IEmailForm {
   onSubmit: (email: string) => void;
 }
 
-function EmailForm({ onSubmit }: IEmailForm) {
+export const EmailForm:React.FC = ({ onSubmit }: IEmailForm) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,29 +20,28 @@ function EmailForm({ onSubmit }: IEmailForm) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <b> Nhập email của bạn: </b>
-      </label>
-      <br />
-      <br />
-      <FormInput
-        width="250px"
-        type="email"
-        value={email}
-        onChange={handleEmailChange}
-        required
-      />
-      <br />
-      <Typography.Text type="secondary">
-        Sử dụng mail .edu sẽ giúp quá trình <br />
-        xác thực được nhanh chóng hơn.
-      </Typography.Text>
-      <br />
-      <br />
-      <SubmitButton type="submit">Tiếp tục</SubmitButton>
-    </form>
+    <div>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-flex">
+          <div className="form-input">
+            <label>
+              <b> Nhập email của bạn: </b>
+            </label>
+            <FormInput
+              width="250px"
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            <Typography.Text type="secondary">
+              Sử dụng mail .edu sẽ giúp quá trình <br />
+              xác thực được nhanh chóng hơn.
+            </Typography.Text>
+          </div>
+          <SubmitButton type="submit">Tiếp tục</SubmitButton>
+        </div>
+      </form>
+    </div>
   );
 }
-
-export default EmailForm;

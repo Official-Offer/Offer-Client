@@ -1,10 +1,12 @@
 import { NextPage } from "next";
-import Link from "next/link";
+import { useState } from "react";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard } from "@components/card/infoCard";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { getCookie } from "cookies-next";
+import { getStudentDetails } from "@services/apiStudent";
+import { useQuery, useMutation } from "react-query";
 import Link from "next/link";
-import apiService from "@services/apiService";
 
 const profile = {
   cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
@@ -45,24 +47,32 @@ const exp = {
 };
 
 const StudentProfile: NextPage = () => {
+  const [studentDetails, setStudentDetails] = useState(null);
+  const studentQuery = useQuery({
+    queryKey: "students/me",
+    queryFn: getStudentDetails,
+    onSuccess: (res) => setStudentDetails(res),
+    onError: (err) => console.log(`Error: ${err}`),
+  });
+  
   return (
     <main className="student-profile">
       <section className="sticky-panel sticky-panel-profile">
         <AntdCard
+          loading={studentQuery.isLoading}
           cover={<img src={profile.cover}/>}
           children={
             <div>
               <img className="sticky-panel-profile-avatar" src={profile.avatar} />
               <div className="sticky-panel-profile-header">
-                <h2>{profile.name}</h2>
-                <span>{profile.year}</span>
+                <h2>{studentDetails?.name}</h2>
+                <span>{(new Date(Date.parse(studentDetails?.expected_graduation))).toDateString()}</span>
               </div>
               <div className="sticky-panel-profile-info">
-                <h4>{profile.school}</h4>
-                <h4>{profile.major}</h4>
-                <h4>{profile.school}</h4>
+                <h4>{studentDetails?.school ?? "Trường không xác định"}</h4>
+                <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>
-                <h4>{profile.jobs.join(", ")}</h4>
+                <h4>{studentDetails?.desired_job ?? "Không xác định"}</h4>
               </div>
             </div>
           }

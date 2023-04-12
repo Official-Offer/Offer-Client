@@ -1,6 +1,6 @@
 // import { NextPage } from "next";
 // import { LeftPanel } from "@styles/styled-components/styledDiv";
-// import SchoolForm from "@components/forms/SchoolForm";
+// import { SchoolForm } from "@components/forms";
 // import { useRouter } from "next/router";
 
 // //create a next page for the student home page, code below

@@ -13,10 +13,10 @@ export const updateStudent = async (body: any) => {
 
 export const getStudentDetails = async () => {
   const response = await request.get(`/students/me/`);
-  return response.data;
+  return response.data.Response;
 };
 
-export const studentLogIn = async (body: any) => {
-  const response = await request.post(`/students/login`, body);
+export const studentLogin = async (body: any) => {
+  const response = await request.post(`/students/login/`, body);
   return response.data;
 };

@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import BasicInfoForm from "@components/forms/BasicInfoForm";
+import { BasicInfoForm } from "@components/forms";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUserDetails } from "services/apiUser";
 import { getStudentDetails, updateStudent } from "services/apiStudent";
@@ -9,7 +9,7 @@ import { getStudentDetails, updateStudent } from "services/apiStudent";
 //create a next page for the student home page, code below
 const RegisterBasicInfo: NextPage = () => {
   const router = useRouter();
-  const studentDetail = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
+  const studentQuery = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -22,7 +22,7 @@ const RegisterBasicInfo: NextPage = () => {
     },
   });
   
-  console.log(studentDetail);
+  console.log(studentDetails);
   
   return (
     <div className="register-student">
@@ -32,7 +32,6 @@ const RegisterBasicInfo: NextPage = () => {
       <div className="register-student-content">
         <div className="register-student-content-form">
           <h1>Xác nhận thông tin cơ bản</h1>
-          <br />
           <BasicInfoForm
             onSubmit={(name: string, dob: string, gradYear: string, job: string, major: string, school: string): void => {
               mutation.mutate({

@@ -7,7 +7,7 @@ interface IResumeForm {
   onSubmit: (resume: string) => void;
 }
 
-function ResumeForm({ onSubmit }: IResumeForm) {
+export const ResumeForm:React.FC = ({ onSubmit }: IResumeForm) => {
   const [resume, setResume] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -39,31 +39,31 @@ function ResumeForm({ onSubmit }: IResumeForm) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <b> Chọn resume </b>
-        </label>
-        <br />
-        <br />
-        <FormInput
-          width="250px"
-          // marginRight="20px"
-          list="mySuggestions"
-          value={resume}
-          onChange={handleResumeChange}
-          required
-        />
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>Tai CV moi</Button>
-        </Upload>
-        <datalist id="mySuggestions">
-          <option value="CV 1" />
-          <option value="CV 2" />
-          <option value="CV 3" />
-        </datalist>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-flex">
+          <div className="form-input">
+            <label>
+              <b> Chọn resume </b>
+            </label>
+            <FormInput
+              width="250px"
+              // marginRight="20px"
+              list="mySuggestions"
+              value={resume}
+              onChange={handleResumeChange}
+              required
+            />
+          </div>
+          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Tai CV moi</Button>
+          </Upload>
+          <datalist id="mySuggestions">
+            <option value="CV 1" />
+            <option value="CV 2" />
+            <option value="CV 3" />
+          </datalist>
+        </div>
       </form>
     </div>
   );
 }
-
-export default ResumeForm;

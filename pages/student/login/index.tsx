@@ -2,10 +2,10 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import LoginForm from "@components/forms/LogInForm";
-import { setCookie } from "cookies-next";
+import { LoginForm } from "@components/forms";
+import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
-import { studentLogIn } from "services/apiStudent";
+import { studentLogin } from "services/apiStudent";
 
 //create a next page for the student home page, code below
 const LoginStudent: NextPage = () => {
@@ -15,7 +15,7 @@ const LoginStudent: NextPage = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: studentLogIn,
+    mutationFn: studentLogin,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
@@ -34,13 +34,11 @@ const LoginStudent: NextPage = () => {
           <h1>
             Bách Khoa Hà Nội
           </h1>
-          <br/>
-          <br/>
           <LoginForm
             onSubmit={(item) => {
               mutation.mutate({
-                email: item.email,
-                password: item.password,
+                "email": item.email,
+                "password": item.password,
               });
               // setEmail(item.email);
               // setPassword(item.password);
