@@ -22,13 +22,12 @@ const StudentEmail: NextPage = () => {
       <div className="student-email-content">
         <div className="student-email-content-form">
           <EmailForm
-            onSubmit={(email: string | string[]) => {
+            onSubmit={(email) => {
               if (users.data.Response.filter((data: { email: string; }) => data.email == email).length > 0) {
                 //if email is in database, navigate to login page
                 router.push("/student/login");
               } else if (email.includes(".edu")) {
-                const school = "Umass Amherst"
-                // schools.data[email.split("@")[1]]
+                const school = schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
