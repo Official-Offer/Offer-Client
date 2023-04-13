@@ -2,14 +2,14 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { SchoolForm } from "@components/forms";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import AppContext from "@components/AppContext";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
   const [school, setSchool] = useState("");
-  const context = useContext(AppContext);
+  const dispatch = useDispatch();
 
 
   return (
@@ -27,7 +27,7 @@ const RegisterStudent: NextPage = () => {
           <SchoolForm
             onSubmit={(school) => {
               // setSchool(school);
-              context.setSchool(school);
+              dispatch(setSchool(school));
               router.push({
                 pathname: "/student/registration/password",
                 // query: { param: school },

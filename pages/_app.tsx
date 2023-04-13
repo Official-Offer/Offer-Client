@@ -9,7 +9,6 @@ import store from "@redux/store";
 import { appWithTranslation } from "@i18n";
 import LayoutGlobal from "src/common/LayoutGlobal";
 import { QueryClient, QueryClientProvider } from "react-query";
-import AppContext from "@components/AppContext";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const AntdTheme = {
@@ -19,17 +18,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   };
 
   const queryClient = new QueryClient();
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [school, setSchool] = useState("");
-  const [token, setToken] = useState("");
-  // const value = useMemo(
-  //   () => ({ session, setSession }), 
-  //   [session]
-  // );
   
   return (
     <ConfigProvider theme={AntdTheme}>
-      <AppContext.Provider value={{ registerEmail, setRegisterEmail, school, setSchool, token, setToken }}>
         <QueryClientProvider client={queryClient}>
           <StyledThemeProvider>
             <Provider store={store}>
@@ -39,7 +30,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             </Provider>
           </StyledThemeProvider>
         </QueryClientProvider>
-      </AppContext.Provider>
     </ConfigProvider>
   );
 }

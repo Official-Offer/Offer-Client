@@ -46,7 +46,7 @@ const LoginStudent: NextPage = () => {
         <div className="register-student-content-form">
           <h1>Bách Khoa Hà Nội</h1>
           <LoginForm
-            onSubmit={(item) => {
+            onSubmit={(item: { email: any; password: any; }) => {
               mutation.mutate({
                 email: item.email,
                 password: item.password,

@@ -5,19 +5,13 @@ import { useRouter } from "next/router";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
-import { useContext } from "react";
-import AppContext from "@components/AppContext";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setRegisterEmail, setSchool } from "@redux/actions";
 
 //create a next page for the student home page, code below
 const StudentEmail: NextPage = () => {
-  const queryClient = useQueryClient();
-  // const context = useContext(AppContext);
-  // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  // console.log(schools);
   const router = useRouter();
   const dispatch = useDispatch();
   return (
@@ -36,15 +30,12 @@ const StudentEmail: NextPage = () => {
                 const school = "Umass Amherst"
                 // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
-                // context.setRegisterEmail(email);
-                // context.setSchool(school);
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
                 router.push(`/student/registration/password`);
               } else {
                 //else, navigate to registration page
                 dispatch(setRegisterEmail(email));
-                // context.setRegisterEmail(email)
                 router.push("/student/registration");
               }
               return;
