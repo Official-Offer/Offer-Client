@@ -7,16 +7,19 @@ import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
 import { useContext } from "react";
 import AppContext from "@components/AppContext";
+import { useDispatch, useSelector } from "react-redux";
 
 //create a next page for the student home page, code below
 const StudentEmail: NextPage = () => {
   const queryClient = useQueryClient();
-  const context = useContext(AppContext);
+  // const context = useContext(AppContext);
   // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
   // console.log(schools);
   const router = useRouter();
+  // const mystate = useSelector((state) => state.change);
+  const dispatch = useDispatch();
   return (
     <div className="student-email">
       <div className="student-email-sideBar">
@@ -32,12 +35,13 @@ const StudentEmail: NextPage = () => {
               } else if (email.includes(".edu")) {
                 const school = schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
-                context.setRegisterEmail(email);
-                context.setSchool(school);
+                // context.setRegisterEmail(email);
+                // context.setSchool(school);
+                dispatch({ type: "CHANGE", payload: school });
                 router.push(`/student/registration/password`);
               } else {
                 //else, navigate to registration page
-                context.setRegisterEmail(email)
+                // context.setRegisterEmail(email)
                 router.push("/student/registration");
               }
               return;
