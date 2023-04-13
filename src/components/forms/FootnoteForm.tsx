@@ -23,7 +23,7 @@ export const FootnoteForm: React.FC = ({embedLogin}: boolean) => {
       <br />
       <br />
       <Typography.Text type="secondary">
-        Bạn là nhà tuyển dụng? <br />
+        Bạn là nhà tuyển dụng hoặc cố vấn? <br />
         <Typography.Text underline>
           <Link href="/student/login">Đăng ký/Đăng nhập tại đây</Link>
         </Typography.Text>

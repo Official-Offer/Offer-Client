@@ -15,7 +15,7 @@ const StudentEmail: NextPage = () => {
   // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  // console.log(schools);
+  console.log(schools);
   const router = useRouter();
   return (
     <div className="student-email">
@@ -30,7 +30,8 @@ const StudentEmail: NextPage = () => {
                 //if email is in database, navigate to login page
                 router.push("/student/login");
               } else if (email.includes(".edu")) {
-                const school = schools.data[email.split("@")[1]]
+                const school = "Umass Amherst"
+                // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
                 context.setRegisterEmail(email);
                 context.setSchool(school);

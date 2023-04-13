@@ -2,25 +2,38 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { LoginForm } from "@components/forms";
+import { FootnoteForm, LoginForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { studentLogin } from "services/apiStudent";
+import { userLogIn } from "@services/apiUser";
 
 //create a next page for the student home page, code below
 const LoginStudent: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
+    // queryKey: ["login"],
     mutationFn: studentLogin,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
-      router.reload();
-      queryClient.invalidateQueries({ queryKey: ["register"] });
+      router
+        .push({
+          pathname: "/student",
+        })
+        .then(() => {
+          router.reload();
+        });
+      queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+    onError: (error: any) => {
+      setErrorMessage(error.response.data.message);
+      queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
 
@@ -31,22 +44,21 @@ const LoginStudent: NextPage = () => {
       </div>
       <div className="register-student-content">
         <div className="register-student-content-form">
-          <h1>
-            Bách Khoa Hà Nội
-          </h1>
+          <h1>Bách Khoa Hà Nội</h1>
           <LoginForm
             onSubmit={(item) => {
               mutation.mutate({
-                "email": item.email,
-                "password": item.password,
+                email: item.email,
+                password: item.password,
               });
               // setEmail(item.email);
               // setPassword(item.password);
-              router.push({
-                pathname: "/student",
-              });
             }}
           />
+          {errorMessage && (
+            <p className="register-student-content-error">{errorMessage}</p>
+          )}
+          <FootnoteForm />
         </div>
       </div>
     </div>

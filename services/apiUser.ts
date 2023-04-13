@@ -17,12 +17,12 @@ export const getUserDetails = async (userId: any) => {
 }
 
 export const userLogIn = async (body: any) => {
-  const response = await request.post(`/accounts/login`, body);
+  const response = await request.post(`/accounts/login/`, body);
   return response.data;
 }
 
 export const verifyEmail = async (body: any) => {
-  const response = await request.post(`/accounts/verifyEmail`, body);
+  const response = await request.post(`/accounts/verifyEmail/`, body);
   return response.data;
 }
 

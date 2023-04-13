@@ -16,6 +16,23 @@ export const SubmitButton = styled.button`
   }
 `
 
+export const ContinueButton = styled.button`
+// props
+  background-color: ${props => props.backgroundColor || "#d30b81"};
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 40px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${props => props.hoverColor || "#b40a6e"}; 
+  }
+`
+
 export const TogglableButton = styled.button`
   width: 100px;
   height: 30px;

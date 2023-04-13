@@ -69,9 +69,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     },
   ];
 
-  return router.pathname.includes("/student/registration") ||
-    router.pathname.includes("/student/email") ||
-    router.pathname.includes("/student/login") ? (
+  return router.pathname.includes("registration") ||
+    router.pathname.includes("email") ||
+    router.pathname.includes("login") ? (
     <></>
   ) : (
     <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")}>
@@ -257,11 +257,13 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 <Link href="/student/profile">Hỗ Trợ</Link>
               </Menu.Item>
               <Menu.Item>
-                <div onClick={()=>{
-                  removeCookies("access_token");
-                  router.push("/student/email");
-                }}>
-                Đăng Xuất
+                <div
+                  onClick={() => {
+                    removeCookies("access_token");
+                    router.push("/student/email");
+                  }}
+                >
+                  Đăng Xuất
                 </div>
                 {/* <Link href="/student/email">Đăng Xuất</Link> */}
               </Menu.Item>

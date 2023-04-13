@@ -8,6 +8,7 @@ import { getStudentDetails } from "services/apiStudent";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { getUserDetails } from "@services/apiUser";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",

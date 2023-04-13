@@ -12,10 +12,9 @@ interface ILoginForm {
   }) => void;
 }
 
-export const LoginForm:React.FC = ({ onSubmit }: ILoginForm) => {
+export const LoginForm: React.FC = ({ onSubmit }: ILoginForm) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handlePasswordChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -31,12 +30,7 @@ export const LoginForm:React.FC = ({ onSubmit }: ILoginForm) => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    // Passwords match, handle form submission here
-    // if (password !== "123456") {
-    //   setErrorMessage("Password do not match. Please try again.");
-    // } else {
     onSubmit({ email, password });
-    // }
   };
 
   return (
@@ -70,9 +64,10 @@ export const LoginForm:React.FC = ({ onSubmit }: ILoginForm) => {
             />
           </div>
         </div>
-        <SubmitButton type="submit" className="form-submit-button">Đăng nhập</SubmitButton>
+        <SubmitButton type="submit" className="form-submit-button">
+          Đăng nhập
+        </SubmitButton>
       </form>
-      <FootnoteForm />
     </div>
   );
-}
+};
