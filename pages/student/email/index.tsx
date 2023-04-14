@@ -12,6 +12,7 @@ import { setRegisterEmail, setSchool } from "@redux/actions";
 const StudentEmail: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
+  console.log(schools);
   const router = useRouter();
   const dispatch = useDispatch();
   return (
