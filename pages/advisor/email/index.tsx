@@ -1,4 +1,4 @@
-import {EmailForm} from "@components/forms/EmailForm";
+import { EmailForm } from "@components/forms/EmailForm";
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
@@ -9,12 +9,14 @@ import { useDispatch } from "react-redux";
 import { setRegisterEmail, setSchool } from "@redux/actions";
 
 //create a next page for the student home page, code below
-const StudentEmail: NextPage = () => {
+const AdvisorEmail: NextPage = () => {
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+  // Queries
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  console.log(schools);
+  // console.log(schools);
   const router = useRouter();
-  const dispatch = useDispatch();
   return (
     <div className="student-email">
       <div className="student-email-sideBar">
@@ -24,11 +26,16 @@ const StudentEmail: NextPage = () => {
         <div className="student-email-content-form">
           <EmailForm
             onSubmit={(email) => {
-              if (users.data.Response.filter((data: { email: string; }) => data.email == email).length > 0) {
+              if (
+                users.data.Response.filter(
+                  (data: { email: string }) => data.email == email
+                ).length > 0
+              ) {
                 //if email is in database, navigate to login page
                 router.push("/student/login");
               } else if (email.includes(".edu")) {
-                const school = schools.data[email.split("@")[1]]
+                const school = "Umass Amherst";
+                // schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
@@ -47,4 +54,4 @@ const StudentEmail: NextPage = () => {
   );
 };
 
-export default StudentEmail;
+export default AdvisorEmail;
