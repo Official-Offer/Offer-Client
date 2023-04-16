@@ -153,3 +153,8 @@ export const MessageBox = styled.div`
     background-color: ${({seen}) => seen ? "transparent" : "#D30B81"};
   }
 `;
+
+export const ResumeCard = styled.div`
+  border: dashed black 1px;
+  border-radius: 10px;
+`;

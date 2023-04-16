@@ -2,9 +2,12 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard } from "@components/card/infoCard";
+import { CardTray, ResumePanel } from "@components";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { getCookie } from "cookies-next";
 import { getStudentDetails } from "@services/apiStudent";
+import { getSchool } from "@services/apiSchool";
+import { getJob } from "@services/apiJob";
 import { useQuery, useMutation } from "react-query";
 import Link from "next/link";
 
@@ -51,7 +54,7 @@ const StudentProfile: NextPage = () => {
   const studentQuery = useQuery({
     queryKey: "students/me",
     queryFn: getStudentDetails,
-    onSuccess: (res) => setStudentDetails(res),
+    onSuccess: async (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`),
   });
   
@@ -66,7 +69,7 @@ const StudentProfile: NextPage = () => {
               <img className="sticky-panel-profile-avatar" src={profile.avatar} />
               <div className="sticky-panel-profile-header">
                 <h2>{studentDetails?.name}</h2>
-                <span>{(new Date(Date.parse(studentDetails?.expected_graduation))).toDateString()}</span>
+                <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails.expected_graduation)).toDateString()}</span>
               </div>
               <div className="sticky-panel-profile-info">
                 <h4>{studentDetails?.school ?? "Trường không xác định"}</h4>
@@ -84,7 +87,11 @@ const StudentProfile: NextPage = () => {
           title={
             <div className="main-panel-header">
               <h2>CV</h2>
-              <input type="file"/>
+            </div>
+          }
+          children={
+            <div>
+              <ResumePanel />
             </div>
           }
         />
