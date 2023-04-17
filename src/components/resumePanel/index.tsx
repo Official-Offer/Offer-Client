@@ -1,32 +1,71 @@
 import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
 import { ResumeCard } from "@styles/styled-components/styledBox";
-import { updateStudentResume } from "@services/apiStudent";
+import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
 export const ResumePanel: React.FC = () => {
+  const [resumeFetch, setResumeFetch] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [isFileSelected, setIsFileSelected] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
-  const selectFile = (event) => {
+  const handleDownload = (data) => {
+    console.log(data);
+    setUploadedFile(<a href={URL.createObjectURL(new Blob([data]))} download="file.pdf">CV của bạn</a>);
+  };
+
+  const selectResume = (event) => {
     setSelectedFile(event.target.files[0]);
-    setIsFileSelected(true);
   };
 
   const uploadFile = async () => {
     const resumeData = new FormData();
     resumeData.append("resume", selectedFile);
-    console.log('selectedFile', selectedFile);
-    console.log('isFileSelected', isFileSelected);
-    console.log('resumeData', resumeData);
-    return await updateStudentResume(resumeData).then(x => console.log(x), err => console.log(err));
+    return await updateStudentResume(resumeData);
+  };
+
+  const downloadQuery = useQuery({
+    queryFn: () => {
+      setResumeFetch(false);
+      return getStudentResume();
+    },
+    onSuccess: handleDownload,
+    enabled: resumeFetch
+  });
+
+  const uploadMutation = useMutation({
+    mutationFn: uploadFile,
+    onSuccess: () => setResumeFetch(true),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteStudentResume,
+    onSuccess: () => setResumeFetch(true),
+  });
+
+  const handleUpload = (event) => {
+    event.preventDefault();
+    if (selectedFile?.type !== "application/pdf") {
+      alert("Dạng file tải lên phải là PDF");
+      return;
+    }
+    uploadMutation.mutate();
+  };
+
+  const handleDelete = () => {
+    event.preventDefault();
+    deleteMutation.mutate();
   };
 
   return (
     <ResumeCard>
-      <input type="file" onChange={selectFile}/>
-      <button onClick={uploadFile}>Upload</button>
-      <div>{isFileSelected ? `Resume: ${selectedFile.name}` : `Please select a file`}</div>
+      <input type="file" accept="application/pdf" onChange={selectResume}/>
+      <button onClick={handleUpload}>Upload</button>
+      <div>{"Upload status: " + uploadMutation.status}</div>
+      {uploadedFile ?? <div>{downloadQuery.isLoading ? `Đang tải` : `Vui lòng tải lên CV`}</div>}
+      <div>{"Download status: " + downloadQuery.status}</div>
       <button>Download</button>
-      <button>Delete</button>
+      <button onClick={handleDelete}>Delete</button>
+      <div>{"Delete status: " + deleteMutation.status}</div>
     </ResumeCard>
   );
 };

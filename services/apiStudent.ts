@@ -15,7 +15,7 @@ export const updateStudent = async (body: any) => {
 
 export const getStudentDetails = async () => {
   const response = (await request.get(`/students/me/`)).data.Response;
-  response.school &&= (await getSchool(response.school)).name; // If school's id exists, fetch its name
+  response.school &&= response.school.map(async (id) => (await getJob(id)).title); // If school's id exists, fetch its name
   response.desired_job &&= (await getJob(response.desired_job)).title; // If job's id exists, fetch its name
   return response;
 };
@@ -34,3 +34,8 @@ export const updateStudentResume = async (file: FormData) => {
   const response = await request.post(`/students/resume/`, file);
   return response.data;
 };
+
+export const deleteStudentResume = async () => {
+  const response = await request.delete(`/students/resume/`);
+  return response.data;
+}
