@@ -44,10 +44,6 @@ export const ResumePanel: React.FC = () => {
 
   const handleUpload = (event) => {
     event.preventDefault();
-    if (selectedFile?.type !== "application/pdf") {
-      alert("Dạng file tải lên phải là PDF");
-      return;
-    }
     uploadMutation.mutate();
   };
 
@@ -58,7 +54,7 @@ export const ResumePanel: React.FC = () => {
 
   return (
     <ResumeCard>
-      <input type="file" accept="application/pdf" onChange={selectResume}/>
+      <input type="file" onChange={selectResume}/>
       <button onClick={handleUpload}>Upload</button>
       <div>{"Upload status: " + uploadMutation.status}</div>
       {uploadedFile ?? <div>{downloadQuery.isLoading ? `Đang tải` : `Vui lòng tải lên CV`}</div>}
