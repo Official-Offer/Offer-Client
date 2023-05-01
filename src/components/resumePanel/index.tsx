@@ -4,13 +4,12 @@ import { ResumeCard } from "@styles/styled-components/styledBox";
 import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
 export const ResumePanel: React.FC = () => {
-  const [resumeFetch, setResumeFetch] = useState(true);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [resumeFetch, setResumeFetch] = useState(true); // For refetching the resume if there's any update
+  const [selectedFile, setSelectedFile] = useState(null); // Holding the formData of the selected file before uploading
+  const [uploadedFile, setUploadedFile] = useState(null); // Holding the URL of uploaded resume for downloading
 
   const handleDownload = (data) => {
-    console.log(data);
-    setUploadedFile(<a href={URL.createObjectURL(new Blob([data]))} download="file.pdf">CV của bạn</a>);
+    setUploadedFile(data);
   };
 
   const selectResume = (event) => {
@@ -39,7 +38,10 @@ export const ResumePanel: React.FC = () => {
 
   const deleteMutation = useMutation({
     mutationFn: deleteStudentResume,
-    onSuccess: () => setResumeFetch(true),
+    onSuccess: () => {
+      setResumeFetch(true);
+      handleDownload();
+    },
   });
 
   const handleUpload = (event) => {
@@ -57,9 +59,11 @@ export const ResumePanel: React.FC = () => {
       <input type="file" onChange={selectResume}/>
       <button onClick={handleUpload}>Upload</button>
       <div>{"Upload status: " + uploadMutation.status}</div>
-      {uploadedFile ?? <div>{downloadQuery.isLoading ? `Đang tải` : `Vui lòng tải lên CV`}</div>}
+      <div>{uploadedFile && uploadedFile.length > 0 ? (downloadQuery.isLoading ? `Đang tải...` : `Đã tải.`) : `Vui lòng tải lên CV`}</div>
       <div>{"Download status: " + downloadQuery.status}</div>
-      <button>Download</button>
+      <a href={uploadedFile} target="_blank">
+        <button>Download</button>
+      </a>
       <button onClick={handleDelete}>Delete</button>
       <div>{"Delete status: " + deleteMutation.status}</div>
     </ResumeCard>

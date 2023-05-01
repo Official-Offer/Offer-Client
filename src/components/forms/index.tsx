@@ -5,3 +5,4 @@ export { LoginForm } from "./LoginForm";
 export { PasswordForm } from "./PasswordForm";
 export { ResumeForm } from "./ResumeForm";
 export { SchoolForm } from "./SchoolForm";
+export { ProfileInfoForm } from "./ProfileInfoForm";

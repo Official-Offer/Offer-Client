@@ -7,7 +7,17 @@ import { Card as AntdCard, Button } from "antd";
 import { InfoCard, ProfileCard } from "@components/card";
 import { CardTray, ResumePanel } from "@components";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { getStudentDetails } from "@services/apiStudent";
+import { 
+  getStudentDetails,
+  getStudentEducations,
+  editStudentEducation,
+  addStudentEducations,
+  deleteStudentEducations,
+  getStudentExperiences,
+  editStudentExperience,
+  addStudentExperiences,
+  deleteStudentExperiences,
+} from "@services/apiStudent";
 import { getSchool } from "@services/apiSchool";
 import { getJob } from "@services/apiJob";
 
@@ -54,7 +64,7 @@ const StudentProfile: NextPage = () => {
   const studentQuery = useQuery({
     queryKey: "students/me",
     queryFn: getStudentDetails,
-    onSuccess: async (res) => setStudentDetails(res),
+    onSuccess: (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`),
   });
   
@@ -101,32 +111,40 @@ const StudentProfile: NextPage = () => {
         />
         <ProfileCard
           fieldTitle="Giáo Dục"
-          itemList={[
-            {
-              name: school.name,
-              logoURL: school.logo,
-              dateLabel: "Thời gian học",
-              dates: school.year,
-              infoList: [
-                { label: "Ngành học", details: school.major }
-              ]
-            }
-          ]}
+          getFunction={getStudentEducations}
+          addFunction={addStudentEducations}
+          editFunction={editStudentEducation}
+          deleteFunction={deleteStudentEducations}
+          // itemList={[
+          //   {
+          //     name: school.name,
+          //     logoURL: school.logo,
+          //     dateLabel: "Thời gian học",
+          //     dates: school.year,
+          //     infoList: [
+          //       { label: "Ngành học", details: school.major }
+          //     ]
+          //   }
+          // ]}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
-          itemList={[
-            {
-              name: exp.name,
-              logoURL: exp.logo,
-              dateLabel: "Thời gian làm việc",
-              dates: exp.year,
-              infoList: [
-                { label: "Vai trò", details: exp.role },
-                { label: "Địa điểm", details: exp.location },
-              ]
-            }
-          ]}
+          getFunction={getStudentExperiences}
+          addFunction={addStudentExperiences}
+          editFunction={editStudentExperience}
+          deleteFunction={deleteStudentExperiences}
+          // itemList={[
+          //   {
+          //     name: exp.name,
+          //     logoURL: exp.logo,
+          //     dateLabel: "Thời gian làm việc",
+          //     dates: exp.year,
+          //     infoList: [
+          //       { label: "Vai trò", details: exp.role },
+          //       { label: "Địa điểm", details: exp.location },
+          //     ]
+          //   }
+          // ]}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">
