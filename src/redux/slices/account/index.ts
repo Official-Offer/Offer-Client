@@ -4,7 +4,7 @@ interface ICAccount {
   email: string;
   school?: string;
   company?: string;
-  role: {
+  role?: {
     isStudent: boolean;
     isAdvisor: boolean;
     isRecruiter: boolean;
@@ -16,7 +16,7 @@ const initialState: ICAccount = {
   school: "",
   company: "",
   role: {
-    isStudent: false,
+    isStudent: true,
     isAdvisor: false,
     isRecruiter: false,
   },

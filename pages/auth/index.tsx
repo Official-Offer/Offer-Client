@@ -1,0 +1,97 @@
+import React from "react";
+import type { NextPage } from "next";
+import { EmailForm } from "@components/forms/EmailForm";
+import { LeftPanel } from "@styles/styled-components/styledDiv";
+import { useRouter } from "next/router";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { getUserList } from "services/apiUser";
+import { getSchoolList } from "services/apiSchool";
+import { useDispatch } from "react-redux";
+import { setRegisterEmail, setRole, setSchool } from "@redux/actions";
+const Auth: NextPage = () => {
+  const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
+  const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
+  const companies = useQuery({ queryKey: ["companies"], queryFn: getSchoolList });
+  // console.log(schools);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  return (
+    <div className="email">
+      <div className="email-sideBar">
+        <LeftPanel> </LeftPanel>
+      </div>
+      <div className="email-content">
+        <h1 className="email-content-title"> Dang Ky </h1>
+        <div className="email-content-form">
+          <EmailForm
+            onSubmit={(email) => {
+              const role = {
+                isStudent: true,
+                isAdvisor: false,
+                isRecruiter: false,
+              };
+              dispatch(setRole(role))
+              if (
+                users.data.Response.filter(
+                  (data: { email: string }) => data.email == email
+                ).length > 0
+              ) {
+                //if email is in database, navigate to login page
+                router.push("/login");
+              } else if (email.includes(".edu")) {
+                const school = schools.data[email.split("@")[1]];
+                //if email is not in database but have an .edu suffix, navigate to school page
+                dispatch(setRegisterEmail(email));
+                dispatch(setSchool(school));
+                router.push(`/registration/password`);
+              } else {
+                //else, navigate to registration page
+                dispatch(setRegisterEmail(email));
+                router.push("/registration");
+              }
+              return;
+            }}
+          />
+        </div>
+        <div className="email-content-form-google" data-onsuccess="onSignIn">
+          Google
+        </div>
+        {/* <div className="email-content-form-recruiter">
+          <EmailForm
+            onSubmit={(email: string) => {
+              let user = users.data.Response.filter(
+                (data: { email: string }) => data.email == email
+              )[0];
+              const role = {
+                isStudent: user.is_student,
+                isAdvisor: user.is_advisor,
+                isRecruiter: user.is_recruiter,
+              };
+              dispatch(setRole(role))
+              if (user) {
+                //if email is in database, navigate to login page
+                router.push("/login");
+              } else if (email.includes(".edu")) {
+                const school = schools.data[email.split("@")[1]];
+                //if email is not in database but have an .edu suffix, navigate to school page
+                dispatch(setRegisterEmail(email));
+                dispatch(setSchool(school));
+                router.push(`/registration/password`);
+              } else {
+                //else, navigate to registration page
+                dispatch(setRegisterEmail(email));
+                router.push("/registration");
+              }
+              return;
+            }}
+          />
+        </div>
+        <div className="email-content-form-google" data-onsuccess="onSignIn">
+          Google
+        </div> */}
+      </div>
+    </div>
+  );
+};
+
+export default Auth;
