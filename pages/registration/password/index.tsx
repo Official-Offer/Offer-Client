@@ -8,6 +8,8 @@ import { registerStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useState } from "react";
+import { registerAdvisor } from "@services/apiAdvisor";
+import { registerRecruiter } from "@services/apiRecruiter";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
@@ -16,7 +18,7 @@ const RegisterPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
-    mutationFn: registerStudent,
+    mutationFn: state.role.isStudent? registerStudent: state.role.isAdvisor? registerAdvisor: registerRecruiter,
     onSuccess: async (data) => {
       setCookie("access_token", data.token);
       console.log('first')
