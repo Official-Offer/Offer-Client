@@ -28,15 +28,6 @@ const RegisterStudent: NextPage = () => {
                 <br />
                 ngồi trên ghế nhà trường với Offer
               </h1>
-              <OrgForm
-                onSubmit={(school) => {
-                  // setSchool(school);
-                  dispatch(setSchool(school));
-                  router.push({
-                    pathname: "/registration/password",
-                  });
-                }}
-              />
             </div>
           ) : state.role.isAdvisor ? (
             <div>
@@ -45,15 +36,6 @@ const RegisterStudent: NextPage = () => {
                 <br />
                 dễ dàng với Offer
               </h1>
-              <OrgForm
-                onSubmit={(school) => {
-                  // setSchool(school);
-                  dispatch(setSchool(school));
-                  router.push({
-                    pathname: "/registration/password",
-                  });
-                }}
-              />
             </div>
           ) : (
             <div>
@@ -62,17 +44,21 @@ const RegisterStudent: NextPage = () => {
                 <br />
                 thuộc hệ thống 500 trường của Offer
               </h1>
-              <OrgForm
-                onSubmit={(company) => {
-                  // setSchool(school);
-                  dispatch(setCompany(company));
-                  router.push({
-                    pathname: "/registration/password",
-                  });
-                }}
-              />
             </div>
           )}
+          <OrgForm
+            onSubmit={(org) => {
+              // setSchool(school);
+              if (state.role.isStudent || state.role.isAdvisor) {
+                dispatch(setSchool(org));
+              } else {
+                dispatch(setCompany(org));
+              }
+              router.push({
+                pathname: "/registration/password",
+              });
+            }}
+          />
         </div>
       </div>
     </div>

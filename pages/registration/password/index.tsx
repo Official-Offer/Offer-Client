@@ -25,11 +25,11 @@ const RegisterPassword: NextPage = () => {
         .then(() => router.reload());
       // queryClient.invalidateQueries({ queryKey: ["register"] });
     },
-    // onError: (error: any) => {
-    //   console.log(error.response.data.message);
-    //   setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
-    //   // queryClient.invalidateQueries({ queryKey: ["register"] });
-    // },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
+      // queryClient.invalidateQueries({ queryKey: ["register"] });
+    },
   });
 
   return (
@@ -40,7 +40,7 @@ const RegisterPassword: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           {/* <Image src="..;/"/> */}
-          <h1>{state.school}</h1>
+          <h1>{state.school || state.company}</h1>
           <PasswordForm
             onSubmit={(password: string) => {
               mutation.mutate({

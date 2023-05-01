@@ -22,7 +22,7 @@ const RegisterBasicInfo: NextPage = () => {
     },
   });
   
-  console.log(studentDetails);
+  // console.log(studentDetails);
   
   return (
     <div className="register">

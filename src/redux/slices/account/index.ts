@@ -4,7 +4,7 @@ interface ICAccount {
   email: string;
   school?: string;
   company?: string;
-  role?: {
+  role: {
     isStudent: boolean;
     isAdvisor: boolean;
     isRecruiter: boolean;
