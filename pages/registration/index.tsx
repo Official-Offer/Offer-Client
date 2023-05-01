@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
-import { SchoolForm } from "@components/forms";
+import { OrgForm } from "@components/forms";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import { setCompany } from "@redux/slices/account";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
@@ -27,13 +28,12 @@ const RegisterStudent: NextPage = () => {
                 <br />
                 ngồi trên ghế nhà trường với Offer
               </h1>
-              <SchoolForm
+              <OrgForm
                 onSubmit={(school) => {
                   // setSchool(school);
                   dispatch(setSchool(school));
                   router.push({
                     pathname: "/registration/password",
-                    // query: { param: school },
                   });
                 }}
               />
@@ -41,17 +41,16 @@ const RegisterStudent: NextPage = () => {
           ) : state.role.isAdvisor ? (
             <div>
               <h1>
-                Bắt đầu sự nghiệp ngay khi
+                Quản lý hướng nghiệp cho học sinh
                 <br />
-                ngồi trên ghế nhà trường với Offer
+                dễ dàng với Offer
               </h1>
-              <SchoolForm
+              <OrgForm
                 onSubmit={(school) => {
                   // setSchool(school);
                   dispatch(setSchool(school));
                   router.push({
                     pathname: "/registration/password",
-                    // query: { param: school },
                   });
                 }}
               />
@@ -59,17 +58,16 @@ const RegisterStudent: NextPage = () => {
           ) : (
             <div>
               <h1>
-                Bắt đầu sự nghiệp ngay khi
+                Tuyển những học sinh giỏi nhất
                 <br />
-                ngồi trên ghế nhà trường với Offer
+                thuộc hệ thống 500 trường của Offer
               </h1>
-              <SchoolForm
-                onSubmit={(school) => {
+              <OrgForm
+                onSubmit={(company) => {
                   // setSchool(school);
-                  dispatch(setSchool(school));
+                  dispatch(setCompany(company));
                   router.push({
                     pathname: "/registration/password",
-                    // query: { param: school },
                   });
                 }}
               />
