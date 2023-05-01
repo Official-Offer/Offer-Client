@@ -3,17 +3,13 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import PinInput from "react-pin-input";
 import { Typography } from "antd";
-import FootnoteForm from "@components/forms/FootnoteForm";
-import AppContext from "@components/AppContext";
+import {FootnoteForm} from "@components/forms/FootnoteForm";
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUserDetails, verifyEmail } from "services/apiUser";
-import Cookies from "js-cookie";
-
 
 const EmailVerify: NextPage = () => {
   const router = useRouter();
-  const context = useContext(AppContext);
   const [success, setSuccess] = useState(false);
   const queryClient = useQueryClient();
   const userDetail = useQuery({ queryKey: ["user-details"], queryFn: getUserDetails });
@@ -21,8 +17,6 @@ const EmailVerify: NextPage = () => {
     mutationFn: verifyEmail,
     onSuccess: (data) => {
       // Invalidate and refetch
-      // setSuccess(data.success);
-      // console.log(data);
       if (data.success) {
         router.push({
           pathname: "/student",

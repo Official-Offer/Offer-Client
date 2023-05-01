@@ -1,36 +1,48 @@
 import React from "react";
 import type { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-// import { Header, Main, CardsGrid, Footer } from "@components";
-import Counter from "@components/examples/counter";
-import { StyledSystemExample } from "@components/examples/styled-system";
-import { TestingLibraryExample } from "@components/examples/testing-library";
-import { I18NExample } from "@components/examples/translate";
+import {EmailForm} from "@components/forms/EmailForm";
+import { LeftPanel } from "@styles/styled-components/styledDiv";
+import { useRouter } from "next/router";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { getUserList } from "services/apiUser";
+import { getSchoolList } from "services/apiSchool";
+import { useDispatch } from "react-redux";
+import { setRegisterEmail, setSchool } from "@redux/actions";
 const Home: NextPage = () => {
-  const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
-  const Header = dynamic(() => import("@components").then((mod: any) => mod.Header)) as any;
-  const Main = dynamic(() => import("@components").then((mod: any) => mod.Main)) as any;
-  const CardsGrid = dynamic(() => import("@components").then((mod: any) => mod.CardsGrid)) as any;
-  const Footer = dynamic(() => import("@components").then((mod: any) => mod.Footer)) as any;
+  const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
+  const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
+  console.log(schools);
+  const router = useRouter();
+  const dispatch = useDispatch();
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-    >
-      <Header />
-      <Navbar />
-      <Main /> 
-      <CardsGrid />
-      <Footer />
-      {/* <Counter /> */}
+    <div className="student-email">
+      <div className="student-email-sideBar">
+        <LeftPanel> </LeftPanel>
+      </div>
+      <div className="student-email-content">
+        <div className="student-email-content-form">
+          <EmailForm
+            onSubmit={(email) => {
+              if (users.data.Response.filter((data: { email: string; }) => data.email == email).length > 0) {
+                //if email is in database, navigate to login page
+                router.push("/student/login");
+              } else if (email.includes(".edu")) {
+                const school = schools.data[email.split("@")[1]]
+                //if email is not in database but have an .edu suffix, navigate to school page
+                dispatch(setRegisterEmail(email));
+                dispatch(setSchool(school));
+                router.push(`/student/registration/password`);
+              } else {
+                //else, navigate to registration page
+                dispatch(setRegisterEmail(email));
+                router.push("/student/registration");
+              }
+              return;
+            }}
+          />
+        </div>
+      </div>
     </div>
-    // <Counter />
-    // <StyledSystemExample />
-    // <TestingLibraryExample
-    //   onClick={() => {
-    //     alert("sonabitch");
-    //   }}
-    // />
-    // <I18NExample />
   );
 };
 

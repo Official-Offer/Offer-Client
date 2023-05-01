@@ -1,60 +1,69 @@
 import { NextPage } from "next";
-import {
-  CenterPanel,
-  LeftPanel,
-  RightPanel,
-} from "@styles/styled-components/styledDiv";
+import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import {
-  ContinueButton,
-  SubmitButton,
-} from "@styles/styled-components/styledButton";
+import { useState } from "react";
+import { FootnoteForm, LoginForm } from "@components/forms";
+import { setCookie, getCookie } from "cookies-next";
+import { useMutation, useQueryClient } from "react-query";
+import { studentLogin } from "services/apiStudent";
+import { userLogIn } from "@services/apiUser";
+
 //create a next page for the student home page, code below
-const Login: NextPage = () => {
+const LoginStudent: NextPage = () => {
   const router = useRouter();
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    // queryKey: ["login"],
+    mutationFn: studentLogin,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      setCookie("access_token", data.token);
+      router
+        .push({
+          pathname: "/student",
+        })
+        .then(() => {
+          router.reload();
+        });
+      queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message)
+      setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
+      queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+  });
 
   return (
-    <div className="login">
-      <div className="login-left">
-        {/* <div className="login-left-text">Bạn là học sinh?</div> */}
-        <div className="login-left-button">
-          <ContinueButton
-            onClick={() => {
-              router.push("/student/email");
-            }}
-          >
-            Học sinh
-          </ContinueButton>
-        </div>
+    <div className="register-student">
+      <div className="register-student-sideBar">
+        <LeftPanel />
       </div>
-      <div className="login-center">
-        {/* <div className="login-left-text">Bạn là nhà tuyển dụng?</div> */}
-        <div className="login-center-button">
-          <ContinueButton
-            backgroundColor="#2980B9"
-            onClick={() => {
-              router.push("/recruiter/email");
+      <div className="register-student-content">
+        <div className="register-student-content-form">
+          <h1>Bách Khoa Hà Nội</h1>
+          <LoginForm
+            onSubmit={(item: { email: any; password: any; }) => {
+              mutation.mutate({
+                email: item.email,
+                password: item.password,
+              });
+              // setEmail(item.email);
+              // setPassword(item.password);
             }}
-          >
-            Nhà tuyển dụng
-          </ContinueButton>
-        </div>
-      </div>
-      <div className="login-right">
-        {/* <div className="login-left-text">Bạn là cố vấn tuyển sinh?</div> */}
-        <div className="login-right-button">
-          <ContinueButton
-            backgroundColor="#f12711"
-            onClick={() => {
-              router.push("/advisor/email");
-            }}
-          >
-            Cố vấn
-          </ContinueButton>
+          />
+          {errorMessage && (
+            <p className="register-student-content-error">{errorMessage}</p>
+          )}
+          <FootnoteForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginStudent;
