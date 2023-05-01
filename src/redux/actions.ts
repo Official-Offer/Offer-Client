@@ -1,2 +1,2 @@
 export { increase, decrease } from "@redux/slices/counter";
-export { setRegisterEmail, setSchool } from "@redux/slices/account";
+export { setRegisterEmail, setSchool, setRole } from "@redux/slices/account";

@@ -5,20 +5,20 @@ import { Typography } from "antd";
 import { FootnoteForm } from "./FootnoteForm";
 import Link from "next/link";
 
-interface ISchoolForm {
+interface IOrgForm {
   onSubmit: (email: string) => void;
 }
 
-export const SchoolForm: React.FC<ISchoolForm> = ({ onSubmit }: ISchoolForm) => {
-  const [school, setSchool] = useState("");
+export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
+  const [Org, setOrg] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(school);
+    onSubmit(Org);
   };
 
-  const handleSchoolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSchool(event.target.value);
+  const handleOrgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOrg(event.target.value);
   };
 
   return (
@@ -32,8 +32,8 @@ export const SchoolForm: React.FC<ISchoolForm> = ({ onSubmit }: ISchoolForm) => 
             <FormInput
               width="250px"
               list="mySuggestions"
-              value={school}
-              onChange={handleSchoolChange}
+              value={Org}
+              onChange={handleOrgChange}
               required
             />
           </div>
