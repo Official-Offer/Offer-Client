@@ -145,14 +145,14 @@ const StudentHome: NextPage = () => {
           <h2>Đề Xuất Công Việc</h2>
           <CardTray cardList={jobQuery.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info}/>)} />
           <div className="see-more">
-            <Link href="student/jobs">{typeof Link}</Link>
+            <Link href="student/jobs">Xem thêm công việc</Link>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
           <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <Link href="student/clubs">Xem thêm công việc</Link>
+            <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
           </div>
         </section>
         <section>

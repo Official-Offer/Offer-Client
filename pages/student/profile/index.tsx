@@ -1,15 +1,15 @@
 import { NextPage } from "next";
+import Link from "next/link";
 import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
+import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard } from "@components/card/infoCard";
 import { CardTray, ResumePanel } from "@components";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { getCookie } from "cookies-next";
 import { getStudentDetails } from "@services/apiStudent";
 import { getSchool } from "@services/apiSchool";
 import { getJob } from "@services/apiJob";
-import { useQuery, useMutation } from "react-query";
-import Link from "next/link";
 
 const profile = {
   cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
@@ -72,7 +72,11 @@ const StudentProfile: NextPage = () => {
                 <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails.expected_graduation)).toDateString()}</span>
               </div>
               <div className="sticky-panel-profile-info">
-                <h4>{studentDetails?.school ?? "Trường không xác định"}</h4>
+                {
+                  (studentDetails?.school === undefined || studentDetails?.school.length === 0) 
+                  ? <h4>Trường không xác định</h4>
+                  : studentDetails?.school.map((school) => <h4>{school}</h4>)
+                }
                 <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>
                 <h4>{studentDetails?.desired_job ?? "Không xác định"}</h4>
