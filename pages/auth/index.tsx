@@ -25,12 +25,6 @@ const Auth: NextPage = () => {
         <div className="email-content-form">
           <EmailForm
             onSubmit={(email) => {
-              const role = {
-                isStudent: true,
-                isAdvisor: false,
-                isRecruiter: false,
-              };
-              dispatch(setRole(role))
               if (
                 users.data.Response.filter(
                   (data: { email: string }) => data.email == email
@@ -56,39 +50,6 @@ const Auth: NextPage = () => {
         <div className="email-content-form-google" data-onsuccess="onSignIn">
           Google
         </div>
-        {/* <div className="email-content-form-recruiter">
-          <EmailForm
-            onSubmit={(email: string) => {
-              let user = users.data.Response.filter(
-                (data: { email: string }) => data.email == email
-              )[0];
-              const role = {
-                isStudent: user.is_student,
-                isAdvisor: user.is_advisor,
-                isRecruiter: user.is_recruiter,
-              };
-              dispatch(setRole(role))
-              if (user) {
-                //if email is in database, navigate to login page
-                router.push("/login");
-              } else if (email.includes(".edu")) {
-                const school = schools.data[email.split("@")[1]];
-                //if email is not in database but have an .edu suffix, navigate to school page
-                dispatch(setRegisterEmail(email));
-                dispatch(setSchool(school));
-                router.push(`/registration/password`);
-              } else {
-                //else, navigate to registration page
-                dispatch(setRegisterEmail(email));
-                router.push("/registration");
-              }
-              return;
-            }}
-          />
-        </div>
-        <div className="email-content-form-google" data-onsuccess="onSignIn">
-          Google
-        </div> */}
       </div>
     </div>
   );
