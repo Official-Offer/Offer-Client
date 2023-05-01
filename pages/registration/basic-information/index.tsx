@@ -25,12 +25,12 @@ const RegisterBasicInfo: NextPage = () => {
   console.log(studentDetails);
   
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           <h1>Xác nhận thông tin cơ bản</h1>
           <BasicInfoForm
             onSubmit={(name: string, dob: string, gradYear: string, job: string, major: string, school: string): void => {

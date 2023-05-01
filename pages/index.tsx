@@ -15,27 +15,27 @@ const Home: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
-    <div className="student-email">
-      <div className="student-email-sideBar">
+    <div className="email">
+      <div className="email-sideBar">
         <LeftPanel> </LeftPanel>
       </div>
-      <div className="student-email-content">
-        <div className="student-email-content-form">
+      <div className="email-content">
+        <div className="email-content-form">
           <EmailForm
             onSubmit={(email) => {
               if (users.data.Response.filter((data: { email: string; }) => data.email == email).length > 0) {
                 //if email is in database, navigate to login page
-                router.push("/student/login");
+                router.push("/login");
               } else if (email.includes(".edu")) {
                 const school = schools.data[email.split("@")[1]]
                 //if email is not in database but have an .edu suffix, navigate to school page
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
-                router.push(`/student/registration/password`);
+                router.push(`/registration/password`);
               } else {
                 //else, navigate to registration page
                 dispatch(setRegisterEmail(email));
-                router.push("/student/registration");
+                router.push("/registration");
               }
               return;
             }}

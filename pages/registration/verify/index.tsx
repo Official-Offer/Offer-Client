@@ -30,18 +30,18 @@ const EmailVerify: NextPage = () => {
   console.log(userDetail);
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           <h1>Bách Khoa Hà Nội</h1>
           <p>
             Mã xác nhận đã được gửi tới email của bạn
             {/* <b>{Cookies.get("email")}</b> */}
           </p>
-          <div className="register-student-content-form-pincode">
+          <div className="register-content-form-pincode">
               <PinInput
                 length={5}
                 initialValue=""

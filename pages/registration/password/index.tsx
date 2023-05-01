@@ -33,12 +33,12 @@ const RegisterPassword: NextPage = () => {
   });
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           {/* <Image src="..;/"/> */}
           <h1>{state.school}</h1>
           <PasswordForm
@@ -47,13 +47,12 @@ const RegisterPassword: NextPage = () => {
                 email: state.email,
                 password: password,
               });
-              console.log("asdd")
               // if (!mutation.isLoading)
               // router.push("/student/email/verify");
             }}
           />
           {errorMessage && (
-            <p className="register-student-content-error">{errorMessage}</p>
+            <p className="register-content-error">{errorMessage}</p>
           )}
           <br />
           <FootnoteForm />

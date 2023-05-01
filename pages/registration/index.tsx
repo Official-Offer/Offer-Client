@@ -13,12 +13,12 @@ const RegisterStudent: NextPage = () => {
 
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           <h1>
             Bắt đầu sự nghiệp ngay khi
             <br />
