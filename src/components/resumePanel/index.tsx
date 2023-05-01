@@ -17,7 +17,7 @@ export const ResumePanel: React.FC = () => {
     console.log('selectedFile', selectedFile);
     console.log('isFileSelected', isFileSelected);
     console.log('resumeData', resumeData);
-    return await updateStudentResume(resumeData).then(x => console.log(x), err => console.log(err));
+    return await updateStudentResume(resumeData);
   };
 
   return (
