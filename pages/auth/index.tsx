@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import type { NextPage } from "next";
 import { EmailForm } from "@components/forms/EmailForm";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
@@ -24,6 +24,15 @@ const Auth: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: session, status } = useSession();
+  useEffect(() => {
+    if (session) {
+      if (session.provider === "google") {
+        var auth_token = session.auth_token;
+        // 13        backendapi(auth_token)
+      }
+    }
+  }, [session]);
+
   if (status === "loading") return <h1> loading... please wait</h1>;
   if (status === "authenticated") {
     router.push("/student");
