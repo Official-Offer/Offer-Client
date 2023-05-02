@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 
 interface IOrgForm {
-  onSubmit: (email: string) => void;
+  onSubmit: (org: string) => void;
 }
 
 export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
@@ -27,7 +27,7 @@ export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
   return (
     <div>
       <form className="form" onSubmit={handleSubmit}>
-        <div className="form-flex">
+         <div className="form-flex">
           <div className="form-input">
             <label>
               <b>

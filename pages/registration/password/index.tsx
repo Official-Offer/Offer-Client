@@ -10,6 +10,7 @@ import { RootState } from "@redux/reducers";
 import { useState } from "react";
 import { registerAdvisor } from "@services/apiAdvisor";
 import { registerRecruiter } from "@services/apiRecruiter";
+import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
@@ -18,12 +19,18 @@ const RegisterPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
-    mutationFn: state.role.isStudent? registerStudent: state.role.isAdvisor? registerAdvisor: registerRecruiter,
+    mutationFn: 
+    // state.role.isStudent
+    //   ? registerStudent
+    //   : state.role.isAdvisor
+    //   ? registerAdvisor
+      // :
+       registerRecruiter,
     onSuccess: async (data) => {
       setCookie("access_token", data.token);
-      console.log('first')
+      console.log("first");
       router
-        .push("/student/registration/basic-information")
+        .push("/registration/basic-information")
         .then(() => router.reload());
       // queryClient.invalidateQueries({ queryKey: ["register"] });
     },
@@ -44,7 +51,9 @@ const RegisterPassword: NextPage = () => {
           {/* <Image src="..;/"/> */}
           <h1>{state.school || state.company}</h1>
           <PasswordForm
+            isLoading={mutation.isLoading}
             onSubmit={(password: string) => {
+              console.log(state.email, password)
               mutation.mutate({
                 email: state.email,
                 password: password,

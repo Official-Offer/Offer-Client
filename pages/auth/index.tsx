@@ -3,16 +3,15 @@ import type { NextPage } from "next";
 import { EmailForm } from "@components/forms/EmailForm";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
 import { useDispatch } from "react-redux";
-import { setRegisterEmail, setRole, setSchool } from "@redux/actions";
+import { setRegisterEmail, setSchool } from "@redux/actions";
 const Auth: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  const companies = useQuery({ queryKey: ["companies"], queryFn: getSchoolList });
-  // console.log(schools);
+  console.log(users);
   const router = useRouter();
   const dispatch = useDispatch();
   return (
@@ -26,7 +25,7 @@ const Auth: NextPage = () => {
           <EmailForm
             onSubmit={(email) => {
               if (
-                users.data.Response.filter(
+                users.data?.Response.filter(
                   (data: { email: string }) => data.email == email
                 ).length > 0
               ) {

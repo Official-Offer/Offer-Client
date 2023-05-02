@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
+import {
+  SubmitButton,
+  SubmitButtonAntd,
+} from "@styles/styled-components/styledButton";
 
-interface ILoginForm {
+interface ILogInForm {
   onSubmit: (emailAndPassword: {
     email: React.SetStateAction<string>;
     password: React.SetStateAction<string>;
-  }) => void;
+  }) => void,
+  isLoading: boolean;
 }
 
-export const LogInForm: React.FC = ({ onSubmit }: ILoginForm) => {
+export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -61,9 +65,17 @@ export const LogInForm: React.FC = ({ onSubmit }: ILoginForm) => {
             />
           </div>
         </div>
-        <SubmitButton type="submit" className="form-submit-button">
+        <SubmitButtonAntd
+          loading={isLoading}
+          style={{
+            color: "white",
+            backgroundColor: isLoading ? "#d30b81" : "#b40a6e",
+          }}
+          onClick={handleSubmit}
+        ></SubmitButtonAntd>
+        {/* <SubmitButton type="submit" className="form-submit-button">
           Đăng nhập
-        </SubmitButton>
+        </SubmitButton> */}
       </form>
     </div>
   );

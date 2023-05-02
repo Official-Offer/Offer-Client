@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { FootnoteForm, LoginForm } from "@components/forms";
+import { FootnoteForm, LogInForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { studentLogin } from "services/apiStudent";
@@ -13,7 +13,7 @@ import { advisorLogin } from "@services/apiAdvisor";
 import { recruiterLogin } from "@services/apiRecruiter";
 
 //create a next page for the student home page, code below
-const LoginStudent: NextPage = () => {
+const Login: NextPage = () => {
   const router = useRouter();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -47,23 +47,25 @@ const LoginStudent: NextPage = () => {
   });
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
-          <h1>{state.school || state.company}</h1>
-          <LoginForm
+      <div className="register-content">
+        <div className="register-content-form">
+          <h1>Đăng nhập</h1>
+          <h1>{state.school ? state.company: ""}</h1>
+          <LogInForm
             onSubmit={(item: { email: any; password: any; }) => {
-              mutation.mutate({
+              return mutation.mutate({
                 email: item.email,
                 password: item.password,
               });
             }}
+            isLoading={mutation.isLoading}
           />
           {errorMessage && (
-            <p className="register-student-content-error">{errorMessage}</p>
+            <p className="register-content-error">{errorMessage}</p>
           )}
           <FootnoteForm />
         </div>
@@ -72,8 +74,8 @@ const LoginStudent: NextPage = () => {
   );
 };
 
-export default LoginStudent;
-function recruiterLogIn(variables: void): Promise<unknown> {
-  throw new Error("Function not implemented.");
-}
+export default Login;
+// function recruiterLogIn(variables: void): Promise<unknown> {
+//   throw new Error("Function not implemented.");
+// }
 

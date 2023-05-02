@@ -5,12 +5,11 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { setCompany } from "@redux/slices/account";
+import { setCompany, setSchool } from "@redux/slices/account";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
-  const [school, setSchool] = useState("");
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
 
