@@ -8,12 +8,26 @@ import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
 import { useDispatch } from "react-redux";
 import { setRegisterEmail, setSchool } from "@redux/actions";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+import { Button } from "antd";
+import {
+  GoogleCircleFilled,
+  GoogleOutlined,
+  GoogleSquareFilled,
+} from "@ant-design/icons";
+
 const Auth: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
   // console.log(users);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { data: session, status } = useSession();
+  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "authenticated") {
+    router.push("/student");
+  }
   return (
     <div className="email">
       <div className="email-sideBar">
@@ -44,12 +58,13 @@ const Auth: NextPage = () => {
               }
               return;
             }}
-            isLoading = { users.isLoading || schools.isLoading }
+            isLoading={users.isLoading || schools.isLoading}
           />
         </div>
-        <div className="email-content-form-google" data-onsuccess="onSignIn">
-          Google
-        </div>
+        <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+          {" "}
+          Đăng nhập với Google{" "}
+        </Button>
       </div>
     </div>
   );
