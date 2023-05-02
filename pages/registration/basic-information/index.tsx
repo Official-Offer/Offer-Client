@@ -52,6 +52,7 @@ const RegisterBasicInfo: NextPage = () => {
               })
               router.push("/student");
             }}
+            isLoading={mutation.isLoading}
           />
           <br/>
           <FootnoteForm />

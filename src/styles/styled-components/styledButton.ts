@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import styled from 'styled-components'
 import { ButtonProps } from 'antd/lib/button';
 
-export const SubmitButton = styled.button`
+export const StyledSubmitButton = styled.button`
   background-color: #d30b81;
   color: white;
   border: none;

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 interface IEmailForm {
   onSubmit: (email: string) => void;
+  isLoading: boolean;
 }
 
-export const EmailForm:React.FC = ({ onSubmit }: IEmailForm) => {
+export const EmailForm: React.FC = ({ onSubmit, isLoading }: IEmailForm) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -39,9 +40,13 @@ export const EmailForm:React.FC = ({ onSubmit }: IEmailForm) => {
               xác thực được nhanh chóng hơn.
             </Typography.Text>
           </div>
-          <SubmitButton type="submit">Tiếp tục</SubmitButton>
+          <SubmitButton
+            text="Tiếp tục"
+            isLoading={isLoading}
+            onClick={handleSubmit}
+          />
         </div>
       </form>
     </div>
   );
-}
+};

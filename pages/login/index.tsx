@@ -15,15 +15,9 @@ import { recruiterLogin } from "@services/apiRecruiter";
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
   const router = useRouter();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  // const [loginFunc, setLoginFunc] = useState(studentLogin);
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
-  // useEffect(() => {
-  //   setLoginFunc(state.role.isStudent? studentLogin: state.role.isAdvisor? advisorLogin: recruiterLogIn)
-  // }, [state.role.isStudent, state.role.isAdvisor, state.role.isRecruiter])
   const mutation = useMutation({
     // queryKey: ["login"],
     mutationFn: state.role.isStudent? studentLogin: state.role.isAdvisor? advisorLogin: recruiterLogin,
@@ -54,7 +48,7 @@ const Login: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           <h1>Đăng nhập</h1>
-          <h1>{state.school ? state.company: ""}</h1>
+          <h1>{state.school || state.company}</h1>
           <LogInForm
             onSubmit={(item: { email: any; password: any; }) => {
               return mutation.mutate({

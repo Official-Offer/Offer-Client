@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import {
-  SubmitButton,
-  SubmitButtonAntd,
-} from "@styles/styled-components/styledButton";
-import { Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
+// import {
+//   SubmitButtonAntd,
+// } from "@styles/styled-components/styledButton";
+// import { Typography } from "antd";
+// import { FootnoteForm } from "./FootnoteForm";
+// import Link from "next/link";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 interface IPasswordForm {
   onSubmit: (email: string) => void;
@@ -79,7 +79,7 @@ export const PasswordForm: React.FC = ({
           </div>
         </div>
       </form>
-      <SubmitButtonAntd
+      {/* <SubmitButtonAntd
         loading={isLoading}
         style={{
           color: "white",
@@ -88,7 +88,8 @@ export const PasswordForm: React.FC = ({
         onClick={handleSubmit}
       >
         Đăng Ký
-      </SubmitButtonAntd>
+      </SubmitButtonAntd> */}
+      <SubmitButton text="Đăng ký" isLoading={isLoading} onClick={handleSubmit}/>
       {/* <SubmitButton disabled = {isLoading} type="submit" onClick={handleSubmit}>Tiếp tục</SubmitButton> */}
     </div>
   );

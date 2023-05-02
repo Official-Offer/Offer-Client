@@ -11,7 +11,7 @@ import { setRegisterEmail, setSchool } from "@redux/actions";
 const Auth: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  console.log(users);
+  // console.log(users);
   const router = useRouter();
   const dispatch = useDispatch();
   return (
@@ -44,6 +44,7 @@ const Auth: NextPage = () => {
               }
               return;
             }}
+            isLoading = { users.isLoading || schools.isLoading }
           />
         </div>
         <div className="email-content-form-google" data-onsuccess="onSignIn">
