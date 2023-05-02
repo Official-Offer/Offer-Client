@@ -1,9 +1,8 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { Card as AntdCard, Button } from "antd";
-import { EventCard } from "@components/card/eventCard";
-import { InfoCard } from "@components/card/infoCard";
-import { CardTray } from "@components/cardTray";
+import { EventCard, InfoCard } from "@components/card";
+import { CardTray } from "@components";
 import { getStudentDetails } from "services/apiStudent";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";
@@ -119,8 +118,8 @@ const StudentHome: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: "jobs",
     queryFn: getJobList,
-    onSuccess: (res) => setJobList(res),
-    onError: (err) => console.log(`Error: ${err}`),
+    onSuccess: (response) => setJobList(response),
+    onError: (error) => console.log(`Error: ${error}`),
   });
   
   return (
@@ -143,16 +142,16 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Đề Xuất Công Việc</h2>
-          <CardTray cardList={jobQuery.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info} loading={jobQuery.isLoading} />)} />
+          <CardTray cardList={jobQuery.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info}/>)} />
           <div className="see-more">
-            <Link href="student/jobs">{typeof Link}</Link>
+            <Link href="student/jobs">Xem thêm công việc</Link>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
           <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
           <div className="see-more">
-            <Link href="student/clubs">Xem thêm công việc</Link>
+            <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
           </div>
         </section>
         <section>

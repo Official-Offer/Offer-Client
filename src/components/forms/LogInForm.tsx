@@ -9,7 +9,7 @@ interface ILoginForm {
   }) => void;
 }
 
-export const LoginForm: React.FC = ({ onSubmit }: ILoginForm) => {
+export const LogInForm: React.FC = ({ onSubmit }: ILoginForm) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 

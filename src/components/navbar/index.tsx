@@ -262,12 +262,11 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 <div
                   onClick={() => {
                     removeCookies("access_token");
-                    router.push("/student/email");
+                    router.push("/student/login");
                   }}
                 >
                   Đăng Xuất
                 </div>
-                {/* <Link href="/student/email">Đăng Xuất</Link> */}
               </Menu.Item>
             </Menu>
           }

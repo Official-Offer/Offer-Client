@@ -22,7 +22,7 @@
   min-width: 23.65%;
   max-height: 322px;
   cursor: pointer;
-  transition: scale 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  transition: scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover {
     scale: 1.05;
@@ -62,7 +62,7 @@
 
 .event-card {
   cursor: pointer;
-  transition: 0.4s ease-in-out;
+  transition: scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover {
     scale: 1.05;
