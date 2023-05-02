@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
-import { Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
 import { RootState } from "@redux/reducers";
 import { useSelector } from "react-redux";
 
