@@ -11,6 +11,9 @@ import { RootState } from "@redux/reducers";
 import { useSelector } from "react-redux";
 import { advisorLogin } from "@services/apiAdvisor";
 import { recruiterLogin } from "@services/apiRecruiter";
+import { Button } from "antd";
+import { GoogleOutlined } from "@ant-design/icons";
+import { signIn, useSession } from "next-auth/react";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -20,7 +23,11 @@ const Login: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
     // queryKey: ["login"],
-    mutationFn: state.role.isStudent? studentLogin: state.role.isAdvisor? advisorLogin: recruiterLogin,
+    mutationFn: state.role.isStudent
+      ? studentLogin
+      : state.role.isAdvisor
+      ? advisorLogin
+      : recruiterLogin,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
@@ -34,12 +41,16 @@ const Login: NextPage = () => {
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
     onError: (error: any) => {
-      console.log(error.response.data.message)
+      console.log(error.response.data.message);
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
-
+  const { data: session, status } = useSession();
+  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "authenticated") {
+    router.push("/student");
+  }
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -50,7 +61,7 @@ const Login: NextPage = () => {
           <h1>Đăng nhập</h1>
           <h1>{state.school || state.company}</h1>
           <LogInForm
-            onSubmit={(item: { email: any; password: any; }) => {
+            onSubmit={(item: { email: any; password: any }) => {
               return mutation.mutate({
                 email: item.email,
                 password: item.password,
@@ -61,6 +72,10 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
+          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+            {" "}
+            Đăng nhập với Google{" "}
+          </Button>
           <FootnoteForm />
         </div>
       </div>
@@ -72,4 +87,3 @@ export default Login;
 // function recruiterLogIn(variables: void): Promise<unknown> {
 //   throw new Error("Function not implemented.");
 // }
-

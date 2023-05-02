@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useRef } from "react";
 import { removeCookies } from "cookies-next";
+import { useSession, signOut } from "next-auth/react";
 
 type Navbar = {
   searchBarHidden: boolean;
@@ -31,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const [hideBar, setHideBar] = useState(true);
   const [hideMesPanel, setHideMesPanel] = useState(true);
   const [searchInput, setSearchInput] = useState("");
-
+  const { status } = useSession();
   const handleSearch = () => null;
   const handleSearchChange = (event) => {
     setSearchInput(event.target?.value ?? "");
@@ -261,8 +262,12 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               <Menu.Item>
                 <div
                   onClick={() => {
+                    if (status === "authenticated") {
+                      signOut();
+                      router.push("/login");
+                    }
                     removeCookies("access_token");
-                    router.push("/student/login");
+                    router.push("/login");
                   }}
                 >
                   Đăng Xuất
