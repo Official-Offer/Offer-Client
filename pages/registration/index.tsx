@@ -57,6 +57,7 @@ const RegisterStudent: NextPage = () => {
                 pathname: "/registration/password",
               });
             }}
+            isLoading={false}
           />
         </div>
       </div>
