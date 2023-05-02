@@ -28,7 +28,7 @@ const Auth: NextPage = () => {
     if (session) {
       if (session.provider === "google") {
         var auth_token = session.auth_token;
-        // 13        backendapi(auth_token)
+        // backendapi(auth_token)
       }
     }
   }, [session]);
