@@ -1,7 +1,3 @@
-import React from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { useDispatch } from "react-redux";
-import { setRole } from "@redux/actions";
 import { NextPage } from "next";
 import {
   CenterPanel,
@@ -13,10 +9,10 @@ import {
   ContinueButton,
   SubmitButton,
 } from "@styles/styled-components/styledButton";
-const Home: NextPage = () => {
-  // console.log(schools);
+//create a next page for the student home page, code below
+const Login: NextPage = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+
   return (
     <div className="login">
       <div className="login-left">
@@ -24,13 +20,7 @@ const Home: NextPage = () => {
         <div className="login-left-button">
           <ContinueButton
             onClick={() => {
-              const role = {
-                isStudent: true,
-                isAdvisor: false,
-                isRecruiter: false,
-              };
-              dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/student/email");
             }}
           >
             Học sinh
@@ -43,13 +33,7 @@ const Home: NextPage = () => {
           <ContinueButton
             backgroundColor="#2980B9"
             onClick={() => {
-              const role = {
-                isStudent: false,
-                isAdvisor: false,
-                isRecruiter: true,
-              };
-              dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/recruiter/email");
             }}
           >
             Nhà tuyển dụng
@@ -62,13 +46,7 @@ const Home: NextPage = () => {
           <ContinueButton
             backgroundColor="#f12711"
             onClick={() => {
-              const role = {
-                isStudent: false,
-                isAdvisor: true,
-                isRecruiter: false,
-              };
-              dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/advisor/email");
             }}
           >
             Cố vấn
@@ -79,4 +57,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Login;

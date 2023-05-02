@@ -1,33 +1,35 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
-import { Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
+import { RootState } from "@redux/reducers";
+import { useSelector } from "react-redux";
 
 interface IBasicInfoForm {
   onSubmit: (
-    lastName: string,
-    firstName: string,
-    gradYear: string,
-    job: string,
+    first_name: string,
+    last_name: string,
+    expected_graduation: string,
+    phone_number: string,
     major: string,
-    school: string
+    roles: string,
+    is_reviewer: boolean
   ) => void;
 }
 
-export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
-  const [name, setName] = useState("");
-  const [dob, setDOB] = useState("");
-  const [gradYear, setGradYear] = useState("");
-  const [job, setJob] = useState("");
+export const BasicInfoForm: React.FC = ({ onSubmit }: IBasicInfoForm) => {
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
+  const [expected_graduation, setGradYear] = useState("");
+  const [roles, setRoles] = useState("");
   const [major, setMajor] = useState("");
-  const [school, setSchool] = useState("");
+  const [is_reviewer, setIsReviewer] = useState(false);
+  const state = useSelector((state: RootState) => state.account);
 
-  const handleNameChange = (event: {
+  const handleFirstNameChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setName(event.target.value);
+    setFirstName(event.target.value);
   };
 
   const handleGradYearChange = (event: {
@@ -36,16 +38,22 @@ export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
     setGradYear(event.target.value);
   };
 
-  const handleDOBChange = (event: {
+  const handleLastNameChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setDOB(event.target.value);
+    setLastName(event.target.value);
   };
 
-  const handleJobChange = (event: {
+  const handleRoleChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setJob(event.target.value);
+    setRoles(event.target.value);
+  };
+
+  const handleReviewerChange = (event: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setIsReviewer(event.target.value == "true");
   };
 
   const handleMajorChange = (event: {
@@ -54,15 +62,23 @@ export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
     setMajor(event.target.value);
   };
 
-  const handleSchoolChange = (event: {
+  const handlePhoneNumberChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {
-    setSchool(event.target.value);
+    setPhoneNumber(event.target.value);
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    onSubmit(name, dob, gradYear, job, major, school);
+    onSubmit(
+      first_name,
+      last_name,
+      expected_graduation,
+      phone_number,
+      major,
+      roles,
+      is_reviewer
+    );
   };
 
   return (
@@ -71,72 +87,83 @@ export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
         <div className="form-grid">
           <div className="form-input">
             <label>
-              <b> Họ Tên *</b>
+              <b> Họ *</b>
             </label>
             <FormInput
               type="name"
-              id="name"
-              value={name}
-              onChange={handleNameChange}
+              id="first_name"
+              value={first_name}
+              onChange={handleFirstNameChange}
               required
             />
           </div>
           <div className="form-input">
             <label>
-              <b> Năm sinh *</b>
+              <b> Tên *</b>
             </label>
             <FormInput
               type="string"
-              id="dob"
-              value={dob}
-              onChange={handleDOBChange}
+              id="last_name"
+              value={last_name}
+              onChange={handleLastNameChange}
               required
             />
           </div>
           <div className="form-input">
             <label>
-              <b> Năm tốt nghiệp * </b>
+              <b> Số điện thoại </b>
             </label>
             <FormInput
               type="string"
-              id="gradYear"
-              value={gradYear}
-              onChange={handleGradYearChange}
+              id="phone_number"
+              value={phone_number}
+              onChange={handlePhoneNumberChange}
               required
             />
           </div>
           <div className="form-input">
             <label>
-              <b> Trường </b>
+              <b>
+                {" "}
+                {state.role.isStudent
+                  ? "Năm tốt nghiệp"
+                  : "Người kiểm duyệt"}{" "}
+              </b>
             </label>
             <FormInput
               type="input"
-              id="school"
-              list="schools"
-              value={school}
-              onChange={handleSchoolChange}
+              id={state.role.isStudent ? "gradYear" : "is_reviewer"}
+              list={state.role.isStudent ? "gradYear" : "is_reviewer"}
+              value={state.role.isStudent ? expected_graduation : is_reviewer}
+              onChange={
+                state.role.isStudent
+                  ? handleGradYearChange
+                  : handleReviewerChange
+              }
             />
-            <datalist id="schools">
-              <option value="Bách Khoa" />
-              <option value="Sư Phạm" />
-              <option value="Ngoại Thương" />
-              <option value="Kinh Tế Quốc Dân" />
-              <option value="FPT" />
-              <option value="VinUniversity" />
-              <option value="RMIT" />
-              <option value="UMass" />
+            <datalist id="gradYear">
+              <option value="2022" />
+              <option value="2023" />
+              <option value="2024" />
+              <option value="2025" />
+            </datalist>
+            <datalist id="is_reviewer">
+              <option value="true" />
+              <option value="false" />
             </datalist>
           </div>
           <div className="form-input full-width">
             <label>
-              <b> Ngành học *</b>
+              <b> {state.role.isStudent ? "Ngành học" : "Chức vụ"} </b>
             </label>
             <FormInput
               type="input"
-              id="major"
-              list="majors"
-              value={major}
-              onChange={handleMajorChange}
+              id={state.role.isStudent ? "majors" : "roles"}
+              list={state.role.isStudent ? "majors" : "roles"}
+              value={state.role.isStudent ? major : roles}
+              onChange={
+                state.role.isStudent ? handleMajorChange : handleRoleChange
+              }
               required
             />
             <datalist id="majors">
@@ -145,20 +172,7 @@ export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
               <option value="Đối ngoại" />
               <option value="Kế toán " />
             </datalist>
-          </div>
-          <div className="form-input full-width">
-            <label>
-              <b> Tìm kiếm công việc</b>
-            </label>
-            <FormInput
-              type="input"
-              id="school"
-              list="jobs"
-              value={job}
-              onChange={handleJobChange}
-              required
-            />
-            <datalist id="jobs">
+            <datalist id="roles">
               <option value="Frontend Developer" />
               <option value="Kế toán" />
               <option value="ADC" />
@@ -172,4 +186,4 @@ export const BasicInfoForm:React.FC = ({ onSubmit }: IBasicInfoForm) => {
       </form>
     </div>
   );
-}
+};

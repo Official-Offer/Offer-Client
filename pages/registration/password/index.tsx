@@ -8,6 +8,8 @@ import { registerStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useState } from "react";
+import { registerAdvisor } from "@services/apiAdvisor";
+import { registerRecruiter } from "@services/apiRecruiter";
 
 //create a next page for the student home page, code below
 const RegisterPassword: NextPage = () => {
@@ -16,7 +18,7 @@ const RegisterPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
-    mutationFn: registerStudent,
+    mutationFn: state.role.isStudent? registerStudent: state.role.isAdvisor? registerAdvisor: registerRecruiter,
     onSuccess: async (data) => {
       setCookie("access_token", data.token);
       console.log('first')
@@ -25,35 +27,34 @@ const RegisterPassword: NextPage = () => {
         .then(() => router.reload());
       // queryClient.invalidateQueries({ queryKey: ["register"] });
     },
-    // onError: (error: any) => {
-    //   console.log(error.response.data.message);
-    //   setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
-    //   // queryClient.invalidateQueries({ queryKey: ["register"] });
-    // },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
+      // queryClient.invalidateQueries({ queryKey: ["register"] });
+    },
   });
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           {/* <Image src="..;/"/> */}
-          <h1>{state.school}</h1>
+          <h1>{state.school || state.company}</h1>
           <PasswordForm
             onSubmit={(password: string) => {
               mutation.mutate({
                 email: state.email,
                 password: password,
               });
-              console.log("asdd")
               // if (!mutation.isLoading)
               // router.push("/student/email/verify");
             }}
           />
           {errorMessage && (
-            <p className="register-student-content-error">{errorMessage}</p>
+            <p className="register-content-error">{errorMessage}</p>
           )}
           <br />
           <FootnoteForm />

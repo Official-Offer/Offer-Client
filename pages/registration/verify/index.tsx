@@ -3,17 +3,13 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import PinInput from "react-pin-input";
 import { Typography } from "antd";
-import FootnoteForm from "@components/forms/FootnoteForm";
-import AppContext from "@components/AppContext";
+import {FootnoteForm} from "@components/forms/FootnoteForm";
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUserDetails, verifyEmail } from "services/apiUser";
-import Cookies from "js-cookie";
-
 
 const EmailVerify: NextPage = () => {
   const router = useRouter();
-  const context = useContext(AppContext);
   const [success, setSuccess] = useState(false);
   const queryClient = useQueryClient();
   const userDetail = useQuery({ queryKey: ["user-details"], queryFn: getUserDetails });
@@ -21,8 +17,6 @@ const EmailVerify: NextPage = () => {
     mutationFn: verifyEmail,
     onSuccess: (data) => {
       // Invalidate and refetch
-      // setSuccess(data.success);
-      // console.log(data);
       if (data.success) {
         router.push({
           pathname: "/student",
@@ -36,18 +30,18 @@ const EmailVerify: NextPage = () => {
   console.log(userDetail);
 
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           <h1>Bách Khoa Hà Nội</h1>
           <p>
             Mã xác nhận đã được gửi tới email của bạn
             {/* <b>{Cookies.get("email")}</b> */}
           </p>
-          <div className="register-student-content-form-pincode">
+          <div className="register-content-form-pincode">
               <PinInput
                 length={5}
                 initialValue=""

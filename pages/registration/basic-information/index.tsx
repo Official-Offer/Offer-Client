@@ -5,12 +5,15 @@ import { BasicInfoForm, FootnoteForm } from "@components/forms";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getUserDetails } from "services/apiUser";
 import { getStudentDetails, updateStudent } from "services/apiStudent";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
 
 //create a next page for the student home page, code below
 const RegisterBasicInfo: NextPage = () => {
   const router = useRouter();
   const studentQuery = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
   const queryClient = useQueryClient();
+  const state = useSelector((state: RootState) => state.account);
 
   const mutation = useMutation({
     mutationFn: updateStudent,
@@ -22,25 +25,31 @@ const RegisterBasicInfo: NextPage = () => {
     },
   });
   
-  console.log(studentDetails);
+  // console.log(studentDetails);
   
   return (
-    <div className="register-student">
-      <div className="register-student-sideBar">
+    <div className="register">
+      <div className="register-sideBar">
         <LeftPanel />
       </div>
-      <div className="register-student-content">
-        <div className="register-student-content-form">
+      <div className="register-content">
+        <div className="register-content-form">
           <h1>Xác nhận thông tin cơ bản</h1>
           <BasicInfoForm
-            onSubmit={(name: string, dob: string, gradYear: string, job: string, major: string, school: string): void => {
-              mutation.mutate({
-                name,
-                // expected_graduation: gradYear,
-                // desired_job: job,
+            onSubmit={(first_name: string, last_name: string, expected_graduation: string, phone_number: string, major: string, roles: string, is_reviewer: boolean): void => {
+              state.role.isStudent ? mutation.mutate({
+                first_name,
+                last_name,
+                phone_number,
+                expected_graduation,
                 major,
-                // school
-              });
+              }): mutation.mutate({
+                first_name,
+                last_name,
+                phone_number,
+                is_reviewer,
+                roles
+              })
               router.push("/student");
             }}
           />

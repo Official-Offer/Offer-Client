@@ -1,29 +1,28 @@
+import React from "react";
+import type { NextPage } from "next";
 import { EmailForm } from "@components/forms/EmailForm";
-import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
 import { useDispatch } from "react-redux";
-import { setRegisterEmail, setSchool } from "@redux/actions";
-
-//create a next page for the student home page, code below
-const RecruiterEmail: NextPage = () => {
-  const queryClient = useQueryClient();
-  const dispatch = useDispatch();
-  // Queries
+import { setRegisterEmail, setRole, setSchool } from "@redux/actions";
+const Auth: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
+  const companies = useQuery({ queryKey: ["companies"], queryFn: getSchoolList });
   // console.log(schools);
   const router = useRouter();
+  const dispatch = useDispatch();
   return (
-    <div className="student-email">
-      <div className="student-email-sideBar">
+    <div className="email">
+      <div className="email-sideBar">
         <LeftPanel> </LeftPanel>
       </div>
-      <div className="student-email-content">
-        <div className="student-email-content-form">
+      <div className="email-content">
+        <h1 className="email-content-title"> Dang Ky </h1>
+        <div className="email-content-form">
           <EmailForm
             onSubmit={(email) => {
               if (
@@ -32,26 +31,28 @@ const RecruiterEmail: NextPage = () => {
                 ).length > 0
               ) {
                 //if email is in database, navigate to login page
-                router.push("/student/login");
+                router.push("/login");
               } else if (email.includes(".edu")) {
-                const school = "Umass Amherst";
-                // schools.data[email.split("@")[1]]
+                const school = schools.data[email.split("@")[1]];
                 //if email is not in database but have an .edu suffix, navigate to school page
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
-                router.push(`/student/registration/password`);
+                router.push(`/registration/password`);
               } else {
                 //else, navigate to registration page
                 dispatch(setRegisterEmail(email));
-                router.push("/student/registration");
+                router.push("/registration");
               }
               return;
             }}
           />
+        </div>
+        <div className="email-content-form-google" data-onsuccess="onSignIn">
+          Google
         </div>
       </div>
     </div>
   );
 };
 
-export default RecruiterEmail;
+export default Auth;

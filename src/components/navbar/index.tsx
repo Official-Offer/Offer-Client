@@ -71,7 +71,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
 
   return router.pathname.includes("registration") ||
     router.pathname.includes("email") ||
-    router.pathname.includes("login") ? (
+    router.pathname.includes("login") ||
+    router.pathname.includes("auth") ||
+    router.pathname == "/" ? (
     <></>
   ) : (
     <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")}>
