@@ -1,13 +1,25 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
-
-var user_credential = []
+import AzureADProvider from "next-auth/providers/azure-ad";
+import {
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+  AZURE_AD_CLIENT_ID,
+  AZURE_AD_CLIENT_SECRET,
+  AZURE_AD_TENANT_ID,
+} from "@config/index";
+var user_credential = [];
 
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+      clientId: NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      clientSecret: NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+    }),
+    AzureADProvider({
+      clientId: AZURE_AD_CLIENT_ID,
+      clientSecret: AZURE_AD_CLIENT_SECRET,
+      tenantId: AZURE_AD_TENANT_ID,
     }),
   ],
   callbacks: {

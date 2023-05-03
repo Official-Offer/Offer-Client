@@ -15,6 +15,7 @@ import {
   GoogleCircleFilled,
   GoogleOutlined,
   GoogleSquareFilled,
+  HeartOutlined,
 } from "@ant-design/icons";
 
 const Auth: NextPage = () => {
@@ -35,7 +36,14 @@ const Auth: NextPage = () => {
 
   if (status === "loading") return <h1> loading... please wait</h1>;
   if (status === "authenticated") {
-    router.push("/student");
+    // router.push("/student");
+    if (
+      users.data?.Response.filter(
+        (d: { email: string }) => d.email == session.user?.email
+      ).length > 0
+    )
+      router.push("/student");
+    else router.push("/registration");
   }
   return (
     <div className="email">
@@ -73,6 +81,11 @@ const Auth: NextPage = () => {
         <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
           {" "}
           Đăng nhập với Google{" "}
+        </Button>
+        <br/>
+        <Button icon={<HeartOutlined />} onClick={() => signIn("azure-ad")}>
+          {" "}
+          Đăng nhập với Mircrosoft{" "}
         </Button>
       </div>
     </div>
