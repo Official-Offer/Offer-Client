@@ -6,6 +6,10 @@ export const StyledSubmitButton = styled.button`
   background-color: #d30b81;
   color: white;
   border: none;
+  /* margin-top: 28px; */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
   border-radius: 20px;
   padding: 10px 40px;
   font-size: 14px;

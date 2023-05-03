@@ -11,7 +11,6 @@ export const SubmitButton: React.FC<IButton> = ({text, isLoading, onClick}: any)
     <StyledSubmitButton
       disabled={isLoading}
       type="submit"
-      className="submit-btn"
       onClick={onClick}
     >
       {!isLoading ? (
@@ -20,7 +19,7 @@ export const SubmitButton: React.FC<IButton> = ({text, isLoading, onClick}: any)
         <div>
           {/* <p>Loading...</p>{" "} */}
           <Image
-            className="submit-btn-spinner"
+            className="spinner"
             src="/icons/spinner.svg"
             alt="pankod"
             width="20"

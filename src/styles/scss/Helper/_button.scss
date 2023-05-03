@@ -26,7 +26,7 @@
   &.ant-btn:hover {
     background: none;
   }
-  
+
   .anticon {
     font-size: 20px;
     border-radius: 50%;
@@ -39,25 +39,21 @@
   }
 }
 
-.submit-btn {
-  margin-top: 28px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+// .submit-btn {
 
-  &-spinner {
-    animation-name: spin;
-    animation-duration: 500ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+.spinner {
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
 }
+// }
