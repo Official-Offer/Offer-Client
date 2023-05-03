@@ -1,11 +1,14 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
-import { OrgForm } from "@components/forms";
+import { FootnoteForm, OrgForm } from "@components/forms";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { setCompany, setSchool } from "@redux/slices/account";
+import { Button } from "antd";
+import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
+import { signIn } from "next-auth/react";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
@@ -59,6 +62,17 @@ const RegisterStudent: NextPage = () => {
             }}
             isLoading={false}
           />
+          <Button className = "btn" icon={<MailOutlined />} onClick={() => router.push('/registration/email')}>
+            {" "}
+            Đăng ký bằng email thường {" "}
+          </Button>
+          <br/>
+          <Button className = "btn" icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+            {" "}
+            Đăng ký với Google{" "}
+          </Button>
+          {/* <br/> */}
+          <FootnoteForm embedLogin />
         </div>
       </div>
     </div>
