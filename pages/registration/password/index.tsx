@@ -34,7 +34,7 @@ const RegisterPassword: NextPage = () => {
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
+      setErrorMessage(error.response.data.message);
       // queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
@@ -47,6 +47,7 @@ const RegisterPassword: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           {/* <Image src="..;/"/> */}
+          <h1>Mật khẩu</h1>
           <h1>{state.school || state.company}</h1>
           <PasswordForm
             isLoading={mutation.isLoading}

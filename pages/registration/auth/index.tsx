@@ -12,10 +12,11 @@ import {
   MailOutlined,
   WindowsOutlined,
 } from "@ant-design/icons";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 import { getUserList } from "@services/apiUser";
 import { getSchoolList } from "@services/apiSchool";
+import { getCookie, removeCookies, setCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const Auth: NextPage = () => {
@@ -24,9 +25,9 @@ const Auth: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const { data: session, status } = useSession();
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
-
-  if (status === "loading") return <h1> loading... please wait</h1>;
-  if (status === "authenticated") {
+  console.log(users);
+  // if (status === "loading") return <h1> loading... please wait</h1>;
+  if (session) {
     dispatch(setRegisterEmail(session.user?.email));
     if (
       users.data?.Response.filter(
@@ -35,9 +36,22 @@ const Auth: NextPage = () => {
     ) {
       //if email is in database, navigate to login page
       router.push("/student");
-    } else {
+    }
+    else {
       router.push("/registration/password");
     }
+    // return (
+    //   <button
+    //     onClick={() => {
+    //       signOut();
+    //       removeCookies("access_token");
+    //     }}
+    //   >
+    //     Sign out
+    //   </button>
+    // );
+    // console.log(session.user);
+    // console.log(getCookie("access_token"));
   }
 
   return (
