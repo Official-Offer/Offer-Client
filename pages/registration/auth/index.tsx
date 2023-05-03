@@ -1,106 +1,103 @@
-import React, { useEffect } from "react";
-import type { NextPage } from "next";
-import { EmailForm } from "@components/forms/EmailForm";
+import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
+import { FootnoteForm, OrgForm } from "@components/forms";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import { getUserList } from "services/apiUser";
-import { getSchoolList } from "services/apiSchool";
-import { useDispatch } from "react-redux";
-import { setRegisterEmail, setSchool } from "@redux/actions";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
+import { setCompany, setSchool } from "@redux/slices/account";
 import { Button } from "antd";
 import {
-  GoogleCircleFilled,
   GoogleOutlined,
-  GoogleSquareFilled,
-  HeartOutlined,
+  MailOutlined,
+  WindowsOutlined,
 } from "@ant-design/icons";
+import { signIn } from "next-auth/react";
 
+//create a next page for the student home page, code below
 const Auth: NextPage = () => {
-  const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
-  const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  // console.log(users);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { data: session, status } = useSession();
-  // useEffect(() => {
-  //   if (session) {
-  //     if (session.provider === "google") {
-  //       var auth_token = session.auth_token;
-  //       // backendapi(auth_token)
-  //     }
-  //   }
-  // }, [session]);
+  const state = useSelector((state: RootState) => state.account);
 
-  if (status === "loading") return <h1> loading... please wait</h1>;
-  if (status === "authenticated") {
-    // router.push("/student");
-    if (
-      users.data?.Response.filter(
-        (d: { email: string }) => d.email == session.user?.email
-      ).length > 0
-    ) {
-      //if email is in database, navigate to login page
-      dispatch(setRegisterEmail(session.user?.email));
-      router.push("/student");
-    } else if (session.user?.email?.includes(".edu")) {
-      const school = schools.data[session.user?.email?.split("@")[1]];
-      //if email is not in database but have an .edu suffix, navigate to school page
-      dispatch(setRegisterEmail(session.user?.email));
-      dispatch(setSchool(school));
-      signIn("azure-ad");
-      router.push(`/registration/password`);
-    } else {
-      dispatch(setRegisterEmail(session.user?.email));
-      router.push("/registration");
-    }
-  }
   return (
-    <div className="email">
-      <div className="email-sideBar">
-        <LeftPanel> </LeftPanel>
+    <div className="register">
+      <div className="register-sideBar">
+        <LeftPanel />
       </div>
-      <div className="email-content">
-        <h1 className="email-content-title"> Dang Ky </h1>
-        <div className="email-content-form">
-          <EmailForm
-            onSubmit={(email) => {
-              if (
-                users.data?.Response.filter(
-                  (data: { email: string }) => data.email == email
-                ).length > 0
-              ) {
-                //if email is in database, navigate to login page
-                dispatch(setRegisterEmail(email));
-                router.push("/login");
-              } else if (email.includes(".edu")) {
-                const school = schools.data[email.split("@")[1]];
-                //if email is not in database but have an .edu suffix, navigate to school page
-                dispatch(setRegisterEmail(email));
-                dispatch(setSchool(school));
-                signIn("azure-ad");
-                router.push(`/registration/password`);
+      <div className="register-content">
+        <div className="register-content-form">
+          {state.role.isStudent ? (
+            <div>
+              <h1>
+                Bắt đầu sự nghiệp ngay khi
+                <br />
+                ngồi trên ghế nhà trường với Offer
+              </h1>
+            </div>
+          ) : state.role.isAdvisor ? (
+            <div>
+              <h1>
+                Quản lý hướng nghiệp cho học sinh
+                <br />
+                dễ dàng với Offer
+              </h1>
+            </div>
+          ) : (
+            <div>
+              <h1>
+                Tuyển những học sinh giỏi nhất
+                <br />
+                thuộc hệ thống 500 trường của Offer
+              </h1>
+            </div>
+          )}
+          {/* <OrgForm
+            onSubmit={(org) => {
+              // setSchool(school);
+              if (state.role.isStudent || state.role.isAdvisor) {
+                dispatch(setSchool(org));
               } else {
-                //else, navigate to registration page
-                dispatch(setRegisterEmail(email));
-                router.push("/registration");
+                dispatch(setCompany(org));
               }
-              return;
+              router.push({
+                pathname: "/registration/password",
+              });
             }}
-            isLoading={users.isLoading || schools.isLoading}
-          />
+            isLoading={false}
+          /> */}
+          <Button
+            className="school-btn"
+            icon={<WindowsOutlined />}
+            onClick={() => {
+              signIn("azure-ad");
+              router.push("registration/password");
+            }}
+          >
+            {" "}
+            Đăng ký với email của trường {state.school}
+          </Button>
+          <Button
+            className="btn"
+            icon={<GoogleOutlined />}
+            onClick={() => {
+              signIn("google");
+              router.push("registration/password");
+            }}
+          >
+            {" "}
+            Đăng ký với Google{" "}
+          </Button>
+          <Button
+            className="btn"
+            icon={<MailOutlined />}
+            onClick={() => router.push("/registration/email")}
+          >
+            {" "}
+            Đăng ký bằng email thường{" "}
+          </Button>
+          <FootnoteForm embedLogin />
         </div>
-        <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
-          {" "}
-          Đăng nhập với Google{" "}
-        </Button>
-        <br />
-        <Button icon={<HeartOutlined />} onClick={() => signIn("azure-ad")}>
-          {" "}
-          Đăng nhập với Mircrosoft{" "}
-        </Button>
       </div>
     </div>
   );

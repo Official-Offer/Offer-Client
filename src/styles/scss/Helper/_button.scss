@@ -19,8 +19,26 @@
   }
 }
 
-.btn {
+.school-btn {
   margin: 10px 0;
+  // width: 100%;
+  height: 50px;
+  border-radius: 5px;
+  background-color: #d30b81;
+  // font-weight: white;
+  font-size: 16px;
+  color: white;
+  border: 0;
+  transition: 0.4s;
+  display: block;
+
+  &:hover {
+    background-color: #b40a6e;
+    color: white;
+  }
+}
+.btn {
+  margin: 10px 10px 10px 0;
 }
 .icon-btn {
   width: 42px;

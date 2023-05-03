@@ -57,21 +57,30 @@ const RegisterStudent: NextPage = () => {
                 dispatch(setCompany(org));
               }
               router.push({
-                pathname: "/registration/password",
+                pathname: "/registration/auth",
               });
             }}
             isLoading={false}
           />
-          <Button className = "btn" icon={<MailOutlined />} onClick={() => router.push('/registration/email')}>
-            {" "}
-            Đăng ký bằng email thường {" "}
-          </Button>
-          <br/>
-          <Button className = "btn" icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+          <Button
+            className="btn"
+            icon={<GoogleOutlined />}
+            onClick={() => {
+              signIn("google");
+              router.push("registration/password");
+            }}
+          >
             {" "}
             Đăng ký với Google{" "}
           </Button>
-          {/* <br/> */}
+          <Button
+            className="btn"
+            icon={<MailOutlined />}
+            onClick={() => router.push("/registration/email")}
+          >
+            {" "}
+            Đăng ký bằng email thường{" "}
+          </Button>
           <FootnoteForm embedLogin />
         </div>
       </div>
