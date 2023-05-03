@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
 import { RootState } from "@redux/reducers";
 import { useSelector } from "react-redux";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 interface IBasicInfoForm {
   onSubmit: (
@@ -13,10 +13,11 @@ interface IBasicInfoForm {
     major: string,
     roles: string,
     is_reviewer: boolean
-  ) => void;
+  ) => void,
+  isLoading: boolean;
 }
 
-export const BasicInfoForm: React.FC = ({ onSubmit }: IBasicInfoForm) => {
+export const BasicInfoForm: React.FC = ({ onSubmit, isLoading}: IBasicInfoForm) => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [phone_number, setPhoneNumber] = useState("");
@@ -181,7 +182,12 @@ export const BasicInfoForm: React.FC = ({ onSubmit }: IBasicInfoForm) => {
           </div>
         </div>
         <div className="form-submit-button">
-          <SubmitButton type="submit">Xác nhận</SubmitButton>
+        <SubmitButton
+            text="Xác nhận"
+            isLoading={isLoading}
+            onClick={handleSubmit}
+          />
+          {/* <SubmitButton type="submit">Xác nhận</SubmitButton> */}
         </div>
       </form>
     </div>

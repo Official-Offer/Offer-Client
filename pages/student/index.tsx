@@ -8,6 +8,7 @@ import { getJobList } from "@services/apiJob";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { getUserDetails } from "@services/apiUser";
+import { useSession } from "next-auth/react";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -121,6 +122,8 @@ const StudentHome: NextPage = () => {
     onSuccess: (response) => setJobList(response),
     onError: (error) => console.log(`Error: ${error}`),
   });
+  const { data: session, status } = useSession();
+  console.log(session);
   
   return (
     <main className="main-home">

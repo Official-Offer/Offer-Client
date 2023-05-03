@@ -1,20 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import type { NextPage } from "next";
 import { EmailForm } from "@components/forms/EmailForm";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { getUserList } from "services/apiUser";
 import { getSchoolList } from "services/apiSchool";
 import { useDispatch } from "react-redux";
-import { setRegisterEmail, setRole, setSchool } from "@redux/actions";
+import { setRegisterEmail, setSchool } from "@redux/actions";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+import { Button } from "antd";
+import {
+  GoogleCircleFilled,
+  GoogleOutlined,
+  GoogleSquareFilled,
+} from "@ant-design/icons";
+
 const Auth: NextPage = () => {
   const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
   const schools = useQuery({ queryKey: ["schools"], queryFn: getSchoolList });
-  const companies = useQuery({ queryKey: ["companies"], queryFn: getSchoolList });
-  // console.log(schools);
+  // console.log(users);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (session) {
+      if (session.provider === "google") {
+        var auth_token = session.auth_token;
+        // backendapi(auth_token)
+      }
+    }
+  }, [session]);
+
+  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "authenticated") {
+    router.push("/student");
+  }
   return (
     <div className="email">
       <div className="email-sideBar">
@@ -26,7 +48,7 @@ const Auth: NextPage = () => {
           <EmailForm
             onSubmit={(email) => {
               if (
-                users.data.Response.filter(
+                users.data?.Response.filter(
                   (data: { email: string }) => data.email == email
                 ).length > 0
               ) {
@@ -45,11 +67,13 @@ const Auth: NextPage = () => {
               }
               return;
             }}
+            isLoading={users.isLoading || schools.isLoading}
           />
         </div>
-        <div className="email-content-form-google" data-onsuccess="onSignIn">
-          Google
-        </div>
+        <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+          {" "}
+          Đăng nhập với Google{" "}
+        </Button>
       </div>
     </div>
   );

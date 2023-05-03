@@ -1,9 +1,15 @@
+import { Button } from 'antd'
 import styled from 'styled-components'
+import { ButtonProps } from 'antd/lib/button';
 
-export const SubmitButton = styled.button`
+export const StyledSubmitButton = styled.button`
   background-color: #d30b81;
   color: white;
   border: none;
+  /* margin-top: 28px; */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
   border-radius: 20px;
   padding: 10px 40px;
   font-size: 14px;
@@ -12,6 +18,25 @@ export const SubmitButton = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
 
+  &:hover {
+    background-color: #b40a6e;
+  }
+`
+
+// const Button = styled((props: NativeButtonProps) => <AntButton {...props} />)``;
+
+export const SubmitButtonAntd: typeof Button = styled(Button)<ButtonProps>`
+  /* margin-bottom: 24px; */
+  /* background-color: #d30b81; */
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+  /* padding: 10px 40px; */
+  font-size: 14px;
+  font-weight: bold;
+  width: 250px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   &:hover {
     background-color: #b40a6e;
   }

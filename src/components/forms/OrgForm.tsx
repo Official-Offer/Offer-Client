@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
+// import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Typography } from "antd";
 import { FootnoteForm } from "./FootnoteForm";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 interface IOrgForm {
-  onSubmit: (email: string) => void;
+  onSubmit: (org: string) => void,
+  isLoading: boolean;
 }
 
-export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
+export const OrgForm: React.FC<IOrgForm> = ({ onSubmit, isLoading }: IOrgForm) => {
   const [Org, setOrg] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
@@ -27,7 +29,7 @@ export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
   return (
     <div>
       <form className="form" onSubmit={handleSubmit}>
-        <div className="form-flex">
+         <div className="form-flex">
           <div className="form-input">
             <label>
               <b>
@@ -62,9 +64,10 @@ export const OrgForm: React.FC<IOrgForm> = ({ onSubmit }: IOrgForm) => {
             <option value="OpenAI" />
           </datalist>
         </div>
-        <SubmitButton type="submit" className="form-submit-button">
+        {/* <SubmitButton type="submit" className="form-submit-button">
           Tiếp tục
-        </SubmitButton>
+        </SubmitButton> */}
+        <SubmitButton text="Tiếp tục" isLoading={isLoading} onClick={handleSubmit}/>
       </form>
       <FootnoteForm embedLogin />
     </div>
