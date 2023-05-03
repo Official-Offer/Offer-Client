@@ -59,13 +59,14 @@ const exp = {
   location: "HCM"
 };
 
-const StudentProfile: NextPage = ({ insertFunc }) => {
+const StudentProfile: NextPage = ({ insertSet }) => {
   const [studentDetails, setStudentDetails] = useState(null);
   const studentQuery = useQuery({
     queryKey: "students/me",
     queryFn: getStudentDetails,
     onSuccess: (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`),
+    enabled: false
   });
   
   return (
@@ -115,18 +116,7 @@ const StudentProfile: NextPage = ({ insertFunc }) => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
-          insertFunc={insertFunc}
-          // itemList={[
-          //   {
-          //     name: school.name,
-          //     logoURL: school.logo,
-          //     dateLabel: "Thời gian học",
-          //     dates: school.year,
-          //     infoList: [
-          //       { label: "Ngành học", details: school.major }
-          //     ]
-          //   }
-          // ]}
+          insertSet={insertSet}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
@@ -134,18 +124,7 @@ const StudentProfile: NextPage = ({ insertFunc }) => {
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperiences}
-          // itemList={[
-          //   {
-          //     name: exp.name,
-          //     logoURL: exp.logo,
-          //     dateLabel: "Thời gian làm việc",
-          //     dates: exp.year,
-          //     infoList: [
-          //       { label: "Vai trò", details: exp.role },
-          //       { label: "Địa điểm", details: exp.location },
-          //     ]
-          //   }
-          // ]}
+          insertSet={insertSet}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">

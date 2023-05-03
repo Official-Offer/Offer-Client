@@ -14,7 +14,7 @@ type ProfileCardProps = {
   insertRef: any,
 }
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunction, addFunction, editFunction, deleteFunction, insertFunc }) => {
+export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunction, addFunction, editFunction, deleteFunction, insertSet }) => {
   const logoURL = "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
 
   const [itemList, setItemList] = useState<Record<string, unknown>[]>([]);
@@ -25,9 +25,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
     onError: (err) => console.log(`Not able to load profileCard's data: ${err}`),
   });
 
-  const showForm = () => {
-    // ReactDOM.render(ProfileCardForm, insertRef.current);
-    insertFunc(<ProfileCardForm />);
+  const showForm = (isAdd: boolean): void => {
+    insertSet(
+      <ProfileCardForm
+        title={fieldTitle}
+        isAdd={isAdd}
+        insertSet={insertSet} 
+      />
+    );
   };
 
   return (
@@ -37,7 +42,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
-          <Button className="icon-btn" type="text" onClick={showForm} icon={<PlusOutlined />} />
+          <Button className="icon-btn" type="text" onClick={() =>showForm(true)} icon={<PlusOutlined />} />
         </div>
       }
       children={

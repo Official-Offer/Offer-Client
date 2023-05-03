@@ -14,14 +14,13 @@ export default function LayoutGlobal(props: any): ReactElement {
 
   return (
     <div>
-      <div className="insert-outlet" ref={outletRef}></div>
-      {insert}
+      <div className="insert-outlet">{insert}</div>
       <Navbar
         searchBarHidden={router.pathname === "/student/jobs" || router.pathname === "/student/events"}
       />
       <div>
         {React.Children.map(props.children, (child) => (
-          React.cloneElement(child, { insertFunc: setInsert })
+          React.cloneElement(child, { insertSet: setInsert })
         ))}
       </div>
     </div>
