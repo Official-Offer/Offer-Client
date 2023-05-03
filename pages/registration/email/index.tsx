@@ -16,6 +16,7 @@ import {
   GoogleOutlined,
   GoogleSquareFilled,
   HeartOutlined,
+  WindowsOutlined,
 } from "@ant-design/icons";
 
 const Auth: NextPage = () => {
@@ -36,25 +37,24 @@ const Auth: NextPage = () => {
 
   if (status === "loading") return <h1> loading... please wait</h1>;
   if (status === "authenticated") {
-    // router.push("/student");
     if (
       users.data?.Response.filter(
-        (d: { email: string }) => d.email == session.user?.email
+        (data: { email: string }) => data.email == session.user?.email
       ).length > 0
     ) {
       //if email is in database, navigate to login page
       dispatch(setRegisterEmail(session.user?.email));
-      router.push("/student");
+      router.push("/login");
     } else if (session.user?.email?.includes(".edu")) {
-      const school = schools.data[session.user?.email?.split("@")[1]];
+      const school = schools.data[session.user?.email.split("@")[1]];
       //if email is not in database but have an .edu suffix, navigate to school page
       dispatch(setRegisterEmail(session.user?.email));
       dispatch(setSchool(school));
-      signIn("azure-ad");
       router.push(`/registration/password`);
     } else {
+      //else, navigate to registration page
       dispatch(setRegisterEmail(session.user?.email));
-      router.push("/registration");
+      router.push("/registration/password");
     }
   }
   return (
@@ -75,17 +75,10 @@ const Auth: NextPage = () => {
                 //if email is in database, navigate to login page
                 dispatch(setRegisterEmail(email));
                 router.push("/login");
-              } else if (email.includes(".edu")) {
-                const school = schools.data[email.split("@")[1]];
-                //if email is not in database but have an .edu suffix, navigate to school page
-                dispatch(setRegisterEmail(email));
-                dispatch(setSchool(school));
-                signIn("azure-ad");
-                router.push(`/registration/password`);
               } else {
                 //else, navigate to registration page
                 dispatch(setRegisterEmail(email));
-                router.push("/registration");
+                router.push("/registration/password");
               }
               return;
             }}
@@ -96,10 +89,9 @@ const Auth: NextPage = () => {
           {" "}
           Đăng nhập với Google{" "}
         </Button>
-        <br />
-        <Button icon={<HeartOutlined />} onClick={() => signIn("azure-ad")}>
+        <Button icon={<WindowsOutlined />} onClick={() => router.push("/registration")}>
           {" "}
-          Đăng nhập với Mircrosoft{" "}
+          Đăng nhập với email trường bạn {" "}
         </Button>
       </div>
     </div>

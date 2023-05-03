@@ -77,7 +77,6 @@ const Auth: NextPage = () => {
             icon={<WindowsOutlined />}
             onClick={() => {
               signIn("azure-ad");
-              // router.push("registration/password");
             }}
           >
             {" "}
@@ -88,7 +87,6 @@ const Auth: NextPage = () => {
             icon={<GoogleOutlined />}
             onClick={() => {
               signIn("google");
-              // router.push("registration/password");
             }}
           >
             {" "}
