@@ -19,13 +19,11 @@ const RegisterPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
-    mutationFn: 
-    // state.role.isStudent
-    //   ? registerStudent
-    //   : state.role.isAdvisor
-    //   ? registerAdvisor
-      // :
-       registerRecruiter,
+    mutationFn: state.role.isStudent
+      ? registerStudent
+      : state.role.isAdvisor
+      ? registerAdvisor
+      : registerRecruiter,
     onSuccess: async (data) => {
       setCookie("access_token", data.token);
       console.log("first");
@@ -53,7 +51,7 @@ const RegisterPassword: NextPage = () => {
           <PasswordForm
             isLoading={mutation.isLoading}
             onSubmit={(password: string) => {
-              console.log(state.email, password)
+              console.log(state.email, password);
               mutation.mutate({
                 email: state.email,
                 password: password,

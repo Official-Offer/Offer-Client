@@ -41,9 +41,21 @@ const Auth: NextPage = () => {
       users.data?.Response.filter(
         (d: { email: string }) => d.email == session.user?.email
       ).length > 0
-    )
+    ) {
+      //if email is in database, navigate to login page
+      dispatch(setRegisterEmail(session.user?.email));
       router.push("/student");
-    else router.push("/registration");
+    } else if (session.user?.email?.includes(".edu")) {
+      const school = schools.data[session.user?.email?.split("@")[1]];
+      //if email is not in database but have an .edu suffix, navigate to school page
+      dispatch(setRegisterEmail(session.user?.email));
+      dispatch(setSchool(school));
+      signIn("azure-ad");
+      router.push(`/registration/password`);
+    } else {
+      dispatch(setRegisterEmail(session.user?.email));
+      router.push("/registration");
+    }
   }
   return (
     <div className="email">
@@ -61,12 +73,14 @@ const Auth: NextPage = () => {
                 ).length > 0
               ) {
                 //if email is in database, navigate to login page
+                dispatch(setRegisterEmail(email));
                 router.push("/login");
               } else if (email.includes(".edu")) {
                 const school = schools.data[email.split("@")[1]];
                 //if email is not in database but have an .edu suffix, navigate to school page
                 dispatch(setRegisterEmail(email));
                 dispatch(setSchool(school));
+                signIn("azure-ad");
                 router.push(`/registration/password`);
               } else {
                 //else, navigate to registration page
@@ -82,7 +96,7 @@ const Auth: NextPage = () => {
           {" "}
           Đăng nhập với Google{" "}
         </Button>
-        <br/>
+        <br />
         <Button icon={<HeartOutlined />} onClick={() => signIn("azure-ad")}>
           {" "}
           Đăng nhập với Mircrosoft{" "}
