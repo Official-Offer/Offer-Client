@@ -45,13 +45,15 @@ const Auth: NextPage = () => {
       //if email is in database, navigate to login page
       dispatch(setRegisterEmail(session.user?.email));
       router.push("/login");
-    } else if (session.user?.email?.includes(".edu")) {
-      const school = schools.data[session.user?.email.split("@")[1]];
-      //if email is not in database but have an .edu suffix, navigate to school page
-      dispatch(setRegisterEmail(session.user?.email));
-      dispatch(setSchool(school));
-      router.push(`/registration/password`);
-    } else {
+    } 
+    // else if (session.user?.email?.includes(".edu")) {
+    //   const school = schools.data[session.user?.email.split("@")[1]];
+    //   //if email is not in database but have an .edu suffix, navigate to school page
+    //   dispatch(setRegisterEmail(session.user?.email));
+    //   dispatch(setSchool(school));
+    //   router.push(`/registration/password`);
+    // } 
+    else {
       //else, navigate to registration page
       dispatch(setRegisterEmail(session.user?.email));
       router.push("/registration/password");

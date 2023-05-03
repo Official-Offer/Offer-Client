@@ -62,7 +62,7 @@ const RegisterStudent: NextPage = () => {
             }}
             isLoading={false}
           />
-          <Button
+          {/* <Button
             className="btn"
             icon={<GoogleOutlined />}
             onClick={() => {
@@ -80,7 +80,7 @@ const RegisterStudent: NextPage = () => {
           >
             {" "}
             Đăng ký bằng email thường{" "}
-          </Button>
+          </Button> */}
           <FootnoteForm embedLogin />
         </div>
       </div>
