@@ -29,7 +29,7 @@ const Home: NextPage = () => {
                 isRecruiter: false,
               };
               dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/registration");
             }}
           >
             Học sinh
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
                 isRecruiter: true,
               };
               dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/registration");
             }}
           >
             Nhà tuyển dụng
@@ -67,7 +67,7 @@ const Home: NextPage = () => {
                 isRecruiter: false,
               };
               dispatch(setRole(role))
-              router.push("/auth");
+              router.push("/registration");
             }}
           >
             Cố vấn
