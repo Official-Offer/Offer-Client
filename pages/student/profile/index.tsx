@@ -59,7 +59,7 @@ const exp = {
   location: "HCM"
 };
 
-const StudentProfile: NextPage = () => {
+const StudentProfile: NextPage = ({ insertFunc }) => {
   const [studentDetails, setStudentDetails] = useState(null);
   const studentQuery = useQuery({
     queryKey: "students/me",
@@ -115,6 +115,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
+          insertFunc={insertFunc}
           // itemList={[
           //   {
           //     name: school.name,

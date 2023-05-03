@@ -15,7 +15,6 @@ type InfoCardProps = {
 };
 
 export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
-  const cardTrayRef = useRef(null);
   const { Meta } = AntdCard;
 
   return (

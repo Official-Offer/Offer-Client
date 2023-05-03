@@ -1,6 +1,8 @@
 import  React, { useState } from "react";
+import ReactDOM from "react-dom";
 import { useQuery, useMutation } from "react-query";
 import { Card as AntdCard, Button } from "antd";
+import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
 type ProfileCardProps = {
@@ -9,9 +11,10 @@ type ProfileCardProps = {
   addFunction: (input: Record<string, unknown>) => Record<string, unknown>,
   editFunction: (input: Record<string, unknown>) => Record<string, unknown>,
   deleteFunction: (input: Record<string, unknown>) => Record<string, unknown>,
+  insertRef: any,
 }
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunction, addFunction, editFunction, deleteFunction }) => {
+export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunction, addFunction, editFunction, deleteFunction, insertFunc }) => {
   const logoURL = "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
 
   const [itemList, setItemList] = useState<Record<string, unknown>[]>([]);
@@ -19,8 +22,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
     queryKey: fieldTitle,
     queryFn: getFunction,
     onSuccess: (res) => setItemList(res),
-    onError: (err) => console.log(`Error: ${err}`),
+    onError: (err) => console.log(`Not able to load profileCard's data: ${err}`),
   });
+
+  const showForm = () => {
+    // ReactDOM.render(ProfileCardForm, insertRef.current);
+    insertFunc(<ProfileCardForm />);
+  };
 
   return (
     <AntdCard
@@ -29,7 +37,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
-          <Button className="icon-btn" type="text" icon={<PlusOutlined />} />
+          <Button className="icon-btn" type="text" onClick={showForm} icon={<PlusOutlined />} />
         </div>
       }
       children={
