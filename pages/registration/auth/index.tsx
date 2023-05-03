@@ -5,20 +5,40 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { setCompany, setSchool } from "@redux/slices/account";
+import { setCompany, setSchool, setRegisterEmail } from "@redux/slices/account";
 import { Button } from "antd";
 import {
   GoogleOutlined,
   MailOutlined,
   WindowsOutlined,
 } from "@ant-design/icons";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useQuery } from "react-query";
+import { getUserList } from "@services/apiUser";
+import { getSchoolList } from "@services/apiSchool";
 
 //create a next page for the student home page, code below
 const Auth: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
+  const { data: session, status } = useSession();
+  const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
+
+  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "authenticated") {
+    dispatch(setRegisterEmail(session.user?.email));
+    if (
+      users.data?.Response.filter(
+        (d: { email: string }) => d.email == session.user?.email
+      ).length > 0
+    ) {
+      //if email is in database, navigate to login page
+      router.push("/student");
+    } else {
+      router.push("/registration/password");
+    }
+  }
 
   return (
     <div className="register">
@@ -52,26 +72,12 @@ const Auth: NextPage = () => {
               </h1>
             </div>
           )}
-          {/* <OrgForm
-            onSubmit={(org) => {
-              // setSchool(school);
-              if (state.role.isStudent || state.role.isAdvisor) {
-                dispatch(setSchool(org));
-              } else {
-                dispatch(setCompany(org));
-              }
-              router.push({
-                pathname: "/registration/password",
-              });
-            }}
-            isLoading={false}
-          /> */}
           <Button
             className="school-btn"
             icon={<WindowsOutlined />}
             onClick={() => {
               signIn("azure-ad");
-              router.push("registration/password");
+              // router.push("registration/password");
             }}
           >
             {" "}
@@ -82,7 +88,7 @@ const Auth: NextPage = () => {
             icon={<GoogleOutlined />}
             onClick={() => {
               signIn("google");
-              router.push("registration/password");
+              // router.push("registration/password");
             }}
           >
             {" "}
