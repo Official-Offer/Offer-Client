@@ -59,7 +59,7 @@ const exp = {
   location: "HCM"
 };
 
-const StudentProfile: NextPage = ({ insertSet }) => {
+const StudentProfile: NextPage = () => {
   const [studentDetails, setStudentDetails] = useState(null);
   const studentQuery = useQuery({
     queryKey: "students/me",
@@ -116,7 +116,6 @@ const StudentProfile: NextPage = ({ insertSet }) => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
-          insertSet={insertSet}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
@@ -124,7 +123,6 @@ const StudentProfile: NextPage = ({ insertSet }) => {
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperiences}
-          insertSet={insertSet}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">
