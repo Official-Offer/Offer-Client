@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
-import { Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
+// import {
+//   SubmitButtonAntd,
+// } from "@styles/styled-components/styledButton";
+// import { Typography } from "antd";
+// import { FootnoteForm } from "./FootnoteForm";
+// import Link from "next/link";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 interface IPasswordForm {
   onSubmit: (email: string) => void;
+  isLoading: boolean;
 }
 
-export const PasswordForm:React.FC = ({ onSubmit }: IPasswordForm) => {
+export const PasswordForm: React.FC = ({
+  onSubmit,
+  isLoading,
+}: IPasswordForm) => {
   const [password, setPassword] = useState("");
   const [reenteredPassword, setReenteredPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [errorMessage, isLoading]);
 
   const handlePasswordChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -68,7 +79,18 @@ export const PasswordForm:React.FC = ({ onSubmit }: IPasswordForm) => {
           </div>
         </div>
       </form>
-      <SubmitButton type="submit">Tiếp tục</SubmitButton>
+      {/* <SubmitButtonAntd
+        loading={isLoading}
+        style={{
+          color: "white",
+          backgroundColor: isLoading ? "#d30b81" : "#b40a6e",
+        }}
+        onClick={handleSubmit}
+      >
+        Đăng Ký
+      </SubmitButtonAntd> */}
+      <SubmitButton text="Đăng ký" isLoading={isLoading} onClick={handleSubmit}/>
+      {/* <SubmitButton disabled = {isLoading} type="submit" onClick={handleSubmit}>Tiếp tục</SubmitButton> */}
     </div>
   );
-}
+};

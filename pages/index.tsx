@@ -11,7 +11,6 @@ import {
 import { useRouter } from "next/router";
 import {
   ContinueButton,
-  SubmitButton,
 } from "@styles/styled-components/styledButton";
 const Home: NextPage = () => {
   // console.log(schools);

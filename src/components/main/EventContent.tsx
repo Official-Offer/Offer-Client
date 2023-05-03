@@ -1,6 +1,6 @@
 import { InboxOutlined, TagOutlined, UploadOutlined } from "@ant-design/icons";
-import EmailForm from "@components/forms/EmailForm";
-import ResumeForm from "@components/forms/ResumeForm";
+import {EmailForm} from "@components/forms/EmailForm";
+import {ResumeForm} from "@components/forms/ResumeForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Button, Modal, Upload, UploadProps } from "antd";
 import { useState } from "react";
