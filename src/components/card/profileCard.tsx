@@ -1,6 +1,8 @@
-import  React, { useState } from "react";
+import  React, { useState, useRef } from "react";
+import ReactDOM from "react-dom";
 import { useQuery, useMutation } from "react-query";
 import { Card as AntdCard, Button } from "antd";
+import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
 type ProfileCardProps = {
@@ -19,8 +21,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
     queryKey: fieldTitle,
     queryFn: getFunction,
     onSuccess: (res) => setItemList(res),
-    onError: (err) => console.log(`Error: ${err}`),
+    onError: (err) => console.log(`Not able to load profileCard's data: ${err}`),
+    enabled: false
   });
+
+  const dialogRef = useRef<HTMLDialogElement>();
 
   return (
     <AntdCard
@@ -29,7 +34,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, getFunctio
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
-          <Button className="icon-btn" type="text" icon={<PlusOutlined />} />
+          <Button className="icon-btn" type="text" onClick={() => dialogRef.current?.showModal()} icon={<PlusOutlined />} />
+          <dialog ref={dialogRef} onClick={() => dialogRef.current?.close()}>
+            <ProfileCardForm
+              title={fieldTitle}
+              isAdd={true}
+              dialogRef={dialogRef} 
+            />
+          </dialog>
         </div>
       }
       children={

@@ -66,6 +66,7 @@ const StudentProfile: NextPage = () => {
     queryFn: getStudentDetails,
     onSuccess: (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`),
+    enabled: false
   });
   
   return (
@@ -115,17 +116,6 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
-          // itemList={[
-          //   {
-          //     name: school.name,
-          //     logoURL: school.logo,
-          //     dateLabel: "Thời gian học",
-          //     dates: school.year,
-          //     infoList: [
-          //       { label: "Ngành học", details: school.major }
-          //     ]
-          //   }
-          // ]}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
@@ -133,18 +123,6 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperiences}
-          // itemList={[
-          //   {
-          //     name: exp.name,
-          //     logoURL: exp.logo,
-          //     dateLabel: "Thời gian làm việc",
-          //     dates: exp.year,
-          //     infoList: [
-          //       { label: "Vai trò", details: exp.role },
-          //       { label: "Địa điểm", details: exp.location },
-          //     ]
-          //   }
-          // ]}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">
