@@ -37,9 +37,9 @@ const Auth: NextPage = () => {
       //if email is in database, navigate to login page
       router.push("/student");
     }
-    else {
-      router.push("/registration/password");
-    }
+    // else {
+    //   router.push("/registration/password");
+    // }
     // return (
     //   <button
     //     onClick={() => {
