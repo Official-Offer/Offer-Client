@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement } from "react";
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -8,14 +8,15 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
+} from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Layout, Menu, theme } from "antd";
+import { useRouter } from "next/router";
 // import VerticalNav from '@components/navbar/VerticalNav';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items: MenuProps['items'] = [
+const items: MenuProps["items"] = [
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
@@ -31,46 +32,45 @@ const items: MenuProps['items'] = [
 }));
 
 export const VerticalNav: React.FC = (props: any): ReactElement => {
-//   const {
-//     token: { colorBgContainer },
-//   } = theme.useToken();
+  const router = useRouter();
 
-  return (
-    <Layout hasSider>
-      <Sider
-        style={{
-          overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          bottom: 0,
-        }}
-      >
-        <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
-      </Sider>
-      <Layout className="site-layout" style={{ marginLeft: 200 }}>
-        {/* <Header style={{ padding: 0 }} /> */}
-        {/* <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-          <div style={{ padding: 24, textAlign: 'center'}}>
-            <p>long content</p>
-            {
-              // indicates very long content
-              Array.from({ length: 100 }, (_, index) => (
-                <React.Fragment key={index}>
-                  {index % 20 === 0 && index ? 'more' : '...'}
-                  <br />
-                </React.Fragment>
-              ))
-            }
-          </div>
-        </Content> */}
-        <div>{props.children}</div>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+  if (
+    router.pathname.includes("recruiter") ||
+    router.pathname.includes("advisor")
+  ) {
+    return (
+      <Layout hasSider>
+        <Sider
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+        >
+          <div
+            style={{
+              height: 32,
+              margin: 16,
+              background: "rgba(255, 255, 255, 0.2)",
+            }}
+          />
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["4"]}
+            items={items}
+          />
+        </Sider>
+        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+          <div>{props.children}</div>
+        </Layout>
       </Layout>
-    </Layout>
-  );
+    );
+  }
+  return <div>{props.children}</div>;
 };
 
 // export default VerticalNav;
