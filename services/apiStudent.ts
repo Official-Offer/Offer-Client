@@ -1,5 +1,6 @@
 import { setCookie } from "cookies-next";
 import { getSchool } from "./apiSchool";
+import { getCompany } from "./apiCompany";
 import { getJob } from "./apiJob"; 
 import request from "./apiService";
 
@@ -16,8 +17,7 @@ export const updateStudent = async (body: any) => {
 
 export const getStudentDetails = async () => {
   const response = (await request.get(`/students/me/`)).data.Response;
-  response.school &&= response.school.map(async (id) => (await getJob(id)).title); // If school's id exists, fetch its name
-  response.desired_job &&= (await getJob(response.desired_job)).title; // If job's id exists, fetch its name
+  response.school &&= await Promise.all(response.school.map(async (id) => (await getSchool(id)).title)); // If school's id exists, fetch its name
   return response;
 };
 
@@ -45,7 +45,12 @@ export const deleteStudentResume = async () => {
 // Educations
 export const getStudentEducations = async () => {
   const response = await request.get(`/students/educations/`);
-  return response.data;
+  const educations = response.data;
+  // If school's id exists, fetch its name
+  for (const education of educations) {
+    education.schoolName = (await getSchool(education.school)).name;
+  }
+  return educations;
 };
 
 export const editStudentEducation = async (id: number, input: Record<string, unknown>) => {
@@ -66,7 +71,12 @@ export const deleteStudentEducations = async (input: Record<string, unknown>) =>
 // Experiences
 export const getStudentExperiences = async () => {
   const response = await request.get(`/students/experiences/`);
-  return response.data;
+  const experiences = response.data;
+  // If company's id exists, fetch its name
+  for (const experience of experiences) {
+    experience.companyName = (await getCompany(experience.company)).name;
+  }
+  return experiences;
 }
 
 export const editStudentExperience = async (id: number, input: Record<string, unknown>) => {

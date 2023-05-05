@@ -44,20 +44,38 @@ const info = {
   cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
 };
 
-const school = {
-  name: "MIT at Amherst",
-  logo: "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png",
-  year: ["08/2021", "10/2024"],
-  major: "Công Nghệ Thông Tin"
+const eduFieldItems = {
+  labelToAPI: {
+    "itemTitle": "schoolName",
+    "GPA": "gpa",
+    "Ngành học": "study_fields"
+  },
+  APItoLabel: {
+    "schoolName": "itemTitle",
+    "gpa": "GPA",
+    "study_fields": "Ngành học"
+  }, 
+  isRequired: {
+    "schoolName": true
+  }
 };
 
-const exp = {
-  name: "Techfarm",
-  logo: "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png",
-  year: ["08/2021", "10/2024"],
-  role: "Software Developer",
-  location: "HCM"
-};
+const expFieldItems = {
+  labelToAPI: {
+    "itemTitle": "title",
+    "Công ty": "companyName",
+    "Địa điểm": "location",
+  },
+  APItoLabel: {
+    "title": "itemTitle",
+    "companyName": "Công ty",
+    "location": "Địa điểm",
+  },
+  isRequired: {
+    "title": true,
+    "companyName": true,
+  }
+}
 
 const StudentProfile: NextPage = () => {
   const [studentDetails, setStudentDetails] = useState(null);
@@ -65,8 +83,7 @@ const StudentProfile: NextPage = () => {
     queryKey: "students/me",
     queryFn: getStudentDetails,
     onSuccess: (res) => setStudentDetails(res),
-    onError: (err) => console.log(`Error: ${err}`),
-    enabled: false
+    onError: (err) => console.log(`Error: ${err}`)
   });
   
   return (
@@ -112,6 +129,7 @@ const StudentProfile: NextPage = () => {
         />
         <ProfileCard
           fieldTitle="Giáo Dục"
+          fieldItemProps={eduFieldItems}
           getFunction={getStudentEducations}
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
@@ -119,6 +137,7 @@ const StudentProfile: NextPage = () => {
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
+          fieldItemProps={expFieldItems}
           getFunction={getStudentExperiences}
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}

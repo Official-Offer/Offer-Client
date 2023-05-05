@@ -71,6 +71,10 @@
   flex: 3;
   padding: 0px 40px;
 
+  .ant-card-body {
+    padding-bottom: 0;
+  }
+
   &-card {
     padding: 20px;
   }
@@ -85,6 +89,7 @@
     display: flex;
     align-items: center;
     gap: 24px;
+    padding-bottom: 24px;
     
     &-logo {
       width: 80px;
