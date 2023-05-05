@@ -17,7 +17,7 @@ export const updateStudent = async (body: any) => {
 
 export const getStudentDetails = async () => {
   const response = (await request.get(`/students/me/`)).data.Response;
-  response.school &&= await Promise.all(response.school.map(async (id) => (await getSchool(id)).title)); // If school's id exists, fetch its name
+  // If school's id exists, fetch its name
   return response;
 };
 

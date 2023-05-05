@@ -101,9 +101,9 @@ const StudentProfile: NextPage = () => {
               </div>
               <div className="sticky-panel-profile-info">
                 {
-                  (studentDetails?.school === undefined || studentDetails?.school.length === 0) 
+                  (studentDetails?.school?.length === 0) 
                   ? <h4>Trường không xác định</h4>
-                  : studentDetails?.school.map((school) => <h4>{school}</h4>)
+                  : studentDetails?.school.map((eachSchool) => <h4>{eachSchool.name}</h4>)
                 }
                 <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>
