@@ -1,7 +1,7 @@
 import  React, { useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useQuery, useMutation } from "react-query";
-import { Card as AntdCard, Button } from "antd";
+import { Card as AntdCard, Button, Divider } from "antd";
 import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -60,31 +60,34 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
             getItems.isError ? <div>Server hiện tại không đưa thông tin được.</div> :
             (queryItemList.length === 0 
               ? <div>Xin hãy thêm thông tin vào đây.</div> 
-              : queryItemList.map((item) => (
-                <div className="main-panel-info">
-                  <div className="main-panel-info-logo">
-                    <img src={logoURL}/>
-                  </div>
-                  <div className="main-panel-info-center">
-                    <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
-                    {
-                      item.start_date.length !== 0 && (
-                        <div>
-                          <span>{item.start_date + " - " + (item.is_current ? "Hiện tại" : item.end_date)}</span>
-                        </div>
-                      )
-                    }
-                    {
-                      (Object.keys(fieldItemProps.labelToAPI)).map((label) => label !== "itemTitle" && (
-                        <div>
-                          <b>{label}</b>
-                          <span>{": " + item[fieldItemProps.labelToAPI[label]]}</span>
-                        </div>
-                      ))
-                    }
-                  </div>
-                  <div>
-                    <Button className="icon-btn" type="text" icon={<EditOutlined />} />
+              : queryItemList.map((item, index) => (
+                <div>
+                  {index !== 0 && <Divider/>}
+                  <div className="main-panel-info">
+                    <div className="main-panel-info-logo">
+                      <img src={logoURL}/>
+                    </div>
+                    <div className="main-panel-info-center">
+                      <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
+                      {
+                        item.start_date.length !== 0 && (
+                          <div>
+                            <span>{item.start_date + " - " + (item.is_current ? "Hiện tại" : item.end_date)}</span>
+                          </div>
+                        )
+                      }
+                      {
+                        (Object.keys(fieldItemProps.labelToAPI)).map((label) => label !== "itemTitle" && (
+                          <div>
+                            <b>{label}</b>
+                            <span>{": " + item[fieldItemProps.labelToAPI[label]]}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                    <div>
+                      <Button className="icon-btn" type="text" icon={<EditOutlined />} />
+                    </div>
                   </div>
                 </div>
               ))
