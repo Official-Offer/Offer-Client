@@ -17,7 +17,7 @@ import router, { useRouter } from "next/router";
 const { Header, Content, Footer, Sider } = Layout;
 
 const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Sự kiện"];
-const path = ["/recruiter", "/jobs", "/applicants", "/events"];
+const path = ["/", "/jobs", "/applicants", "/events"];
 const items: MenuProps["items"] = [
   BarChartOutlined,
   UserOutlined,
