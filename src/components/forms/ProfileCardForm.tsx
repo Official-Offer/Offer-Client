@@ -1,5 +1,4 @@
 import react, { useState, useEffect, useRef } from "react";
-import { DarkOverlay } from "@styles/styled-components/styledDiv";
 import { 
   Card as AntdCard, 
   Button, 
@@ -39,8 +38,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
 
   const onCancel = () => {
     closeForm();
-  }
-
+  };
+  
   return (
     <Modal
       className="main-panel-form"
