@@ -18,6 +18,10 @@ a {
 dialog {
   background-color: transparent;
   border: none;
+
+  &::backdrop {
+    background: rgba(0,0,0,0.5);
+  }
 }
 
 /* Components */
