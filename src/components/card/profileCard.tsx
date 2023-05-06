@@ -1,5 +1,4 @@
-import  React, { useState, useRef } from "react";
-import ReactDOM from "react-dom";
+import  React, { useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { Card as AntdCard, Modal, Button, Divider } from "antd";
 import { ProfileCardForm } from "@components/forms";
