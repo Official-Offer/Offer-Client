@@ -15,6 +15,15 @@ a {
   text-decoration: none;
 }
 
+dialog {
+  background-color: transparent;
+  border: none;
+
+  &::backdrop {
+    background: rgba(0,0,0,0.5);
+  }
+}
+
 /* Components */
 @import "./scss/Components/forms";
 @import "./scss/Components/cards";

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { useRef, useState, ReactElement } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import "antd/dist/antd.css";

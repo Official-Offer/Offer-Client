@@ -27,4 +27,8 @@ export const DarkOverlay = styled.div`
   width: 100vw;
   background-color: rgba(0,0,0, ${({darkPercent}) => darkPercent / 100});
   z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

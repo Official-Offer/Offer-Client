@@ -7,5 +7,5 @@ export const getSchoolList = async () => {
 
 export const getSchool = async (id: number) => {
   const response = await request.get(`/schools/${id}/`);
-  return response.data;
+  return response.data.message; // For some reasons the data is in the message field
 }
