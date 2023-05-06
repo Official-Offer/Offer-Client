@@ -9,4 +9,5 @@ export { CardTray } from "./cardTray";
 export { ResumePanel } from "./resumePanel";
 export { Footer } from "./footer";
 export { ApplicantTable } from "./table/ApplicantTable";
+export { SearchBar } from "./search";
 // asdda

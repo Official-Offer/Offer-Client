@@ -2,6 +2,8 @@ import React from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
+import { SearchBar } from "../search";
+import ApplicantNameSearch from "@components/search/ApplicantNameSearch";
 
 interface DataType {
   key: string;
@@ -88,7 +90,12 @@ export const ApplicantTable: React.FC = () => {
   return (
     <div>
       <div className="applicant-filter">
-        <ApplicantTypeFilter />
+        <div className="applicant-filter-item">
+          <ApplicantNameSearch />
+        </div>
+        <div className="applicant-filter-item">
+          <ApplicantTypeFilter />
+        </div>
       </div>
       <Table columns={columns} dataSource={data} />
     </div>

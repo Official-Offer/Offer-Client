@@ -7,15 +7,10 @@
     }
     &-filter {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 200px;
+        align-items: left;
         margin-bottom: 20px;
-        &-search {
-            width: 300px;
-        }
-        &-sort {
-            width: 200px;
+        &-item {
+            margin-right: 20px;
         }
     }
     &-table {

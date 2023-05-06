@@ -1,8 +1,13 @@
-import React from 'react';
-import { Select, Tag } from 'antd';
-import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
+import React from "react";
+import { Select, Tag } from "antd";
+import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
-const options = [{ value: 'gold' }, { value: 'lime' }, { value: 'green' }, { value: 'cyan' }];
+const options = [
+  { value: "gold" },
+  { value: "lime" },
+  { value: "green" },
+  { value: "cyan" },
+];
 
 const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props;
@@ -23,15 +28,17 @@ const tagRender = (props: CustomTagProps) => {
   );
 };
 
-const ApplicantTypeFilter: React.FC = () => (
-  <Select
-    mode="multiple"
-    showArrow
-    tagRender={tagRender}
-    defaultValue={['gold', 'cyan']}
-    style={{ width: '100%' }}
-    options={options}
-  />
+const ApplicantTypeFilter: React.FC = ({ ...props }) => (
+  <div {...props}>
+    <Select
+      mode="multiple"
+      showArrow
+      tagRender={tagRender}
+      defaultValue={["gold", "cyan"]}
+      options={options}
+      className="filter-applicant"
+    />
+  </div>
 );
 
 export default ApplicantTypeFilter;
