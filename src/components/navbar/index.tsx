@@ -49,26 +49,29 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     setHideMesPanel(true);
   };
 
-  const listMenu: MenuMiddleNav["items"] = [
-    {
-      name: "Công việc",
-      link: "/student/jobs",
-      newTab: false,
-      routeSelected: "/student/jobs",
-    },
-    {
-      name: "Sự kiện",
-      link: "/student/events",
-      newTab: false,
-      routeSelected: "/student/events",
-    },
-    {
-      name: "Dịch Vụ",
-      link: "/student/service",
-      newTab: false,
-      routeSelected: "/student/service",
-    },
-  ];
+  const listMenu: MenuMiddleNav["items"] =
+    router.pathname.includes("recruiter") || router.pathname.includes("advisor")
+      ? []
+      : [
+          {
+            name: "Công việc",
+            link: "/student/jobs",
+            newTab: false,
+            routeSelected: "/student/jobs",
+          },
+          {
+            name: "Sự kiện",
+            link: "/student/events",
+            newTab: false,
+            routeSelected: "/student/events",
+          },
+          {
+            name: "Dịch Vụ",
+            link: "/student/service",
+            newTab: false,
+            routeSelected: "/student/service",
+          },
+        ];
 
   return router.pathname.includes("registration") ||
     router.pathname.includes("email") ||
@@ -83,22 +86,27 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         mode="horizontal"
         className="navbar left-menu"
       >
-        <Menu.Item key={"/student/"} className="m-0">
-          {false ? (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="m-0"
-              href={"/student/"}
-            >
-              {"Home"}
-            </a>
-          ) : (
-            <Link href={"/student/"}>
-              <a className="m-0">{"Home"}</a>
-            </Link>
-          )}
-        </Menu.Item>
+        {router.pathname.includes("recruiter") ||
+        router.pathname.includes("advisor") ? (
+          <></>
+        ) : (
+          <Menu.Item key={"/student/"} className="m-0">
+            {false ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="m-0"
+                href={"/student/"}
+              >
+                {"Home"}
+              </a>
+            ) : (
+              <Link href={"/student/"}>
+                <a className="m-0">{"Home"}</a>
+              </Link>
+            )}
+          </Menu.Item>
+        )}
         <Input
           ref={searchBar}
           className={

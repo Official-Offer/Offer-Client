@@ -12,9 +12,8 @@ import {
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
 import router, { useRouter } from "next/router";
-// import VerticalNav from '@components/navbar/VerticalNav';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Sự kiện"];
 const path = ["/", "/jobs", "/applicants", "/events"];
@@ -73,5 +72,3 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
   }
   return <div>{props.children}</div>;
 };
-
-// export default VerticalNav;
