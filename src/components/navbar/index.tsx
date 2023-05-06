@@ -28,6 +28,11 @@ const mesList = [{ seen: true }, { seen: false }, { seen: true }];
 
 export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const router = useRouter();
+  const path = router.pathname.includes("student")
+    ? "student"
+    : router.pathname.includes("recruiter")
+    ? "recruiter"
+    : "advisor";
   const searchBar = useRef();
   const [hideBar, setHideBar] = useState(true);
   const [hideMesPanel, setHideMesPanel] = useState(true);
@@ -249,23 +254,23 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           overlay={
             <Menu>
               <Menu.Item>
-                <Link href="/student/profile">Hồ Sơ Người Dùng</Link>
+                <Link href={`/${path}/profile`}>Hồ Sơ Người Dùng</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Đã Lưu</Link>
+                <Link href={`/${path}/profile`}>Đã Lưu</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Công Việc Đã Ứng Tuyển</Link>
+                <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
               </Menu.Item>
               <Menu.Divider />
               <Menu.Item>
-                <Link href="/student/profile">Cài Đặt</Link>
+                <Link href={`/${path}/profile`}>Cài Đặt</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Điều Khoản Sử Dụng</Link>
+                <Link href={`/${path}/profile`}>Điều Khoản Sử Dụng</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Hỗ Trợ</Link>
+                <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
               </Menu.Item>
               <Menu.Item>
                 <div
