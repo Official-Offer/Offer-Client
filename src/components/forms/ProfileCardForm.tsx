@@ -1,35 +1,75 @@
 import react, { useState, useEffect, useRef } from "react";
 import { DarkOverlay } from "@styles/styled-components/styledDiv";
-import { Card as AntdCard, Button } from "antd";
+import { 
+  Card as AntdCard, 
+  Button, 
+  Modal, 
+  Form,
+  Input
+} from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 interface ProfileCardFormProps {
-  fieldTitle: string,
+  open: boolean,
+  closeForm: () => void,
   isAdd: boolean,
-  dialogRef: HTMLDialogElement,
+  fieldTitle: string,
   fieldItemProps: {
+    itemTitle: string,
+    contentLayout: string[],
+    formLayout: string[],
     labelToAPI: Record<string, string>,
-    APItoLabel: Record<string, string>,
+    APIToLabel: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
-  queryItemList: Record<string, unknown>[],
+  fieldItems?: Record<string, unknown>,
   postFunction: (input: Record<string, unknown>) => void,
 };
 
 // Form for editing or adding for different fields in profile page
-export const ProfileCardForm: React.FC = ({ fieldTitle, isAdd, dialogRef, fieldItemProps, queryItemList, postFunction }: ProfileCardFormProps) => {
+export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeForm, isAdd, fieldTitle, fieldItemProps, fieldItems, postFunction }) => {
+  const form = Form.useForm();
+  const getLabel = (itemName: string, isLowerCase: boolean) => {
+    const label = fieldItemProps.APIToLabel[itemName];
+    if (label === "itemTitle") {
+      return isLowerCase ? fieldItemProps.itemTitle?.toLowerCase() : fieldItemProps.itemTitle;
+    }
+    return isLowerCase ? label?.toLowerCase() : label;
+  };
+
+  const onCancel = () => {
+    closeForm();
+  }
+
   return (
-    <AntdCard
-      className="profile-change-card"
-      onClick={(event) => event.stopPropagation()}
-      title={
-        <div className="main-panel-header">
-          <h2>{(isAdd ? "Thêm " : "Chỉnh Sửa ") + fieldTitle}</h2>
-          <Button className="icon-btn" type="text" onClick={() => dialogRef.current?.close()} icon={<CloseOutlined />} />
-        </div>
-      }
+    <Modal
+      className="main-panel-form"
+      title={(isAdd ? "Thêm " :"Chỉnh Sửa ") + fieldTitle}
+      centered
+      open={open}
+      onCancel={onCancel}
     >
-      An array of HTML forms element
-    </AntdCard>
+      <Form
+        name="profileForm"
+        layout="vertical"
+      >
+        {
+          fieldItemProps.formLayout.map((itemName) => (
+            <Form.Item 
+              name={itemName}
+              label={getLabel(itemName, false)}
+              rules={[
+                {
+                  required: fieldItemProps.isRequired[itemName],
+                  message: "Vui lòng nhập " + getLabel(itemName, true),
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          ))
+        }
+      </Form>
+    </Modal>
   );
 };
