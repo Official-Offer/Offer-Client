@@ -5,16 +5,54 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { setCompany, setSchool } from "@redux/slices/account";
+import { setCompany, setSchool, setRegisterEmail } from "@redux/slices/account";
 import { Button } from "antd";
-import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { signIn } from "next-auth/react";
+import {
+  GoogleOutlined,
+  MailOutlined,
+  WindowsOutlined,
+} from "@ant-design/icons";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useQuery } from "react-query";
+import { getUserList } from "@services/apiUser";
+import { getSchoolList } from "@services/apiSchool";
+import { getCookie, removeCookies, setCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
-const RegisterStudent: NextPage = () => {
+const Auth: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
+  const { data: session, status } = useSession();
+  const users = useQuery({ queryKey: ["users"], queryFn: getUserList });
+  console.log(users);
+  // if (status === "loading") return <h1> loading... please wait</h1>;
+  if (session) {
+    dispatch(setRegisterEmail(session.user?.email));
+    if (
+      users.data?.Response.filter(
+        (d: { email: string }) => d.email == session.user?.email
+      ).length > 0
+    ) {
+      //if email is in database, navigate to login page
+      router.push("/student");
+    }
+    // else {
+    //   router.push("/registration/password");
+    // }
+    // return (
+    //   <button
+    //     onClick={() => {
+    //       signOut();
+    //       removeCookies("access_token");
+    //     }}
+    //   >
+    //     Sign out
+    //   </button>
+    // );
+    // console.log(session.user);
+    // console.log(getCookie("access_token"));
+  }
 
   return (
     <div className="register">
@@ -48,26 +86,21 @@ const RegisterStudent: NextPage = () => {
               </h1>
             </div>
           )}
-          <OrgForm
-            onSubmit={(org) => {
-              // setSchool(school);
-              if (state.role.isStudent || state.role.isAdvisor) {
-                dispatch(setSchool(org));
-              } else {
-                dispatch(setCompany(org));
-              }
-              router.push({
-                pathname: "/registration/auth",
-              });
+          <Button
+            className="school-btn"
+            icon={<WindowsOutlined />}
+            onClick={() => {
+              signIn("azure-ad");
             }}
-            isLoading={false}
-          />
-          {/* <Button
+          >
+            {" "}
+            Đăng ký với email của trường {state.school}
+          </Button>
+          <Button
             className="btn"
             icon={<GoogleOutlined />}
             onClick={() => {
               signIn("google");
-              router.push("registration/password");
             }}
           >
             {" "}
@@ -80,7 +113,7 @@ const RegisterStudent: NextPage = () => {
           >
             {" "}
             Đăng ký bằng email thường{" "}
-          </Button> */}
+          </Button>
           <FootnoteForm embedLogin />
         </div>
       </div>
@@ -88,4 +121,4 @@ const RegisterStudent: NextPage = () => {
   );
 };
 
-export default RegisterStudent;
+export default Auth;

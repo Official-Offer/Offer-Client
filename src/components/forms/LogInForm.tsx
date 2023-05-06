@@ -6,6 +6,8 @@ import {
 } from "@styles/styled-components/styledButton";
 import Image from "next/image";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
 // import { ReactComponent as Loader } from '/icons'
 interface ILogInForm {
   onSubmit: (emailAndPassword: {
@@ -18,6 +20,7 @@ interface ILogInForm {
 export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const state = useSelector((state: RootState) => state.account);
 
   const handlePasswordChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -46,6 +49,7 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
             </label>
             <FormInput
               width="250px"
+              defaultValue={state.email}
               type="email"
               id="password"
               value={email}
