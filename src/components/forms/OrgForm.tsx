@@ -67,9 +67,9 @@ export const OrgForm: React.FC<IOrgForm> = ({ onSubmit, isLoading }: IOrgForm) =
         {/* <SubmitButton type="submit" className="form-submit-button">
           Tiếp tục
         </SubmitButton> */}
-        <SubmitButton text="Tiếp tục" isLoading={isLoading} onClick={handleSubmit}/>
+        <br/>
+        <div><SubmitButton text="Tiếp tục" isLoading={isLoading} onClick={handleSubmit}/></div>
       </form>
-      <FootnoteForm embedLogin />
     </div>
   );
 };

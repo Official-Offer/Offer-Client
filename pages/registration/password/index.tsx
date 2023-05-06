@@ -19,13 +19,11 @@ const RegisterPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
-    mutationFn: 
-    // state.role.isStudent
-    //   ? registerStudent
-    //   : state.role.isAdvisor
-    //   ? registerAdvisor
-      // :
-       registerRecruiter,
+    mutationFn: state.role.isStudent
+      ? registerStudent
+      : state.role.isAdvisor
+      ? registerAdvisor
+      : registerRecruiter,
     onSuccess: async (data) => {
       setCookie("access_token", data.token);
       console.log("first");
@@ -36,7 +34,7 @@ const RegisterPassword: NextPage = () => {
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      setErrorMessage("Mật khẩu quá ngắn (ít nhất 6 ký tự)");
+      setErrorMessage(error.response.data.message);
       // queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
@@ -49,11 +47,12 @@ const RegisterPassword: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           {/* <Image src="..;/"/> */}
+          <h1>Mật khẩu</h1>
           <h1>{state.school || state.company}</h1>
           <PasswordForm
             isLoading={mutation.isLoading}
             onSubmit={(password: string) => {
-              console.log(state.email, password)
+              console.log(state.email, password);
               mutation.mutate({
                 email: state.email,
                 password: password,

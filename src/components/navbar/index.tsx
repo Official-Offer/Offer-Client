@@ -262,11 +262,12 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               <Menu.Item>
                 <div
                   onClick={() => {
-                    if (status === "authenticated") {
-                      signOut();
-                      router.push("/login");
-                    }
                     removeCookies("access_token");
+                    if (status === "authenticated") {
+                      signOut().then(() => {
+                        router.push("/login");
+                      });
+                    }
                     router.push("/login");
                   }}
                 >
