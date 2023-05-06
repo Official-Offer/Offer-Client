@@ -18,7 +18,8 @@ import {
   addStudentExperiences,
   deleteStudentExperiences,
 } from "@services/apiStudent";
-import { getSchool } from "@services/apiSchool";
+import { getSchoolList } from "@services/apiSchool";
+import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 
 const profile = {
@@ -46,36 +47,28 @@ const info = {
 
 const eduFieldItems = {
   itemTitle: "Trường",
-  contentLayout: [
+  dataIDLabel: "school",
+  dataName: "schoolName",
+  disableEndDate: false,
+  layout: [
     "study_fields",
     "gpa"
-  ],
-  formLayout: [
-    "schoolName",
-    "study_fields",
-    "gpa",
-    "start_date",
-    "end_date",
-    "is_current",
-    "description"
   ],
   labelToAPI: {
     "itemTitle": "schoolName",
     "GPA": "gpa",
     "Ngành học": "study_fields",
     "Ngày bắt đầu": "start_date",
-    "Ngày kết thúc": "end_date",
-    "Đang học": "is_current",
-    "Mô tả": "description",
+    "Ngày tốt nghiệp": "end_date",
+    "Tôi đang học trường này": "is_current",
   },
   APIToLabel: {
     "schoolName": "itemTitle",
     "gpa": "GPA",
     "study_fields": "Ngành học",
     "start_date": "Ngày bắt đầu",
-    "end_date": "Ngày kết thúc",
-    "is_current": "Đang học",
-    "description": "Mô tả",
+    "end_date": "Ngày tốt nghiệp",
+    "is_current": "Tôi đang học trường này",
   }, 
   isRequired: {
     "schoolName": true
@@ -84,18 +77,12 @@ const eduFieldItems = {
 
 const expFieldItems = {
   itemTitle: "Vị Trí",
-  contentLayout: [
+  dataIDLabel: "company",
+  dataName: "companyName",
+  disableEndDate: true,
+  layout: [
     "companyName",
     "location"
-  ],
-  formLayout: [
-    "title",
-    "companyName",
-    "location",
-    "start_date",
-    "end_date",
-    "is_current",
-    "description"
   ],
   labelToAPI: {
     "itemTitle": "title",
@@ -103,8 +90,7 @@ const expFieldItems = {
     "Địa điểm": "location",
     "Ngày bắt đầu": "start_date",
     "Ngày kết thúc": "end_date",
-    "Đang làm": "is_current",
-    "Mô tả": "description",
+    "Tôi đang làm công việc này": "is_current",
   },
   APIToLabel: {
     "title": "itemTitle",
@@ -112,8 +98,7 @@ const expFieldItems = {
     "location": "Địa điểm",
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày kết thúc",
-    "is_current": "Đang làm",
-    "description": "Mô tả",
+    "is_current": "Tôi đang làm công việc này",
   },
   isRequired: {
     "title": true,
@@ -178,6 +163,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
+          dataFunction={getSchoolList}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
@@ -186,6 +172,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperiences}
+          dataFunction={getCompanyList}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">
