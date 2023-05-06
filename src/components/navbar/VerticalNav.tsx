@@ -11,24 +11,25 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 // import VerticalNav from '@components/navbar/VerticalNav';
 
 const { Header, Content, Footer, Sider } = Layout;
 
+const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Sự kiện"];
+const path = ["/recruiter", "/jobs", "/applicants", "/events"];
 const items: MenuProps["items"] = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
   BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
+  UserOutlined,
+  UploadOutlined,
   TeamOutlined,
-  ShopOutlined,
 ].map((icon, index) => ({
   key: String(index + 1),
   icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
+  label: titles[index],
+  onClick: () => {
+    router.push(`/recruiter/${path[index]}`);
+  }
 }));
 
 export const VerticalNav: React.FC = (props: any): ReactElement => {
@@ -53,7 +54,7 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
           <div
             style={{
               height: 32,
-              margin: 16,
+              margin: 25,
               background: "rgba(255, 255, 255, 0.2)",
             }}
           />

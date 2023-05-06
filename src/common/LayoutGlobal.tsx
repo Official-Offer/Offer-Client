@@ -2,7 +2,6 @@ import React, { useRef, useState, ReactElement } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import "antd/dist/antd.css";
-// import VerticalNav from "@components/navbar/VerticalNav";
 
 export default function LayoutGlobal(props: any): ReactElement {
   const Navbar = dynamic(() =>
