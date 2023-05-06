@@ -1,3 +1,4 @@
+import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 
@@ -8,11 +9,10 @@ const Applicant: NextPage = () => {
   ) as any;
 
   return (
-    <div className = "applicant">
-      <h1 className="applicant-title">Applicant table</h1>
-      <div className="filter-applicant"></div>
-      <div className = "applicant-table">
-      <ApplicantTable />
+    <div className="applicant">
+      <h1 className="applicant-title">Ứng viên</h1>
+      <div className="applicant-table">
+        <ApplicantTable/>
       </div>
     </div>
   );

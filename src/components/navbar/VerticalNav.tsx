@@ -66,25 +66,8 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
   ) {
     return (
       <Layout hasSider>
-        <Sider
-          style={{
-            overflow: "auto",
-            height: "100vh",
-            position: "fixed",
-            left: 0,
-            top: 0,
-            bottom: 0,
-          }}
-        >
-          <div
-            style={{
-              height: 32,
-              margin: 25,
-              background: "rgba(255, 255, 255, 0.2)",
-            }}
-          >
-            Home
-          </div>
+        <Sider className="recruiter-sider">
+          <div className="recruiter-sider-logo">Home</div>
           <Menu
             defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
@@ -96,7 +79,7 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
             items={items}
           />
         </Sider>
-        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <Layout className="layout-with-sider">
           <div>{props.children}</div>
         </Layout>
       </Layout>

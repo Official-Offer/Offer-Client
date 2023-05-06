@@ -1,0 +1,26 @@
+.applicant {
+    padding: 20px;
+    &-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    &-filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 200px;
+        margin-bottom: 20px;
+        &-search {
+            width: 300px;
+        }
+        &-sort {
+            width: 200px;
+        }
+    }
+    &-table {
+
+    }
+}
+
+

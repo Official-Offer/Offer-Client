@@ -8,5 +8,5 @@ export { CardsGrid } from "./cardsGrid";
 export { CardTray } from "./cardTray";
 export { ResumePanel } from "./resumePanel";
 export { Footer } from "./footer";
-export { ApplicantTable } from "./table/applicantTable";
+export { ApplicantTable } from "./table/ApplicantTable";
 // asdda
