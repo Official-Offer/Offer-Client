@@ -170,12 +170,6 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
     }
   }
 
-  const bruh = {};
-  bruh[fieldItemProps.dataIDLabel] = fieldItems?.[fieldItemProps.dataIDLabel];
-  bruh.gpa = 4;
-  // bruh.start_date = fieldItems?.start_date;
-  // bruh.description = console.log(fieldItems)
-
   return (
     <Modal
       className="main-panel-form"
@@ -192,7 +186,6 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
         layout="vertical"
         initialValues={
           !isAdd && fieldItems
-          // bruh
         }
       >
         {/* Item's Title - meaning the string display as the header */}
