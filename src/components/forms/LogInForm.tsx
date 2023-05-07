@@ -44,7 +44,7 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
           <Form.Item label="Email">
             <Input
               required
-              className="form-email"
+              className="form-item"
               placeholder={state.email}
               onChange={handleEmailChange}
             />

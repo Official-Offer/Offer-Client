@@ -41,13 +41,13 @@ const RegisterBasicInfo: NextPage = () => {
                 first_name,
                 last_name,
                 phone_number,
-                expected_graduation,
+                // expected_graduation,
                 major,
               }): mutation.mutate({
                 first_name,
                 last_name,
                 phone_number,
-                is_reviewer,
+                // is_reviewer,
                 roles
               })
               router.push("/student");

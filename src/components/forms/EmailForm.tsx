@@ -21,13 +21,13 @@ export const EmailForm: React.FC = ({ onSubmit, isLoading }: IEmailForm) => {
     setEmail(value);
   };
   return (
-    <Form className="form" onSubmit={handleSubmit}>
+    <Form className="form" onSubmit={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Email">
             <Input
               required
-              className="form-email"
+              className="form-item"
               onChange={handleEmailChange}
             />
           </Form.Item>
