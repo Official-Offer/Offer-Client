@@ -5,7 +5,7 @@ export const getCompanyList = async () => {
   return response.data;
 }
 
-export const getCompanyDetails = async (id: number) => {
+export const getCompany = async (id: number) => {
   const response = await request.get(`/companies/${id}`);
-  return response.data;
+  return response.data.message;
 }

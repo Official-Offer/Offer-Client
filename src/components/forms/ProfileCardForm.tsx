@@ -36,7 +36,7 @@ interface ProfileCardFormProps {
 };
 
 // Form for editing or adding for different fields in profile page
-export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeForm, isAdd, fieldTitle, fieldItemProps, fieldItems, postFunction, dataArr }) => {
+export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeForm, isAdd, fieldTitle, fieldItemProps, fieldItems, postFunction, dataArr, index }) => {
   // Hooks
   const [form] = Form.useForm();
 
@@ -47,12 +47,12 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
   });
 
   // States
-  const [isCurrent, setIsCurrent] = useState(false);
-  const [dates, setDates] = useState({
+  const [isCurrent, setIsCurrent] = useState<boolean>(false);
+  const [dates, setDates] = useState<Record<string, Moment>>({
     "start_date": null,
     "end_date": null
   });
-  const [areValidDates, setAreValidDates] = useState(true);
+  const [areValidDates, setAreValidDates] = useState<boolean>(true);
 
   // Functions
   const getLabel = (itemName: string, isLowerCase: boolean): string => {
@@ -64,9 +64,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
   };
 
   const validateDates = (date: Date, itemName: string): void => {
-    dates[itemName] =  date;
+    dates[itemName] = date;
     setDates(dates);
-    const areValid = (dates.start_date && dates.end_date) && (dates.start_date < dates.end_date);
+    const areValid = dates?.start_date < dates?.end_date;
     setAreValidDates(areValid);
   }
 
@@ -112,10 +112,11 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
         showSearch
         optionFilterProp="label"
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
+        loading={optionArr === undefined}
         options={
-          optionArr && optionArr.map((dataItem) => ({
-            value: dataItem.id ?? dataItem,
-            label: dataItem.name ?? dataItem
+          optionArr?.map((dataItem) => ({
+            value: name === fieldItemProps.dataIDLabel ? dataItem.id : dataItem,
+            label: name === fieldItemProps.dataIDLabel ? dataItem.name : dataItem
           }))
         }
       />
@@ -148,7 +149,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
             label={getLabel(itemName, false)}
             isRequired={fieldItemProps.isRequired[itemName]}
             isMulti={true}
-            optionArr={fieldItems && fieldItems[itemName]}
+            optionArr={fieldItems?.[itemName]}
           />
         );
       default:
@@ -169,6 +170,12 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
     }
   }
 
+  const bruh = {};
+  bruh[fieldItemProps.dataIDLabel] = fieldItems?.[fieldItemProps.dataIDLabel];
+  bruh.gpa = 4;
+  // bruh.start_date = fieldItems?.start_date;
+  // bruh.description = console.log(fieldItems)
+
   return (
     <Modal
       className="main-panel-form"
@@ -183,6 +190,10 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
         form={form}
         name="profileForm"
         layout="vertical"
+        initialValues={
+          !isAdd && fieldItems
+          // bruh
+        }
       >
         {/* Item's Title - meaning the string display as the header */}
         {
@@ -239,7 +250,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
           label={getLabel("start_date", false)}
           validateStatus={!areValidDates && "error"}
         >
-          <DatePicker onChange={(date) => validateDates(date?._d, "start_date")}/>
+          <DatePicker format="DD/MM/YYYY" onChange={(date) => validateDates(date?._d, "start_date")}/>
         </Form.Item>
         <Form.Item
           name="end_date"
@@ -248,7 +259,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
           help={!areValidDates && `Xin hãy nhập đúng hai ngày (${getLabel("start_date", false)} trước ${getLabel("end_date", false).toLowerCase()})`}
           hidden={fieldItemProps.disableEndDate && isCurrent}
         >
-          <DatePicker onChange={(date) => validateDates(date?._d, "end_date")}/>
+          <DatePicker format="DD/MM/YYYY" onChange={(date) => validateDates(date?._d, "end_date")}/>
         </Form.Item>
         <Form.Item
           name="description"
