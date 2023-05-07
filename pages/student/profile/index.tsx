@@ -69,7 +69,11 @@ const eduFieldItems = {
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày tốt nghiệp",
     "is_current": "Tôi đang học trường này",
-  }, 
+  },
+  itemType: {
+    "study_fields": "object",
+    "gpa": "number",
+  },
   isRequired: {
     "schoolName": true
   }
@@ -99,6 +103,9 @@ const expFieldItems = {
     "start_date": "Ngày bắt đầu",
     "end_date": "Ngày kết thúc",
     "is_current": "Tôi đang làm công việc này",
+  },
+  itemType: {
+    "location": "string",
   },
   isRequired: {
     "title": true,

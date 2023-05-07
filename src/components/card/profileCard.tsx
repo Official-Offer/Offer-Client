@@ -14,6 +14,7 @@ type ProfileCardProps = {
     layout: string[],
     labelToAPI: Record<string, string>,
     APIToLabel: Record<string, string>,
+    itemType: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
   getFunction: () => Record<string, unknown>[],
@@ -68,6 +69,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
             isAdd={true}
             fieldTitle={fieldTitle}
             fieldItemProps={fieldItemProps}
+            fieldItems={queryItemList && queryItemList[0]}
             postFunction={addFunction}
             dataArr={dataArr}
           />

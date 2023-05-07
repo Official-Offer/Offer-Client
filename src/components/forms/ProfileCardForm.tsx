@@ -6,10 +6,12 @@ import {
   Modal, 
   Form,
   Input,
+  InputNumber,
   Select,
   Checkbox,
   DatePicker
 } from "antd";
+import moment from "moment";
 import { CloseOutlined } from "@ant-design/icons";
 
 interface ProfileCardFormProps {
@@ -25,6 +27,7 @@ interface ProfileCardFormProps {
     layout: string[],
     labelToAPI: Record<string, string>,
     APIToLabel: Record<string, string>,
+    itemType: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
   fieldItems?: Record<string, unknown>,
@@ -38,16 +41,21 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
   const [form] = Form.useForm();
 
   const postMutation = useMutation({
-    mutationFn: postFunction,
+    mutationFn: (input) => postFunction(input),
     onSuccess: (data) => console.log(data),
     onError: (err) => console.log(`Submit Error: ${err}`)
   });
 
   // States
   const [isCurrent, setIsCurrent] = useState(false);
+  const [dates, setDates] = useState({
+    "start_date": null,
+    "end_date": null
+  });
+  const [areValidDates, setAreValidDates] = useState(true);
 
   // Functions
-  const getLabel = (itemName: string, isLowerCase: boolean) => {
+  const getLabel = (itemName: string, isLowerCase: boolean): string => {
     const label = fieldItemProps.APIToLabel[itemName];
     if (label === "itemTitle") {
       return isLowerCase ? fieldItemProps.itemTitle?.toLowerCase() : fieldItemProps.itemTitle;
@@ -55,20 +63,40 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
     return isLowerCase ? label?.toLowerCase() : label;
   };
 
+  const validateDates = (date: Date, itemName: string): void => {
+    dates[itemName] =  date;
+    setDates(dates);
+    const areValid = (dates.start_date && dates.end_date) && (dates.start_date < dates.end_date);
+    setAreValidDates(areValid);
+  }
+
+  const parseDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  };
+
   const onCancel = () => {
     form.resetFields();
+    setAreValidDates(true);
     closeForm();
   };
 
   const onOk = () => {
     form
       .validateFields()
-      .then(console.log)
+      .then((formData) => {
+        formData.start_date = moment(formData.start_date).format("YYYY-MM-DD");
+        formData.end_date = moment(formData.start_date).format("YYYY-MM-DD");
+        console.log(formData);
+        postMutation.mutate(formData);
+      })
       .catch((err) => console.log("Form Error: ", err));
   };
 
   // Components
-  const DataInput = ({ name, label, isRequired }) => (
+  const DataInput = ({ name, label, isRequired, isMulti, optionArr }): React.FC => (
     <Form.Item
       name={name}
       label={label}
@@ -80,19 +108,66 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
       ]}
     >
       <Select
+        mode={isMulti && "multiple"}
         showSearch
+        optionFilterProp="label"
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
-      >
-        {
-          dataArr && dataArr.map((dataItem) => (
-            <Select.Option key={dataItem.id} value={dataItem.name}>
-              {dataItem.name}
-            </Select.Option>
-          ))
+        options={
+          optionArr && optionArr.map((dataItem) => ({
+            value: dataItem.id ?? dataItem,
+            label: dataItem.name ?? dataItem
+          }))
         }
-      </Select>
+      />
     </Form.Item>
   );
+
+  const ItemInput = ({ itemName }) => {
+    switch (fieldItemProps.itemType[itemName]) {
+      case "number":
+        return (
+          <Form.Item 
+            name={itemName}
+            label={getLabel(itemName, false)}
+            rules={[
+              {
+                required: fieldItemProps.isRequired[itemName],
+                message: `Vui lòng nhập ${getLabel(itemName, true)}`,
+              },
+            ]}
+          >
+            <InputNumber
+              controls={false}
+            />
+          </Form.Item>
+        );
+      case "object":
+        return (
+          <DataInput
+            name={itemName}
+            label={getLabel(itemName, false)}
+            isRequired={fieldItemProps.isRequired[itemName]}
+            isMulti={true}
+            optionArr={fieldItems && fieldItems[itemName]}
+          />
+        );
+      default:
+        return (
+          <Form.Item 
+            name={itemName}
+            label={getLabel(itemName, false)}
+            rules={[
+              {
+                required: fieldItemProps.isRequired[itemName],
+                message: `Vui lòng nhập ${getLabel(itemName, true)}`,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        );
+    }
+  }
 
   return (
     <Modal
@@ -102,6 +177,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
       open={open}
       onCancel={onCancel}
       onOk={onOk}
+      confirmLoading={postMutation.isLoading}
     >
       <Form
         form={form}
@@ -115,6 +191,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
               name={fieldItemProps.dataIDLabel}
               label={fieldItemProps.itemTitle}
               isRequired={true}
+              isMulti={false}
+              optionArr={dataArr}
             />
           :
             <Form.Item
@@ -138,25 +216,17 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
                 name={fieldItemProps.dataIDLabel}
                 label={fieldItemProps.APIToLabel[itemName]}
                 isRequired={true}
+                isMulti={false}
+                optionArr={dataArr}
               />
             :
-              <Form.Item 
-                name={itemName}
-                label={getLabel(itemName, false)}
-                rules={[
-                  {
-                    required: fieldItemProps.isRequired[itemName],
-                    message: `Vui lòng nhập ${getLabel(itemName, true)}`,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+              <ItemInput itemName={itemName} />
           ))
         }
         {/* Current, Start date, End date, Description */}
         <Form.Item
           name="is_current"
+          valuePropName="checked"
         >
           <Checkbox
             onChange={(event) => setIsCurrent(event.target.checked)}
@@ -167,15 +237,18 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = ({ open, closeFor
         <Form.Item
           name="start_date"
           label={getLabel("start_date", false)}
+          validateStatus={!areValidDates && "error"}
         >
-          <DatePicker />
+          <DatePicker onChange={(date) => validateDates(date?._d, "start_date")}/>
         </Form.Item>
         <Form.Item
           name="end_date"
           label={getLabel("end_date", false) + (isCurrent ? " (dự định)" : "")}
+          validateStatus={!areValidDates && "error"}
+          help={!areValidDates && `Xin hãy nhập đúng hai ngày (${getLabel("start_date", false)} trước ${getLabel("end_date", false).toLowerCase()})`}
           hidden={fieldItemProps.disableEndDate && isCurrent}
         >
-          <DatePicker />
+          <DatePicker onChange={(date) => validateDates(date?._d, "end_date")}/>
         </Form.Item>
         <Form.Item
           name="description"
