@@ -36,7 +36,7 @@ export const PasswordForm: React.FC = ({
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+    // event.preventDefault();
     // Passwords match, handle form submission here
     if (password !== reenteredPassword) {
       setErrorMessage("Passwords do not match. Please try again.");
@@ -85,6 +85,7 @@ export const PasswordForm: React.FC = ({
           onClick={handleSubmit}
         />
       </div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </Form>
   );
 };
