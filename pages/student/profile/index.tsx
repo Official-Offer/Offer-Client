@@ -18,7 +18,8 @@ import {
   addStudentExperiences,
   deleteStudentExperiences,
 } from "@services/apiStudent";
-import { getSchool } from "@services/apiSchool";
+import { getSchoolList } from "@services/apiSchool";
+import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 
 const profile = {
@@ -45,15 +46,29 @@ const info = {
 };
 
 const eduFieldItems = {
+  itemTitle: "Trường",
+  dataIDLabel: "school",
+  dataName: "schoolName",
+  disableEndDate: false,
+  layout: [
+    "study_fields",
+    "gpa"
+  ],
   labelToAPI: {
     "itemTitle": "schoolName",
     "GPA": "gpa",
-    "Ngành học": "study_fields"
+    "Ngành học": "study_fields",
+    "Ngày bắt đầu": "start_date",
+    "Ngày tốt nghiệp": "end_date",
+    "Tôi đang học trường này": "is_current",
   },
-  APItoLabel: {
+  APIToLabel: {
     "schoolName": "itemTitle",
     "gpa": "GPA",
-    "study_fields": "Ngành học"
+    "study_fields": "Ngành học",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày tốt nghiệp",
+    "is_current": "Tôi đang học trường này",
   }, 
   isRequired: {
     "schoolName": true
@@ -61,15 +76,29 @@ const eduFieldItems = {
 };
 
 const expFieldItems = {
+  itemTitle: "Vị Trí",
+  dataIDLabel: "company",
+  dataName: "companyName",
+  disableEndDate: true,
+  layout: [
+    "companyName",
+    "location"
+  ],
   labelToAPI: {
     "itemTitle": "title",
     "Công ty": "companyName",
     "Địa điểm": "location",
+    "Ngày bắt đầu": "start_date",
+    "Ngày kết thúc": "end_date",
+    "Tôi đang làm công việc này": "is_current",
   },
-  APItoLabel: {
+  APIToLabel: {
     "title": "itemTitle",
     "companyName": "Công ty",
     "location": "Địa điểm",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "is_current": "Tôi đang làm công việc này",
   },
   isRequired: {
     "title": true,
@@ -134,6 +163,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentEducations}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducations}
+          dataFunction={getSchoolList}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
@@ -142,6 +172,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentExperiences}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperiences}
+          dataFunction={getCompanyList}
         />
       </section>
       <section className="sticky-panel sticky-panel-job">
