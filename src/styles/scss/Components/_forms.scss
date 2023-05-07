@@ -1,5 +1,5 @@
 .form {
-  margin: 15px 0 5px 0;
+  margin: 15px 0 10px 0;
 
   &-flex {
     display: flex;
@@ -35,6 +35,12 @@
     // gap: 5px;
   }
   &-password {
+    padding: 8px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #000000;
+  }
+  &-email {
     padding: 8px;
     width: 100%;
     border-radius: 8px;

@@ -35,7 +35,7 @@ export const PasswordForm: React.FC = ({
     setReenteredPassword(value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = () => {
     // event.preventDefault();
     // Passwords match, handle form submission here
     if (password !== reenteredPassword) {
