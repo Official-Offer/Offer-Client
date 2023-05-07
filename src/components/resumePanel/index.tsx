@@ -28,12 +28,14 @@ export const ResumePanel: React.FC = () => {
       return getStudentResume();
     },
     onSuccess: handleDownload,
+    onError: (err) => console.log(`Download Error: ${err}`),
     enabled: resumeFetch
   });
 
   const uploadMutation = useMutation({
     mutationFn: uploadFile,
     onSuccess: () => setResumeFetch(true),
+    onError: (err) => console.log(`Upload Error: ${err}`),
   });
 
   const deleteMutation = useMutation({
@@ -42,6 +44,7 @@ export const ResumePanel: React.FC = () => {
       setResumeFetch(true);
       handleDownload();
     },
+    onError: (err) => console.log(`Delete Error: ${err}`),
   });
 
   const handleUpload = (event) => {
