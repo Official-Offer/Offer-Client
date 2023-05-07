@@ -35,18 +35,16 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit}>
+    <Form className="form" onSubmit={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <label>
-            <b>
-              {" "}
-              {state.role.isStudent || state.role.isAdvisor
-                ? "Kết nối với trường của bạn:"
-                : "Kết nối với công ty của bạn:"}{" "}
-            </b>
-          </label>
-          <Form.Item>
+          <Form.Item
+            label={
+              state.role.isStudent || state.role.isAdvisor
+                ? "Kết nối với trường của bạn"
+                : "Kết nối với công ty của bạn"
+            }
+          >
             <Select
               className="form-select"
               bordered={false}
@@ -73,14 +71,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
           </Form.Item>
         </div>
       </div>
-      <br />
-      <div>
-        <SubmitButton
-          text="Tiếp tục"
-          isLoading={isLoading}
-          onClick={handleSubmit}
-        />
-      </div>
+      <SubmitButton
+        text="Tiếp tục"
+        isLoading={isLoading}
+        onClick={handleSubmit}
+      />
     </Form>
   );
 };

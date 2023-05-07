@@ -38,14 +38,12 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit}>
+    <Form className="form" onSubmit={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <label>
-            <b> Email </b>
-          </label>
-          <Form.Item>
+          <Form.Item label="Email">
             <Input
+              required
               className="form-email"
               placeholder={state.email}
               iconRender={(visible) =>
@@ -56,11 +54,9 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
           </Form.Item>
         </div>
         <div className="form-input">
-          <label>
-            <b> Mật khẩu</b>
-          </label>
-          <Form.Item>
+          <Form.Item label="Mật khẩu">
             <Input.Password
+              required
               className="form-password"
               placeholder="Mật khẩu"
               iconRender={(visible) =>

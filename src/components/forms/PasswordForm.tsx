@@ -46,13 +46,10 @@ export const PasswordForm: React.FC = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit}>
+    <Form className="form" onSubmit={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <label>
-            <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
-          </label>
-          <Form.Item>
+          <Form.Item label="Nhập mật khẩu cho lần đăng nhập sau">
             <Input.Password
               className="form-password"
               placeholder="Mật khẩu"
@@ -64,12 +61,8 @@ export const PasswordForm: React.FC = ({
           </Form.Item>
         </div>
         <div className="form-input">
-          <label>
-            <b> Nhập lại mật khẩu *</b>
-          </label>
-          <Form.Item>
+          <Form.Item label="Nhập lại mật khẩu">
             <Input.Password
-              label="Nhập lại mật khẩu *"
               className="form-password"
               placeholder="Nhập lại mật khẩu *"
               iconRender={(visible) =>
