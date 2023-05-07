@@ -45,15 +45,37 @@ const info = {
 };
 
 const eduFieldItems = {
+  itemTitle: "Trường",
+  contentLayout: [
+    "study_fields",
+    "gpa"
+  ],
+  formLayout: [
+    "schoolName",
+    "study_fields",
+    "gpa",
+    "start_date",
+    "end_date",
+    "is_current",
+    "description"
+  ],
   labelToAPI: {
     "itemTitle": "schoolName",
     "GPA": "gpa",
-    "Ngành học": "study_fields"
+    "Ngành học": "study_fields",
+    "Ngày bắt đầu": "start_date",
+    "Ngày kết thúc": "end_date",
+    "Đang học": "is_current",
+    "Mô tả": "description",
   },
-  APItoLabel: {
+  APIToLabel: {
     "schoolName": "itemTitle",
     "gpa": "GPA",
-    "study_fields": "Ngành học"
+    "study_fields": "Ngành học",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "is_current": "Đang học",
+    "description": "Mô tả",
   }, 
   isRequired: {
     "schoolName": true
@@ -61,15 +83,37 @@ const eduFieldItems = {
 };
 
 const expFieldItems = {
+  itemTitle: "Vị Trí",
+  contentLayout: [
+    "companyName",
+    "location"
+  ],
+  formLayout: [
+    "title",
+    "companyName",
+    "location",
+    "start_date",
+    "end_date",
+    "is_current",
+    "description"
+  ],
   labelToAPI: {
     "itemTitle": "title",
     "Công ty": "companyName",
     "Địa điểm": "location",
+    "Ngày bắt đầu": "start_date",
+    "Ngày kết thúc": "end_date",
+    "Đang làm": "is_current",
+    "Mô tả": "description",
   },
-  APItoLabel: {
+  APIToLabel: {
     "title": "itemTitle",
     "companyName": "Công ty",
     "location": "Địa điểm",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "is_current": "Đang làm",
+    "description": "Mô tả",
   },
   isRequired: {
     "title": true,

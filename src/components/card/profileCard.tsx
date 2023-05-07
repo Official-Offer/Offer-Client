@@ -1,15 +1,17 @@
-import  React, { useState, useRef } from "react";
-import ReactDOM from "react-dom";
+import  React, { useState } from "react";
 import { useQuery, useMutation } from "react-query";
-import { Card as AntdCard, Button, Divider } from "antd";
+import { Card as AntdCard, Modal, Button, Divider } from "antd";
 import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
 type ProfileCardProps = {
   fieldTitle: string,
   fieldItemProps: {
+    itemTitle: string,
+    contentLayout: string[],
+    formLayout: string[],
     labelToAPI: Record<string, string>,
-    APItoLabel: Record<string, string>,
+    APIToLabel: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
   getFunction: () => Record<string, unknown>[],
@@ -31,7 +33,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
     onError: (err) => console.log(`Not able to load profileCard's data: ${err}`),
   });
 
-  const dialogRef = useRef<HTMLDialogElement>();
+  const [openAddForm, setOpenAddForm] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
 
   return (
     <AntdCard
@@ -40,61 +43,82 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
-          <Button className="icon-btn" type="text" onClick={() => dialogRef.current?.showModal()} icon={<PlusOutlined />} />
-          {/* Popup form */}
-          <dialog ref={dialogRef} onClick={() => dialogRef.current?.close()}>
-            <ProfileCardForm
-              fieldTitle={fieldTitle}
-              isAdd={true}
-              dialogRef={dialogRef}
-              fieldItemProps={fieldItemProps}
-              queryItemList={queryItemList}
-              postFunction={addFunction}
-            />
-          </dialog>
+          <Button 
+            className="icon-btn" 
+            type="text" 
+            icon={<PlusOutlined />} 
+            // onClick={() => addDialogRef?.current?.showModal()}
+            onClick={() => setOpenAddForm(true)} 
+          />
+          {/* Popup adding form */}
+          <ProfileCardForm
+            open={openAddForm}
+            closeForm={() => setOpenAddForm(false)}
+            isAdd={true}
+            fieldTitle={fieldTitle}
+            fieldItemProps={fieldItemProps}
+            postFunction={addFunction}
+          />
         </div>
       }
-      children={
-        <div className="main-panel-layout">
-          { getItems.isLoading ? <div>Đang tải...</div> : 
-            getItems.isError ? <div>Server hiện tại không đưa thông tin được.</div> :
-            (queryItemList.length === 0 
-              ? <div>Xin hãy thêm thông tin vào đây.</div> 
-              : queryItemList.map((item, index) => (
-                <div>
-                  {index !== 0 && <Divider/>}
-                  <div className="main-panel-info">
-                    <div className="main-panel-info-logo">
-                      <img src={logoURL}/>
-                    </div>
-                    <div className="main-panel-info-center">
-                      <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
-                      {
-                        item.start_date.length !== 0 && (
-                          <div>
-                            <span>{item.start_date + " - " + (item.is_current ? "Hiện tại" : item.end_date)}</span>
-                          </div>
-                        )
-                      }
-                      {
-                        (Object.keys(fieldItemProps.labelToAPI)).map((label) => label !== "itemTitle" && (
-                          <div>
-                            <b>{label}</b>
-                            <span>{": " + item[fieldItemProps.labelToAPI[label]]}</span>
-                          </div>
-                        ))
-                      }
-                    </div>
-                    <div>
-                      <Button className="icon-btn" type="text" icon={<EditOutlined />} />
+    >
+      <div className="main-panel-layout">
+        { getItems.isLoading ? <div>Đang tải...</div> : 
+          getItems.isError ? <div>Server hiện tại không đưa thông tin được.</div> :
+          (queryItemList.length === 0 
+            ? <div>Xin hãy thêm thông tin vào đây.</div> 
+            : queryItemList.map((item, index) => {
+                return (
+                  <div>
+                    {index !== 0 && <Divider/>}
+                    {/* Popup adding form */}
+                    <ProfileCardForm
+                      open={openEditForm}
+                      closeForm={() => setOpenEditForm(false)}
+                      isAdd={false}
+                      fieldTitle={fieldTitle}
+                      fieldItemProps={fieldItemProps}
+                      fieldItems={queryItemList[index]}
+                      postFunction={addFunction}
+                    />
+                    <div className="main-panel-info">
+                      <div className="main-panel-info-logo">
+                        <img src={logoURL}/>
+                      </div>
+                      <div className="main-panel-info-center">
+                        <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
+                        {
+                          item.start_date.length !== 0 && (
+                            <div>
+                              <span>{item.start_date + " - " + (item.is_current ? "Hiện tại" : item.end_date)}</span>
+                            </div>
+                          )
+                        }
+                        {
+                          fieldItemProps.contentLayout.map((apiName) => (
+                            <div>
+                              <b>{fieldItemProps.APIToLabel[apiName]}</b>
+                              <span>{": " + item[apiName]}</span>
+                            </div>
+                          ))
+                        }
+                      </div>
+                      <div>
+                        <Button 
+                          className="icon-btn" 
+                          type="text" 
+                          icon={<EditOutlined />}
+                          onClick={() => setOpenEditForm(true)}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              }
             )
-          }
-        </div>
-      }
-    />
+          )
+        }
+      </div>
+    </AntdCard>
   );
 }

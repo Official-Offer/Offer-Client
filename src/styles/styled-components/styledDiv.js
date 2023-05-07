@@ -20,15 +20,3 @@ export const RightPanel = styled.div`
   background: linear-gradient(180deg, #f12711 -10.74%, #f5af19 121.39%);
   transform: matrix(-1, 0, 0, 1, 0, 0);
 `;
-
-export const DarkOverlay = styled.div`
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0,0,0, ${({darkPercent}) => darkPercent / 100});
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
