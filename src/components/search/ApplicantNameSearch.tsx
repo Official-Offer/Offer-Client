@@ -3,11 +3,11 @@ import React from "react";
 
 interface IApplicant {
   onSearch: (email: string) => void;
-  isLoading: boolean;
+  // options: any;
 }
 
-export const ApplicantNameSearch: React.FC = ({ onSearch, isLoading }: IApplicant) => {
-  
+export const ApplicantNameSearch: React.FC = ({ onSearch }: IApplicant) => {
+
   return (
     <Select
       className="filter-name"
@@ -15,22 +15,23 @@ export const ApplicantNameSearch: React.FC = ({ onSearch, isLoading }: IApplican
       placeholder="Tìm ứng viên"
       optionFilterProp="children"
       onChange={onSearch}
+      allowClear
       // onSearch={handleSearch}
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
       options={[
         {
-          value: "jack",
-          label: "Jack",
+          value: "John Brown",
+          label: "John Brown",
         },
         {
-          value: "lucy",
-          label: "Lucy",
+          value: "Jim Green",
+          label: "Jim Green",
         },
         {
-          value: "tom",
-          label: "Tom",
+          value: "Joe Black",
+          label: "Joe Black",
         },
       ]}
     />

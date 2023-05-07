@@ -10,7 +10,7 @@ interface DataType {
   name: string;
   age: number;
   address: string;
-  tags: string[];
+  tag: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -34,21 +34,15 @@ const columns: ColumnsType<DataType> = [
     title: "Tags",
     key: "tags",
     dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    render: (_, { tag }) => {
+      let color =
+        tag === "resume" ? "green" : tag === "interview" ? "blue" : "volcano";
+      return (
+        <Tag color={color} key={tag}>
+          {tag.toUpperCase()}
+        </Tag>
+      );
+    },
   },
   {
     title: "Action",
@@ -68,21 +62,21 @@ const dataset: DataType[] = [
     name: "John Brown",
     age: 32,
     address: "New York No. 1 Lake Park",
-    tags: ["resume"],
+    tag: "resume",
   },
   {
     key: "2",
     name: "Jim Green",
     age: 42,
     address: "London No. 1 Lake Park",
-    tags: ["interview"],
+    tag: "interview",
   },
   {
     key: "3",
     name: "Joe Black",
     age: 32,
     address: "Sydney No. 1 Lake Park",
-    tags: ["accepted"],
+    tag: "accepted",
   },
 ];
 
@@ -104,7 +98,15 @@ export const ApplicantTable: React.FC = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => values.map(value => item.tags.includes(value))));
+    setData(
+      dataset.filter((item) => {
+        if (!item.tag || values.length == 0) return false;
+        for (let i = 0; i < values.length; i++) {
+          if (values[i]?.label === item.tag) return true;
+        }
+        return false;
+      })
+    );
   };
 
   return (
@@ -115,12 +117,13 @@ export const ApplicantTable: React.FC = () => {
             onSearch={(value: any) => {
               handleFilterName(value);
             }}
+            // options={dataset.map((item) => item.name)}
           />
         </div>
         <div className="applicant-filter-type">
           <ApplicantTypeFilter
-            onSearch={(value: any) => {
-              handleFilterType(value);
+            onSearch={(_x: any, values: any) => {
+              handleFilterType(values);
             }}
           />
         </div>
