@@ -3,6 +3,7 @@ import { FormInput } from "@styles/styled-components/styledForm";
 import { RootState } from "@redux/reducers";
 import { useSelector } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { Form } from "antd";
 
 interface IBasicInfoForm {
   onSubmit: (
@@ -83,8 +84,7 @@ export const BasicInfoForm: React.FC = ({ onSubmit, isLoading}: IBasicInfoForm) 
   };
 
   return (
-    <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <div className="form-input">
             <label>
@@ -189,7 +189,6 @@ export const BasicInfoForm: React.FC = ({ onSubmit, isLoading}: IBasicInfoForm) 
           />
           {/* <SubmitButton type="submit">Xác nhận</SubmitButton> */}
         </div>
-      </form>
-    </div>
+      </Form>
   );
 };

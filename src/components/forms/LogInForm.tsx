@@ -46,9 +46,6 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
               required
               className="form-email"
               placeholder={state.email}
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
               onChange={handleEmailChange}
             />
           </Form.Item>
