@@ -3,10 +3,9 @@ import { Select, Tag } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 const options = [
-  { value: "gold" },
-  { value: "lime" },
-  { value: "green" },
-  { value: "cyan" },
+  { label: "resume", value: "red"},
+  { label: "interview", value: "blue" },
+  { label: "accepted", value: "green" },
 ];
 
 const tagRender = (props: CustomTagProps) => {
@@ -28,13 +27,14 @@ const tagRender = (props: CustomTagProps) => {
   );
 };
 
-const ApplicantTypeFilter: React.FC = ({ ...props }) => (
+const ApplicantTypeFilter: React.FC = ({onSearch, ...props }) => (
   <div {...props}>
     <Select
       mode="multiple"
       showArrow
+      onChange={onSearch}
       tagRender={tagRender}
-      defaultValue={["gold", "cyan"]}
+      // defaultValue={["gold", "cyan"]}
       options={options}
       className="filter-applicant"
     />

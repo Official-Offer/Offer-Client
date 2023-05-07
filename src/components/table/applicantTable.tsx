@@ -62,39 +62,67 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
+const dataset: DataType[] = [
   {
     key: "1",
     name: "John Brown",
     age: 32,
     address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
+    tags: ["resume"],
   },
   {
     key: "2",
     name: "Jim Green",
     age: 42,
     address: "London No. 1 Lake Park",
-    tags: ["loser"],
+    tags: ["interview"],
   },
   {
     key: "3",
     name: "Joe Black",
     age: 32,
     address: "Sydney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
+    tags: ["accepted"],
   },
 ];
 
 export const ApplicantTable: React.FC = () => {
+  const [data, setData] = React.useState<DataType[]>(dataset);
+
+  const handleFilterName = (value: string) => {
+    console.log(value);
+    if (!value) {
+      setData(dataset);
+      return;
+    }
+    setData(dataset.filter((item) => item.name == value));
+  };
+
+  const handleFilterType = (values: string[]) => {
+    console.log(values);
+    if (values.length == 0) {
+      setData(dataset);
+      return;
+    }
+    setData(dataset.filter((item) => values.map(value => item.tags.includes(value))));
+  };
+
   return (
     <div>
       <div className="applicant-filter">
-        <div className="applicant-filter-item">
-          <ApplicantNameSearch onSearch={() => {}} />
+        <div className="applicant-filter-name">
+          <ApplicantNameSearch
+            onSearch={(value: any) => {
+              handleFilterName(value);
+            }}
+          />
         </div>
-        <div className="applicant-filter-item">
-          <ApplicantTypeFilter />
+        <div className="applicant-filter-type">
+          <ApplicantTypeFilter
+            onSearch={(value: any) => {
+              handleFilterType(value);
+            }}
+          />
         </div>
       </div>
       <Table columns={columns} dataSource={data} />

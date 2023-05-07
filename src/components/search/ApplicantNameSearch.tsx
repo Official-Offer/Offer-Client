@@ -7,23 +7,15 @@ interface IApplicant {
 }
 
 export const ApplicantNameSearch: React.FC = ({ onSearch, isLoading }: IApplicant) => {
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const handleSearch = (value: string) => {
-    console.log("search:", value);
-    onSearch(value);
-  };
-
+  
   return (
     <Select
       className="filter-name"
       showSearch
       placeholder="Tìm ứng viên"
       optionFilterProp="children"
-      onChange={onChange}
-      onSearch={handleSearch}
+      onChange={onSearch}
+      // onSearch={handleSearch}
       filterOption={(input, option) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
