@@ -1,8 +1,11 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import {
   AppstoreOutlined,
   BarChartOutlined,
   CloudOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  ScheduleOutlined,
   ShopOutlined,
   TeamOutlined,
   UploadOutlined,
@@ -10,30 +13,52 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, theme } from "antd";
 import router, { useRouter } from "next/router";
-// import VerticalNav from '@components/navbar/VerticalNav';
+import Link from "next/link";
 
-const { Header, Content, Footer, Sider } = Layout;
-
-const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Sự kiện"];
-const path = ["/recruiter", "/jobs", "/applicants", "/events"];
-const items: MenuProps["items"] = [
-  BarChartOutlined,
-  UserOutlined,
-  UploadOutlined,
-  TeamOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: titles[index],
-  onClick: () => {
-    router.push(`/recruiter/${path[index]}`);
-  }
-}));
+const { Sider } = Layout;
 
 export const VerticalNav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
+  const [selectedKey, setSelectedKey] = useState<string>("");
+  const [collapsed, setCollapsed] = useState(false);
+  const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
+  const path = ["/", "/jobs", "/applicants", "schools", "/events"];
+
+  const items: MenuProps["items"] = [
+    BarChartOutlined,
+    UserOutlined,
+    UploadOutlined,
+    ScheduleOutlined,
+    TeamOutlined,
+  ].map((icon, index) => ({
+    key: path[index],
+    icon: React.createElement(icon),
+    label: titles[index],
+    onClick: (e) => {
+      setSelectedKey(path[index]);
+      router.push(`/recruiter/${path[index]}`);
+      //   setSelectedKey([String(index + 1)]);
+    },
+    children:
+      index == 1
+        ? [
+            { label: "Đã duyệt", icon: React.createElement(icon), key: "" },
+            { label: "Chưa duyệt", icon: React.createElement(icon), key: "" },
+          ]
+        : index == 2
+        ? [
+            { label: "CV", icon: React.createElement(icon), key: "" },
+            { label: "Phỏng vấn", icon: React.createElement(icon), key: "" },
+            { label: "Đã tuyển", icon: React.createElement(icon), key: "" },
+          ]
+        : undefined,
+  }));
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   if (
     router.pathname.includes("recruiter") ||
@@ -41,31 +66,20 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
   ) {
     return (
       <Layout hasSider>
-        <Sider
-          style={{
-            overflow: "auto",
-            height: "100vh",
-            position: "fixed",
-            left: 0,
-            top: 0,
-            bottom: 0,
-          }}
-        >
-          <div
-            style={{
-              height: 32,
-              margin: 25,
-              background: "rgba(255, 255, 255, 0.2)",
-            }}
-          />
+        <Sider className="recruiter-sider">
+          <div className="recruiter-sider-logo">Home</div>
           <Menu
-            theme="dark"
+            defaultSelectedKeys={["1"]}
+            defaultOpenKeys={["sub1"]}
+            // key={selectedKey}
+            selectedKeys={[selectedKey]}
             mode="inline"
-            defaultSelectedKeys={["4"]}
+            theme="dark"
+            inlineCollapsed={collapsed}
             items={items}
           />
         </Sider>
-        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <Layout className="layout-with-sider">
           <div>{props.children}</div>
         </Layout>
       </Layout>
@@ -73,5 +87,3 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
   }
   return <div>{props.children}</div>;
 };
-
-// export default VerticalNav;

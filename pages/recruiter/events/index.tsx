@@ -8,11 +8,11 @@ const Events: NextPage = () => {
   ) as any;
 
   return (
-    <div className = "applicant">
-      <h1 className="applicant-title">Sự kiện</h1>
-      <div className="filter-applicant"></div>
+    <div className="applicant">
+      <h1 className="applicant-title">Ứng viên</h1>
+      <div className="applicant-filter"></div>
       <div className = "applicant-table">
-      <ApplicantTable />
+        <ApplicantTable />
       </div>
     </div>
   );
