@@ -11,12 +11,12 @@ import {
   getStudentDetails,
   getStudentEducations,
   editStudentEducation,
-  addStudentEducations,
-  deleteStudentEducations,
+  addStudentEducation,
+  deleteStudentEducation,
   getStudentExperiences,
   editStudentExperience,
-  addStudentExperiences,
-  deleteStudentExperiences,
+  addStudentExperience,
+  deleteStudentExperience,
 } from "@services/apiStudent";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
@@ -167,18 +167,18 @@ const StudentProfile: NextPage = () => {
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
           getFunction={getStudentEducations}
-          addFunction={addStudentEducations}
+          addFunction={addStudentEducation}
           editFunction={editStudentEducation}
-          deleteFunction={deleteStudentEducations}
+          deleteFunction={deleteStudentEducation}
           dataFunction={getSchoolList}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
           getFunction={getStudentExperiences}
-          addFunction={addStudentExperiences}
+          addFunction={addStudentExperience}
           editFunction={editStudentExperience}
-          deleteFunction={deleteStudentExperiences}
+          deleteFunction={deleteStudentExperience}
           dataFunction={getCompanyList}
         />
       </section>

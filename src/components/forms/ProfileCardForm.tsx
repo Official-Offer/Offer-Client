@@ -33,6 +33,7 @@ interface ProfileCardFormProps {
   fieldItems?: Record<string, unknown>,
   postFunction: (input: Record<string, unknown>) => void,
   deleteFunction: (input: Record<string, unknown>) => void,
+  refetchFunction: () => void,
   dataArr: Record<string, unknown>[],
 };
 
@@ -42,18 +43,29 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   const [form] = Form.useForm();
 
   const postMutation = useMutation({
-    mutationFn: (input) => props.postFunction(input),
-    onSuccess: (data) => console.log("POST Success", data),
+    mutationFn: (input) => props.isAdd ? props.postFunction(input) : props.postFunction(props.fieldItems.id, input),
+    onMutate: () => {
+      setModalLoading(true);
+    },
+    onSuccess: (data) => {
+      setModalLoading(false);
+      props.refetchFunction();
+      handleCancel();
+    },
     onError: (err) => console.log(`Submit Error: ${err}`)
   });
 
   const deleteMutation = useMutation({
     mutationFn: () => props.deleteFunction(props.fieldItems?.id),
-    onSuccess: (data) => console.log("DELETE Success", data),
+    onSuccess: (data) => {
+      props.refetchFunction();
+      handleCancel();
+    },
     onError: (err) => console.log(`Delete Error: ${err}`)
   })
 
   // States
+  const [modalLoading, setModalLoading] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [isCurrent, setIsCurrent] = useState<boolean>(false);
   const [dates, setDates] = useState<Record<string, Moment>>({
@@ -85,7 +97,11 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     return `${year}-${month}-${day}`;
   };
 
-  const handleCancel = () => props.closeForm();
+  const handleCancel = () => {
+    setAreValidDates(true);
+    form.resetFields();
+    props.closeForm();
+  }
 
   const handleDelete = () => {
     Modal.confirm({
@@ -105,8 +121,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       .then((formData) => {
         formData.start_date = moment(formData.start_date).format("YYYY-MM-DD");
         formData.end_date = moment(formData.start_date).format("YYYY-MM-DD");
-        console.log(formData);
-        // postMutation.mutate(formData);
+        postMutation.mutate(formData);
       })
       .catch((err) => console.log("Form Error: ", err))
   );
@@ -128,11 +143,11 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         showSearch
         optionFilterProp="label"
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
-        loading={optionArr === undefined}
+        loading={props.dataArr === undefined}
         options={
-          optionArr?.map((dataItem) => ({
+          (optionArr ?? ['1']).map((dataItem) => ({
             value: name === props.fieldItemProps.dataIDLabel ? dataItem.id : dataItem,
-            label: name === props.fieldItemProps.dataIDLabel ? dataItem.name : dataItem
+            label: name === props.fieldItemProps.dataIDLabel ? dataItem.name : dataItem,
           }))
         }
       />
@@ -191,7 +206,6 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       className="main-panel-form"
       title={(props.isAdd ? "Thêm " :"Chỉnh Sửa ") + props.fieldTitle}
       centered
-      destroyOnClose
       open={props.open}
       onOk={handleOk}
       onCancel={handleCancel}
@@ -211,16 +225,16 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         <Button onClick={handleCancel}>
           Bỏ qua
         </Button>,
-        <Button type="primary" onClick={handleOk}>
+        <Button type="primary" loading={modalLoading} onClick={handleOk}>
           {props.isAdd ? "Thêm" : "Lưu"}
         </Button>
       ]}
     >
       <Form
         form={form}
-        preserve={false}
         name="profileForm"
         layout="vertical"
+        disabled={postMutation.isLoading}
         initialValues={
           !props.isAdd && props.fieldItems
         }
