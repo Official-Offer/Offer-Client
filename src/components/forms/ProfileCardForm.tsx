@@ -67,11 +67,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   // States
   const [modalLoading, setModalLoading] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-  const [isCurrent, setIsCurrent] = useState<boolean>(false);
-  const [dates, setDates] = useState<Record<string, Moment>>({
-    "start_date": null,
-    "end_date": null
-  });
+  const [isCurrent, setIsCurrent] = useState<boolean>(!props.isAdd && props.fieldItems?.is_current);
   const [areValidDates, setAreValidDates] = useState<boolean>(true);
 
   // Functions
@@ -83,11 +79,12 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     return isLowerCase ? label?.toLowerCase() : label;
   };
 
-  const validateDates = (date: Date, itemName: string): void => {
-    dates[itemName] = date;
-    setDates(dates);
-    const areValid = dates?.start_date < dates?.end_date;
-    setAreValidDates(areValid);
+  const validateDates = () => {
+    const startDate = form.getFieldValue("start_date");
+    const endDate = form.getFieldValue("end_date");
+    if (startDate && endDate) {
+      setAreValidDates(startDate <= endDate);
+    }
   }
 
   const parseDate = (date: Date): string => {
@@ -98,6 +95,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   };
 
   const handleCancel = () => {
+    setIsCurrent(!props.isAdd && props.fieldItems?.is_current);
     setAreValidDates(true);
     form.resetFields();
     props.closeForm();
@@ -284,7 +282,15 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           valuePropName="checked"
         >
           <Checkbox
-            onChange={(event) => setIsCurrent(event.target.checked)}
+            onChange={(event) => {
+              setIsCurrent(event.target.checked);
+              if (props.fieldItemProps.disableEndDate && event.target.checked) {
+                setAreValidDates(true);
+              }
+              else {
+                validateDates();
+              }
+            }}
           >
             {getLabel("is_current", false)}
           </Checkbox>
@@ -294,7 +300,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           label={getLabel("start_date", false)}
           validateStatus={!areValidDates && "error"}
         >
-          <DatePicker format="DD/MM/YYYY" onChange={(date) => validateDates(date?._d, "start_date")}/>
+          <DatePicker format="DD/MM/YYYY" onChange={validateDates}/>
         </Form.Item>
         <Form.Item
           name="end_date"
@@ -303,7 +309,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           help={!areValidDates && `Xin hãy nhập đúng hai ngày (${getLabel("start_date", false)} trước ${getLabel("end_date", false).toLowerCase()})`}
           hidden={props.fieldItemProps.disableEndDate && isCurrent}
         >
-          <DatePicker format="DD/MM/YYYY" onChange={(date) => validateDates(date?._d, "end_date")}/>
+          <DatePicker format="DD/MM/YYYY" onChange={validateDates}/>
         </Form.Item>
         <Form.Item
           name="description"
