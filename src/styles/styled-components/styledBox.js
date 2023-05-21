@@ -154,7 +154,21 @@ export const MessageBox = styled.div`
   }
 `;
 
-export const ResumeCard = styled.div`
-  border: dashed black 1px;
-  border-radius: 10px;
+export const StyledResumeCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 320px;
+  height: 320px;
+  padding: 16px;
+  color: white;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #313C49 100%);
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 40px;
+  }
 `;
