@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import {
   AppstoreOutlined,
   BarChartOutlined,
@@ -21,11 +21,12 @@ const { Sider } = Layout;
 
 export const VerticalNav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
-  const [selectedKey, setSelectedKey] = useState<string>("");
+  // const [selectedKey, setSelectedKey] = useState("/recruiter");
+  // const selectedRef = useRef("1");
   const [collapsed, setCollapsed] = useState(false);
   const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
-  const path = ["/", "/jobs", "/applicants", "schools", "/events"];
-
+  const path = ["", "/jobs", "/applicants", "/schools", "/events"];
+  // console.log(router.pathname);
   const items: MenuProps["items"] = [
     BarChartOutlined,
     UserOutlined,
@@ -33,25 +34,50 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
     ScheduleOutlined,
     TeamOutlined,
   ].map((icon, index) => ({
-    key: path[index],
+    key: `/recruiter${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      setSelectedKey(path[index]);
-      router.push(`/recruiter/${path[index]}`);
-      //   setSelectedKey([String(index + 1)]);
+      if (index != 1 && index != 2) router.push(`/recruiter${path[index]}`);
     },
     children:
       index == 1
         ? [
-            { label: "Đã duyệt", icon: React.createElement(icon), key: "" },
-            { label: "Chưa duyệt", icon: React.createElement(icon), key: "" },
+            {
+              label: "Đã duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/recruiter${path[index]}/verified`);
+              },
+              key: `/recruiter${path[index]}/verified`,
+            },
+            {
+              label: "Chưa duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/recruiter${path[index]}/unverified`);
+              },
+              key: `/recruiter${path[index]}/unverified`,
+            },
           ]
         : index == 2
         ? [
-            { label: "CV", icon: React.createElement(icon), key: "" },
-            { label: "Phỏng vấn", icon: React.createElement(icon), key: "" },
-            { label: "Đã tuyển", icon: React.createElement(icon), key: "" },
+            {
+              label: "Vòng đơn",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/recruiter${path[index]}/resume`);
+              },
+              key: `/recruiter${path[index]}/resume`,
+            },
+            {
+              label: "Vòng phỏng vấn",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/recruiter${path[index]}/interview`);
+              },
+              key: `/recruiter${path[index]}/interview`,
+            },
           ]
         : undefined,
   }));
@@ -59,6 +85,8 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+
+  console.log(router.pathname);
 
   if (
     router.pathname.includes("recruiter") ||
@@ -69,10 +97,15 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
         <Sider className="recruiter-sider">
           <div className="recruiter-sider-logo">Home</div>
           <Menu
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
-            // key={selectedKey}
-            selectedKeys={[selectedKey]}
+            defaultSelectedKeys={["/recruiter"]}
+            defaultOpenKeys={[router.pathname.includes("jobs")? "/recruiter/jobs" : "/recruiter/applicants"]}
+            selectedKeys={[router.pathname]}
+            // openKeys={["/recruiter/jobs"]}
+            // onClick={(e) => {
+            //   selectedKey != e.key && setSelectedKey(e.key);
+            //   selectedRef.current = e.key;
+            //   // router.push(`/recruiter/${path[Number(e.key)]}`)
+            // }}
             mode="inline"
             theme="dark"
             inlineCollapsed={collapsed}
