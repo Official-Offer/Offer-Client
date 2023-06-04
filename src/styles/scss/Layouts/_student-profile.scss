@@ -83,7 +83,6 @@
 
   &-info {
     display: flex;
-    align-items: center;
     gap: 24px;
     
     &-logo {
@@ -98,6 +97,9 @@
 
     &-center {
       flex: 2;
+      &-description {
+        padding-top: 4px;
+      }
     }
   }
 

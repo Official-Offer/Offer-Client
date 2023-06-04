@@ -54,17 +54,17 @@ export const getStudentEducations = async () => {
 };
 
 export const editStudentEducation = async (id: number, input: Record<string, unknown>) => {
-  const response = await request.put(`/students/educations/${id}`, input);
+  const response = await request.put(`/students/educations/${id}/`, input);
   return response.data;
 };
 
-export const addStudentEducations = async (input: Record<string, unknown>) => {
+export const addStudentEducation = async (input: Record<string, unknown>) => {
   const response = await request.post(`/students/educations/`, input);
   return response.data;
 };
 
-export const deleteStudentEducations = async (id: number) => {
-  const response = await request.delete(`/students/educations/${id}`);
+export const deleteStudentEducation = async (id: number) => {
+  const response = await request.delete(`/students/educations/${id}/`);
   return response.data;
 };
 
@@ -80,16 +80,17 @@ export const getStudentExperiences = async () => {
 }
 
 export const editStudentExperience = async (id: number, input: Record<string, unknown>) => {
-  const response = await request.put(`/students/experiences/${id}`, input);
+  const response = await request.put(`/students/experiences/${id}/`, input);
   return response.data;
 }
 
-export const addStudentExperiences = async (input: Record<string, unknown>) => {
+export const addStudentExperience = async (input: Record<string, unknown>) => {
   const response = await request.post(`/students/experiences/`, input);
   return response.data;
 }
 
-export const deleteStudentExperiences = async (id: number) => {
-  const response = await request.delete(`/students/experiences/${id}`);
+export const deleteStudentExperience = async (id: number) => {
+  console.log(id, `/students/experiences/${id}/`);
+  const response = await request.delete(`/students/experiences/${id}/`);
   return response.data;
 }

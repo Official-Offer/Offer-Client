@@ -33,11 +33,12 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
   const [dataArr, setDataArr] = useState<Record<string, unknown>[]>();
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(queryItemList?.map(() => false));
+  const [showRefetching, setShowRefetching] = useState<boolean>(false);
 
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
-  const getItems = useQuery({
+  const itemsQuery = useQuery({
     queryKey: fieldTitle,
     queryFn: getFunction,
     onSuccess: (res) => (
@@ -71,11 +72,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       setOpenEditFormArr(queryItemList?.map(() => false));
     }
   }
+
+  const handleRefetch = () => {
+    setShowRefetching(true);
+    itemsQuery.refetch().then(() => setShowRefetching(false));
+  };
   
   return (
     <AntdCard
       className="main-panel-card"
-      loading={getItems.isLoading}
+      loading={itemsQuery.isLoading || (showRefetching && itemsQuery.isRefetching)}
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
@@ -94,72 +100,85 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
             fieldItemProps={fieldItemProps}
             fieldItems={queryItemList?.[0]}
             postFunction={addFunction}
+            refetchFunction={handleRefetch}
             dataArr={dataArr}
           />
         </div>
       }
     >
       <div className="main-panel-layout">
-        { getItems.isLoading ? <div>Đang tải...</div> : 
-          getItems.isError ? <div>Server hiện tại không đưa thông tin được.</div> :
+        { itemsQuery.isLoading ? <div>Đang tải...</div> : 
+          ((queryItemList === undefined) || itemsQuery.isError) ? <div>Server hiện tại không đưa thông tin được.</div> :
           (queryItemList.length === 0 
             ? <div>Xin hãy thêm thông tin vào đây.</div> 
-            : queryItemList.map((item, index) => {
-                return (
-                  <div>
-                    {index !== 0 && <Divider/>}
-                    {/* Popup adding form */}
-                    <ProfileCardForm
-                      open={openEditFormArr?.[index]}
-                      closeForm={() => setOpenEditForm(false)}
-                      isAdd={false}
-                      fieldTitle={fieldTitle}
-                      fieldItemProps={fieldItemProps}
-                      fieldItems={queryItemList[index]}
-                      postFunction={addFunction}
-                      deleteFunction={deleteFunction}
-                      dataArr={dataArr}
-                    />
-                    <div className="main-panel-info">
-                      <div className="main-panel-info-logo">
-                        <img src={logoURL}/>
-                      </div>
-                      <div className="main-panel-info-center">
-                        <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
-                        {
-                          item.start_date.length !== 0 && (
-                            <div>
-                              <span>{
-                                moment(item.start_date).format("MM/YYYY") + 
-                                " - " + 
-                                (item.is_current ? "Hiện tại" : moment(item.end_date).format("MM/YYYY"))
-                              }</span>
-                            </div>
-                          )
-                        }
-                        {
-                          fieldItemProps.layout.map((apiName) => (
-                            <div>
-                              <b>{fieldItemProps.APIToLabel[apiName]}</b>
-                              <span>{": " + item[apiName]}</span>
-                            </div>
-                          ))
-                        }
-                      </div>
-                      <div>
-                        <Button 
-                          className="icon-btn" 
-                          type="text" 
-                          icon={<EditOutlined />}
-                          onClick={() => setOpenEditForm(index)}
-                        />
+            : queryItemList
+                .sort((item1, item2) => {
+                  // Sorting items by their dates
+                  if (item1.is_current && !item2.is_current) return -1;
+                  if (!item1.is_current && item2.is_current) return 1;
+                  if (!item1.is_current && !item2.is_current) return (item2.end_date?.valueOf() ?? 0) - (item1.end_date?.valueOf() ?? 0);
+                  return (item2.start_date?.valueOf() ?? 0) - (item1.start_date?.valueOf() ?? 0);
+                })
+                .map((item, index) => {
+                  return (
+                    <div>
+                      {index !== 0 && <Divider/>}
+                      {/* Popup adding form */}
+                      <ProfileCardForm
+                        open={openEditFormArr?.[index]}
+                        closeForm={() => setOpenEditForm(false)}
+                        isAdd={false}
+                        fieldTitle={fieldTitle}
+                        fieldItemProps={fieldItemProps}
+                        fieldItems={queryItemList[index]}
+                        postFunction={editFunction}
+                        deleteFunction={deleteFunction}
+                        refetchFunction={handleRefetch}
+                        dataArr={dataArr}
+                      />
+                      <div className="main-panel-info">
+                        <div className="main-panel-info-logo">
+                          <img src={logoURL}/>
+                        </div>
+                        <div className="main-panel-info-center">
+                          <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
+                          {
+                            item.start_date.length !== 0 && (
+                              <div>
+                                <span>{
+                                  moment(item.start_date).format("MM/YYYY") + 
+                                  " - " + 
+                                  (item.is_current ? "Hiện tại" : moment(item.end_date).format("MM/YYYY"))
+                                }</span>
+                              </div>
+                            )
+                          }
+                          {
+                            fieldItemProps.layout.map((apiName) => (
+                              <div>
+                                <b>{fieldItemProps.APIToLabel[apiName]}</b>
+                                <span>{": " + item[apiName]}</span>
+                              </div>
+                            ))
+                          }
+                          <div className="main-panel-info-center-description">
+                            {item.description}  
+                          </div>
+                        </div>
+                        <div>
+                          <Button 
+                            className="icon-btn" 
+                            type="text" 
+                            icon={<EditOutlined />}
+                            onClick={() => setOpenEditForm(index)}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              }
+                  );
+                }
+              )
             )
-          )
         }
       </div>
     </AntdCard>
