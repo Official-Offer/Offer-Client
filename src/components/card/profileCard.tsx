@@ -117,8 +117,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
                       fieldItemProps={fieldItemProps}
                       fieldItems={queryItemList[index]}
                       postFunction={addFunction}
+                      deleteFunction={deleteFunction}
                       dataArr={dataArr}
-                      index={index}
                     />
                     <div className="main-panel-info">
                       <div className="main-panel-info-logo">

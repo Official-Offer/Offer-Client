@@ -63,8 +63,8 @@ export const addStudentEducations = async (input: Record<string, unknown>) => {
   return response.data;
 };
 
-export const deleteStudentEducations = async (input: Record<string, unknown>) => {
-  const response = await request.delete(`/students/educations/`, input);
+export const deleteStudentEducations = async (id: number) => {
+  const response = await request.delete(`/students/educations/${id}`);
   return response.data;
 };
 
@@ -89,7 +89,7 @@ export const addStudentExperiences = async (input: Record<string, unknown>) => {
   return response.data;
 }
 
-export const deleteStudentExperiences = async (input: Record<string, unknown>) => {
-  const response = await request.delete(`/students/experiences/`, input);
+export const deleteStudentExperiences = async (id: number) => {
+  const response = await request.delete(`/students/experiences/${id}`);
   return response.data;
 }
