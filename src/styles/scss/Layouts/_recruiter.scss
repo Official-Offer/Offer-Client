@@ -1,0 +1,13 @@
+.recruiter-sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  &-logo {
+    height: 35;
+    margin: 25px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
