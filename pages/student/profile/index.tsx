@@ -123,19 +123,19 @@ const StudentProfile: NextPage = () => {
   });
   
   return (
-    <main className="student-profile">
-      <section className="sticky-panel sticky-panel-profile">
+    <main className="split-layout">
+      <section className="split-layout-sticky student-profile">
         <AntdCard
           loading={studentQuery.isLoading}
           cover={<img src={profile.cover}/>}
           children={
             <div>
-              <img className="sticky-panel-profile-avatar" src={profile.avatar} />
-              <div className="sticky-panel-profile-header">
+              <img className="student-profile-avatar" src={profile.avatar} />
+              <div className="student-profile-header">
                 <h2>{studentDetails?.name}</h2>
                 <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails.expected_graduation)).toDateString()}</span>
               </div>
-              <div className="sticky-panel-profile-info">
+              <div className="student-profile-info">
                 {
                   (studentDetails?.school?.length === 0) 
                   ? <h4>Trường không xác định</h4>
@@ -149,7 +149,7 @@ const StudentProfile: NextPage = () => {
           }
         />
       </section>
-      <section className="main-panel">
+      <section className="split-layout-main main-md">
         <ResumeCard />
         <ProfileCard
           fieldTitle="Giáo Dục"
@@ -170,12 +170,12 @@ const StudentProfile: NextPage = () => {
           dataFunction={getCompanyList}
         />
       </section>
-      <section className="sticky-panel sticky-panel-job">
-        <div className="sticky-panel-job-section">
+      <section className="split-layout-sticky student-job">
+        <div className="student-job-section">
           <Link href="/students/jobs">Jobs Applied</Link>
           <InfoCard info={info} />
         </div>
-        <div className="sticky-panel-job-section">
+        <div className="student-job-section">
           <Link href="/students/jobs">Jobs Saved</Link>
           <InfoCard info={info} />
         </div>

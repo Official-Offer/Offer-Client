@@ -35,7 +35,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(queryItemList?.map(() => false));
   const [showRefetching, setShowRefetching] = useState<boolean>(false);
 
-  // Hooks
+  // Queries
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
   const itemsQuery = useQuery({

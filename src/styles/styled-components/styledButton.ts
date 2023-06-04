@@ -81,14 +81,19 @@ export const FileAddButton = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+
   height: 32px;
+  max-width: 200px;
+
   background-color: #d30b81;
   color: white;
   border: none;
   border-radius: 20px;
   padding: 4px 16px;
+
   font-size: 14px;
   font-weight: 600;
+  text-overflow: ellipsis;
   cursor: pointer;
   transition: background-color 0.3s ease;
   &:hover {
@@ -106,10 +111,10 @@ export const FileAddButton = styled.div`
 `
 
 export const FileUploadButton = styled.button`
-height: 32px;
-background-color: #7277F1;
-color: white;
-border: none;
+  height: 32px;
+  background-color: #7277F1;
+  color: white;
+  border: none;
   border-radius: 20px;
   padding: 4px 16px;
   font-size: 14px;

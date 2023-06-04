@@ -91,13 +91,13 @@ export const ResumeCard: React.FC = () => {
             <div className="file-btn">
               <input type="file" id="file-input" onChange={selectResume} />
               <label htmlFor="file-input">
-                <FileAddButton>
+                <FileAddButton disabled={uploadMutation.isLoading}>
                   <span>{selectedFile?.name ?? "Chọn CV"}</span>
                   <span><PlusOutlined /></span>
                 </FileAddButton>
               </label>
             </div>
-            <FileUploadButton disabled={uploadMutation.isLoading} onClick={!uploadMutation.isLoading && handleUpload}>
+            <FileUploadButton disabled={uploadMutation.isLoading} onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}>
               {
                 uploadMutation.isLoading ? (
                   <div className="btn-body">

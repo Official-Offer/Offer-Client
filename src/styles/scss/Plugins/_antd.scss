@@ -18,8 +18,13 @@
 }
 
 .ant-btn {
-  &-text:focus {
-    background: transparent !important;
+  &-text {
+    &:hover {
+      background: #DDDDDD;
+    }
+    &:focus {
+      background: transparent !important;
+    }
   }
 }
 

@@ -244,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 <Link href="/student/profile">Hồ Sơ Người Dùng</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Đã Lưu</Link>
+                <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
               </Menu.Item>
               <Menu.Item>
                 <Link href="/student/profile">Công Việc Đã Ứng Tuyển</Link>
