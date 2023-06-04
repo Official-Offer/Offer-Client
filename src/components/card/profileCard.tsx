@@ -88,8 +88,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
           <Button 
             className="icon-btn" 
             type="text" 
-            icon={<PlusOutlined />} 
-            onClick={() => setOpenAddForm(true)} 
+            icon={<PlusOutlined />}
+            onClick={() => setOpenAddForm(true)}
           />
           {/* Popup adding form */}
           <ProfileCardForm

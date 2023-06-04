@@ -1,3 +1,13 @@
+.btn-list-horizontal {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  &-expand {
+    flex: 2
+  }
+}
+
 .scroll-btn {
   position: absolute;
   z-index: 2;
@@ -37,9 +47,11 @@
     color: white;
   }
 }
+
 .btn {
   margin: 10px 10px 10px 0;
 }
+
 .icon-btn {
   width: 42px;
   height: 42px;
@@ -78,3 +90,9 @@
   }
 }
 // }
+
+.file-btn {
+  input {
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { Card as AntdCard, Button } from "antd";
 import { Card } from "./index";
@@ -15,7 +15,6 @@ type EventCardProps = {
 };
 
 export const EventCard: React.FC<EventCardProps> = ({ info, ...rest }) => {
-  const cardTrayRef = useRef(null);
   const { Meta } = AntdCard;
 
   return (

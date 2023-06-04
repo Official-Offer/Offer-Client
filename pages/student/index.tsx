@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard, InfoCard } from "@components/card";
-import { CardTray } from "@components";
+import { CardTray } from "@components/list";
 import { getStudentDetails } from "services/apiStudent";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";

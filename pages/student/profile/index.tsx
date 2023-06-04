@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
-import { InfoCard, ProfileCard } from "@components/card";
-import { CardTray, ResumePanel } from "@components";
+import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
+import { CardTray } from "@components/list";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { 
   getStudentDetails,
@@ -150,19 +150,7 @@ const StudentProfile: NextPage = () => {
         />
       </section>
       <section className="main-panel">
-        <AntdCard
-          className="main-panel-card"
-          title={
-            <div className="main-panel-header">
-              <h2>CV</h2>
-            </div>
-          }
-          children={
-            <div>
-              <ResumePanel />
-            </div>
-          }
-        />
+        <ResumeCard />
         <ProfileCard
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}

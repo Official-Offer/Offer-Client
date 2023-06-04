@@ -5,8 +5,6 @@ export { Main } from "./main";
 export { Button } from "./button";
 export { Card } from "./card";
 export { CardsGrid } from "./cardsGrid";
-export { CardTray } from "./cardTray";
-export { ResumePanel } from "./resumePanel";
 export { Footer } from "./footer";
 export { ApplicantTable } from "./table/ApplicantTable";
 export { SearchBar } from "./search";
