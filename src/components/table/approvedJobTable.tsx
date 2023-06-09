@@ -128,7 +128,7 @@ export const ApplicantTable: React.FC = () => {
           />
         </div>
       </div>
-      <Table className="table-applicant" columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 };

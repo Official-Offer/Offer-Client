@@ -1,0 +1,13 @@
+.table {
+    // padding: 20px;
+    &-applicant {
+        .ant-table-content {
+            border-radius: 50%;
+            // background-color: rgb(127, 127, 127);
+            // color: rgb(127, 127, 127);
+           }
+        // padding: 30px;
+        border-radius: 50%;
+        // background-color: white;
+    }
+}

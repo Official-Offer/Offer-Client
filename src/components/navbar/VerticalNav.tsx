@@ -100,14 +100,8 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
             defaultSelectedKeys={["/recruiter"]}
             defaultOpenKeys={[router.pathname.includes("jobs")? "/recruiter/jobs" : "/recruiter/applicants"]}
             selectedKeys={[router.pathname]}
-            // openKeys={["/recruiter/jobs"]}
-            // onClick={(e) => {
-            //   selectedKey != e.key && setSelectedKey(e.key);
-            //   selectedRef.current = e.key;
-            //   // router.push(`/recruiter/${path[Number(e.key)]}`)
-            // }}
             mode="inline"
-            theme="dark"
+            // theme="dark"
             inlineCollapsed={collapsed}
             items={items}
           />

@@ -4,6 +4,8 @@ import type { ColumnsType } from "antd/es/table";
 import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
 import { SearchBar } from "../search";
 import { ApplicantNameSearch } from "@components/search/ApplicantNameSearch";
+import { useQuery } from "react-query";
+import { getJobList } from "@services/apiJob";
 
 interface DataType {
   key: string;
@@ -81,6 +83,15 @@ const dataset: DataType[] = [
 ];
 
 export const ApplicantTable: React.FC = () => {
+  const jobQuery = useQuery({
+    queryKey: "recruiter/unapproved-jobs",
+    queryFn: getJobList,
+    // onSuccess: (res) => setStudentDetails(res),
+    onError: (err) => console.log(`Error: ${err}`)
+  });
+
+  console.log(jobQuery)
+  
   const [data, setData] = React.useState<DataType[]>(dataset);
 
   const handleFilterName = (value: string) => {
@@ -128,7 +139,7 @@ export const ApplicantTable: React.FC = () => {
           />
         </div>
       </div>
-      <Table className="table-applicant" columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 };

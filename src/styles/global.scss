@@ -30,6 +30,7 @@ dialog {
 @import "./scss/Components/navbar";
 @import "./scss/Components/cover";
 @import "./scss/Components/filter";
+@import "./scss/Components/table";
 
 
 /* Helper */
@@ -47,7 +48,6 @@ dialog {
 @import "./scss/Layouts/email";
 @import "./scss/Layouts/student-profile";
 @import "./scss/Layouts/register";
-@import "./scss/Components/forms";
 @import "./scss/Layouts/student_job_portal";
 a {
     text-decoration: none;
