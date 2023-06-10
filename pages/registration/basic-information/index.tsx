@@ -36,18 +36,18 @@ const RegisterBasicInfo: NextPage = () => {
         <div className="register-content-form">
           <h1>Xác nhận thông tin cơ bản</h1>
           <BasicInfoForm
-            onSubmit={(first_name: string, last_name: string, expected_graduation: string, phone_number: string, major: string, roles: string, is_reviewer: boolean): void => {
+            onSubmit={(first_name: string, last_name: string, phone_number: string, major: string, roles: string): void => {
               state.role.isStudent ? mutation.mutate({
                 first_name,
                 last_name,
                 phone_number,
-                expected_graduation,
+                // expected_graduation,
                 major,
               }): mutation.mutate({
                 first_name,
                 last_name,
                 phone_number,
-                is_reviewer,
+                // is_reviewer,
                 roles
               })
               router.push("/student");

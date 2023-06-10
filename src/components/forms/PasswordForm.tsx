@@ -7,6 +7,8 @@ import { FormInput } from "@styles/styled-components/styledForm";
 // import { FootnoteForm } from "./FootnoteForm";
 // import Link from "next/link";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { Form, Input } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 interface IPasswordForm {
   onSubmit: (email: string) => void;
@@ -25,20 +27,16 @@ export const PasswordForm: React.FC = ({
     setLoading(isLoading);
   }, [errorMessage, isLoading]);
 
-  const handlePasswordChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
   };
 
-  const handleReenteredPasswordChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setReenteredPassword(event.target.value);
+  const handleReenteredPasswordChange = (value: string) => {
+    setReenteredPassword(value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    // event.preventDefault();
     // Passwords match, handle form submission here
     if (password !== reenteredPassword) {
       setErrorMessage("Passwords do not match. Please try again.");
@@ -48,49 +46,39 @@ export const PasswordForm: React.FC = ({
   };
 
   return (
-    <div>
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-flex">
-          <div className="form-input">
-            <label>
-              <b> Nhập mật khẩu cho lần đăng nhập sau * </b>
-            </label>
-            <FormInput
-              width="250px"
-              type="password"
-              id="password"
-              value={password}
+    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+      <div className="form-flex">
+        <div className="form-input">
+          <Form.Item label="Nhập mật khẩu cho lần đăng nhập sau">
+            <Input.Password
+              className="form-password"
+              placeholder="Mật khẩu"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
               onChange={handlePasswordChange}
-              required
             />
-          </div>
-          <div className="form-input">
-            <label>
-              <b> Nhập lại mật khẩu *</b>
-            </label>
-            <FormInput
-              width="250px"
-              type="password"
-              id="reentered-password"
-              value={reenteredPassword}
-              onChange={handleReenteredPasswordChange}
-              required
-            />
-          </div>
+          </Form.Item>
         </div>
-      </form>
-      {/* <SubmitButtonAntd
-        loading={isLoading}
-        style={{
-          color: "white",
-          backgroundColor: isLoading ? "#d30b81" : "#b40a6e",
-        }}
-        onClick={handleSubmit}
-      >
-        Đăng Ký
-      </SubmitButtonAntd> */}
-      <SubmitButton text="Đăng ký" isLoading={isLoading} onClick={handleSubmit}/>
-      {/* <SubmitButton disabled = {isLoading} type="submit" onClick={handleSubmit}>Tiếp tục</SubmitButton> */}
-    </div>
+        <div className="form-input">
+          <Form.Item label="Nhập lại mật khẩu">
+            <Input.Password
+              className="form-password"
+              placeholder="Nhập lại mật khẩu *"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={handlePasswordChange}
+            />
+          </Form.Item>
+        </div>
+        <SubmitButton
+          text="Đăng ký"
+          isLoading={isLoading}
+          onClick={handleSubmit}
+        />
+      </div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    </Form>
   );
 };
