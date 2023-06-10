@@ -233,7 +233,7 @@ export const StyledBookmarkedCard = styled.div`
       }
       
       .date-saved {
-        background-color: #F50A0A;
+        background-color: #F5510A;
         border-radius: 4px;
         padding: 2px;
       }
