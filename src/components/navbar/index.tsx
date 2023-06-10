@@ -28,6 +28,11 @@ const mesList = [{ seen: true }, { seen: false }, { seen: true }];
 
 export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const router = useRouter();
+  const path = router.pathname.includes("student")
+    ? "student"
+    : router.pathname.includes("recruiter")
+    ? "recruiter"
+    : "advisor";
   const searchBar = useRef();
   const [hideBar, setHideBar] = useState(true);
   const [hideMesPanel, setHideMesPanel] = useState(true);
@@ -49,26 +54,29 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     setHideMesPanel(true);
   };
 
-  const listMenu: MenuMiddleNav["items"] = [
-    {
-      name: "Công việc",
-      link: "/student/jobs",
-      newTab: false,
-      routeSelected: "/student/jobs",
-    },
-    {
-      name: "Sự kiện",
-      link: "/student/events",
-      newTab: false,
-      routeSelected: "/student/events",
-    },
-    {
-      name: "Dịch Vụ",
-      link: "/student/service",
-      newTab: false,
-      routeSelected: "/student/service",
-    },
-  ];
+  const listMenu: MenuMiddleNav["items"] =
+    router.pathname.includes("recruiter") || router.pathname.includes("advisor")
+      ? []
+      : [
+          {
+            name: "Công việc",
+            link: "/student/jobs",
+            newTab: false,
+            routeSelected: "/student/jobs",
+          },
+          {
+            name: "Sự kiện",
+            link: "/student/events",
+            newTab: false,
+            routeSelected: "/student/events",
+          },
+          {
+            name: "Dịch Vụ",
+            link: "/student/service",
+            newTab: false,
+            routeSelected: "/student/service",
+          },
+        ];
 
   return router.pathname.includes("registration") ||
     router.pathname.includes("email") ||
@@ -83,22 +91,27 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         mode="horizontal"
         className="navbar left-menu"
       >
-        <Menu.Item key={"/student/"} className="m-0">
-          {false ? (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="m-0"
-              href={"/student/"}
-            >
-              {"Home"}
-            </a>
-          ) : (
-            <Link href={"/student/"}>
-              <a className="m-0">{"Home"}</a>
-            </Link>
-          )}
-        </Menu.Item>
+        {router.pathname.includes("recruiter") ||
+        router.pathname.includes("advisor") ? (
+          <></>
+        ) : (
+          <Menu.Item key={"/student/"} className="m-0">
+            {false ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="m-0"
+                href={"/student/"}
+              >
+                {"Home"}
+              </a>
+            ) : (
+              <Link href={"/student/"}>
+                <a className="m-0">{"Home"}</a>
+              </Link>
+            )}
+          </Menu.Item>
+        )}
         <Input
           ref={searchBar}
           className={
@@ -241,23 +254,23 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           overlay={
             <Menu>
               <Menu.Item>
-                <Link href="/student/profile">Hồ Sơ Người Dùng</Link>
+                <Link href={`/${path}/profile`}>Hồ Sơ Người Dùng</Link>
               </Menu.Item>
               <Menu.Item>
                 <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Công Việc Đã Ứng Tuyển</Link>
+                <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
               </Menu.Item>
               <Menu.Divider />
               <Menu.Item>
-                <Link href="/student/profile">Cài Đặt</Link>
+                <Link href={`/${path}/profile`}>Cài Đặt</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Điều Khoản Sử Dụng</Link>
+                <Link href={`/${path}/profile`}>Điều Khoản Sử Dụng</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link href="/student/profile">Hỗ Trợ</Link>
+                <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
               </Menu.Item>
               <Menu.Item>
                 <div

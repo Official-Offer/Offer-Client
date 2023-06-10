@@ -4,8 +4,6 @@
   align-items: center;
   padding: 0 32px;
 
-  background-color: $grey-light-background;
-
   .main__content {
     padding: 0;
     max-width: 1464px;
@@ -28,4 +26,8 @@
       }
     }
   }
+}
+
+.layout-with-sider {
+  margin-left: 200px;
 }

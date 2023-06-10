@@ -99,6 +99,10 @@
       color: black;
       font-size: 1rem;
       font-weight: $fw-bold-0;
+
+      &:hover {
+        background-color: $grey-light;
+      }
     }
 
     &-item-divider {

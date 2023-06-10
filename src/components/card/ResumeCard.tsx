@@ -7,44 +7,35 @@ import { FileAddButton, FileDownloadButton, FileUploadButton } from "@styles/sty
 import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
 export const ResumeCard: React.FC = () => {
-  const [resumeFetch, setResumeFetch] = useState<boolean>(true); // For refetching the resume if there's any update
+  // States
   const [selectedFile, setSelectedFile] = useState<File>(null); // Holding the formData of the selected file before uploading
   const [uploadedFile, setUploadedFile] = useState<string>(null); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<number>(0); // For resetting the timer after each upload
 
-  const handleDownload = (data) => {
-    // Check if there is no file uploaded
-    if (!data?.endsWith("media/")) {
-      setUploadedFile(data);
-    }
-  };
-  
+  // Hooks
   const downloadQuery = useQuery({
-    queryFn: () => {
-      setResumeFetch(false);
-      return getStudentResume();
+    queryKey: "resumeDownload",
+    queryFn: getStudentResume,
+    onSuccess: (res) => {
+      if (!res?.endsWith("media/")) {
+        setUploadedFile(res);
+      }
     },
-    onSuccess: handleDownload,
     onError: (err) => console.log(`Download Error: ${err}`),
-    enabled: resumeFetch
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
   
-  const selectResume = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const uploadFile = async () => {
-    if (selectedFile) {
-      const resumeData = new FormData();
-      resumeData.append("resume", selectedFile);
-      return await updateStudentResume(resumeData);
-    }
-  };
-  
   const uploadMutation = useMutation({
-    mutationFn: uploadFile,
+    mutationFn: async () => {
+      if (selectedFile) {
+        const resumeData = new FormData();
+        resumeData.append("resume", selectedFile);
+        return await updateStudentResume(resumeData);
+      }
+    },
     onSuccess: () => {
-      setResumeFetch(true);
+      downloadQuery.refetch();
       if (resetTimer) clearTimeout(resetTimer);
       setResetTimer(setTimeout(() => {
         setSelectedFile(null);
@@ -52,20 +43,24 @@ export const ResumeCard: React.FC = () => {
     },
     onError: (err) => console.log(`Upload Error: ${err}`),
   });
+  
+  const deleteMutation = useMutation({
+    mutationFn: deleteStudentResume,
+    onSuccess: () => {
+      downloadQuery.refetch();
+    },
+    onError: (err) => console.log(`Delete Error: ${err}`),
+  });
 
+  // Functions  
+  const selectResume = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  
   const handleUpload = (event) => {
     event.preventDefault();
     uploadMutation.mutate();
   };
-
-  const deleteMutation = useMutation({
-    mutationFn: deleteStudentResume,
-    onSuccess: () => {
-      setResumeFetch(true);
-      handleDownload();
-    },
-    onError: (err) => console.log(`Delete Error: ${err}`),
-  });
 
   const handleDelete = () => {
     event.preventDefault();
@@ -83,7 +78,7 @@ export const ResumeCard: React.FC = () => {
   return (
     <AntdCard
       className="main-panel-card"
-      loading={downloadQuery.isLoading}
+      loading={downloadQuery.isLoading || downloadQuery.isRefetching}
       title={
         <div className="main-panel-header">
           <h2>CV</h2>

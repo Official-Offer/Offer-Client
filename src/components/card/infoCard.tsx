@@ -27,7 +27,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
             description={
               <div>
                 <span className="date-posted">{info?.time_published === undefined ? "Ngày không xác định" : (new Date(info.time_published)).toDateString()}</span>
-                <h4>{ info?.company || "Unknown Company Name" }</h4>
+                <h4>{ info?.company_name || "Unknown Company Name" }</h4>
                 <span>{ info?.job_type || "Not Specified Status"}{" | "}{ info?.location || "Unknown Location" }</span>
                 <div className="avatar-info-mini">
                   <div>

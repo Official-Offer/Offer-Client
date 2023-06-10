@@ -20,6 +20,8 @@ a {
 @import "./scss/Components/cards";
 @import "./scss/Components/navbar";
 @import "./scss/Components/cover";
+@import "./scss/Components/filter";
+
 
 /* Helper */
 @import "./scss/Helper/button";
@@ -30,6 +32,8 @@ a {
 
 /* Layouts */
 @import "./scss/Layouts/main-home";
+@import "./scss/Layouts/applicant";
+@import "./scss/Layouts/recruiter";
 @import "./scss/Layouts/login";
 @import "./scss/Layouts/email";
 @import "./scss/Layouts/student-profile";

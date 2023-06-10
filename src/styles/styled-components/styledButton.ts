@@ -96,15 +96,18 @@ export const FileAddButton = styled.div`
   text-overflow: ellipsis;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
   &:hover {
     background-color: #b40a6e;
   }
+
   &:disabled {
     background-color: #d30b81;
     color: white;
     opacity: 0.5;
     cursor: not-allowed;
   }
+  
   &:focus {
     outline: none;
   }
@@ -175,3 +178,12 @@ export const FileDownloadButton = styled.button`
     outline: none;
   }
 `
+
+export const StyledMenuButton = styled.div`
+  padding: 4px 8px;
+
+  &:hover {
+    backdrop-filter: brightness(0.90);
+    cursor: pointer;
+  }
+`;
