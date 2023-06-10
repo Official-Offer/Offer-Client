@@ -195,7 +195,7 @@ export const StyledBookmarkedCard = styled.div`
   .bookmarked {
     &-img {
       flex: 1;
-      min-height: 130px;
+      min-height: 120px;
       min-width: 170px;
       border-radius: 8px;
       background: black;
@@ -203,17 +203,17 @@ export const StyledBookmarkedCard = styled.div`
 
     &-body {
       flex: 3;
-      margin: 0px 24px;
+      margin: 0px 28px;
       
       &-title {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
       }
 
       &-main {
         font-size: 1rem;
         font-weight: 600;
         color: #7E7D7D;
-        p { margin-bottom: 4px; }
+        p { margin-bottom: 0px; }
       }
     }
 
