@@ -92,6 +92,7 @@ const BookmarkedJobs: NextPage = () => {
           }
         >
           {
+            bookmarkedList?.length === 0 ? "Chưa có công việc nào đã được lưu" :
             bookmarkedList?.map((job) => (
               <BookmarkedCard bookmark={job} />
             ))
