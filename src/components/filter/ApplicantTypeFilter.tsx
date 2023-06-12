@@ -3,9 +3,9 @@ import { Select, Tag } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 const options = [
-  { label: "resume", value: "red"},
-  { label: "interview", value: "blue" },
-  { label: "accepted", value: "green" },
+  { label: "Vòng đơn", value: "red"},
+  { label: "Vòng phỏng vấn", value: "blue" },
+  { label: "Đã nhận", value: "green" },
 ];
 
 const tagRender = (props: CustomTagProps) => {

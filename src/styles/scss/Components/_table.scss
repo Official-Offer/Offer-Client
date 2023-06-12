@@ -1,13 +1,50 @@
 .table {
-    // padding: 20px;
-    &-applicant {
-        .ant-table-content {
-            border-radius: 50%;
-            // background-color: rgb(127, 127, 127);
-            // color: rgb(127, 127, 127);
-           }
-        // padding: 30px;
-        border-radius: 50%;
-        // background-color: white;
+  // padding: 20px;
+  &-applicant {
+    .ant-table-content {
+    //   border-radius: 50%;
+    //   background-color: aquamarine;
     }
+    .ant-table {
+        // border-radius: 50%;
+        border-radius: 15px !important;
+    }
+    // .ant-table-title {
+    //     border-radius: 10px !important;
+    //   }
+    // .ant-table-container {
+    //   border-radius: 20% !important;
+    // }
+    // .ant-table table {
+    //     width: 100%;
+    //     text-align: left;
+    //     border-radius: 10px !important;
+    //     border-collapse: separate;
+    //     border-spacing: 0;
+    //   }
+    //   .ant-table-wrapper {
+    //     // clear: both;
+    //     // max-width: 100%;
+    //     border-radius: 10px !important;
+    //   }
+    .ant-table-container {
+        border-radius: 15px !important;
+      }
+      .ant-table-title {
+        border-radius: 15px !important;
+      }
+    //   .ant-table-thead {
+    //     border-radius: 15px !important;
+    //   }
+      .ant-table-thead > tr > th {
+        position: relative;
+        border-radius: 15px !important;
+        color: black(0, 0, 0, 0.85);
+        font-weight: 500;
+        text-align: left;
+        background: white;
+        // border-bottom: 1px solid black;
+        transition: background 0.3s ease;
+      }
+  }
 }

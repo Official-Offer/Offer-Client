@@ -13,9 +13,38 @@ interface DataType {
   tag: string;
 }
 
+const dataset: DataType[] = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tag: "Vòng đơn",
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tag: "Vòng phỏng vấn",
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sydney No. 1 Lake Park",
+    tag: "Đã nhận",
+  },
+];
+
 const columns: ColumnsType<DataType> = [
   {
-    title: "Name",
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
     dataIndex: "name",
     key: "name",
     render: (text) => <a>{text}</a>,
@@ -31,12 +60,12 @@ const columns: ColumnsType<DataType> = [
     key: "address",
   },
   {
-    title: "Tags",
+    title: "Giai đoạn",
     key: "tags",
     dataIndex: "tags",
     render: (_, { tag }) => {
       let color =
-        tag === "resume" ? "green" : tag === "interview" ? "blue" : "volcano";
+        tag === "Vòng đơn" ? "volcano" : tag === "Vòng phỏng vấn" ? "blue" : "green";
       return (
         <Tag color={color} key={tag}>
           {tag.toUpperCase()}
@@ -56,29 +85,6 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const dataset: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tag: "resume",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tag: "interview",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tag: "accepted",
-  },
-];
 
 export const ApplicantTable: React.FC = () => {
   const [data, setData] = React.useState<DataType[]>(dataset);
