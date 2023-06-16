@@ -13,6 +13,17 @@ export const getJobList = async () => {
   return jobList;
 };
 
+export const getJobListWithApplicant = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobList = response.data;
+  // Fetch company name for each job
+  for (const job of jobList) {
+    // job.applicants.append(await getStudentDetails());
+    // job.is_bookmarked = (await checkIsBookmarked(job.id)).status;
+  }
+  return jobList;
+};
+
 export const getJob = async (id: number) => {
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;

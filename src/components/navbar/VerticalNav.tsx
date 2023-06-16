@@ -38,7 +38,7 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1 && index != 2) router.push(`/recruiter${path[index]}`);
+      if (index != 1) router.push(`/recruiter${path[index]}`);
     },
     children:
       index == 1
