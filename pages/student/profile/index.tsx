@@ -4,21 +4,22 @@ import { useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
-import { InfoCard, ProfileCard } from "@components/card";
-import { CardTray, ResumePanel } from "@components";
+import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
+import { CardTray } from "@components/list";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { 
   getStudentDetails,
   getStudentEducations,
   editStudentEducation,
-  addStudentEducations,
-  deleteStudentEducations,
+  addStudentEducation,
+  deleteStudentEducation,
   getStudentExperiences,
   editStudentExperience,
-  addStudentExperiences,
-  deleteStudentExperiences,
+  addStudentExperience,
+  deleteStudentExperience,
 } from "@services/apiStudent";
-import { getSchool } from "@services/apiSchool";
+import { getSchoolList } from "@services/apiSchool";
+import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 
 const profile = {
@@ -45,31 +46,66 @@ const info = {
 };
 
 const eduFieldItems = {
+  itemTitle: "Trường",
+  dataIDLabel: "school",
+  dataName: "schoolName",
+  disableEndDate: false,
+  layout: [
+    "study_fields",
+    "gpa"
+  ],
   labelToAPI: {
     "itemTitle": "schoolName",
     "GPA": "gpa",
-    "Ngành học": "study_fields"
+    "Ngành học": "study_fields",
+    "Ngày bắt đầu": "start_date",
+    "Ngày tốt nghiệp": "end_date",
+    "Tôi đang học trường này": "is_current",
   },
-  APItoLabel: {
+  APIToLabel: {
     "schoolName": "itemTitle",
     "gpa": "GPA",
-    "study_fields": "Ngành học"
-  }, 
+    "study_fields": "Ngành học",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày tốt nghiệp",
+    "is_current": "Tôi đang học trường này",
+  },
+  itemType: {
+    "study_fields": "object",
+    "gpa": "number",
+  },
   isRequired: {
     "schoolName": true
   }
 };
 
 const expFieldItems = {
+  itemTitle: "Vị Trí",
+  dataIDLabel: "company",
+  dataName: "companyName",
+  disableEndDate: true,
+  layout: [
+    "companyName",
+    "location"
+  ],
   labelToAPI: {
     "itemTitle": "title",
     "Công ty": "companyName",
     "Địa điểm": "location",
+    "Ngày bắt đầu": "start_date",
+    "Ngày kết thúc": "end_date",
+    "Tôi đang làm công việc này": "is_current",
   },
-  APItoLabel: {
+  APIToLabel: {
     "title": "itemTitle",
     "companyName": "Công ty",
     "location": "Địa điểm",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "is_current": "Tôi đang làm công việc này",
+  },
+  itemType: {
+    "location": "string",
   },
   isRequired: {
     "title": true,
@@ -87,19 +123,19 @@ const StudentProfile: NextPage = () => {
   });
   
   return (
-    <main className="student-profile">
-      <section className="sticky-panel sticky-panel-profile">
+    <main className="split-layout">
+      <section className="split-layout-sticky student-profile">
         <AntdCard
           loading={studentQuery.isLoading}
           cover={<img src={profile.cover}/>}
           children={
             <div>
-              <img className="sticky-panel-profile-avatar" src={profile.avatar} />
-              <div className="sticky-panel-profile-header">
+              <img className="student-profile-avatar" src={profile.avatar} />
+              <div className="student-profile-header">
                 <h2>{studentDetails?.name}</h2>
                 <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails.expected_graduation)).toDateString()}</span>
               </div>
-              <div className="sticky-panel-profile-info">
+              <div className="student-profile-info">
                 {
                   (studentDetails?.school?.length === 0) 
                   ? <h4>Trường không xác định</h4>
@@ -113,43 +149,33 @@ const StudentProfile: NextPage = () => {
           }
         />
       </section>
-      <section className="main-panel">
-        <AntdCard
-          className="main-panel-card"
-          title={
-            <div className="main-panel-header">
-              <h2>CV</h2>
-            </div>
-          }
-          children={
-            <div>
-              <ResumePanel />
-            </div>
-          }
-        />
+      <section className="split-layout-main main-md">
+        <ResumeCard />
         <ProfileCard
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
           getFunction={getStudentEducations}
-          addFunction={addStudentEducations}
+          addFunction={addStudentEducation}
           editFunction={editStudentEducation}
-          deleteFunction={deleteStudentEducations}
+          deleteFunction={deleteStudentEducation}
+          dataFunction={getSchoolList}
         />
         <ProfileCard
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
           getFunction={getStudentExperiences}
-          addFunction={addStudentExperiences}
+          addFunction={addStudentExperience}
           editFunction={editStudentExperience}
-          deleteFunction={deleteStudentExperiences}
+          deleteFunction={deleteStudentExperience}
+          dataFunction={getCompanyList}
         />
       </section>
-      <section className="sticky-panel sticky-panel-job">
-        <div className="sticky-panel-job-section">
+      <section className="split-layout-sticky student-job">
+        <div className="student-job-section">
           <Link href="/students/jobs">Jobs Applied</Link>
           <InfoCard info={info} />
         </div>
-        <div className="sticky-panel-job-section">
+        <div className="student-job-section">
           <Link href="/students/jobs">Jobs Saved</Link>
           <InfoCard info={info} />
         </div>

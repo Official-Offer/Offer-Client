@@ -154,7 +154,97 @@ export const MessageBox = styled.div`
   }
 `;
 
-export const ResumeCard = styled.div`
-  border: dashed black 1px;
-  border-radius: 10px;
+export const StyledResumeCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 320px;
+  height: 320px;
+  padding: 16px;
+  color: white;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #313C49 100%);
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 40px;
+  }
+`;
+
+export const StyledBookmarkedCard = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 8px;
+  padding: 24px;
+
+  &:hover {
+    backdrop-filter: brightness(0.90);
+
+    .bookmarked {
+      &-close-button {
+        display: initial;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .bookmarked {
+    &-img {
+      flex: 1;
+      min-height: 120px;
+      min-width: 170px;
+      border-radius: 8px;
+      background: black;
+    }
+
+    &-body {
+      flex: 3;
+      margin: 0px 28px;
+      
+      &-title {
+        margin-bottom: 4px;
+      }
+
+      &-main {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #7E7D7D;
+        p { margin-bottom: 0px; }
+      }
+    }
+
+    &-dates {
+      flex: 1;
+      min-width: 200px;
+      color: white;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px;
+      
+      .date-posted {
+        background-color: #7277F1;
+        border-radius: 4px;
+        padding: 2px;
+        margin-bottom: 4px;
+      }
+      
+      .date-saved {
+        background-color: #F5510A;
+        border-radius: 4px;
+        padding: 2px;
+      }
+    }
+
+    &-close-button {
+      display: none;
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 1rem;
+    }
+  }
 `;

@@ -48,14 +48,43 @@
   .date-posted {
     position: absolute;
     top: 12px;
-    left: 12px;
+    left: 16px;
 
     padding: 4px 8px;
     border-radius: 4px;
 
     color: $grey-blue;
     font-style: italic;
+    font-weight: 600;
     background-color: $purple-color;
+  }
+
+  .bookmark-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $orange-color;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      scale: 1.2;
+    }
+
+    &:active {
+      scale: 0.8;
+    }
+
+    img {
+      filter: invert(1);
+    }
   }
 
 }
@@ -95,9 +124,5 @@
   .event-info {
     padding: 20px;
   }
-}
-
-.profile-change-card {
-  width: 744px;
 }
 

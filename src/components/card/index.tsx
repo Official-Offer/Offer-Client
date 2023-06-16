@@ -10,6 +10,7 @@ export const Card: React.FC<CardProps> = ({ className, children, ...rest }) => {
   );
 };
 
-export { InfoCard } from "./infoCard";
-export { EventCard } from "./eventCard";
-export { ProfileCard } from "./profileCard";
+export { InfoCard } from "./InfoCard";
+export { EventCard } from "./EventCard";
+export { ProfileCard } from "./ProfileCard";
+export { ResumeCard } from "./ResumeCard";

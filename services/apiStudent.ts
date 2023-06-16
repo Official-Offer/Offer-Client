@@ -28,6 +28,7 @@ export const studentLogin = async (body: any) => {
 
 // Resume
 export const getStudentResume = async () => {
+  console.log("resume called")
   const response = await request.get(`/students/resume/`);
   return response.data.Response;
 };
@@ -54,17 +55,17 @@ export const getStudentEducations = async () => {
 };
 
 export const editStudentEducation = async (id: number, input: Record<string, unknown>) => {
-  const response = await request.put(`/students/educations/${id}`, input);
+  const response = await request.put(`/students/educations/${id}/`, input);
   return response.data;
 };
 
-export const addStudentEducations = async (input: Record<string, unknown>) => {
+export const addStudentEducation = async (input: Record<string, unknown>) => {
   const response = await request.post(`/students/educations/`, input);
   return response.data;
 };
 
-export const deleteStudentEducations = async (input: Record<string, unknown>) => {
-  const response = await request.delete(`/students/educations/`, input);
+export const deleteStudentEducation = async (id: number) => {
+  const response = await request.delete(`/students/educations/${id}/`);
   return response.data;
 };
 
@@ -80,16 +81,17 @@ export const getStudentExperiences = async () => {
 }
 
 export const editStudentExperience = async (id: number, input: Record<string, unknown>) => {
-  const response = await request.put(`/students/experiences/${id}`, input);
+  const response = await request.put(`/students/experiences/${id}/`, input);
   return response.data;
 }
 
-export const addStudentExperiences = async (input: Record<string, unknown>) => {
+export const addStudentExperience = async (input: Record<string, unknown>) => {
   const response = await request.post(`/students/experiences/`, input);
   return response.data;
 }
 
-export const deleteStudentExperiences = async (input: Record<string, unknown>) => {
-  const response = await request.delete(`/students/experiences/`, input);
+export const deleteStudentExperience = async (id: number) => {
+  console.log(id, `/students/experiences/${id}/`);
+  const response = await request.delete(`/students/experiences/${id}/`);
   return response.data;
 }

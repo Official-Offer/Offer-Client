@@ -15,15 +15,6 @@ a {
   text-decoration: none;
 }
 
-dialog {
-  background-color: transparent;
-  border: none;
-
-  &::backdrop {
-    background: rgba(0,0,0,0.5);
-  }
-}
-
 /* Components */
 @import "./scss/Components/forms";
 @import "./scss/Components/cards";
@@ -48,7 +39,6 @@ dialog {
 @import "./scss/Layouts/email";
 @import "./scss/Layouts/student-profile";
 @import "./scss/Layouts/register";
-@import "./scss/Layouts/student_job_portal";
-a {
-    text-decoration: none;
-}
+@import "./scss/Components/forms";
+@import "./scss/Layouts/student-job-portal";
+@import "./scss/Layouts/split-layout";
