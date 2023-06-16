@@ -60,26 +60,27 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
               key: `/recruiter${path[index]}/unverified`,
             },
           ]
-        : index == 2
-        ? [
-            {
-              label: "Vòng đơn",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/recruiter${path[index]}/resume`);
-              },
-              key: `/recruiter${path[index]}/resume`,
-            },
-            {
-              label: "Vòng phỏng vấn",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/recruiter${path[index]}/interview`);
-              },
-              key: `/recruiter${path[index]}/interview`,
-            },
-          ]
         : undefined,
+        // index == 2
+        // ? [
+        //     {
+        //       label: "Vòng đơn",
+        //       icon: React.createElement(icon),
+        //       onClick: (e) => {
+        //         router.push(`/recruiter${path[index]}/resume`);
+        //       },
+        //       key: `/recruiter${path[index]}/resume`,
+        //     },
+        //     {
+        //       label: "Vòng phỏng vấn",
+        //       icon: React.createElement(icon),
+        //       onClick: (e) => {
+        //         router.push(`/recruiter${path[index]}/interview`);
+        //       },
+        //       key: `/recruiter${path[index]}/interview`,
+        //     },
+        //   ]
+        // : 
   }));
 
   const toggleCollapsed = () => {

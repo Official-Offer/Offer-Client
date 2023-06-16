@@ -13,30 +13,6 @@ interface DataType {
   tag: string;
 }
 
-const dataset: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tag: "Vòng đơn",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tag: "Vòng phỏng vấn",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tag: "Đã nhận",
-  },
-];
-
 const columns: ColumnsType<DataType> = [
   {
     title: "ID",
@@ -50,14 +26,19 @@ const columns: ColumnsType<DataType> = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: "Trường",
+    dataIndex: "school",
+    key: "school",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Ngành học",
+    dataIndex: "major",
+    key: "major",
+  },
+  {
+    title: "Nộp vào lúc",
+    dataIndex: "applied_time",
+    key: "applied_time",
   },
   {
     title: "Giai đoạn",
@@ -78,15 +59,37 @@ const columns: ColumnsType<DataType> = [
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
+        <a>Xem CV</a>
+        <a>Xoá</a>
       </Space>
     ),
   },
 ];
 
-
-export const ApplicantTable: React.FC = () => {
+export const ApplicantTable: React.FC = (jobID: number) => {
+  const dataset: DataType[] = [
+    // {
+    //   key: "1",
+    //   name: "John Brown",
+    //   age: 32,
+    //   address: "New York No. 1 Lake Park",
+    //   tag: "Vòng đơn",
+    // },
+    // {
+    //   key: "2",
+    //   name: "Jim Green",
+    //   age: 42,
+    //   address: "London No. 1 Lake Park",
+    //   tag: "Vòng phỏng vấn",
+    // },
+    // {
+    //   key: "3",
+    //   name: "Joe Black",
+    //   age: 32,
+    //   address: "Sydney No. 1 Lake Park",
+    //   tag: "Đã nhận",
+    // },
+  ];
   const [data, setData] = React.useState<DataType[]>(dataset);
 
   const handleFilterName = (value: string) => {
