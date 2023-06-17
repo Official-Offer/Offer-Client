@@ -20,7 +20,7 @@ const Applicants: NextPage = () => {
     onSuccess: (response) => setJobList(response),
     onError: (error) => console.log(`Error: ${error}`),
   });
-
+  console.log(jobList);
   return (
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
@@ -28,18 +28,20 @@ const Applicants: NextPage = () => {
         {/* <ApplicantTable/> */}
         {jobList.map((job) => (
           <StyledBookmarkedCard
-            onClick={()=>router.push(`/recruiter/applicants/${job.id}`)}
+            onClick={() => router.push(`/recruiter/applicants/${job.id}`)}
           >
-            <div className="bookmarked-img"></div>
-            <div className="bookmarked-body">
-              <div className="bookmarked-body-title">
-                <h2>{job.name}</h2>
+            {/* <div className="applicant-card"> */}
+              <div className="bookmarked-img"></div>
+              <div className="bookmarked-body">
+                <div className="bookmarked-body-title">
+                  <h2>{job.title}</h2>
+                </div>
+                <div className="bookmarked-body-main">
+                  <p>Number of applicants:</p>
+                  <p>{job.applicants.length}</p>
+                </div>
               </div>
-              <div className="bookmarked-body-main">
-                <p>Number of applicants:</p>
-                <p>{job.applicants.length}</p>
-              </div>
-            </div>
+            {/* </div> */}
           </StyledBookmarkedCard>
         ))}
       </div>
