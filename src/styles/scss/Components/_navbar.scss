@@ -42,7 +42,7 @@
   }
   
   .ant-menu-item {
-    height: 100%;
+    height: 101%; // Adjustment because of antd
     padding: 10px 20px !important;
     
     // Highlight when dropdown is open
