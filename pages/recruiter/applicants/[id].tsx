@@ -7,7 +7,8 @@ import {useRouter} from "next/router";
 const Applicant: NextPage = () => {
   const router = useRouter();
   const id = router.query.id;
-  
+//   console.log(id)
+
   const ApplicantTable = dynamic(() =>
     import("@components").then((mod: any) => mod.ApplicantTable)
   ) as any;
@@ -16,7 +17,7 @@ const Applicant: NextPage = () => {
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
-        <ApplicantTable jobID={id}/>
+        <ApplicantTable applicantID={id}/>
       </div>
     </div>
   );

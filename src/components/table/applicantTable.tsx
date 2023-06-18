@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
 import { SearchBar } from "../search";
 import { ApplicantNameSearch } from "@components/search/ApplicantNameSearch";
+import { useQuery } from "react-query";
+import { getApplicants } from "@services/apiStudent";
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tag: string;
+  ID: string | null;
+  name: string | null;
+  school: string | null;
+  major: string | null;
+  expected_graduation: string | null;
+  tag: string | null;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -36,9 +39,9 @@ const columns: ColumnsType<DataType> = [
     key: "major",
   },
   {
-    title: "Nộp vào lúc",
-    dataIndex: "applied_time",
-    key: "applied_time",
+    title: "Năm tốt nghiệp",
+    dataIndex: "expected_graduation",
+    key: "expected_graduation",
   },
   {
     title: "Giai đoạn",
@@ -46,7 +49,11 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "tags",
     render: (_, { tag }) => {
       let color =
-        tag === "Vòng đơn" ? "volcano" : tag === "Vòng phỏng vấn" ? "blue" : "green";
+        tag === "Vòng đơn"
+          ? "volcano"
+          : tag === "Vòng phỏng vấn"
+          ? "blue"
+          : "green";
       return (
         <Tag color={color} key={tag}>
           {tag.toUpperCase()}
@@ -66,31 +73,33 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-export const ApplicantTable: React.FC = (jobID: number) => {
-  const dataset: DataType[] = [
-    // {
-    //   key: "1",
-    //   name: "John Brown",
-    //   age: 32,
-    //   address: "New York No. 1 Lake Park",
-    //   tag: "Vòng đơn",
-    // },
-    // {
-    //   key: "2",
-    //   name: "Jim Green",
-    //   age: 42,
-    //   address: "London No. 1 Lake Park",
-    //   tag: "Vòng phỏng vấn",
-    // },
-    // {
-    //   key: "3",
-    //   name: "Joe Black",
-    //   age: 32,
-    //   address: "Sydney No. 1 Lake Park",
-    //   tag: "Đã nhận",
-    // },
-  ];
-  const [data, setData] = React.useState<DataType[]>(dataset);
+export const ApplicantTable: React.FC = (props) => {
+  const [applicantList, setApplicantList] = useState([]);
+  const [dataset, setData] = React.useState<DataType[]>([]);
+  // DataType[]
+  const { jobID } = props;
+  console.log(jobID);
+  const jobQuery = useQuery({
+    queryKey: "jobID",
+    queryFn: () => getApplicants(jobID),
+    onSuccess: async (res) => {
+      res.map((student) => {
+        setData([
+          ...dataset,
+          {
+            ID: jobID,
+            name: student.data.name,
+            school: student.data.default_school.name,
+            major: student.data.major,
+            expected_graduation: student.data.expected_graduation,
+            tag: "Vòng đơn",
+          },
+        ]);
+      });
+    },
+    onError: () => {},
+  });
+  console.log(dataset);
 
   const handleFilterName = (value: string) => {
     console.log(value);
@@ -137,7 +146,11 @@ export const ApplicantTable: React.FC = (jobID: number) => {
           />
         </div>
       </div>
-      <Table className="table-applicant" columns={columns} dataSource={data} />
+      <Table
+        className="table-applicant"
+        columns={columns}
+        dataSource={dataset}
+      />
     </div>
   );
 };
