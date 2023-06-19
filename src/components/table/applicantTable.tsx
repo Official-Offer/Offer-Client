@@ -6,6 +6,7 @@ import { SearchBar } from "../search";
 import { ApplicantNameSearch } from "@components/search/ApplicantNameSearch";
 import { useQuery } from "react-query";
 import { getApplicants } from "@services/apiStudent";
+import { JobDescription } from '../main/EventContent';
 
 interface DataType {
   ID: string | null;
@@ -74,24 +75,30 @@ const columns: ColumnsType<DataType> = [
 ];
 
 export const ApplicantTable: React.FC = (props) => {
-  const [applicantList, setApplicantList] = useState([]);
+  const [applicantList, setApplicantList] = useState<string[]>([]);
   const [dataset, setData] = React.useState<DataType[]>([]);
   // DataType[]
   const { jobID } = props;
   console.log(jobID);
   const jobQuery = useQuery({
-    queryKey: "jobID",
+    queryKey: ["jobID"],
     queryFn: () => getApplicants(jobID),
     onSuccess: async (res) => {
-      res.map((student) => {
+      console.log(res)
+      res.forEach((student) => {
+        // console.log(student)
+        setApplicantList([
+          ...applicantList,
+          student.name || "No name"
+        ])
         setData([
           ...dataset,
           {
-            ID: jobID,
-            name: student.data.name,
-            school: student.data.default_school.name,
-            major: student.data.major,
-            expected_graduation: student.data.expected_graduation,
+            ID: student.user.id,
+            name: student.name || "No name",
+            school: student.default_school?.name || "No School",
+            major: student.major,
+            expected_graduation: student.expected_graduation,
             tag: "Vòng đơn",
           },
         ]);
@@ -99,7 +106,7 @@ export const ApplicantTable: React.FC = (props) => {
     },
     onError: () => {},
   });
-  console.log(dataset);
+  // console.log(dataset);
 
   const handleFilterName = (value: string) => {
     console.log(value);
@@ -132,6 +139,7 @@ export const ApplicantTable: React.FC = (props) => {
       <div className="applicant-filter">
         <div className="applicant-filter-name">
           <ApplicantNameSearch
+            names={applicantList}
             onSearch={(value: any) => {
               handleFilterName(value);
             }}

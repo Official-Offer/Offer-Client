@@ -22,12 +22,19 @@ export const getStudentDetails = async () => {
 };
 
 export const getApplicants = async (id: number) => {
-  const response = (await request.get(`/jobs/${id}`));
+  const jobs = (await request.get(`/jobs/${id}`)).data;
   const studentList: any[] = [];
-  response.data.applicants.forEach(async (applicant_id: string) => {
-    const student = (await request.get(`/students/${applicant_id}`));
+  // jobs.data.applicants.forEach(async (applicant_id: string) => {
+  //   const student = (await request.get(`/students/${applicant_id}`)).data;
+  //   console.log(student)
+  //   studentList.push(student);
+  // });
+  for (const applicant_id of jobs.applicants) {
+    const student = (await request.get(`/students/${applicant_id}`)).data;
+  //   console.log(student)
     studentList.push(student);
-  });
+  }
+  // console.log(studentList)
   return studentList;
 };
 

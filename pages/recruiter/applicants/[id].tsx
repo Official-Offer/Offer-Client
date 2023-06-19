@@ -17,7 +17,7 @@ const Applicant: NextPage = () => {
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
-        <ApplicantTable applicantID={id}/>
+        <ApplicantTable jobID={id}/>
       </div>
     </div>
   );
