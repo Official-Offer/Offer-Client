@@ -5,6 +5,12 @@ import { UnapprovedJobDataType } from "./dataType";
 
 export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
     title: "Ngày tạo",
     dataIndex: "date",
     key: "date",

@@ -1,16 +1,16 @@
 import { Select } from "antd";
 import React from "react";
 
-interface IApplicant {
+interface ISearch {
   onSearch: (email: string) => void;
-  names: string[];
+  searchResults: string[];
   // options: any;
 }
 
-export const ApplicantNameSearch: React.FC = ({
+export const FilterSearch: React.FC = ({
   onSearch,
-  names,
-}: IApplicant) => {
+  searchResults,
+}: ISearch) => {
   return (
     <Select
       className="filter-name"
@@ -24,7 +24,7 @@ export const ApplicantNameSearch: React.FC = ({
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
       options={
-        names.map((n) => ({
+        searchResults.map((n) => ({
           value: n,
           label: n,
         }))

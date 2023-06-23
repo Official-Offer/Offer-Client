@@ -13,6 +13,37 @@ export const getJobList = async () => {
   return jobList;
 };
 
+export const getJobs = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobList = response.data;
+  // Fetch company name for each job
+  // for (const job of jobList) {
+  //   job.company_name = (await getCompany(job.company)).name;
+  //   job.is_bookmarked = (await checkIsBookmarked(job.id)).status;
+  // }
+  return jobList;
+};
+
+export const getUnapprovedJobs = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobList = response.data;
+  // Fetch company name for each job
+  var res = []
+  for (const job of jobList) {
+    res.push({
+      key: job.id,
+      ID: job.id,
+      date: job.timestamp.toString(),
+      title: job.title || "No title",
+      address: job.location || "No location",
+      schools: job.schools.length || "No School",
+      applicants: job.applicants.length,
+      tag: "Vòng đơn",
+    })
+  }
+  return res;
+};
+
 export const getJobListWithApplicant = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;

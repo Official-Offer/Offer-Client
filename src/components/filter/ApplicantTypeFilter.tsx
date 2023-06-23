@@ -27,7 +27,7 @@ const tagRender = (props: CustomTagProps) => {
   );
 };
 
-const ApplicantTypeFilter: React.FC = ({onSearch, ...props }) => (
+const TypeFilter: React.FC = ({onSearch, ...props }) => (
   <div {...props}>
     <Select
       mode="multiple"
@@ -41,4 +41,4 @@ const ApplicantTypeFilter: React.FC = ({onSearch, ...props }) => (
   </div>
 );
 
-export default ApplicantTypeFilter;
+export default TypeFilter;

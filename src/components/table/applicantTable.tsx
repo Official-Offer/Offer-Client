@@ -3,10 +3,11 @@ import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
 import { SearchBar } from "../search";
-import { ApplicantNameSearch } from "@components/search/ApplicantNameSearch";
+// import { ApplicantNameSearch } from "@components/search/ApplicantNameSearch";
 import { useQuery } from "react-query";
 import { getApplicants } from "@services/apiStudent";
-import { JobDescription } from '../main/EventContent';
+import { JobDescription } from "../main/EventContent";
+import { FilterSearch } from "@components/search/FilterSearch";
 
 interface DataType {
   ID: string | null;
@@ -84,13 +85,10 @@ export const ApplicantTable: React.FC = (props) => {
     queryKey: ["jobID"],
     queryFn: () => getApplicants(jobID),
     onSuccess: async (res) => {
-      console.log(res)
+      console.log(res);
       res.forEach((student) => {
         // console.log(student)
-        setApplicantList([
-          ...applicantList,
-          student.name || "No name"
-        ])
+        setApplicantList([...applicantList, student.name || "No name"]);
         setData([
           ...dataset,
           {
@@ -138,8 +136,8 @@ export const ApplicantTable: React.FC = (props) => {
     <div>
       <div className="applicant-filter">
         <div className="applicant-filter-name">
-          <ApplicantNameSearch
-            names={applicantList}
+          <FilterSearch
+            searchResults={applicantList}
             onSearch={(value: any) => {
               handleFilterName(value);
             }}
@@ -147,7 +145,7 @@ export const ApplicantTable: React.FC = (props) => {
           />
         </div>
         <div className="applicant-filter-type">
-          <ApplicantTypeFilter
+          <TypeFilter
             onSearch={(_x: any, values: any) => {
               handleFilterType(values);
             }}

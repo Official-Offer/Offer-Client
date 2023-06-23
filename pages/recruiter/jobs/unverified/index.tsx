@@ -5,6 +5,10 @@ import type { ColumnsType } from "antd/es/table";
 import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/unapprovedJobTable";
 import { unapprovedJobColumns } from "@components/table/columnType";
+import { useQuery } from "react-query";
+import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import { useState } from "react";
+import { UnapprovedJobDataType } from "@components/table/dataType";
 
 //create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
@@ -12,41 +16,78 @@ const UnapprovedJobs: NextPage = () => {
     import("@components").then((mod: any) => mod.ApplicantTable)
   ) as any;
 
-  const [applicantList, setApplicantList] = useState<string[]>([]);
-  const [dataset, setData] = useState<DataType[]>([]);
-
+  // const [applicantList, setApplicantList] = useState<string[]>([]);
+  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
   // DataType[]
-  const { jobID } = props;
-  console.log(jobID);
   const jobQuery = useQuery({
-    queryKey: ["jobID"],
-    queryFn: () => getApplicants(jobID),
-    onSuccess: async (res) => {
-      console.log(res);
-      res.forEach((student) => {
-        // console.log(student)
-        setApplicantList([...applicantList, student.name || "No name"]);
-        setData([
-          ...dataset,
-          {
-            ID: student.user.id,
-            name: student.name || "No name",
-            school: student.default_school?.name || "No School",
-            major: student.major,
-            expected_graduation: student.expected_graduation,
-            tag: "Vòng đơn",
-          },
-        ]);
-      });
+    queryKey: ["unapproved-job"],
+    queryFn: getUnapprovedJobs,
+    onSuccess: async (jobs) => {
+      console.log(jobs);
+      setData(jobs);
+      // jobs.forEach((job) => {
+      //   // console.log(student)
+      //   // setApplicantList([...applicantList, student.name || "No name"]);
+      //   setData([
+      //     ...dataset,
+      //     {
+      //       key: job.id,
+      //       ID: job.id,
+      //       date: job.timestamp.toString(),
+      //       title: job.title || "No title",
+      //       address: job.location || "No location",
+      //       schools: job.schools.length || "No School",
+      //       applicants: job.applicants.length,
+      //       tag: "Vòng đơn",
+      //     },
+      //   ]);
+      //   d.push({
+      //     key: job.id,
+      //     ID: job.id,
+      //     date: job.timestamp.toString(),
+      //     title: job.title || "No title",
+      //     address: job.location || "No location",
+      //     schools: job.schools.length || "No School",
+      //     applicants: job.applicants.length,
+      //     tag: "Vòng đơn",
+      //   })
+      // });
     },
     onError: () => {},
   });
+
+
+  const handleFilterType = (values: string[]) => {
+    console.log(values);
+    if (values.length == 0) {
+      setData(dataset);
+      return;
+    }
+    setData(
+      dataset.filter((item) => {
+        if (!item.tag || values.length == 0) return false;
+        for (let i = 0; i < values.length; i++) {
+          if (values[i]?.label === item.tag) return true;
+        }
+        return false;
+      })
+    );
+  };
+
+  const handleFilterTitle = (value: string) => {
+    console.log(value);
+    if (!value) {
+      setData(dataset);
+      return;
+    }
+    setData(dataset.filter((item) => item.title == value));
+  };
 
   return (
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
-        <BaseTable dataset={dataset} columns={unapprovedJobColumns}/>
+        <BaseTable dataset={dataset} columns={unapprovedJobColumns} handleFilterType={handleFilterType} handleFilterTitle={handleFilterTitle}/>
       </div>
     </div>
   );
