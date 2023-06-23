@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
-import TypeFilter from "@components/filter/ApplicantTypeFilter";
+import FilterType from "@components/filter/TypeFilter";
 import { FilterSearch } from "@components/search/FilterSearch";
 
 export const BaseTable: React.FC = ({
   dataset,
   columns,
   handleFilterType,
-  handleFilterTitle,
+  handleFilterSearch,
 }: any) => {
   return (
     <div>
@@ -16,13 +16,13 @@ export const BaseTable: React.FC = ({
           <FilterSearch
             searchResults={["1", "2"]}
             onSearch={(value: any) => {
-              handleFilterTitle(value);
+              handleFilterSearch(value);
             }}
             // options={dataset.map((item) => item.name)}
           />
         </div>
         <div className="applicant-filter-type">
-          <TypeFilter
+          <FilterType
             onSearch={(_x: any, values: any) => {
               handleFilterType(values);
             }}

@@ -1,7 +1,7 @@
 import { Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
-import { UnapprovedJobDataType } from "./dataType";
+import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
 
 export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
@@ -60,6 +60,63 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
         <a>Tạo danh sách ứng viên</a>
         <a>Chỉnh sửa công việc</a>
         <a>Xoá công việc</a>
+      </Space>
+    ),
+  },
+];
+
+export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Trường",
+    dataIndex: "school",
+    key: "school",
+  },
+  {
+    title: "Ngành học",
+    dataIndex: "major",
+    key: "major",
+  },
+  {
+    title: "Năm tốt nghiệp",
+    dataIndex: "expected_graduation",
+    key: "expected_graduation",
+  },
+  {
+    title: "Giai đoạn",
+    key: "tags",
+    dataIndex: "tags",
+    render: (_, { tag }) => {
+      let color =
+        tag === "Vòng đơn"
+          ? "volcano"
+          : tag === "Vòng phỏng vấn"
+          ? "blue"
+          : "green";
+      return (
+        <Tag color={color} key={tag}>
+          {tag.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <a>Xem CV</a>
+        <a>Xoá</a>
       </Space>
     ),
   },

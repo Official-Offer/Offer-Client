@@ -1,4 +1,4 @@
-import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
+import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 

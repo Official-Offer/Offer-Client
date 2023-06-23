@@ -9,3 +9,12 @@ export interface UnapprovedJobDataType {
     tag: string;
     // action: string;
 }
+
+export interface ApplicantDataType {
+    ID: string | null;
+    name: string | null;
+    school: string | null;
+    major: string | null;
+    expected_graduation: string | null;
+    tag: string | null;
+  }

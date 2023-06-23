@@ -21,20 +21,20 @@ export const getStudentDetails = async () => {
   return response;
 };
 
-export const getApplicants = async (id: number) => {
+export const getApplicantsFromJobs = async (id: number) => {
   const jobs = (await request.get(`/jobs/${id}`)).data;
   const studentList: any[] = [];
-  // jobs.data.applicants.forEach(async (applicant_id: string) => {
-  //   const student = (await request.get(`/students/${applicant_id}`)).data;
-  //   console.log(student)
-  //   studentList.push(student);
-  // });
   for (const applicant_id of jobs.applicants) {
     const student = (await request.get(`/students/${applicant_id}`)).data;
-  //   console.log(student)
-    studentList.push(student);
+    studentList.push({
+      ID: student.user.id,
+      name: student.name || "No name",
+      school: student.default_school?.name || "No School",
+      major: student.major,
+      expected_graduation: student.expected_graduation,
+      tag: "Vòng đơn",
+    },);
   }
-  // console.log(studentList)
   return studentList;
 };
 

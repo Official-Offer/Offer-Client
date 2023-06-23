@@ -1,4 +1,4 @@
-import ApplicantTypeFilter from "@components/filter/ApplicantTypeFilter";
+import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { getJobListWithApplicant } from "@services/apiJob";
 import { StyledBookmarkedCard } from "@styles/styled-components/styledBox";
 import { NextPage } from "next";
