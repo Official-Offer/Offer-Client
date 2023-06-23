@@ -16,18 +16,81 @@ const ApplicantActionItems = [
   { key: "2", label: "Xoá ứng viên" },
 ];
 
-export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
+export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
     title: "ID",
     dataIndex: "ID",
     key: "ID",
-    // render: (text) => <a>{text}</a>,
   },
   {
     title: "Ngày tạo",
     dataIndex: "date",
     key: "date",
-    // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Tiêu đề",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Địa điểm",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Số trường",
+    dataIndex: "schools",
+    key: "schools",
+  },
+  {
+    title: "Số đơn",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
+    title: "Tình trạng",
+    key: "tags",
+    dataIndex: "tags",
+    render: (_, { tag }) => {
+      let color =
+        tag === "Chưa tạo danh sách"
+          ? "red"
+          : tag === "Chưa tuyển"
+          ? "volcano"
+          : "green";
+      return (
+        <Tag color={color} key={tag}>
+          {tag.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Ngày tạo",
+    dataIndex: "date",
+    key: "date",
   },
   {
     title: "Tiêu đề",
@@ -134,6 +197,71 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     render: (_, record) => (
       <Space size="middle">
         <Dropdown menu={{items: ApplicantActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Ngày tạo",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Tiêu đề",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Địa điểm",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Số trường",
+    dataIndex: "schools",
+    key: "schools",
+  },
+  {
+    title: "Số đơn",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
+    title: "Tình trạng",
+    key: "tags",
+    dataIndex: "tags",
+    render: (_, { tag }) => {
+      let color =
+        tag === "Chưa tạo danh sách"
+          ? "red"
+          : tag === "Chưa tuyển"
+          ? "volcano"
+          : "green";
+      return (
+        <Tag color={color} key={tag}>
+          {tag.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
           <a>
             <MoreOutlined />
           </a>
