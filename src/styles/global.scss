@@ -15,6 +15,11 @@ a {
   text-decoration: none;
 }
 
+em {
+  font-style: normal;
+  font-weight: bold;
+}
+
 /* Components */
 @import "./scss/Components/forms";
 @import "./scss/Components/cards";
@@ -22,7 +27,6 @@ a {
 @import "./scss/Components/cover";
 @import "./scss/Components/filter";
 @import "./scss/Components/table";
-
 
 /* Helper */
 @import "./scss/Helper/button";

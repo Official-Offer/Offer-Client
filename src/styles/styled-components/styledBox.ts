@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { border, color, layout, space } from "styled-system";
+import styled from 'styled-components';
+import { border, color, layout, space } from 'styled-system';
 
 export const Box = styled.div`
   display: flex;
@@ -24,13 +24,13 @@ export const NotiBox = styled.div`
   align-items: center;
   padding: 12px;
   position: relative;
-  background-color: ${({ seen }) => (seen ? "white" : "#FAD4E6")};
+  background-color: ${({seen}) => seen ? "white" : "#FAD4E6"};
   transition: 0.2s;
   cursor: pointer;
   gap: 10px;
 
   &:hover {
-    background-color: ${({ seen }) => (seen ? "#00000014" : "#F6AACD")};
+    background-color: ${({seen}) => seen ? "#00000014" : "#F6AACD"};
   }
 
   .avatar {
@@ -67,7 +67,7 @@ export const NotiBox = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${({ seen }) => (seen ? "transparent" : "#D30B81")};
+    background-color: ${({seen}) => seen ? "transparent" : "#D30B81"};
   }
 `;
 
@@ -98,7 +98,7 @@ export const MessagePanel = styled.div`
   .mes-search-bar {
     padding: 0px 12px;
     .search-bar {
-      background-color: #f1f1f1;
+      background-color: #F1F1F1;
     }
   }
 `;
@@ -112,7 +112,7 @@ export const MessageBox = styled.div`
   cursor: pointer;
   gap: 10px;
   color: black;
-  font-weight: ${({ seen }) => (seen ? "400" : "700")};
+  font-weight: ${({seen}) => seen ? "400" : "700"};
   max-height: 9rem;
 
   &:hover {
@@ -150,7 +150,7 @@ export const MessageBox = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${({ seen }) => (seen ? "transparent" : "#D30B81")};
+    background-color: ${({seen}) => seen ? "transparent" : "#D30B81"};
   }
 `;
 
@@ -163,7 +163,7 @@ export const StyledResumeCard = styled.div`
   padding: 16px;
   color: white;
   border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff 0%, #313c49 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #313C49 100%);
 
   h3 {
     font-size: 1.4rem;
@@ -181,8 +181,8 @@ export const StyledBookmarkedCard = styled.div`
   padding: 24px;
 
   &:hover {
-    backdrop-filter: brightness(0.9);
-    cursor: pointer;
+    backdrop-filter: brightness(0.90);
+
     .bookmarked {
       &-close-button {
         display: initial;
@@ -191,12 +191,7 @@ export const StyledBookmarkedCard = styled.div`
       }
     }
   }
-  .applicant-card {
-    background: white;
-    box-shadow: #7e7d7d;
-    margin-bottom: 15px;
-    margin-right: 20px;
-  }
+
   .bookmarked {
     &-img {
       flex: 1;
@@ -209,7 +204,7 @@ export const StyledBookmarkedCard = styled.div`
     &-body {
       flex: 3;
       margin: 0px 28px;
-
+      
       &-title {
         margin-bottom: 4px;
       }
@@ -217,10 +212,8 @@ export const StyledBookmarkedCard = styled.div`
       &-main {
         font-size: 1rem;
         font-weight: 600;
-        color: #7e7d7d;
-        p {
-          margin-bottom: 0px;
-        }
+        color: #7E7D7D;
+        p { margin-bottom: 0px; }
       }
     }
 
@@ -231,16 +224,16 @@ export const StyledBookmarkedCard = styled.div`
       font-weight: 700;
       text-align: center;
       padding: 16px;
-
+      
       .date-posted {
-        background-color: #7277f1;
+        background-color: #7277F1;
         border-radius: 4px;
         padding: 2px;
         margin-bottom: 4px;
       }
-
+      
       .date-saved {
-        background-color: #f5510a;
+        background-color: #F5510A;
         border-radius: 4px;
         padding: 2px;
       }
