@@ -1,7 +1,15 @@
-import { Space, Tag } from "antd";
+import { Dropdown, Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
 import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
+import { MoreOutlined } from "@ant-design/icons";
+
+const items = [
+  { key: "1", label: "Copy ID" },
+  { key: "2", label: "Tạo danh sách ứng viên" },
+  { key: "3", label: "Chỉnh sửa công việc" },
+  { key: "4", label: "Xoá công việc" },
+];
 
 export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
@@ -42,7 +50,11 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     dataIndex: "tags",
     render: (_, { tag }) => {
       let color =
-        tag === "Chưa tạo danh sách" ? "red" : tag === "Chưa tuyển" ? "volcano" : "green";
+        tag === "Chưa tạo danh sách"
+          ? "red"
+          : tag === "Chưa tuyển"
+          ? "volcano"
+          : "green";
       return (
         <Tag color={color} key={tag}>
           {tag.toUpperCase()}
@@ -56,10 +68,11 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <a>Copy ID</a>
-        <a>Tạo danh sách ứng viên</a>
-        <a>Chỉnh sửa công việc</a>
-        <a>Xoá công việc</a>
+        <Dropdown menu={{ items }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
       </Space>
     ),
   },
