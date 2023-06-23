@@ -11,7 +11,6 @@ export const ApplicantNameSearch: React.FC = ({
   onSearch,
   names,
 }: IApplicant) => {
-  console.log(names)
   return (
     <Select
       className="filter-name"
