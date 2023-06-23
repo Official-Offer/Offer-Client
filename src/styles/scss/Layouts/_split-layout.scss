@@ -1,0 +1,36 @@
+.split-layout {
+  display: flex;
+  align-items: flex-start;
+  padding: 48px 40px;
+
+  &-sticky {
+    position: sticky;
+    max-height: 0;
+    top: 116px;
+    flex: 1;
+  }
+  
+  &-main {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 0px 40px;
+
+    &.main-sm {
+      flex: 2;
+    }
+
+    &.main-md {
+      flex: 3;
+    }
+
+    &.main-lg {
+      flex: 4;
+    }
+
+    &.main-xl {
+      flex: 5;
+    }
+
+  }
+}

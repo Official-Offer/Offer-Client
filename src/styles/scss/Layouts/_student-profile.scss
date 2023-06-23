@@ -1,18 +1,4 @@
-.student-profile {
-  display: flex;
-  align-items: flex-start;
-  padding: 48px 40px;
-
-  background-color: $grey-light-background;
-}
-
-// Will work more on making this scrollable
-.sticky-panel {
-  position: sticky;
-  max-height: 0;
-  top: 136px;
-  flex: 1;
-  
+.student {
   &-profile {
     text-align: center;
 

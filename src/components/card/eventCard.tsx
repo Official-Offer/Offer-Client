@@ -15,8 +15,6 @@ type EventCardProps = {
 };
 
 export const EventCard: React.FC<EventCardProps> = ({ info, ...rest }) => {
-  const { Meta } = AntdCard;
-
   return (
     <Card 
       className="event-card"

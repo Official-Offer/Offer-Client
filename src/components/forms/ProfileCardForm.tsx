@@ -39,6 +39,12 @@ interface ProfileCardFormProps {
 
 // Form for editing or adding for different fields in profile page
 export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
+  // States
+  const [modalLoading, setModalLoading] = useState<boolean>(false);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+  const [isCurrent, setIsCurrent] = useState<boolean>(!props.isAdd && props.fieldItems?.is_current);
+  const [areValidDates, setAreValidDates] = useState<boolean>(true);
+
   // Hooks
   const [form] = Form.useForm();
 
@@ -63,12 +69,6 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     },
     onError: (err) => console.log(`Delete Error: ${err}`)
   })
-
-  // States
-  const [modalLoading, setModalLoading] = useState<boolean>(false);
-  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-  const [isCurrent, setIsCurrent] = useState<boolean>(!props.isAdd && props.fieldItems?.is_current);
-  const [areValidDates, setAreValidDates] = useState<boolean>(true);
 
   // Functions
   const getLabel = (itemName: string, isLowerCase: boolean): string => {
@@ -152,7 +152,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     </Form.Item>
   );
 
-  const ItemInput = ({ itemName }) => {
+  const ItemInput = ({ itemName }): React.FC => {
     switch (props.fieldItemProps.itemType[itemName]) {
       case "number":
         return (

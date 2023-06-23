@@ -33,7 +33,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
   const [dataArr, setDataArr] = useState<Record<string, unknown>[]>();
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(queryItemList?.map(() => false));
-  const [showRefetching, setShowRefetching] = useState<boolean>(false);
 
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
@@ -49,6 +48,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       }))
     ),
     onError: (err) => console.log(`Not able to load profileCard's data: ${err}`),
+    refetchOnWindowFocus: false,
   });
 
   // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
@@ -72,16 +72,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       setOpenEditFormArr(queryItemList?.map(() => false));
     }
   }
-
-  const handleRefetch = () => {
-    setShowRefetching(true);
-    itemsQuery.refetch().then(() => setShowRefetching(false));
-  };
   
   return (
     <AntdCard
       className="main-panel-card"
-      loading={itemsQuery.isLoading || (showRefetching && itemsQuery.isRefetching)}
+      loading={itemsQuery.isLoading || itemsQuery.isRefetching}
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
@@ -100,7 +95,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
             fieldItemProps={fieldItemProps}
             fieldItems={queryItemList?.[0]}
             postFunction={addFunction}
-            refetchFunction={handleRefetch}
+            refetchFunction={itemsQuery.refetch}
             dataArr={dataArr}
           />
         </div>
@@ -133,7 +128,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
                         fieldItems={queryItemList[index]}
                         postFunction={editFunction}
                         deleteFunction={deleteFunction}
-                        refetchFunction={handleRefetch}
+                        refetchFunction={itemsQuery.refetch}
                         dataArr={dataArr}
                       />
                       <div className="main-panel-info">
