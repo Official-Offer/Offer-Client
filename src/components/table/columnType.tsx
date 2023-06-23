@@ -4,11 +4,16 @@ import React from "react";
 import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
-const items = [
+const UnapprovedJobsActionItems = [
   { key: "1", label: "Copy ID" },
   { key: "2", label: "Tạo danh sách ứng viên" },
   { key: "3", label: "Chỉnh sửa công việc" },
   { key: "4", label: "Xoá công việc" },
+];
+
+const ApplicantActionItems = [
+  { key: "1", label: "Xem CV" },
+  { key: "2", label: "Xoá ứng viên" },
 ];
 
 export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
@@ -68,7 +73,7 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{ items }}>
+        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
           <a>
             <MoreOutlined />
           </a>
@@ -128,8 +133,11 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <a>Xem CV</a>
-        <a>Xoá</a>
+        <Dropdown menu={{items: ApplicantActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
       </Space>
     ),
   },
