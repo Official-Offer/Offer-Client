@@ -6,6 +6,7 @@ import { FilterSearch } from "@components/search/FilterSearch";
 export const BaseTable: React.FC = ({
   dataset,
   columns,
+  searchResults,
   handleFilterType,
   handleFilterSearch,
 }: any) => {
@@ -14,7 +15,7 @@ export const BaseTable: React.FC = ({
       <div className="applicant-filter">
         <div className="applicant-filter-name">
           <FilterSearch
-            searchResults={["1", "2"]}
+            searchResults={searchResults}
             onSearch={(value: any) => {
               handleFilterSearch(value);
             }}

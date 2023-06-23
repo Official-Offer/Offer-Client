@@ -24,24 +24,25 @@ export const FilterSearch: React.FC = ({
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
       options={
-        searchResults.map((n) => ({
-          value: n,
-          label: n,
-        }))
-        // [
-        // {
-        //   value: "John Brown",
-        //   label: "John Brown",
-        // },
-        // {
-        //   value: "Jim Green",
-        //   label: "Jim Green",
-        // },
-        // {
-        //   value: "Joe Black",
-        //   label: "Joe Black",
-        // },
-        // ]
+        searchResults
+          ? searchResults.map((n) => ({
+              value: n,
+              label: n,
+            }))
+          : [
+              {
+                value: "John Brown",
+                label: "John Brown",
+              },
+              {
+                value: "Jim Green",
+                label: "Jim Green",
+              },
+              {
+                value: "Joe Black",
+                label: "Joe Black",
+              },
+            ]
       }
     />
   );

@@ -5,7 +5,7 @@ import { ApplicantDataType } from "@components/table/dataType";
 import { getApplicantsFromJobs } from "@services/apiStudent";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
@@ -13,20 +13,27 @@ import { useQuery } from "react-query";
 const Applicant: NextPage = () => {
   const router = useRouter();
   const jobID = router.query.id;
-//   console.log(id)
+  //   console.log(id)
 
-const [dataset, setData] = useState<ApplicantDataType[]>([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [dataset, setData] = useState<ApplicantDataType[]>([]);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job"],
     queryFn: () => getApplicantsFromJobs(Number(jobID)),
     onSuccess: async (applicants) => {
-      console.log(applicants);
+      // console.log(applicants);
       setData(applicants);
+      var s: string[] = [];
+
+      applicants.forEach((app) => {
+        s.push(app.name);
+      });
+
+      setSearchResults(s);
     },
     onError: () => {},
   });
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -58,7 +65,13 @@ const [dataset, setData] = useState<ApplicantDataType[]>([]);
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
-        <BaseTable dataset={dataset} columns={ApplicantColumns} handleFilterType={handleFilterType} handleFilterSearch={handleFilterSearch}/>
+        <BaseTable
+          dataset={dataset}
+          columns={ApplicantColumns}
+          handleFilterType={handleFilterType}
+          handleFilterSearch={handleFilterSearch}
+          searchResults={searchResults}
+        />
       </div>
     </div>
   );

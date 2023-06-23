@@ -12,15 +12,22 @@ import { UnapprovedJobDataType } from "@components/table/dataType";
 
 //create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
-  // const [applicantList, setApplicantList] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job"],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
-      console.log(jobs);
       setData(jobs);
+      
+      var s: string[] = []
+
+      jobs.forEach((job)=>{
+        s.push(job.title)
+      })
+      
+      setSearchResults(s)
       // jobs.forEach((job) => {
       //   // console.log(student)
       //   // setApplicantList([...applicantList, student.name || "No name"]);
@@ -83,7 +90,13 @@ const UnapprovedJobs: NextPage = () => {
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
-        <BaseTable dataset={dataset} columns={unapprovedJobColumns} handleFilterType={handleFilterType} handleFilterSearch={handleFilterSearch}/>
+        <BaseTable
+          dataset={dataset}
+          columns={unapprovedJobColumns}
+          handleFilterType={handleFilterType}
+          handleFilterSearch={handleFilterSearch}
+          searchResults={searchResults}
+        />
       </div>
     </div>
   );
