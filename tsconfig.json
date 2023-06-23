@@ -82,8 +82,9 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/styles/styled-components/styledButton.ts"  ],
+    "**/*.tsx", 
+    // "src/styles/styled-components/styledButton.ts",
+  ],
   "exclude": [
     "node_modules",
     "test/*"

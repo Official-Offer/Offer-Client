@@ -1,10 +1,9 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSession, signOut } from "next-auth/react";
+import React, { useState, useRef } from "react";
+import { removeCookies } from "cookies-next";
 import { Menu, Input, Button, Dropdown } from "antd";
-import {
-  Card,
-  NotiBox,
-  MessagePanel,
-  MessageBox,
-} from "@styles/styled-components/styledBox";
 import {
   SearchOutlined,
   SmileFilled,
@@ -12,18 +11,19 @@ import {
   BellOutlined,
   CloseOutlined,
 } from "@ant-design/icons";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useState, useRef } from "react";
-import { removeCookies } from "cookies-next";
-import { useSession, signOut } from "next-auth/react";
+import { GeneralSearch } from "@components/search/GeneralSearch";
+import {
+  Card,
+  NotiBox,
+  MessagePanel,
+  MessageBox
+} from "@styles/styled-components/styledBox";
 
-type Navbar = {
-  searchBarHidden: boolean;
+type NavbarProps = {
+  searchBarHidden: boolean,
 };
 
 const notiList = [{ seen: true }, { seen: false }, { seen: true }];
-
 const mesList = [{ seen: true }, { seen: false }, { seen: true }];
 
 export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
@@ -33,16 +33,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     : router.pathname.includes("recruiter")
     ? "recruiter"
     : "advisor";
-  const searchBar = useRef();
-  const [hideBar, setHideBar] = useState(true);
-  const [hideMesPanel, setHideMesPanel] = useState(true);
-  const [searchInput, setSearchInput] = useState("");
+
   const { status } = useSession();
-  const handleSearch = () => null;
-  const handleSearchChange = (event) => {
-    setSearchInput(event.target?.value ?? "");
-  };
-  const handleMessageSearch = () => null;
+  const [hideMesPanel, setHideMesPanel] = useState(true);
+
   const handleMesSearchChange = (event) => {
     setSearchInput(event.target?.value ?? "");
   };
@@ -92,38 +86,28 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         className="navbar left-menu"
       >
         {router.pathname.includes("recruiter") ||
-        router.pathname.includes("advisor") ? (
-          <></>
-        ) : (
-          <Menu.Item key={"/student/"} className="m-0">
-            {false ? (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className="m-0"
-                href={"/student/"}
-              >
-                {"Home"}
-              </a>
-            ) : (
-              <Link href={"/student/"}>
-                <a className="m-0">{"Home"}</a>
-              </Link>
-            )}
-          </Menu.Item>
-        )}
-        <Input
-          ref={searchBar}
-          className={
-            "search-bar" + (searchBarHidden && hideBar ? " hide-bar" : "")
-          }
-          placeholder="Tìm Kiếm"
-          prefix={<SearchOutlined />}
-          onSearch={handleSearch}
-          onChange={handleSearchChange}
-          onFocus={() => setHideBar(false)}
-          onBlur={() => setHideBar(searchInput === "")}
-        />
+          router.pathname.includes("advisor") ? (
+            null
+          ) : (
+            <Menu.Item key={"/student/"} className="m-0">
+              {false ? (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="m-0"
+                  href={"/student/"}
+                >
+                  {"Home"}
+                </a>
+              ) : (
+                <Link href={"/student/"}>
+                  <a className="m-0">{"Home"}</a>
+                </Link>
+              )}
+            </Menu.Item>
+          )
+        }
+        <GeneralSearch hidden={searchBarHidden} />
       </Menu>
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
@@ -180,7 +164,6 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               <Input
                 className="search-bar"
                 placeholder="Tìm tên người dùng, nội dung..."
-                onSearch={handleMessageSearch}
                 onChange={handleMesSearchChange}
               />
             </div>
