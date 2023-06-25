@@ -8,23 +8,19 @@ import { getStudentDetails, updateStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { JobPostForm } from "@components/forms/JobPostForm";
+import { postJob } from "@services/apiJob";
 
 //create a next page for the student home page, code below
 const PostJobs: NextPage = () => {
   const router = useRouter();
-  const studentQuery = useQuery({
-    queryKey: ["student-details"],
-    queryFn: getStudentDetails,
-  });
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
 
   const mutation = useMutation({
-    mutationFn: updateStudent,
+    mutationFn: postJob,
     onSuccess: async (data) => {
       // Invalidate and refetch
       // router.reload();
-      router.push("/student");
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
@@ -37,27 +33,21 @@ const PostJobs: NextPage = () => {
       <div className="recruiter-form">
         <JobPostForm
           onSubmit={(
-            first_name: string,
-            last_name: string,
-            phone_number: string,
-            major: string,
-            roles: string
+            title: string,
+            department: string,
+            description: string,
+            salary: number,
+            end_date: Date,
+            expected_no_appliants: number
           ): void => {
-            state.role.isStudent
-              ? mutation.mutate({
-                  first_name,
-                  last_name,
-                  phone_number,
-                  // expected_graduation,
-                  major,
-                })
-              : mutation.mutate({
-                  first_name,
-                  last_name,
-                  phone_number,
-                  // is_reviewer,
-                  roles,
-                });
+            mutation.mutate({
+              title,
+              department,
+              description,
+              salary,
+              end_date,
+              expected_no_appliants,
+            });
           }}
           isLoading={mutation.isLoading}
         />

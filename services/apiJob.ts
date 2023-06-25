@@ -91,6 +91,12 @@ export const bookmarkJob = async (id: number) => {
   return response.data;
 };
 
+export const postJob = async (body: any) => {
+  console.log("job posted");
+  const response = await request.post(`/jobs/`, body);
+  return response.data;
+};
+
 export const deleteBookmarkedJob = async (id: number) => {
   console.log("delete called");
   const response = await request.delete(`/jobs/bookmark/${id}/`);

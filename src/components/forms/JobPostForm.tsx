@@ -6,14 +6,14 @@ import { SubmitButton } from "@components/button/SubmitButton";
 import { Form, Input, Select } from "antd";
 import router from "next/router";
 
-interface IBasicInfoForm {
+interface IForm {
   onSubmit: (
-    first_name: string,
-    last_name: string,
-    // expected_graduation: string,
-    phone_number: string,
-    major: string,
-    roles: string
+    title: string,
+    department: string,
+    description: string,
+    salary: number,
+    end_date: Date,
+    expected_no_appliants: number
     // is_reviewer: boolean
   ) => void;
   isLoading: boolean;
@@ -22,49 +22,51 @@ interface IBasicInfoForm {
 export const JobPostForm: React.FC = ({
   onSubmit,
   isLoading,
-}: IBasicInfoForm) => {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [phone_number, setPhoneNumber] = useState("");
-  // const [expected_graduation, setGradYear] = useState("");
-  const [roles, setRoles] = useState("");
-  const [major, setMajor] = useState("");
-  // const [is_reviewer, setIsReviewer] = useState(false);
-  const state = useSelector((state: RootState) => state.account);
-  const [majors, setMajors] = useState(["CNTT", "Kinh tế", "Luật"]);
-  const [positions, setPositions] = useState(["Thành viên", "Trưởng nhóm"]);
+}: IForm) => {
+  const [title, setTitle] = useState<string>("");
+  const [department, setDepartment] = useState<string>("");
+  const [departments, setDepartments] = useState([
+    "Kinh doanh",
+    "Công nghệ",
+    "Luật",
+  ]);
+  const [description, setDescription] = useState<string>("");
+  const [end_date, setEndDate] = useState<Date>(new Date());
+  const [salary, setSalary] = useState<number>(0);
+  const [expected_no_appliants, setExpected] = useState<number>(0);
 
   const [continued, setContinued] = useState(false);
-  const handleFirstNameChange = (value: React.SetStateAction<string>) => {
-    setFirstName(value);
+  const handleTitleChange = (value: React.SetStateAction<string>) => {
+    setTitle(value);
   };
 
-  const handleLastNameChange = (value: React.SetStateAction<string>) => {
-    setLastName(value);
+  const handleDepartmentChange = (value: React.SetStateAction<string>) => {
+    setDepartment(value);
   };
 
-  const handleRoleChange = (value: React.SetStateAction<string>) => {
-    setRoles(value);
+  const handleDescChange = (value: React.SetStateAction<string>) => {
+    setDescription(value);
   };
 
-  const handleMajorChange = (value: React.SetStateAction<string>) => {
-    setMajor(value);
+  const handleSalaryChange = (value: React.SetStateAction<number>) => {
+    setSalary(value);
   };
-
-  const handlePhoneNumberChange = (value: React.SetStateAction<string>) => {
-    setPhoneNumber(value);
+  const handleEndDateChange = (value: React.SetStateAction<Date>) => {
+    setEndDate(value);
+  };
+  const handleExpectedChange = (value: React.SetStateAction<number>) => {
+    setExpected(value);
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     onSubmit(
-      first_name,
-      last_name,
-      // expected_graduation,
-      phone_number,
-      major,
-      roles
-      // is_reviewer
+      title,
+      department,
+      description,
+      salary,
+      end_date,
+      expected_no_appliants
     );
     router.push("/unverified");
   };
@@ -86,22 +88,18 @@ export const JobPostForm: React.FC = ({
   return (
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
-        <Form.Item label="Tên công ty" className="form-input">
-          <Input
-            required
-            className="form-item"
-            onChange={handleFirstNameChange}
-          />
+        <Form.Item label="Tên công việc" className="form-input">
+          <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
-        <Form.Item label="Vị trí" className="form-input">
+        <Form.Item label="Tên phòng ban" className="form-input">
           <Select
             className="form-select"
             bordered={false}
-            onChange={handleRoleChange}
+            onChange={handleDepartmentChange}
           >
-            {positions.map((pos) => (
-              <Select.Option className="form-select-dropdown" value={pos}>
-                {pos}
+            {departments.map((dep) => (
+              <Select.Option className="form-select-dropdown" value={dep}>
+                {dep}
               </Select.Option>
             ))}
           </Select>
@@ -110,7 +108,7 @@ export const JobPostForm: React.FC = ({
           <Input
             required
             className="form-item-long"
-            onChange={handlePhoneNumberChange}
+            onChange={handleDescChange}
           />
         </Form.Item>
         {continued && (
@@ -119,14 +117,14 @@ export const JobPostForm: React.FC = ({
               <Input
                 required
                 className="form-item"
-                onChange={handlePhoneNumberChange}
+                onChange={handleSalaryChange}
               />
             </Form.Item>
             <Form.Item label="Hạn nộp" className="form-input full-width">
               <Input
                 required
                 className="form-item"
-                onChange={handlePhoneNumberChange}
+                onChange={handleEndDateChange}
               />
             </Form.Item>
             <Form.Item
@@ -136,14 +134,14 @@ export const JobPostForm: React.FC = ({
               <Input
                 required
                 className="form-item"
-                onChange={handlePhoneNumberChange}
+                onChange={handleExpectedChange}
               />
             </Form.Item>
-            <Form.Item label="Ngành" className="form-input full-width">
+            {/* <Form.Item label="Ngành" className="form-input full-width">
               <Select
                 className="form-select full-width"
                 bordered={false}
-                onChange={handleMajorChange}
+                onChange={handleIndustryChange}
               >
                 {majors.map((major) => (
                   <Select.Option className="form-select-dropdown" value={major}>
@@ -151,7 +149,7 @@ export const JobPostForm: React.FC = ({
                   </Select.Option>
                 ))}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
           </>
         )}
       </div>
