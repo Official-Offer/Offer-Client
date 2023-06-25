@@ -34,7 +34,9 @@ const UnapprovedJobs: NextPage = () => {
     onError: () => {},
   });
 
-  
+  console.log(jobQuery)
+
+
   const handleFilterType = (values: string[]) => {
     console.log(values);
     if (values.length == 0) {
@@ -77,7 +79,7 @@ const UnapprovedJobs: NextPage = () => {
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"unapprovedJob"}
-          isLoading={isLoading}
+          isLoading={jobQuery.isLoading}
         />
       </div>
     </div>

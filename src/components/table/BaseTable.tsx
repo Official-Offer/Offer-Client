@@ -62,6 +62,7 @@ export const BaseTable: React.FC = ({
         rowSelection={{ ...rowSelection }}
         columns={columns}
         dataSource={dataset}
+        loading={isLoading}
       />
     </div>
   );

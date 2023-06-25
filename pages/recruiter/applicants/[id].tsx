@@ -71,6 +71,7 @@ const Applicant: NextPage = () => {
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
+          isLoading={jobQuery.isLoading}
         />
       </div>
     </div>
