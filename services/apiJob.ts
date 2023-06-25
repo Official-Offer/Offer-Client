@@ -97,6 +97,12 @@ export const postJob = async (body: any) => {
   return response.data;
 };
 
+export const deleteJob = async (id: any) => {
+  console.log("job deleted");
+  const response = await request.delete(`/jobs/`, id);
+  return response.data;
+};
+
 export const deleteBookmarkedJob = async (id: number) => {
   console.log("delete called");
   const response = await request.delete(`/jobs/bookmark/${id}/`);
