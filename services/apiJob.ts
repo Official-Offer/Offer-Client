@@ -8,7 +8,7 @@ export const getJobList = async () => {
   // Fetch company name for each job
   for (const job of jobList) {
     job.company_name = (await getCompany(job.company)).name;
-    job.is_bookmarked = (await checkIsBookmarked(job.id)).status;
+    job.is_bookmarked = (await checkIsBookmarked(job.id).catch(() => ({status: false}))).status;
   }
   return jobList;
 };
@@ -36,13 +36,11 @@ export const checkIsBookmarked = async (id: number) => {
 }
 
 export const bookmarkJob = async (id: number) => {
-  console.log("bookmark called")
   const response = await request.post(`/jobs/bookmark/`, { "job_id": id, "created_by": 0});
   return response.data;
 }
 
 export const deleteBookmarkedJob = async (id: number) => {
-  console.log("delete called")
   const response = await request.delete(`/jobs/bookmark/${id}/`);
   return response.data;
 }

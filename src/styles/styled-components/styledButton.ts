@@ -68,12 +68,16 @@ export const TogglableButton = styled.button`
   align-items: center;
 
   border-radius: 40px;
-  border: ${props => props.active ? "none" : "1px solid rgba(0, 0, 0, 0.3)"};
+  border: ${(props) => props.checked ? "none" : "1px solid rgba(0, 0, 0, 0.3)"};
 
   cursor: pointer;
   background-color: white;
-  color: ${props => props.active ? "white" : "black"} ;
-  background-color: ${props => props.active ? "#f63d74" : "white"};
+  color: ${(props) => props.checked ? "white" : "black"} ;
+  background-color: ${(props) => props.checked ? "#f63d74" : "white"};
+
+  &:hover {
+    filter: brightness(0.87);
+  }
 `
 
 export const FileAddButton = styled.div`
