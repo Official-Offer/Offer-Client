@@ -1,4 +1,5 @@
 import { InboxOutlined, TagOutlined, UploadOutlined } from "@ant-design/icons";
+import { BookmarkOutlined } from "@components/icons/BookmarkOutlined";
 import EmailForm from "@components/forms/EmailForm";
 import ResumeForm from "@components/forms/ResumeForm";
 import { SubmitButton } from "@styles/styled-components/styledButton";
@@ -39,13 +40,13 @@ export const JobDescription: React.FC = () => {
         >
           Ứng tuyển
         </Button>
-        <Button className="bookmark" icon={<TagOutlined />} />
         <Button
           className="inbox"
           icon={<InboxOutlined style={{ fontSize: 20 }} />}
         >
           Nhắn tin
         </Button>
+        <Button className="job-portal-list-card-bookmark icon-btn" type="text" icon={<BookmarkOutlined />} />
         <Modal
           title="Ứng tuyển"
           visible={isVisible}

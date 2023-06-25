@@ -56,9 +56,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
 
   &.ant-btn:hover {
     background: $grey-light;
