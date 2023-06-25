@@ -3,23 +3,23 @@ import styled from 'styled-components'
 import { ButtonProps } from 'antd/lib/button';
 
 export const StyledSubmitButton = styled.button`
-  background-color: #d30b81;
+  background: ${props => props.background || "#d30b81"};
   color: white;
   border: none;
-  /* margin-top: 28px; */
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
-  border-radius: 20px;
-  padding: 10px 40px;
+  border-radius: ${props => props.borderRadius || "20px"}; 
+  padding-top: ${props => props.paddingTopBottom || "10px"}; 
+  padding-bottom: ${props => props.paddingTopBottom || "10px"}; 
+  padding-left: ${props => props.paddingLeftRight || "40px"}; 
+  padding-right:  ${props => props.paddingLeftRight || "40px"};  
   font-size: 14px;
   font-weight: bold;
-  width: 250px;
+  width: ${props => props.width || "250px"};  
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #b40a6e;
+    background-color: ${props => props.hoverBackgroundColor || "#b40a6e"}; 
   }
 `
 

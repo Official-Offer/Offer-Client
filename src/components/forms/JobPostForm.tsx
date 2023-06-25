@@ -66,7 +66,7 @@ export const JobPostForm: React.FC = ({
       roles
       // is_reviewer
     );
-    router.push("/recruiter/jobs/unverified");
+    router.push("/unverified");
   };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
@@ -80,7 +80,7 @@ export const JobPostForm: React.FC = ({
   };
 
   const handleCancel = (event: { preventDefault: () => void }) => {
-    router.push("recruiter/jobs/unverified");
+    router.push("unverified");
   };
 
   return (
@@ -156,16 +156,22 @@ export const JobPostForm: React.FC = ({
         )}
       </div>
       <div className="form-submit-button">
-        <SubmitButton
-          text={continued ? "Quay lại" : "Huỷ"}
-          isLoading={isLoading}
-          onClick={continued ? handleBack : handleCancel}
-        />
-        <SubmitButton
-          text={continued ? "Lưu công việc" : "Tiếp tục"}
-          isLoading={isLoading}
-          onClick={continued ? handleSubmit : handleContinue}
-        />
+        <div className="form-submit-button-back">
+          <SubmitButton
+            text={continued ? "Quay lại" : "Huỷ"}
+            isLoading={isLoading}
+            type={2}
+            onClick={continued ? handleBack : handleCancel}
+          />
+        </div>
+        <div className="form-submit-button-continue">
+          <SubmitButton
+            text={continued ? "Lưu công việc" : "Tiếp tục"}
+            isLoading={isLoading}
+            type={3}
+            onClick={continued ? handleSubmit : handleContinue}
+          />
+        </div>
       </div>
     </Form>
   );

@@ -74,15 +74,19 @@
   }
 
   &-submit-button {
-    // margin-top: 28px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    display: flex;
     &-spinner {
       animation-name: spin;
       animation-duration: 500ms;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
+    }
+    &-continue {
+      margin-left: auto;
+    }
+    &-back {
+      align-items: right;
+      margin-right: 20px;
     }
     @keyframes spin {
       from {
