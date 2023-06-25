@@ -66,7 +66,7 @@ export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     },
   },
   {
-    title: "Action",
+    title: "Hành động",
     key: "action",
     render: (_, record) => (
       // {record.name}
@@ -119,7 +119,7 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, { tag }) => {
       let color =
         tag === "Chưa tạo danh sách"
-          ? "red"
+          ? "blue"
           : tag === "Chưa tuyển"
           ? "volcano"
           : "green";
@@ -131,7 +131,7 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     },
   },
   {
-    title: "Action",
+    title: "Hành động",
     key: "action",
     render: (_, record) => (
       // {record.name}

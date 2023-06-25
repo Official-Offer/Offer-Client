@@ -39,12 +39,6 @@ export const JobPostForm: React.FC = ({
     setFirstName(value);
   };
 
-  // const handleGradYearChange = (event: {
-  //   target: { value: React.SetStateAction<string> };
-  // }) => {
-  //   setGradYear(event.target.value);
-  // };
-
   const handleLastNameChange = (value: React.SetStateAction<string>) => {
     setLastName(value);
   };
@@ -52,12 +46,6 @@ export const JobPostForm: React.FC = ({
   const handleRoleChange = (value: React.SetStateAction<string>) => {
     setRoles(value);
   };
-
-  // const handleReviewerChange = (event: {
-  //   target: { value: React.SetStateAction<string> };
-  // }) => {
-  //   setIsReviewer(event.target.value == "true");
-  // };
 
   const handleMajorChange = (value: React.SetStateAction<string>) => {
     setMajor(value);
@@ -92,66 +80,89 @@ export const JobPostForm: React.FC = ({
   };
 
   const handleCancel = (event: { preventDefault: () => void }) => {
-    router.push('recruiter/jobs/unverified')
+    router.push("recruiter/jobs/unverified");
   };
 
   return (
     <Form className="form" layout="vertical">
-      <div className="form-grid">
-        <Form.Item label="Họ" className="form-input">
+      <div className="form-grid-white">
+        <Form.Item label="Tên công ty" className="form-input">
           <Input
             required
             className="form-item"
             onChange={handleFirstNameChange}
           />
         </Form.Item>
-        <Form.Item label="Tên" className="form-input">
-          <Input
-            required
-            className="form-item"
-            onChange={handleLastNameChange}
-          />
+        <Form.Item label="Vị trí" className="form-input">
+          <Select
+            className="form-select"
+            bordered={false}
+            onChange={handleRoleChange}
+          >
+            {positions.map((pos) => (
+              <Select.Option className="form-select-dropdown" value={pos}>
+                {pos}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
-        <Form.Item label="Số điện thoại" className="form-input full-width">
+        <Form.Item label="Miêu tả" className="form-input full-width">
           <Input
             required
-            className="form-item"
+            className="form-item-long"
             onChange={handlePhoneNumberChange}
           />
         </Form.Item>
-        <Form.Item
-          label={state.role.isStudent ? "Ngành học" : "Chức vụ"}
-          className="form-input full-width"
-        >
-          <Select
-            className="form-select full-width"
-            bordered={false}
-            onChange={
-              state.role.isStudent ? handleMajorChange : handleRoleChange
-            }
-          >
-            {state.role.isStudent || state.role.isAdvisor
-              ? majors.map((major) => (
+        {continued && (
+          <>
+            <Form.Item label="Lương" className="form-input full-width">
+              <Input
+                required
+                className="form-item"
+                onChange={handlePhoneNumberChange}
+              />
+            </Form.Item>
+            <Form.Item label="Hạn nộp" className="form-input full-width">
+              <Input
+                required
+                className="form-item"
+                onChange={handlePhoneNumberChange}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Số người muốn tuyển"
+              className="form-input full-width"
+            >
+              <Input
+                required
+                className="form-item"
+                onChange={handlePhoneNumberChange}
+              />
+            </Form.Item>
+            <Form.Item label="Ngành" className="form-input full-width">
+              <Select
+                className="form-select full-width"
+                bordered={false}
+                onChange={handleMajorChange}
+              >
+                {majors.map((major) => (
                   <Select.Option className="form-select-dropdown" value={major}>
                     {major}
                   </Select.Option>
-                ))
-              : positions.map((pos) => (
-                  <Select.Option className="form-select-dropdown" value={pos}>
-                    {pos}
-                  </Select.Option>
                 ))}
-          </Select>
-        </Form.Item>
+              </Select>
+            </Form.Item>
+          </>
+        )}
       </div>
       <div className="form-submit-button">
         <SubmitButton
-          text={continued ? "Huỷ" : "Quay lại"}
+          text={continued ? "Quay lại" : "Huỷ"}
           isLoading={isLoading}
           onClick={continued ? handleBack : handleCancel}
         />
         <SubmitButton
-          text={continued ? "Tạo công việc" : "Tiếp tục"}
+          text={continued ? "Lưu công việc" : "Tiếp tục"}
           isLoading={isLoading}
           onClick={continued ? handleSubmit : handleContinue}
         />

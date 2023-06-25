@@ -12,7 +12,10 @@ import { JobPostForm } from "@components/forms/JobPostForm";
 //create a next page for the student home page, code below
 const PostJobs: NextPage = () => {
   const router = useRouter();
-  const studentQuery = useQuery({ queryKey: ["student-details"], queryFn: getStudentDetails });
+  const studentQuery = useQuery({
+    queryKey: ["student-details"],
+    queryFn: getStudentDetails,
+  });
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
 
@@ -25,33 +28,41 @@ const PostJobs: NextPage = () => {
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
-  
+
   // console.log(studentDetails);
-  
+
   return (
-      <div className="register-content">
-        <div className="register-content-form">
-          <h1>Tạo công việc mới</h1>
-          <JobPostForm
-            onSubmit={(first_name: string, last_name: string, phone_number: string, major: string, roles: string): void => {
-              state.role.isStudent ? mutation.mutate({
-                first_name,
-                last_name,
-                phone_number,
-                // expected_graduation,
-                major,
-              }): mutation.mutate({
-                first_name,
-                last_name,
-                phone_number,
-                // is_reviewer,
-                roles
-              })
-            }}
-            isLoading={mutation.isLoading}
-          />
-        </div>
+    <div className="recruiter-job-post">
+      <h1>Tạo công việc mới</h1>
+      <div className="recruiter-form">
+        <JobPostForm
+          onSubmit={(
+            first_name: string,
+            last_name: string,
+            phone_number: string,
+            major: string,
+            roles: string
+          ): void => {
+            state.role.isStudent
+              ? mutation.mutate({
+                  first_name,
+                  last_name,
+                  phone_number,
+                  // expected_graduation,
+                  major,
+                })
+              : mutation.mutate({
+                  first_name,
+                  last_name,
+                  phone_number,
+                  // is_reviewer,
+                  roles,
+                });
+          }}
+          isLoading={mutation.isLoading}
+        />
       </div>
+    </div>
   );
 };
 
