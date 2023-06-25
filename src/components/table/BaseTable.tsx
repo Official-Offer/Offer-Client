@@ -56,12 +56,6 @@ export const BaseTable: React.FC = ({
           <StyledAddButton className="table-functions-add" onClick={handleAdd}>
             Tạo công việc
           </StyledAddButton>
-          // <SubmitButton
-          //   className="table-add"
-          //   text="Tạo công việc"
-          //   isLoading={isLoading}
-          //   onClick={handleAdd}
-          // />
         )}
       </div>
       <Table

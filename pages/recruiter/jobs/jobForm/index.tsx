@@ -7,6 +7,7 @@ import { getUserDetails } from "services/apiUser";
 import { getStudentDetails, updateStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import { JobPostForm } from "@components/forms/JobPostForm";
 
 //create a next page for the student home page, code below
 const PostJobs: NextPage = () => {
@@ -28,14 +29,10 @@ const PostJobs: NextPage = () => {
   // console.log(studentDetails);
   
   return (
-    <div className="register">
-      <div className="register-sideBar">
-        <LeftPanel />
-      </div>
       <div className="register-content">
         <div className="register-content-form">
-          <h1>Xác nhận thông tin cơ bản</h1>
-          <BasicInfoForm
+          <h1>Tạo công việc mới</h1>
+          <JobPostForm
             onSubmit={(first_name: string, last_name: string, phone_number: string, major: string, roles: string): void => {
               state.role.isStudent ? mutation.mutate({
                 first_name,
@@ -50,16 +47,12 @@ const PostJobs: NextPage = () => {
                 // is_reviewer,
                 roles
               })
-              router.push("/student");
             }}
             isLoading={mutation.isLoading}
           />
-          <br/>
-          <FootnoteForm />
         </div>
       </div>
-    </div>
   );
 };
 
-export default RegisterBasicInfo;
+export default PostJobs;
