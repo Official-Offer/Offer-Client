@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Card as AntdCard } from 'antd';
-import { CardProps } from 'antd/lib/card';
 import { border, color, layout, space } from 'styled-system';
 
 export const Box = styled.div`
@@ -183,7 +181,7 @@ export const StyledBookmarkedCard = styled.div`
   padding: 24px;
 
   &:hover {
-    backdrop-filter: brightness(0.87);
+    backdrop-filter: brightness(0.90);
 
     .bookmarked {
       &-close-button {
@@ -248,35 +246,5 @@ export const StyledBookmarkedCard = styled.div`
       right: 24px;
       font-size: 1rem;
     }
-  }
-`;
-
-type SearchDropdownProps = {
-  background: string;
-}
-
-export const SearchDropdown: typeof AntdCard = styled(AntdCard)<CardProps & SearchDropdownProps>`
-  text-align: center;
-  
-  ul {
-    padding: 0;
-    margin-bottom: 0;
-    text-align: left;
-    list-style: none;
-    background: ${({background}) => background};
-  
-    li {
-      padding: 8px 24px;
-      background: ${({background}) => background};
-  
-      &:hover {
-        cursor: pointer;
-        filter: brightness(0.87);
-      }
-    }
-  }
-
-  .ant-card-body {
-    padding: 16px 0px;
   }
 `;
