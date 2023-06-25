@@ -8,11 +8,11 @@ const Jobs: NextPage = () => {
   ) as any;
 
   return (
-    <div className = "applicant">
+    <div className="applicant">
       <h1 className="applicant-title">Công việc</h1>
       <div className="filter-applicant"></div>
-      <div className = "applicant-table">
-      <ApplicantTable />
+      <div className="applicant-table">
+        <ApplicantTable />
       </div>
     </div>
   );

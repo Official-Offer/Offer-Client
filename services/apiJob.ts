@@ -1,6 +1,6 @@
 import request from "./apiService";
 import { getCompany } from "./apiCompany";
-import { URL_API_ADMIN, TOKEN_BEARER } from 'config/index';
+import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 
 export const getJobList = async () => {
   const response = await request.get(`/jobs/`);
@@ -27,8 +27,13 @@ export const getJobs = async () => {
 export const getUnapprovedJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
+  const tags = [
+    "Chưa tạo danh sách",
+    "Chưa tuyển",
+    "Đã tuyển",
+  ];
   // Fetch company name for each job
-  var res = []
+  var res = [];
   for (const job of jobList) {
     res.push({
       key: job.id,
@@ -38,8 +43,8 @@ export const getUnapprovedJobs = async () => {
       address: job.location || "No location",
       schools: job.schools.length || "No School",
       applicants: job.applicants.length,
-      tag: "Vòng đơn",
-    })
+      tag: tags[Math.floor(Math.random()*tags.length)],
+    });
   }
   return res;
 };
@@ -70,21 +75,24 @@ export const getBookmarkedList = async () => {
     job.job_info = await getJob(job.job_id);
   }
   return bookmarkedList;
-}
+};
 
 export const checkIsBookmarked = async (id: number) => {
   const response = await request.get(`/jobs/bookmark/${id}/`);
   return response.data;
-}
+};
 
 export const bookmarkJob = async (id: number) => {
-  console.log("bookmark called")
-  const response = await request.post(`/jobs/bookmark/`, { "job_id": id, "created_by": 0});
+  console.log("bookmark called");
+  const response = await request.post(`/jobs/bookmark/`, {
+    job_id: id,
+    created_by: 0,
+  });
   return response.data;
-}
+};
 
 export const deleteBookmarkedJob = async (id: number) => {
-  console.log("delete called")
+  console.log("delete called");
   const response = await request.delete(`/jobs/bookmark/${id}/`);
   return response.data;
-}
+};

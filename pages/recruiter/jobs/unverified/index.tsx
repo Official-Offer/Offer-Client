@@ -9,57 +9,32 @@ import { useQuery } from "react-query";
 import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
+import router from "next/router";
 
 //create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [isLoading, setLoading] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job"],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
-      
-      var s: string[] = []
 
-      jobs.forEach((job)=>{
-        s.push(job.title)
-      })
-      
-      setSearchResults(s)
-      // jobs.forEach((job) => {
-      //   // console.log(student)
-      //   // setApplicantList([...applicantList, student.name || "No name"]);
-      //   setData([
-      //     ...dataset,
-      //     {
-      //       key: job.id,
-      //       ID: job.id,
-      //       date: job.timestamp.toString(),
-      //       title: job.title || "No title",
-      //       address: job.location || "No location",
-      //       schools: job.schools.length || "No School",
-      //       applicants: job.applicants.length,
-      //       tag: "Vòng đơn",
-      //     },
-      //   ]);
-      //   d.push({
-      //     key: job.id,
-      //     ID: job.id,
-      //     date: job.timestamp.toString(),
-      //     title: job.title || "No title",
-      //     address: job.location || "No location",
-      //     schools: job.schools.length || "No School",
-      //     applicants: job.applicants.length,
-      //     tag: "Vòng đơn",
-      //   })
-      // });
+      var s: string[] = [];
+
+      jobs.forEach((job) => {
+        s.push(job.title);
+      });
+
+      setSearchResults(s);
     },
     onError: () => {},
   });
 
-
+  
   const handleFilterType = (values: string[]) => {
     console.log(values);
     if (values.length == 0) {
@@ -86,6 +61,10 @@ const UnapprovedJobs: NextPage = () => {
     setData(dataset.filter((item) => item.title == value));
   };
 
+  const handleAddJob = () => {
+    router.push('/recruiter/jobs/jobForm');
+  }
+
   return (
     <div className="applicant">
       <h1 className="applicant-title">Ứng viên</h1>
@@ -96,6 +75,9 @@ const UnapprovedJobs: NextPage = () => {
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
+          handleAdd={handleAddJob}
+          tableType={"unapprovedJob"}
+          isLoading={isLoading}
         />
       </div>
     </div>
