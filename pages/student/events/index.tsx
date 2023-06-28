@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { JobFilterNavbar } from "@components/navbar/JobFilterNavBar";
+import { FilterNavbar } from "@components/navbar/FilterNavbar";
 import { JobCard } from "@components/cardsGrid/JobCard";
 import { Row, Col } from "antd";
 import { JobDescription } from "@components/main/JobContent";
@@ -10,7 +10,7 @@ const StudentEvents: NextPage = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   return (
     <div>
-      <JobFilterNavbar />
+      <FilterNavbar />
       <div className="job-portal-fusion"></div>
       <Row>
         <Col span={7}>

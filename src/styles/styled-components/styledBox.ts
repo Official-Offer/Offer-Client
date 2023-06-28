@@ -84,7 +84,7 @@ export const MessagePanel = styled.div`
   border-radius: 8px 8px 0px 0px;
   background-color: white;
   padding: 10px 0px;
-  transition: 0.4s;
+  transition: 0.3s;
 
   &.mes-panel {
     &-open {

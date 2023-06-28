@@ -20,7 +20,10 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
   const searchQuery = useQuery({
     queryKey: "search",
     queryFn: () => searchInput !== "" && getSearch(searchInput),
-    onSuccess: (res) => setSearchResult(res),
+    onSuccess: (res) => {
+      setOpenDropdown(Object.keys(res).length > 0);
+      setSearchResult(res);
+    },
     onError: (err) => console.log("Search Error: ", err),
     enabled: false,
   });
@@ -41,12 +44,12 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
   };
   
   const handleFocus = () => {
-    setOpenDropdown(searchInput !== "");
+    setOpenDropdown(searchInput !== "" && Object.keys(searchResult).length > 0);
     setHideBar(false);
   }
 
   const handleBlur = () => {
-    // setOpenDropdown(false);
+    setOpenDropdown(false);
     setHideBar(searchInput === "");
   }
 
@@ -68,7 +71,7 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
           <SearchDropdown
             background="white"
             children={
-              searchQuery.isFetching ? <LoadingOutlined /> :
+              searchQuery.isFetching ? <LoadingOutlined /> : (
                 <ul className="list-menu">
                   {
                     Object.keys(searchResult).map((key) => 
@@ -78,6 +81,7 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
                     )).flat()
                   }
                 </ul>
+              )
             }
           />
         }

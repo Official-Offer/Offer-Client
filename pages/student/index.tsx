@@ -145,7 +145,14 @@ const StudentHome: NextPage = () => {
         </section>
         <section>
           <h2>Đề Xuất Công Việc</h2>
-          <CardTray cardList={jobQuery.isLoading ? Array(8).fill(<InfoCard loading />) : jobList.map((info) => <InfoCard info={info} />)} />
+          <CardTray 
+            cardList={
+              jobQuery.isLoading ? 
+                Array(4).fill(<InfoCard loading />) 
+              : 
+                jobList.filter((job) => !job.is_closed).map((job) => <InfoCard info={job} />)
+            }
+          />
           <div className="see-more">
             <Link href="student/jobs">Xem thêm công việc</Link>
           </div>
