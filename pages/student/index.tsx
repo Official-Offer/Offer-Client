@@ -148,7 +148,7 @@ const StudentHome: NextPage = () => {
           <CardTray 
             cardList={
               jobQuery.isLoading ? 
-                Array(4).fill(<InfoCard loading />) 
+                Array(8).fill(<InfoCard loading />) 
               : 
                 jobList.filter((job) => !job.is_closed).map((job) => <InfoCard info={job} />)
             }

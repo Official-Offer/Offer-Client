@@ -24,7 +24,7 @@ export const FilterNavbar: React.FC<FilterNavbarProps> = ({ filters, searchFunc 
   };
   
   return (
-    <div className="job-portal-container navbar">
+    <div className="job-portal-navbar navbar">
       <Input
         className="search-bar"
         placeholder="Tìm Kiếm"
