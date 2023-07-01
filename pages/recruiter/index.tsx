@@ -5,6 +5,7 @@ import { unapprovedJobColumns } from "@components/table/columnType";
 import { getUnapprovedJobs } from "@services/apiJob";
 import { Avatar, Badge, Space } from "antd";
 import Card from "antd/lib/card/Card";
+import Meta from "antd/lib/card/Meta";
 import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -84,40 +85,108 @@ const Recruiter: NextPage = () => {
       <div>
         <h2>Xin Chào Bạn</h2>
       </div>
-      <div>
-        <div>
-          <Card />
+      <div className="recruiter-dashboard-mainStats">
+        <div className="recruiter-dashboard-graph">
+          <Card loading={false}>
+            <Meta
+              style={{ height: "250px" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+          </Card>
         </div>
-        <div>
-          <Card />
+        <div className="recruiter-dashboard-applicants">
+        <Card loading={false}>
+            <Meta
+              style={{ height: "40%" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+            <br/>
+            <Meta
+              style={{ height: "40%" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+            <br/>
+            <Meta
+              style={{ height: "40%" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+          </Card>
         </div>
       </div>
       <div>
         <h2>Số liệu</h2>
       </div>
-      <div>
-        <div>
-          <Card />
+      <div className="recruiter-dashboard-addStats">
+        <div className="recruiter-dashboard-g1">
+        <Card loading={false}>
+            <Meta
+              style={{ height: "250px" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+          </Card>
         </div>
-        <div>
-          <Card />
+        <div className="recruiter-dashboard-g2">
+        <Card loading={false}>
+            <Meta
+              style={{ height: "250px" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+          </Card>
         </div>
-        <div>
-          <Card />
+        <div className="recruiter-dashboard-g3">
+        <Card loading={false}>
+            <Meta
+              style={{ height: "250px" }}
+              avatar={
+                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+              }
+              title="Card title"
+              description="This is the description"
+            />
+          </Card>
         </div>
       </div>
       <div className="applicant-table">
-        <BaseTable
-          dataset={dataset}
-          columns={unapprovedJobColumns}
-          handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearch}
-          searchResults={searchResults}
-          // handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
-        />
-        <h1>Xem thêm</h1>
+        <div className="recruiter-dashboard-searchBar">
+          <h2>Công Việc</h2>
+          <h1>Xem thêm</h1>
+        </div>
+        <div className="recruiter-dashboard-searchBar">
+          <BaseTable
+            dataset={dataset}
+            columns={unapprovedJobColumns}
+            handleFilterType={handleFilterType}
+            handleFilterSearch={handleFilterSearch}
+            searchResults={searchResults}
+            // handleAdd={handleAddJob}
+            tableType={"unapprovedJob"}
+            isLoading={jobQuery.isLoading}
+          />
+        </div>
       </div>
     </div>
   );
