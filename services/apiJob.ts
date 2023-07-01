@@ -98,7 +98,7 @@ export const postJob = async (body: any) => {
 };
 
 export const deleteJob = async (id: any) => {
-  console.log("job deleted");
+  console.log ("job deleted");
   const response = await request.delete(`/jobs/`, id);
   return response.data;
 };
