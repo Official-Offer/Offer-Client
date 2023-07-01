@@ -1,5 +1,5 @@
 export { Navbar } from "./navbar";
-export { VerticalNav } from "./navbar/VerticalNav";
+export { Nav } from "./navbar/Nav";
 export { Main } from "./main";
 export { Button } from "./button";
 export { Card } from "./card";
