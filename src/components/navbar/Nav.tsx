@@ -112,12 +112,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
           }
         />
         <Layout>
-          {/* <Navbar
-          searchBarHidden={
-            router.pathname === "/student/jobs" ||
-            router.pathname === "/student/events"
-          }
-        /> */}
           <Sider className="recruiter-sider">
             <div className="recruiter-sider-logo">Home</div>
             <Menu
@@ -143,12 +137,12 @@ export const Nav: React.FC = (props: any): ReactElement => {
   }
   return (
     <>
-      {/* <Navbar
+      <Navbar
         searchBarHidden={
           router.pathname === "/student/jobs" ||
           router.pathname === "/student/events"
         }
-      /> */}
+      />
       <div>{props.children}</div>
     </>
   );
