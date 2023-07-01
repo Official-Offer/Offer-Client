@@ -23,3 +23,15 @@
     padding: 20px;
   }
 }
+.recruiter-dashboard {
+  padding: 20px;
+  &-header {
+    display: flex;
+  }
+  &-badges {
+
+  }
+  &-searchBar {
+    margin-left: auto;
+  }
+}
