@@ -101,7 +101,7 @@ const Recruiter: NextPage = () => {
         <div className="recruiter-dashboard-applicants">
         <Card loading={false}>
             <Meta
-              style={{ height: "40%" }}
+              style={{ height: "75px" }}
               avatar={
                 <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
               }
@@ -110,7 +110,7 @@ const Recruiter: NextPage = () => {
             />
             <br/>
             <Meta
-              style={{ height: "40%" }}
+              style={{ height: "75px" }}
               avatar={
                 <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
               }
@@ -119,7 +119,7 @@ const Recruiter: NextPage = () => {
             />
             <br/>
             <Meta
-              style={{ height: "40%" }}
+              style={{ height: "75px" }}
               avatar={
                 <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
               }

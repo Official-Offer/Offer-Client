@@ -16,9 +16,10 @@ const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);

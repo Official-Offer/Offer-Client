@@ -16,6 +16,11 @@ const ApplicantActionItems = [
   { key: "2", label: "Xoá ứng viên" },
 ];
 
+const SchoolActionItems = [
+  { key: "1", label: "Xem chi tiết" },
+  { key: "2", label: "Copy ID" },
+];
+
 export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
     title: "ID",
@@ -213,29 +218,19 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
     key: "ID",
   },
   {
-    title: "Ngày tạo",
-    dataIndex: "date",
-    key: "date",
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
   },
   {
-    title: "Tiêu đề",
-    dataIndex: "title",
-    key: "title",
+    title: "Số học sinh",
+    dataIndex: "noStudents",
+    key: "noStudents",
   },
   {
-    title: "Địa điểm",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Số trường",
-    dataIndex: "schools",
-    key: "schools",
-  },
-  {
-    title: "Số đơn",
-    dataIndex: "applicants",
-    key: "applicants",
+    title: "Số công việc",
+    dataIndex: "noJobs",
+    key: "noJobs",
   },
   {
     title: "Tình trạng",
@@ -261,7 +256,7 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
+        <Dropdown menu={{items: SchoolActionItems}}>
           <a>
             <MoreOutlined />
           </a>

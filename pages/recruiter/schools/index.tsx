@@ -1,32 +1,32 @@
 import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
+// import dynamic from "next/dynamic";
+// import type { ColumnsType } from "antd/es/table";
+// import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { schoolColumns, unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
+import { getSchoolsForRecruiter } from "@services/apiSchool";
+import { SchoolDataType } from "@components/table/dataType";
 
 //create a next page for the student home page, code below
 const Schools: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setData] = useState<SchoolDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
-  // DataType[]
-  const jobQuery = useQuery({
+  const schoolQuery = useQuery({
     queryKey: ["schools"],
-    queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
+    queryFn: getSchoolsForRecruiter,
+    onSuccess: async (schools) => {
+      setData(schools);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      schools.forEach((school) => {
+        s.push(school.name);
       });
 
       setSearchResults(s);
@@ -34,7 +34,7 @@ const Schools: NextPage = () => {
     onError: () => {},
   });
 
-  console.log(jobQuery)
+  // console.log(jobQuery)
 
 
   const handleFilterType = (values: string[]) => {
@@ -63,23 +63,23 @@ const Schools: NextPage = () => {
     setData(dataset.filter((item) => item.title == value));
   };
 
-  const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
-  }
+  // const handleAddJob = () => {
+  //   router.push('/recruiter/jobs/jobForm');
+  // }
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Danh sách trường</h1>
       <div className="applicant-table">
         <BaseTable
           dataset={dataset}
-          columns={unapprovedJobColumns}
+          columns={schoolColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          handleAdd={handleAddJob}
+          // handleAdd={handleAddJob}
           tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          isLoading={schoolQuery.isLoading}
         />
       </div>
     </div>
