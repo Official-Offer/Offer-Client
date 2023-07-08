@@ -60,7 +60,7 @@ const UnapprovedJobs: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title == value));
+    setData(dataset.filter((item) => item.title === value));
   };
 
   const handleAddJob = () => {
