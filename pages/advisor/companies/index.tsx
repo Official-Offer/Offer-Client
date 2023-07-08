@@ -12,13 +12,12 @@ import router from "next/router";
 import { getSchoolsForRecruiter } from "@services/apiSchool";
 import { SchoolDataType } from "@components/table/dataType";
 
-//create a next page for the student home page, code below
-const Schools: NextPage = () => {
+const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<SchoolDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const schoolQuery = useQuery({
-    queryKey: ["schools"],
+  const companyQuery = useQuery({
+    queryKey: ["companies"],
     queryFn: getSchoolsForRecruiter,
     onSuccess: async (schools) => {
       setData(schools);
@@ -69,7 +68,7 @@ const Schools: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Danh sách trường</h1>
+      <h1 className="applicant-title">Danh sách công ty</h1>
       <div className="applicant-table">
         <BaseTable
           dataset={dataset}
@@ -78,7 +77,7 @@ const Schools: NextPage = () => {
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           // handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
+          tableType={"companies"}
           isLoading={schoolQuery.isLoading}
         />
       </div>
