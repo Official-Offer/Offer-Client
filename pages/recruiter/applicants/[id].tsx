@@ -58,7 +58,7 @@ const Applicant: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.name == value));
+    setData(dataset.filter((item) => item.name === value));
   };
 
   return (

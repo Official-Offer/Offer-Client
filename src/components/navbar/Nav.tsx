@@ -16,13 +16,18 @@ import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
 import router, { useRouter } from "next/router";
 import Link from "next/link";
+import { Header } from "antd/lib/layout/layout";
+import dynamic from "next/dynamic";
 
 const { Sider } = Layout;
 
-export const VerticalNav: React.FC = (props: any): ReactElement => {
+export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   // const [selectedKey, setSelectedKey] = useState("/recruiter");
   // const selectedRef = useRef("1");
+  const Navbar = dynamic(() =>
+    import("@components").then((mod: any) => mod.Navbar)
+  ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
   const path = ["", "/jobs", "/applicants", "/schools", "/events"];
@@ -61,31 +66,36 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
             },
           ]
         : undefined,
-        // index == 2
-        // ? [
-        //     {
-        //       label: "Vòng đơn",
-        //       icon: React.createElement(icon),
-        //       onClick: (e) => {
-        //         router.push(`/recruiter${path[index]}/resume`);
-        //       },
-        //       key: `/recruiter${path[index]}/resume`,
-        //     },
-        //     {
-        //       label: "Vòng phỏng vấn",
-        //       icon: React.createElement(icon),
-        //       onClick: (e) => {
-        //         router.push(`/recruiter${path[index]}/interview`);
-        //       },
-        //       key: `/recruiter${path[index]}/interview`,
-        //     },
-        //   ]
-        // : 
+    // index == 2
+    // ? [
+    //     {
+    //       label: "Vòng đơn",
+    //       icon: React.createElement(icon),
+    //       onClick: (e) => {
+    //         router.push(`/recruiter${path[index]}/resume`);
+    //       },
+    //       key: `/recruiter${path[index]}/resume`,
+    //     },
+    //     {
+    //       label: "Vòng phỏng vấn",
+    //       icon: React.createElement(icon),
+    //       onClick: (e) => {
+    //         router.push(`/recruiter${path[index]}/interview`);
+    //       },
+    //       key: `/recruiter${path[index]}/interview`,
+    //     },
+    //   ]
+    // :
   }));
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+
+  const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
 
   console.log(router.pathname);
 
@@ -94,24 +104,46 @@ export const VerticalNav: React.FC = (props: any): ReactElement => {
     router.pathname.includes("advisor")
   ) {
     return (
-      <Layout hasSider>
-        <Sider className="recruiter-sider">
-          <div className="recruiter-sider-logo">Home</div>
-          <Menu
-            defaultSelectedKeys={["/recruiter"]}
-            defaultOpenKeys={[router.pathname.includes("jobs")? "/recruiter/jobs" : "/recruiter/applicants"]}
-            selectedKeys={[router.pathname]}
-            mode="inline"
-            // theme="dark"
-            inlineCollapsed={collapsed}
-            items={items}
-          />
-        </Sider>
-        <Layout className="layout-with-sider">
-          <div>{props.children}</div>
+      <Layout>
+        <Navbar
+          searchBarHidden={
+            router.pathname === "/student/jobs" ||
+            router.pathname === "/student/events"
+          }
+        />
+        <Layout>
+          <Sider className="recruiter-sider">
+            <div className="recruiter-sider-logo">Home</div>
+            <Menu
+              defaultSelectedKeys={["/recruiter"]}
+              defaultOpenKeys={[
+                router.pathname.includes("jobs")
+                  ? "/recruiter/jobs"
+                  : "/recruiter/applicants",
+              ]}
+              selectedKeys={[router.pathname]}
+              mode="inline"
+              // theme="dark"
+              inlineCollapsed={collapsed}
+              items={items}
+            />
+          </Sider>
+          <Layout className="layout-with-sider">
+            <div>{props.children}</div>
+          </Layout>
         </Layout>
       </Layout>
     );
   }
-  return <div>{props.children}</div>;
+  return (
+    <>
+      <Navbar
+        searchBarHidden={
+          router.pathname === "/student/jobs" ||
+          router.pathname === "/student/events"
+        }
+      />
+      <div>{props.children}</div>
+    </>
+  );
 };

@@ -23,3 +23,40 @@
     padding: 20px;
   }
 }
+.recruiter-dashboard {
+  padding: 20px;
+  &-header {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  &-badges {
+  }
+  &-searchBar {
+    margin-left: auto;
+  }
+  &-mainStats {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 20px;
+  }
+  &-graph {
+    flex: 2;
+  }
+  &-applicants {
+    flex: 1;
+  }
+  &-addStats {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 20px;
+  }
+  &-g1 {
+    flex: 1;
+  }
+  &-g2 {
+    flex: 1;
+  }
+  &-g3 {
+    flex: 1;
+  }
+}

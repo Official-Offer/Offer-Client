@@ -11,7 +11,6 @@ import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
-//create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);

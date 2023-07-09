@@ -18,3 +18,11 @@ export interface ApplicantDataType {
     expected_graduation: string | null;
     tag: string | null;
   }
+
+  export interface SchoolDataType {
+    ID: string | null;
+    name: string | null;
+    noStudents: number | 0;
+    noJobs: number | 0;
+    tag: string | null;
+  }

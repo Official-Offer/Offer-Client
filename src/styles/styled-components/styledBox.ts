@@ -179,9 +179,13 @@ export const StyledBookmarkedCard = styled.div`
   position: relative;
   border-radius: 8px;
   padding: 24px;
+  background-color: ${({applicant}) => applicant ? "white" : "transparent"};
+  margin-bottom: ${({applicant}) => applicant ? "20px" : ""};
 
   &:hover {
-    backdrop-filter: brightness(0.90);
+    backdrop-filter: brightness(0.90); 
+    cursor: pointer;
+    background-color: ${({applicant}) => applicant ? "#D9D9D9" : "transparent"};
 
     .bookmarked {
       &-close-button {
