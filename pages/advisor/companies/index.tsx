@@ -78,11 +78,11 @@ const Companies: NextPage = () => {
           searchResults={searchResults}
           // handleAdd={handleAddJob}
           tableType={"companies"}
-          isLoading={schoolQuery.isLoading}
+          isLoading={companyQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default Schools;
+export default Companies;

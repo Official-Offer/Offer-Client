@@ -26,7 +26,6 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch
-      console.log("success")
       setCookie("access_token", data.token);
       router
         .push({
@@ -63,7 +62,6 @@ const Login: NextPage = () => {
           <h1>{state.school || state.company}</h1>
           <LogInForm
             onSubmit={(item: { email: any; password: any }) => {
-              console.log("item", item.email)
               return mutation.mutate({
                 email:  item.email,
                 password: item.password,
