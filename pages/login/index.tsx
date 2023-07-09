@@ -23,17 +23,17 @@ const Login: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
     // queryKey: ["login"],
-    mutationFn: state.role.isStudent
-      ? studentLogin
-      : state.role.isAdvisor
-      ? advisorLogin
-      : recruiterLogin,
+    mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
       router
         .push({
-          pathname: "/student",
+          pathname: state.role.isStudent
+          ? "/student"
+          : state.role.isAdvisor
+          ? "/advisor"
+          : "/recruiter"
         })
         .then(() => {
           router.reload();
@@ -84,6 +84,3 @@ const Login: NextPage = () => {
 };
 
 export default Login;
-// function recruiterLogIn(variables: void): Promise<unknown> {
-//   throw new Error("Function not implemented.");
-// }
