@@ -9,8 +9,8 @@ import { studentLogin } from "services/apiStudent";
 import { userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useSelector } from "react-redux";
-import { advisorLogin } from "@services/apiAdvisor";
-import { recruiterLogin } from "@services/apiRecruiter";
+// import { advisorLogin } from "@services/apiAdvisor";
+// import { recruiterLogin } from "@services/apiRecruiter";
 import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, useSession } from "next-auth/react";
@@ -26,6 +26,7 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch
+      console.log("success")
       setCookie("access_token", data.token);
       router
         .push({
@@ -38,12 +39,12 @@ const Login: NextPage = () => {
         .then(() => {
           router.reload();
         });
-      queryClient.invalidateQueries({ queryKey: ["login"] });
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
-      queryClient.invalidateQueries({ queryKey: ["login"] });
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
   const { data: session, status } = useSession();
@@ -62,8 +63,9 @@ const Login: NextPage = () => {
           <h1>{state.school || state.company}</h1>
           <LogInForm
             onSubmit={(item: { email: any; password: any }) => {
+              console.log("item", item.email)
               return mutation.mutate({
-                email: item.email,
+                email:  item.email,
                 password: item.password,
               });
             }}
