@@ -26,26 +26,29 @@ const { Sider } = Layout;
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
+  const isRecruiter = state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor = state.role.isRecruiter || router.pathname.includes("advisor");
+  const role = isRecruiter ? "recruiter" : "advisor";
   // const selectedRef = useRef("1");
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
-  const titles = ["Trang chủ", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
-  const path = ["", "/jobs", "/applicants", "/schools", "/events"];
+  const titles = isRecruiter ? ["Trang chủ", "Công việc", "Ứng viên", "Trường", "Sự kiện"] : ["Trang chủ", "Công việc", "Học sinh", "Công ty", "Sự kiện"];
+  const path = isRecruiter ? ["", "/jobs", "/applicants", "/schools", "/events"] :  ["", "/jobs", "/students", "/companies", "/events"];
   // console.log(router.pathname);
-  const recruiterItems: MenuProps["items"] = [
+  const items: MenuProps["items"] = [
     BarChartOutlined,
     UserOutlined,
     UploadOutlined,
     ScheduleOutlined,
     TeamOutlined,
   ].map((icon, index) => ({
-    key: `/recruiter${path[index]}`,
+    key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1) router.push(`/recruiter${path[index]}`);
+      if (index != 1) router.push(`/${role}${path[index]}`);
     },
     children:
       index == 1
@@ -54,57 +57,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
               label: "Đã duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/verified`);
+                router.push(`/${role}${path[index]}/verified`);
               },
-              key: `/recruiter${path[index]}/verified`,
+              key: `/${role}${path[index]}/verified`,
             },
             {
               label: "Chưa duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/unverified`);
+                router.push(`/${role}${path[index]}/unverified`);
               },
-              key: `/recruiter${path[index]}/unverified`,
+              key: `/${role}${path[index]}/unverified`,
             },
           ]
         : undefined,
   }));
 
-  const advisorItems: MenuProps["items"] = [
-    BarChartOutlined,
-    UserOutlined,
-    UploadOutlined,
-    ScheduleOutlined,
-    TeamOutlined,
-  ].map((icon, index) => ({
-    key: `/recruiter${path[index]}`,
-    icon: React.createElement(icon),
-    label: titles[index],
-    onClick: (e) => {
-      if (index != 1) router.push(`/recruiter${path[index]}`);
-    },
-    children:
-      index == 1
-        ? [
-            {
-              label: "Đã duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/recruiter${path[index]}/verified`);
-              },
-              key: `/recruiter${path[index]}/verified`,
-            },
-            {
-              label: "Chưa duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/recruiter${path[index]}/unverified`);
-              },
-              key: `/recruiter${path[index]}/unverified`,
-            },
-          ]
-        : undefined,
-  }));
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -118,10 +86,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
   console.log(router.pathname);
 
   if (
-    state.role.isRecruiter || 
-    state.role.isAdvisor
-    // router.pathname.includes("recruiter") ||
-    // router.pathname.includes("advisor")
+    isRecruiter|| 
+    isAdvisor
   ) {
     return (
       <Layout>
@@ -132,23 +98,23 @@ export const Nav: React.FC = (props: any): ReactElement => {
           }
         />
         <Layout>
-          <Sider className="recruiter-sider">
-            <div className="recruiter-sider-logo">Logo</div>
+          <Sider className="navbar-sider">
+            <div className="navbar-sider-logo">Logo</div>
             <Menu
-              defaultSelectedKeys={[state.role.isRecruiter ? "/recruiter": "/advisor"]}
+              defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[
                 router.pathname.includes("jobs")
-                  ? "/recruiter/jobs"
-                  : "/recruiter/applicants",
+                  ? `/${role}/jobs`
+                  : `/${role}/applicants`
               ]}
               selectedKeys={[router.pathname]}
               mode="inline"
               // theme="dark"
               inlineCollapsed={collapsed}
-              items={state.role.isRecruiter ? recruiterItems : advisorItems}
+              items={items}
             />
           </Sider>
-          <Layout className="layout-with-sider">
+          <Layout className="navbar-with-sider">
             <div>{props.children}</div>
           </Layout>
         </Layout>

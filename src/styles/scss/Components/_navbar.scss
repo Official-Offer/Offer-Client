@@ -1,3 +1,25 @@
+.navbar-with-sider {
+  margin-left: 200px;
+  // background-color: #313C49;
+  color: white;
+}
+.navbar-sider {
+  overflow: auto;
+  height: 90vh;
+  border-radius: 20px;
+  background: #fff;
+  // color: white;
+  position: fixed;
+  box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
+  left: 0;
+  top: 13;
+  bottom: 0;
+  &-logo {
+    height: 35;
+    margin: 25px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
 .navbar-splitter {
   display: flex;
   align-items: stretch;
@@ -134,3 +156,5 @@
     }
   }
 }
+
+
