@@ -56,13 +56,13 @@ const BookmarkedJobs: NextPage = () => {
           <h2>{bookmark.job_info.title}</h2>
         </div>
         <div className="bookmarked-body-main">
-          <p>{bookmark.job_info.company_name}</p>
+          <p>{bookmark.job_info.company_data.name}</p>
           <p>{bookmark.job_info.location}</p>
         </div>
       </div>
       <div className="bookmarked-dates">
         <div className="date-posted">
-          Đăng vào {moment(bookmark.job_info.timestamp).format("D/M/YYYY")}
+          Đăng vào {moment(bookmark.job_info.time_published).format("D/M/YYYY")}
         </div>
         <div className="date-saved">
           Lưu vào {moment(bookmark.timestamp).format("D/M/YYYY")}

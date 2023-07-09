@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { PlusOutlined, CloudDownloadOutlined, CloudUploadOutlined, LoadingOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { StyledResumeCard } from "@styles/styled-components/styledBox";
-import { FileAddButton, FileDownloadButton, FileUploadButton } from "@styles/styled-components/styledButton";
+import { FileDownloadButton, IconButton } from "@styles/styled-components/styledButton";
 import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
 export const ResumeCard: React.FC = () => {
@@ -86,13 +86,24 @@ export const ResumeCard: React.FC = () => {
             <div className="file-btn">
               <input type="file" id="file-input" onChange={selectResume} />
               <label htmlFor="file-input">
-                <FileAddButton disabled={uploadMutation.isLoading}>
-                  <span>{selectedFile?.name ?? "Chọn CV"}</span>
-                  <span><PlusOutlined /></span>
-                </FileAddButton>
+                <IconButton
+                  round
+                  backgroundColor="#D30B81" 
+                  disabled={uploadMutation.isLoading}
+                >
+                  <div className="btn-body">
+                    <span>{selectedFile?.name ?? "Chọn CV"}</span>
+                    <span><PlusOutlined /></span>
+                  </div>
+                </IconButton>
               </label>
             </div>
-            <FileUploadButton disabled={uploadMutation.isLoading} onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}>
+            <IconButton
+              round
+              backgroundColor="#7277F1"
+              disabled={uploadMutation.isLoading} 
+              onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}
+            >
               {
                 uploadMutation.isLoading ? (
                   <div className="btn-body">
@@ -113,7 +124,7 @@ export const ResumeCard: React.FC = () => {
                   )
                 )
               }
-            </FileUploadButton>
+            </IconButton>
           </div>
         </div>
       }
@@ -128,10 +139,12 @@ export const ResumeCard: React.FC = () => {
               <h3>CV hiện tại</h3>
               <div className="btn-list-horizontal">
                 <a className="btn-list-horizontal-expand" href={uploadedFile} target="_blank">
-                  <FileDownloadButton>
-                    <span>Tải xuống</span>
-                    <span><CloudDownloadOutlined /></span>
-                  </FileDownloadButton>
+                  <IconButton round fullWidth backgroundColor="#8799AE">
+                    <div className="btn-body">
+                      <span>Tải xuống</span>
+                      <span><CloudDownloadOutlined /></span>
+                    </div>
+                  </IconButton>
                 </a>
                 <Button type="danger" shape="circle" loading={deleteMutation.isLoading} icon={<DeleteOutlined />} onClick={handleDelete} />
               </div>

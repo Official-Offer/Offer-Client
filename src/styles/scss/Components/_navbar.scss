@@ -19,6 +19,9 @@
 }
 
 .navbar {
+  height: 64px;
+  position: sticky;
+  display: flex;
   align-items: center;
   
   &.left-menu {

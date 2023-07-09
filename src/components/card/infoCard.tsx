@@ -85,7 +85,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
                   <div>
                     {info?.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
                   </div>
-                  {(info?.applicants || []).length === 0 ? "" : <h4>{(info?.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
+                  {(info?.applicants || []).length === 0 ? "" : <h4>{( ninfo?.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
                 </div>
               </div>
             }

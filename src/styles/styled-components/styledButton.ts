@@ -99,64 +99,34 @@ export const TogglableButton = styled.button`
   }
 `
 
-export const FileAddButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+type IconButtonProps = {
+  round: boolean,
+  fullWidth: boolean,
+  backgroundColor: string,
+}
 
+export const IconButton = styled.div`
+  width: ${({ fullWidth }) => fullWidth ? "100%": "auto"};
   height: 32px;
-  max-width: 200px;
-
-  background-color: #d30b81;
+  background-color: ${({ backgroundColor }) => backgroundColor};
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 4px 16px;
-
-  font-size: 14px;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #b40a6e;
-  }
-
-  &:disabled {
-    background-color: #d30b81;
-    color: white;
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  &:focus {
-    outline: none;
-  }
-`
-
-export const FileUploadButton = styled.button`
-  height: 32px;
-  background-color: #7277F1;
-  color: white;
-  border: none;
-  border-radius: 20px;
+  border-radius: ${({round}) => round ? "20px" : "8px"};
   padding: 4px 16px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.3s ease;
   
   .btn-body {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 8px;
   }
 
   &:hover {
-    background-color: #5359EE;
+    filter: brightness(0.87);
   }
 
   &:disabled {
@@ -174,6 +144,7 @@ export const FileUploadButton = styled.button`
 export const FileDownloadButton = styled.button`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   background-color: #8799AE;
   color: white;
