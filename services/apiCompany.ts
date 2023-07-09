@@ -19,7 +19,7 @@ export const getCompaniesForAdvisor = async (id: number) => {
       ID: company.id,
       name: company.name,
       // description: company.description || "Không tồn tại",
-      advisors: 10000,
+      recruiters: 10000,
       unverifiedJobs: 10000,
       verifiedJobs: 10000,
       students: 10000,

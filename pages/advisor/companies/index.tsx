@@ -4,9 +4,8 @@ import { NextPage } from "next";
 // import type { ColumnsType } from "antd/es/table";
 // import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { schoolColumns, unapprovedJobColumns } from "@components/table/columnType";
+import { companyColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";
 import { CompanyDataType } from "@components/table/dataType";
@@ -15,7 +14,6 @@ import { getCompaniesForAdvisor } from "@services/apiCompany";
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<CompanyDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
   const companyQuery = useQuery({
     // queryKey: ["companies"],
     queryFn: getCompaniesForAdvisor,
@@ -51,12 +49,12 @@ const Companies: NextPage = () => {
   // }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Danh sách công ty</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Danh sách công ty</h1>
+      <div className="advisor-table">
         <BaseTable
           dataset={dataset}
-          columns={schoolColumns}
+          columns={companyColumns}
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

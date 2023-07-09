@@ -68,9 +68,9 @@ const UnapprovedJobs: NextPage = () => {
   }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Ứng viên</h1>
+      <div className="advisor-table">
         <BaseTable
           dataset={dataset}
           columns={unapprovedJobColumns}

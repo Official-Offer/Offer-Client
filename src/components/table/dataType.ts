@@ -31,7 +31,7 @@ export interface ApplicantDataType {
     ID: string | null;
     name: string | null;
     //Should be changed to images + numbers
-    advisors: number | 0;
+    recruiters: number | 0;
     unverifiedJobs: number | 0;
     verifiedJobs: number | 0;
     students: number | 0;

@@ -20,6 +20,10 @@ const SchoolActionItems = [
   { key: "1", label: "Xem chi tiết" },
   { key: "2", label: "Copy ID" },
 ];
+const CompanyActionItems = [
+  { key: "1", label: "Nhắn tin" },
+  { key: "2", label: "Xem chi tiết" },
+];
 
 export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
@@ -257,6 +261,58 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
       // {record.name}
       <Space size="middle">
         <Dropdown menu={{items: SchoolActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const companyColumns: ColumnsType<UnapprovedJobDataType> = [
+  // {
+  //   title: "ID",
+  //   dataIndex: "ID",
+  //   key: "ID",
+  // },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Người tuyển dụng",
+    dataIndex: "recruiters",
+    key: "recruiters",
+  },
+  {
+    title: "Công việc chưa duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Công việc đã duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Học sinh tại công ty",
+    dataIndex: "students",
+    key: "students",
+  },
+  {
+    title: "Sự kiện đã tổ chức",
+    dataIndex: "events",
+    key: "events",
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{items: CompanyActionItems}}>
           <a>
             <MoreOutlined />
           </a>
