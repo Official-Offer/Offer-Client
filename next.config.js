@@ -1,3 +1,11 @@
-const withPlugins = require("next-compose-plugins");
-
-module.exports = withPlugins([], {});
+module.exports = {
+  async redirects() {
+    return [
+      {
+        source: "/student/jobs",
+        destination: "/student/jobs/0",
+        permanent: true,
+      },
+    ]
+  },
+}

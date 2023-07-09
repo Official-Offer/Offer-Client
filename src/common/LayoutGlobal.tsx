@@ -17,8 +17,8 @@ export default function LayoutGlobal(props: any): ReactElement {
     <VerticalNav>
       <Navbar
         searchBarHidden={
-          router.pathname === "/student/jobs" ||
-          router.pathname === "/student/events"
+          router.pathname.includes("/student/jobs") ||
+          router.pathname.includes("/student/events")
         }
       />
       <div>{props.children}</div>

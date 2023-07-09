@@ -8,7 +8,7 @@ export const getJobList = async () => {
   // Fetch company name for each job
   for (const job of jobList) {
     job.company_data = await getCompany(job.company);
-    job.is_bookmarked = (await checkIsBookmarked(job.id).catch(() => ({status: false}))).status;
+    // job.is_bookmarked = (await checkIsBookmarked(job.id).catch(() => ({status: false}))).status;
   }
   return jobList;
 };

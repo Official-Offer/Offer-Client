@@ -1,4 +1,5 @@
-import { NextPage } from "next";
+import { NextPage, GetStaticProps, GetStaticPaths } from "next";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { Skeleton } from "antd";
@@ -29,13 +30,26 @@ const jobFilterArr = [
 const StudentJobs: NextPage = () => {
   // States
   const [jobList, setJobList] = useState<Record<string, unknown>[]>();
+  const jobIndexList = new Map<number, number>();
   const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   // Hooks
+  const router = useRouter();
+  let jobID = parseInt(router.query.jobID);
+
   const jobListQuery = useQuery({
     queryKey: "job-list",
     queryFn: getJobList,
-    onSuccess: (res) => setJobList(res),
+    onSuccess: (res) => {
+      setJobList(res);
+      for (let i = 0; i < res.length; i++) {
+        jobIndexList.set(res[i].id, i);
+        console.log(res[i].id, i);
+        console.log(jobIndexList);
+      }
+      console.log(jobID, jobIndexList.get(jobID));
+      setActiveCardIndex(jobIndexList.get(jobID));
+    },
     onError: (err) => console.log(`Job List Error: ${err}`),
   })
 
@@ -52,11 +66,11 @@ const StudentJobs: NextPage = () => {
               }
             </li>
             {jobList ? jobList.map((job, i) => (
-              <li>
+              <li id={job.id}>
                 <JobCard
                   jobData={job}
-                  active={i===activeCardIndex} 
-                  onClick={()=>setActiveCardIndex(i)}
+                  active={i === activeCardIndex} 
+                  onClick={() => setActiveCardIndex(i)}
                 />
               </li>
             )) : Array(8).fill(<li><Skeleton className="job-portal-list-loading" active/></li>)}
@@ -71,3 +85,22 @@ const StudentJobs: NextPage = () => {
 };
 
 export default StudentJobs;
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const jobDataArr = await getJobList();
+//   return {
+//     paths: jobDataArr.map((jobData) => ({
+//       params: {
+//         jobID: jobData.id.toString()
+//       },
+//     })),
+//     fallback: false
+//   };
+// };
+
+// export const getStaticProps: GetStaticProps = ({ params }) => {
+//   return {
+//     props: {
+//       jobID: params.jobID,
+//     }
+//   }
+// }
