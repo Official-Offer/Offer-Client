@@ -9,23 +9,23 @@ import { useQuery } from "react-query";
 import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";
-import { getSchoolsForRecruiter } from "@services/apiSchool";
-import { SchoolDataType } from "@components/table/dataType";
+import { CompanyDataType } from "@components/table/dataType";
+import { getCompaniesForAdvisor } from "@services/apiCompany";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<SchoolDataType[]>([]);
+  const [dataset, setData] = useState<CompanyDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
   const companyQuery = useQuery({
-    queryKey: ["companies"],
-    queryFn: getSchoolsForRecruiter,
-    onSuccess: async (schools) => {
-      setData(schools);
+    // queryKey: ["companies"],
+    queryFn: getCompaniesForAdvisor,
+    onSuccess: async (companies) => {
+      setData(companies);
 
       var s: string[] = [];
 
-      schools.forEach((school) => {
-        s.push(school.name);
+      companies.forEach((company) => {
+        s.push(company.name);
       });
 
       setSearchResults(s);
@@ -36,22 +36,6 @@ const Companies: NextPage = () => {
   // console.log(jobQuery)
 
 
-  const handleFilterType = (values: string[]) => {
-    console.log(values);
-    if (values.length == 0) {
-      setData(dataset);
-      return;
-    }
-    setData(
-      dataset.filter((item) => {
-        if (!item.tag || values.length == 0) return false;
-        for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
-        }
-        return false;
-      })
-    );
-  };
 
   const handleFilterSearch = (value: string) => {
     console.log(value);
@@ -73,7 +57,7 @@ const Companies: NextPage = () => {
         <BaseTable
           dataset={dataset}
           columns={schoolColumns}
-          handleFilterType={handleFilterType}
+          // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           // handleAdd={handleAddJob}

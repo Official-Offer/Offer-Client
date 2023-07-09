@@ -26,3 +26,14 @@ export interface ApplicantDataType {
     noJobs: number | 0;
     tag: string | null;
   }
+
+  export interface CompanyDataType {
+    ID: string | null;
+    name: string | null;
+    //Should be changed to images + numbers
+    advisors: number | 0;
+    unverifiedJobs: number | 0;
+    verifiedJobs: number | 0;
+    students: number | 0;
+    events: number | 0;
+  }
