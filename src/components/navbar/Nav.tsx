@@ -29,7 +29,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
-  const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
+  const titles = ["Trang chủ", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
   const path = ["", "/jobs", "/applicants", "/schools", "/events"];
   // console.log(router.pathname);
   const items: MenuProps["items"] = [
@@ -66,26 +66,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
             },
           ]
         : undefined,
-    // index == 2
-    // ? [
-    //     {
-    //       label: "Vòng đơn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/resume`);
-    //       },
-    //       key: `/recruiter${path[index]}/resume`,
-    //     },
-    //     {
-    //       label: "Vòng phỏng vấn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/interview`);
-    //       },
-    //       key: `/recruiter${path[index]}/interview`,
-    //     },
-    //   ]
-    // :
   }));
 
   const toggleCollapsed = () => {
@@ -113,7 +93,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         />
         <Layout>
           <Sider className="recruiter-sider">
-            <div className="recruiter-sider-logo">Home</div>
+            <div className="recruiter-sider-logo">Logo</div>
             <Menu
               defaultSelectedKeys={["/recruiter"]}
               defaultOpenKeys={[
