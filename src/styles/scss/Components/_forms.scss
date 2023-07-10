@@ -11,7 +11,18 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-
+    &-white {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      margin: 20px 0;
+      .full-width {
+        grid-column: 1 / 3;
+      }
+    }
     .full-width {
       grid-column: 1 / 3;
     }
@@ -21,6 +32,7 @@
     padding: 5px;
     width: 100%;
     border-radius: 8px;
+    background-color: white;
     border: 1px solid #000000;
     &-dropdown {
       padding: 8px;
@@ -32,6 +44,7 @@
   &-input {
     display: flex;
     flex-direction: column;
+
     // gap: 5px;
   }
   &-password {
@@ -51,18 +64,29 @@
     width: 100%;
     border-radius: 8px;
     border: 1px solid #000000;
+    height: 45px;
+    &-long {
+      height: 150px;
+      border-radius: 8px;
+      padding: 8px;
+      border: 1px solid #000000;
+    }
   }
 
   &-submit-button {
-    // margin-top: 28px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    display: flex;
     &-spinner {
       animation-name: spin;
       animation-duration: 500ms;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
+    }
+    &-continue {
+      margin-left: auto;
+    }
+    &-back {
+      align-items: right;
+      margin-right: 20px;
     }
     @keyframes spin {
       from {

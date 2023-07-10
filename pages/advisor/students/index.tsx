@@ -20,7 +20,7 @@ const Applicants: NextPage = () => {
   console.log(jobList);
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Học sinh</h1>
       <div className="applicant-table">
         {/* <ApplicantTable/> */}
         {jobList.map((job) => (
@@ -35,7 +35,7 @@ const Applicants: NextPage = () => {
                   <h2>{job.title}</h2>
                 </div>
                 <div className="bookmarked-body-main">
-                  <p>Number of applicants:</p>
+                  <p>Số người ứng tuyển:</p>
                   <p>{job.applicants.length}</p>
                 </div>
               </div>

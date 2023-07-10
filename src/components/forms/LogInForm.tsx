@@ -24,16 +24,17 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
   const [email, setEmail] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
+  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setPassword(event.target.value);
   };
 
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
+  const handleEmailChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setEmail(event.target.value);
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     // event.preventDefault();
+    console.log(email, password)
     onSubmit({ email, password });
   };
 

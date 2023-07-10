@@ -4,7 +4,7 @@ module.exports = {
       {
         source: "/student/jobs",
         destination: "/student/jobs/0",
-        permanent: true,
+        permanent: false,
       },
     ]
   },

@@ -17,25 +17,22 @@ const Events: NextPage = () => {
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
   // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+  const eventQuery = useQuery({
+    queryKey: ["event"],
     queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
+    onSuccess: async (events) => {
+      setData(events);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      events.forEach((event) => {
+        s.push(event.title);
       });
 
       setSearchResults(s);
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -63,13 +60,13 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+  const handleAddEvent = () => {
+    router.push('/advisor/jobs/eventForm');
   }
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Sự kiện</h1>
       <div className="applicant-table">
         <BaseTable
           dataset={dataset}
@@ -77,9 +74,9 @@ const Events: NextPage = () => {
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          handleAdd={handleAddEvent}
+          tableType={"Event"}
+          isLoading={eventQuery.isLoading}
         />
       </div>
     </div>

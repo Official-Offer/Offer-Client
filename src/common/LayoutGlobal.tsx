@@ -7,21 +7,15 @@ export default function LayoutGlobal(props: any): ReactElement {
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
-  const VerticalNav = dynamic(() =>
-    import("@components").then((mod: any) => mod.VerticalNav)
+  const Nav = dynamic(() =>
+    import("@components").then((mod: any) => mod.Nav)
   ) as any;
 
   const router = useRouter();
 
   return (
-    <VerticalNav>
-      <Navbar
-        searchBarHidden={
-          router.pathname.includes("/student/jobs") ||
-          router.pathname.includes("/student/events")
-        }
-      />
+    <Nav>
       <div>{props.children}</div>
-    </VerticalNav>
+    </Nav>
   );
 }

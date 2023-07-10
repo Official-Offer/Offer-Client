@@ -11,14 +11,14 @@ import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
-//create a next page for the student home page, code below
-const Events: NextPage = () => {
+const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
@@ -86,4 +86,4 @@ const Events: NextPage = () => {
   );
 };
 
-export default Events;
+export default UnapprovedJobs;

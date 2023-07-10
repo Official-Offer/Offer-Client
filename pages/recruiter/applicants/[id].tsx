@@ -1,41 +1,39 @@
 import ApplicantTypeFilter from "@components/filter/TypeFilter";
+import { BaseTable } from "@components/table/BaseTable";
+import { ApplicantColumns } from "@components/table/columnType";
+import { ApplicantDataType } from "@components/table/dataType";
+import { getApplicantsFromJobs } from "@services/apiStudent";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
-import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
-import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
-import router from "next/router";
+import { useQuery } from "react-query";
 
 //create a next page for the student home page, code below
-const Events: NextPage = () => {
+const Applicant: NextPage = () => {
+  const router = useRouter();
+  const jobID = router.query.id;
+  //   console.log(id)
+
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [dataset, setData] = useState<ApplicantDataType[]>([]);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job"],
-    queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
-
+    queryFn: () => getApplicantsFromJobs(Number(jobID)),
+    onSuccess: async (applicants) => {
+      // console.log(applicants);
+      setData(applicants);
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      applicants.forEach((app) => {
+        s.push(app.name);
       });
 
       setSearchResults(s);
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -60,12 +58,8 @@ const Events: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    setData(dataset.filter((item) => item.name === value));
   };
-
-  const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
-  }
 
   return (
     <div className="applicant">
@@ -73,12 +67,10 @@ const Events: NextPage = () => {
       <div className="applicant-table">
         <BaseTable
           dataset={dataset}
-          columns={unapprovedJobColumns}
+          columns={ApplicantColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
           isLoading={jobQuery.isLoading}
         />
       </div>
@@ -86,4 +78,4 @@ const Events: NextPage = () => {
   );
 };
 
-export default Events;
+export default Applicant;
