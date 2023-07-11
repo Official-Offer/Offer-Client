@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { approvedJobAdvisorColumns, unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { approvedJobsAdvisors, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
@@ -66,7 +66,7 @@ const ApprovedJobs: NextPage = () => {
       <div className="advisor-table">
         <BaseTable
           dataset={data}
-          columns={unapprovedJobColumns}
+          columns={approvedJobAdvisorColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

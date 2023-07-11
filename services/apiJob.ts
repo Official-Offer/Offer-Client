@@ -1,6 +1,7 @@
 import request from "./apiService";
 import { getCompany } from "./apiCompany";
 import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
+import moment from "moment";
 
 export const getJobList = async () => {
   const response = await request.get(`/jobs/`);
@@ -38,10 +39,10 @@ export const getUnapprovedJobs = async () => {
     res.push({
       key: job.id,
       ID: job.id,
-      date: job.timestamp.toString(),
-      title: job.title || "No title",
-      address: job.location || "No location",
-      schools: job.schools.length || "No School",
+      date: moment(job.timestamp).format("D/M/YYYY"),
+      title: job.title || "Không tìm thấy",
+      address: job.location || "Không tìm thấy",
+      schools: job.schools.length || "Không tìm thấy",
       applicants: job.applicants.length,
       tag: tags[Math.floor(Math.random()*tags.length)],
     });
@@ -52,23 +53,18 @@ export const getUnapprovedJobs = async () => {
 export const approvedJobsAdvisors = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
-  const tags = [
-    // "Chưa tạo danh sách",
-    "Chưa tuyển",
-    "Đã tuyển",
-  ];
   // Fetch company name for each job
   var res = [];
   for (const job of jobList) {
     res.push({
       key: job.id,
       ID: job.id,
-      date: job.timestamp.toString(),
-      title: job.title || "No title",
-      address: job.location || "No location",
-      schools: job.schools.length || "No School",
-      applicants: job.applicants.length,
-      tag: tags[Math.floor(Math.random()*tags.length)],
+      date: moment(job.timestamp).format("D/M/YYYY"),
+      title: job.title || "Không tìm thấy",
+      address: job.location || "Không tìm thấy",
+      company: job.company|| "Không tìm thấy",
+      applicants: "5/100",
+      accepted: "1/2"
     });
   }
   return res;

@@ -25,6 +25,11 @@ const CompanyActionItems = [
   { key: "2", label: "Xem chi tiết" },
 ];
 
+const approvedJobsAdvisorActionItems = [
+  { key: "1", label: "Nhắn tin" },
+  { key: "2", label: "Xem chi tiết" },
+];
+
 export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
     title: "ID",
@@ -146,6 +151,59 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
       // {record.name}
       <Space size="middle">
         <Dropdown menu={{items: UnapprovedJobsActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const approvedJobAdvisorColumns: ColumnsType<UnapprovedJobDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Ngày tạo",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Tiêu đề",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Địa điểm",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Công ty",
+    dataIndex: "company",
+    key: "company",
+  },
+  {
+    title: "Ứng viên trường bạn/tất cả",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
+    title: "Được nhận trường bạn/tất cả",
+    dataIndex: "accepted",
+    key: "accepted",
+  },
+ 
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{items: approvedJobsAdvisorActionItems}}>
           <a>
             <MoreOutlined />
           </a>

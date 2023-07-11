@@ -17,7 +17,7 @@ export interface approvedJobAdvisorDataType {
   address: string;
   company: number;
   applicants: string;
-  tag: string;
+  accepted: string;
 }
 
 export interface ApplicantDataType {
