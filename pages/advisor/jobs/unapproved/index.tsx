@@ -21,6 +21,7 @@ const UnapprovedJobs: NextPage = () => {
     queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
+      setData(jobs);
       setDataSet(jobs);
 
       var s: string[] = [];
@@ -35,7 +36,6 @@ const UnapprovedJobs: NextPage = () => {
   });
 
   const handleFilterType = (values: string[]) => {
-    console.log(values);
     if (values.length == 0) {
       setData(dataset);
       return;
@@ -60,12 +60,12 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+    router.push('/advisor/jobs/jobForm');
   }
 
   return (
     <div className="advisor">
-      <h1 className="advisor-title">Ứng viên</h1>
+      <h1 className="advisor-title">Công việc chưa được duyệt</h1>
       <div className="advisor-table">
         <BaseTable
           dataset={data}

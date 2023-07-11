@@ -13,22 +13,22 @@ import router from "next/router";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
-  c  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
   const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
-  const jobQuery = useQuery({
+  const eventQuery = useQuery({
     queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setDataSet(jobs);
+    onSuccess: async (events) => {
+      setData(events);
+      setDataSet(events);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      events.forEach((event) => {
+        s.push(event.title);
       });
 
       setSearchResults(s);

@@ -1,12 +1,8 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
 import { unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import { getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
@@ -16,13 +12,13 @@ const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
+      setData(jobs);
       setDataSet(jobs);
 
       var s: string[] = [];

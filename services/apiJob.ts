@@ -28,7 +28,32 @@ export const getUnapprovedJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
   const tags = [
-    "Chưa tạo danh sách",
+    // "Chưa tạo danh sách",
+    "Chưa tuyển",
+    "Đã tuyển",
+  ];
+  // Fetch company name for each job
+  var res = [];
+  for (const job of jobList) {
+    res.push({
+      key: job.id,
+      ID: job.id,
+      date: job.timestamp.toString(),
+      title: job.title || "No title",
+      address: job.location || "No location",
+      schools: job.schools.length || "No School",
+      applicants: job.applicants.length,
+      tag: tags[Math.floor(Math.random()*tags.length)],
+    });
+  }
+  return res;
+};
+
+export const approvedJobsAdvisors = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobList = response.data;
+  const tags = [
+    // "Chưa tạo danh sách",
     "Chưa tuyển",
     "Đã tuyển",
   ];

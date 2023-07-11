@@ -23,6 +23,7 @@ const Students: NextPage = () => {
     queryFn: () => getApplicantsFromJobs(Number(jobID)),
     onSuccess: async (applicants) => {
       // console.log(applicants);
+      setData(applicants);
       setDataSet(applicants);
       var s: string[] = [];
 

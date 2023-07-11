@@ -16,6 +16,7 @@ const Schools: NextPage = () => {
     // queryKey: ["schools"],
     queryFn: getSchoolsForRecruiter,
     onSuccess: async (schools) => {
+      setData(schools);
       setDataSet(schools);
 
       var s: string[] = [];

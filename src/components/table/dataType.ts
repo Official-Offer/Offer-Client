@@ -7,7 +7,17 @@ export interface UnapprovedJobDataType {
     schools: number;
     applicants: number;
     tag: string;
-    // action: string;
+}
+
+export interface approvedJobAdvisorDataType {
+  key: string;
+  ID: string;
+  date: string;
+  title: string;
+  address: string;
+  company: number;
+  applicants: string;
+  tag: string;
 }
 
 export interface ApplicantDataType {

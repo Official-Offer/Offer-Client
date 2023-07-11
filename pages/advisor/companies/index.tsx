@@ -19,7 +19,8 @@ const Companies: NextPage = () => {
     // queryKey: ["companies"],
     queryFn: getCompaniesForAdvisor,
     onSuccess: async (companies) => {
-      setDataSet(companies);
+      setData(companies);
+      setDataSet(companies)
 
       var s: string[] = [];
 
@@ -32,10 +33,6 @@ const Companies: NextPage = () => {
     onError: () => {},
   });
 
-  // console.log(jobQuery)
-
-
-
   const handleFilterSearch = (value: string) => {
     console.log(value);
     if (!value) {
@@ -44,10 +41,6 @@ const Companies: NextPage = () => {
     }
     setData(dataset.filter((item) => item.name === value));
   };
-
-  // const handleAddJob = () => {
-  //   router.push('/recruiter/jobs/jobForm');
-  // }
 
   return (
     <div className="advisor">

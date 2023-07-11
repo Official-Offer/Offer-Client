@@ -14,27 +14,28 @@ import router from "next/router";
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
   // DataType[]
-  const jobQuery = useQuery({
+  const eventQuery = useQuery({
     queryKey: ["unapproved-job"],
     queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
+    onSuccess: async (events) => {
+      setData(events);
+      setDataSet(events);
+
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      events.forEach((event) => {
+        s.push(event.title);
       });
 
       setSearchResults(s);
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
 
 
   const handleFilterType = (values: string[]) => {
@@ -72,14 +73,14 @@ const Events: NextPage = () => {
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          isLoading={eventQuery.isLoading}
         />
       </div>
     </div>

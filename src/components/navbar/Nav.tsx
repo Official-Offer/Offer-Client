@@ -57,17 +57,17 @@ export const Nav: React.FC = (props: any): ReactElement => {
               label: "Đã duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/${role}${path[index]}/verified`);
+                router.push(`/${role}${path[index]}/approved`);
               },
-              key: `/${role}${path[index]}/verified`,
+              key: `/${role}${path[index]}/approved`,
             },
             {
               label: "Chưa duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/${role}${path[index]}/unverified`);
+                router.push(`/${role}${path[index]}/unapproved`);
               },
-              key: `/${role}${path[index]}/unverified`,
+              key: `/${role}${path[index]}/unapproved`,
             },
           ]
         : undefined,

@@ -16,13 +16,13 @@ const ApprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job", searchChange],
+    queryKey: ["approved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
+      setData(jobs);
       setDataSet(jobs);
 
       var s: string[] = [];
@@ -70,7 +70,7 @@ const ApprovedJobs: NextPage = () => {
       <h1 className="applicant-title">Công việc đã được duyệt</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
