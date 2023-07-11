@@ -13,20 +13,22 @@ import router from "next/router";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
-  const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  c  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
-  const eventQuery = useQuery({
-    queryKey: ["event"],
+  const jobQuery = useQuery({
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
-    onSuccess: async (events) => {
-      setData(events);
+    onSuccess: async (jobs) => {
+      setDataSet(jobs);
 
       var s: string[] = [];
 
-      events.forEach((event) => {
-        s.push(event.title);
+      jobs.forEach((job) => {
+        s.push(job.title);
       });
 
       setSearchResults(s);
@@ -52,7 +54,6 @@ const Events: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -60,8 +61,8 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddEvent = () => {
-    router.push('/advisor/jobs/eventForm');
+  const handleAddJob = () => {
+    router.push('/recruiter/jobs/eventForm');
   }
 
   return (
@@ -69,7 +70,7 @@ const Events: NextPage = () => {
       <h1 className="advisor-title">Sự kiện</h1>
       <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}

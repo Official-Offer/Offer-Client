@@ -13,12 +13,13 @@ import { getCompaniesForAdvisor } from "@services/apiCompany";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<CompanyDataType[]>([]);
+  const [data, setData] = useState<CompanyDataType[]>([]);
+  const [dataset, setDataSet] = useState<CompanyDataType[]>([]);
   const companyQuery = useQuery({
     // queryKey: ["companies"],
     queryFn: getCompaniesForAdvisor,
     onSuccess: async (companies) => {
-      setData(companies);
+      setDataSet(companies);
 
       var s: string[] = [];
 
@@ -53,7 +54,7 @@ const Companies: NextPage = () => {
       <h1 className="advisor-title">Danh sách công ty</h1>
       <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={companyColumns}
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}

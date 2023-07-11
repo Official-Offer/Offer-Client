@@ -14,7 +14,8 @@ import router from "next/router";
 //create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
@@ -22,7 +23,7 @@ const UnapprovedJobs: NextPage = () => {
     queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
-      setData(jobs);
+      setDataSet(jobs);
 
       var s: string[] = [];
 
@@ -34,9 +35,6 @@ const UnapprovedJobs: NextPage = () => {
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -56,7 +54,6 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -70,10 +67,10 @@ const UnapprovedJobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Công việc chưa được duyệt</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}

@@ -2,6 +2,7 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
 import { BaseTable } from "@components/table/BaseTable";
 import { unapprovedJobColumns } from "@components/table/columnType";
+import { UnapprovedJobDataType } from "@components/table/dataType";
 import { getUnapprovedJobs } from "@services/apiJob";
 import { Avatar, Badge, Space } from "antd";
 import Card from "antd/lib/card/Card";
@@ -14,14 +15,15 @@ import { useQuery } from "react-query";
 //create a next page for the student home page, code below
 const Recruiter: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
-      setData(jobs);
+      setDataSet(jobs);
 
       var s: string[] = [];
 
@@ -33,8 +35,6 @@ const Recruiter: NextPage = () => {
     },
     onError: () => {},
   });
-
-  console.log(jobQuery);
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -54,12 +54,11 @@ const Recruiter: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title == value));
+    setData(dataset.filter((item) => item.title === value));
   };
 
   return (

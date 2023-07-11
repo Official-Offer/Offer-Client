@@ -11,16 +11,19 @@ import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
-const UnapprovedJobs: NextPage = () => {
+//create a next page for the student home page, code below
+const ApprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
-      setData(jobs);
+      setDataSet(jobs);
 
       var s: string[] = [];
 
@@ -32,9 +35,6 @@ const UnapprovedJobs: NextPage = () => {
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -54,7 +54,6 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -63,13 +62,13 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+    router.push('/advisor/jobs/jobForm');
   }
 
   return (
-    <div className="advisor">
-      <h1 className="advisor-title">Ứng viên</h1>
-      <div className="advisor-table">
+    <div className="applicant">
+      <h1 className="applicant-title">Công việc đã được duyệt</h1>
+      <div className="applicant-table">
         <BaseTable
           dataset={dataset}
           columns={unapprovedJobColumns}
@@ -85,4 +84,4 @@ const UnapprovedJobs: NextPage = () => {
   );
 };
 
-export default UnapprovedJobs;
+export default ApprovedJobs;
