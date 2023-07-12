@@ -14,14 +14,16 @@ import router from "next/router";
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const eventQuery = useQuery({
-    queryKey: ["event"],
+    queryKey: ["unapproved-job", searchChange],
     queryFn: getUnapprovedJobs,
     onSuccess: async (events) => {
       setData(events);
+      setDataSet(events);
 
       var s: string[] = [];
 
@@ -52,7 +54,6 @@ const Events: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -60,16 +61,16 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddEvent = () => {
-    router.push('/advisor/jobs/eventForm');
+  const handleAddJob = () => {
+    router.push('/recruiter/jobs/eventForm');
   }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Sự kiện</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Sự kiện</h1>
+      <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}

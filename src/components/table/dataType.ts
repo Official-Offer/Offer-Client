@@ -7,7 +7,17 @@ export interface UnapprovedJobDataType {
     schools: number;
     applicants: number;
     tag: string;
-    // action: string;
+}
+
+export interface approvedJobAdvisorDataType {
+  key: string;
+  ID: string;
+  date: string;
+  title: string;
+  address: string;
+  company: number;
+  applicants: string;
+  accepted: string;
 }
 
 export interface ApplicantDataType {
@@ -25,4 +35,15 @@ export interface ApplicantDataType {
     noStudents: number | 0;
     noJobs: number | 0;
     tag: string | null;
+  }
+
+  export interface CompanyDataType {
+    ID: string | null;
+    name: string | null;
+    //Should be changed to images + numbers
+    recruiters: number | 0;
+    unverifiedJobs: number | 0;
+    verifiedJobs: number | 0;
+    students: number | 0;
+    events: number | 0;
   }

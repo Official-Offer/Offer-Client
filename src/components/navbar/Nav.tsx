@@ -18,19 +18,24 @@ import router, { useRouter } from "next/router";
 import Link from "next/link";
 import { Header } from "antd/lib/layout/layout";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
 
 const { Sider } = Layout;
 
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
-  // const [selectedKey, setSelectedKey] = useState("/recruiter");
+  const state = useSelector((state: RootState) => state.account);
+  const isRecruiter = state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor = state.role.isRecruiter || router.pathname.includes("advisor");
+  const role = isRecruiter ? "recruiter" : "advisor";
   // const selectedRef = useRef("1");
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
-  const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
-  const path = ["", "/jobs", "/applicants", "/schools", "/events"];
+  const titles = isRecruiter ? ["Trang chủ", "Công việc", "Ứng viên", "Trường", "Sự kiện"] : ["Trang chủ", "Công việc", "Học sinh", "Công ty", "Sự kiện"];
+  const path = isRecruiter ? ["", "/jobs", "/applicants", "/schools", "/events"] :  ["", "/jobs", "/students", "/companies", "/events"];
   // console.log(router.pathname);
   const items: MenuProps["items"] = [
     BarChartOutlined,
@@ -39,11 +44,11 @@ export const Nav: React.FC = (props: any): ReactElement => {
     ScheduleOutlined,
     TeamOutlined,
   ].map((icon, index) => ({
-    key: `/recruiter${path[index]}`,
+    key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1) router.push(`/recruiter${path[index]}`);
+      if (index != 1) router.push(`/${role}${path[index]}`);
     },
     children:
       index == 1
@@ -52,41 +57,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
               label: "Đã duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/verified`);
+                router.push(`/${role}${path[index]}/approved`);
               },
-              key: `/recruiter${path[index]}/verified`,
+              key: `/${role}${path[index]}/approved`,
             },
             {
               label: "Chưa duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/unverified`);
+                router.push(`/${role}${path[index]}/unapproved`);
               },
-              key: `/recruiter${path[index]}/unverified`,
+              key: `/${role}${path[index]}/unapproved`,
             },
           ]
         : undefined,
-    // index == 2
-    // ? [
-    //     {
-    //       label: "Vòng đơn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/resume`);
-    //       },
-    //       key: `/recruiter${path[index]}/resume`,
-    //     },
-    //     {
-    //       label: "Vòng phỏng vấn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/interview`);
-    //       },
-    //       key: `/recruiter${path[index]}/interview`,
-    //     },
-    //   ]
-    // :
   }));
+
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -100,8 +86,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
   console.log(router.pathname);
 
   if (
-    router.pathname.includes("recruiter") ||
-    router.pathname.includes("advisor")
+    isRecruiter|| 
+    isAdvisor
   ) {
     return (
       <Layout>
@@ -112,14 +98,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
           }
         />
         <Layout>
-          <Sider className="recruiter-sider">
-            <div className="recruiter-sider-logo">Home</div>
+          <Sider className="navbar-sider">
+            <div className="navbar-sider-logo">Logo</div>
             <Menu
-              defaultSelectedKeys={["/recruiter"]}
+              defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[
                 router.pathname.includes("jobs")
-                  ? "/recruiter/jobs"
-                  : "/recruiter/applicants",
+                  ? `/${role}/jobs`
+                  : `/${role}/applicants`
               ]}
               selectedKeys={[router.pathname]}
               mode="inline"
@@ -128,7 +114,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               items={items}
             />
           </Sider>
-          <Layout className="layout-with-sider">
+          <Layout className="navbar-with-sider">
             <div>{props.children}</div>
           </Layout>
         </Layout>

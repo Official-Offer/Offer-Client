@@ -15,14 +15,16 @@ const Students: NextPage = () => {
   const jobID = router.query.id;
 
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<ApplicantDataType[]>([]);
+  const [data, setData] = useState<ApplicantDataType[]>([]);
+  const [dataset, setDataSet] = useState<ApplicantDataType[]>([]);
   // DataType[]
-  const jobQuery = useQuery({
+  const studentQuery = useQuery({
     queryKey: ["unapproved-job"],
     queryFn: () => getApplicantsFromJobs(Number(jobID)),
     onSuccess: async (applicants) => {
       // console.log(applicants);
       setData(applicants);
+      setDataSet(applicants);
       var s: string[] = [];
 
       applicants.forEach((app) => {
@@ -61,16 +63,16 @@ const Students: NextPage = () => {
   };
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Ứng viên</h1>
+      <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={ApplicantColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          isLoading={jobQuery.isLoading}
+          isLoading={studentQuery.isLoading}
         />
       </div>
     </div>

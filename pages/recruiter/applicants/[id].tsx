@@ -13,17 +13,18 @@ import { useQuery } from "react-query";
 const Applicant: NextPage = () => {
   const router = useRouter();
   const jobID = router.query.id;
-  //   console.log(id)
 
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<ApplicantDataType[]>([]);
+  const [data, setData] = useState<ApplicantDataType[]>([]);
+  const [dataset, setDataSet] = useState<ApplicantDataType[]>([]);
   // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
+  const applicantQuery = useQuery({
+    queryKey: ["applicants"],
     queryFn: () => getApplicantsFromJobs(Number(jobID)),
     onSuccess: async (applicants) => {
       // console.log(applicants);
       setData(applicants);
+      setDataSet(applicants);
       var s: string[] = [];
 
       applicants.forEach((app) => {
@@ -66,12 +67,12 @@ const Applicant: NextPage = () => {
       <h1 className="applicant-title">Ứng viên</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={ApplicantColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          isLoading={jobQuery.isLoading}
+          isLoading={applicantQuery.isLoading}
         />
       </div>
     </div>

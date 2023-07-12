@@ -19,9 +19,9 @@ const Applicants: NextPage = () => {
   });
   console.log(jobList);
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Học sinh</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Học sinh</h1>
+      <div className="advisor-table">
         {/* <ApplicantTable/> */}
         {jobList.map((job) => (
           <StyledBookmarkedCard

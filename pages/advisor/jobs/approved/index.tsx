@@ -1,26 +1,24 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { approvedJobAdvisorColumns, unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import { approvedJobsAdvisors, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { UnapprovedJobDataType, approvedJobAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
 
-const UnapprovedJobs: NextPage = () => {
+const ApprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<approvedJobAdvisorDataType[]>([]);
+  const [dataset, setDataSet] = useState<approvedJobAdvisorDataType[]>([]);
+  const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
-    queryFn: getUnapprovedJobs,
+    queryKey: ["approved-jobs", searchChange],
+    queryFn: approvedJobsAdvisors,
     onSuccess: async (jobs) => {
       setData(jobs);
+      setDataSet(jobs);
 
       var s: string[] = [];
 
@@ -32,9 +30,6 @@ const UnapprovedJobs: NextPage = () => {
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -54,7 +49,6 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -63,16 +57,16 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+    router.push('/advisor/jobs/jobForm');
   }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Ứng viên</h1>
+      <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
-          columns={unapprovedJobColumns}
+          dataset={data}
+          columns={approvedJobAdvisorColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
@@ -85,4 +79,4 @@ const UnapprovedJobs: NextPage = () => {
   );
 };
 
-export default UnapprovedJobs;
+export default ApprovedJobs;

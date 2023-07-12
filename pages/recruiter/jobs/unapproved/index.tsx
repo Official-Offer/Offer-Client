@@ -1,20 +1,17 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
 import { unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import { getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
+//create a next page for the student home page, code below
 const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
@@ -22,6 +19,7 @@ const UnapprovedJobs: NextPage = () => {
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
+      setDataSet(jobs);
 
       var s: string[] = [];
 
@@ -33,9 +31,6 @@ const UnapprovedJobs: NextPage = () => {
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -55,7 +50,6 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -69,10 +63,10 @@ const UnapprovedJobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Công việc chưa được duyệt</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
+          dataset={data}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
