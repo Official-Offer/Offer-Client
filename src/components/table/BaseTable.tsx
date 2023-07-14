@@ -34,16 +34,17 @@ export const BaseTable: React.FC = ({
       console.log(selected, selectedRows, changeRows);
     },
   };
+  console.log(searchResults)
   return (
     <div>
       <div className="table-functions">
         <div className="table-functions-search">
           {placeholders?.map((value:string, index:number) => (
             <FilterSearch
-              searchResults={searchResults}
+              searchResults={searchResults[index]}
               placeholder={value}
               onSearch={(value: any) => {
-                handleFilterSearch(value);
+                handleFilterSearch[index](value);
               }}
               // options={dataset.map((item) => item.name)}
             />
