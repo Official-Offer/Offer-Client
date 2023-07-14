@@ -12,10 +12,13 @@ import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
 const UnapprovedJobs: NextPage = () => {
-  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [filterResults, setFilterResults] = useState<any[][]>([]);
   const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const [searchChange, setSearchChange] = useState(false);
+  const [filterType, setFilterType] = useState("title");
+  const [placeholders, setPlaceholders] = useState<string[]>(["Tìm ứng viên"]);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["unapproved-job", searchChange],
@@ -27,10 +30,9 @@ const UnapprovedJobs: NextPage = () => {
       var s: string[] = [];
 
       jobs.forEach((job) => {
-        s.push(job.title);
+        setSearchResults(oldSearch=>[...oldSearch, job.title]);
       });
 
-      setSearchResults(s);
     },
     onError: () => {},
   });
@@ -51,13 +53,17 @@ const UnapprovedJobs: NextPage = () => {
     );
   };
 
-  const handleFilterSearch = (value: string) => {
+  const handleFilterSearch = (value: any) => {
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    setData(dataset.filter((item) => item[`${filterType}`] === value));
   };
+
+  const filterProps = () => {
+
+  }
 
   const handleAddJob = () => {
     router.push('/advisor/jobs/jobForm');
@@ -69,6 +75,7 @@ const UnapprovedJobs: NextPage = () => {
       <div className="advisor-table">
         <BaseTable
           dataset={data}
+          placeholders={placeholders}
           columns={unapprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}

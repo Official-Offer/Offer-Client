@@ -8,6 +8,7 @@ interface ISearch {
 }
 
 export const FilterSearch: React.FC = ({
+  placeholder,
   onSearch,
   searchResults,
 }: ISearch) => {
@@ -15,7 +16,7 @@ export const FilterSearch: React.FC = ({
     <Select
       className="filter-name"
       showSearch
-      placeholder="Tìm ứng viên"
+      placeholder={placeholder}
       optionFilterProp="children"
       onChange={onSearch}
       allowClear
