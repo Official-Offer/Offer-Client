@@ -97,8 +97,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
     label: `nav ${key}`,
   }));
 
-  console.log(router.pathname);
-
   if (
     router.pathname.includes("recruiter") ||
     router.pathname.includes("advisor")
