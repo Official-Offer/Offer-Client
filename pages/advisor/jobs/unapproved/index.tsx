@@ -20,7 +20,7 @@ const UnapprovedJobs: NextPage = () => {
   const [filterTypes, setFilterTypes] = useState<string[]>([]);
   const [filterType, setFilterType] = useState<string>("title");
   const [placeholders, setPlaceholders] = useState<string[]>(["Tìm ứng viên"]);
-  const [handleFilterSearches, setHandleFilterSearches] = useState([]);
+  const [handleFilterSearches, setHandleFilterSearches] = useState<CallableFunction[]>([]);
   const addFilter = () => {
     let inType = unapprovedJobColumns.filter((col)=>filterType === col.key)
     if (inType) {
@@ -33,7 +33,7 @@ const UnapprovedJobs: NextPage = () => {
       };
       setPlaceholders((p)=>[...p, filterType]);
       setFilterTypes((filters) => [...filters, filterType]);
-      setHandleFilterSearches((filters)=>[...filters, ()=>{return;}])
+      setHandleFilterSearches((filters)=>[...filters, handleFilterSearch])
       var s: any[] = [];
       dataset.forEach((data)=>{
         s.push(data[`${filterType}`]);

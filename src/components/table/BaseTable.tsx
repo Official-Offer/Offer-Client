@@ -44,6 +44,7 @@ export const BaseTable: React.FC = ({
               searchResults={searchResults[index]}
               placeholder={value}
               onSearch={(value: any) => {
+                console.log(handleFilterSearch[index])
                 handleFilterSearch[index](value);
               }}
               // options={dataset.map((item) => item.name)}
