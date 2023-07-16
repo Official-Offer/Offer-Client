@@ -64,8 +64,8 @@ export interface AdvisorCompanyDataType {
   school: string | null;
   role: string | null; 
   // compatibility: number | 0;
-  contacted: string | null; // Đã liên hệ, chưa liên hệ
   email: string | null;
+  contacted: string | null; // Đã liên hệ, chưa liên hệ
 }
 
 export interface AdvisorSchoolDataType {
@@ -83,8 +83,8 @@ export interface RecruiterSchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  role: string | null;
   company: string | null;
+  role: string | null;
   // compatibility: number | 0; 
   jobs_posted: number | null; // in this school
   email: string | null;

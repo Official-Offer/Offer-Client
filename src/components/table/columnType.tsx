@@ -9,6 +9,10 @@ import {
   StudentDataType,
   EventAdvisorDataType,
   EventRecruiterDataType,
+  AdvisorCompanyDataType,
+  AdvisorSchoolDataType,
+  RecruiterCompanyDataType,
+  RecruiterSchoolDataType,
 } from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
@@ -30,13 +34,37 @@ const ApprovedJobsActionItems = [
 const ApplicantActionItems = [
   { key: "1", label: "Xem chi tiết" },
   { key: "2", label: "Ẩn ứng viên" },
-  { key: "3", label: "Liên hệ" },
+  { key: "3", label: "Nhắn tin" },
 ];
 
 const StudentActionItems = [
   { key: "1", label: "Xem chi tiết" },
   { key: "2", label: "Ẩn học sinh" },
-  { key: "2", label: "Liên hệ" },
+  { key: "2", label: "Nhắn tin" },
+];
+
+const AdvisorSchoolActionItems = [
+  { key: "1", label: "Xem chi tiết" },
+  { key: "2", label: "Ẩn" },
+  { key: "2", label: "Nhắn tin" },
+];
+
+const AdvisorCompanyActionItems = [
+  { key: "1", label: "Xem chi tiết" },
+  { key: "2", label: "Ẩn" },
+  { key: "2", label: "Nhắn tin" },
+];
+
+const RecruiterSchoolActionItems = [
+  { key: "1", label: "Xem chi tiết" },
+  { key: "2", label: "Ẩn" },
+  { key: "2", label: "Nhắn tin" },
+];
+
+const RecruiterCompanyActionItems = [
+  { key: "1", label: "Xem chi tiết" },
+  { key: "2", label: "Ẩn" },
+  { key: "2", label: "Nhắn tin" },
 ];
 
 const SchoolActionItems = [
@@ -341,6 +369,226 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     render: (_, record) => (
       <Space size="middle">
         <Dropdown menu={{ items: StudentActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const AdvisorCompanyColumns: ColumnsType<AdvisorCompanyDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Trường",
+    dataIndex: "school",
+    key: "school",
+  },
+  {
+    title: "Vai trò",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: "email",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
+    title: "Liên hệ?",
+    key: "contacted",
+    dataIndex: "contacted",
+    render: (_, { contacted }) => {
+      let color =
+      contacted === "Chưa liên hệ"
+          ? "volcano"
+          : "green";
+      return (
+        <Tag color={color} key={contacted}>
+          {contacted?.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <Dropdown menu={{ items: AdvisorCompanyActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const AdvisorSchoolColumns: ColumnsType<AdvisorSchoolDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Trường",
+    dataIndex: "school",
+    key: "school",
+  },
+  {
+    title: "Vai trò",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: "Xác thực email?",
+    dataIndex: "email_verified",
+    key: "email_verified",
+  },
+  {
+    title: "Xác thực vai trò?",
+    dataIndex: "role_verified",
+    key: "role_verified",
+  },
+  {
+    title: "Học sinh phụ trách",
+    dataIndex: "managed_students",
+    key: "managed_students",
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <Dropdown menu={{ items: AdvisorSchoolActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const RecruiterSchoolColumns: ColumnsType<RecruiterSchoolDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Công ty",
+    dataIndex: "company",
+    key: "company",
+  },
+  {
+    title: "Vai trò",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: "Số công việc đã đăng",
+    dataIndex: "jobs_posted",
+    key: "jobs_posted",
+  },
+  {
+    title: "email",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
+    title: "Liên hệ?",
+    key: "contacted",
+    dataIndex: "contacted",
+    render: (_, { contacted }) => {
+      let color =
+      contacted === "Chưa liên hệ"
+          ? "volcano"
+          : "green";
+      return (
+        <Tag color={color} key={contacted}>
+          {contacted?.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <Dropdown menu={{ items: RecruiterSchoolActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const RecruiterCompanyColumns: ColumnsType<RecruiterCompanyDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Vai trò",
+    dataIndex: "role",
+    key: "role",
+  },
+  {
+    title: "Xác thực email?",
+    dataIndex: "email_verified",
+    key: "email_verified",
+  },
+  {
+    title: "Xác thực vai trò?",
+    dataIndex: "role_verified",
+    key: "role_verified",
+  },
+  {
+    title: "Số công việc đã đăng",
+    dataIndex: "jobs_posted",
+    key: "jobs_posted",
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <Dropdown menu={{ items: RecruiterCompanyActionItems }}>
           <a>
             <MoreOutlined />
           </a>
