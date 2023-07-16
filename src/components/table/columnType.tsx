@@ -1,7 +1,7 @@
 import { Dropdown, Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
-import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
+import { ApplicantDataType, UnapprovedJobDataType, ApprovedJobAdvisorDataType, UnapprovedJobAdvisorDataType, StudentDataType } from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
 const UnapprovedJobsActionItems = [
@@ -17,12 +17,14 @@ const ApplicantActionItems = [
 ];
 
 const SchoolActionItems = [
-  { key: "1", label: "Xem chi tiết" },
-  { key: "2", label: "Copy ID" },
+  { key: "1", label: "Nhắn tin" },
+  { key: "2", label: "Xem chi tiết" },
+  { key: "3", label: "Sao chép ID" },
 ];
 const CompanyActionItems = [
   { key: "1", label: "Nhắn tin" },
   { key: "2", label: "Xem chi tiết" },
+  { key: "3", label: "Sao chép ID" },
 ];
 
 const approvedJobsAdvisorActionItems = [
@@ -160,7 +162,60 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   },
 ];
 
-export const approvedJobAdvisorColumns: ColumnsType<UnapprovedJobDataType> = [
+export const unapprovedJobAdvisorColumns: ColumnsType<UnapprovedJobAdvisorDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Ngày tạo",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Tiêu đề",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Địa điểm",
+    dataIndex: "address",
+    key: "address",
+  },
+  {
+    title: "Công ty",
+    dataIndex: "company",
+    key: "company",
+  },
+  {
+    title: "Ứng viên trường bạn/tất cả",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
+    title: "Được nhận trường bạn/tất cả",
+    dataIndex: "accepted",
+    key: "accepted",
+  },
+ 
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{items: approvedJobsAdvisorActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const approvedJobAdvisorColumns: ColumnsType<ApprovedJobAdvisorDataType> = [
   {
     title: "ID",
     dataIndex: "ID",
@@ -273,6 +328,66 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
   },
 ];
 
+export const StudentColumns: ColumnsType<StudentDataType> = [
+  {
+    title: "ID",
+    dataIndex: "ID",
+    key: "ID",
+  },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Trường",
+    dataIndex: "school",
+    key: "school",
+  },
+  {
+    title: "Ngành học",
+    dataIndex: "major",
+    key: "major",
+  },
+  {
+    title: "Năm tốt nghiệp",
+    dataIndex: "expected_graduation",
+    key: "expected_graduation",
+  },
+  {
+    title: "Giai đoạn",
+    key: "tags",
+    dataIndex: "tags",
+    render: (_, { tag }) => {
+      let color =
+        tag === "Vòng đơn"
+          ? "volcano"
+          : tag === "Vòng phỏng vấn"
+          ? "blue"
+          : "green";
+      return (
+        <Tag color={color} key={tag}>
+          {tag.toUpperCase()}
+        </Tag>
+      );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => (
+      <Space size="middle">
+        <Dropdown menu={{items: ApplicantActionItems}}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
 export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
   {
     title: "ID",
@@ -290,30 +405,40 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
     key: "noStudents",
   },
   {
-    title: "Số công việc",
-    dataIndex: "noJobs",
-    key: "noJobs",
+    title: "Công việc chưa duyệt",
+    dataIndex: "unapprovedJobs",
+    key: "unapprovedJobs",
   },
   {
-    title: "Tình trạng",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tag }) => {
-      let color =
-        tag === "Chưa tạo danh sách"
-          ? "red"
-          : tag === "Chưa tuyển"
-          ? "volcano"
-          : "green";
-      return (
-        <Tag color={color} key={tag}>
-          {tag.toUpperCase()}
-        </Tag>
-      );
-    },
+    title: "Công việc đã duyệt",
+    dataIndex: "approvedJobs",
+    key: "approvedJobs",
   },
   {
-    title: "Action",
+    title: "Độ hợp",
+    dataIndex: "compatibility",
+    key: "compatibility",
+  }, 
+  // {
+  //   title: "Tình trạng",
+  //   key: "tags",
+  //   dataIndex: "tags",
+  //   render: (_, { tag }) => {
+  //     let color =
+  //       tag === "Chưa tạo danh sách"
+  //         ? "red"
+  //         : tag === "Chưa tuyển"
+  //         ? "volcano"
+  //         : "green";
+  //     return (
+  //       <Tag color={color} key={tag}>
+  //         {tag.toUpperCase()}
+  //       </Tag>
+  //     );
+  //   },
+  // },
+  {
+    title: "Xem thêm",
     key: "action",
     render: (_, record) => (
       // {record.name}
@@ -365,7 +490,12 @@ export const companyColumns: ColumnsType<UnapprovedJobDataType> = [
     key: "events",
   },
   {
-    title: "Action",
+    title: "Độ hợp",
+    dataIndex: "compatibility",
+    key: "compatibility",
+  }, 
+  {
+    title: "Xem thêm",
     key: "action",
     render: (_, record) => (
       // {record.name}
