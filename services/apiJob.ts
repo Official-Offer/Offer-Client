@@ -28,10 +28,17 @@ export const getJobs = async () => {
 export const getUnapprovedJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
-  const tags = [
+  const companies = [
     // "Chưa tạo danh sách",
-    "Chưa tuyển",
-    "Đã tuyển",
+    "VinAI",
+    "FB",
+    "Amz"
+  ];
+  const recruiters = [
+    // "Chưa tạo danh sách",
+    "thuan cho",
+    "bao deng",
+    "ktwo"
   ];
   // Fetch company name for each job
   var res = [];
@@ -41,8 +48,8 @@ export const getUnapprovedJobs = async () => {
       ID: job.id,
       posted_date: moment(job.timestamp).format("D/M/YYYY"),
       title: job.title || "Không tìm thấy",
-      company: "VinAI",
-      recruiter: "Thuan",
+      company: companies[Math.floor(Math.random()*companies.length)],
+      recruiter: recruiters[Math.floor(Math.random()*recruiters.length)],
       expected: 5,
       compatibility: "70%",
       // tag: tags[Math.floor(Math.random()*tags.length)],

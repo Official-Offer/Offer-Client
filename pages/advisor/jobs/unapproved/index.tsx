@@ -24,12 +24,12 @@ const UnapprovedJobs: NextPage = () => {
     if (inType) {
       setPlaceholders((p)=>[...p, filterType]);
       setFilterTypes((filters) => [...filters, filterType]);
-      var s: any[] = [];
+      var s =  new Set();
       dataset.forEach((data)=>{
-        s.push(data[`${filterType}`]);
+        s.add(data[`${filterType}`]);
       })
-      console.log(searchResults)
-      setSearchResults((oldSearches)=>[...oldSearches, s])
+      let arr = Array.from(s)
+      setSearchResults((oldSearches)=>[...oldSearches, arr])
     } else {
       console.log("not a valid filter type")
     }
@@ -72,7 +72,7 @@ const UnapprovedJobs: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item[`${filter}`] === value));
+    setData(dataset.filter((item) =>  item[`${filter}`] == value));
   };
 
   const handleAddJob = () => {
