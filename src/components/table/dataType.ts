@@ -1,37 +1,38 @@
 export interface JobDataType {
-  key: string;
+  key: string | null;
   ID: string | null;
-  posted_date: string;
-  title: string;
-  unapproved_schools: number; 
-  approved_schools: number;
-  no_applicants: number;
-  expected: number;
+  posted_date: string | null;
+  title: string | null;
+  unapproved_schools: string | null;
+  approved_schools: string | null;
+  no_applicants: number | 0;
+  expected: number | 0;
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
 export interface UnapprovedJobDataType {
-  key: string;
+  key: string | null;
   ID: string | null;
-  posted_date: string;
-  title: string;
+  posted_date: string | null;
+  title: string | null;
   // address: string;
-  company: string;
-  no_applicants: number;
-  expected: number;
+  company: string | null;
+  recruiter: string | null;
+  expected: number | 0;
   compatibility: number | 0; //percentage
 }
 
 export interface ApprovedJobDataType {
-  key: string;
+  key: string | null;
   ID: string | null;
-  posted_date: string;
-  title: string;
+  posted_date: string | null;
+  title: string | null;
   // address: string;
-  company: string;
-  no_applicants: string; //school/total
-  expected: number;
-  accepted: number; // from this school only
+  company: string | null;
+  recruiter: string | null;
+  applicants: string | null; //school/total
+  expected: number | 0;
+  accepted: string | 0; //school/total
 }
 
 export interface ApplicantDataType {
@@ -42,7 +43,7 @@ export interface ApplicantDataType {
   major: string | null;
   expected_graduation: string | null;
   compatibility: number | 0; //percentage
-  tag: string | null;
+  tag: string | null; //Chua nop / Pending / Da nhan
 }
 
 export interface StudentDataType {
@@ -106,8 +107,8 @@ export interface SchoolDataType {
   ID: string | null;
   name: string | null;
   advisors: string | null;
-  no_students: number | 0;
-  no_employees: number | 0; 
+  no_students: number | null;
+  students_applicants: string | 0; // in this company
   unapproved_jobs: number | 0; //in this company
   approved_jobs: number | 0; //in this company
   compatibility: number | 0;
@@ -130,9 +131,10 @@ export interface EventRecruiterDataType {
   key: string | null;
   ID: string | null;
   posted_date: string | null;
-  name: string | null;
+  title: string | null;
   school: string | null;
   no_attendants: number | null;
+  compatibility: number | 0;
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 
@@ -140,9 +142,10 @@ export interface EventAdvisorDataType {
   key: string | null;
   ID: string | null;
   posted_date: string | null;
-  name: string | null;
+  title: string | null;
   company: string | null;
   no_attendants: number | null;
+  compatibility: number | 0;
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 
