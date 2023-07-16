@@ -1,6 +1,6 @@
 export interface JobDataType {
   key: string;
-  ID: string;
+  ID: string | null;
   posted_date: string;
   title: string;
   unapproved_schools: number; 
@@ -12,19 +12,19 @@ export interface JobDataType {
 
 export interface UnapprovedJobDataType {
   key: string;
-  ID: string;
+  ID: string | null;
   posted_date: string;
   title: string;
   // address: string;
   company: string;
   no_applicants: number;
   expected: number;
-  compatibility: string; //percentage
+  compatibility: number | 0; //percentage
 }
 
 export interface ApprovedJobDataType {
   key: string;
-  ID: string;
+  ID: string | null;
   posted_date: string;
   title: string;
   // address: string;
@@ -41,7 +41,7 @@ export interface ApplicantDataType {
   school: string | null;
   major: string | null;
   expected_graduation: string | null;
-  compatibility: string; //percentage
+  compatibility: number | 0; //percentage
   tag: string | null;
 }
 
@@ -56,26 +56,25 @@ export interface StudentDataType {
   // tag: string | null;
 }
 
-
 export interface AdvisorCompanyDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  major: string | null;
-  expected_graduation: string | null;
-  jobs_applied: number | null;
-  jobs_accepted: number | null;
-  // tag: string | null;
+  school: string | null;
+  role: string | null; 
+  // compatibility: number | 0;
+  contacted: string | null; // Đã liên hệ, chưa liên hệ
+  email: string | null;
 }
 
 export interface AdvisorSchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  major: string | null;
-  expected_graduation: string | null;
-  jobs_applied: number | null;
-  jobs_accepted: number | null;
+  role: string | null; 
+  email_verified: boolean | null;
+  role_verified: boolean | null;
+  managed_students: string | null;
   // tag: string | null;
 }
 
@@ -83,21 +82,22 @@ export interface RecruiterSchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  major: string | null;
-  expected_graduation: string | null;
-  jobs_applied: number | null;
-  jobs_accepted: number | null;
-  // tag: string | null;
+  role: string | null;
+  company: string | null;
+  // compatibility: number | 0; 
+  jobs_posted: number | null; // in this school
+  email: string | null;
+  contacted: string | null; // Đã liên hệ, chưa liên hệ
 }
 
 export interface RecruiterCompanyDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  major: string | null;
-  expected_graduation: string | null;
-  jobs_applied: number | null;
-  jobs_accepted: number | null;
+  role: string | null; 
+  email_verified: boolean | null;
+  role_verified: boolean | null;
+  jobs_posted: number | null;
   // tag: string | null;
 }
 
@@ -107,10 +107,10 @@ export interface SchoolDataType {
   name: string | null;
   advisors: string | null;
   no_students: number | 0;
-  no_employees: number | 0;
-  unapproved_jobs: number | 0;
-  approved_jobs: number | 0;
-  compatibility: string | null;
+  no_employees: number | 0; 
+  unapproved_jobs: number | 0; //in this company
+  approved_jobs: number | 0; //in this company
+  compatibility: number | 0;
   // tag: string | null;
 }
 
@@ -120,25 +120,29 @@ export interface CompanyDataType {
   name: string | null;
   //Should be changed to images + numbers
   recruiters: string | null;
-  unverified_jobs: number | 0;
-  verifiedJobs: number | 0;
-  students: number | 0;
-  events: number | 0;
+  unapproved_jobs: number | 0; // in this school
+  approved_jobs: number | 0; // in this school
+  student_employees: number | 0; 
+  compatibility: number | 0;
 }
 
 export interface EventRecruiterDataType {
+  key: string | null;
   ID: string | null;
+  posted_date: string | null;
   name: string | null;
-  noStudents: number | 0;
-  noJobs: number | 0;
-  tag: string | null;
+  school: string | null;
+  no_attendants: number | null;
+  tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 
 export interface EventAdvisorDataType {
+  key: string | null;
   ID: string | null;
+  posted_date: string | null;
   name: string | null;
-  noStudents: number | 0;
-  noJobs: number | 0;
-  tag: string | null;
+  company: string | null;
+  no_attendants: number | null;
+  tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 

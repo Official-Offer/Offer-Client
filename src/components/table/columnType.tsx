@@ -174,8 +174,8 @@ export const unapprovedJobAdvisorColumns: ColumnsType<UnapprovedJobAdvisorDataTy
   [
     {
       title: "ID",
-      dataIndex: "ID",
-      key: "ID",
+      dataIndex: "key",
+      key: "key",
     },
     {
       title: "Ngày tạo",
