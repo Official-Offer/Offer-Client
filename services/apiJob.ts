@@ -39,12 +39,13 @@ export const getUnapprovedJobs = async () => {
     res.push({
       key: job.id,
       ID: job.id,
-      date: moment(job.timestamp).format("D/M/YYYY"),
+      posted_date: moment(job.timestamp).format("D/M/YYYY"),
       title: job.title || "Không tìm thấy",
-      address: job.location || "Không tìm thấy",
-      schools: job.schools.length || "Không tìm thấy",
-      applicants: job.applicants.length,
-      tag: tags[Math.floor(Math.random()*tags.length)],
+      company: "VinAI",
+      recruiter: "Thuan",
+      expected: 5,
+      compatibility: "70%",
+      // tag: tags[Math.floor(Math.random()*tags.length)],
     });
   }
   return res;

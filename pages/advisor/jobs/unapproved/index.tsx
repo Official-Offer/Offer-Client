@@ -4,60 +4,49 @@ import dynamic from "next/dynamic";
 import type { ColumnsType } from "antd/es/table";
 import { Button, Input, Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
+import { UnapprovedJobColumns } from "@components/table/columnType";
 
 const UnapprovedJobs: NextPage = () => {
-  const [searchResults, setSearchResults] = useState<any[][]>([]);
+  const [searchResults, setSearchResults] = useState<any[][]>([[]]);
   // const [filterResults, setFilterResults] = useState<any[][]>([]);
   const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
   const [filterTypes, setFilterTypes] = useState<string[]>([]);
-  const [filterType, setFilterType] = useState<string>("title");
-  const [placeholders, setPlaceholders] = useState<string[]>(["Tìm ứng viên"]);
-  const [handleFilterSearches, setHandleFilterSearches] = useState<CallableFunction[]>([]);
+  const [filterType, setFilterType] = useState<string>("");
+  const [placeholders, setPlaceholders] = useState<string[]>([]);
   const addFilter = () => {
-    let inType = unapprovedJobColumns.filter((col)=>filterType === col.key)
+    let inType = UnapprovedJobColumns.filter((col)=>filterType === col.key)
     if (inType) {
-      let handleFilterSearch = (value: any) => {
-        if (!value) {
-          setData(dataset);
-          return;
-        }
-        setData(dataset.filter((item) => item[`${filterType}`] === value));
-      };
       setPlaceholders((p)=>[...p, filterType]);
       setFilterTypes((filters) => [...filters, filterType]);
-      setHandleFilterSearches((filters)=>[...filters, handleFilterSearch])
       var s: any[] = [];
       dataset.forEach((data)=>{
         s.push(data[`${filterType}`]);
       })
+      console.log(searchResults)
       setSearchResults((oldSearches)=>[...oldSearches, s])
     } else {
-      console.log("not value filter type")
+      console.log("not a valid filter type")
     }
   };
 
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job", searchChange, filterTypes],
+    queryKey: ["unapproved-job", filterTypes],
     queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
 
-      // var s: string[] = [];
-
-      // jobs.forEach((job) => {
-      //   filterTypes.forEach((filter) => {
-      //     setSearchResults((oldSearch) => [...oldSearch, job[`${filter}`]]);
-      //   });
-      // });
+      // var s: any[] = [];
+      // jobs.forEach((data)=>{
+      //   s.push(data.title);
+      // })
+      // setSearchResults((oldSearches)=>[...oldSearches, s])
     },
     onError: () => {},
   });
@@ -78,12 +67,12 @@ const UnapprovedJobs: NextPage = () => {
     );
   };
 
-  const handleFilterSearch = (value: any) => {
+  const handleFilterSearch = (value: any, filter: any) => {
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item[`${filterType}`] === value));
+    setData(dataset.filter((item) => item[`${filter}`] === value));
   };
 
   const handleAddJob = () => {
@@ -106,9 +95,10 @@ const UnapprovedJobs: NextPage = () => {
         <BaseTable
           dataset={data}
           placeholders={placeholders}
-          columns={unapprovedJobColumns}
+          filterTypes={filterTypes}
+          columns={UnapprovedJobColumns}
           handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearches}
+          handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"unapprovedJob"}

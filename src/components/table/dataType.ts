@@ -19,7 +19,7 @@ export interface UnapprovedJobDataType {
   company: string | null;
   recruiter: string | null;
   expected: number | 0;
-  compatibility: number | 0; //percentage
+  compatibility: string | null; //percentage
 }
 
 export interface ApprovedJobDataType {
@@ -42,7 +42,7 @@ export interface ApplicantDataType {
   school: string | null;
   major: string | null;
   expected_graduation: string | null;
-  compatibility: number | 0; //percentage
+  compatibility: string | null; //percentage
   tag: string | null; //Chua nop / Pending / Da nhan
 }
 
@@ -63,7 +63,7 @@ export interface AdvisorCompanyDataType {
   name: string | null;
   school: string | null;
   role: string | null; 
-  // compatibility: number | 0;
+  // compatibility: string | null;
   email: string | null;
   contacted: string | null; // Đã liên hệ, chưa liên hệ
 }
@@ -85,7 +85,7 @@ export interface RecruiterSchoolDataType {
   name: string | null;
   company: string | null;
   role: string | null;
-  // compatibility: number | 0; 
+  // compatibility: string | null; 
   jobs_posted: number | null; // in this school
   email: string | null;
   contacted: string | null; // Đã liên hệ, chưa liên hệ
@@ -111,7 +111,7 @@ export interface SchoolDataType {
   students_applicants: string | 0; // in this company
   unapproved_jobs: number | 0; //in this company
   approved_jobs: number | 0; //in this company
-  compatibility: number | 0;
+  compatibility: string | null;
   // tag: string | null;
 }
 
@@ -124,7 +124,7 @@ export interface CompanyDataType {
   unapproved_jobs: number | 0; // in this school
   approved_jobs: number | 0; // in this school
   student_employees: number | 0; 
-  compatibility: number | 0;
+  compatibility: string | null;
 }
 
 export interface EventRecruiterDataType {
@@ -134,7 +134,7 @@ export interface EventRecruiterDataType {
   title: string | null;
   school: string | null;
   no_attendants: number | null;
-  compatibility: number | 0;
+  compatibility: string | null;
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 
@@ -145,7 +145,7 @@ export interface EventAdvisorDataType {
   title: string | null;
   company: string | null;
   no_attendants: number | null;
-  compatibility: number | 0;
+  compatibility: string | null;
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 

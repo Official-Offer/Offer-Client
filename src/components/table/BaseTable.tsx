@@ -15,6 +15,7 @@ export const BaseTable: React.FC = ({
   handleFilterSearch,
   handleAdd,
   dataType,
+  filterTypes,
   isLoading,
   placeholders,
 }: any) => {
@@ -41,11 +42,10 @@ export const BaseTable: React.FC = ({
         <div className="table-functions-search">
           {placeholders?.map((value:string, index:number) => (
             <FilterSearch
-              searchResults={searchResults[index]}
+              searchResults={searchResults[index+1]}
               placeholder={value}
               onSearch={(value: any) => {
-                console.log(handleFilterSearch)
-                handleFilterSearch[index](value);
+                handleFilterSearch(value, filterTypes[index]);
               }}
               // options={dataset.map((item) => item.name)}
             />
