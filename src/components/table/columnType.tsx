@@ -3,16 +3,16 @@ import { ColumnsType } from "antd/es/table";
 import React from "react";
 import {
   ApplicantDataType,
+  JobDataType,
+  ApprovedJobDataType,
   UnapprovedJobDataType,
-  ApprovedJobAdvisorDataType,
-  UnapprovedJobAdvisorDataType,
   StudentDataType,
   EventAdvisorDataType,
   EventRecruiterDataType,
 } from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
-const UnapprovedJobsActionItems = [
+const JobsActionItems = [
   { key: "1", label: "Copy ID" },
   { key: "2", label: "Tạo danh sách ứng viên" },
   { key: "3", label: "Chỉnh sửa công việc" },
@@ -40,7 +40,7 @@ const approvedJobsAdvisorActionItems = [
   { key: "2", label: "Xem chi tiết" },
 ];
 
-export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
+export const JobColumns: ColumnsType<UnapprovedJobDataType> = [
   {
     title: "ID",
     dataIndex: "ID",
