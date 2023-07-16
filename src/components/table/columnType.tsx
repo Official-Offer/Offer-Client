@@ -1,7 +1,15 @@
 import { Dropdown, Space, Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React from "react";
-import { ApplicantDataType, UnapprovedJobDataType, ApprovedJobAdvisorDataType, UnapprovedJobAdvisorDataType, StudentDataType } from "./dataType";
+import {
+  ApplicantDataType,
+  UnapprovedJobDataType,
+  ApprovedJobAdvisorDataType,
+  UnapprovedJobAdvisorDataType,
+  StudentDataType,
+  EventAdvisorDataType,
+  EventRecruiterDataType,
+} from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
 const UnapprovedJobsActionItems = [
@@ -87,7 +95,7 @@ export const approvedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
+        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
           <a>
             <MoreOutlined />
           </a>
@@ -152,7 +160,7 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{items: UnapprovedJobsActionItems}}>
+        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
           <a>
             <MoreOutlined />
           </a>
@@ -162,111 +170,113 @@ export const unapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
   },
 ];
 
-export const unapprovedJobAdvisorColumns: ColumnsType<UnapprovedJobAdvisorDataType> = [
-  {
-    title: "ID",
-    dataIndex: "ID",
-    key: "ID",
-  },
-  {
-    title: "Ngày tạo",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Tiêu đề",
-    dataIndex: "title",
-    key: "title",
-  },
-  {
-    title: "Địa điểm",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Công ty",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ứng viên trường bạn/tất cả",
-    dataIndex: "applicants",
-    key: "applicants",
-  },
-  {
-    title: "Được nhận trường bạn/tất cả",
-    dataIndex: "accepted",
-    key: "accepted",
-  },
- 
-  {
-    title: "Hành động",
-    key: "action",
-    render: (_, record) => (
-      // {record.name}
-      <Space size="middle">
-        <Dropdown menu={{items: approvedJobsAdvisorActionItems}}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
-];
+export const unapprovedJobAdvisorColumns: ColumnsType<UnapprovedJobAdvisorDataType> =
+  [
+    {
+      title: "ID",
+      dataIndex: "ID",
+      key: "ID",
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Tiêu đề",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Địa điểm",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Công ty",
+      dataIndex: "company",
+      key: "company",
+    },
+    {
+      title: "Ứng viên trường bạn/tất cả",
+      dataIndex: "applicants",
+      key: "applicants",
+    },
+    {
+      title: "Được nhận trường bạn/tất cả",
+      dataIndex: "accepted",
+      key: "accepted",
+    },
 
-export const approvedJobAdvisorColumns: ColumnsType<ApprovedJobAdvisorDataType> = [
-  {
-    title: "ID",
-    dataIndex: "ID",
-    key: "ID",
-  },
-  {
-    title: "Ngày tạo",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Tiêu đề",
-    dataIndex: "title",
-    key: "title",
-  },
-  {
-    title: "Địa điểm",
-    dataIndex: "address",
-    key: "address",
-  },
-  {
-    title: "Công ty",
-    dataIndex: "company",
-    key: "company",
-  },
-  {
-    title: "Ứng viên trường bạn/tất cả",
-    dataIndex: "applicants",
-    key: "applicants",
-  },
-  {
-    title: "Được nhận trường bạn/tất cả",
-    dataIndex: "accepted",
-    key: "accepted",
-  },
- 
-  {
-    title: "Hành động",
-    key: "action",
-    render: (_, record) => (
-      // {record.name}
-      <Space size="middle">
-        <Dropdown menu={{items: approvedJobsAdvisorActionItems}}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
-];
+    {
+      title: "Hành động",
+      key: "action",
+      render: (_, record) => (
+        // {record.name}
+        <Space size="middle">
+          <Dropdown menu={{ items: approvedJobsAdvisorActionItems }}>
+            <a>
+              <MoreOutlined />
+            </a>
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
+
+export const approvedJobAdvisorColumns: ColumnsType<ApprovedJobAdvisorDataType> =
+  [
+    {
+      title: "ID",
+      dataIndex: "ID",
+      key: "ID",
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Tiêu đề",
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Địa điểm",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "Công ty",
+      dataIndex: "company",
+      key: "company",
+    },
+    {
+      title: "Ứng viên trường bạn/tất cả",
+      dataIndex: "applicants",
+      key: "applicants",
+    },
+    {
+      title: "Được nhận trường bạn/tất cả",
+      dataIndex: "accepted",
+      key: "accepted",
+    },
+
+    {
+      title: "Hành động",
+      key: "action",
+      render: (_, record) => (
+        // {record.name}
+        <Space size="middle">
+          <Dropdown menu={{ items: approvedJobsAdvisorActionItems }}>
+            <a>
+              <MoreOutlined />
+            </a>
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
 
 export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
   {
@@ -318,7 +328,7 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <Dropdown menu={{items: ApplicantActionItems}}>
+        <Dropdown menu={{ items: ApplicantActionItems }}>
           <a>
             <MoreOutlined />
           </a>
@@ -378,7 +388,7 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <Dropdown menu={{items: ApplicantActionItems}}>
+        <Dropdown menu={{ items: ApplicantActionItems }}>
           <a>
             <MoreOutlined />
           </a>
@@ -418,7 +428,7 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
     title: "Độ hợp",
     dataIndex: "compatibility",
     key: "compatibility",
-  }, 
+  },
   // {
   //   title: "Tình trạng",
   //   key: "tags",
@@ -443,7 +453,7 @@ export const schoolColumns: ColumnsType<UnapprovedJobDataType> = [
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{items: SchoolActionItems}}>
+        <Dropdown menu={{ items: SchoolActionItems }}>
           <a>
             <MoreOutlined />
           </a>
@@ -493,14 +503,128 @@ export const companyColumns: ColumnsType<UnapprovedJobDataType> = [
     title: "Độ hợp",
     dataIndex: "compatibility",
     key: "compatibility",
-  }, 
+  },
   {
     title: "Xem thêm",
     key: "action",
     render: (_, record) => (
       // {record.name}
       <Space size="middle">
-        <Dropdown menu={{items: CompanyActionItems}}>
+        <Dropdown menu={{ items: CompanyActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const eventRecruiterColumns: ColumnsType<EventRecruiterDataType> = [
+  // {
+  //   title: "ID",
+  //   dataIndex: "ID",
+  //   key: "ID",
+  // },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Người tuyển dụng",
+    dataIndex: "recruiters",
+    key: "recruiters",
+  },
+  {
+    title: "Công việc chưa duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Công việc đã duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Học sinh tại công ty",
+    dataIndex: "students",
+    key: "students",
+  },
+  {
+    title: "Sự kiện đã tổ chức",
+    dataIndex: "events",
+    key: "events",
+  },
+  {
+    title: "Độ hợp",
+    dataIndex: "compatibility",
+    key: "compatibility",
+  },
+  {
+    title: "Xem thêm",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: CompanyActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
+];
+
+export const eventAdvisorColumns: ColumnsType<EventAdvisorDataType> = [
+  // {
+  //   title: "ID",
+  //   dataIndex: "ID",
+  //   key: "ID",
+  // },
+  {
+    title: "Tên",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Người tuyển dụng",
+    dataIndex: "recruiters",
+    key: "recruiters",
+  },
+  {
+    title: "Công việc chưa duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Công việc đã duyệt",
+    dataIndex: "unverifiedJobs",
+    key: "unverifiedJobs",
+  },
+  {
+    title: "Học sinh tại công ty",
+    dataIndex: "students",
+    key: "students",
+  },
+  {
+    title: "Sự kiện đã tổ chức",
+    dataIndex: "events",
+    key: "events",
+  },
+  {
+    title: "Độ hợp",
+    dataIndex: "compatibility",
+    key: "compatibility",
+  },
+  {
+    title: "Xem thêm",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: CompanyActionItems }}>
           <a>
             <MoreOutlined />
           </a>
