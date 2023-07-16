@@ -84,7 +84,6 @@ const EventAdvisorActionItems = [
   { key: "2", label: "Xem chi tiết" },
 ];
 
-
 export const JobColumns: ColumnsType<JobDataType> = [
   // {
   //   title: "ID",
@@ -746,7 +745,7 @@ export const EventRecruiterColumns: ColumnsType<EventRecruiterDataType> = [
           : "green";
       return (
         <Tag color={color} key={tag}>
-          {tag.toUpperCase()}
+          {tag?.toUpperCase()}
         </Tag>
       );
     },
@@ -811,7 +810,7 @@ export const EventAdvisorColumns: ColumnsType<EventAdvisorDataType> = [
           : "green";
       return (
         <Tag color={color} key={tag}>
-          {tag.toUpperCase()}
+          {tag?.toUpperCase()}
         </Tag>
       );
     },

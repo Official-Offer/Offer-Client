@@ -1,17 +1,17 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { JobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
 
 //create a next page for the student home page, code below
-const UnapprovedJobs: NextPage = () => {
+const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
+  const [data, setData] = useState<JobDataType[]>([]);
+  const [dataset, setDataSet] = useState<JobDataType[]>([]);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
@@ -63,16 +63,16 @@ const UnapprovedJobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Công việc chưa được duyệt</h1>
+      <h1 className="applicant-title">Công việc</h1>
       <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={unapprovedJobColumns}
+          columns={JobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
+          tableType={"RecruiterJobs"}
           isLoading={jobQuery.isLoading}
         />
       </div>
@@ -80,4 +80,4 @@ const UnapprovedJobs: NextPage = () => {
   );
 };
 
-export default UnapprovedJobs;
+export default Jobs;
