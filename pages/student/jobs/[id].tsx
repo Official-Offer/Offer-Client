@@ -52,7 +52,7 @@ const StudentJobs: NextPage = () => {
       for (let i = 0; i < res.length; i++) {
         jobIndexList.set(res[i].id, i);
       }
-      setActiveCardIndex(activeCardIndex ?? jobIndexList.get(jobID));
+      setActiveCardIndex(activeCardIndex ?? (jobID === 0 ? 0 : jobIndexList.get(jobID)));
       setJobIndexList(jobIndexList);
     },
     onError: (err) => console.log(`Job List Error: ${err}`),
