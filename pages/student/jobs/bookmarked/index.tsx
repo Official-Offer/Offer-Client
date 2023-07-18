@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import moment from "moment";
-import { getBookmarkedList, deleteBookmarkedJob } from "services/apiJob";
+import { getBookmarkedList, unbookmarkJob } from "services/apiJob";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { StyledBookmarkedCard } from "@styles/styled-components/styledBox";
@@ -25,7 +25,7 @@ const BookmarkedJobs: NextPage = () => {
   });
 
   const unbookmarkJobMutation = useMutation({
-    mutationFn: deleteBookmarkedJob,
+    mutationFn: unbookmarkJob,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarkedJobs"] }),
     onError: (err) => console.log(`Delete Error: ${err}`),
   });

@@ -32,7 +32,6 @@
   }
 
   &-list {
-    position: relative;
     padding: 0;
     border-right: 1px solid black;
     height: calc(100dvh - 128px);
@@ -91,11 +90,20 @@
       }
 
       &-bookmark {
-        transition: background-color 0s, filter 0s, scale 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 42px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        border: none;
+        padding: 4px;
         background-color: $grey-light;
+        transition: background-color 0s, filter 0s, scale 0.3s;
 
         &:hover {
           scale: 1.2;
+          cursor: pointer;
         }
 
         &:active {
@@ -182,29 +190,20 @@
         ;
       }
 
-      button {
+      .ant-btn {
         border-radius: 10px;
         height: 45px;
         width: 120px;
         color: white;
         font-weight: bold;
-      }
 
-      button.apply {
-        background-color: #d30b81;
-      }
-
-      button.inbox {
-        background-color: #7277f1;
-      }
-
-      button.bookmark {
-        height: 45px;
-        width: 45px;
-        background: rgb(235, 235, 235) !important;
-        color: black !important;
-        border: none !important;
-        border-radius: 100%;
+        &.apply {
+          background-color: #d30b81;
+        }
+  
+        &.inbox {
+          background-color: #7277f1;
+        }
       }
 
     }

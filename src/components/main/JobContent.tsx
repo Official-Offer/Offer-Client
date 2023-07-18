@@ -3,17 +3,19 @@ import { useQuery, useMutation } from "react-query";
 import { Button, Modal, Skeleton, Upload } from "antd";
 import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { BookmarkOutlined } from "@components/icons/BookmarkOutlined";
 import { ResumeForm } from "@components/forms/ResumeForm";
+import { BookmarkButton } from "@components/button/BookmarkButton";
 import { IconButton } from "@styles/styled-components/styledButton";
 
-type JobDescriptionProps = {
+type JobContentProps = {
   isLoading: boolean,
-  jobData: Record<string, unknown>
+  jobData: Record<string, unknown>,
+  bookmarkClicked?: boolean,
+  setBookmarkClicked?: (isBookmarked: boolean) => void,
+  setJobCardBookmarkClicked?: (isBookmarked: boolean) => void,
 };
 
-
-export const JobDescription: React.FC<JobDescriptionProps> = ({ isLoading, jobData }) => {
+export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, bookmarkClicked, setBookmarkClicked, setJobCardBookmarkClicked }) => {
   // Mock data
   const avatarURL = Array(Math.min(jobData?.company_data.number_of_employees ?? 0, 3)).fill("/images/avatar.png");
   
@@ -71,7 +73,13 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ isLoading, jobDa
           >
             Nhắn tin
           </Button>
-          <Button className="job-portal-list-card-bookmark icon-btn" type="text" icon={<BookmarkOutlined />} />
+          <BookmarkButton
+            className="job-portal-list-card-bookmark"
+            id={jobData?.id}
+            isClickedByOther={bookmarkClicked}
+            setIsClickedByOther={setBookmarkClicked}
+            setClickOther={setJobCardBookmarkClicked}
+          />
           <Modal
             title="Ứng tuyển"
             open={isVisible}
