@@ -120,7 +120,7 @@ export interface CompanyDataType {
   ID: string | null;
   name: string | null;
   //Should be changed to images + numbers
-  recruiters: string | null;
+  recruiters: number | 0;
   unapproved_jobs: number | 0; // in this school
   approved_jobs: number | 0; // in this school
   student_employees: number | 0; 

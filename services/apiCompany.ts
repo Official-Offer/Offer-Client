@@ -18,13 +18,11 @@ export const getCompaniesForAdvisor = async (id: number) => {
       key: company.id,
       ID: company.id,
       name: company.name,
-      // description: company.description || "Không tồn tại",
-      recruiters: 10000,
-      unverifiedJobs: 10000,
-      verifiedJobs: 10000,
-      students: 10000,
-      events: 10000,
-      // tag: 'Whatever',
+      recruiters: 3,
+      unapproved_jobs: 200,
+      approved_jobs: 10000,
+      student_employees: 20,
+      compatibility: "70%",
     });
   }
   return res;
