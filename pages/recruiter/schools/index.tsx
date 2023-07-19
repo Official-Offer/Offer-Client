@@ -67,7 +67,6 @@ const Schools: NextPage = () => {
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          // handleAdd={handleAddJob}
           tableType={"unapprovedJob"}
           isLoading={schoolQuery.isLoading}
         />
