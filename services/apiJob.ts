@@ -71,11 +71,6 @@ export const getJobsForRecruiter = async () => {
     "Harvard",
     "Bach Khoa"
   ];
-  const recruiters = [
-    "thuan cho",
-    "bao deng",
-    "ktwo"
-  ];
   var res = [];
   for (const job of jobList) {
     res.push({
@@ -92,21 +87,34 @@ export const getJobsForRecruiter = async () => {
   return res;
 };
 
-export const approvedJobsAdvisors = async () => {
+export const getApprovedJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
+  const companies = [
+    // "Chưa tạo danh sách",
+    "VinAI",
+    "FB",
+    "Amz"
+  ];
+  const recruiters = [
+    // "Chưa tạo danh sách",
+    "thuan cho",
+    "bao deng",
+    "ktwo"
+  ];
   // Fetch company name for each job
   var res = [];
   for (const job of jobList) {
     res.push({
       key: job.id,
       ID: job.id,
-      date: moment(job.timestamp).format("D/M/YYYY"),
+      posted_date: moment(job.timestamp).format("D/M/YYYY"),
       title: job.title || "Không tìm thấy",
-      address: job.location || "Không tìm thấy",
-      company: job.company|| "Không tìm thấy",
-      applicants: "5/100",
-      accepted: "1/2"
+      company: companies[Math.floor(Math.random()*companies.length)],
+      recruiter: recruiters[Math.floor(Math.random()*recruiters.length)],
+      expected: 5,
+      compatibility: "70%",
+      // tag: tags[Math.floor(Math.random()*tags.length)],
     });
   }
   return res;

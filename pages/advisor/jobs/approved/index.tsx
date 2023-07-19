@@ -1,21 +1,21 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { approvedJobAdvisorColumns, unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { approvedJobsAdvisors, getUnapprovedJobs } from "@services/apiJob";
+import { getApprovedJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType, approvedJobAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
+import { ApprovedJobDataType } from "@components/table/dataType";
+import { ApprovedJobColumns } from "@components/table/columnType";
 
 const ApprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<approvedJobAdvisorDataType[]>([]);
-  const [dataset, setDataSet] = useState<approvedJobAdvisorDataType[]>([]);
+  const [data, setData] = useState<ApprovedJobDataType[]>([]);
+  const [dataset, setDataSet] = useState<ApprovedJobDataType[]>([]);
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["approved-jobs", searchChange],
-    queryFn: approvedJobsAdvisors,
+    queryFn: getApprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
@@ -41,7 +41,7 @@ const ApprovedJobs: NextPage = () => {
       dataset.filter((item) => {
         if (!item.tag || values.length == 0) return false;
         for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
+          if (values[i]?.label === item.title) return true;
         }
         return false;
       })
@@ -66,7 +66,7 @@ const ApprovedJobs: NextPage = () => {
       <div className="advisor-table">
         <BaseTable
           dataset={data}
-          columns={approvedJobAdvisorColumns}
+          columns={ApprovedJobColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

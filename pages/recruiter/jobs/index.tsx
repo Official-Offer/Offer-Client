@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { JobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getUnapprovedJobs } from "@services/apiJob";
+import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
@@ -15,8 +15,8 @@ const Jobs: NextPage = () => {
   const [searchChange, setSearchChange] = useState(false);
   // DataType[]
   const jobQuery = useQuery({
-    queryKey: ["unapproved-job", searchChange],
-    queryFn: getUnapprovedJobs,
+    queryKey: ["jobs"],
+    queryFn: getJobsForRecruiter,
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
