@@ -112,8 +112,9 @@ export const getApprovedJobs = async () => {
       title: job.title || "Không tìm thấy",
       company: companies[Math.floor(Math.random()*companies.length)],
       recruiter: recruiters[Math.floor(Math.random()*recruiters.length)],
+      applicants: "2/100",
       expected: 5,
-      compatibility: "70%",
+      accepted: "1/2"
       // tag: tags[Math.floor(Math.random()*tags.length)],
     });
   }
