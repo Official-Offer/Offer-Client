@@ -58,6 +58,40 @@ export const getUnapprovedJobs = async () => {
   return res;
 };
 
+export const getJobsForRecruiter = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobList = response.data;
+  const schools = [
+    "Vin Uni",
+    "UMass",
+    "MIT"
+  ];
+  const approvedSchools = [
+    "Amherst",
+    "Harvard",
+    "Bach Khoa"
+  ];
+  const recruiters = [
+    "thuan cho",
+    "bao deng",
+    "ktwo"
+  ];
+  var res = [];
+  for (const job of jobList) {
+    res.push({
+      key: job.id,
+      ID: job.id,
+      posted_date: moment(job.timestamp).format("D/M/YYYY"),
+      title: job.title || "Không tìm thấy",
+      unapproved_schools: schools[Math.floor(Math.random()*schools.length)],
+      approved_schools: approvedSchools[Math.floor(Math.random()*approvedSchools.length)],
+      no_applicants: 20,
+      expected: 5,
+    });
+  }
+  return res;
+};
+
 export const approvedJobsAdvisors = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
