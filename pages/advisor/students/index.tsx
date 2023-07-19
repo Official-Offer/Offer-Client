@@ -1,50 +1,79 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
-import { getJobListWithApplicant } from "@services/apiJob";
-import { ApplicantCard, StyledBookmarkedCard } from "@styles/styled-components/styledBox";
+import { BaseTable } from "@components/table/BaseTable";
+import { StudentColumns } from "@components/table/columnType";
+import { StudentDataType } from "@components/table/dataType";
+import { getStudentsFromSchool } from "@services/apiStudent";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 //create a next page for the student home page, code below
-const Applicants: NextPage = () => {
-  const [jobList, setJobList] = useState([]);
+const Students: NextPage = () => {
   const router = useRouter();
-  const jobQuery = useQuery({
-    queryKey: "jobs",
-    queryFn: getJobListWithApplicant,
-    onSuccess: (response) => setJobList(response),
-    onError: (error) => console.log(`Error: ${error}`),
+
+  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [data, setData] = useState<StudentDataType[]>([]);
+  const [dataset, setDataSet] = useState<StudentDataType[]>([]);
+  // DataType[]
+  const studentQuery = useQuery({
+    queryKey: ["students"],
+    queryFn: () => getStudentsFromSchool(2),
+    onSuccess: async (students) => {
+      // console.log(applicants);
+      setData(students);
+      setDataSet(students);
+      var s: string[] = [];
+
+      students.forEach((std) => {
+        s.push(std.name);
+      });
+
+      setSearchResults(s);
+    },
+    onError: () => {},
   });
-  console.log(jobList);
+
+  const handleFilterType = (values: string[]) => {
+    console.log(values);
+    if (values.length == 0) {
+      setData(dataset);
+      return;
+    }
+    setData(
+      dataset.filter((item) => {
+        if (!item.tag || values.length == 0) return false;
+        for (let i = 0; i < values.length; i++) {
+          if (values[i]?.label === item.tag) return true;
+        }
+        return false;
+      })
+    );
+  };
+
+  const handleFilterSearch = (value: string) => {
+    console.log(value);
+    if (!value) {
+      setData(dataset);
+      return;
+    }
+    setData(dataset.filter((item) => item.name === value));
+  };
+
   return (
     <div className="advisor">
-      <h1 className="advisor-title">Học sinh</h1>
+      <h1 className="advisor-title">Ứng viên</h1>
       <div className="advisor-table">
-        {/* <ApplicantTable/> */}
-        {jobList.map((job) => (
-          <StyledBookmarkedCard
-            applicant = {true}
-            onClick={() => router.push(`/recruiter/applicants/${job.id}`)}
-          >
-            {/* <div className="applicant-card"> */}
-              <div className="bookmarked-img" />
-              <div className="bookmarked-body">
-                <div className="bookmarked-body-title">
-                  <h2>{job.title}</h2>
-                </div>
-                <div className="bookmarked-body-main">
-                  <p>Số người ứng tuyển:</p>
-                  <p>{job.applicants.length}</p>
-                </div>
-              </div>
-            {/* </div> */}
-          </StyledBookmarkedCard>
-        ))}
+        <BaseTable
+          dataset={data}
+          columns={StudentColumns}
+          handleFilterType={handleFilterType}
+          handleFilterSearch={handleFilterSearch}
+          searchResults={searchResults}
+          isLoading={studentQuery.isLoading}
+        />
       </div>
     </div>
   );
 };
 
-export default Applicants;
+export default Students;
