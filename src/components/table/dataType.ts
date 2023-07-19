@@ -106,9 +106,9 @@ export interface SchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  advisors: string | null;
+  advisors: number | 0;
   no_students: number | null;
-  students_applicants: string | 0; // in this company
+  students_applicants: number | 0; // in this company
   unapproved_jobs: number | 0; //in this company
   approved_jobs: number | 0; //in this company
   compatibility: string | null;
