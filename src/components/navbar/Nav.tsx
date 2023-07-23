@@ -15,8 +15,6 @@ import {
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
 import router, { useRouter } from "next/router";
-import Link from "next/link";
-import { Header } from "antd/lib/layout/layout";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
@@ -26,17 +24,29 @@ const { Sider } = Layout;
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
-  const isRecruiter = state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = state.role.isRecruiter || router.pathname.includes("advisor");
+  const isRecruiter =
+    state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor =
+    state.role.isRecruiter || router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
-  // const selectedRef = useRef("1");
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
-  const titles = isRecruiter ? ["Trang chủ", "Công việc", "Ứng viên", "Trường", "Sự kiện"] : ["Trang chủ", "Công việc", "Học sinh", "Công ty", "Sự kiện"];
-  const path = isRecruiter ? ["", "/jobs", "/applicants", "/schools", "/events"] :  ["", "/jobs", "/students", "/companies", "/events"];
-  // console.log(router.pathname);
+  const titles = [
+    "Trang chủ",
+    "Công việc",
+    "Người dùng",
+    isRecruiter ? "Trường" : "Công ty",
+    "Sự kiện",
+  ];
+  const path = [
+    "",
+    "/jobs",
+    "/users",
+    isRecruiter ? "/schools" : "/companies",
+    "/events",
+  ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     UserOutlined,
@@ -48,10 +58,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1) router.push(`/${role}${path[index]}`);
+      if (!(index == 1 && role =='advisor') && index != 2) router.push(`/${role}${path[index]}`);
     },
     children:
-      index == 1
+      index == 1 && role == "advisor"
         ? [
             {
               label: "Đã duyệt",
@@ -70,23 +80,51 @@ export const Nav: React.FC = (props: any): ReactElement => {
               key: `/${role}${path[index]}/unapproved`,
             },
           ]
+        : index == 2
+        ? [
+            {
+              label: isRecruiter ? "Ứng viên" : "Học sinh",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                console.log(path[index])
+                router.push(
+                  `/${role}${path[index]}/students`
+                );
+              },
+              key: `/${role}${path[index]}/students`,
+            },
+            {
+              label: "Cố vấn",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/advisors`);
+              },
+              key: `/${role}${path[index]}/advisors`,
+            },
+            {
+              label: "Nhà tuyển dụng",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/recruiters`);
+              },
+              key: `/${role}${path[index]}/recruiters`,
+            },
+          ]
         : undefined,
   }));
-
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
-  const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
+  // const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+  //   key,
+  //   label: `nav ${key}`,
+  // }));
 
-  if (
-    isRecruiter|| 
-    isAdvisor
-  ) {
+  console.log(router.pathname);
+
+  if (isRecruiter || isAdvisor) {
     return (
       <Layout>
         <Navbar
@@ -101,9 +139,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
             <Menu
               defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[
-                router.pathname.includes("jobs")
+                router.pathname.includes("jobs") && role === 'advisor'
                   ? `/${role}/jobs`
-                  : `/${role}/applicants`
+                  : `/${role}/users`,
               ]}
               selectedKeys={[router.pathname]}
               mode="inline"

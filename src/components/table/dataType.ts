@@ -75,7 +75,7 @@ export interface AdvisorSchoolDataType {
   role: string | null; 
   email_verified: boolean | null;
   role_verified: boolean | null;
-  managed_students: string | null;
+  managed_students: string[] | null;
   // tag: string | null;
 }
 
@@ -106,9 +106,9 @@ export interface SchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  advisors: string | null;
+  advisors: number | 0;
   no_students: number | null;
-  students_applicants: string | 0; // in this company
+  students_applicants: number | 0; // in this company
   unapproved_jobs: number | 0; //in this company
   approved_jobs: number | 0; //in this company
   compatibility: string | null;
@@ -120,7 +120,7 @@ export interface CompanyDataType {
   ID: string | null;
   name: string | null;
   //Should be changed to images + numbers
-  recruiters: string | null;
+  recruiters: number | 0;
   unapproved_jobs: number | 0; // in this school
   approved_jobs: number | 0; // in this school
   student_employees: number | 0; 

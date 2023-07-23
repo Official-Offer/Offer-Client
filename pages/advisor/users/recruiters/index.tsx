@@ -1,29 +1,29 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
+import { RecruiterSchoolColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getApprovedJobs, getUnapprovedJobs } from "@services/apiJob";
+import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
+import { RecruiterSchoolDataType } from "@components/table/dataType";
 import router from "next/router";
-import { ApprovedJobDataType } from "@components/table/dataType";
-import { ApprovedJobColumns } from "@components/table/columnType";
+import { getRecruitersForSchool } from "@services/apiRecruiter";
 
-const ApprovedJobs: NextPage = () => {
+const Recruiters: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<ApprovedJobDataType[]>([]);
-  const [dataset, setDataSet] = useState<ApprovedJobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
-  // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["approved-jobs", searchChange],
-    queryFn: getApprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
-      setDataSet(jobs);
+  const [data, setData] = useState<RecruiterSchoolDataType[]>([]);
+  const [dataset, setDataSet] = useState<RecruiterSchoolDataType[]>([]);
+
+  const recruiterQuery = useQuery({
+    queryKey: ["recruiter"],
+    queryFn: getRecruitersForSchool,
+    onSuccess: async (recruiters) => {
+      setData(recruiters);
+      setDataSet(recruiters);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      recruiters.forEach((ret) => {
+        s.push(ret.name);
       });
 
       setSearchResults(s);
@@ -41,7 +41,7 @@ const ApprovedJobs: NextPage = () => {
       dataset.filter((item) => {
         if (!item.tag || values.length == 0) return false;
         for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.title) return true;
+          if (values[i]?.label === item.name) return true;
         }
         return false;
       })
@@ -57,26 +57,26 @@ const ApprovedJobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/advisor/jobs/jobForm');
+    router.push('/recruiter/jobs/jobForm');
   }
 
   return (
-    <div className="advisor">
-      <h1 className="advisor-title">Ứng viên</h1>
-      <div className="advisor-table">
+    <div className="applicant">
+      <h1 className="applicant-title">Công việc</h1>
+      <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={ApprovedJobColumns}
+          columns={RecruiterSchoolColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          tableType={"RecruiterJobs"}
+          isLoading={recruiterQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default ApprovedJobs;
+export default Recruiters;

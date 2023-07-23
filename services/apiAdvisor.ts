@@ -16,6 +16,42 @@ export const getAdvisorDetails = async () => {
   return response.data.Response;
 };
 
+export const getAdvisorsForSchool = async () => {
+  const response = await request.get(`/advisors/`);
+  const advisorList = response.data;
+  var res = [];
+  for (const advisor of advisorList) {
+    res.push({
+      key: advisor.id,
+      ID: advisor.id,
+      name: advisor.name,
+      role: "chief",
+      email_verified: false,
+      role_verified: true,
+      managed_students: ["stud1", "stud2"],
+    });
+  }
+  return res;
+};
+
+export const getAdvisorsForCompany = async () => {
+  const response = await request.get(`/advisors/`);
+  const advisorList = response.data;
+  var res = [];
+  for (const advisor of advisorList) {
+    res.push({
+      key: advisor.id,
+      ID: advisor.id,
+      name: advisor.name,
+      school: advisor.school,
+      role: "chief",
+      email: "lklkl@garena.com",
+      contacted: "Đã liên lạc",
+    });
+  }
+  return res;
+};
+
 export const advisorLogin = async (body: any) => {
   const response = await request.post(`/advisors/login/`, body);
   return response.data;

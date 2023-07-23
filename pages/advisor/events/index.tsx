@@ -1,26 +1,22 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import {  getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { EventAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
+import { EventAdvisorColumns } from '../../../src/components/table/columnType';
+import { getAdvisorEvents } from "@services/apiEvents";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
+  const [data, setData] = useState<EventAdvisorDataType[]>([]);
+  const [dataset, setDataSet] = useState<EventAdvisorDataType[]>([]);
   // DataType[]
   const eventQuery = useQuery({
-    queryKey: ["unapproved-job", searchChange],
-    queryFn: getUnapprovedJobs,
+    queryKey: ["advisor-events"],
+    queryFn: getAdvisorEvents,
     onSuccess: async (events) => {
       setData(events);
       setDataSet(events);
@@ -61,7 +57,7 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddJob = () => {
+  const handleAddEvent = () => {
     router.push('/recruiter/jobs/eventForm');
   }
 
@@ -71,7 +67,7 @@ const Events: NextPage = () => {
       <div className="advisor-table">
         <BaseTable
           dataset={data}
-          columns={unapprovedJobColumns}
+          columns={EventAdvisorColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

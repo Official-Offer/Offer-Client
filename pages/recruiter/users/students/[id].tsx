@@ -4,13 +4,12 @@ import { ApplicantColumns } from "@components/table/columnType";
 import { ApplicantDataType } from "@components/table/dataType";
 import { getApplicantsFromJobs } from "@services/apiStudent";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 //create a next page for the student home page, code below
-const Students: NextPage = () => {
+const Applicant: NextPage = () => {
   const router = useRouter();
   const jobID = router.query.id;
 
@@ -18,8 +17,8 @@ const Students: NextPage = () => {
   const [data, setData] = useState<ApplicantDataType[]>([]);
   const [dataset, setDataSet] = useState<ApplicantDataType[]>([]);
   // DataType[]
-  const studentQuery = useQuery({
-    queryKey: ["unapproved-job"],
+  const applicantQuery = useQuery({
+    queryKey: ["applicants"],
     queryFn: () => getApplicantsFromJobs(Number(jobID)),
     onSuccess: async (applicants) => {
       // console.log(applicants);
@@ -63,20 +62,20 @@ const Students: NextPage = () => {
   };
 
   return (
-    <div className="advisor">
-      <h1 className="advisor-title">Ứng viên</h1>
-      <div className="advisor-table">
+    <div className="applicant">
+      <h1 className="applicant-title">Ứng viên</h1>
+      <div className="applicant-table">
         <BaseTable
           dataset={data}
           columns={ApplicantColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          isLoading={studentQuery.isLoading}
+          isLoading={applicantQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default Students;
+export default Applicant;

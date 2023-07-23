@@ -1,13 +1,8 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-// import dynamic from "next/dynamic";
-// import type { ColumnsType } from "antd/es/table";
-// import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
 import { companyColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { useState } from "react";
-import router from "next/router";
 import { CompanyDataType } from "@components/table/dataType";
 import { getCompaniesForAdvisor } from "@services/apiCompany";
 

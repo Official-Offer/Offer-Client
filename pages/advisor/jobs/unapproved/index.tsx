@@ -42,11 +42,6 @@ const UnapprovedJobs: NextPage = () => {
       setData(jobs);
       setDataSet(jobs);
 
-      // var s: any[] = [];
-      // jobs.forEach((data)=>{
-      //   s.push(data.title);
-      // })
-      // setSearchResults((oldSearches)=>[...oldSearches, s])
     },
     onError: () => {},
   });

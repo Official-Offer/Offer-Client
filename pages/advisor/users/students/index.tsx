@@ -1,34 +1,31 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { BaseTable } from "@components/table/BaseTable";
-import { ApplicantColumns } from "@components/table/columnType";
-import { ApplicantDataType } from "@components/table/dataType";
-import { getApplicantsFromJobs } from "@services/apiStudent";
+import { StudentColumns } from "@components/table/columnType";
+import { StudentDataType } from "@components/table/dataType";
+import { getStudentsFromSchool } from "@services/apiStudent";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
 //create a next page for the student home page, code below
-const Applicant: NextPage = () => {
+const Students: NextPage = () => {
   const router = useRouter();
-  const jobID = router.query.id;
 
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<ApplicantDataType[]>([]);
-  const [dataset, setDataSet] = useState<ApplicantDataType[]>([]);
+  const [data, setData] = useState<StudentDataType[]>([]);
+  const [dataset, setDataSet] = useState<StudentDataType[]>([]);
   // DataType[]
-  const applicantQuery = useQuery({
-    queryKey: ["applicants"],
-    queryFn: () => getApplicantsFromJobs(Number(jobID)),
-    onSuccess: async (applicants) => {
+  const studentQuery = useQuery({
+    queryKey: ["students"],
+    queryFn: getStudentsFromSchool,
+    onSuccess: async (students) => {
       // console.log(applicants);
-      setData(applicants);
-      setDataSet(applicants);
+      setData(students);
+      setDataSet(students);
       var s: string[] = [];
 
-      applicants.forEach((app) => {
-        s.push(app.name);
+      students.forEach((std) => {
+        s.push(std.name);
       });
 
       setSearchResults(s);
@@ -63,20 +60,20 @@ const Applicant: NextPage = () => {
   };
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Ứng viên</h1>
+      <div className="advisor-table">
         <BaseTable
           dataset={data}
-          columns={ApplicantColumns}
+          columns={StudentColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          isLoading={applicantQuery.isLoading}
+          isLoading={studentQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default Applicant;
+export default Students;
