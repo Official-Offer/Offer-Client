@@ -75,7 +75,7 @@ export interface AdvisorSchoolDataType {
   role: string | null; 
   email_verified: boolean | null;
   role_verified: boolean | null;
-  managed_students: string | null;
+  managed_students: string[] | null;
   // tag: string | null;
 }
 
