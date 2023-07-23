@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "react-query";
-import { LoadingOutlined } from "@ant-design/icons";
 import { checkIsBookmarked, bookmarkJob, unbookmarkJob } from "@services/apiJob";
 import { BookmarkOutlined, BookmarkFilled } from "@components/icons";
 
@@ -67,7 +66,6 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, isClickedByO
   return (
     <button {...rest} type="button" disabled={bookmarkQuery.isLoading} onClick={handleClick}>
       {
-        bookmarkQuery.isLoading ? <LoadingOutlined /> :
         isBookmarked ? <BookmarkFilled /> : <BookmarkOutlined />
       }
     </button>

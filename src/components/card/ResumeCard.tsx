@@ -16,11 +16,7 @@ export const ResumeCard: React.FC = () => {
   const downloadQuery = useQuery({
     queryKey: "resumeDownload",
     queryFn: getStudentResume,
-    onSuccess: (res) => {
-      if (!res?.endsWith("media/")) {
-        setUploadedFile(res);
-      }
-    },
+    onSuccess: (res) => setUploadedFile(!res.endsWith("media/") && res),
     onError: (err) => console.log(`Download Error: ${err}`),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -142,7 +138,7 @@ export const ResumeCard: React.FC = () => {
                   <IconButton round fullWidth backgroundColor="#8799AE">
                     <div className="btn-body">
                       <span>Tải xuống</span>
-                      <span><CloudDownloadOutlined /></span>
+                      <CloudDownloadOutlined className="icon-md"/>
                     </div>
                   </IconButton>
                 </a>
