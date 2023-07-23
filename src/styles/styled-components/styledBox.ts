@@ -84,7 +84,7 @@ export const MessagePanel = styled.div`
   border-radius: 8px 8px 0px 0px;
   background-color: white;
   padding: 10px 0px;
-  transition: 0.4s;
+  transition: 0.3s;
 
   &.mes-panel {
     &-open {
@@ -173,12 +173,12 @@ export const StyledResumeCard = styled.div`
   }
 `;
 
-export const StyledBookmarkedCard = styled.div`
+export const StyledListCard = styled.div`
   display: flex;
   align-items: center;
   position: relative;
   border-radius: 8px;
-  padding: 24px;
+  padding: ${({hasLink}) => hasLink ? "0px" : "24px"};
   background-color: ${({applicant}) => applicant ? "white" : "transparent"};
   margin-bottom: ${({applicant}) => applicant ? "20px" : ""};
 
@@ -194,6 +194,13 @@ export const StyledBookmarkedCard = styled.div`
         cursor: pointer;
       }
     }
+  }
+
+  .link-wrapped {
+    display: flex;
+    align-items: center;
+    padding: ${({hasLink}) => hasLink ? "24px" : "0px"};
+    width: 100%;
   }
 
   .bookmarked {

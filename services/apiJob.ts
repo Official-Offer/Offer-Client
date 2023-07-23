@@ -8,8 +8,8 @@ export const getJobList = async () => {
   const jobList = response.data;
   // Fetch company name for each job
   for (const job of jobList) {
-    job.company_name = (await getCompany(job.company)).name;
-    job.is_bookmarked = (await checkIsBookmarked(job.id)).status;
+    job.company_data = await getCompany(job.company);
+    // job.is_bookmarked = (await checkIsBookmarked(job.id).catch(() => ({status: false}))).status;
   }
   return jobList;
 };
@@ -135,7 +135,7 @@ export const getJobListWithApplicant = async () => {
 export const getJob = async (id: number) => {
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
-  job.company_name = (await getCompany(job.company)).name;
+  job.company_data = await getCompany(job.company);
   return job;
 };
 
@@ -155,7 +155,6 @@ export const checkIsBookmarked = async (id: number) => {
 };
 
 export const bookmarkJob = async (id: number) => {
-  console.log("bookmark called");
   const response = await request.post(`/jobs/bookmark/`, {
     job_id: id,
     created_by: 0,
@@ -169,14 +168,14 @@ export const postJob = async (body: any) => {
   return response.data;
 };
 
+export const unbookmarkJob = async (id: number) => {
+  const response = await request.delete(`/jobs/bookmark/${id}/`);
+  return response.data;
+};
+
 export const deleteJob = async (id: any) => {
   console.log ("job deleted");
   const response = await request.delete(`/jobs/`, id);
   return response.data;
 };
 
-export const deleteBookmarkedJob = async (id: number) => {
-  console.log("delete called");
-  const response = await request.delete(`/jobs/bookmark/${id}/`);
-  return response.data;
-};

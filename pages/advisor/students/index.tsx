@@ -1,6 +1,6 @@
 import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { getJobListWithApplicant } from "@services/apiJob";
-import { StyledListCard } from "@styles/styled-components/styledBox";
+import { ApplicantCard, StyledListCard } from "@styles/styled-components/styledBox";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -19,9 +19,9 @@ const Applicants: NextPage = () => {
   });
   console.log(jobList);
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Học sinh</h1>
+      <div className="advisor-table">
         {/* <ApplicantTable/> */}
         {jobList.map((job) => (
           <StyledListCard
@@ -35,7 +35,7 @@ const Applicants: NextPage = () => {
                   <h2>{job.title}</h2>
                 </div>
                 <div className="bookmarked-body-main">
-                  <p>Số lượng ứng viên:</p>
+                  <p>Số người ứng tuyển:</p>
                   <p>{job.applicants.length}</p>
                 </div>
               </div>

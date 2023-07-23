@@ -286,8 +286,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
               setIsCurrent(event.target.checked);
               if (props.fieldItemProps.disableEndDate && event.target.checked) {
                 setAreValidDates(true);
-              }
-              else {
+              } else {
                 validateDates();
               }
             }}

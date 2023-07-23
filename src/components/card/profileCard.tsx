@@ -66,9 +66,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       const newArr = queryItemList?.map(() => false);
       newArr[index] = true;
       setOpenEditFormArr(newArr);
-    } 
-    // Close all edit forms
-    else {
+    } else {
+      // Close all edit forms
       setOpenEditFormArr(queryItemList?.map(() => false));
     }
   }

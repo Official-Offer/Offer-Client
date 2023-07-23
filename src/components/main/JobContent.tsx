@@ -1,98 +1,155 @@
-import { InboxOutlined, TagOutlined, UploadOutlined } from "@ant-design/icons";
-import EmailForm from "@components/forms/EmailForm";
-import ResumeForm from "@components/forms/ResumeForm";
-import { SubmitButton } from "@styles/styled-components/styledButton";
-import { Button, Modal, Upload, UploadProps } from "antd";
 import { useState } from "react";
-export const JobDescription: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const avatarURL = [
-    "/images/avatar.png",
-    "/images/avatar.png",
-    "/images/avatar.png",
-  ];
+import { useQuery, useMutation } from "react-query";
+import { Button, Modal, Skeleton, Upload } from "antd";
+import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
+import moment from "moment";
+import { ResumeForm } from "@components/forms/ResumeForm";
+import { BookmarkButton } from "@components/button/BookmarkButton";
+import { IconButton } from "@styles/styled-components/styledButton";
+
+type JobContentProps = {
+  isLoading: boolean,
+  jobData: Record<string, unknown>,
+  bookmarkClicked?: boolean,
+  setBookmarkClicked?: (isBookmarked: boolean) => void,
+  setJobCardBookmarkClicked?: (isBookmarked: boolean) => void,
+};
+
+export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, bookmarkClicked, setBookmarkClicked, setJobCardBookmarkClicked }) => {
+  // Mock data
+  const avatarURL = Array(Math.min(jobData?.company_data.number_of_employees ?? 0, 3)).fill("/images/avatar.png");
+  
+  // States
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  // Function
+  const numberFormat = (n: number) => n?.toLocaleString().replace(/,/g, ".");
+  
   return (
     <div className="job-portal-description">
-      <div className="job-portal-description-title">
-        Thực tập sinh Kỹ sư phần mềm chi nhánh TPHCM
-      </div>
-      <div className="job-portal-description-detail">
-        <p>Hạn nộp: 30/2/2023</p>
-        <p>&emsp;•&emsp;</p>
-        <p>Đăng 2 ngày trước</p>
-      </div>
-      <img className="job-portal-description-logo" src="/images/samsing.png" />
-      <div className="avatar-info-mini">
-        <div>
-          {avatarURL.map((url) => (
-            <img src={url}></img>
-          ))}
+      <Skeleton 
+        active
+        loading={isLoading}
+        paragraph={{
+          rows: 18,
+        }}
+      >
+        <div className="job-portal-description-title">
+          <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
         </div>
-        <h4>18+ people from your school work here</h4>
-      </div>
-      <div className="job-portal-description-actions">
-        <Button
-          className="apply"
-          onClick={() => {
-            isVisible ? setIsVisible(false) : setIsVisible(true);
-          }}
-        >
-          Ứng tuyển
-        </Button>
-        <Button className="bookmark" icon={<TagOutlined />} />
-        <Button
-          className="inbox"
-          icon={<InboxOutlined style={{ fontSize: 20 }} />}
-        >
-          Nhắn tin
-        </Button>
-        <Modal
-          title="Ứng tuyển"
-          visible={isVisible}
-          onOk={() => {setIsVisible(false)}}
-          onCancel={() => {setIsVisible(false)}}
-          footer={[
-            <SubmitButton type="submit">Tiếp tục</SubmitButton>,
-          ]}
-        >
-          <ResumeForm onSubmit={() => {}}/>
-          {/* <EmailForm onSubmit={() => {}}/> */}
-        </Modal>
-      </div>
-      <div className="job-portal-description-important">
-        <div className="flex">
-          <div className="left">
-            <div className="title">Mức lương</div>
-            <div className="detail">120k USD</div>
-            <div className="title">Cap bac</div>
-            <div className="detail">Undergrad</div>
+        <div className="job-portal-description-date">
+          <span>Đăng vào {moment(jobData?.time_published).format("D/M/YYYY")}</span>
+          <span>&emsp;•&emsp;</span>
+          <span>
+            {
+              jobData?.is_closed ? "Đã đóng đơn" :
+                `Hạn nộp: ${moment(jobData?.deadline).format("D/M/YYYY")}`
+            }
+          </span>
+        </div>
+        <img className="job-portal-description-logo" src="/images/samsing.png" />
+        <div className="job-portal-description-employees avatar-info-mini">
+          <div>
+            {avatarURL.map((url) => (
+              <img src={url}></img>
+            ))}
           </div>
-          <div className="right">
-            <div className="title">Company Size</div>
-            <div className="detail">50-100</div>
-            <div className="title">Hinh thuc lam viec</div>
-            <div className="detail">Part-Time</div>
+          <h4>
+            {
+              numberFormat(jobData?.company_data?.number_of_employees)
+            } người đang làm việc trong công ty này
+          </h4>
+        </div>
+        <div className="job-portal-description-actions">
+          <Button
+            className="apply"
+            onClick={() => setIsVisible(true)}
+          >
+            Ứng tuyển
+          </Button>
+          <Button
+            className="inbox"
+            icon={<SendOutlined />}
+          >
+            Nhắn tin
+          </Button>
+          <BookmarkButton
+            className="job-portal-list-card-bookmark"
+            id={jobData?.id}
+            isClickedByOther={bookmarkClicked}
+            setIsClickedByOther={setBookmarkClicked}
+            setClickOther={setJobCardBookmarkClicked}
+          />
+          <Modal
+            title="Ứng tuyển"
+            open={isVisible}
+            onOk={() => {setIsVisible(false)}}
+            onCancel={() => {setIsVisible(false)}}
+            footer={[
+              <IconButton backgroundColor="#D30B81">
+                <div className="btn-body">
+                  <span>Nộp đơn</span>
+                  <span><FileDoneOutlined /></span>
+                </div>
+              </IconButton>
+            ]}
+          >
+            <Upload.Dragger
+              listType="picture"
+              onChange={(info) => console.log(info)}
+            >
+              <UploadOutlined />
+              <h4>Vui lòng tải lên CV của bạn</h4>
+              <div>Bạn có thể kéo và thả file ở đây</div>
+            </Upload.Dragger>
+          </Modal>
+        </div>
+        <section className="job-portal-description-info">
+          <div className="job-portal-description-info-section">
+            <div>
+              <h4>Mức lương</h4>
+              <div>{numberFormat(jobData?.salary)}</div>
+            </div>
+            <div>
+              <h4>Cấp bậc</h4>
+              <div>Undergrad</div>
+            </div>
           </div>
-        </div>
-        <div className="title">Dia diem</div>
-        <div className="detail">
-          - Ha Noi: Tran Duy Hung <br /> - Saigon: Bui Vien
-        </div>
-      </div>
-      <div className="job-portal-description-title">Mo ta</div>
-      <div className="job-portal-description-detail">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        sequi illum perferendis similique perspiciatis quasi ratione, deserunt
-        fuga ducimus rerum deleniti aut tenetur recusandae magnam? Placeat ullam
-        accusantium ex distinctio.
-      </div>
-      <div className="job-portal-description-title">Yeu cau</div>
-      <div className="job-portal-description-detail">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-        cupiditate, consequuntur fugit illum rerum laudantium. Cumque
-        repudiandae, iusto, velit excepturi dignissimos maiores quisquam, optio
-        labore nobis nisi ducimus possimus tempora.
-      </div>
+          <div className="job-portal-description-info-section">
+            <div>
+              <h4>Số lượng nhân viên</h4>
+              <div>{(jobData?.company_data?.number_of_employees)?.toLocaleString().replace(/,/g, ".")}</div>
+            </div>
+            <div>
+              <h4>Hình thức làm việc</h4>
+              <div>{jobData?.job_type}</div>
+            </div>
+          </div>
+          <div className="full-width">
+            <h4>Địa điểm</h4>
+            <div>{jobData?.location}</div>
+          </div>
+        </section>
+        <section className="job-portal-description-section">
+          <div className="job-portal-description-title">
+            <h3>Mô Tả</h3>
+          </div>
+          <div className="job-portal-description-detail">
+            {jobData?.description}
+          </div>
+        </section>
+        <section>
+        <div className="job-portal-description-title">
+            <h3>Yêu Cầu</h3>
+          </div>
+          <div className="job-portal-description-detail">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
+            cupiditate, consequuntur fugit illum rerum laudantium. Cumque
+            repudiandae, iusto, velit excepturi dignissimos maiores quisquam, optio
+            labore nobis nisi ducimus possimus tempora.
+          </div>
+        </section>
+      </Skeleton>
     </div>
   );
 };

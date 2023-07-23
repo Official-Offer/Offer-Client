@@ -12,18 +12,6 @@
     section {
       margin-bottom: 36px;
 
-      .see-more {
-        text-align: right;
-        margin: 0 60px;
-        a {
-          color: $purple-color;
-          font-weight: $fw-bold-1;
-          text-decoration: underline;
-          &::after {
-            content: " →";
-          }
-        }
-      }
     }
   }
 }

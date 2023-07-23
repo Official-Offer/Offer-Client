@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     router.pathname == "/" ? (
     <></>
   ) : (
-    <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")}>
+    <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")} >
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
@@ -233,6 +233,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         </Dropdown>
         <Dropdown
           trigger="click"
+          onClick={() => console.log(router.pathname)}
           overlayClassName="avatar-dropdown"
           overlay={
             <Menu>
