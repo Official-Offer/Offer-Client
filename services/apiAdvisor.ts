@@ -16,7 +16,7 @@ export const getAdvisorDetails = async () => {
   return response.data.Response;
 };
 
-export const getAdvisorForSchool = async () => {
+export const getAdvisorsForSchool = async () => {
   const response = await request.get(`/advisors/`);
   const advisorList = response.data;
   var res = [];

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import { AdvisorSchoolDataType } from "@components/table/dataType";
 import router from "next/router";
-import { getAdvisorForSchool } from "@services/apiAdvisor";
+import { getAdvisorsForSchool } from "@services/apiAdvisor";
 
 const Advisors: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -14,7 +14,7 @@ const Advisors: NextPage = () => {
   // DataType[]
   const advisorQuery = useQuery({
     queryKey: ["jobs"],
-    queryFn: getAdvisorForSchool,
+    queryFn: getAdvisorsForSchool,
     onSuccess: async (events) => {
       setData(events);
       setDataSet(events);

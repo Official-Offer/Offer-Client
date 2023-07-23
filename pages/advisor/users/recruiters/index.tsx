@@ -1,29 +1,29 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { JobColumns } from "@components/table/columnType";
+import { RecruiterSchoolColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
+import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
-import { JobDataType } from "@components/table/dataType";
+import { RecruiterSchoolDataType } from "@components/table/dataType";
 import router from "next/router";
+import { getRecruitersForSchool } from "@services/apiRecruiter";
 
 const Recruiters: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<JobDataType[]>([]);
-  const [dataset, setDataSet] = useState<JobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
-  // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobsForRecruiter,
-    onSuccess: async (jobs) => {
-      setData(jobs);
-      setDataSet(jobs);
+  const [data, setData] = useState<RecruiterSchoolDataType[]>([]);
+  const [dataset, setDataSet] = useState<RecruiterSchoolDataType[]>([]);
+
+  const recruiterQuery = useQuery({
+    queryKey: ["recruiter"],
+    queryFn: getRecruitersForSchool,
+    onSuccess: async (recruiters) => {
+      setData(recruiters);
+      setDataSet(recruiters);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      recruiters.forEach((ret) => {
+        s.push(ret.name);
       });
 
       setSearchResults(s);
@@ -41,7 +41,7 @@ const Recruiters: NextPage = () => {
       dataset.filter((item) => {
         if (!item.tag || values.length == 0) return false;
         for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
+          if (values[i]?.label === item.name) return true;
         }
         return false;
       })
@@ -66,13 +66,13 @@ const Recruiters: NextPage = () => {
       <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={JobColumns}
+          columns={RecruiterSchoolColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"RecruiterJobs"}
-          isLoading={jobQuery.isLoading}
+          isLoading={recruiterQuery.isLoading}
         />
       </div>
     </div>
