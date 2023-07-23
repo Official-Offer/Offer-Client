@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useMutation } from "react-query";
 import moment from "moment";
-import { bookmarkJob, deleteBookmarkedJob } from "@services/apiJob";
 import { Card as AntdCard, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { BookmarkOutlined, BookmarkFilled } from "@components/icons";
+import { BookmarkButton } from "@components/button/BookmarkButton";
 
 type InfoCardProps = {
   info: {
@@ -17,9 +16,10 @@ type InfoCardProps = {
       commonSchool?: Array<Object>,
       date?: Date,
     },
+  loading: boolean,
 };
 
-export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
+export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) => {
   const { Meta } = AntdCard;
 
   // States
@@ -62,18 +62,17 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, ...rest }) => {
   return (
     <AntdCard
       className="info-card"
+      loading={loading}
       cover={
+        // Temporary solution for disabling clicking during loading
+        loading ? <img src="https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc" /> : 
         <Link href={`/student/jobs/${info?.id}`}>
           <img src="https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc" />
         </Link>
       }
       children={
         <div>
-          <button className="bookmark-btn" onClick={handleBookmark}>
-            {
-              isBookmarked ? <BookmarkFilled /> : <BookmarkOutlined />
-            }
-          </button>
+          <BookmarkButton className="bookmark-btn" id={info?.id}/>
           <Link href={`/student/jobs/${info?.id}`}>
             <Meta
               title={info?.title || ""}

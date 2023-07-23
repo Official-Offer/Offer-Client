@@ -1,6 +1,6 @@
 import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { getJobListWithApplicant } from "@services/apiJob";
-import { ApplicantCard, StyledBookmarkedCard } from "@styles/styled-components/styledBox";
+import { ApplicantCard, StyledListCard } from "@styles/styled-components/styledBox";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -24,7 +24,7 @@ const Applicants: NextPage = () => {
       <div className="advisor-table">
         {/* <ApplicantTable/> */}
         {jobList.map((job) => (
-          <StyledBookmarkedCard
+          <StyledListCard
             applicant = {true}
             onClick={() => router.push(`/recruiter/applicants/${job.id}`)}
           >
@@ -40,7 +40,7 @@ const Applicants: NextPage = () => {
                 </div>
               </div>
             {/* </div> */}
-          </StyledBookmarkedCard>
+          </StyledListCard>
         ))}
       </div>
     </div>

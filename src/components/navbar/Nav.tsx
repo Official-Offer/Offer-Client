@@ -91,8 +91,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
       <Layout>
         <Navbar
           searchBarHidden={
-            router.pathname.includes("/student/jobs") ||
-            router.pathname.ncludes("/student/events")
+            router.pathname.includes("/student/jobs/[id]") ||
+            router.pathname.ncludes("/student/events/[id")
           }
         />
         <Layout>
@@ -123,8 +123,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
     <>
       <Navbar
         searchBarHidden={
-          router.pathname.includes("/student/jobs") ||
-          router.pathname.includes("/student/events")
+          router.pathname.includes("/student/jobs/[id]") ||
+          router.pathname.includes("/student/events/[id]")
         }
       />
       <div>{props.children}</div>

@@ -87,12 +87,11 @@ export const TogglableButton = styled.button`
   align-items: center;
 
   border-radius: 40px;
-  border: ${(props) => props.checked ? "none" : "1px solid rgba(0, 0, 0, 0.3)"};
+  border: none;
 
   cursor: pointer;
-  background-color: white;
   color: ${(props) => props.checked ? "white" : "black"} ;
-  background-color: ${(props) => props.checked ? "#f63d74" : "white"};
+  background-color: ${(props) => props.checked ? "#f63d74" : "#EDEDED"};
 
   &:hover {
     filter: brightness(0.87);

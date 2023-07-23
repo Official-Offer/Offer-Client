@@ -2,10 +2,11 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import moment from "moment";
-import { getBookmarkedList, deleteBookmarkedJob } from "services/apiJob";
+import Link from "next/link";
+import { getBookmarkedList, unbookmarkJob } from "services/apiJob";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { StyledBookmarkedCard } from "@styles/styled-components/styledBox";
+import { StyledListCard } from "@styles/styled-components/styledBox";
 import { StyledMenuButton } from "@styles/styled-components/styledButton";
 
 const BookmarkedJobs: NextPage = () => {
@@ -25,7 +26,7 @@ const BookmarkedJobs: NextPage = () => {
   });
 
   const unbookmarkJobMutation = useMutation({
-    mutationFn: deleteBookmarkedJob,
+    mutationFn: unbookmarkJob,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarkedJobs"] }),
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
@@ -48,30 +49,34 @@ const BookmarkedJobs: NextPage = () => {
 
   // Components
   const BookmarkedCard = ({ bookmark }): React.FC => (
-    <StyledBookmarkedCard>
-      <div className="bookmarked-img">
-      </div>
-      <div className="bookmarked-body">
-        <div className="bookmarked-body-title">
-          <h2>{bookmark.job_info.title}</h2>
+    <StyledListCard hasLink>
+      <Link href={`/student/jobs/${bookmark.job_info.id}`}>
+        <div className="link-wrapped">
+          <div className="bookmarked-img">
+          </div>
+          <div className="bookmarked-body">
+            <div className="bookmarked-body-title">
+              <h2>{bookmark.job_info.title}</h2>
+            </div>
+            <div className="bookmarked-body-main">
+              <p>{bookmark.job_info.company_data.name}</p>
+              <p>{bookmark.job_info.location}</p>
+            </div>
+          </div>
+          <div className="bookmarked-dates">
+            <div className="date-posted">
+              Đăng vào {moment(bookmark.job_info.time_published).format("D/M/YYYY")}
+            </div>
+            <div className="date-saved">
+              Lưu vào {moment(bookmark.timestamp).format("D/M/YYYY")}
+            </div>
+          </div>
         </div>
-        <div className="bookmarked-body-main">
-          <p>{bookmark.job_info.company_data.name}</p>
-          <p>{bookmark.job_info.location}</p>
-        </div>
-      </div>
-      <div className="bookmarked-dates">
-        <div className="date-posted">
-          Đăng vào {moment(bookmark.job_info.time_published).format("D/M/YYYY")}
-        </div>
-        <div className="date-saved">
-          Lưu vào {moment(bookmark.timestamp).format("D/M/YYYY")}
-        </div>
-      </div>
+      </Link>
       <div className="bookmarked-close-button" id={bookmark.job_id} onClick={handleUnbookmark}>
         <CloseOutlined />
       </div>
-    </StyledBookmarkedCard>
+    </StyledListCard>
   );
 
   return (

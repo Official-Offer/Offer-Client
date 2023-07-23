@@ -1,13 +1,14 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { nextReplaceUrl } from "next-replace-url";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery } from "react-query";
 import { Skeleton } from "antd";
 import { getJobList } from "@services/apiJob";
 import { FilterNavbar } from "@components/navbar/FilterNavbar";
 import { JobCard } from "@components/card/JobCard";
-import { JobDescription } from "@components/main/JobContent";
+import { JobContent } from "@components/main/JobContent";
+import { BookmarkButton } from "@components/button/BookmarkButton";
 
 const jobFilterArr = [
   {
@@ -35,6 +36,9 @@ const StudentJobs: NextPage = () => {
   const [jobIndexList, setJobIndexList] = useState<Map<number, number>>(new Map<number, number>());
   const [activeCardIndex, setActiveCardIndex] = useState();
 
+  const [jobCardBookmarkClicked, setJobCardBookmarkClicked] = useState<boolean>(false);
+  const [jobContentBookmarkClicked, setJobContentBookmarkClicked] = useState<boolean>(false);
+
   // Hooks
   const router = useRouter();
   const jobID = parseInt(router.query.id);
@@ -44,11 +48,11 @@ const StudentJobs: NextPage = () => {
     queryFn: getJobList,
     onSuccess: (res) => {
       // Push the selected job from the link to top for initial load (O(n))
-      setJobList(activeCardIndex ? res : res.sort((a,b) => a.id === jobID ? -1 : (b.id === jobID ? 1 : 0)));
+      setJobList(res.sort((a,b) => a.id === jobID ? -1 : (b.id === jobID ? 1 : 0)));
       for (let i = 0; i < res.length; i++) {
         jobIndexList.set(res[i].id, i);
       }
-      setActiveCardIndex(activeCardIndex ?? jobIndexList.get(jobID));
+      setActiveCardIndex(activeCardIndex ?? (jobID === 0 ? 0 : jobIndexList.get(jobID)));
       setJobIndexList(jobIndexList);
     },
     onError: (err) => console.log(`Job List Error: ${err}`),
@@ -82,6 +86,9 @@ const StudentJobs: NextPage = () => {
                       jobData={job}
                       active={i === activeCardIndex} 
                       onClick={() => updatePage(job.id)}
+                      bookmarkClicked={i === activeCardIndex ? jobCardBookmarkClicked : undefined}
+                      setBookmarkClicked={i === activeCardIndex ? setJobCardBookmarkClicked : undefined}
+                      setJobContentBookmarkClicked={i === activeCardIndex ? setJobContentBookmarkClicked : undefined}
                     />
                   </li>
                 ))
@@ -91,9 +98,12 @@ const StudentJobs: NextPage = () => {
           </ul>
         </div>
         <div className="split-layout-main main-xl">
-          <JobDescription 
+          <JobContent
             isLoading={jobListQuery.isLoading} 
-            jobData={jobList?.[activeCardIndex]} 
+            jobData={jobList?.[activeCardIndex]}
+            bookmarkClicked={jobContentBookmarkClicked}
+            setBookmarkClicked={setJobContentBookmarkClicked}
+            setJobCardBookmarkClicked={setJobCardBookmarkClicked}
           />
         </div>
       </div>

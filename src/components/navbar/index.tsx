@@ -233,6 +233,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         </Dropdown>
         <Dropdown
           trigger="click"
+          onClick={() => console.log(router.pathname)}
           overlayClassName="avatar-dropdown"
           overlay={
             <Menu>

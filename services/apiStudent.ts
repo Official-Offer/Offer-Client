@@ -45,7 +45,6 @@ export const studentLogin = async (body: any) => {
 
 // Resume
 export const getStudentResume = async () => {
-  console.log("resume called");
   const response = await request.get(`/students/resume/`);
   return response.data.Response;
 };
