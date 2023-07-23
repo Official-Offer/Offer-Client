@@ -1,11 +1,9 @@
 import request from "./apiService";
-import { getCompany } from "./apiCompany";
-import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 import moment from "moment";
 
-export const getEventsAdvisors = async () => {
+export const getAdvisorEvents = async () => {
   const response = await request.get(`/events/`);
-  const jobList = response.data;
+  const eventList = response.data;
   const companies = [
     // "Chưa tạo danh sách",
     "VinAI",
@@ -14,22 +12,54 @@ export const getEventsAdvisors = async () => {
   ];
   const tags = [
     // "Chưa tạo danh sách",
-    "Đang tạo danh sách",
-    "bao deng",
-    "ktwo"
+    "Peding",
+    "unapproved",
+    "approved"
   ];
-  // Fetch company name for each job
   var res = [];
-  for (const job of jobList) {
+  for (const event of eventList) {
     res.push({
-      key: job.id,
-      ID: job.id,
-      posted_date: moment(job.timestamp).format("D/M/YYYY"),
-      title: job.title || "Không tìm thấy",
+      key: event.id,
+      ID: event.id,
+      posted_date: moment(event.timestamp).format("D/M/YYYY"),
+      title: event.title || "Không tìm thấy",
       company: companies[Math.floor(Math.random()*companies.length)],
+      no_attendants: 10,
       compatibility: "70%",
       tag: tags[Math.floor(Math.random()*tags.length)],
     });
   }
+  return res;
+};
+
+export const getRecruiterEvents = async () => {
+  const response = await request.get(`/events/`);
+  const eventList = response.data;
+  const schools = [
+    // "Chưa tạo danh sách",
+    "VinUni",
+    "FBUni",
+    "UMass"
+  ];
+  const tags = [
+    // "Chưa tạo danh sách",
+    "Peding",
+    "unapproved",
+    "approved"
+  ];
+  var res = [];
+  for (const event of eventList) {
+    res.push({
+      key: event.id,
+      ID: event.id,
+      posted_date: moment(event.timestamp).format("D/M/YYYY"),
+      title: event.title || "Không tìm thấy",
+      school: schools[Math.floor(Math.random()*schools.length)],
+      no_attendants: 10,
+      compatibility: "70%",
+      tag: tags[Math.floor(Math.random()*tags.length)],
+    });
+  }
+  return res;
 };
 

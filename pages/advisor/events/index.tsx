@@ -6,6 +6,7 @@ import { useState } from "react";
 import { EventAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
 import { EventAdvisorColumns } from '../../../src/components/table/columnType';
+import { getAdvisorEvents } from "@services/apiEvents";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
@@ -56,7 +57,7 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddJob = () => {
+  const handleAddEvent = () => {
     router.push('/recruiter/jobs/eventForm');
   }
 
