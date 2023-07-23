@@ -43,7 +43,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const path = [
     "",
     "/jobs",
-    "/applicants",
+    "/users",
     isRecruiter ? "/schools" : "/companies",
     "/events",
   ];
@@ -58,10 +58,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1) router.push(`/${role}${path[index]}`);
+      if (!(index == 1 && role =='advisor') && index != 2) router.push(`/${role}${path[index]}`);
     },
     children:
-      index == 1 && role === "advisor"
+      index == 1 && role == "advisor"
         ? [
             {
               label: "Đã duyệt",
@@ -86,31 +86,28 @@ export const Nav: React.FC = (props: any): ReactElement => {
               label: isRecruiter ? "Ứng viên" : "Học sinh",
               icon: React.createElement(icon),
               onClick: (e) => {
+                console.log(path[index])
                 router.push(
-                  `/${role}${path[index]}/${
-                    isRecruiter ? "applicant" : "student"
-                  }`
+                  `/${role}${path[index]}/students`
                 );
               },
-              key: `/${role}${path[index]}/${
-                isRecruiter ? "applicant" : "student"
-              }`,
+              key: `/${role}${path[index]}/students`,
             },
             {
               label: "Cố vấn",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/${role}${path[index]}/advisor`);
+                router.push(`/${role}${path[index]}/advisors`);
               },
-              key: `/${role}${path[index]}/advisor`,
+              key: `/${role}${path[index]}/advisors`,
             },
             {
               label: "Nhà tuyển dụng",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/${role}${path[index]}/recruiter`);
+                router.push(`/${role}${path[index]}/recruiters`);
               },
-              key: `/${role}${path[index]}/recruiter`,
+              key: `/${role}${path[index]}/recruiters`,
             },
           ]
         : undefined,
@@ -142,9 +139,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
             <Menu
               defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[
-                router.pathname.includes("jobs")
+                router.pathname.includes("jobs") && role === 'advisor'
                   ? `/${role}/jobs`
-                  : `/${role}/applicants`,
+                  : `/${role}/users`,
               ]}
               selectedKeys={[router.pathname]}
               mode="inline"

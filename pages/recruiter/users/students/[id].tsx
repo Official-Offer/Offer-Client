@@ -4,7 +4,6 @@ import { ApplicantColumns } from "@components/table/columnType";
 import { ApplicantDataType } from "@components/table/dataType";
 import { getApplicantsFromJobs } from "@services/apiStudent";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
