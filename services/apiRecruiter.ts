@@ -39,3 +39,21 @@ export const getRecruitersForSchool = async () => {
   }
   return res;
 };
+
+export const getRecruitersForCompany = async () => {
+  const response = await request.get(`/recruiters/`);
+  const recruiterList = response.data;
+  var res = [];
+  for (const recruiter of recruiterList) {
+    res.push({
+      key: recruiter.id,
+      ID: recruiter.id,
+      name: recruiter.name,
+      role: "chief",
+      email_verified: true,
+      role_verified: true,
+      jobs_posted: 15
+    });
+  }
+  return res;
+};

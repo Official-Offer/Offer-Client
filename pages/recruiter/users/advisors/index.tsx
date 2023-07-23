@@ -1,29 +1,28 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { JobColumns } from "@components/table/columnType";
+import { AdvisorCompanyColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { JobDataType } from "@components/table/dataType";
+import { AdvisorCompanyDataType } from "@components/table/dataType";
 import router from "next/router";
+import { getAdvisorsForCompany } from "@services/apiAdvisor";
 
 const Advisors: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<JobDataType[]>([]);
-  const [dataset, setDataSet] = useState<JobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
+  const [data, setData] = useState<AdvisorCompanyDataType[]>([]);
+  const [dataset, setDataSet] = useState<AdvisorCompanyDataType[]>([]);
   // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobsForRecruiter,
-    onSuccess: async (jobs) => {
-      setData(jobs);
-      setDataSet(jobs);
+  const advisorQuery = useQuery({
+    queryKey: ["advisors"],
+    queryFn: getAdvisorsForCompany,
+    onSuccess: async (advisors) => {
+      setData(advisors);
+      setDataSet(advisors);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      advisors.forEach((advisor) => {
+        s.push(advisor.name);
       });
 
       setSearchResults(s);
@@ -41,7 +40,7 @@ const Advisors: NextPage = () => {
       dataset.filter((item) => {
         if (!item.tag || values.length == 0) return false;
         for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
+          if (values[i]?.label === item.contacted) return true;
         }
         return false;
       })
@@ -53,7 +52,7 @@ const Advisors: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    setData(dataset.filter((item) => item.name === value));
   };
 
   const handleAddJob = () => {
@@ -66,13 +65,13 @@ const Advisors: NextPage = () => {
       <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={JobColumns}
+          columns={AdvisorCompanyColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"RecruiterJobs"}
-          isLoading={jobQuery.isLoading}
+          isLoading={advisorQuery.isLoading}
         />
       </div>
     </div>

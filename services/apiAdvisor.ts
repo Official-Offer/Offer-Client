@@ -34,6 +34,24 @@ export const getAdvisorsForSchool = async () => {
   return res;
 };
 
+export const getAdvisorsForCompany = async () => {
+  const response = await request.get(`/advisors/`);
+  const advisorList = response.data;
+  var res = [];
+  for (const advisor of advisorList) {
+    res.push({
+      key: advisor.id,
+      ID: advisor.id,
+      name: advisor.name,
+      school: advisor.school,
+      role: "chief",
+      email: "lklkl@garena.com",
+      contacted: "Đã liên lạc",
+    });
+  }
+  return res;
+};
+
 export const advisorLogin = async (body: any) => {
   const response = await request.post(`/advisors/login/`, body);
   return response.data;

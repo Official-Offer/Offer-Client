@@ -17,7 +17,7 @@ const Students: NextPage = () => {
   // DataType[]
   const studentQuery = useQuery({
     queryKey: ["students"],
-    queryFn: () => getStudentsFromSchool(2),
+    queryFn: getStudentsFromSchool,
     onSuccess: async (students) => {
       // console.log(applicants);
       setData(students);

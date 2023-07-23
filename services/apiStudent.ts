@@ -40,8 +40,8 @@ export const getApplicantsFromJobs = async (id: number) => {
   return studentList;
 };
 
-export const getStudentsFromSchool = async (id: number) => {
-  const schools = (await request.get(`/schools/${id}`)).data;
+export const getStudentsFromSchool = async () => {
+  const schools = (await request.get(`/schools/`)).data;
   const studentList: any[] = [];
   for (const stud_id of schools.applicants) {
     const student = (await request.get(`/students/${stud_id}`)).data;
