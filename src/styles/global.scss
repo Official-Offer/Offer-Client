@@ -31,6 +31,7 @@ em {
 /* Helper */
 @import "./scss/Helper/button";
 @import "./scss/Helper/avatar";
+@import "./scss/Helper/text-color";
 
 /* Plugins */
 @import "./scss/Plugins/antd"; 
@@ -47,3 +48,4 @@ em {
 @import "./scss/Components/forms";
 @import "./scss/Layouts/student-job-portal";
 @import "./scss/Layouts/split-layout";
+@import "./scss/Layouts/center";

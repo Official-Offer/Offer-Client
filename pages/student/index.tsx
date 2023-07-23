@@ -153,28 +153,28 @@ const StudentHome: NextPage = () => {
                 jobList.filter((job) => !job.is_closed).map((job) => <InfoCard info={job} />)
             }
           />
-          <div className="see-more">
+          <div className="link-arrow">
             <Link href="student/jobs">Xem thêm công việc</Link>
           </div>
         </section>
         <section>
           <h2>Câu Lạc Bộ</h2>
           <CardTray cardList={clubList.map((info) => <InfoCard info={info} />)} />
-          <div className="see-more">
+          <div className="link-arrow">
             <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
           </div>
         </section>
         <section>
           <h2>Sự Kiện</h2>
           <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} cardsDisplayNum={0} isLoading={false} />
-          <div className="see-more">
+          <div className="link-arrow">
             <Link href="student/events">Xem thêm sự kiện</Link>
           </div>
         </section>
         <section>
           <h2>Học Bổng</h2>
           <CardTray cardList={scholarshipList.map((info) => <InfoCard info={info} />)} />
-          <div className="see-more">
+          <div className="link-arrow">
             <Link href="student/scholarships">Xem thêm học bổng</Link>
           </div>
         </section>

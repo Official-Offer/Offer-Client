@@ -83,8 +83,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
     label: `nav ${key}`,
   }));
 
-  console.log(router.pathname);
-
   if (
     isRecruiter|| 
     isAdvisor
@@ -93,8 +91,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
       <Layout>
         <Navbar
           searchBarHidden={
-            router.pathname === "/student/jobs" ||
-            router.pathname === "/student/events"
+            router.pathname.includes("/student/jobs") ||
+            router.pathname.ncludes("/student/events")
           }
         />
         <Layout>
@@ -125,8 +123,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
     <>
       <Navbar
         searchBarHidden={
-          router.pathname === "/student/jobs" ||
-          router.pathname === "/student/events"
+          router.pathname.includes("/student/jobs") ||
+          router.pathname.includes("/student/events")
         }
       />
       <div>{props.children}</div>
