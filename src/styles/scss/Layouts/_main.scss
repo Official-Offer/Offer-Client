@@ -1,10 +1,10 @@
-.main-home {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 32px;
 
-  .main__content {
+  &__content {
     padding: 0;
     max-width: 1464px;
     width: 100%;

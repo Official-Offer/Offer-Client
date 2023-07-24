@@ -29,14 +29,14 @@ const Applicants: NextPage = () => {
             onClick={() => router.push(`/recruiter/applicants/${job.id}`)}
           >
             {/* <div className="applicant-card"> */}
-              <div className="bookmarked-img" />
-              <div className="bookmarked-body">
-                <div className="bookmarked-body-title">
+              <div className="content-img" />
+              <div className="content-body">
+                <div className="content-body-title">
                   <h2>{job.title}</h2>
                 </div>
-                <div className="bookmarked-body-main">
-                  <p>Number of applicants:</p>
-                  <p>{job.applicants.length}</p>
+                <div className="content-body-main">
+                  <span>Number of applicants:</span>
+                  <span> {job.applicants.length}</span>
                 </div>
               </div>
             {/* </div> */}
