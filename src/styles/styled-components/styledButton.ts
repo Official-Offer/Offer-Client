@@ -23,25 +23,6 @@ export const StyledSubmitButton = styled.button`
   }
 `
 
-export const StyledAddButton = styled.button`
-  background-color: #d30b81;
-  color: white;
-  border: none;
-  /* margin-top: 28px; */
-  text-align: center;
-  border-radius: 20px;
-  padding: 2;
-  font-size: 14px;
-  font-weight: bold;
-  width: 180px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #b40a6e;
-  }
-`
-
 // const Button = styled((props: NativeButtonProps) => <AntButton {...props} />)``;
 
 export const SubmitButtonAntd: typeof Button = styled(Button)<ButtonProps>`

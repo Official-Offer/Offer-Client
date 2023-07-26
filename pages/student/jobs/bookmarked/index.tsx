@@ -52,18 +52,18 @@ const BookmarkedJobs: NextPage = () => {
     <StyledListCard hasLink>
       <Link href={`/student/jobs/${bookmark.job_info.id}`}>
         <div className="link-wrapped">
-          <div className="bookmarked-img">
+          <div className="content-img">
           </div>
-          <div className="bookmarked-body">
-            <div className="bookmarked-body-title">
+          <div className="content-body">
+            <div className="content-body-title">
               <h2>{bookmark.job_info.title}</h2>
             </div>
-            <div className="bookmarked-body-main">
+            <div className="content-body-main">
               <p>{bookmark.job_info.company_data.name}</p>
               <p>{bookmark.job_info.location}</p>
             </div>
           </div>
-          <div className="bookmarked-dates">
+          <div className="content-dates">
             <div className="date-posted">
               Đăng vào {moment(bookmark.job_info.time_published).format("D/M/YYYY")}
             </div>
@@ -73,7 +73,7 @@ const BookmarkedJobs: NextPage = () => {
           </div>
         </div>
       </Link>
-      <div className="bookmarked-close-button" id={bookmark.job_id} onClick={handleUnbookmark}>
+      <div className="close-btn" id={bookmark.job_id} onClick={handleUnbookmark}>
         <CloseOutlined />
       </div>
     </StyledListCard>

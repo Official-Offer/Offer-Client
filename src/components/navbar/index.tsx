@@ -12,18 +12,14 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
-import {
-  Card,
-  NotiBox,
-  MessagePanel,
-  MessageBox
-} from "@styles/styled-components/styledBox";
+import { NotiBox } from "@components/box";
+import { Card, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
 
 type NavbarProps = {
   searchBarHidden: boolean,
 };
 
-const notiList = [{ seen: true }, { seen: false }, { seen: true }];
+const notiList = [{ read: true }, { read: false }, { read: true }];
 const mesList = [{ seen: true }, { seen: false }, { seen: true }];
 
 export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
@@ -202,26 +198,24 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 </a>
               </div>
               <div>
-                {mesList.map((noti) => (
-                  <NotiBox seen={noti.seen}>
-                    <img className="avatar" src="/images/avatar.png" />
-                    <div className="preview">
-                      <a className="preview-link" href="/student/notifications">
-                        <span>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
-                        </span>
-                      </a>
-                    </div>
-                    <div className="dot" />
-                  </NotiBox>
+                {notiList.map((noti) => (
+                  <NotiBox
+                    hasDot
+                    read={noti.read}
+                    content={
+                      <span>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing
+                        elit, sed do eiusmod tempor incididunt ut labore et
+                        dolore magna aliqua. Ut enim ad minim veniam, quis
+                        nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat non proident, sunt in culpa qui officia
+                        deserunt mollit anim id est laborum.
+                      </span>
+                    }
+                  />
                 ))}
               </div>
             </Card>

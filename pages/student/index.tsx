@@ -126,7 +126,7 @@ const StudentHome: NextPage = () => {
   console.log(session);
   
   return (
-    <main className="main-home">
+    <main className="main">
       <div className="main__content">
         <section>
           <AntdCard
