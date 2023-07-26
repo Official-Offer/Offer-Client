@@ -17,7 +17,11 @@ export const updateStudent = async (body: any) => {
 
 export const getStudentDetails = async () => {
   const response = (await request.get(`/students/me/`)).data.Response;
-  // If school's id exists, fetch its name
+  return response;
+};
+
+export const getStudentDetailsFromID = async (id: number) => {
+  const response = (await request.get(`/students/${id}/`)).data;
   return response;
 };
 

@@ -94,7 +94,7 @@
 
 .avatar-dropdown {
   .ant-dropdown-menu {
-    padding: 10px;
+    padding: 8px;
     text-align: right;
     border-radius: 8px;
 
@@ -102,6 +102,7 @@
       color: black;
       font-size: 1rem;
       font-weight: $fw-bold-0;
+      border-radius: 4px;
 
       &:hover {
         background-color: $grey-light;

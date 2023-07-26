@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { getCookie } from "cookies-next";
@@ -8,7 +9,7 @@ import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
 import { CardTray } from "@components/list";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 import { 
-  getStudentDetails,
+  getStudentDetailsFromID,
   getStudentEducations,
   editStudentEducation,
   addStudentEducation,
@@ -113,11 +114,15 @@ const expFieldItems = {
   }
 }
 
-const StudentProfile: NextPage = () => {
+const StudentIDProfile: NextPage = () => {
   const [studentDetails, setStudentDetails] = useState(null);
+
+  const router = useRouter();
+  const studentID = parseInt(router.query.id);
+  
   const studentQuery = useQuery({
-    queryKey: "students/me",
-    queryFn: getStudentDetails,
+    queryKey: `students/${studentID}`,
+    queryFn: () => getStudentDetailsFromID(studentID),
     onSuccess: (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`)
   });
@@ -139,7 +144,7 @@ const StudentProfile: NextPage = () => {
                 {
                   (studentDetails?.school?.length === 0) 
                   ? <h4>Trường không xác định</h4>
-                  : studentDetails?.school.map((eachSchool) => <h4>{eachSchool.name}</h4>)
+                  : studentDetails?.school?.map((eachSchool) => <h4>{eachSchool.name}</h4>)
                 }
                 <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>
@@ -150,9 +155,8 @@ const StudentProfile: NextPage = () => {
         />
       </section>
       <section className="split-layout-main main-md">
-        <ResumeCard isEditable/>
+        <ResumeCard />
         <ProfileCard
-          isEditable
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
           getFunction={getStudentEducations}
@@ -162,7 +166,6 @@ const StudentProfile: NextPage = () => {
           dataFunction={getSchoolList}
         />
         <ProfileCard
-          isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
           getFunction={getStudentExperiences}
@@ -186,4 +189,4 @@ const StudentProfile: NextPage = () => {
   );
 };
 
-export default StudentProfile;
+export default StudentIDProfile;
