@@ -15,23 +15,38 @@ import {
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
 import router, { useRouter } from "next/router";
-import Link from "next/link";
-import { Header } from "antd/lib/layout/layout";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
 
 const { Sider } = Layout;
 
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
-  // const [selectedKey, setSelectedKey] = useState("/recruiter");
-  // const selectedRef = useRef("1");
+  const state = useSelector((state: RootState) => state.account);
+  const isRecruiter =
+    state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor =
+    state.role.isRecruiter || router.pathname.includes("advisor");
+  const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
-  const titles = ["Dữ liệu", "Công việc", "Ứng viên", "Trường", "Sự kiện"];
-  const path = ["", "/jobs", "/applicants", "/schools", "/events"];
-  // console.log(router.pathname);
+  const titles = [
+    "Trang chủ",
+    "Công việc",
+    "Người dùng",
+    isRecruiter ? "Trường" : "Công ty",
+    "Sự kiện",
+  ];
+  const path = [
+    "",
+    "/jobs",
+    "/users",
+    isRecruiter ? "/schools" : "/companies",
+    "/events",
+  ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     UserOutlined,
@@ -39,68 +54,77 @@ export const Nav: React.FC = (props: any): ReactElement => {
     ScheduleOutlined,
     TeamOutlined,
   ].map((icon, index) => ({
-    key: `/recruiter${path[index]}`,
+    key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index != 1) router.push(`/recruiter${path[index]}`);
+      if (!(index == 1 && role =='advisor') && index != 2) router.push(`/${role}${path[index]}`);
     },
     children:
-      index == 1
+      index == 1 && role == "advisor"
         ? [
             {
               label: "Đã duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/verified`);
+                router.push(`/${role}${path[index]}/approved`);
               },
-              key: `/recruiter${path[index]}/verified`,
+              key: `/${role}${path[index]}/approved`,
             },
             {
               label: "Chưa duyệt",
               icon: React.createElement(icon),
               onClick: (e) => {
-                router.push(`/recruiter${path[index]}/unverified`);
+                router.push(`/${role}${path[index]}/unapproved`);
               },
-              key: `/recruiter${path[index]}/unverified`,
+              key: `/${role}${path[index]}/unapproved`,
+            },
+          ]
+        : index == 2
+        ? [
+            {
+              label: isRecruiter ? "Ứng viên" : "Học sinh",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                console.log(path[index])
+                router.push(
+                  `/${role}${path[index]}/students`
+                );
+              },
+              key: `/${role}${path[index]}/students`,
+            },
+            {
+              label: "Cố vấn",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/advisors`);
+              },
+              key: `/${role}${path[index]}/advisors`,
+            },
+            {
+              label: "Nhà tuyển dụng",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/recruiters`);
+              },
+              key: `/${role}${path[index]}/recruiters`,
             },
           ]
         : undefined,
-    // index == 2
-    // ? [
-    //     {
-    //       label: "Vòng đơn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/resume`);
-    //       },
-    //       key: `/recruiter${path[index]}/resume`,
-    //     },
-    //     {
-    //       label: "Vòng phỏng vấn",
-    //       icon: React.createElement(icon),
-    //       onClick: (e) => {
-    //         router.push(`/recruiter${path[index]}/interview`);
-    //       },
-    //       key: `/recruiter${path[index]}/interview`,
-    //     },
-    //   ]
-    // :
   }));
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
 
-  const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
+  // const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+  //   key,
+  //   label: `nav ${key}`,
+  // }));
 
-  if (
-    router.pathname.includes("recruiter") ||
-    router.pathname.includes("advisor")
-  ) {
+  console.log(router.pathname);
+
+  if (isRecruiter || isAdvisor) {
     return (
       <Layout>
         <Navbar
@@ -110,14 +134,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
           }
         />
         <Layout>
-          <Sider className="recruiter-sider">
-            <div className="recruiter-sider-logo">Home</div>
+          <Sider className="navbar-sider">
+            <div className="navbar-sider-logo">Logo</div>
             <Menu
-              defaultSelectedKeys={["/recruiter"]}
+              defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[
-                router.pathname.includes("jobs")
-                  ? "/recruiter/jobs"
-                  : "/recruiter/applicants",
+                router.pathname.includes("jobs") && role === 'advisor'
+                  ? `/${role}/jobs`
+                  : `/${role}/users`,
               ]}
               selectedKeys={[router.pathname]}
               mode="inline"
@@ -126,7 +150,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               items={items}
             />
           </Sider>
-          <Layout className="layout-with-sider">
+          <Layout className="navbar-with-sider">
             <div>{props.children}</div>
           </Layout>
         </Layout>

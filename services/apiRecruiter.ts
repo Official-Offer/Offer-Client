@@ -20,3 +20,40 @@ export const recruiterLogin = async (body: any) => {
   const response = await request.post(`/recruiters/login/`, body);
   return response.data;
 };
+
+export const getRecruitersForSchool = async () => {
+  const response = await request.get(`/recruiters/`);
+  const recruiterList = response.data;
+  var res = [];
+  for (const recruiter of recruiterList) {
+    res.push({
+      key: recruiter.id,
+      ID: recruiter.id,
+      name: recruiter.name,
+      company: recruiter.company,
+      role: "chief",
+      jobs_posted: 10,
+      email: "ktto@umass.edu",
+      contacted: "Đã liên hệ",
+    });
+  }
+  return res;
+};
+
+export const getRecruitersForCompany = async () => {
+  const response = await request.get(`/recruiters/`);
+  const recruiterList = response.data;
+  var res = [];
+  for (const recruiter of recruiterList) {
+    res.push({
+      key: recruiter.id,
+      ID: recruiter.id,
+      name: recruiter.name,
+      role: "chief",
+      email_verified: true,
+      role_verified: true,
+      jobs_posted: 15
+    });
+  }
+  return res;
+};

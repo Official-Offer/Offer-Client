@@ -1,27 +1,25 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
+import {  getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { EventAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
+import { EventAdvisorColumns } from '../../../src/components/table/columnType';
+import { getAdvisorEvents } from "@services/apiEvents";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<EventAdvisorDataType[]>([]);
+  const [dataset, setDataSet] = useState<EventAdvisorDataType[]>([]);
   // DataType[]
   const eventQuery = useQuery({
-    queryKey: ["event"],
-    queryFn: getUnapprovedJobs,
+    queryKey: ["advisor-events"],
+    queryFn: getAdvisorEvents,
     onSuccess: async (events) => {
       setData(events);
+      setDataSet(events);
 
       var s: string[] = [];
 
@@ -52,7 +50,6 @@ const Events: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -61,16 +58,16 @@ const Events: NextPage = () => {
   };
 
   const handleAddEvent = () => {
-    router.push('/advisor/jobs/eventForm');
+    router.push('/recruiter/jobs/eventForm');
   }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Sự kiện</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Sự kiện</h1>
+      <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
-          columns={unapprovedJobColumns}
+          dataset={data}
+          columns={EventAdvisorColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

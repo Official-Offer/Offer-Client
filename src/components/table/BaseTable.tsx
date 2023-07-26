@@ -16,7 +16,9 @@ export const BaseTable: React.FC = ({
   handleFilterSearch,
   handleAdd,
   dataType,
+  filterTypes,
   isLoading,
+  placeholders,
 }: any) => {
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
   const rowSelection: TableRowSelection<ApplicantDataType> = {
@@ -34,17 +36,21 @@ export const BaseTable: React.FC = ({
       console.log(selected, selectedRows, changeRows);
     },
   };
+  console.log(searchResults)
   return (
     <div>
       <div className="table-functions">
         <div className="table-functions-search">
-          <FilterSearch
-            searchResults={searchResults}
-            onSearch={(value: any) => {
-              handleFilterSearch(value);
-            }}
-            // options={dataset.map((item) => item.name)}
-          />
+          {placeholders?.map((value:string, index:number) => (
+            <FilterSearch
+              searchResults={searchResults[index+1]}
+              placeholder={value}
+              onSearch={(value: any) => {
+                handleFilterSearch(value, filterTypes[index]);
+              }}
+              // options={dataset.map((item) => item.name)}
+            />
+          ))}
         </div>
         <div className="table-functions-type">
           <FilterType

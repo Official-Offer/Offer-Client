@@ -1,41 +1,35 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { EventRecruiterColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { EventRecruiterDataType } from "@components/table/dataType";
 import router from "next/router";
+import { getRecruiterEvents } from "@services/apiEvents";
 
 //create a next page for the student home page, code below
 const Events: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<EventRecruiterDataType[]>([]);
+  const [dataset, setDataSet] = useState<EventRecruiterDataType[]>([]);
   // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
-    queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
+  const eventQuery = useQuery({
+    queryKey: ["advisor-events"],
+    queryFn: getRecruiterEvents,
+    onSuccess: async (events) => {
+      setData(events);
+      setDataSet(events);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      events.forEach((event) => {
+        s.push(event.title);
       });
 
       setSearchResults(s);
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -55,7 +49,6 @@ const Events: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
@@ -63,23 +56,23 @@ const Events: NextPage = () => {
     setData(dataset.filter((item) => item.title === value));
   };
 
-  const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+  const handleAddEvent = () => {
+    router.push('/recruiter/jobs/eventForm');
   }
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
-      <div className="applicant-table">
+    <div className="advisor">
+      <h1 className="advisor-title">Sự kiện</h1>
+      <div className="advisor-table">
         <BaseTable
-          dataset={dataset}
-          columns={unapprovedJobColumns}
+          dataset={data}
+          columns={EventRecruiterColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          handleAdd={handleAddEvent}
+          tableType={"Event"}
+          isLoading={eventQuery.isLoading}
         />
       </div>
     </div>
@@ -87,3 +80,4 @@ const Events: NextPage = () => {
 };
 
 export default Events;
+

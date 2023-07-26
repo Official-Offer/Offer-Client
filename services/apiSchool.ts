@@ -12,24 +12,27 @@ export const getSchool = async (id: number) => {
 
 export const getSchoolsForRecruiter = async (id: number) => {
   const response = (await request.get(`/schools/`)).data;
-  const jobs = (await request.get(`/jobs/`)).data;
-  var noJobs = {};
+  // const jobs = (await request.get(`/jobs/`)).data;
+  // var noJobs = {};
   var res = [];
-  for (const job of jobs) {
-    for (const school in job.schools) {
-      if (noJobs[school]) noJobs[school] = 1;
-      else noJobs[school] += 1;
-    }
-  }
+  // for (const job of jobs) {
+  //   for (const school in job.schools) {
+  //     if (noJobs[school]) noJobs[school] = 1;
+  //     else noJobs[school] += 1;
+  //   }
+  // }
   for (const school of response) {
     res.push({
-      key: school.id,
-      ID: school.id,
-      name: school.name,
-      description: school.description || "No description",
-      noStudents: 10000,
-      noJobs: noJobs[school.id],
-      tag: 'Whatever',
+      key: school.id || "2",
+      ID: school.id || "2",
+      name: school.name || "UMass",
+      advisors: 200,
+      // description: school.description || "No description",
+      no_students: 10000,
+      students_applicants: 2000,
+      unapproved_jobs: 100,
+      approved_jobs: 150,
+      compatibility: "60%",
     });
   }
   return res;

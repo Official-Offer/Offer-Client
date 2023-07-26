@@ -1,41 +1,34 @@
-import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import type { ColumnsType } from "antd/es/table";
-import { Space, Tag } from "antd";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { AdvisorSchoolColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobList, getJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { UnapprovedJobDataType } from "@components/table/dataType";
+import { AdvisorSchoolDataType } from "@components/table/dataType";
 import router from "next/router";
+import { getAdvisorsForSchool } from "@services/apiAdvisor";
 
-//create a next page for the student home page, code below
-const UnapprovedJobs: NextPage = () => {
+const Advisors: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [dataset, setData] = useState<UnapprovedJobDataType[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<AdvisorSchoolDataType[]>([]);
+  const [dataset, setDataSet] = useState<AdvisorSchoolDataType[]>([]);
   // DataType[]
-  const jobQuery = useQuery({
-    queryKey: ["unapproved-job"],
-    queryFn: getUnapprovedJobs,
-    onSuccess: async (jobs) => {
-      setData(jobs);
+  const advisorQuery = useQuery({
+    queryKey: ["jobs"],
+    queryFn: getAdvisorsForSchool,
+    onSuccess: async (events) => {
+      setData(events);
+      setDataSet(events);
 
       var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
+      events.forEach((event) => {
+        s.push(event.name);
       });
 
       setSearchResults(s);
     },
     onError: () => {},
   });
-
-  console.log(jobQuery)
-
 
   const handleFilterType = (values: string[]) => {
     console.log(values);
@@ -47,7 +40,7 @@ const UnapprovedJobs: NextPage = () => {
       dataset.filter((item) => {
         if (!item.tag || values.length == 0) return false;
         for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
+          if (values[i]?.label === item.name) return true;
         }
         return false;
       })
@@ -55,12 +48,11 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    setData(dataset.filter((item) => item.name === value));
   };
 
   const handleAddJob = () => {
@@ -69,21 +61,21 @@ const UnapprovedJobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Ứng viên</h1>
+      <h1 className="applicant-title">Danh sách cố vấn của trường</h1>
       <div className="applicant-table">
         <BaseTable
-          dataset={dataset}
-          columns={unapprovedJobColumns}
+          dataset={data}
+          columns={AdvisorSchoolColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
-          isLoading={jobQuery.isLoading}
+          tableType={"RecruiterJobs"}
+          isLoading={advisorQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default UnapprovedJobs;
+export default Advisors;
