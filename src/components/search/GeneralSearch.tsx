@@ -21,7 +21,6 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
     queryKey: "search",
     queryFn: () => searchInput !== "" && getSearch(searchInput),
     onSuccess: (res) => {
-      setOpenDropdown(Object.keys(res).length > 0);
       setSearchResult(res);
     },
     onError: (err) => console.log("Search Error: ", err),
@@ -44,17 +43,21 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
   };
   
   const handleFocus = () => {
-    setOpenDropdown(searchInput !== "" && Object.keys(searchResult).length > 0);
+    setOpenDropdown(searchInput !== "");
     setHideBar(false);
   }
 
   const handleBlur = () => {
+    console.log("what")
     setOpenDropdown(false);
     setHideBar(searchInput === "");
   }
 
   return (
-    <div>
+    <div
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       <Input
         className={
           "search-bar" + (hidden && hideBar ? " hide-bar" : "")
@@ -62,8 +65,6 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
         placeholder="Tìm Kiếm"
         prefix={<SearchOutlined />}
         onChange={handleSearchChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         />
       <Dropdown
         open={openDropdown}
@@ -74,6 +75,7 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
               searchQuery.isFetching ? <LoadingOutlined /> : (
                 <ul className="list-menu">
                   {
+                    Object.keys(searchResult).length === 0 ? <span>Không có kết quả</span> :
                     Object.keys(searchResult).map((key) => 
                       searchResult[key].map((item) => (
                         <li>{parse(item._highlightResult?.name?.value ?? (item._highlightResult?.title?.value ?? ""))} - {key}</li>

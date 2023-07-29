@@ -6,7 +6,11 @@ import { StyledResumeCard } from "@styles/styled-components/styledBox";
 import { FileDownloadButton, IconButton } from "@styles/styled-components/styledButton";
 import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
-export const ResumeCard: React.FC = () => {
+type ResumeCardProps = {
+  isEditable: boolean
+}
+
+export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File>(null); // Holding the formData of the selected file before uploading
   const [uploadedFile, setUploadedFile] = useState<string>(null); // Holding the URL of uploaded resume for downloading
@@ -78,50 +82,54 @@ export const ResumeCard: React.FC = () => {
       title={
         <div className="main-panel-header">
           <h2>CV</h2>
-          <div className="btn-list-horizontal">
-            <div className="file-btn">
-              <input type="file" id="file-input" onChange={selectResume} />
-              <label htmlFor="file-input">
+          {
+            isEditable && (              
+              <div className="btn-list-horizontal">
+                <div className="file-btn">
+                  <input type="file" id="file-input" onChange={selectResume} />
+                  <label htmlFor="file-input">
+                    <IconButton
+                      round
+                      backgroundColor="#D30B81" 
+                      disabled={uploadMutation.isLoading}
+                    >
+                      <div className="btn-body">
+                        <span>{selectedFile?.name ?? "Chọn CV"}</span>
+                        <span><PlusOutlined /></span>
+                      </div>
+                    </IconButton>
+                  </label>
+                </div>
                 <IconButton
                   round
-                  backgroundColor="#D30B81" 
-                  disabled={uploadMutation.isLoading}
+                  backgroundColor="#7277F1"
+                  disabled={uploadMutation.isLoading} 
+                  onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}
                 >
-                  <div className="btn-body">
-                    <span>{selectedFile?.name ?? "Chọn CV"}</span>
-                    <span><PlusOutlined /></span>
-                  </div>
+                  {
+                    uploadMutation.isLoading ? (
+                      <div className="btn-body">
+                        <span>Đang tải lên...</span>
+                        <span><LoadingOutlined /></span>
+                      </div>
+                    ) : (
+                      (selectedFile && uploadMutation.isSuccess) ? (
+                        <div className="btn-body">
+                          <span>Tải lên thành công</span>
+                          <span><CheckOutlined /></span>
+                        </div>
+                      ) : (
+                        <div className="btn-body">
+                          <span>Tải lên</span>
+                          <span><CloudUploadOutlined /></span>
+                        </div>
+                      )
+                    )
+                  }
                 </IconButton>
-              </label>
-            </div>
-            <IconButton
-              round
-              backgroundColor="#7277F1"
-              disabled={uploadMutation.isLoading} 
-              onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}
-            >
-              {
-                uploadMutation.isLoading ? (
-                  <div className="btn-body">
-                    <span>Đang tải lên...</span>
-                    <span><LoadingOutlined /></span>
-                  </div>
-                ) : (
-                  (selectedFile && uploadMutation.isSuccess) ? (
-                    <div className="btn-body">
-                      <span>Tải lên thành công</span>
-                      <span><CheckOutlined /></span>
-                    </div>
-                  ) : (
-                    <div className="btn-body">
-                      <span>Tải lên</span>
-                      <span><CloudUploadOutlined /></span>
-                    </div>
-                  )
-                )
-              }
-            </IconButton>
-          </div>
+              </div>
+            )
+          }
         </div>
       }
       children={
@@ -142,7 +150,15 @@ export const ResumeCard: React.FC = () => {
                     </div>
                   </IconButton>
                 </a>
-                <Button type="danger" shape="circle" loading={deleteMutation.isLoading} icon={<DeleteOutlined />} onClick={handleDelete} />
+                {isEditable && (
+                  <Button 
+                    type="danger" 
+                    shape="circle" 
+                    loading={deleteMutation.isLoading} 
+                    icon={<DeleteOutlined />} 
+                    onClick={handleDelete} 
+                  />
+                )}
               </div>
             </StyledResumeCard>
           )
