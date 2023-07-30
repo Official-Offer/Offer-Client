@@ -1,6 +1,6 @@
 import ApplicantTypeFilter from "@components/filter/TypeFilter";
 import { getJobListWithApplicant } from "@services/apiJob";
-import { ApplicantCard, StyledListCard } from "@styles/styled-components/styledBox";
+import {  StyledListCard } from "@styles/styled-components/styledBox";
 import { NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
