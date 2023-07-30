@@ -242,7 +242,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Menu.Item>
               <Menu.Divider />
               <Menu.Item>
-                <Link href={`/${path}/profile`}>Cài Đặt</Link>
+                <Link href={`/settings`}>Cài Đặt</Link>
               </Menu.Item>
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Điều Khoản Sử Dụng</Link>

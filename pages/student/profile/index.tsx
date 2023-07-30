@@ -149,7 +149,7 @@ const StudentProfile: NextPage = () => {
           }
         />
       </section>
-      <section className="split-layout-main main-md">
+      <section className="split-layout-item flex-md">
         <ResumeCard isEditable/>
         <ProfileCard
           isEditable

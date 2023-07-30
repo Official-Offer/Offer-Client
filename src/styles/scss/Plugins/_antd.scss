@@ -52,7 +52,7 @@
 
 .ant-divider {
   &-horizontal {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -60,5 +60,19 @@
   .anticon-upload {
     font-size: 1.5rem;
     margin-bottom: 8px;
+  }
+}
+
+.ant-menu-inline {
+  .ant-menu-item {
+    &:hover {
+      background-color: $grey-light;
+    }
+
+    &-selected {
+      &:hover {
+        background-color: hsl(199, 100%, 90%);
+      }
+    }
   }
 }
