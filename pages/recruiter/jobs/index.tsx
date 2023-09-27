@@ -10,10 +10,10 @@ import router from "next/router";
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
+  // data to be filtered/changed
   const [data, setData] = useState<JobDataType[]>([]);
+  // original data that remains unchanged
   const [dataset, setDataSet] = useState<JobDataType[]>([]);
-  // const [searchChange, setSearchChange] = useState(false);
-  // DataType[]
   const jobQuery = useQuery({
     queryKey: ["jobs"],
     queryFn: getJobsForRecruiter,

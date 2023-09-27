@@ -41,13 +41,15 @@ any) => {
     <div>
       <div className="table-functions">
         <div className="table-functions-search">
-          <FilterSearch
-            placeholder={placeholder}
-            onSearch={(value: any) => {
-              handleFilterSearch(value);
-            }}
-            searchResults={searchResults}
-          />
+          {handleFilterSearch && (
+            <FilterSearch
+              placeholder={placeholder}
+              onSearch={(value: any) => {
+                handleFilterSearch(value);
+              }}
+              searchResults={searchResults}
+            />
+          )}
         </div>
         <div className="table-functions-type">
           {handleFilterType && (
