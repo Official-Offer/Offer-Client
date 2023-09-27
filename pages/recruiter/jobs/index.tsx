@@ -26,29 +26,11 @@ const Jobs: NextPage = () => {
       // jobs.forEach((job) => {
       //   s.push(job.title);
       // });
-
+      console.log(jobs);
       setSearchResults(jobs.map(job=>job.title));
     },
     onError: () => {},
   });
-
-  //reimplement filters
-  // const handleFilterType = (values: string[]) => {
-  //   console.log(values);
-  //   if (values.length == 0) {
-  //     setData(dataset);
-  //     return;
-  //   }
-  //   setData(
-  //     dataset.filter((item) => {
-  //       if (!item.tag || values.length == 0) return false;
-  //       for (let i = 0; i < values.length; i++) {
-  //         if (values[i]?.label === item.tag) return true;
-  //       }
-  //       return false;
-  //     })
-  //   );
-  // };
 
   //reimplemented search
   const handleFilterSearch = (value: string) => {
