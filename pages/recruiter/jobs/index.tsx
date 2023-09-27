@@ -59,7 +59,7 @@ const Jobs: NextPage = () => {
     const filteredData = dataset.filter(item =>
       item.title?.includes(value)
     );
-    
+    setData(filteredData);
     // setData(dataset.filter((item) => item.title === value));
   };
 
