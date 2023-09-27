@@ -106,7 +106,7 @@ export const JobColumns: ColumnsType<JobDataType> = [
     key: "approved_schools",
   },
   {
-    title: "Người ứng tuyển",
+    title: "Ứng viên",
     dataIndex: "applicants",
     key: "applicants",
   },

@@ -74,19 +74,32 @@ export const getJobsForRecruiter = async () => {
   const unapprovedSchools = ["Vin Uni", "UMass", "MIT"];
   const unapprovedSchoolString = unapprovedSchools.reduce((acc, cur, index) => {
     if (index < 2) {
+      if (index == unapprovedSchools.length-1){
+        return acc + cur;
+      }
       return acc + cur + ", ";
     } else if (index == 2) {
+      if (index == unapprovedSchools.length-1){
+        return acc + cur;
+      }
       return acc + cur + "..." + "(" + unapprovedSchools.length + ") ";
-    } else {
+    } 
+    else {
       return acc + "";
     }
   }, "");
   const approvedSchools = ["Amherst", "Harvard", "Bach Khoa", "NEU", "FTU", "UMass"];
   const approvedSchoolString = approvedSchools.reduce((acc, cur, index) => {
     if (index < 2) {
+      if (index == approvedSchools.length-1){
+        return acc + cur;
+      }
       return acc + cur + ", ";
     } 
     else if (index == 2) {
+      if (index == approvedSchools.length-1){
+        return acc + cur;
+      }
       return acc + cur + "..." + "(" + approvedSchools.length + ") ";
     } else {
       return acc + "";
