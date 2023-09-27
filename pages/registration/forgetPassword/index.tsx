@@ -13,7 +13,7 @@ import { registerRecruiter } from "@services/apiRecruiter";
 import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
 
 //create a next page for the student home page, code below
-const RegisterPassword: NextPage = () => {
+const ForgetPassword: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);

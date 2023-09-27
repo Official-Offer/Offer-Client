@@ -56,4 +56,4 @@ const DetailedCompanies: NextPage = () => {
   );
 };
 
-export default PostJobs;
+export default DetailedCompanies;

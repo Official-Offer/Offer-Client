@@ -1,13 +1,7 @@
 import React from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
 import { setRole } from "@redux/actions";
 import { NextPage } from "next";
-import {
-  CenterPanel,
-  LeftPanel,
-  RightPanel,
-} from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import {
   ContinueButton,

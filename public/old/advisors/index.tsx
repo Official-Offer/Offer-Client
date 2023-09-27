@@ -1,7 +1,7 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
 import { BaseTable } from "@components/table/BaseTable";
-import { unapprovedJobColumns } from "@components/table/columnType";
+import { UnapprovedJobColumns } from "@components/table/columnType";
 import { getUnapprovedJobs } from "@services/apiJob";
 import { Avatar, Badge, Space } from "antd";
 import Card from "antd/lib/card/Card";

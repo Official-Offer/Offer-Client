@@ -35,7 +35,7 @@ export const BaseTable: React.FC = ({
       console.log(selected, selectedRows, changeRows);
     },
   };
-  console.log(searchResults)
+  // console.log(searchResults)
   return (
     <div>
       <div className="table-functions">
@@ -65,7 +65,7 @@ export const BaseTable: React.FC = ({
         )}
       </div>
       <Table
-        rowSelection={{ ...rowSelection }}
+        // rowSelection={{ ...rowSelection }}
         columns={columns}
         dataSource={dataset}
         loading={isLoading}

@@ -1,10 +1,16 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
+  AppstoreOutlined,
   BarChartOutlined,
-  // ScheduleOutlined,
-  // TeamOutlined,
+  CloudOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  ScheduleOutlined,
+  ShopOutlined,
+  TeamOutlined,
   UploadOutlined,
   UserOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Button, Layout, Menu, theme } from "antd";
@@ -28,33 +34,93 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    // "Trang chủ",
+    "Trang chủ",
     "Công việc",
-    isRecruiter ? "Ứng Viên" : "Học sinh",
+    "Người dùng",
     isRecruiter ? "Trường" : "Công ty",
-    // "Sự kiện",
+    "Sự kiện",
   ];
   const path = [
-    // "",
+    "",
     "/jobs",
-    isRecruiter ? "/applicants" : "/students",
+    "/users",
     isRecruiter ? "/schools" : "/companies",
-    // "/events",
+    "/events",
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     UserOutlined,
     UploadOutlined,
-    // ScheduleOutlined,
-    // TeamOutlined,
+    ScheduleOutlined,
+    TeamOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
       if (!(index == 1 && role =='advisor') && index != 2) router.push(`/${role}${path[index]}`);
-    }
+    },
+    children:
+      index == 1 && role == "advisor"
+        ? [
+            {
+              label: "Đã duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/approved`);
+              },
+              key: `/${role}${path[index]}/approved`,
+            },
+            {
+              label: "Chưa duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/unapproved`);
+              },
+              key: `/${role}${path[index]}/unapproved`,
+            },
+          ]
+        : index == 2
+        ? [
+            {
+              label: isRecruiter ? "Ứng viên" : "Học sinh",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                console.log(path[index])
+                router.push(
+                  `/${role}${path[index]}/students`
+                );
+              },
+              key: `/${role}${path[index]}/students`,
+            },
+            {
+              label: "Cố vấn",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/advisors`);
+              },
+              key: `/${role}${path[index]}/advisors`,
+            },
+            {
+              label: "Nhà tuyển dụng",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/recruiters`);
+              },
+              key: `/${role}${path[index]}/recruiters`,
+            },
+          ]
+        : undefined,
   }));
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
+  // const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
+  //   key,
+  //   label: `nav ${key}`,
+  // }));
 
   console.log(router.pathname);
 
@@ -71,13 +137,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
           <Sider className="navbar-sider">
             <Menu
               defaultSelectedKeys={[`/${role}`]}
-              // defaultOpenKeys={[
-              //   router.pathname.includes("jobs") && role === 'advisor'
-              //     ? `/${role}/jobs`
-              //     : `/${role}/users`,
-              // ]}
+              defaultOpenKeys={[
+                router.pathname.includes("jobs") && role === 'advisor'
+                  ? `/${role}/jobs`
+                  : `/${role}/users`,
+              ]}
               selectedKeys={[router.pathname]}
               mode="inline"
+              // theme="dark"
               inlineCollapsed={collapsed}
               items={items}
             />

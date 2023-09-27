@@ -5,7 +5,7 @@ import {  getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { EventAdvisorDataType } from "@components/table/dataType";
 import router from "next/router";
-import { EventAdvisorColumns } from '../../../src/components/table/columnType';
+import { EventAdvisorColumns } from '../../../../src/components/table/columnType';
 import { getAdvisorEvents } from "@services/apiEvents";
 
 //create a next page for the student home page, code below
