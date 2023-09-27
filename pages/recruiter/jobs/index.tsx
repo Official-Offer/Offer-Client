@@ -21,36 +21,36 @@ const Jobs: NextPage = () => {
       setData(jobs);
       setDataSet(jobs);
 
-      var s: string[] = [];
+      // var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
-      });
+      // jobs.forEach((job) => {
+      //   s.push(job.title);
+      // });
 
-      setSearchResults(s);
+      setSearchResults(jobs.map(job=>job.title));
     },
     onError: () => {},
   });
 
   //reimplement filters
-  const handleFilterType = (values: string[]) => {
-    console.log(values);
-    if (values.length == 0) {
-      setData(dataset);
-      return;
-    }
-    setData(
-      dataset.filter((item) => {
-        if (!item.tag || values.length == 0) return false;
-        for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
-        }
-        return false;
-      })
-    );
-  };
+  // const handleFilterType = (values: string[]) => {
+  //   console.log(values);
+  //   if (values.length == 0) {
+  //     setData(dataset);
+  //     return;
+  //   }
+  //   setData(
+  //     dataset.filter((item) => {
+  //       if (!item.tag || values.length == 0) return false;
+  //       for (let i = 0; i < values.length; i++) {
+  //         if (values[i]?.label === item.tag) return true;
+  //       }
+  //       return false;
+  //     })
+  //   );
+  // };
 
-  //reimplement search
+  //reimplemented search
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
@@ -74,7 +74,8 @@ const Jobs: NextPage = () => {
         <BaseTable
           dataset={data}
           columns={JobColumns}
-          handleFilterType={handleFilterType}
+          placeholder={"Tìm công việc"}
+          // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}

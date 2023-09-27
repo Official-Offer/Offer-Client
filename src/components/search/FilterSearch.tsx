@@ -2,6 +2,7 @@ import { Select } from "antd";
 import React from "react";
 
 interface ISearch {
+  placeholder: string;
   onSearch: (email: string) => void;
   searchResults: string[];
   // options: any;
@@ -32,16 +33,16 @@ export const FilterSearch: React.FC = ({
             }))
           : [
               {
-                value: "John Brown",
-                label: "John Brown",
+                value: "Kiên Tô",
+                label: "Kiên Tô",
               },
               {
-                value: "Jim Green",
-                label: "Jim Green",
+                value: "Võ Thuấn",
+                label: "Võ Thuấn",
               },
               {
-                value: "Joe Black",
-                label: "Joe Black",
+                value: "Bảo Đặng",
+                label: "Bảo Đặng",
               },
             ]
       }
