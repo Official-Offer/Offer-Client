@@ -71,11 +71,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
           <Sider className="navbar-sider">
             <Menu
               defaultSelectedKeys={[`/${role}`]}
-              // defaultOpenKeys={[
-              //   router.pathname.includes("jobs") && role === 'advisor'
-              //     ? `/${role}/jobs`
-              //     : `/${role}/users`,
-              // ]}
               selectedKeys={[router.pathname]}
               mode="inline"
               inlineCollapsed={collapsed}
