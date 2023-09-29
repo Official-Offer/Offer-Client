@@ -34,19 +34,25 @@ const PostJobs: NextPage = () => {
         <JobPostForm
           onSubmit={(
             title: string,
-            department: string,
+            // department: string,
+            company: string,
             description: string,
-            salary: number,
-            end_date: Date,
-            expected_no_appliants: number
+            // level: string,
+            // type: string,
+            // salary: number,
+            // end_date: Date,
+            // expected_no_appliants: number
           ): void => {
             mutation.mutate({
               title,
-              department,
+              // department,
+              company,
               description,
-              salary,
-              end_date,
-              expected_no_appliants,
+              // level,
+              // type
+              // salary,
+              // end_date,
+              // expected_no_appliants,
             });
           }}
           isLoading={mutation.isLoading}

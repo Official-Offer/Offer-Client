@@ -1,0 +1,21 @@
+.list {
+  &-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 40px 0px 40px;
+  }
+
+  &-card {
+    max-width: 900px;
+
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    .ant-card-body {
+      padding: 0px 0px;
+      overflow-y: auto !important;
+    }
+  }
+}

@@ -5,7 +5,8 @@ import { FilterSearch } from "@components/search/FilterSearch";
 // import { TableRowSelection } from "antd/lib/table/interface";
 // import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
 // import { SubmitButton } from "@components/button/SubmitButton";
-import { StyledAddButton } from "@styles/styled-components/styledButton";
+import { IconButton } from "@styles/styled-components/styledButton";
+import { PlusOutlined } from "@ant-design/icons";
 
 export const BaseTable: React.FC = ({
   dataset,
@@ -61,9 +62,17 @@ any) => {
           )}
         </div>
         {handleAdd && (
-          <StyledAddButton className="table-functions-add" onClick={handleAdd}>
-            Tạo công việc
-          </StyledAddButton>
+          <IconButton
+            round
+            className="table-functions-add"
+            backgroundColor="#D30B81"
+            onClick={handleAdd}
+          >
+            <div className="btn-body">
+              <span>Tạo công việc</span>
+              <span><PlusOutlined /></span>
+            </div>
+          </IconButton>
         )}
       </div>
       <Table

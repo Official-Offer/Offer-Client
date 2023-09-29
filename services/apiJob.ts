@@ -105,16 +105,13 @@ export const getJobsForRecruiter = async () => {
       return acc + "";
     }
   }, "");
-  console.log(unapprovedSchoolString);
   const res = jobList.map((job: any) => ({
     // key: job.id,
     // ID: job.id,
     posted_date: moment(job.timestamp).format("D/M/YYYY"),
     title: job.title || "Không tìm thấy",
     unapproved_schools: unapprovedSchoolString,
-    // [schools[Math.floor(Math.random() * schools.length)]],
     approved_schools: approvedSchoolString,
-    // [approvedSchools[Math.floor(Math.random() * approvedSchools.length)]],
     applicants: 20,
   }));
   return res;

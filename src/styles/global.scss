@@ -38,7 +38,8 @@ em {
 @import "./scss/Plugins/antd"; 
 
 /* Layouts */
-@import "./scss/Layouts/main-home";
+@import "./scss/Layouts/main";
+@import "./scss/Layouts/list";
 @import "./scss/Layouts/applicant";
 @import "./scss/Layouts/recruiter";
 @import "./scss/Layouts/advisor";

@@ -6,6 +6,7 @@ import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
 type ProfileCardProps = {
+  isEditable: boolean,
   fieldTitle: string,
   fieldItemProps: {
     itemTitle: string,
@@ -25,7 +26,7 @@ type ProfileCardProps = {
   dataFunction: () => Record<string, unknown>[],
 }
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemProps, getFunction, addFunction, editFunction, deleteFunction, dataFunction }) => {
+export const ProfileCard: React.FC<ProfileCardProps> = ({ isEditable, fieldTitle, fieldItemProps, getFunction, addFunction, editFunction, deleteFunction, dataFunction }) => {
   const logoURL = "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
 
   // States
@@ -79,12 +80,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
-          <Button 
-            className="icon-btn" 
-            type="text" 
-            icon={<PlusOutlined />}
-            onClick={() => setOpenAddForm(true)}
-          />
+          {
+            isEditable && (
+              <Button 
+                className="icon-btn" 
+                type="text" 
+                icon={<PlusOutlined />}
+                onClick={() => setOpenAddForm(true)}
+              />
+            )
+          }
           {/* Popup adding form */}
           <ProfileCardForm
             open={openAddForm}
@@ -159,14 +164,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ fieldTitle, fieldItemP
                             {item.description}  
                           </div>
                         </div>
-                        <div>
-                          <Button 
-                            className="icon-btn" 
-                            type="text" 
-                            icon={<EditOutlined />}
-                            onClick={() => setOpenEditForm(index)}
-                          />
-                        </div>
+                        {
+                          isEditable && (
+                            <div>
+                              <Button 
+                                className="icon-btn" 
+                                type="text" 
+                                icon={<EditOutlined />}
+                                onClick={() => setOpenEditForm(index)}
+                              />
+                            </div>
+                          )
+                        }
                       </div>
                     </div>
                   );

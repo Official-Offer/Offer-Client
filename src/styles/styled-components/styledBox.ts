@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Card as AntdCard } from 'antd';
+import { CardProps } from 'antd/lib/card';
 import { border, color, layout, space } from 'styled-system';
 
 export const Box = styled.div`
@@ -19,23 +21,23 @@ export const Card = styled.div`
   flex-direction: column;
 `;
 
-export const NotiBox = styled.div`
+export const StyledNotiBox = styled.div`
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding: ${({large}) => large ? "24px" : "12px"};
   position: relative;
-  background-color: ${({seen}) => seen ? "white" : "#FAD4E6"};
+  background-color: ${({read}) => read ? "white" : "#FAD4E6"};
   transition: 0.2s;
   cursor: pointer;
-  gap: 10px;
+  gap: ${({large}) => large ? "20px" : "16px"};
 
   &:hover {
-    background-color: ${({seen}) => seen ? "#00000014" : "#F6AACD"};
+    background-color: ${({read}) => read ? "#00000014" : "#F6AACD"};
   }
 
   .avatar {
-    width: 32px;
-    height: 32px;
+    width: 48px;
+    aspect-ratio: 1;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -67,7 +69,7 @@ export const NotiBox = styled.div`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${({seen}) => seen ? "transparent" : "#D30B81"};
+    background-color: ${({read}) => read ? "transparent" : "#D30B81"};
   }
 `;
 
@@ -187,8 +189,7 @@ export const StyledListCard = styled.div`
     cursor: pointer;
     background-color: ${({applicant}) => applicant ? "#D9D9D9" : "transparent"};
 
-    .bookmarked {
-      &-close-button {
+    .close-btn {
         display: initial;
         font-weight: 700;
         cursor: pointer;
@@ -203,7 +204,7 @@ export const StyledListCard = styled.div`
     width: 100%;
   }
 
-  .bookmarked {
+  .content {
     &-img {
       flex: 1;
       min-height: 120px;
@@ -213,7 +214,7 @@ export const StyledListCard = styled.div`
     }
 
     &-body {
-      flex: 3;
+      flex: 5;
       margin: 0px 28px;
       
       &-title {
@@ -249,13 +250,47 @@ export const StyledListCard = styled.div`
         padding: 2px;
       }
     }
+  }
+  
+  .close-btn {
+    display: none;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 1rem;
+  }
+`;
 
-    &-close-button {
-      display: none;
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      font-size: 1rem;
+type SearchDropdownProps = {
+  background: string;
+}
+
+export const SearchDropdown: typeof AntdCard = styled(AntdCard)<CardProps & SearchDropdownProps>`
+  text-align: center;
+  
+  ul {
+    padding: 0;
+    margin-bottom: 0;
+    text-align: left;
+    list-style: none;
+    background: ${({background}) => background};
+  
+    li {
+      padding: 8px 24px;
+      background: ${({background}) => background};
+  
+      &:hover {
+        cursor: pointer;
+        filter: brightness(0.87);
+      }
     }
+  }
+
+  span {
+    padding: 8px 24px;
+  }
+
+  .ant-card-body {
+    padding: 16px 0px;
   }
 `;

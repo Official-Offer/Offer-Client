@@ -71,34 +71,36 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
         </Link>
       }
       children={
-        <div>
-          <BookmarkButton className="bookmark-btn" id={info?.id}/>
-          <Link href={`/student/jobs/${info?.id}`}>
-            <Meta
-              title={info?.title || ""}
-              description={
-                <div>
-                  <div className="date-posted">
-                    {
-                      info?.time_published === undefined ? 
-                        "Ngày không xác định" 
-                      : 
-                        `Đăng vào ${moment(info.time_published).format("D/M/YYYY")}`
-                    }
-                  </div>
-                  <h4>{ info?.company_data?.name || "Công ty trống" }</h4>
-                  <span>{ info?.job_type || "Not Specified Status"}{" | "}{ info?.location || "Unknown Location" }</span>
-                  <div className="avatar-info-mini">
+          info && (
+            <div>
+              <BookmarkButton className="bookmark-btn" id={info.id}/>
+              <Link href={`/student/jobs/${info.id}`}>
+                <Meta
+                  title={info.title || ""}
+                  description={
                     <div>
-                      {info?.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
+                      <div className="date-posted">
+                        {
+                          info?.time_published === undefined ? 
+                            "Ngày không xác định" 
+                          : 
+                            `Đăng vào ${moment(info.time_published).format("D/M/YYYY")}`
+                        }
+                      </div>
+                      <h4>{ info.company_data?.name || "Công ty trống" }</h4>
+                      <span>{ info.job_type || "Not Specified Status"}{" | "}{ info.location || "Unknown Location" }</span>
+                      <div className="avatar-info-mini">
+                        <div>
+                          {info.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
+                        </div>
+                        {(info.applicants || []).length === 0 ? "" : <h4>{(info.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
+                      </div>
                     </div>
-                    {(info?.applicants || []).length === 0 ? "" : <h4>{(info?.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
-                  </div>
-                </div>
-              }
-            />
-          </Link>
-        </div>
+                  }
+                />
+              </Link>
+            </div>
+          )
       }
       {...rest}
     />

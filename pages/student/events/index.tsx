@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { FilterNavbar } from "@components/navbar/FilterNavbar";
-import { JobCard } from "@components/cardsGrid/JobCard";
+import { EventCard } from "@components/card/EventCard";
 import { Row, Col } from "antd";
 import { JobDescription } from "@components/main/JobContent";
 import { useState } from "react";
@@ -10,21 +10,7 @@ const StudentEvents: NextPage = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   return (
     <div>
-      <FilterNavbar />
-      <div className="job-portal-fusion"></div>
-      <Row>
-        <Col span={7}>
-          <div className="job-portal-list">
-            <div className="job-portal-list-result">20k kết quả</div>
-            {jobsList.map((job, i) => (
-              <JobCard active={i===activeCardIndex} onClick={()=>setActiveCardIndex(i)}/>
-            ))}
-          </div>
-        </Col>
-        <Col span={17}>
-          <JobDescription />
-        </Col>
-      </Row>
+      {typeof EventCard}
     </div>
   );
 };
