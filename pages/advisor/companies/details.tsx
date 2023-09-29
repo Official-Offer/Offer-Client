@@ -11,7 +11,7 @@ import { JobPostForm } from "@components/forms/JobPostForm";
 import { postJob } from "@services/apiJob";
 
 //create a next page for the student home page, code below
-const PostJobs: NextPage = () => {
+const DetailedCompanies: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
@@ -34,25 +34,19 @@ const PostJobs: NextPage = () => {
         <JobPostForm
           onSubmit={(
             title: string,
-            // department: string,
-            company: string,
+            department: string,
             description: string,
-            // level: string,
-            // type: string,
-            // salary: number,
-            // end_date: Date,
-            // expected_no_appliants: number
+            salary: number,
+            end_date: Date,
+            expected_no_appliants: number
           ): void => {
             mutation.mutate({
               title,
-              // department,
-              company,
+              department,
               description,
-              // level,
-              // type
-              // salary,
-              // end_date,
-              // expected_no_appliants,
+              salary,
+              end_date,
+              expected_no_appliants,
             });
           }}
           isLoading={mutation.isLoading}
@@ -62,4 +56,4 @@ const PostJobs: NextPage = () => {
   );
 };
 
-export default PostJobs;
+export default DetailedCompanies;

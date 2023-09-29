@@ -1,29 +1,29 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { RecruiterSchoolColumns } from "@components/table/columnType";
+import { ApplicantColumns, JobColumns, RecruiterCompanyColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
 import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
-import { RecruiterSchoolDataType } from "@components/table/dataType";
+import { RecruiterCompanyDataType } from "@components/table/dataType";
 import router from "next/router";
-import { getRecruitersForSchool } from "@services/apiRecruiter";
+import { getRecruitersForCompany } from "@services/apiRecruiter";
 
-const Recruiters: NextPage = () => {
+const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<RecruiterSchoolDataType[]>([]);
-  const [dataset, setDataSet] = useState<RecruiterSchoolDataType[]>([]);
+  const [data, setData] = useState<RecruiterCompanyDataType[]>([]);
+  const [dataset, setDataSet] = useState<RecruiterCompanyDataType[]>([]);
 
-  const recruiterQuery = useQuery({
-    queryKey: ["recruiter"],
-    queryFn: getRecruitersForSchool,
+  const applicantQuery = useQuery({
+    queryKey: ["applicants"],
+    queryFn: getRecruitersForCompany,
     onSuccess: async (recruiters) => {
       setData(recruiters);
       setDataSet(recruiters);
 
       var s: string[] = [];
 
-      recruiters.forEach((ret) => {
-        s.push(ret.name);
+      recruiters.forEach((recruiter) => {
+        s.push(recruiter.name);
       });
 
       setSearchResults(s);
@@ -53,7 +53,7 @@ const Recruiters: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    setData(dataset.filter((item) => item.name === value));
   };
 
   const handleAddJob = () => {
@@ -66,17 +66,17 @@ const Recruiters: NextPage = () => {
       <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={RecruiterSchoolColumns}
+          columns={ApplicantColumns}
           handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"RecruiterJobs"}
-          isLoading={recruiterQuery.isLoading}
+          tableType={"Applicants"}
+          isLoading={applicantQuery.isLoading}
         />
       </div>
     </div>
   );
 };
 
-export default Recruiters;
+export default Applicants;

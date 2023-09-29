@@ -16,11 +16,6 @@ import {
 } from "./dataType";
 import { MoreOutlined } from "@ant-design/icons";
 
-const JobsActionItems = [
-  { key: "1", label: "Chỉnh sửa công việc" },
-  { key: "2", label: "Xoá công việc" },
-];
-
 const UnapprovedJobsActionItems = [
   { key: "1", label: "Duyệt công việc" },
   { key: "2", label: "Xem thêm" },
@@ -111,15 +106,15 @@ export const JobColumns: ColumnsType<JobDataType> = [
     key: "approved_schools",
   },
   {
-    title: "Số đơn",
-    dataIndex: "no_applicants",
-    key: "no_applicants",
+    title: "Ứng viên",
+    dataIndex: "applicants",
+    key: "applicants",
   },
-  {
-    title: "Số người cần tuyển",
-    dataIndex: "expected",
-    key: "expected",
-  },
+  // {
+  //   title: "Số người cần tuyển",
+  //   dataIndex: "expected",
+  //   key: "expected",
+  // },
   // {
   //   title: "Tình trạng",
   //   key: "tags",
@@ -138,20 +133,20 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //     );
   //   },
   // },
-  {
-    title: "Hành động",
-    key: "action",
-    render: (_, record) => (
-      // {record.name}
-      <Space size="middle">
-        <Dropdown menu={{ items: JobsActionItems }}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
+  // {
+  //   title: "Hành động",
+  //   key: "action",
+  //   render: (_, record) => (
+  //     // {record.name}
+  //     <Space size="middle">
+  //       <Dropdown menu={{ items: JobsActionItems }}>
+  //         <a>
+  //           <MoreOutlined />
+  //         </a>
+  //       </Dropdown>
+  //     </Space>
+  //   ),
+  // },
 ];
 
 export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
@@ -283,38 +278,38 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     key: "school",
   },
   {
-    title: "Ngành học",
-    dataIndex: "major",
-    key: "major",
+    title: "Công việc nộp",
+    dataIndex: "job",
+    key: "job",
   },
   {
-    title: "Năm tốt nghiệp",
-    dataIndex: "expected_graduation",
-    key: "expected_graduation",
+    title: "CV",
+    dataIndex: "resume",
+    key: "resume",
   },
   {
     title: "Độ phù hợp",
     dataIndex: "compatibility",
     key: "compatibility",
   },
-  {
-    title: "Giai đoạn",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tag }) => {
-      let color =
-        tag === "Chưa nộp"
-          ? "volcano"
-          : tag === "Đã nộp"
-          ? "blue"
-          : "green";
-      return (
-        <Tag color={color} key={tag}>
-          {tag.toUpperCase()}
-        </Tag>
-      );
-    },
-  },
+  // {
+  //   title: "Giai đoạn",
+  //   key: "tags",
+  //   dataIndex: "tags",
+  //   render: (_, { tag }) => {
+  //     let color =
+  //       tag === "Chưa nộp"
+  //         ? "volcano"
+  //         : tag === "Đã nộp"
+  //         ? "blue"
+  //         : "green";
+  //     return (
+  //       <Tag color={color} key={tag}>
+  //         {tag.toUpperCase()}
+  //       </Tag>
+  //     );
+  //   },
+  // },
   {
     title: "Action",
     key: "action",

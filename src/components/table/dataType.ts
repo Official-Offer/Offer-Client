@@ -1,12 +1,13 @@
 export interface JobDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   posted_date: string | null;
   title: string | null;
-  unapproved_schools: string | null;
-  approved_schools: string | null;
-  no_applicants: number | 0;
-  expected: number | 0;
+  unapproved_schools: string | "";
+  approved_schools: string | "";
+  applicants: number | 0;
+  // no_applicants: number | 0;
+  // expected: number | 0;
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
