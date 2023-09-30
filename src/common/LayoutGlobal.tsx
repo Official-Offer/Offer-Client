@@ -4,9 +4,6 @@ import dynamic from "next/dynamic";
 import "antd/dist/antd.css";
 
 export default function LayoutGlobal(props: any): ReactElement {
-  const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar)
-  ) as any;
   const Nav = dynamic(() =>
     import("@components").then((mod: any) => mod.Nav)
   ) as any;

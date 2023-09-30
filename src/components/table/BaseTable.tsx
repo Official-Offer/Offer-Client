@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
 import FilterType from "@components/filter/TypeFilter";
 import { FilterSearch } from "@components/search/FilterSearch";
-import { TableRowSelection } from "antd/lib/table/interface";
-import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
-import { SubmitButton } from "@components/button/SubmitButton";
+// import { TableRowSelection } from "antd/lib/table/interface";
+// import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
+// import { SubmitButton } from "@components/button/SubmitButton";
 import { IconButton } from "@styles/styled-components/styledButton";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -15,49 +15,51 @@ export const BaseTable: React.FC = ({
   handleFilterType,
   handleFilterSearch,
   handleAdd,
-  dataType,
-  filterTypes,
+  placeholder,
+  // dataType,
+  // filterTypes,
   isLoading,
-  placeholders,
-}: any) => {
+}: // placeholders,
+any) => {
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
-  const rowSelection: TableRowSelection<ApplicantDataType> = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows);
-    },
-    onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows);
-    },
-  };
-  console.log(searchResults)
+  // const rowSelection: TableRowSelection<ApplicantDataType> = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     console.log(
+  //       `selectedRowKeys: ${selectedRowKeys}`,
+  //       "selectedRows: ",
+  //       selectedRows
+  //     );
+  //   },
+  //   onSelect: (record, selected, selectedRows) => {
+  //     console.log(record, selected, selectedRows);
+  //   },
+  //   onSelectAll: (selected, selectedRows, changeRows) => {
+  //     console.log(selected, selectedRows, changeRows);
+  //   },
+  // };
+  // console.log(searchResults)
   return (
     <div>
       <div className="table-functions">
         <div className="table-functions-search">
-          {placeholders?.map((value:string, index:number) => (
+          {handleFilterSearch && (
             <FilterSearch
-              searchResults={searchResults[index+1]}
-              placeholder={value}
+              placeholder={placeholder}
               onSearch={(value: any) => {
-                handleFilterSearch(value, filterTypes[index]);
+                handleFilterSearch(value);
               }}
-              // options={dataset.map((item) => item.name)}
+              searchResults={searchResults}
             />
-          ))}
+          )}
         </div>
         <div className="table-functions-type">
-          <FilterType
-            onSearch={(_x: any, values: any) => {
-              handleFilterType(values);
-            }}
-          />
+          {handleFilterType && (
+            <FilterType
+              onSearch={(_x: any, values: any) => {
+                handleFilterType(values);
+              }}
+            />
+          )}
         </div>
         {handleAdd && (
           <IconButton
@@ -74,7 +76,7 @@ export const BaseTable: React.FC = ({
         )}
       </div>
       <Table
-        rowSelection={{ ...rowSelection }}
+        // rowSelection={{ ...rowSelection }}
         columns={columns}
         dataSource={dataset}
         loading={isLoading}

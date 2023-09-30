@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { JobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
+import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
 import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
@@ -10,10 +10,10 @@ import router from "next/router";
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
+  // data to be filtered/changed
   const [data, setData] = useState<JobDataType[]>([]);
+  // original data that remains unchanged
   const [dataset, setDataSet] = useState<JobDataType[]>([]);
-  const [searchChange, setSearchChange] = useState(false);
-  // DataType[]
   const jobQuery = useQuery({
     queryKey: ["jobs"],
     queryFn: getJobsForRecruiter,
@@ -21,40 +21,28 @@ const Jobs: NextPage = () => {
       setData(jobs);
       setDataSet(jobs);
 
-      var s: string[] = [];
+      // var s: string[] = [];
 
-      jobs.forEach((job) => {
-        s.push(job.title);
-      });
-
-      setSearchResults(s);
+      // jobs.forEach((job) => {
+      //   s.push(job.title);
+      // });
+      console.log(jobs);
+      setSearchResults(jobs.map(job=>job.title));
     },
     onError: () => {},
   });
 
-  const handleFilterType = (values: string[]) => {
-    console.log(values);
-    if (values.length == 0) {
-      setData(dataset);
-      return;
-    }
-    setData(
-      dataset.filter((item) => {
-        if (!item.tag || values.length == 0) return false;
-        for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.tag) return true;
-        }
-        return false;
-      })
-    );
-  };
-
+  //reimplemented search
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    const filteredData = dataset.filter(item =>
+      item.title?.includes(value)
+    );
+    setData(filteredData);
+    // setData(dataset.filter((item) => item.title === value));
   };
 
   const handleAddJob = () => {
@@ -68,7 +56,8 @@ const Jobs: NextPage = () => {
         <BaseTable
           dataset={data}
           columns={JobColumns}
-          handleFilterType={handleFilterType}
+          placeholder={"Tìm công việc"}
+          // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}

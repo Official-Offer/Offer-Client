@@ -32,13 +32,13 @@ export const getUnapprovedJobs = async () => {
     // "Chưa tạo danh sách",
     "VinAI",
     "FB",
-    "Amz"
+    "Amz",
   ];
   const recruiters = [
     // "Chưa tạo danh sách",
     "thuan cho",
     "bao deng",
-    "ktwo"
+    "ktwo",
   ];
   // Fetch company name for each job
   var res = [];
@@ -48,8 +48,8 @@ export const getUnapprovedJobs = async () => {
       ID: job.id,
       posted_date: moment(job.timestamp).format("D/M/YYYY"),
       title: job.title || "Không tìm thấy",
-      company: companies[Math.floor(Math.random()*companies.length)],
-      recruiter: recruiters[Math.floor(Math.random()*recruiters.length)],
+      company: companies[Math.floor(Math.random() * companies.length)],
+      recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
       expected: 5,
       compatibility: "70%",
       // tag: tags[Math.floor(Math.random()*tags.length)],
@@ -59,31 +59,61 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
-  const response = await request.get(`/jobs/`);
-  const jobList = response.data;
-  const schools = [
-    "Vin Uni",
-    "UMass",
-    "MIT"
+  // const response = await request.get(`/jobs/`);
+  // const jobList = response.data;
+  const jobList = [
+    {
+      timestamp: "",
+      title: "SWE Intern",
+    },
+    {
+      timestamp: "",
+      title: "Sales Intern",
+    },
   ];
-  const approvedSchools = [
-    "Amherst",
-    "Harvard",
-    "Bach Khoa"
-  ];
-  var res = [];
-  for (const job of jobList) {
-    res.push({
-      key: job.id,
-      ID: job.id,
-      posted_date: moment(job.timestamp).format("D/M/YYYY"),
-      title: job.title || "Không tìm thấy",
-      unapproved_schools: schools[Math.floor(Math.random()*schools.length)],
-      approved_schools: approvedSchools[Math.floor(Math.random()*approvedSchools.length)],
-      no_applicants: 20,
-      expected: 5,
-    });
-  }
+  const unapprovedSchools = ["Vin Uni", "UMass", "MIT"];
+  const unapprovedSchoolString = unapprovedSchools.reduce((acc, cur, index) => {
+    if (index < 2) {
+      if (index == unapprovedSchools.length-1){
+        return acc + cur;
+      }
+      return acc + cur + ", ";
+    } else if (index == 2) {
+      if (index == unapprovedSchools.length-1){
+        return acc + cur;
+      }
+      return acc + cur + "..." + "(" + unapprovedSchools.length + ") ";
+    } 
+    else {
+      return acc + "";
+    }
+  }, "");
+  const approvedSchools = ["Amherst", "Harvard", "Bach Khoa", "NEU", "FTU", "UMass"];
+  const approvedSchoolString = approvedSchools.reduce((acc, cur, index) => {
+    if (index < 2) {
+      if (index == approvedSchools.length-1){
+        return acc + cur;
+      }
+      return acc + cur + ", ";
+    } 
+    else if (index == 2) {
+      if (index == approvedSchools.length-1){
+        return acc + cur;
+      }
+      return acc + cur + "..." + "(" + approvedSchools.length + ") ";
+    } else {
+      return acc + "";
+    }
+  }, "");
+  const res = jobList.map((job: any) => ({
+    // key: job.id,
+    // ID: job.id,
+    posted_date: moment(job.timestamp).format("D/M/YYYY"),
+    title: job.title || "Không tìm thấy",
+    unapproved_schools: unapprovedSchoolString,
+    approved_schools: approvedSchoolString,
+    applicants: 20,
+  }));
   return res;
 };
 
@@ -94,13 +124,13 @@ export const getApprovedJobs = async () => {
     // "Chưa tạo danh sách",
     "VinAI",
     "FB",
-    "Amz"
+    "Amz",
   ];
   const recruiters = [
     // "Chưa tạo danh sách",
     "thuan cho",
     "bao deng",
-    "ktwo"
+    "ktwo",
   ];
   // Fetch company name for each job
   var res = [];
@@ -110,11 +140,11 @@ export const getApprovedJobs = async () => {
       ID: job.id,
       posted_date: moment(job.timestamp).format("D/M/YYYY"),
       title: job.title || "Không tìm thấy",
-      company: companies[Math.floor(Math.random()*companies.length)],
-      recruiter: recruiters[Math.floor(Math.random()*recruiters.length)],
+      company: companies[Math.floor(Math.random() * companies.length)],
+      recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
       applicants: "2/100",
       expected: 5,
-      accepted: "1/2"
+      accepted: "1/2",
       // tag: tags[Math.floor(Math.random()*tags.length)],
     });
   }
@@ -174,8 +204,7 @@ export const unbookmarkJob = async (id: number) => {
 };
 
 export const deleteJob = async (id: any) => {
-  console.log ("job deleted");
+  console.log("job deleted");
   const response = await request.delete(`/jobs/`, id);
   return response.data;
 };
-

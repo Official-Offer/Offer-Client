@@ -138,7 +138,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         mode="horizontal"
         className="navbar right-menu"
       >
-        <Menu.Item>
+        {/* <Menu.Item>
           <Button
             type="text"
             className="icon-btn"
@@ -224,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           <Menu.Item>
             <Button type="text" className="icon-btn" icon={<BellOutlined />} />
           </Menu.Item>
-        </Dropdown>
+        </Dropdown> */}
         <Dropdown
           trigger="click"
           onClick={() => console.log(router.pathname)}
@@ -232,11 +232,11 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           overlay={
             <Menu>
               <Menu.Item>
-                <Link href={`/${path}/profile`}>Hồ Sơ Người Dùng</Link>
+                <Link href={`/${path}/profile`}>Hồ Sơ</Link>
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
               </Menu.Item>
@@ -249,7 +249,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 <div
                   onClick={() => {
