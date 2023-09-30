@@ -68,7 +68,7 @@ const StudentJobs: NextPage = () => {
     <div>
       <FilterNavbar filters={jobFilterArr}/>
       <div className="job-portal split-layout no-padding">
-        <div className="split-layout-main main-sm">
+        <div className="split-layout-item flex-sm no-padding">
           <ul className="job-portal-list">
             <li className="job-portal-list-result">
               {
@@ -97,7 +97,7 @@ const StudentJobs: NextPage = () => {
             }
           </ul>
         </div>
-        <div className="split-layout-main main-xl">
+        <div className="split-layout-item flex-xl no-padding">
           <JobContent
             isLoading={jobListQuery.isLoading} 
             jobData={jobList?.[activeCardIndex]}

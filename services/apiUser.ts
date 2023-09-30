@@ -30,3 +30,8 @@ export const updateUser = async (body: any) => {
   const response = await request.delete(`/accounts/me/`, body);
   return response.data;
 }
+
+export const changePassword = async (body: Record<string, string>) => {
+  const response = await request.put(`/accounts/change-password/`, body);
+  return response.data;
+}

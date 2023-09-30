@@ -88,7 +88,7 @@ const BookmarkedJobs: NextPage = () => {
           </StyledMenuButton>
         </AntdCard>
       </section>
-      <section className="split-layout-main main-xl">
+      <section className="split-layout-item flex-xl">
         <AntdCard
           className="main-panel-card"
           loading={bookmarkedListQuery.isLoading || bookmarkedListQuery.isRefetching || unbookmarkJobMutation.isLoading}
