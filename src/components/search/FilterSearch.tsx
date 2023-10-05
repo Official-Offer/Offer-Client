@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Input, Select } from "antd";
 import React from "react";
 
 interface ISearch {
@@ -14,7 +14,7 @@ export const FilterSearch: React.FC = ({
   searchResults,
 }: ISearch) => {
   return (
-    <Select
+    <Input.Search
       className="filter-name"
       showSearch
       placeholder={placeholder}

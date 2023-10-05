@@ -45,8 +45,8 @@ any) => {
           {handleFilterSearch && (
             <FilterSearch
               placeholder={placeholder}
-              onSearch={(value: any) => {
-                handleFilterSearch(value);
+              onSearch={(event: any) => {
+                handleFilterSearch(event.target.value);
               }}
               searchResults={searchResults}
             />

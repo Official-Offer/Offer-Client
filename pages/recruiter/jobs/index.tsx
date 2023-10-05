@@ -20,12 +20,6 @@ const Jobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-
-      // var s: string[] = [];
-
-      // jobs.forEach((job) => {
-      //   s.push(job.title);
-      // });
       console.log(jobs);
       setSearchResults(jobs.map(job=>job.title));
     },
@@ -39,7 +33,7 @@ const Jobs: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(item =>
-      item.title?.includes(value)
+      item.title?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
     // setData(dataset.filter((item) => item.title === value));
