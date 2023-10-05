@@ -19,8 +19,6 @@ const PostJobs: NextPage = () => {
   const mutation = useMutation({
     mutationFn: postJob,
     onSuccess: async (data) => {
-      // Invalidate and refetch
-      // router.reload();
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
