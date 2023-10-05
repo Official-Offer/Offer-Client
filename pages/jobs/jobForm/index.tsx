@@ -25,8 +25,6 @@ const PostJobs: NextPage = () => {
     },
   });
 
-  // console.log(studentDetails);
-
   return (
     <div className="recruiter-job-post">
       <h1>Tạo công việc mới</h1>
@@ -34,25 +32,13 @@ const PostJobs: NextPage = () => {
         <JobPostForm
           onSubmit={(
             title: string,
-            // department: string,
             company: string,
             description: string,
-            // level: string,
-            // type: string,
-            // salary: number,
-            // end_date: Date,
-            // expected_no_appliants: number
           ): void => {
             mutation.mutate({
               title,
-              // department,
               company,
               description,
-              // level,
-              // type
-              // salary,
-              // end_date,
-              // expected_no_appliants,
             });
           }}
           isLoading={mutation.isLoading}

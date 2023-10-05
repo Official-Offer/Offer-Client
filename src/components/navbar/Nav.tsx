@@ -58,7 +58,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   console.log(router.pathname);
 
-  if (isRecruiter || isAdvisor) {
+  // if (isRecruiter || isAdvisor) {
     return (
       <Layout>
         <Navbar
@@ -84,16 +84,16 @@ export const Nav: React.FC = (props: any): ReactElement => {
         </Layout>
       </Layout>
     );
-  }
-  return (
-    <>
-      <Navbar
-        searchBarHidden={
-          router.pathname.includes("/student/jobs/[id]") ||
-          router.pathname.includes("/student/events/[id]")
-        }
-      />
-      <div>{props.children}</div>
-    </>
-  );
+  // }
+  // return (
+  //   <>
+  //     <Navbar
+  //       searchBarHidden={
+  //         router.pathname.includes("/student/jobs/[id]") ||
+  //         router.pathname.includes("/student/events/[id]")
+  //       }
+  //     />
+  //     <div>{props.children}</div>
+  //   </>
+  // );
 };
