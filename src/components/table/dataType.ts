@@ -52,9 +52,10 @@ export interface StudentDataType {
   ID: string | null;
   name: string | null;
   major: string | null;
+  resume: string | null;
   expected_graduation: string | null;
   jobs_applied: number | null;
-  jobs_accepted: number | null;
+  // jobs_accepted: number | null;
   // tag: string | null;
 }
 

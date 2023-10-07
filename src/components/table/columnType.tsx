@@ -110,43 +110,6 @@ export const JobColumns: ColumnsType<JobDataType> = [
     dataIndex: "applicants",
     key: "applicants",
   },
-  // {
-  //   title: "Số người cần tuyển",
-  //   dataIndex: "expected",
-  //   key: "expected",
-  // },
-  // {
-  //   title: "Tình trạng",
-  //   key: "tags",
-  //   dataIndex: "tags",
-  //   render: (_, { tag }) => {
-  //     let color =
-  //       tag === "Chưa tạo danh sách"
-  //         ? "red"
-  //         : tag === "Chưa tuyển"
-  //         ? "volcano"
-  //         : "green";
-  //     return (
-  //       <Tag color={color} key={tag}>
-  //         {tag.toUpperCase()}
-  //       </Tag>
-  //     );
-  //   },
-  // },
-  // {
-  //   title: "Hành động",
-  //   key: "action",
-  //   render: (_, record) => (
-  //     // {record.name}
-  //     <Space size="middle">
-  //       <Dropdown menu={{ items: JobsActionItems }}>
-  //         <a>
-  //           <MoreOutlined />
-  //         </a>
-  //       </Dropdown>
-  //     </Space>
-  //   ),
-  // },
 ];
 
 export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
@@ -343,6 +306,11 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     key: "major",
   },
   {
+    title: "CV",
+    dataIndex: "resume",
+    key: "resume"
+  },
+  {
     title: "Năm tốt nghiệp",
     dataIndex: "expected_graduation",
     key: "expected_graduation",
@@ -352,24 +320,24 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     dataIndex: "jobs_applied",
     key: "jobs_applied",
   },
-  {
-    title: "Việc đã được nhận",
-    dataIndex: "jobs_accepted",
-    key: "jobs_accepted",
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Dropdown menu={{ items: StudentActionItems }}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
+  // {
+  //   title: "Việc đã được nhận",
+  //   dataIndex: "jobs_accepted",
+  //   key: "jobs_accepted",
+  // },
+  // {
+  //   title: "Action",
+  //   key: "action",
+  //   render: (_, record) => (
+  //     <Space size="middle">
+  //       <Dropdown menu={{ items: StudentActionItems }}>
+  //         <a>
+  //           <MoreOutlined />
+  //         </a>
+  //       </Dropdown>
+  //     </Space>
+  //   ),
+  // },
 ];
 
 export const AdvisorCompanyColumns: ColumnsType<AdvisorCompanyDataType> = [

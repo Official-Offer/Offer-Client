@@ -32,3 +32,4 @@ export const getSchoolsForRecruiter = async (id: number) => {
     compatibility: "60%",
   }));
 }
+
