@@ -19,10 +19,10 @@ const Schools: NextPage = () => {
     // queryKey: ["schools"],
     queryFn: getSchoolsForRecruiter,
     onSuccess: async (schools) => {
-      console.log(schools)
+      console.log(schools);
       setData(schools);
       setDataSet(schools);
-      setSearchResults(schools.map(school=>school.name));
+      setSearchResults(schools.map((school) => school.name));
     },
     onError: () => {},
   });
@@ -49,7 +49,10 @@ const Schools: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.name === value));
+    const filteredData = dataset.filter((item) =>
+      item.name?.toLowerCase().includes(value.toLowerCase())
+    );
+    setData(filteredData);
   };
 
   return (
