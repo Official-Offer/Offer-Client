@@ -9,7 +9,6 @@ import { SubmitButton } from "@components/button/SubmitButton";
 
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = ["Apple", "Pear", "Orange"];
 const schools = [
   "Bach Khoa",
   "Ngoai Thuong",

@@ -41,6 +41,7 @@ const Applicants: NextPage = () => {
         <BaseTable
           dataset={data}
           columns={ApplicantColumns}
+          placeholder={"Tìm ứng viên"}
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}

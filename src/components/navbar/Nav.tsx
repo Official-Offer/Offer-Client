@@ -52,7 +52,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (!(index == 1 && role =='advisor') && index != 2) router.push(`/${role}${path[index]}`);
+      // if (!(index == 1 && role =='advisor') && index != 2) 
+      router.push(`/${role}${path[index]}`);
     }
   }));
 

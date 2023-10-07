@@ -6,6 +6,31 @@
     padding: 20px;
   }
 }
+.recruiter-schools {
+  margin: 20px;
+  &-search {
+    margin-top: 20px;
+  }
+  &-grid {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  &-card{
+    width: 18em;
+    display: inline-block;
+    &-info {
+      // display: inline-block;
+      margin-top: 20px;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-wrap: wrap;
+
+  }
+}
 .recruiter-dashboard {
   padding: 20px;
   &-header {

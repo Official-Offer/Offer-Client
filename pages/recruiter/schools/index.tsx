@@ -5,6 +5,9 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import { getSchoolsForRecruiter } from "@services/apiSchool";
 import { SchoolDataType } from "@components/table/dataType";
+import { Avatar, Card } from "antd";
+import { FilterSearch } from "@components/search/FilterSearch";
+import { AntDesignOutlined } from "@ant-design/icons";
 
 //create a next page for the student home page, code below
 const Schools: NextPage = () => {
@@ -30,22 +33,21 @@ const Schools: NextPage = () => {
     onError: () => {},
   });
 
-
-  const handleFilterType = (values: string[]) => {
-    if (values.length == 0) {
-      setData(dataset);
-      return;
-    }
-    setData(
-      dataset.filter((item) => {
-        if (!item.tag || values.length == 0) return false;
-        for (let i = 0; i < values.length; i++) {
-          if (values[i]?.label === item.name) return true;
-        }
-        return false;
-      })
-    );
-  };
+  // const handleFilterType = (values: string[]) => {
+  //   if (values.length == 0) {
+  //     setData(dataset);
+  //     return;
+  //   }
+  //   setData(
+  //     dataset.filter((item) => {
+  //       if (!item.tag || values.length == 0) return false;
+  //       for (let i = 0; i < values.length; i++) {
+  //         if (values[i]?.label === item.name) return true;
+  //       }
+  //       return false;
+  //     })
+  //   );
+  // };
 
   const handleFilterSearch = (value: string) => {
     console.log(value);
@@ -56,20 +58,39 @@ const Schools: NextPage = () => {
     setData(dataset.filter((item) => item.name === value));
   };
 
+  const schools = [
+    { name: "Bach Khoa", desc: "trường đại học kỹ thuật" },
+    { name: "Ngoai Thuong", desc: "trường đại học kỹ thuật" },
+    { name: "Kinh Te Quoc Dan", desc: "trường đại học kỹ thuật" },
+    { name: "UMass", desc: "trường đại học kỹ thuật" },
+    { name: "HSGS", desc: "trường đại học kỹ thuật" },
+  ];
 
   return (
-    <div className="applicant">
-      <h1 className="applicant-title">Danh sách trường</h1>
-      <div className="applicant-table">
-        <BaseTable
-          dataset={data}
-          columns={schoolColumns}
-          handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearch}
+    <div className="recruiter-schools">
+      <h2>Trường</h2>
+      <div className="recruiter-schools-search">
+        <FilterSearch
+          placeholder={"Tìm trường"}
+          onSearch={(event: any) => {
+            handleFilterSearch(event.target.value);
+          }}
           searchResults={searchResults}
-          tableType={"unapprovedJob"}
-          isLoading={schoolQuery.isLoading}
         />
+      </div>
+      <div className="recruiter-schools-grid">
+        {schools.map((school) => (
+          <Card className="recruiter-schools-card">
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+              icon={<AntDesignOutlined />}
+            />
+            <div className="recruiter-schools-card-info">
+              <b>{school.name}</b>
+              <p>{school.desc}</p>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );

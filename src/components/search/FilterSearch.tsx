@@ -8,21 +8,22 @@ interface ISearch {
   // options: any;
 }
 
-export const FilterSearch: React.FC = ({
+export const FilterSearch: React.FC<ISearch> = ({
   placeholder,
   onSearch,
   searchResults,
 }: ISearch) => {
   return (
     <Input.Search
-      className="filter-name"
+      className="filter-search"
+      enterButton
+      size="large"
       showSearch
       placeholder={placeholder}
       optionFilterProp="children"
       onChange={onSearch}
       allowClear
-      // onSearch={handleSearch}
-      filterOption={(input, option) =>
+      filterOption={(input: string, option: { label: any; }) =>
         (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
       }
       options={
