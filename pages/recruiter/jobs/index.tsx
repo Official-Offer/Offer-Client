@@ -35,7 +35,6 @@ const Jobs: NextPage = () => {
       item.title?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
-    // setData(dataset.filter((item) => item.title === value));
   };
 
   const handleAddJob = () => {

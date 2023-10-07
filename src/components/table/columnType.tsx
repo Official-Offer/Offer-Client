@@ -310,19 +310,19 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
   //     );
   //   },
   // },
-  {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <Dropdown menu={{ items: ApplicantActionItems }}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
+  // {
+  //   title: "Action",
+  //   key: "action",
+  //   render: (_, record) => (
+  //     <Space size="middle">
+  //       <Dropdown menu={{ items: ApplicantActionItems }}>
+  //         <a>
+  //           <MoreOutlined />
+  //         </a>
+  //       </Dropdown>
+  //     </Space>
+  //   ),
+  // },
 ];
 
 export const StudentColumns: ColumnsType<StudentDataType> = [

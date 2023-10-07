@@ -37,14 +37,14 @@ export interface ApprovedJobDataType {
 }
 
 export interface ApplicantDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   name: string | null;
   school: string | null;
-  major: string | null;
-  expected_graduation: string | null;
+  job: string | null;
+  resume: string | null;
   compatibility: string | null; //percentage
-  tag: string | null; //Chua nop / Pending / Da nhan
+  // tag: string | null; //Chua nop / Pending / Da nhan
 }
 
 export interface StudentDataType {

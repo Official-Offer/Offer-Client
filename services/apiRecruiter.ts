@@ -52,8 +52,41 @@ export const getRecruitersForCompany = async () => {
       role: "chief",
       email_verified: true,
       role_verified: true,
-      jobs_posted: 15
+      jobs_posted: 15,
     });
   }
   return res;
+};
+
+export const getApplicantsForRecruiter = async () => {
+  const applicants = [
+    {
+      name: "Kien",
+      school: "Umass",
+      job: "Ke Toan",
+      resume: "resume_link",
+      compatibility: "90%",
+    },
+    {
+      name: "Thuan",
+      school: "AT&T",
+      job: "Dev",
+      resume: "resume_link",
+      compatibility: "10%",
+    },
+    {
+      name: "Bao Dang",
+      school: "Umass",
+      job: "FE Dev",
+      resume: "resume_link",
+      compatibility: "40%",
+    },
+  ];
+  return applicants.map((app) => ({
+    name: app.name,
+    school: app.school,
+    job: app.job,
+    resume: app.resume,
+    compatibility: app.compatibility,
+  }));
 };
