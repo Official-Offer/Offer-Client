@@ -16,8 +16,6 @@ export const BaseTable: React.FC = ({
   handleFilterSearch,
   handleAdd,
   placeholder,
-  // dataType,
-  // filterTypes,
   isLoading,
 }: // placeholders,
 any) => {

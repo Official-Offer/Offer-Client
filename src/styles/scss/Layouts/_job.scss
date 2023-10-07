@@ -45,3 +45,18 @@
   margin-left: auto;
   float: right;
 }
+
+.job-school {
+  margin: 20px;
+  height: 1000px;
+  .ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    // display: block;
+    // margin-right: 0;
+  }
+}
+
+.job-school-checkbox {
+  height: 20px;
+}

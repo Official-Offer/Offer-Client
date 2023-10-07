@@ -67,7 +67,7 @@ const JobDescription: NextPage = (comp) => {
             Chỉnh sửa <EditOutlined />
           </p>
         </div>
-        <h4>Dang vao 2 ngay truoc</h4>
+        <h4>Đăng vào 2 ngày trước</h4>
         <p>{state.company || `Samsung`}</p>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
@@ -154,7 +154,7 @@ const JobDescription: NextPage = (comp) => {
           </div>
         </div>
         <div>
-          <h2>Quyen loi</h2>
+          <h2>Quyền lợi</h2>
           {editing ? (
             <input
               type="text"
@@ -169,7 +169,7 @@ const JobDescription: NextPage = (comp) => {
           )}
         </div>
         <div>
-          <h2>Yeu cau</h2>
+          <h2>Yêu cầu</h2>
           {editing ? (
             <input
               type="text"
@@ -184,8 +184,9 @@ const JobDescription: NextPage = (comp) => {
           )}
         </div>
         <div>
-          <h2>Mo ta</h2>
-          {editing ? (
+          <h2>Mô tả</h2>
+          <p>{jd}</p>
+          {/* {editing ? (
             <input
               type="text"
               className="job-desc-input"
@@ -196,7 +197,7 @@ const JobDescription: NextPage = (comp) => {
             />
           ) : (
             <p>{jd}</p>
-          )}
+          )} */}
         </div>
       </div>
       <div className="job-desc-button">

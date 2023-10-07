@@ -20,7 +20,6 @@ const Jobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-      console.log(jobs);
       setSearchResults(jobs.map(job=>job.title));
     },
     onError: () => {},
@@ -40,7 +39,7 @@ const Jobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/recruiter/jobs/jobForm');
+    router.push('/jobs/jobForm');
   }
 
   return (
