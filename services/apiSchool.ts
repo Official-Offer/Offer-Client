@@ -23,7 +23,7 @@ export const getSchoolsForRecruiter = async (id: number) => {
     key: "1",
     ID: "1",
     name: school.name,
-    desc: school.desc,
+    description: school.desc,
     advisors: 200,
     no_students: 10000,
     students_applicants: 2000,

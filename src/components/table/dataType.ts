@@ -107,6 +107,7 @@ export interface SchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
+  description: string | "";
   advisors: number | 0;
   no_students: number | null;
   students_applicants: number | 0; // in this company
@@ -120,6 +121,7 @@ export interface CompanyDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
+  description: string | "";
   //Should be changed to images + numbers
   recruiters: number | 0;
   unapproved_jobs: number | 0; // in this school

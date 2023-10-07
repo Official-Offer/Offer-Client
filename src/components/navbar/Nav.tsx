@@ -52,39 +52,61 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      // if (!(index == 1 && role =='advisor') && index != 2) 
-      router.push(`/${role}${path[index]}`);
-    }
+      if (!(index == 0 && role == "advisor"))
+        router.push(`/${role}${path[index]}`);
+    },
+    children:
+      index == 0 && role == "advisor"
+        ? [
+            {
+              label: "Chưa duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/unapproved`);
+              },
+              key: `/${role}${path[index]}/unapproved`,
+            },
+            {
+              label: "Đã duyệt",
+              icon: React.createElement(icon),
+              onClick: (e) => {
+                router.push(`/${role}${path[index]}/approved`);
+              },
+              key: `/${role}${path[index]}/approved`,
+            },
+          ]
+        : undefined,
   }));
 
   console.log(router.pathname);
 
   // if (isRecruiter || isAdvisor) {
-    return (
+  return (
+    <Layout>
+      <Navbar
+        searchBarHidden={
+          router.pathname.includes("/student/jobs/[id]") ||
+          router.pathname.includes("/student/events/[id]")
+        }
+      />
       <Layout>
-        <Navbar
-          searchBarHidden={
-            router.pathname.includes("/student/jobs/[id]") ||
-            router.pathname.includes("/student/events/[id]")
-          }
-        />
-        <Layout>
-          <Sider className="navbar-sider">
-            <Menu
-              defaultSelectedKeys={[`/${role}`]}
-              selectedKeys={[router.pathname]}
-              mode="inline"
-              inlineCollapsed={collapsed}
-              items={items}
-            />
-            <div className="navbar-sider-logo">Logo</div>
-          </Sider>
-          <Layout className="navbar-with-sider">
-            <div>{props.children}</div>
-          </Layout>
+        <Sider className="navbar-sider">
+          <Menu
+            defaultSelectedKeys={[`/${role}`]}
+            defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
+            selectedKeys={[router.pathname]}
+            mode="inline"
+            inlineCollapsed={collapsed}
+            items={items}
+          />
+          <div className="navbar-sider-logo">Logo</div>
+        </Sider>
+        <Layout className="navbar-with-sider">
+          <div>{props.children}</div>
         </Layout>
       </Layout>
-    );
+    </Layout>
+  );
   // }
   // return (
   //   <>

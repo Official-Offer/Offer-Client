@@ -50,7 +50,7 @@ any) => {
             />
           )}
         </div>
-        <div className="table-functions-type">
+        {/* <div className="table-functions-type">
           {handleFilterType && (
             <FilterType
               onSearch={(_x: any, values: any) => {
@@ -58,7 +58,7 @@ any) => {
               }}
             />
           )}
-        </div>
+        </div> */}
         {handleAdd && (
           <IconButton
             round

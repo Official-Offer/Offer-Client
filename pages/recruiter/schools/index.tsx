@@ -76,7 +76,7 @@ const Schools: NextPage = () => {
             />
             <div className="recruiter-schools-card-info">
               <b>{school.name}</b>
-              <p>{school.desc}</p>
+              <p>{school.description}</p>
             </div>
           </Card>
         ))}
