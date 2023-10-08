@@ -7,6 +7,8 @@ import { SubmitButton } from "@components/button/SubmitButton";
 import { EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import { LoadingLine } from "@components/loading/LoadingLine";
+import { Skeleton } from "antd";
 
 const JobDescription: NextPage = (comp) => {
   const state = useSelector((state: RootState) => state.jobs);
@@ -52,10 +54,9 @@ const JobDescription: NextPage = (comp) => {
       //   setJob(res);
     },
     onError: () => {},
+    reloadOnWindowFocus: false,
   });
-  return jobQuery.isLoading ? (
-    <div>Loading</div>
-  ) : (
+  return (
     <div className="job-desc">
       <div className="job-desc-nav">
         <h1>Xem trước</h1>
@@ -71,7 +72,7 @@ const JobDescription: NextPage = (comp) => {
         <p>{state.company || `Samsung`}</p>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
-          <div className="job-desc-row">
+          <div className="job-desc-grid">
             <div>
               <h3>Luơng</h3>
               {editing ? (
@@ -84,7 +85,9 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <p>{salary}</p>
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{salary}</p>
+                </LoadingLine>
               )}
             </div>
             <div>
@@ -99,11 +102,11 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 ></input>
               ) : (
-                <p>{level}</p>
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{level}</p>
+                </LoadingLine>
               )}
             </div>
-          </div>
-          <div className="job-desc-row">
             <div>
               <h3>Hình thức</h3>
               {editing ? (
@@ -116,7 +119,9 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <p>{type}</p>
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{type}</p>
+                </LoadingLine>
               )}
             </div>
             <div>
@@ -131,7 +136,9 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <p>{exp}</p>
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{exp}</p>
+                </LoadingLine>
               )}
             </div>
           </div>
@@ -148,7 +155,9 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <p>{location}</p>
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{location}</p>
+                </LoadingLine>
               )}
             </div>
           </div>
@@ -165,7 +174,9 @@ const JobDescription: NextPage = (comp) => {
               }}
             />
           ) : (
-            <p>{benefits}</p>
+            <LoadingLine loading={jobQuery.isLoading}>
+              <p>{benefits}</p>
+            </LoadingLine>
           )}
         </div>
         <div>
@@ -180,12 +191,16 @@ const JobDescription: NextPage = (comp) => {
               }}
             />
           ) : (
-            <p>{requirements}</p>
+            <LoadingLine loading={jobQuery.isLoading}>
+              <p>{requirements}</p>
+            </LoadingLine>
           )}
         </div>
         <div>
           <h2>Mô tả</h2>
-          <p>{jd}</p>
+          <Skeleton loading={jobQuery.isLoading} active>
+            <pre>{jd}</pre>
+          </Skeleton>
           {/* {editing ? (
             <input
               type="text"
