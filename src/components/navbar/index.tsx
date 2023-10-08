@@ -5,22 +5,22 @@ import React, { useState, useRef } from "react";
 import { removeCookies } from "cookies-next";
 import { Menu, Input, Button, Dropdown } from "antd";
 import {
-  SearchOutlined,
+  // SearchOutlined,
   SmileFilled,
-  MessageOutlined,
-  BellOutlined,
-  CloseOutlined,
+  // MessageOutlined,
+  // BellOutlined,
+  // CloseOutlined,
 } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
-import { NotiBox } from "@components/box";
-import { Card, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
+// import { NotiBox } from "@components/box";
+// import { Card, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
 
 type NavbarProps = {
   searchBarHidden: boolean,
 };
 
-const notiList = [{ read: true }, { read: false }, { read: true }];
-const mesList = [{ seen: true }, { seen: false }, { seen: true }];
+// const notiList = [{ read: true }, { read: false }, { read: true }];
+// const mesList = [{ seen: true }, { seen: false }, { seen: true }];
 
 export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const router = useRouter();
@@ -31,42 +31,42 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     : "advisor";
 
   const { status } = useSession();
-  const [hideMesPanel, setHideMesPanel] = useState(true);
+  // const [hideMesPanel, setHideMesPanel] = useState(true);
 
-  const handleMesSearchChange = (event) => {
-    setSearchInput(event.target?.value ?? "");
-  };
+  // const handleMesSearchChange = (event) => {
+  //   setSearchInput(event.target?.value ?? "");
+  // };
 
-  const openMesPanel = () => {
-    setHideMesPanel(!hideMesPanel);
-  };
-  const closeMesPanel = () => {
-    setHideMesPanel(true);
-  };
+  // const openMesPanel = () => {
+  //   setHideMesPanel(!hideMesPanel);
+  // };
+  // const closeMesPanel = () => {
+  //   setHideMesPanel(true);
+  // };
 
-  const listMenu: MenuMiddleNav["items"] =
-    router.pathname.includes("recruiter") || router.pathname.includes("advisor")
-      ? []
-      : [
-          {
-            name: "Công việc",
-            link: "/student/jobs",
-            newTab: false,
-            routeSelected: "/student/jobs",
-          },
-          {
-            name: "Sự kiện",
-            link: "/student/events",
-            newTab: false,
-            routeSelected: "/student/events",
-          },
-          {
-            name: "Dịch Vụ",
-            link: "/student/service",
-            newTab: false,
-            routeSelected: "/student/service",
-          },
-        ];
+  const listMenu: MenuMiddleNav["items"] = [];
+    // router.pathname.includes("recruiter") || router.pathname.includes("advisor")
+    //   ? []
+    //   : [
+    //       {
+    //         name: "Công việc",
+    //         link: "/student/jobs",
+    //         newTab: false,
+    //         routeSelected: "/student/jobs",
+    //       },
+    //       {
+    //         name: "Sự kiện",
+    //         link: "/student/events",
+    //         newTab: false,
+    //         routeSelected: "/student/events",
+    //       },
+    //       {
+    //         name: "Dịch Vụ",
+    //         link: "/student/service",
+    //         newTab: false,
+    //         routeSelected: "/student/service",
+    //       },
+    //     ];
 
   return router.pathname.includes("registration") ||
     router.pathname.includes("email") ||

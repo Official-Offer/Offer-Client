@@ -12,39 +12,40 @@ export interface JobDataType {
 }
 
 export interface UnapprovedJobDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   posted_date: string | null;
   title: string | null;
   // address: string;
   company: string | null;
   recruiter: string | null;
-  expected: number | 0;
+  reputation: string | null;
+  // expected: number | 0;
   compatibility: string | null; //percentage
 }
 
 export interface ApprovedJobDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   posted_date: string | null;
   title: string | null;
   // address: string;
   company: string | null;
   recruiter: string | null;
   applicants: string | null; //school/total
-  expected: number | 0;
-  accepted: string | 0; //school/total
+  // expected: number | 0;
+  // accepted: string | 0; //school/total
 }
 
 export interface ApplicantDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   name: string | null;
   school: string | null;
-  major: string | null;
-  expected_graduation: string | null;
+  job: string | null;
+  resume: string | null;
   compatibility: string | null; //percentage
-  tag: string | null; //Chua nop / Pending / Da nhan
+  // tag: string | null; //Chua nop / Pending / Da nhan
 }
 
 export interface StudentDataType {
@@ -52,9 +53,10 @@ export interface StudentDataType {
   ID: string | null;
   name: string | null;
   major: string | null;
+  resume: string | null;
   expected_graduation: string | null;
   jobs_applied: number | null;
-  jobs_accepted: number | null;
+  // jobs_accepted: number | null;
   // tag: string | null;
 }
 
@@ -107,6 +109,7 @@ export interface SchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
+  description: string | "";
   advisors: number | 0;
   no_students: number | null;
   students_applicants: number | 0; // in this company
@@ -120,6 +123,7 @@ export interface CompanyDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
+  description: string | "";
   //Should be changed to images + numbers
   recruiters: number | 0;
   unapproved_jobs: number | 0; // in this school

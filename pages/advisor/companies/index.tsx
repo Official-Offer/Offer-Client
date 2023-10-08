@@ -5,6 +5,9 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import { CompanyDataType } from "@components/table/dataType";
 import { getCompaniesForAdvisor } from "@services/apiCompany";
+import { FilterSearch } from "@components/search/FilterSearch";
+import { Avatar, Card } from "antd";
+import { AntDesignOutlined } from "@ant-design/icons";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -15,15 +18,9 @@ const Companies: NextPage = () => {
     queryFn: getCompaniesForAdvisor,
     onSuccess: async (companies) => {
       setData(companies);
-      setDataSet(companies)
+      setDataSet(companies);
 
-      var s: string[] = [];
-
-      companies.forEach((company) => {
-        s.push(company.name);
-      });
-
-      setSearchResults(s);
+      setSearchResults(companies.map((company) => company.name));
     },
     onError: () => {},
   });
@@ -34,23 +31,38 @@ const Companies: NextPage = () => {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.name === value));
+    const filteredData = dataset.filter((item) =>
+      item.name?.toLowerCase().includes(value.toLowerCase())
+    );
+    setData(filteredData);
   };
 
   return (
-    <div className="advisor">
-      <h1 className="advisor-title">Danh sách công ty</h1>
-      <div className="advisor-table">
-        <BaseTable
-          dataset={data}
-          columns={companyColumns}
-          // handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearch}
+    <div className="recruiter-schools">
+      <h2>Công Ty</h2>
+      <div className="recruiter-schools-search">
+        <FilterSearch
+          placeholder={"Tìm công ty"}
+          onSearch={(event: any) => {
+            handleFilterSearch(event.target.value);
+          }}
           searchResults={searchResults}
-          // handleAdd={handleAddJob}
-          tableType={"companies"}
-          isLoading={companyQuery.isLoading}
+          size={"large"}
         />
+      </div>
+      <div className="recruiter-schools-grid">
+        {data.map((company) => (
+          <Card className="recruiter-schools-card">
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+              icon={<AntDesignOutlined />}
+            />
+            <div className="recruiter-schools-card-info">
+              <b>{company.name}</b>
+              <p>{company.description}</p>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );

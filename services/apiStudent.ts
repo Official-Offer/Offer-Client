@@ -45,21 +45,33 @@ export const getApplicantsFromJobs = async (id: number) => {
 };
 
 export const getStudentsFromSchool = async () => {
-  const schools = (await request.get(`/schools/`)).data;
-  const studentList: any[] = [];
-  for (const stud_id of schools.applicants) {
-    const student = (await request.get(`/students/${stud_id}`)).data;
-    studentList.push({
-      key: student.user.id || "123" || "234",
-      ID: student.user.id || "123" || "234",
-      name: student.name || "No name",
-      major: student.major || "Biology" || "Math" || "CS",
-      expected_graduation: student.expected_graduation || "2025",
+  // const schools = (await request.get(`/schools/`)).data;
+  // const studentList: any[] = [];
+  // for (const stud_id of schools.applicants) {
+  //   const student = (await request.get(`/students/${stud_id}`)).data;
+  //   studentList.push({
+  //     key: student.user.id || "123" || "234",
+  //     ID: student.user.id || "123" || "234",
+  //     name: student.name || "No name",
+  //     major: student.major || "Biology" || "Math" || "CS",
+  //     expected_graduation: student.expected_graduation || "2025",
+  //     jobs_applied: 20,
+  //     jobs_accepted: 2,
+  //   },);
+  // }
+  const schoolApplicants = [
+    "1", "2", "3", "4"
+  ]
+  return schoolApplicants.map((student)=>({
+      key: "123" || "234",
+      ID:  "123" || "234",
+      name: "ktto" || "thuan vo" || "No name",
+      major: "Biology" || "Math" || "CS",
+      resume: "CV(1)",
+      expected_graduation: "2014" || "2025",
       jobs_applied: 20,
-      jobs_accepted: 2,
-    },);
-  }
-  return studentList;
+      // jobs_accepted: 2,
+  }));
 };
 
 export const studentLogin = async (body: any) => {

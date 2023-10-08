@@ -10,7 +10,6 @@ import store from "@redux/store";
 import LayoutGlobal from "src/common/LayoutGlobal";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "next-auth/react";
-import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const AntdTheme = {

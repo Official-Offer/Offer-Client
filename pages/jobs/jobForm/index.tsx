@@ -19,13 +19,9 @@ const PostJobs: NextPage = () => {
   const mutation = useMutation({
     mutationFn: postJob,
     onSuccess: async (data) => {
-      // Invalidate and refetch
-      // router.reload();
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },
   });
-
-  // console.log(studentDetails);
 
   return (
     <div className="recruiter-job-post">
@@ -34,19 +30,13 @@ const PostJobs: NextPage = () => {
         <JobPostForm
           onSubmit={(
             title: string,
-            department: string,
+            company: string,
             description: string,
-            salary: number,
-            end_date: Date,
-            expected_no_appliants: number
           ): void => {
             mutation.mutate({
               title,
-              department,
+              company,
               description,
-              salary,
-              end_date,
-              expected_no_appliants,
             });
           }}
           isLoading={mutation.isLoading}

@@ -6,7 +6,8 @@ import { FilterSearch } from "@components/search/FilterSearch";
 // import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
 // import { SubmitButton } from "@components/button/SubmitButton";
 import { IconButton } from "@styles/styled-components/styledButton";
-import { PlusOutlined } from "@ant-design/icons";
+import { CheckCircleFilled, PlusOutlined } from "@ant-design/icons";
+import { TableRowSelection } from "antd/lib/table/interface";
 
 export const BaseTable: React.FC = ({
   dataset,
@@ -15,29 +16,29 @@ export const BaseTable: React.FC = ({
   handleFilterType,
   handleFilterSearch,
   handleAdd,
+  handleVerify,
   placeholder,
-  // dataType,
-  // filterTypes,
   isLoading,
 }: // placeholders,
 any) => {
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
-  // const rowSelection: TableRowSelection<ApplicantDataType> = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(
-  //       `selectedRowKeys: ${selectedRowKeys}`,
-  //       "selectedRows: ",
-  //       selectedRows
-  //     );
-  //   },
-  //   onSelect: (record, selected, selectedRows) => {
-  //     console.log(record, selected, selectedRows);
-  //   },
-  //   onSelectAll: (selected, selectedRows, changeRows) => {
-  //     console.log(selected, selectedRows, changeRows);
-  //   },
-  // };
+  const rowSelection: TableRowSelection<any> = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    onSelect: (record, selected, selectedRows) => {
+      console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+      console.log(selected, selectedRows, changeRows);
+    },
+  };
   // console.log(searchResults)
+
   return (
     <div>
       <div className="table-functions">
@@ -45,14 +46,14 @@ any) => {
           {handleFilterSearch && (
             <FilterSearch
               placeholder={placeholder}
-              onSearch={(value: any) => {
-                handleFilterSearch(value);
+              onSearch={(event: any) => {
+                handleFilterSearch(event.target.value);
               }}
               searchResults={searchResults}
             />
           )}
         </div>
-        <div className="table-functions-type">
+        {/* <div className="table-functions-type">
           {handleFilterType && (
             <FilterType
               onSearch={(_x: any, values: any) => {
@@ -60,23 +61,25 @@ any) => {
               }}
             />
           )}
-        </div>
-        {handleAdd && (
+        </div> */}
+        {(handleAdd || handleVerify) && (
           <IconButton
             round
             className="table-functions-add"
-            backgroundColor="#D30B81"
-            onClick={handleAdd}
+            backgroundColor={handleAdd ? "#D30B81" : "green"}
+            onClick={handleAdd || handleVerify}
           >
             <div className="btn-body">
-              <span>Tạo công việc</span>
-              <span><PlusOutlined /></span>
+              <span>{handleAdd ? `Tạo công việc` : `Duyệt công việc`}</span>
+              <span>
+                {handleAdd ? <PlusOutlined /> : <CheckCircleFilled />}
+              </span>
             </div>
           </IconButton>
         )}
       </div>
       <Table
-        // rowSelection={{ ...rowSelection }}
+        rowSelection={handleVerify && { ...rowSelection }}
         columns={columns}
         dataSource={dataset}
         loading={isLoading}
