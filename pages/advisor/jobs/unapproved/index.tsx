@@ -37,7 +37,7 @@ const UnapprovedJobs: NextPage = () => {
     setData(filteredData);
   };
 
-  const handleAddJob = () => {
+  const handleVerifyJob = () => {
     router.push('/jobs/jobForm');
   }
 
@@ -52,7 +52,8 @@ const UnapprovedJobs: NextPage = () => {
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
-          handleAdd={handleAddJob}
+          handleVerify={handleVerifyJob}
+          // handleAdd={handleAddJob}
           tableType={"UnapprovedJobs"}
           isLoading={jobQuery.isLoading}
         />

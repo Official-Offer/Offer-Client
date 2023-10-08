@@ -153,20 +153,20 @@ export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     dataIndex: "compatibility",
     key: "compatibility",
   },
-  // {
-  //   title: "Hành động",
-  //   key: "action",
-  //   render: (_, record) => (
-  //     // {record.name}
-  //     <Space size="middle">
-  //       <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
-  //         <a>
-  //           <MoreOutlined />
-  //         </a>
-  //       </Dropdown>
-  //     </Space>
-  //   ),
-  // },
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
 ];
 
 export const ApprovedJobColumns: ColumnsType<ApprovedJobDataType> =
