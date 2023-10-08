@@ -12,28 +12,29 @@ export interface JobDataType {
 }
 
 export interface UnapprovedJobDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   posted_date: string | null;
   title: string | null;
   // address: string;
   company: string | null;
   recruiter: string | null;
-  expected: number | 0;
+  reputation: string | null;
+  // expected: number | 0;
   compatibility: string | null; //percentage
 }
 
 export interface ApprovedJobDataType {
-  key: string | null;
-  ID: string | null;
+  // key: string | null;
+  // ID: string | null;
   posted_date: string | null;
   title: string | null;
   // address: string;
   company: string | null;
   recruiter: string | null;
   applicants: string | null; //school/total
-  expected: number | 0;
-  accepted: string | 0; //school/total
+  // expected: number | 0;
+  // accepted: string | 0; //school/total
 }
 
 export interface ApplicantDataType {

@@ -47,6 +47,7 @@ const Companies: NextPage = () => {
             handleFilterSearch(event.target.value);
           }}
           searchResults={searchResults}
+          size={"large"}
         />
       </div>
       <div className="recruiter-schools-grid">

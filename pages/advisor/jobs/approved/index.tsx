@@ -20,45 +20,43 @@ const ApprovedJobs: NextPage = () => {
       setData(jobs);
       setDataSet(jobs);
 
-      var s: string[] = [];
-
-      jobs.forEach((job) => {
-        s.push(job.title);
-      });
-
-      setSearchResults(s);
+      setSearchResults(jobs.map((job) => job.title));
     },
     onError: () => {},
   });
 
-//   const handleFilterType = (values: string[]) => {
-//     console.log(values);
-//     if (values.length == 0) {
-//       setData(dataset);
-//       return;
-//     }
-//     setData(
-//       dataset.filter((item) => {
-//         if (!item.tag || values.length == 0) return false;
-//         for (let i = 0; i < values.length; i++) {
-//           if (values[i]?.label === item.title) return true;
-//         }
-//         return false;
-//       })
-//     );
-//   };
+  //   const handleFilterType = (values: string[]) => {
+  //     console.log(values);
+  //     if (values.length == 0) {
+  //       setData(dataset);
+  //       return;
+  //     }
+  //     setData(
+  //       dataset.filter((item) => {
+  //         if (!item.tag || values.length == 0) return false;
+  //         for (let i = 0; i < values.length; i++) {
+  //           if (values[i]?.label === item.title) return true;
+  //         }
+  //         return false;
+  //       })
+  //     );
+  //   };
 
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
       return;
     }
-    setData(dataset.filter((item) => item.title === value));
+    // setData(dataset.filter((item) => item.title === value));
+    const filteredData = dataset.filter((item) =>
+      item.title?.toLowerCase().includes(value.toLowerCase())
+    );
+    setData(filteredData);
   };
 
   const handleAddJob = () => {
-    router.push('/advisor/jobs/jobForm');
-  }
+    router.push("/advisor/jobs/jobForm");
+  };
 
   return (
     <div className="advisor">
@@ -67,11 +65,11 @@ const ApprovedJobs: NextPage = () => {
         <BaseTable
           dataset={data}
           columns={ApprovedJobColumns}
-        //   handleFilterType={handleFilterType}
+          //   handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"unapprovedJob"}
+          tableType={"approvedJob"}
           isLoading={jobQuery.isLoading}
         />
       </div>

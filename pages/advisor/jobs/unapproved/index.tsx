@@ -1,22 +1,22 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { JobColumns } from "@components/table/columnType";
+import { UnapprovedJobColumns } from "@components/table/columnType";
 import { useQuery } from "react-query";
-import { getJobsForRecruiter } from "@services/apiJob";
+import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
-import { JobDataType } from "@components/table/dataType";
+import { UnapprovedJobDataType } from "@components/table/dataType";
 import router from "next/router";
 
 //create a next page for the student home page, code below
-const Jobs: NextPage = () => {
+const UnapprovedJobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   // data to be filtered/changed
-  const [data, setData] = useState<JobDataType[]>([]);
+  const [data, setData] = useState<UnapprovedJobDataType[]>([]);
   // original data that remains unchanged
-  const [dataset, setDataSet] = useState<JobDataType[]>([]);
+  const [dataset, setDataSet] = useState<UnapprovedJobDataType[]>([]);
   const jobQuery = useQuery({
     queryKey: ["jobs"],
-    queryFn: getJobsForRecruiter,
+    queryFn: getUnapprovedJobs,
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
@@ -43,17 +43,17 @@ const Jobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Công việc</h1>
+      <h1 className="applicant-title">Công việc chưa duyệt</h1>
       <div className="applicant-table">
         <BaseTable
           dataset={data}
-          columns={JobColumns}
+          columns={UnapprovedJobColumns}
           placeholder={"Tìm công việc"}
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleAdd={handleAddJob}
-          tableType={"RecruiterJobs"}
+          tableType={"UnapprovedJobs"}
           isLoading={jobQuery.isLoading}
         />
       </div>
@@ -61,4 +61,4 @@ const Jobs: NextPage = () => {
   );
 };
 
-export default Jobs;
+export default UnapprovedJobs;

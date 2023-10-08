@@ -22,7 +22,7 @@ const UnapprovedJobsActionItems = [
 ];
 
 const ApprovedJobsActionItems = [
-  { key: "1", label: "Duyệt công việc" },
+  { key: "1", label: "Xoá công việc" },
   { key: "2", label: "Xem thêm" },
 ];
 
@@ -138,30 +138,35 @@ export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [
     dataIndex: "recruiter",
     key: "recruiter",
   },
+  // {
+  //   title: "Số người cần tuyển",
+  //   dataIndex: "expected",
+  //   key: "expected",
+  // },
   {
-    title: "Số người cần tuyển",
-    dataIndex: "expected",
-    key: "expected",
+    title: "Mức độ uy tín",
+    dataIndex: "reputation",
+    key: "reputation",
   },
   {
     title: "Độ phù hợp",
     dataIndex: "compatibility",
     key: "compatibility",
   },
-  {
-    title: "Hành động",
-    key: "action",
-    render: (_, record) => (
-      // {record.name}
-      <Space size="middle">
-        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
-          <a>
-            <MoreOutlined />
-          </a>
-        </Dropdown>
-      </Space>
-    ),
-  },
+  // {
+  //   title: "Hành động",
+  //   key: "action",
+  //   render: (_, record) => (
+  //     // {record.name}
+  //     <Space size="middle">
+  //       <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
+  //         <a>
+  //           <MoreOutlined />
+  //         </a>
+  //       </Dropdown>
+  //     </Space>
+  //   ),
+  // },
 ];
 
 export const ApprovedJobColumns: ColumnsType<ApprovedJobDataType> =
@@ -191,21 +196,21 @@ export const ApprovedJobColumns: ColumnsType<ApprovedJobDataType> =
       dataIndex: "recruiter",
       key: "recruiter",
     },
-    {
-      title: "Số người cần tuyển",
-      dataIndex: "expected",
-      key: "expected",
-    },
+    // {
+    //   title: "Số người cần tuyển",
+    //   dataIndex: "expected",
+    //   key: "expected",
+    // },
     {
       title: "Ứng viên trường bạn/tất cả",
       dataIndex: "applicants",
       key: "applicants",
     },
-    {
-      title: "Được nhận trường bạn/tất cả",
-      dataIndex: "accepted",
-      key: "accepted",
-    },
+    // {
+    //   title: "Được nhận trường bạn/tất cả",
+    //   dataIndex: "accepted",
+    //   key: "accepted",
+    // },
 
     {
       title: "Hành động",
