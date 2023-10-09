@@ -1,35 +1,34 @@
 import { Typography } from "antd";
 import Link from "next/link";
 
-export const FootnoteForm: React.FC = ({embedLogin}: boolean) => {
+export const FootnoteForm: React.FC<any> = ({
+  type,
+  embedLogin,
+}: {
+  type: string;
+  embedLogin: boolean;
+}) => {
   return (
     <div>
       <hr />
-      {embedLogin ?
+      {embedLogin ? (
         <Typography.Text type="secondary">
           Đã có tài khoản? <br />
           <Typography.Text underline>
             <Link href="/login">Đăng nhập tại đây</Link>
           </Typography.Text>
         </Typography.Text>
-      :
-        <Typography.Text type="secondary">
-          Chưa có tài khoản? <br />
+      ) : (
+        <div>
+            <Typography.Text underline>
+              <Link href="/">Đăng ký</Link>
+            </Typography.Text>
+          <br />
           <Typography.Text underline>
-            <Link href="/">Đăng ký tại đây</Link>
+            <Link href="/login">Quên mật khẩu?</Link>
           </Typography.Text>
-        </Typography.Text>
-      }
-      <br />
-      <br />
-      <Typography.Text type="secondary">
-        Bạn là nhà tuyển dụng hoặc cố vấn? <br />
-        <Typography.Text underline>
-          <Link href="/login">Đăng ký/Đăng nhập tại đây</Link>
-        </Typography.Text>
-      </Typography.Text>
+        </div>
+      )}
     </div>
   );
-}
-
-
+};

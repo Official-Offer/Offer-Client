@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { studentLogin } from "services/apiStudent";
 import { userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { advisorLogin } from "@services/apiAdvisor";
 // import { recruiterLogin } from "@services/apiRecruiter";
 import { Button } from "antd";
@@ -27,6 +27,7 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
+      // useDispatch
       router
         .push({
           pathname: state.role.isStudent
@@ -59,7 +60,11 @@ const Login: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           <h1>Đăng nhập</h1>
-          <h1>{state.school || state.company}</h1>
+          <br/>
+          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+            {" "}
+            Đăng nhập với Google{" "}
+          </Button>
           <LogInForm
             onSubmit={(item: { email: any; password: any }) => {
               return mutation.mutate({
@@ -72,11 +77,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
-            {" "}
-            Đăng nhập với Google{" "}
-          </Button>
-          <FootnoteForm />
+          <FootnoteForm embedLogin={false}/>
         </div>
       </div>
     </div>
