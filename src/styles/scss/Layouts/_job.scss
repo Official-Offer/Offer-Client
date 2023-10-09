@@ -1,6 +1,6 @@
 .job-desc {
   margin: 40px;
-  p {
+  p, pre {
     color: black;
   }
 }
@@ -26,14 +26,16 @@
   border-radius: 10px;
 }
 
-.job-desc-row {
-  display: flex;
-  justify-content: space-between;
+.job-desc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin-bottom: 10px;
 }
+
 .job-desc-heading {
   display: flex;
   justify-content: space-between;
+  gap: 50%;
   margin-bottom: 10px;
   cursor: pointer;
 }
