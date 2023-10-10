@@ -1,21 +1,61 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
-import { FootnoteForm, OrgForm } from "@components/forms";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FootnoteForm, LogInForm } from "@components/forms";
+import { setCookie } from "cookies-next";
+import { useMutation, useQueryClient } from "react-query";
+import { userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
-import { setCompany, setSchool } from "@redux/slices/account";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
-import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { signIn } from "next-auth/react";
+import { GoogleOutlined } from "@ant-design/icons";
+import { signIn, useSession } from "next-auth/react";
+import { setLoggedIn } from "@redux/actions";
+import { AuthForm } from "@components/forms/AuthForm";
 
 //create a next page for the student home page, code below
-const RegisterStudent: NextPage = () => {
+const Registration: NextPage = () => {
   const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
-
+  const mutation = useMutation({
+    // queryKey: ["login"],
+    mutationFn: userLogIn,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      setCookie("access_token", data.token);
+      // dispatch({
+      //   type: "SET_LOGIN",
+      //   payload: data.user,
+      // });
+      dispatch(setLoggedIn(true));
+      router
+        .push({
+          pathname: state.role.isStudent
+          ? "/student"
+          : state.role.isAdvisor
+          ? "/advisor"
+          : "/recruiter"
+        })
+        .then(() => {
+          router.reload();
+        });
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+  });
+  const { data: session, status } = useSession();
+  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "authenticated") {
+    router.push("/student");
+  }
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -23,69 +63,30 @@ const RegisterStudent: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {state.role.isStudent ? (
-            <div>
-              <h1>
-                Bắt đầu sự nghiệp ngay khi
-                <br />
-                ngồi trên ghế nhà trường với Offer
-              </h1>
-            </div>
-          ) : state.role.isAdvisor ? (
-            <div>
-              <h1>
-                Quản lý hướng nghiệp cho học sinh
-                <br />
-                dễ dàng với Offer
-              </h1>
-            </div>
-          ) : (
-            <div>
-              <h1>
-                Tuyển những học sinh giỏi nhất
-                <br />
-                thuộc hệ thống 500 trường của Offer
-              </h1>
-            </div>
-          )}
-          <OrgForm
-            onSubmit={(org) => {
-              // setSchool(school);
-              if (state.role.isStudent || state.role.isAdvisor) {
-                dispatch(setSchool(org));
-              } else {
-                dispatch(setCompany(org));
-              }
-              router.push({
-                pathname: "/registration/auth",
-              });
-            }}
-            isLoading={false}
-          />
-          {/* <Button
-            className="btn"
-            icon={<GoogleOutlined />}
-            onClick={() => {
-              signIn("google");
-              router.push("registration/password");
-            }}
-          >
+          <h1>Đăng ký</h1>
+          <br/>
+          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
             {" "}
             Đăng ký với Google{" "}
           </Button>
-          <Button
-            className="btn"
-            icon={<MailOutlined />}
-            onClick={() => router.push("/registration/email")}
-          >
-            {" "}
-            Đăng ký bằng email thường{" "}
-          </Button> */}
-          <FootnoteForm embedLogin />
+          <AuthForm
+            onSubmit={(item: { email: any; password: any }) => {
+              return mutation.mutate({
+                email:  item.email,
+                password: item.password,
+              });
+            }}
+            isLoading={mutation.isLoading}
+            embedSignup={true}
+          />
+          {errorMessage && (
+            <p className="register-content-error">{errorMessage}</p>
+          )}
+          <FootnoteForm/>
         </div>
       </div>
     </div>
   );
 };
 
-export default RegisterStudent;
+export default Registration;
