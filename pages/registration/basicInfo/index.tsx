@@ -1,16 +1,20 @@
+import React from "react";
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { FootnoteForm, OrgForm } from "@components/forms";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { setCompany, setSchool } from "@redux/slices/account";
+import { setCompany, setRole, setSchool } from "@redux/slices/account";
+import { Segmented } from "antd";
+import { useState } from "react";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
+  const [role, setRol] = useState<string>("student");
 
   return (
     <div className="register">
@@ -19,36 +23,28 @@ const RegisterStudent: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {state.role.isStudent ? (
-            <div>
-              <h1>
-                Bắt đầu sự nghiệp ngay khi
-                <br />
-                ngồi trên ghế nhà trường với Offer
-              </h1>
-            </div>
-          ) : (
-            // state.role.isAdvisor ? (
-            //   <div>
-            //     <h1>
-            //       Quản lý hướng nghiệp cho học sinh
-            //       <br />
-            //       dễ dàng với Offer
-            //     </h1>
-            //   </div>
-            // ) :
-            <div>
-              <h1>
-                Tuyển những học sinh giỏi nhất
-                <br />
-                thuộc hệ thống 500 trường của Offer
-              </h1>
-            </div>
-          )}
+          <div>
+            <h1>Thông tin cơ bản</h1>
+          </div>
+          <br />
+          <div>Chọn vai trò</div>
+          <Segmented
+            options={["advisor", "recruiter", "student"]}
+            onResize={undefined}
+            onResizeCapture={undefined}
+            onChange={(value) => {
+              setRol(value.toString());
+              const role = {
+                isStudent: value.toString() == "student",
+                isAdvisor: value.toString() == "advisor",
+                isRecruiter: value.toString() == "recruiter",
+              };
+              dispatch(setRole(role));
+            }}
+          />
           <OrgForm
             onSubmit={(org) => {
-              // setSchool(school);
-              if (state.role.isStudent || state.role.isAdvisor) {
+              if (role == "student" || role == "advisor") {
                 dispatch(setSchool(org));
               } else {
                 dispatch(setCompany(org));
@@ -59,7 +55,7 @@ const RegisterStudent: NextPage = () => {
             }}
             isLoading={false}
           />
-          <FootnoteForm embedLogin />
+          <FootnoteForm />
         </div>
       </div>
     </div>

@@ -72,7 +72,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
         </div>
       </div>
       <SubmitButton
-        text="Tiếp tục"
+        text="Đăng ký"
         isLoading={isLoading}
         onClick={handleSubmit}
       />
