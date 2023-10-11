@@ -8,6 +8,7 @@ import { RootState } from "@redux/reducers";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Segmented } from "antd";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
@@ -15,6 +16,7 @@ const RegisterStudent: NextPage = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
   const [role, setRol] = useState<string>("student");
+  const { data: session, status } = useSession();
 
   return (
     <div className="register">

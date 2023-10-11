@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FootnoteForm, LogInForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
-import { userLogIn } from "@services/apiUser";
+import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
@@ -23,7 +23,7 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
     // queryKey: ["login"],
-    mutationFn: userLogIn,
+    mutationFn: registerUser,
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
@@ -54,7 +54,7 @@ const Registration: NextPage = () => {
   const { data: session, status } = useSession();
   if (status === "loading") return <h1> loading... please wait</h1>;
   if (status === "authenticated") {
-    router.push("/student");
+    router.push("/registration/basicInfo");
   }
   return (
     <div className="register">

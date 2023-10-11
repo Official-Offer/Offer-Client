@@ -72,4 +72,4 @@ const ForgetPassword: NextPage = () => {
   );
 };
 
-export default RegisterPassword;
+export default ForgetPassword;
