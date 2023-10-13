@@ -27,23 +27,18 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
-      // dispatch({
-      //   type: "SET_LOGIN",
-      //   payload: data.user,
-      // });
       dispatch(setLoggedIn(true));
       router
         .push({
           pathname: state.role.isStudent
           ? "/student"
           : state.role.isAdvisor
-          ? "/advisor"
-          : "/recruiter"
+          ? "/advisor/jobs/unapproved"
+          : "/recruiter/jobs"
         })
         .then(() => {
           router.reload();
         });
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);

@@ -1,20 +1,15 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
+import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
+import { SubmitButton } from "@components/button/SubmitButton";
 import { useRouter } from "next/router";
-import { EmailForm, FootnoteForm, PasswordForm } from "@components/forms";
-import { useMutation, useQueryClient } from "react-query";
-import { setCookie } from "cookies-next";
-import { registerStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { useState } from "react";
-import { registerAdvisor } from "@services/apiAdvisor";
-import { registerRecruiter } from "@services/apiRecruiter";
-import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
 
 //create a next page for the student home page, code below
 const VerifyPassword: NextPage = () => {
-
+  const router = useRouter();
+  const state = useSelector((state: RootState) => state.account);
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -22,9 +17,29 @@ const VerifyPassword: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          <h1 style={{ color: "red" }}>
-            Email đã được xác nhận.
-          </h1>
+          <h1 style={{ color: "Purple" }}>Email đã được xác nhận</h1>
+          <br />
+          {/* center this div*/}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <SubmitButton
+              text="Quay lại trang chủ"
+              // isLoading={isLoading}
+              onClick={() => {
+                state.role.isStudent
+                  ? router.push("/student")
+                  : state.role.isAdvisor
+                  ? router.push("/advisor/jobs/unapproved")
+                  : router.push("/recruiter/jobs");
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
