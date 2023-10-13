@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-import {
-  StyledSubmitButton,
-  SubmitButtonAntd,
-} from "@styles/styled-components/styledButton";
-import Image from "next/image";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";

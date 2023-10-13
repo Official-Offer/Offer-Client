@@ -60,7 +60,7 @@ const ApprovedJobs: NextPage = () => {
 
   return (
     <div className="advisor">
-      <h1 className="advisor-title">Ứng viên</h1>
+      <h1 className="advisor-title">Công việc đã duyệt</h1>
       <div className="advisor-table">
         <BaseTable
           dataset={data}

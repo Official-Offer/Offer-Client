@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
-import { Segmented } from "antd";
+import { Form, Input, Segmented } from "antd";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -28,7 +28,16 @@ const RegisterStudent: NextPage = () => {
           <div>
             <h1>Thông tin cơ bản</h1>
           </div>
-          <br />
+          <Form className="form" onSubmit={() => {}} layout="vertical">
+            <div className="form-grid">
+              <Form.Item label="Tên" className="form-input">
+                <Input required className="form-item" onChange={() => {}} />
+              </Form.Item>
+              <Form.Item label="Họ" className="form-input">
+                <Input required className="form-item" onChange={() => {}} />
+              </Form.Item>
+            </div>
+          </Form>
           <div>Chọn vai trò</div>
           <Segmented
             options={["advisor", "recruiter", "student"]}
@@ -51,9 +60,6 @@ const RegisterStudent: NextPage = () => {
               } else {
                 dispatch(setCompany(org));
               }
-              router.push({
-                pathname: "/registration/auth",
-              });
             }}
             isLoading={false}
           />

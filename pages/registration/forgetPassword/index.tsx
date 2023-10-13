@@ -16,6 +16,7 @@ import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
 const ForgetPassword: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [screen, setScreen] = useState("pw");
   const state = useSelector((state: RootState) => state.account);
   const [errorMessage, setErrorMessage] = useState("");
   const mutation = useMutation({
@@ -48,7 +49,7 @@ const ForgetPassword: NextPage = () => {
         <div className="register-content-form">
           {/* <Image src="..;/"/> */}
           <h1>Mật khẩu</h1>
-          <h1>{state.school || state.company}</h1>
+          {/* <h1>{state.school || state.company}</h1> */}
           <PasswordForm
             isLoading={mutation.isLoading}
             onSubmit={(password: string) => {
@@ -57,8 +58,6 @@ const ForgetPassword: NextPage = () => {
                 email: state.email,
                 password: password,
               });
-              // if (!mutation.isLoading)
-              // router.push("/student/email/verify");
             }}
           />
           {errorMessage && (
