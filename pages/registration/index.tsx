@@ -27,7 +27,7 @@ const Registration: NextPage = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
-  const [role, setRol] = useState<string>("student");
+  const [role, setRol] = useState<string>("Học sinh");
   const { data: session, status } = useSession();
   const mutation = useMutation({
     // queryKey: ["login"],
@@ -111,15 +111,16 @@ const Registration: NextPage = () => {
                 </div>
                 <Form.Item required label="Chọn vai trò" className="form-input">
                   <Segmented
-                    options={["advisor", "recruiter", "student"]}
+                    options={["Học sinh", "Nhà tuyển dụng", "Trường" ]}
                     onResize={undefined}
+                    size={"large"}
                     onResizeCapture={undefined}
                     onChange={(value) => {
                       setRol(value.toString());
                       const role = {
-                        isStudent: value.toString() == "student",
-                        isAdvisor: value.toString() == "advisor",
-                        isRecruiter: value.toString() == "recruiter",
+                        isStudent: value.toString() == "Học sinh",
+                        isAdvisor: value.toString() == "Trường",
+                        isRecruiter: value.toString() == "Nhà tuyển dụng",
                       };
                       dispatch(setRole(role));
                     }}

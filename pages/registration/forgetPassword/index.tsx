@@ -48,7 +48,7 @@ const ForgetPassword: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           {/* <Image src="..;/"/> */}
-          <h1>Mật khẩu</h1>
+          <h1>Đổi Mật khẩu</h1>
           {/* <h1>{state.school || state.company}</h1> */}
           <PasswordForm
             isLoading={mutation.isLoading}
@@ -64,7 +64,7 @@ const ForgetPassword: NextPage = () => {
             <p className="register-content-error">{errorMessage}</p>
           )}
           <br />
-          <FootnoteForm />
+          {/* <FootnoteForm /> */}
         </div>
       </div>
     </div>
