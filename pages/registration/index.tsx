@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FootnoteForm, LogInForm } from "@components/forms";
+import { FootnoteForm, LogInForm, OrgForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
@@ -13,14 +13,22 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
+import { setCompany, setRole, setSchool } from "@redux/slices/account";
+import { Form, Input, Segmented } from "antd";
+import { set } from "lodash";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
   const router = useRouter();
+  const [pwScreen, setScreen] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
+  const [role, setRol] = useState<string>("student");
+  const { data: session, status } = useSession();
   const mutation = useMutation({
     // queryKey: ["login"],
     mutationFn: registerUser,
@@ -35,10 +43,10 @@ const Registration: NextPage = () => {
       router
         .push({
           pathname: state.role.isStudent
-          ? "/student"
-          : state.role.isAdvisor
-          ? "/advisor"
-          : "/recruiter"
+            ? "/student"
+            : state.role.isAdvisor
+            ? "/advisor"
+            : "/recruiter",
         })
         .then(() => {
           router.reload();
@@ -51,7 +59,6 @@ const Registration: NextPage = () => {
       // queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
-  const { data: session, status } = useSession();
   if (status === "loading") return <h1> loading... please wait</h1>;
   if (status === "authenticated") {
     router.push("/registration/basicInfo");
@@ -63,26 +70,78 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          <h1>Đăng ký</h1>
-          <br/>
-          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
-            {" "}
-            Đăng ký với Google{" "}
-          </Button>
-          <AuthForm
-            onSubmit={(item: { email: any; password: any }) => {
-              return mutation.mutate({
-                email:  item.email,
-                password: item.password,
-              });
-            }}
-            isLoading={mutation.isLoading}
-            embedSignup={true}
-          />
+          {pwScreen ? (
+            <>
+              <h1>Đăng ký</h1>
+              <br />
+              <Button
+                icon={<GoogleOutlined />}
+                onClick={() => signIn("google")}
+              >
+                {" "}
+                Đăng ký với Google{" "}
+              </Button>
+              <AuthForm
+                onSubmit={(item: { email: any; password: any }) => {
+                  // return mutation.mutate({
+                  //   email: item.email,
+                  //   password: item.password,
+                  // });
+                  setPassword(item.password);
+                  setEmail(item.email);
+                  setScreen(false);
+                }}
+                isLoading={mutation.isLoading}
+                embedSignup={true}
+              />
+            </>
+          ) : (
+            <>
+              <div>
+                <h1>Thông tin cơ bản</h1>
+              </div>
+              <Form className="form" onSubmit={() => {}} layout="vertical">
+                <div className="form-grid">
+                  <Form.Item label="Tên" className="form-input">
+                    <Input required className="form-item" onChange={() => {}} />
+                  </Form.Item>
+                  <Form.Item label="Họ" className="form-input">
+                    <Input required className="form-item" onChange={() => {}} />
+                  </Form.Item>
+                </div>
+              </Form>
+              <div>Chọn vai trò</div>
+              <Segmented
+                options={["advisor", "recruiter", "student"]}
+                onResize={undefined}
+                onResizeCapture={undefined}
+                onChange={(value) => {
+                  setRol(value.toString());
+                  const role = {
+                    isStudent: value.toString() == "student",
+                    isAdvisor: value.toString() == "advisor",
+                    isRecruiter: value.toString() == "recruiter",
+                  };
+                  dispatch(setRole(role));
+                }}
+              />
+              <OrgForm
+                onSubmit={(org) => {
+                  if (role == "student" || role == "advisor") {
+                    dispatch(setSchool(org));
+                  } else {
+                    dispatch(setCompany(org));
+                  }
+                  setScreen(true);
+                }}
+                isLoading={false}
+              />
+            </>
+          )}
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <FootnoteForm/>
+          <FootnoteForm />
         </div>
       </div>
     </div>
