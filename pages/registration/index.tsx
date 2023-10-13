@@ -102,29 +102,31 @@ const Registration: NextPage = () => {
               </div>
               <Form className="form" onSubmit={() => {}} layout="vertical">
                 <div className="form-grid">
-                  <Form.Item label="Tên" className="form-input">
+                  <Form.Item required label="Họ" className="form-input">
                     <Input required className="form-item" onChange={() => {}} />
                   </Form.Item>
-                  <Form.Item label="Họ" className="form-input">
+                  <Form.Item required label="Tên" className="form-input">
                     <Input required className="form-item" onChange={() => {}} />
                   </Form.Item>
                 </div>
+                <Form.Item required label="Chọn vai trò" className="form-input">
+                  <Segmented
+                    options={["advisor", "recruiter", "student"]}
+                    onResize={undefined}
+                    onResizeCapture={undefined}
+                    onChange={(value) => {
+                      setRol(value.toString());
+                      const role = {
+                        isStudent: value.toString() == "student",
+                        isAdvisor: value.toString() == "advisor",
+                        isRecruiter: value.toString() == "recruiter",
+                      };
+                      dispatch(setRole(role));
+                    }}
+                  />
+                </Form.Item>
               </Form>
-              <div>Chọn vai trò</div>
-              <Segmented
-                options={["advisor", "recruiter", "student"]}
-                onResize={undefined}
-                onResizeCapture={undefined}
-                onChange={(value) => {
-                  setRol(value.toString());
-                  const role = {
-                    isStudent: value.toString() == "student",
-                    isAdvisor: value.toString() == "advisor",
-                    isRecruiter: value.toString() == "recruiter",
-                  };
-                  dispatch(setRole(role));
-                }}
-              />
+
               <OrgForm
                 onSubmit={(org) => {
                   if (role == "student" || role == "advisor") {

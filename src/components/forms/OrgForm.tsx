@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormInput } from "@styles/styled-components/styledForm";
 // import { SubmitButton } from "@styles/styled-components/styledButton";
-import { Form, Select, Typography } from "antd";
+import { Form, Input, Select, Typography } from "antd";
 import { FootnoteForm } from "./FootnoteForm";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -44,8 +44,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
                 ? "Kết nối với trường của bạn"
                 : "Kết nối với công ty của bạn"
             }
+            required
           >
             <Select
+              showSearch
               className="form-select"
               bordered={false}
               onChange={handleOrgChange}
@@ -68,6 +70,16 @@ export const OrgForm: React.FC<IOrgForm> = ({
                     </Select.Option>
                   ))}
             </Select>
+          </Form.Item>
+          <Form.Item
+            label="Không tìm thấy tên trường? Nhập dưới đây"
+            className="form-input full-width"
+          >
+            <Input
+              required
+              className="form-item"
+              // onChange={handlePhoneNumberChange}
+            />
           </Form.Item>
         </div>
       </div>
