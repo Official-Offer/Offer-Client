@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
-import { SubmitButtonAntd } from "@styles/styled-components/styledButton";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
