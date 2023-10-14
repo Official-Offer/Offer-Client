@@ -40,7 +40,6 @@ export const PasswordForm: React.FC = ({
     // Passwords match, handle form submission here
     if (password !== reenteredPassword) {
       alert("Mật khẩu không khớp");
-      // setErrorMessage("Passwords do not match. Please try again.");
     } else {
       onSubmit(password);
     }
@@ -69,7 +68,7 @@ export const PasswordForm: React.FC = ({
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
-              onChange={handlePasswordChange}
+              onChange={handleReenteredPasswordChange}
             />
           </Form.Item>
         </div>
