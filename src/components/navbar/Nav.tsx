@@ -80,7 +80,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   console.log(router.pathname);
 
-  // if (isRecruiter || isAdvisor) {
+  if (
+    router.pathname.includes("login") ||
+    router.pathname.includes("registration")
+  ) {
+    return (
+      <>
+        <Navbar
+          searchBarHidden={
+            router.pathname.includes("/student/jobs/[id]") ||
+            router.pathname.includes("/student/events/[id]")
+          }
+        />
+        <div>{props.children}</div>
+      </>
+    );
+  }
   return (
     <Layout>
       <Navbar
@@ -107,16 +122,4 @@ export const Nav: React.FC = (props: any): ReactElement => {
       </Layout>
     </Layout>
   );
-  // }
-  // return (
-  //   <>
-  //     <Navbar
-  //       searchBarHidden={
-  //         router.pathname.includes("/student/jobs/[id]") ||
-  //         router.pathname.includes("/student/events/[id]")
-  //       }
-  //     />
-  //     <div>{props.children}</div>
-  //   </>
-  // );
 };

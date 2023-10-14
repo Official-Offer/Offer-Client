@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-import {
-  StyledSubmitButton,
-  SubmitButtonAntd,
-} from "@styles/styled-components/styledButton";
-import Image from "next/image";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
@@ -17,10 +11,12 @@ interface ILogInForm {
     password: React.SetStateAction<string>;
   }) => void;
   isLoading: boolean;
+  embedSignup?: boolean;
 }
 
-export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
+export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignup }: ILogInForm) => {
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
@@ -28,13 +24,25 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
     setPassword(event.target.value);
   };
 
+  const handleReenterPasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setRePassword(event.target.value);
+  };
   const handleEmailChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setEmail(event.target.value);
   };
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     // event.preventDefault();
-    console.log(email, password)
+    if (embedSignup && password !== rePassword) {
+      alert("Mật khẩu không khớp");
+      return;
+    }
+    //check if email has the right format
+    if (!email.includes("@")) {
+      alert("Email không hợp lệ");
+      return;
+    }
+
     onSubmit({ email, password });
   };
 
@@ -64,9 +72,22 @@ export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
             />
           </Form.Item>
         </div>
+        {embedSignup && <div className="form-input">
+          <Form.Item label="Nhập lại mật khẩu">
+            <Input.Password
+              required
+              className="form-password"
+              placeholder="Nhập lại mật khẩu"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={handleReenterPasswordChange}
+            />
+          </Form.Item>
+        </div>}
       </div>
       <SubmitButton
-        text="Đăng nhập"
+        text={embedSignup? "Tiếp tục" : "Đăng nhập"}
         isLoading={isLoading}
         onClick={handleSubmit}
       />

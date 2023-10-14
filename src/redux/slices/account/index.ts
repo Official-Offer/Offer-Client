@@ -9,6 +9,7 @@ interface ICAccount {
     isAdvisor: boolean;
     isRecruiter: boolean;
   };
+  loggedIn: boolean;
 }
 
 const initialState: ICAccount = {
@@ -20,6 +21,7 @@ const initialState: ICAccount = {
     isAdvisor: false,
     isRecruiter: false,
   },
+  loggedIn: false,
 };
 
 const accountSlice = createSlice({
@@ -38,9 +40,12 @@ const accountSlice = createSlice({
     setRole: (state, action) => {
       state.role = action.payload;
     },
+    setLoggedIn: (state, action) => {
+      state.loggedIn = action.payload;
+    }
   },
 });
 
-export const { setRegisterEmail, setSchool, setCompany, setRole } = accountSlice.actions;
+export const { setRegisterEmail, setSchool, setCompany, setRole, setLoggedIn } = accountSlice.actions;
 
 export default accountSlice.reducer;
