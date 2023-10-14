@@ -104,7 +104,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
           router.pathname.includes("/student/events/[id]")
         }
       /> */}
-      {/* <Layout> */}
+      <Layout style={{ minHeight: '100vh' }}>
         <Sider className="navbar-sider">
           <div className="navbar-sider-logo">
             <Image
@@ -125,7 +125,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         <Layout className="navbar-with-sider">
           <div>{props.children}</div>
         </Layout>
-      {/* </Layout> */}
+      </Layout>
     </div>
   );
 };
