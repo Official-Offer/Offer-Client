@@ -2,8 +2,6 @@ import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
   TeamOutlined,
-  // ScheduleOutlined,
-  // TeamOutlined,
   UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -99,14 +97,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
     );
   }
   return (
-    <Layout>
+    <div>
       {/* <Navbar
         searchBarHidden={
           router.pathname.includes("/student/jobs/[id]") ||
           router.pathname.includes("/student/events/[id]")
         }
       /> */}
-      <Layout>
+      {/* <Layout> */}
         <Sider className="navbar-sider">
           <div className="navbar-sider-logo">
             <Image
@@ -127,7 +125,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         <Layout className="navbar-with-sider">
           <div>{props.children}</div>
         </Layout>
-      </Layout>
-    </Layout>
+      {/* </Layout> */}
+    </div>
   );
 };
