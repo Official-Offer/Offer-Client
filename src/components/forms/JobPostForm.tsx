@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-import { RootState } from "@redux/reducers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { Form, Input, Select } from "antd";
-import router from "next/router";
 import { setCompany, setDescription, setTitle } from "@redux/actions";
 
 interface IForm {
