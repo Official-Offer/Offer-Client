@@ -82,8 +82,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
   console.log(router.pathname);
 
   if (
-    // !router.pathname.includes("login") ||
-    // router.pathname.includes("registration")
     !isRecruiter &&
     !isAdvisor &&
     !router.pathname.includes("jobs")
@@ -112,7 +110,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
         <Sider className="navbar-sider">
           <div className="navbar-sider-logo">
             <Image
-              // className="navbar-sider-logo"
               src="/images/logo.png"
               width={40}
               height={40}
