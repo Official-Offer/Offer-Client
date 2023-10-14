@@ -1,23 +1,38 @@
 .navbar-with-sider {
-  margin-left: 200px;
-  // background-color: #313C49;
-  color: white;
+  margin-left: 10px;
+  height: 100%;
+  // background-color: gray;
+  // color: white;
 }
 .navbar-sider {
   overflow: auto;
-  height: 90vh;
-  border-radius: 20px;
+  height: 100vh;
+  // border-radius: 20px;
   background: #fff;
   // color: white;
-  position: fixed;
+  position: relative;
+  // position: fixed;
   box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.25);
-  left: 0;
-  top: 13;
-  bottom: 0;
+  display: grid;
+  // flex-direction: column;
+  // left: 0;
+  // bottom: 0;
+  //center this logo and put it at the bottom of the sider
   &-logo {
-    height: 35;
-    margin: 25px;
-    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    // box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.25);
+    // font-weight: $fw-bold-0;
+    // position: fixed;
+    // z-index: 999;
+    // margin-top: auto;
+    // margin-bottom: 0;
+    // align-self: end;
+    // position: absolute;
+    // bottom: 0;
+    // left: 10%;
   }
 }
 .navbar-splitter {
@@ -45,16 +60,16 @@
   position: sticky;
   display: flex;
   align-items: center;
-  
+
   &.left-menu {
     width: 20%;
   }
-  
+
   &.center-menu {
     justify-content: center;
     width: 50%;
   }
-  
+
   &.right-menu {
     justify-content: flex-end;
     width: 20%;
@@ -65,11 +80,11 @@
       }
     }
   }
-  
+
   .ant-menu-item {
     height: 101%; // Adjustment because of antd
     padding: 10px 20px !important;
-    
+
     // Highlight when dropdown is open
     &.ant-dropdown-open {
       .icon-btn {
@@ -141,7 +156,8 @@
   width: 360px;
   max-width: calc(100vw - 24px);
   border-radius: 8px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
 
 .panel-header {
@@ -160,5 +176,3 @@
     }
   }
 }
-
-

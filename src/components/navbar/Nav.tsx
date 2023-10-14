@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
+  TeamOutlined,
   // ScheduleOutlined,
   // TeamOutlined,
   UploadOutlined,
@@ -12,6 +13,7 @@ import router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import Image from "next/image";
 
 const { Sider } = Layout;
 
@@ -32,21 +34,20 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "Công việc",
     isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    // "Sự kiện",
+    "Tài khoản",
   ];
   const path = [
     // "",
     "/jobs",
     isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
-    // "/events",
+    "/profile",
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
-    UserOutlined,
+    TeamOutlined,
     UploadOutlined,
-    // ScheduleOutlined,
-    // TeamOutlined,
+    UserOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
@@ -81,8 +82,11 @@ export const Nav: React.FC = (props: any): ReactElement => {
   console.log(router.pathname);
 
   if (
-    router.pathname.includes("login") ||
-    router.pathname.includes("registration")
+    // !router.pathname.includes("login") ||
+    // router.pathname.includes("registration")
+    !isRecruiter &&
+    !isAdvisor &&
+    !router.pathname.includes("jobs")
   ) {
     return (
       <>
@@ -98,14 +102,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
   }
   return (
     <Layout>
-      <Navbar
+      {/* <Navbar
         searchBarHidden={
           router.pathname.includes("/student/jobs/[id]") ||
           router.pathname.includes("/student/events/[id]")
         }
-      />
+      /> */}
       <Layout>
         <Sider className="navbar-sider">
+          <div className="navbar-sider-logo">
+            <Image
+              // className="navbar-sider-logo"
+              src="/images/logo.png"
+              width={40}
+              height={40}
+            />
+          </div>
           <Menu
             defaultSelectedKeys={[`/${role}`]}
             defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
@@ -114,7 +126,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
             inlineCollapsed={collapsed}
             items={items}
           />
-          <div className="navbar-sider-logo">Logo</div>
         </Sider>
         <Layout className="navbar-with-sider">
           <div>{props.children}</div>
