@@ -8,12 +8,7 @@ import router from "next/router";
 import { setCompany, setDescription, setTitle } from "@redux/actions";
 
 interface IForm {
-  onSubmit: (
-    title: string,
-    company: string,
-    description: string
-    // is_reviewer: boolean
-  ) => void;
+  onSubmit: () => void;
   isLoading: boolean;
 }
 
@@ -30,19 +25,14 @@ export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
     dispatch(setTitle(event.target.value));
   };
 
-  const handleCompanyChange = (value: React.SetStateAction<string>) => {
-    dispatch(setCompany(value));
-  };
-
   const handleDescChange = (event: any) => {
     dispatch(setDescription(event.target.value));
   };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
-    router.push("/jobs/jobDesc");
+    onSubmit();
     event.preventDefault();
   };
-
 
   const handleCancel = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -51,10 +41,10 @@ export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
   return (
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
-        <Form.Item label="Tiêu đề" className="form-input">
+        <Form.Item label="Tiêu đề" className="form-input full-width">
           <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
-        <Form.Item label="Công ty" className="form-input">
+        {/* <Form.Item label="Công ty" className="form-input">
           <Select
             className="form-select"
             bordered={false}
@@ -66,7 +56,7 @@ export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
               </Select.Option>
             ))}
           </Select>
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label="Miêu tả" className="form-input full-width">
           <Input
             required

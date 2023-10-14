@@ -55,7 +55,7 @@ const ApprovedJobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push("/advisor/jobs/jobForm");
+    router.push('/advisor/postJobs/jobForm');
   };
 
   return (

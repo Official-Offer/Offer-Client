@@ -38,7 +38,7 @@ const UnapprovedJobs: NextPage = () => {
   };
 
   const handleVerifyJob = () => {
-    router.push('/jobs/jobForm');
+    router.push('/postJobs/jobForm');
   }
 
   return (

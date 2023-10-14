@@ -1,5 +1,3 @@
-import axios from "axios";
-import { NextPage } from "next";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { generateJobDescription } from "@services/apiJob";
@@ -10,7 +8,7 @@ import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { Skeleton } from "antd";
 
-const JobDescription: NextPage = (comp) => {
+export const JobDescription: React.FC = ({onClick}) => {
   const state = useSelector((state: RootState) => state.jobs);
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
@@ -20,8 +18,9 @@ const JobDescription: NextPage = (comp) => {
   const [location, setLocation] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
-  const [jd, setJd] =
-    useState<string>(state.description || `[HCM] Cơ hội trở thành "teammate" với Con Cưng cho sinh viên năm 3!!!
+  const [jd, setJd] = useState<string>(
+    state.description ||
+      `[HCM] Cơ hội trở thành "teammate" với Con Cưng cho sinh viên năm 3!!!
   Team HSE - Con Cưng đang rất mong chờ chào đón các bạn HSE Intern về chung một nhà! Apply ngay thôi !!!
   ---------------
   🥳 Bạn nhận được gì khi ở vị trí này?
@@ -37,7 +36,8 @@ const JobDescription: NextPage = (comp) => {
   Xem thông tin JD tại: https://tuyendung.concung.com/603-tuyen-dung-hse-intern
   💁‍♀️ Bạn sẽ làm việc tại: Tầng 14, Tòa nhà Phú Mỹ Hưng, P. Tân Phú, Quận 7, TP HCM.
   🙆‍♀️ Thời gian bạn sẽ làm việc: 8h30 - 17h30 (T2 - T6).
-  Nhanh tay gửi CV về: careers@concung.com hoặc inbox mình để trao đổi thêm nhé!!!`);
+  Nhanh tay gửi CV về: careers@concung.com hoặc inbox mình để trao đổi thêm nhé!!!`
+  );
 
   const jobQuery = useQuery({
     queryKey: ["job-description"],
@@ -51,11 +51,11 @@ const JobDescription: NextPage = (comp) => {
       setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
-      //   setJob(res);
     },
     onError: () => {},
     reloadOnWindowFocus: false,
   });
+  
   return (
     <div className="job-desc">
       <div className="job-desc-nav">
@@ -63,7 +63,9 @@ const JobDescription: NextPage = (comp) => {
       </div>
       <div className="job-desc-content">
         <div className="job-desc-heading">
-          <h2>{state.title || `Thực tập sinh Kỹ sư Phần Mềm chi nhánh TP.HCM`}</h2>
+          <h2>
+            {state.title || `Thực tập sinh Kỹ sư Phần Mềm chi nhánh TP.HCM`}
+          </h2>
           <p onClick={() => (editing ? setEditing(false) : setEditing(true))}>
             Chỉnh sửa <EditOutlined />
           </p>
@@ -201,24 +203,11 @@ const JobDescription: NextPage = (comp) => {
           <Skeleton loading={jobQuery.isLoading} active>
             <pre>{jd}</pre>
           </Skeleton>
-          {/* {editing ? (
-            <input
-              type="text"
-              className="job-desc-input"
-              value={jd}
-              onChange={(event) => {
-                setJd(event.target.value);
-              }}
-            />
-          ) : (
-            <p>{jd}</p>
-          )} */}
         </div>
       </div>
       <div className="job-desc-button">
-        <SubmitButton text={"Tiếp tục"} />
+        <SubmitButton onClick={()=>{onClick()}} text={"Tiếp tục"} />
       </div>
     </div>
   );
 };
-export default JobDescription;

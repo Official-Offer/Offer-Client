@@ -63,11 +63,12 @@ export const getUnapprovedJobs = async () => {
     "ktto@umass.edu",
     "hto@umass.edu",
   ];
+  const title = ["SWE Intern", "Sales Intern", "SWE Full-time"];
   return jobList.map((job: any) => ({
     // key: job.id,
     // ID: job.id,
     posted_date: moment(job.timestamp).format("D/M/YYYY") || "09/05/2002",
-    title: job.title || "Không tìm thấy",
+    title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
     // expected: 5,

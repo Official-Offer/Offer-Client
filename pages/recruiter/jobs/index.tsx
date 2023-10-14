@@ -38,7 +38,7 @@ const Jobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push('/jobs/jobForm');
+    router.push('recruiter/postJobs/jobForm');
   }
 
   return (
