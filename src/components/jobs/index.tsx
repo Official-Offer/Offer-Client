@@ -8,7 +8,7 @@ import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { Skeleton } from "antd";
 
-export const JobDescription: React.FC = ({onClick}) => {
+export const JobDescription: React.FC = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
@@ -55,7 +55,7 @@ export const JobDescription: React.FC = ({onClick}) => {
     onError: () => {},
     reloadOnWindowFocus: false,
   });
-  
+
   return (
     <div className="job-desc">
       <div className="job-desc-nav">
@@ -206,7 +206,12 @@ export const JobDescription: React.FC = ({onClick}) => {
         </div>
       </div>
       <div className="job-desc-button">
-        <SubmitButton onClick={()=>{onClick()}} text={"Tiếp tục"} />
+        <SubmitButton
+          onClick={() => {
+            onClick();
+          }}
+          text={"Tiếp tục"}
+        />
       </div>
     </div>
   );
