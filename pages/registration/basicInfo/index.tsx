@@ -15,10 +15,9 @@ import { registerUser } from "@services/apiUser";
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
+  const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
-  const [role, setRol] = useState<string>("student");
-  const { data: session, status } = useSession();
   const mutation = useMutation({
     // queryKey: ["register"],
     mutationFn: registerUser,
@@ -50,20 +49,30 @@ const RegisterStudent: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          <div>
-            <h1>Thông tin cơ bản</h1>
-          </div>
-          <OrgForm
-            onSubmit={(org) => {
-              if (role == "student" || role == "advisor") {
-                dispatch(setSchool(org));
-              } else {
-                dispatch(setCompany(org));
-              }
-            }}
-            isLoading={mutation.isLoading}
-          />
-          <FootnoteForm />
+          {submitted ? (
+            <h3 style={{ color: "purple" }}>
+              Link xác nhận đã được gửi đến email của bạn, vui lòng check email
+              để kích hoạt tài khoản.
+            </h3>
+          ) : (
+            <>
+              <div>
+                <h1>Thông tin cơ bản</h1>
+              </div>
+              <OrgForm
+                onSubmit={(org) => {
+                  if (state.role.isStudent || state.role.isAdvisor) {
+                    dispatch(setSchool(org));
+                  } else {
+                    dispatch(setCompany(org));
+                  }
+                  setSubmitted(true);
+                }}
+                isLoading={mutation.isLoading}
+              />
+              <FootnoteForm />
+            </>
+          )}
         </div>
       </div>
     </div>
