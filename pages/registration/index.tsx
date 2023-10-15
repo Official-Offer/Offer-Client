@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FootnoteForm, LogInForm, OrgForm } from "@components/forms";
+import { FootnoteForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
@@ -15,7 +15,6 @@ import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
-import { set } from "lodash";
 import { SubmitButton } from "@components/button/SubmitButton";
 
 //create a next page for the student home page, code below
@@ -31,7 +30,7 @@ const Registration: NextPage = () => {
   const [role, setRol] = useState<string>("Học sinh");
   const { data: session, status } = useSession();
   const mutation = useMutation({
-    // queryKey: ["login"],
+    // queryKey: ["register"],
     mutationFn: registerUser,
     onSuccess: async (data) => {
       // Invalidate and refetch
