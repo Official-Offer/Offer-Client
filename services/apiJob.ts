@@ -80,8 +80,6 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
-  // const response = await request.get(`/jobs/`);
-  // const jobList = response.data;
   const jobList = [
     {
       timestamp: "",
@@ -148,28 +146,22 @@ export const getApprovedJobs = async () => {
   // const jobList = response.data;
   const jobList = ["1", "2", "3", "4"];
   const companies = [
-    // "Chưa tạo danh sách",
     "VinAI",
     "FB",
     "Amz",
   ];
   const recruiters = [
-    // "Chưa tạo danh sách",
     "vvnguyen@umass.edu",
     "ktto@umass.edu",
     "hto@umass.edu",
   ];
   return jobList.map((job: any) => ({
     key: job,
-    // ID: job.id,
     posted_date: moment(job.timestamp).format("D/M/YYYY") || "09/05/2002",
     title: job.title || "Không tìm thấy",
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
-    // expected: 5,
     applicants: "3 (tổng 100)",
-    // accepted: "70%",
-    // tag: tags[Math.floor(Math.random()*tags.length)],
   }));
 };
 
