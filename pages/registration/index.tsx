@@ -39,28 +39,14 @@ const Registration: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("access_token", data.token);
-      // dispatch({
-      //   type: "SET_LOGIN",
-      //   payload: data.user,
-      // });
       dispatch(setLoggedIn(true));
-      router
-        .push({
-          pathname: state.role.isStudent
-            ? "/student"
-            : state.role.isAdvisor
-            ? "/advisor"
-            : "/recruiter",
-        })
-        .then(() => {
-          router.reload();
-        });
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
+      router.push("/registration/basicInfo").then(() => {
+        router.reload();
+      });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
+      // setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
     },
   });
   if (status === "loading") return <h1> loading... please wait</h1>;
@@ -144,6 +130,7 @@ const Registration: NextPage = () => {
                   />
                 </Form.Item>
                 <SubmitButton
+                  isLoading={mutation.isLoading}
                   text={"Tiếp tục"}
                   onClick={() => {
                     const role =
@@ -152,6 +139,7 @@ const Registration: NextPage = () => {
                         : rol == "Trường"
                         ? "advisor"
                         : "recruiter";
+                    dispatch(setRole(r));
                     mutation.mutate({
                       email,
                       password,
@@ -159,8 +147,6 @@ const Registration: NextPage = () => {
                       lastName,
                       role,
                     });
-                    dispatch(setRole(r));
-                    router.push("/registration/basicInfo");
                   }}
                 />
               </Form>

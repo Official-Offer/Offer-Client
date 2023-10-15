@@ -19,7 +19,7 @@ const Login: NextPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
     // queryKey: ["login"],
@@ -43,7 +43,7 @@ const Login: NextPage = () => {
     onError: (error: any) => {
       console.log(error.response.data.message);
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
+      queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
   const { data: session, status } = useSession();

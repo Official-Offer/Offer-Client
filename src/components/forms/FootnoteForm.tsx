@@ -14,11 +14,11 @@ export const FootnoteForm: React.FC<any> = ({
       {embedLogin ? (
         <div>
           <Typography.Text underline>
-            <Link href="/">Đăng ký</Link>
+            <Link href="/registration">Đăng ký</Link>
           </Typography.Text>
           <br />
           <Typography.Text underline>
-            <Link href="/login">Quên mật khẩu?</Link>
+            <Link href="/registration/forgetPassword">Quên mật khẩu?</Link>
           </Typography.Text>
         </div>
       ) : (
