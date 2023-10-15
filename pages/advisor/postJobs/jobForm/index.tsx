@@ -24,6 +24,9 @@ const PostJobs: NextPage = () => {
       <h1>Tạo công việc mới</h1>
       <div className="recruiter-form">
         <JobPostForm
+          onCancel={(): void => {
+            router.push("/advisor/jobs/approved");
+          }}
           onSubmit={(): void => {
             router.push("/advisor/postJobs/jobDesc");
           }}

@@ -6,10 +6,11 @@ import { setCompany, setDescription, setTitle } from "@redux/actions";
 
 interface IForm {
   onSubmit: () => void;
+  onCancel: () => void;
   isLoading: boolean;
 }
 
-export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
+export const JobPostForm: React.FC = ({ onSubmit, onCancel, isLoading }: IForm) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<string[]>([
@@ -32,6 +33,7 @@ export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
   };
 
   const handleCancel = (event: { preventDefault: () => void }) => {
+    onCancel();
     event.preventDefault();
   };
 
