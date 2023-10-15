@@ -16,6 +16,7 @@ import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { set } from "lodash";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -24,10 +25,13 @@ const Registration: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [r, setR] = useState<any>({});
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
-  const [role, setRol] = useState<string>("Học sinh");
+  const [rol, setRol] = useState<string>("Học sinh");
   const { data: session, status } = useSession();
   const mutation = useMutation({
     // queryKey: ["register"],
@@ -103,15 +107,27 @@ const Registration: NextPage = () => {
               <Form className="form" onSubmit={() => {}} layout="vertical">
                 <div className="form-grid">
                   <Form.Item required label="Họ" className="form-input">
-                    <Input required className="form-item" onChange={() => {}} />
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(value) => {
+                        setFirstName(value.toString());
+                      }}
+                    />
                   </Form.Item>
                   <Form.Item required label="Tên" className="form-input">
-                    <Input required className="form-item" onChange={() => {}} />
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(value) => {
+                        setLastName(value.toString());
+                      }}
+                    />
                   </Form.Item>
                 </div>
                 <Form.Item required label="Chọn vai trò" className="form-input">
                   <Segmented
-                    options={["Học sinh", "Nhà tuyển dụng", "Trường" ]}
+                    options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
                     onResize={undefined}
                     size={"large"}
                     onResizeCapture={undefined}
@@ -122,13 +138,31 @@ const Registration: NextPage = () => {
                         isAdvisor: value.toString() == "Trường",
                         isRecruiter: value.toString() == "Nhà tuyển dụng",
                       };
+                      setR(role);
                       // dispatch(setRole(role));
                     }}
                   />
                 </Form.Item>
-                <SubmitButton text={"Tiep tuc"} onClick={()=> {
-                  router.push("/registration/basicInfo");
-                }}/>
+                <SubmitButton
+                  text={"Tiếp tục"}
+                  onClick={() => {
+                    const role =
+                      rol == "Học sinh"
+                        ? "student"
+                        : rol == "Trường"
+                        ? "advisor"
+                        : "recruiter";
+                    mutation.mutate({
+                      email,
+                      password,
+                      firstName,
+                      lastName,
+                      role,
+                    });
+                    dispatch(setRole(r));
+                    router.push("/registration/basicInfo");
+                  }}
+                />
               </Form>
             </>
           )}

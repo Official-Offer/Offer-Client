@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
-  const listMenu: MenuMiddleNav["items"] = [];
+  const listMenu: MenuMiddleNav["items"] = 
     router.pathname.includes("recruiter") || router.pathname.includes("advisor") 
       ? []
       : [
@@ -61,10 +61,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             routeSelected: "/student/events",
           },
           {
-            name: "Dịch Vụ",
-            link: "/student/service",
+            name: "Công ty",
+            link: "/student/companies",
             newTab: false,
-            routeSelected: "/student/service",
+            routeSelected: "/student/companies",
           },
         ];
 
