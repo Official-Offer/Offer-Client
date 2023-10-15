@@ -35,7 +35,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",
-    "Đăng xuất"
+    "Đăng xuất",
   ];
   const path = [
     // "",
@@ -43,14 +43,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
     isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
     "/profile",
-    "/logout"
+    "/logout",
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     TeamOutlined,
     UploadOutlined,
     UserOutlined,
-    UnlockOutlined
+    UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
@@ -84,52 +84,45 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   console.log(router.pathname);
 
-  if (
-    !isRecruiter &&
-    !isAdvisor 
-  ) {
+  if (isRecruiter || isAdvisor) {
     return (
-      <>
-        <Navbar
-          searchBarHidden={
-            router.pathname.includes("/student/jobs/[id]") ||
-            router.pathname.includes("/student/events/[id]")
-          }
-        />
-        <div>{props.children}</div>
-      </>
-    );
-  }
-  return (
-    <div>
-      {/* <Navbar
+      <div>
+        {/* <Navbar
         searchBarHidden={
           router.pathname.includes("/student/jobs/[id]") ||
           router.pathname.includes("/student/events/[id]")
         }
       /> */}
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider className="navbar-sider">
-          <div className="navbar-sider-logo">
-            <Image
-              src="/images/logo.png"
-              width={40}
-              height={40}
+        <Layout style={{ minHeight: "100vh" }}>
+          <Sider className="navbar-sider">
+            <div className="navbar-sider-logo">
+              <Image src="/images/logo.png" width={40} height={40} />
+            </div>
+            <Menu
+              defaultSelectedKeys={[`/${role}`]}
+              defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
+              selectedKeys={[router.pathname]}
+              mode="inline"
+              inlineCollapsed={collapsed}
+              items={items}
             />
-          </div>
-          <Menu
-            defaultSelectedKeys={[`/${role}`]}
-            defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
-            selectedKeys={[router.pathname]}
-            mode="inline"
-            inlineCollapsed={collapsed}
-            items={items}
-          />
-        </Sider>
-        <Layout className="navbar-with-sider">
-          <div>{props.children}</div>
+          </Sider>
+          <Layout className="navbar-with-sider">
+            <div>{props.children}</div>
+          </Layout>
         </Layout>
-      </Layout>
-    </div>
+      </div>
+    );
+  }
+  return (
+    <>
+      <Navbar
+        searchBarHidden={
+          router.pathname.includes("/student/jobs/[id]") ||
+          router.pathname.includes("/student/events/[id]")
+        }
+      />
+      <div>{props.children}</div>
+    </>
   );
 };

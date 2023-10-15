@@ -28,31 +28,6 @@ const RegisterStudent: NextPage = () => {
           <div>
             <h1>Thông tin cơ bản</h1>
           </div>
-          <Form className="form" onSubmit={() => {}} layout="vertical">
-            <div className="form-grid">
-              <Form.Item label="Tên" className="form-input">
-                <Input required className="form-item" onChange={() => {}} />
-              </Form.Item>
-              <Form.Item label="Họ" className="form-input">
-                <Input required className="form-item" onChange={() => {}} />
-              </Form.Item>
-            </div>
-          </Form>
-          <div>Chọn vai trò</div>
-          <Segmented
-            options={["advisor", "recruiter", "student"]}
-            onResize={undefined}
-            onResizeCapture={undefined}
-            onChange={(value) => {
-              setRol(value.toString());
-              const role = {
-                isStudent: value.toString() == "student",
-                isAdvisor: value.toString() == "advisor",
-                isRecruiter: value.toString() == "recruiter",
-              };
-              dispatch(setRole(role));
-            }}
-          />
           <OrgForm
             onSubmit={(org) => {
               if (role == "student" || role == "advisor") {

@@ -16,6 +16,7 @@ import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { set } from "lodash";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -122,23 +123,14 @@ const Registration: NextPage = () => {
                         isAdvisor: value.toString() == "Trường",
                         isRecruiter: value.toString() == "Nhà tuyển dụng",
                       };
-                      dispatch(setRole(role));
+                      // dispatch(setRole(role));
                     }}
                   />
                 </Form.Item>
+                <SubmitButton text={"Tiep tuc"} onClick={()=> {
+                  router.push("/registration/basicInfo");
+                }}/>
               </Form>
-
-              <OrgForm
-                onSubmit={(org) => {
-                  if (role == "student" || role == "advisor") {
-                    dispatch(setSchool(org));
-                  } else {
-                    dispatch(setCompany(org));
-                  }
-                  setScreen(true);
-                }}
-                isLoading={false}
-              />
             </>
           )}
           {errorMessage && (
