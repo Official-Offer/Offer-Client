@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FootnoteForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
@@ -16,7 +16,6 @@ import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { set } from "lodash";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -24,7 +23,7 @@ const Registration: NextPage = () => {
   const [pwScreen, setScreen] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [r, setR] = useState<any>({});
@@ -49,10 +48,18 @@ const Registration: NextPage = () => {
       // setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
     },
   });
-  if (status === "loading") return <h1> loading... please wait</h1>;
-  if (status === "authenticated") {
-    router.push("/registration/basicInfo");
-  }
+  if (status === "loading") return <h1> Đang tải ... </h1>;
+  // if (status === "authenticated") {
+  //   console.log("logged in with gg");
+    // setEmail(session?.user?.email);
+    // setPassword("google");
+    // router.push("/registration/basicInfo");
+  // }
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //   setScreen(false);
+  //   }
+  // }, [status]);
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -60,7 +67,7 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen ? (
+          {pwScreen && status !== "authenticated" ? (
             <>
               <h1>Đăng ký</h1>
               <br />
@@ -73,10 +80,6 @@ const Registration: NextPage = () => {
               </Button>
               <AuthForm
                 onSubmit={(item: { email: any; password: any }) => {
-                  // return mutation.mutate({
-                  //   email: item.email,
-                  //   password: item.password,
-                  // });
                   setPassword(item.password);
                   setEmail(item.email);
                   setScreen(false);
@@ -129,6 +132,10 @@ const Registration: NextPage = () => {
                     }}
                   />
                 </Form.Item>
+                <SubmitButton onClick={()=>{
+                  //logout google nextjs
+                  
+                }} text={"Log out"}/>
                 <SubmitButton
                   isLoading={mutation.isLoading}
                   text={"Tiếp tục"}

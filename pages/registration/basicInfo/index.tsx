@@ -22,23 +22,9 @@ const RegisterStudent: NextPage = () => {
     // queryKey: ["register"],
     mutationFn: registerUser,
     onSuccess: async (data) => {
-      // Invalidate and refetch
-      // setCookie("access_token", data.token);
-      router
-        .push({
-          pathname: state.role.isStudent
-            ? "/student"
-            : state.role.isAdvisor
-            ? "/advisor"
-            : "/recruiter",
-        })
-        .then(() => {
-          router.reload();
-        });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      // setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
     },
   });
 
