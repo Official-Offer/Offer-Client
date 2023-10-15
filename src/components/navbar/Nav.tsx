@@ -1,7 +1,9 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
+  LockOutlined,
   TeamOutlined,
+  UnlockOutlined,
   UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -33,6 +35,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",
+    "Đăng xuất"
   ];
   const path = [
     // "",
@@ -40,12 +43,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
     isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
     "/profile",
+    "/logout"
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     TeamOutlined,
     UploadOutlined,
     UserOutlined,
+    UnlockOutlined
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
@@ -81,8 +86,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   if (
     !isRecruiter &&
-    !isAdvisor &&
-    !router.pathname.includes("jobs")
+    !isAdvisor 
   ) {
     return (
       <>
