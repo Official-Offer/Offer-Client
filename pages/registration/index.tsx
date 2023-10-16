@@ -10,7 +10,7 @@ import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
@@ -132,10 +132,6 @@ const Registration: NextPage = () => {
                     }}
                   />
                 </Form.Item>
-                <SubmitButton onClick={()=>{
-                  //logout google nextjs
-                  
-                }} text={"Log out"}/>
                 <SubmitButton
                   isLoading={mutation.isLoading}
                   text={"Tiếp tục"}
@@ -156,6 +152,10 @@ const Registration: NextPage = () => {
                     });
                   }}
                 />
+                {/* <SubmitButton onClick={()=>{
+                  //logout google nextjs
+                  signOut();
+                }} text={"Log out"}/> */}
               </Form>
             </>
           )}
