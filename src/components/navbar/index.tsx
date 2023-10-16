@@ -43,7 +43,6 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   // const closeMesPanel = () => {
   //   setHideMesPanel(true);
   // };
-
   const listMenu: MenuMiddleNav["items"] = [];
     // router.pathname.includes("recruiter") || router.pathname.includes("advisor")
     //   ? []
@@ -71,9 +70,8 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   return router.pathname.includes("registration") ||
     router.pathname.includes("email") ||
     router.pathname.includes("login") ||
-    router.pathname.includes("auth") ||
-    router.pathname == "/" ? (
-    <></>
+    router.pathname.includes("auth") ? (
+      <></>
   ) : (
     <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")} >
       <Menu

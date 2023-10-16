@@ -27,7 +27,11 @@ const tagRender = (props: CustomTagProps) => {
   );
 };
 
-const FilterType: React.FC = ({onSearch, ...props }) => (
+type FilterTypeProps = {
+  onSearch?: (value: string[]) => void;
+};
+
+const FilterType: React.FC<FilterTypeProps> = ({onSearch, ...props }) => (
   <div {...props}>
     <Select
       mode="multiple"

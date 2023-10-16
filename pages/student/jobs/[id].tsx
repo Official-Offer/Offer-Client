@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { nextReplaceUrl } from "next-replace-url";
 import { useState, useRef } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "antd";
 import { getJobList } from "@services/apiJob";
 import { FilterNavbar } from "@components/navbar/FilterNavbar";
@@ -34,21 +34,21 @@ const StudentJobs: NextPage = () => {
   // States
   const [jobList, setJobList] = useState<Record<string, unknown>[]>();
   const [jobIndexList, setJobIndexList] = useState<Map<number, number>>(new Map<number, number>());
-  const [activeCardIndex, setActiveCardIndex] = useState();
+  const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
 
   const [jobCardBookmarkClicked, setJobCardBookmarkClicked] = useState<boolean>(false);
   const [jobContentBookmarkClicked, setJobContentBookmarkClicked] = useState<boolean>(false);
 
   // Hooks
   const router = useRouter();
-  const jobID = parseInt(router.query.id);
+  const jobID = router?.query?.id && !Array.isArray(router.query.id) ? parseInt(router.query.id) : 0;
 
   const jobListQuery = useQuery({
-    queryKey: "job-list",
+    queryKey: ["job-list"],
     queryFn: getJobList,
     onSuccess: (res) => {
       // Push the selected job from the link to top for initial load (O(n))
-      setJobList(res.sort((a,b) => a.id === jobID ? -1 : (b.id === jobID ? 1 : 0)));
+      setJobList(res.sort((a: Record<string, unknown>, b: Record<string, unknown>) => a.id === jobID ? -1 : (b.id === jobID ? 1 : 0)));
       for (let i = 0; i < res.length; i++) {
         jobIndexList.set(res[i].id, i);
       }
@@ -59,9 +59,11 @@ const StudentJobs: NextPage = () => {
   })
 
   // Functions
-  const updatePage = (id: number) => {
-    setActiveCardIndex(jobIndexList.get(id));
-    nextReplaceUrl("id", `${id}`);
+  const updatePage = (id: number | unknown) => {
+    if (typeof id === "number") {
+      setActiveCardIndex(jobIndexList.get(id) ?? 0);
+      nextReplaceUrl("id", `${id}`);
+    }
   };
 
   return (
@@ -78,10 +80,10 @@ const StudentJobs: NextPage = () => {
             </li>
             {
               // If the jobs are still loading, show the skeletons
-              !jobListQuery.isLoading
+              !jobListQuery.isLoading && jobList
               ? 
-                jobList.map((job, i) => (
-                  <li id={job.id}>
+                jobList.map((job: any, i: number) => (
+                  <li>
                     <JobCard
                       jobData={job}
                       active={i === activeCardIndex} 

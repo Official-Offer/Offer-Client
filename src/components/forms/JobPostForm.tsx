@@ -17,7 +17,7 @@ interface IForm {
   isLoading: boolean;
 }
 
-export const JobPostForm: React.FC = ({ onSubmit, isLoading }: IForm) => {
+export const JobPostForm: React.FC<IForm> = ({ onSubmit, isLoading }) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<string[]>([

@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import Link from "next/link";
 import { getBookmarkedList, unbookmarkJob } from "services/apiJob";
@@ -8,6 +8,22 @@ import { Card as AntdCard, Button, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { StyledListCard } from "@styles/styled-components/styledBox";
 import { StyledMenuButton } from "@styles/styled-components/styledButton";
+
+type BookmarkedCardProps = {
+  bookmark?: {
+    job_id?: string;
+    job_info?: {
+      id: string;
+      title: string;
+      location: string;
+      time_published: string;
+      company_data: {
+        name: string;
+      };
+    };
+    timestamp?: string;
+  }
+}
 
 const BookmarkedJobs: NextPage = () => {
   // States
@@ -17,7 +33,7 @@ const BookmarkedJobs: NextPage = () => {
   const queryClient = useQueryClient();
 
   const bookmarkedListQuery = useQuery({
-    queryKey: "bookmarkedJobs",
+    queryKey: ["bookmarkedJobs"],
     queryFn: getBookmarkedList,
     onSuccess: (res) => setBookmarkedList(res),
     onError: (err) => console.log(`Not able to load bookmarkedJobs: ${err}`),
@@ -32,7 +48,7 @@ const BookmarkedJobs: NextPage = () => {
   });
 
   // Functions
-  const handleUnbookmark = (event) => {
+  const handleUnbookmark = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const id = event.currentTarget.id;
     Modal.confirm({
@@ -48,34 +64,36 @@ const BookmarkedJobs: NextPage = () => {
   };
 
   // Components
-  const BookmarkedCard = ({ bookmark }): React.FC => (
+  const BookmarkedCard: React.FC<BookmarkedCardProps> = ({ bookmark }) => (
     <StyledListCard hasLink>
-      <Link href={`/student/jobs/${bookmark.job_info.id}`}>
-        <div className="link-wrapped">
-          <div className="content-img">
+      <>
+        <Link href={`/student/jobs/${bookmark?.job_info?.id}`}>
+          <div className="link-wrapped">
+            <div className="content-img">
+            </div>
+            <div className="content-body">
+              <div className="content-body-title">
+                <h2>{bookmark?.job_info?.title}</h2>
+              </div>
+              <div className="content-body-main">
+                <p>{bookmark?.job_info?.company_data.name}</p>
+                <p>{bookmark?.job_info?.location}</p>
+              </div>
+            </div>
+            <div className="content-dates">
+              <div className="date-posted">
+                Đăng vào {moment(bookmark?.job_info?.time_published).format("D/M/YYYY")}
+              </div>
+              <div className="date-saved">
+                Lưu vào {moment(bookmark?.timestamp).format("D/M/YYYY")}
+              </div>
+            </div>
           </div>
-          <div className="content-body">
-            <div className="content-body-title">
-              <h2>{bookmark.job_info.title}</h2>
-            </div>
-            <div className="content-body-main">
-              <p>{bookmark.job_info.company_data.name}</p>
-              <p>{bookmark.job_info.location}</p>
-            </div>
-          </div>
-          <div className="content-dates">
-            <div className="date-posted">
-              Đăng vào {moment(bookmark.job_info.time_published).format("D/M/YYYY")}
-            </div>
-            <div className="date-saved">
-              Lưu vào {moment(bookmark.timestamp).format("D/M/YYYY")}
-            </div>
-          </div>
+        </Link>
+        <div className="close-btn" id={bookmark?.job_id} onClick={handleUnbookmark}>
+          <CloseOutlined />
         </div>
-      </Link>
-      <div className="close-btn" id={bookmark.job_id} onClick={handleUnbookmark}>
-        <CloseOutlined />
-      </div>
+      </>
     </StyledListCard>
   );
 

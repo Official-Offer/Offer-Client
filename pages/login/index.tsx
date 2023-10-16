@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FootnoteForm, LogInForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "services/apiStudent";
 import { userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
@@ -22,7 +22,7 @@ const Login: NextPage = () => {
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
-    // queryKey: ["login"],
+    mutationKey: ["login"],
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch

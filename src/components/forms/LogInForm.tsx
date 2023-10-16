@@ -19,27 +19,26 @@ interface ILogInForm {
   isLoading: boolean;
 }
 
-export const LogInForm: React.FC = ({ onSubmit, isLoading }: ILogInForm) => {
+export const LogInForm: React.FC<ILogInForm> = ({ onSubmit, isLoading }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
-  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value ?? "");
   };
 
-  const handleEmailChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setEmail(event.target.value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value ?? "");
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     console.log(email, password)
     onSubmit({ email, password });
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Email">

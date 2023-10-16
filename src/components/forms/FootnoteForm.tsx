@@ -1,7 +1,11 @@
 import { Typography } from "antd";
 import Link from "next/link";
 
-export const FootnoteForm: React.FC = ({embedLogin}: boolean) => {
+type FootnooteFormProps = {
+  embedLogin?: boolean;
+}
+
+export const FootnoteForm: React.FC<FootnooteFormProps> = ({ embedLogin }) => {
   return (
     <div>
       <hr />

@@ -21,7 +21,7 @@ export const Card = styled.div`
   flex-direction: column;
 `;
 
-export const StyledNotiBox = styled.div`
+export const StyledNotiBox = styled.div<JSXElement | Record<string, boolean>>`
   display: flex;
   align-items: center;
   padding: ${({large}) => large ? "24px" : "12px"};
@@ -175,7 +175,7 @@ export const StyledResumeCard = styled.div`
   }
 `;
 
-export const StyledListCard = styled.div`
+export const StyledListCard = styled.div<JSXElement | Record<string, boolean>>`
   display: flex;
   align-items: center;
   position: relative;

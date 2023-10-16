@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextPage } from "next";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
@@ -54,7 +54,7 @@ const JobDescription: NextPage = (comp) => {
       //   setJob(res);
     },
     onError: () => {},
-    reloadOnWindowFocus: false,
+    refetchOnWindowFocus: false,
   });
   return (
     <div className="job-desc">
@@ -85,7 +85,7 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
+                <LoadingLine loading={jobQuery.isFetching}>
                   <p>{salary}</p>
                 </LoadingLine>
               )}
@@ -102,7 +102,7 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 ></input>
               ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
+                <LoadingLine loading={jobQuery.isFetching}>
                   <p>{level}</p>
                 </LoadingLine>
               )}
@@ -119,7 +119,7 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
+                <LoadingLine loading={jobQuery.isFetching}>
                   <p>{type}</p>
                 </LoadingLine>
               )}
@@ -136,7 +136,7 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
+                <LoadingLine loading={jobQuery.isFetching}>
                   <p>{exp}</p>
                 </LoadingLine>
               )}
@@ -155,7 +155,7 @@ const JobDescription: NextPage = (comp) => {
                   }}
                 />
               ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
+                <LoadingLine loading={jobQuery.isFetching}>
                   <p>{location}</p>
                 </LoadingLine>
               )}

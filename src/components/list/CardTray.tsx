@@ -5,8 +5,8 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 type TrayProps = {
   cardList: unknown[],
-  cardsDisplayNum: number,
-  isLoading: boolean,
+  cardsDisplayNum?: number,
+  isLoading?: boolean,
 };
 
 export const CardTray: React.FC<TrayProps> = ({cardList, cardsDisplayNum, isLoading}) => {

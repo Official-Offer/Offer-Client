@@ -31,7 +31,7 @@ export const updateUser = async (body: any) => {
   return response.data;
 }
 
-export const changePassword = async (body: Record<string, string>) => {
+export const changePassword = async (body: Record<string, string> | void) => {
   const response = await request.put(`/accounts/change-password/`, body);
   return response.data;
 }

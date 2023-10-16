@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
+import Link from "next/link";
 import { increase, decrease } from "@redux/actions";
 import { RootState } from "@redux/reducers";
 import { useAppDispatch } from "@redux/store";

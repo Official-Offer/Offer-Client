@@ -1,12 +1,13 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { getServerSession } from "next-auth/next";
 import { Card as AntdCard, Button } from "antd";
 import { EventCard, InfoCard } from "@components/card";
 import { CardTray } from "@components/list";
 import { getStudentDetails } from "services/apiStudent";
 import { getJobList } from "@services/apiJob";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getUserDetails } from "@services/apiUser";
 import { useSession } from "next-auth/react";
 
@@ -90,6 +91,7 @@ const eventList = [
 
 const clubList = [
   {
+    id: 0,
     name: "Marketing Member",
     institution: "CLB Doi Ngoai DHNT ",
     location: "TP. Hồ Chí Minh",
@@ -114,10 +116,10 @@ const scholarshipList = [
 
 //create a next page for the student home page, code below
 const Home: NextPage = () => {
-  const [jobList, setJobList] = useState([]);
+  const [jobList, setJobList] = useState<any[]>([]);
   // Fetching jobs list
   const jobQuery = useQuery({
-    queryKey: "jobs",
+    queryKey: ["jobs"],
     queryFn: getJobList,
     onSuccess: (response) => setJobList(response),
     onError: (error) => console.log(`Error: ${error}`),
@@ -158,24 +160,10 @@ const Home: NextPage = () => {
           </div>
         </section>
         <section>
-          <h2>Câu Lạc Bộ</h2>
-          <CardTray cardList={clubList.map((info) => <InfoCard info={info} loading={false} />)} cardsDisplayNum={0} isLoading={false} />
-          <div className="link-arrow">
-            <Link href="student/clubs">Xem thêm câu lạc bộ</Link>
-          </div>
-        </section>
-        <section>
           <h2>Sự Kiện</h2>
           <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} cardsDisplayNum={0} isLoading={false} />
           <div className="link-arrow">
             <Link href="student/events">Xem thêm sự kiện</Link>
-          </div>
-        </section>
-        <section>
-          <h2>Học Bổng</h2>
-          <CardTray cardList={scholarshipList.map((info) => <InfoCard info={info} loading={false} />)} cardsDisplayNum={0} isLoading={false} />
-          <div className="link-arrow">
-            <Link href="student/scholarships">Xem thêm học bổng</Link>
           </div>
         </section>
       </div>
@@ -184,3 +172,14 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+// export const getServerSideProps = async (context) => {
+//   const session = await getServerSession(context);
+//   // const userDetails = await getUserDetails(session.user.email);
+//   return {
+//     props: {
+//       session,
+//       // userDetails,
+//     },
+//   };
+// }

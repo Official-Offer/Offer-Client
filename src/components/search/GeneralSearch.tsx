@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import parse from "html-react-parser";
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getSearch } from "services/apiSearch";
 import { Input, Dropdown, Card } from "antd";
 import { SearchOutlined, LoadingOutlined } from "@ant-design/icons";
@@ -18,7 +18,7 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
 
   // Hooks
   const searchQuery = useQuery({
-    queryKey: "search",
+    queryKey: ["search"],
     queryFn: () => searchInput !== "" && getSearch(searchInput),
     onSuccess: (res) => {
       setSearchResult(res);
@@ -29,15 +29,14 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
 
   useEffect(() => {
     // Prevent calling API for every change
-    let resetTimer;
-    resetTimer = setTimeout(() => {
+    let resetTimer = setTimeout(() => {
       searchQuery.refetch();
     }, 500);
     return () => clearTimeout(resetTimer);
   }, [searchInput]);
 
   // Functions
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target?.value ?? "");
     setOpenDropdown(event.target?.value !== "");
   };

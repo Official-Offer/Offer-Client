@@ -1,12 +1,16 @@
 import React from "react";
 import { Button as BaseButton } from "antd";
-import { ButtonProps } from "antd/lib/button";
 import { StyledSubmitButton } from "@styles/styled-components/styledButton";
 import Image from "next/image";
 
-export type IButton = ButtonProps;
+type SubmitButtonProps = {
+  text?: string;
+  isLoading?: boolean;
+  onClick?: (event: { preventDefault: () => void }) => void;
+  type?: number;
+}
 
-export const SubmitButton: React.FC<IButton> = ({text, isLoading, onClick, type}: any) => {
+export const SubmitButton: React.FC<SubmitButtonProps> = ({text, isLoading, onClick, type}: any) => {
   const styles = type == 2 ? {
     width: '150px',
     background: 'gray',

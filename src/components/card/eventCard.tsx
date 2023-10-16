@@ -5,12 +5,13 @@ import { Card } from "./index";
 
 type EventCardProps = {
   info: {
-    name?: string,
-    institution?: string,
-    location?: string,
-    attribute?: string,
-    commonSchool?: Array<Object>,
-    date?: Date,
+    name: string,
+    institution: string,
+    location: string,
+    attribute: string,
+    commonSchool: Array<Object>,
+    date: Date,
+    cover?: string,
   },
 };
 
@@ -18,7 +19,7 @@ export const EventCard: React.FC<EventCardProps> = ({ info, ...rest }) => {
   return (
     <Card 
       className="event-card"
-      cover={info.cover !== undefined ? <img alt={info.name + " at " + info.institution} src={info.cover}/> : ""}
+      cover={(info.cover !== undefined) ? <img alt={info.name + " at " + info.institution} src={info.cover}/> : ""}
       children={
           <div>
             <div className="event-date">
