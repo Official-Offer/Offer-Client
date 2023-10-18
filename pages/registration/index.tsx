@@ -28,8 +28,8 @@ const Registration: NextPage = () => {
   const [lastName, setLastName] = useState<string>("");
   const [r, setR] = useState<any>({});
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const state = useSelector((state: RootState) => state.account);
+  // const queryClient = useQueryClient();
+  // const state = useSelector((state: RootState) => state.account);
   const [rol, setRol] = useState<string>("Học sinh");
   const { data: session, status } = useSession();
   const mutation = useMutation({

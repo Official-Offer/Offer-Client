@@ -66,8 +66,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         else {
           //sign out traditional way
         }
-        router.push("/");
-        return;
+        router.push("/login");
       }
       else if (!(index == 0 && role == "advisor")) {
         router.push(`/${role}${path[index]}`);
