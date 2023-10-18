@@ -14,6 +14,8 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
+import { removeCookies } from "cookies-next";
+import { signOut, useSession } from "next-auth/react";
 
 const { Sider } = Layout;
 
@@ -22,9 +24,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const state = useSelector((state: RootState) => state.account);
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor =
-    state.role.isAdvisor || router.pathname.includes("advisor");
+  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
+  const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
@@ -56,8 +58,20 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (!(index == 0 && role == "advisor"))
+      if (index == 4) {
+        // removeCookies(null, "token");
+        if (status == "authenticated") {
+          signOut();
+        }
+        else {
+          //sign out traditional way
+        }
+        router.push("/");
+        return;
+      }
+      else if (!(index == 0 && role == "advisor")) {
         router.push(`/${role}${path[index]}`);
+      }
     },
     children:
       index == 0 && role == "advisor"
@@ -84,7 +98,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   console.log(router.pathname);
 
-  if (router.pathname.includes("recruiter") || router.pathname.includes("advisor")) {
+  if (
+    router.pathname.includes("recruiter") ||
+    router.pathname.includes("advisor")
+  ) {
     return (
       <div>
         {/* <Navbar
