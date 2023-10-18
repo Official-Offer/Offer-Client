@@ -247,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
-              </Menu.Item> */}
+              </Menu.Item> 
               <Menu.Item>
                 <div
                   onClick={() => {

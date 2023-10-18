@@ -10,7 +10,11 @@ interface IForm {
   isLoading: boolean;
 }
 
-export const JobPostForm: React.FC = ({ onSubmit, onCancel, isLoading }: IForm) => {
+export const JobPostForm: React.FC = ({
+  onSubmit,
+  onCancel,
+  isLoading,
+}: IForm) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<string[]>([
@@ -57,7 +61,8 @@ export const JobPostForm: React.FC = ({ onSubmit, onCancel, isLoading }: IForm) 
           </Select>
         </Form.Item> */}
         <Form.Item label="Miêu tả" className="form-input full-width">
-          <Input
+          <Input.TextArea
+            rows={6}
             required
             className="form-item-long"
             onChange={handleDescChange}

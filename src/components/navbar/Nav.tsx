@@ -23,7 +23,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor =
-    state.role.isRecruiter || router.pathname.includes("advisor");
+    state.role.isAdvisor || router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
@@ -84,7 +84,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   console.log(router.pathname);
 
-  if (isRecruiter || isAdvisor) {
+  if (router.pathname.includes("recruiter") || router.pathname.includes("advisor")) {
     return (
       <div>
         {/* <Navbar
