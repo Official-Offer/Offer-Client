@@ -44,34 +44,32 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
-  const listMenu: MenuMiddleNav["items"] = [];
-    // router.pathname.includes("recruiter") || router.pathname.includes("advisor")
-    //   ? []
-    //   : [
-    //       {
-    //         name: "Công việc",
-    //         link: "/student/jobs",
-    //         newTab: false,
-    //         routeSelected: "/student/jobs",
-    //       },
-    //       {
-    //         name: "Sự kiện",
-    //         link: "/student/events",
-    //         newTab: false,
-    //         routeSelected: "/student/events",
-    //       },
-    //       {
-    //         name: "Dịch Vụ",
-    //         link: "/student/service",
-    //         newTab: false,
-    //         routeSelected: "/student/service",
-    //       },
-    //     ];
+  const listMenu: MenuMiddleNav["items"] = 
+    router.pathname.includes("recruiter") || router.pathname.includes("advisor") 
+      ? []
+      : [
+          {
+            name: "Công việc",
+            link: "/student/jobs",
+            newTab: false,
+            routeSelected: "/student/jobs",
+          },
+          {
+            name: "Sự kiện",
+            link: "/student/events",
+            newTab: false,
+            routeSelected: "/student/events",
+          },
+          {
+            name: "Công ty",
+            link: "/student/companies",
+            newTab: false,
+            routeSelected: "/student/companies",
+          },
+        ];
 
   return router.pathname.includes("registration") ||
-    router.pathname.includes("email") ||
     router.pathname.includes("login") ||
-    router.pathname.includes("auth") ||
     router.pathname == "/" ? (
     <></>
   ) : (
@@ -249,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
-              </Menu.Item> */}
+              </Menu.Item> 
               <Menu.Item>
                 <div
                   onClick={() => {

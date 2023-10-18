@@ -1,5 +1,5 @@
 export interface JobDataType {
-  // key: string | null;
+  key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -12,7 +12,7 @@ export interface JobDataType {
 }
 
 export interface UnapprovedJobDataType {
-  // key: string | null;
+  key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -25,7 +25,7 @@ export interface UnapprovedJobDataType {
 }
 
 export interface ApprovedJobDataType {
-  // key: string | null;
+  key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -38,7 +38,7 @@ export interface ApprovedJobDataType {
 }
 
 export interface ApplicantDataType {
-  // key: string | null;
+  key: string | null;
   // ID: string | null;
   name: string | null;
   school: string | null;

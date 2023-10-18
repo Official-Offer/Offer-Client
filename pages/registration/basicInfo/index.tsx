@@ -9,14 +9,24 @@ import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useMutation } from "react-query";
+import { registerUser } from "@services/apiUser";
 
 //create a next page for the student home page, code below
 const RegisterStudent: NextPage = () => {
   const router = useRouter();
+  const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
-  const [role, setRol] = useState<string>("student");
-  const { data: session, status } = useSession();
+  const mutation = useMutation({
+    // queryKey: ["register"],
+    mutationFn: registerUser,
+    onSuccess: async (data) => {
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+    },
+  });
 
   return (
     <div className="register">
@@ -25,45 +35,30 @@ const RegisterStudent: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          <div>
-            <h1>Thông tin cơ bản</h1>
-          </div>
-          <Form className="form" onSubmit={() => {}} layout="vertical">
-            <div className="form-grid">
-              <Form.Item label="Tên" className="form-input">
-                <Input required className="form-item" onChange={() => {}} />
-              </Form.Item>
-              <Form.Item label="Họ" className="form-input">
-                <Input required className="form-item" onChange={() => {}} />
-              </Form.Item>
-            </div>
-          </Form>
-          <div>Chọn vai trò</div>
-          <Segmented
-            options={["advisor", "recruiter", "student"]}
-            onResize={undefined}
-            onResizeCapture={undefined}
-            onChange={(value) => {
-              setRol(value.toString());
-              const role = {
-                isStudent: value.toString() == "student",
-                isAdvisor: value.toString() == "advisor",
-                isRecruiter: value.toString() == "recruiter",
-              };
-              dispatch(setRole(role));
-            }}
-          />
-          <OrgForm
-            onSubmit={(org) => {
-              if (role == "student" || role == "advisor") {
-                dispatch(setSchool(org));
-              } else {
-                dispatch(setCompany(org));
-              }
-            }}
-            isLoading={false}
-          />
-          <FootnoteForm />
+          {submitted ? (
+            <h3 style={{ color: "purple" }}>
+              Link xác nhận đã được gửi đến email của bạn, vui lòng check email
+              để kích hoạt tài khoản.
+            </h3>
+          ) : (
+            <>
+              <div>
+                <h1>Thông tin cơ bản</h1>
+              </div>
+              <OrgForm
+                onSubmit={(org) => {
+                  if (state.role.isStudent || state.role.isAdvisor) {
+                    dispatch(setSchool(org));
+                  } else {
+                    dispatch(setCompany(org));
+                  }
+                  setSubmitted(true);
+                }}
+                isLoading={mutation.isLoading}
+              />
+              <FootnoteForm />
+            </>
+          )}
         </div>
       </div>
     </div>

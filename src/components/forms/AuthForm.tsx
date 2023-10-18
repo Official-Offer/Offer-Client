@@ -54,7 +54,7 @@ export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignu
             <Input
               required
               className="form-item"
-              placeholder={state.email}
+              placeholder={"Email"}
               onChange={handleEmailChange}
             />
           </Form.Item>

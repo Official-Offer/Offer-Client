@@ -1,8 +1,9 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
-  // ScheduleOutlined,
-  // TeamOutlined,
+  LockOutlined,
+  TeamOutlined,
+  UnlockOutlined,
   UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -12,6 +13,9 @@ import router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
+import Image from "next/image";
+import { removeCookies } from "cookies-next";
+import { signOut, useSession } from "next-auth/react";
 
 const { Sider } = Layout;
 
@@ -20,9 +24,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const state = useSelector((state: RootState) => state.account);
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor =
-    state.role.isRecruiter || router.pathname.includes("advisor");
+  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
+  const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
@@ -32,28 +36,41 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "Công việc",
     isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    // "Sự kiện",
+    "Tài khoản",
+    "Đăng xuất",
   ];
   const path = [
     // "",
     "/jobs",
     isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
-    // "/events",
+    "/profile",
+    "/logout",
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
-    UserOutlined,
+    TeamOutlined,
     UploadOutlined,
-    // ScheduleOutlined,
-    // TeamOutlined,
+    UserOutlined,
+    UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (!(index == 0 && role == "advisor"))
+      if (index == 4) {
+        // removeCookies(null, "token");
+        if (status == "authenticated") {
+          signOut();
+        }
+        else {
+          //sign out traditional way
+        }
+        router.push("/login");
+      }
+      else if (!(index == 0 && role == "advisor")) {
         router.push(`/${role}${path[index]}`);
+      }
     },
     children:
       index == 0 && role == "advisor"
@@ -81,45 +98,47 @@ export const Nav: React.FC = (props: any): ReactElement => {
   console.log(router.pathname);
 
   if (
-    router.pathname.includes("login") ||
-    router.pathname.includes("registration")
+    router.pathname.includes("recruiter") ||
+    router.pathname.includes("advisor")
   ) {
     return (
-      <>
-        <Navbar
-          searchBarHidden={
-            router.pathname.includes("/student/jobs/[id]") ||
-            router.pathname.includes("/student/events/[id]")
-          }
-        />
-        <div>{props.children}</div>
-      </>
+      <div>
+        {/* <Navbar
+        searchBarHidden={
+          router.pathname.includes("/student/jobs/[id]") ||
+          router.pathname.includes("/student/events/[id]")
+        }
+      /> */}
+        <Layout style={{ minHeight: "100vh" }}>
+          <Sider className="navbar-sider">
+            <div className="navbar-sider-logo">
+              <Image src="/images/logo.png" width={40} height={40} />
+            </div>
+            <Menu
+              defaultSelectedKeys={[`/${role}`]}
+              defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
+              selectedKeys={[router.pathname]}
+              mode="inline"
+              inlineCollapsed={collapsed}
+              items={items}
+            />
+          </Sider>
+          <Layout className="navbar-with-sider">
+            <div>{props.children}</div>
+          </Layout>
+        </Layout>
+      </div>
     );
   }
   return (
-    <Layout>
+    <>
       <Navbar
         searchBarHidden={
           router.pathname.includes("/student/jobs/[id]") ||
           router.pathname.includes("/student/events/[id]")
         }
       />
-      <Layout>
-        <Sider className="navbar-sider">
-          <Menu
-            defaultSelectedKeys={[`/${role}`]}
-            defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
-            selectedKeys={[router.pathname]}
-            mode="inline"
-            inlineCollapsed={collapsed}
-            items={items}
-          />
-          <div className="navbar-sider-logo">Logo</div>
-        </Sider>
-        <Layout className="navbar-with-sider">
-          <div>{props.children}</div>
-        </Layout>
-      </Layout>
-    </Layout>
+      <div>{props.children}</div>
+    </>
   );
 };
