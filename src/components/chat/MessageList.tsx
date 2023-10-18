@@ -1,4 +1,6 @@
-import { useMessages } from '@utils/useMessages'
+// import { useMessages } from '@utils/useMessages'
+
+import { useMessages } from "utils/useMessages"
 
 const MessagesList = () => {
   const { messages, isLoadingAnswer } = useMessages()

@@ -10,6 +10,7 @@ import store from "@redux/store";
 import LayoutGlobal from "src/common/LayoutGlobal";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "next-auth/react";
+import { ModalProvider, ToastProvider } from "@apideck/components";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const AntdTheme = {
@@ -26,17 +27,22 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         strategy="afterInteractive"
         src="https://accounts.google.com/gsi/client"
       > */}
-      <QueryClientProvider client={queryClient}>
-        <StyledThemeProvider>
-          <Provider store={store}>
-            <SessionProvider session={session}>
-              <LayoutGlobal>
-                <Component {...pageProps} />
-              </LayoutGlobal>
-            </SessionProvider>
-          </Provider>
-        </StyledThemeProvider>
-      </QueryClientProvider>
+      <ToastProvider>
+        <ModalProvider>
+          <QueryClientProvider client={queryClient}>
+            <StyledThemeProvider>
+              <Provider store={store}>
+                <SessionProvider session={session}>
+                  <LayoutGlobal>
+                    <Component {...pageProps} />
+                  </LayoutGlobal>
+                </SessionProvider>
+              </Provider>
+            </StyledThemeProvider>
+          </QueryClientProvider>
+        </ModalProvider>
+      </ToastProvider>
+
       {/* </Script> */}
     </ConfigProvider>
   );
