@@ -11,7 +11,7 @@ export const getSchool = async (id: number) => {
 }
 
 export const updateEducation = async (body: any) => {
-  const response = await request.post(`/accounts/register/`, body);
+  const response = await request.post(`/students/education/`, body);
   return response.data;
 }
 

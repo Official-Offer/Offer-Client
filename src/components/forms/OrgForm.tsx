@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-// import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Form, Input, Select, Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
@@ -55,7 +51,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
                 ? "Kết nối với trường của bạn"
                 : "Kết nối với công ty của bạn"
             }
-            
           >
             <Select
               showSearch
@@ -64,7 +59,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
               onChange={handleOrgChange}
             >
               {orgs.map((org: any) => (
-                <Select.Option className="form-select-dropdown" value={org.name}>
+                <Select.Option className="form-select-dropdown" value={org.id}>
                   {org.name}
                 </Select.Option>
               ))}
