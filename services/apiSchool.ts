@@ -10,6 +10,11 @@ export const getSchool = async (id: number) => {
   return response.data.message; // For some reasons the data is in the message field
 }
 
+export const updateEducation = async (body: any) => {
+  const response = await request.post(`/accounts/register/`, body);
+  return response.data;
+}
+
 export const getSchoolsForRecruiter = async (id: number) => {
   // const response = (await request.get(`/schools/`)).data;
   const schools = [

@@ -7,6 +7,9 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { useQuery } from "react-query";
+import { getSchoolList } from "@services/apiSchool";
+import { getCompanyList } from "@services/apiCompany";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -17,14 +20,22 @@ export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
   isLoading,
 }: IOrgForm) => {
+  const [orgs, setOrgs] = useState([]);
   const [Org, setOrg] = useState("");
   const state = useSelector((state: RootState) => state.account);
-  const [schools, setSchools] = useState([
-    "Bách Khoa",
-    "Sư Phạm",
-    "Ngoại Thương",
-  ]);
-  const [companies, setCompanies] = useState(["OpenAI", "Google", "Facebook"]);
+  const schoolQuery = useQuery({
+    queryKey: ["jobs"],
+    queryFn:
+      state.role.isAdvisor || state.role.isStudent
+        ? getSchoolList
+        : getCompanyList,
+    onSuccess: async (orgs) => {
+      setOrgs(orgs);
+      console.log(orgs);
+    },
+    onError: () => {},
+  });
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(Org);
@@ -44,7 +55,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                 ? "Kết nối với trường của bạn"
                 : "Kết nối với công ty của bạn"
             }
-            required
+            
           >
             <Select
               showSearch
@@ -52,23 +63,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
               bordered={false}
               onChange={handleOrgChange}
             >
-              {state.role.isStudent || state.role.isAdvisor
-                ? schools.map((school) => (
-                    <Select.Option
-                      className="form-select-dropdown"
-                      value={school}
-                    >
-                      {school}
-                    </Select.Option>
-                  ))
-                : companies.map((company) => (
-                    <Select.Option
-                      className="form-select-dropdown"
-                      value={company}
-                    >
-                      {company}
-                    </Select.Option>
-                  ))}
+              {orgs.map((org) => (
+                <Select.Option className="form-select-dropdown" value={org}>
+                  {org}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -85,7 +84,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       </div>
       <SubmitButton
         text="Đăng ký"
-        isLoading={isLoading}
+        isLoading={schoolQuery.isLoading && isLoading}
         onClick={handleSubmit}
       />
     </Form>

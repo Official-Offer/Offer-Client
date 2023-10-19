@@ -9,20 +9,22 @@ import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { registerUser } from "@services/apiUser";
+import { getCookie } from "cookies-next";
+import { getSchoolList } from "@services/apiSchool";
+import { BackwardOutlined } from "@ant-design/icons";
 
-//create a next page for the student home page, code below
-const RegisterStudent: NextPage = () => {
+const BasicInformation: NextPage = () => {
   const router = useRouter();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
+  console.log("access token", getCookie("access_token"));
   const mutation = useMutation({
     // queryKey: ["register"],
     mutationFn: registerUser,
-    onSuccess: async (data) => {
-    },
+    onSuccess: async (data) => {},
     onError: (error: any) => {
       console.log(error.response.data.message);
     },
@@ -38,10 +40,21 @@ const RegisterStudent: NextPage = () => {
           {submitted ? (
             <h3 style={{ color: "purple" }}>
               Link xác nhận đã được gửi đến email của bạn, vui lòng check email
-              để kích hoạt tài khoản.
+              để kích hoạt tài khoản. Không nhận được email?{" "}
+              <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
             </h3>
           ) : (
             <>
+              <p
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  router.push("/registration");
+                }}
+              >
+                <BackwardOutlined /> Quay lại
+              </p>
               <div>
                 <h1>Thông tin cơ bản</h1>
               </div>
@@ -65,4 +78,4 @@ const RegisterStudent: NextPage = () => {
   );
 };
 
-export default RegisterStudent;
+export default BasicInformation;

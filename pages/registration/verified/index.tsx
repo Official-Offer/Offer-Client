@@ -18,7 +18,6 @@ const VerifyPassword: NextPage = () => {
         <div className="register-content-form">
           <h1 style={{ color: "Purple" }}>Email đã được xác nhận.</h1>
           <br />
-          {/* center this div*/}
           <div
             style={{
               display: "flex",

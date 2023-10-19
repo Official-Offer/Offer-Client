@@ -9,7 +9,7 @@ import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
-import { GoogleOutlined } from "@ant-design/icons";
+import { BackwardOutlined, GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
@@ -26,7 +26,11 @@ const Registration: NextPage = () => {
   const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [r, setR] = useState<any>({});
+  const [r, setR] = useState<any>({
+    isStudent: true,
+    isAdvisor: false,
+    isRecruiter: false,
+  });
   const dispatch = useDispatch();
   // const queryClient = useQueryClient();
   // const state = useSelector((state: RootState) => state.account);
@@ -37,29 +41,25 @@ const Registration: NextPage = () => {
     mutationFn: registerUser,
     onSuccess: async (data) => {
       // Invalidate and refetch
-      setCookie("access_token", data.token);
+      console.log(data);
+      setCookie("access_token", data.message.token);
       dispatch(setLoggedIn(true));
       router.push("/registration/basicInfo").then(() => {
-        router.reload();
+        // router.reload();
       });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      // setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
+      setErrorMessage(error.response.data.message);
     },
   });
   if (status === "loading") return <h1> Đang tải ... </h1>;
   // if (status === "authenticated") {
   //   console.log("logged in with gg");
-    // setEmail(session?.user?.email);
-    // setPassword("google");
-    // router.push("/registration/basicInfo");
+  // setEmail(session?.user?.email);
+  // setPassword("google");
+  // router.push("/registration/basicInfo");
   // }
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //   setScreen(false);
-  //   }
-  // }, [status]);
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -90,6 +90,16 @@ const Registration: NextPage = () => {
             </>
           ) : (
             <>
+              <p
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setScreen(true);
+                }}
+              >
+                <BackwardOutlined /> Quay lại
+              </p>
               <div>
                 <h1>Thông tin cơ bản</h1>
               </div>
@@ -99,8 +109,8 @@ const Registration: NextPage = () => {
                     <Input
                       required
                       className="form-item"
-                      onChange={(value) => {
-                        setFirstName(value.toString());
+                      onChange={(event) => {
+                        setFirstName(event.target.value);
                       }}
                     />
                   </Form.Item>
@@ -108,8 +118,8 @@ const Registration: NextPage = () => {
                     <Input
                       required
                       className="form-item"
-                      onChange={(value) => {
-                        setLastName(value.toString());
+                      onChange={(event) => {
+                        setLastName(event.target.value);
                       }}
                     />
                   </Form.Item>
@@ -142,6 +152,7 @@ const Registration: NextPage = () => {
                         : rol == "Trường"
                         ? "advisor"
                         : "recruiter";
+                    console.log(r);
                     dispatch(setRole(r));
                     mutation.mutate({
                       email,
