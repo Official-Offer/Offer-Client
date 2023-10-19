@@ -39,6 +39,7 @@ const RegisterStudent: NextPage = () => {
             <h3 style={{ color: "purple" }}>
               Link xác nhận đã được gửi đến email của bạn, vui lòng check email
               để kích hoạt tài khoản.
+              Không nhận được email? <a>Nhấn vào link này để gửi lại email.</a>
             </h3>
           ) : (
             <>

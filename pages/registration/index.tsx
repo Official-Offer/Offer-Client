@@ -51,9 +51,9 @@ const Registration: NextPage = () => {
   if (status === "loading") return <h1> Đang tải ... </h1>;
   // if (status === "authenticated") {
   //   console.log("logged in with gg");
-    // setEmail(session?.user?.email);
-    // setPassword("google");
-    // router.push("/registration/basicInfo");
+  // setEmail(session?.user?.email);
+  // setPassword("google");
+  // router.push("/registration/basicInfo");
   // }
   // useEffect(() => {
   //   if (status === "authenticated") {
@@ -67,17 +67,18 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen && status !== "authenticated" ? (
+          {pwScreen ? (
+            // && status !== "authenticated"
             <>
               <h1>Đăng ký</h1>
               <br />
-              <Button
+              {/* <Button
                 icon={<GoogleOutlined />}
                 onClick={() => signIn("google")}
               >
                 {" "}
                 Đăng ký với Google{" "}
-              </Button>
+              </Button> */}
               <AuthForm
                 onSubmit={(item: { email: any; password: any }) => {
                   setPassword(item.password);
