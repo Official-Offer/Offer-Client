@@ -20,8 +20,8 @@ export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
   isLoading,
 }: IOrgForm) => {
-  const [orgs, setOrgs] = useState([]);
-  const [Org, setOrg] = useState("");
+  const [orgs, setOrgs] = useState<any>([]);
+  const [Org, setOrg] = useState<any>();
   const state = useSelector((state: RootState) => state.account);
   const schoolQuery = useQuery({
     queryKey: ["jobs"],
@@ -63,9 +63,9 @@ export const OrgForm: React.FC<IOrgForm> = ({
               bordered={false}
               onChange={handleOrgChange}
             >
-              {orgs.map((org) => (
-                <Select.Option className="form-select-dropdown" value={org}>
-                  {org}
+              {orgs.map((org: any) => (
+                <Select.Option className="form-select-dropdown" value={org.name}>
+                  {org.name}
                 </Select.Option>
               ))}
             </Select>
