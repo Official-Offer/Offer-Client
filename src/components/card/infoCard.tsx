@@ -4,25 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
 import { Card as AntdCard, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Address, Job } from "@types/dataTypes";
 import { BookmarkButton } from "@components/button/BookmarkButton";
+import { formatAddress, formatNum } from "@utils/formatters";
 
 type InfoCardProps = {
-  info?: {
-      id: number,
-      title?: string,
-      name?: string,
-      institution?: string,
-      location?: string,
-      attribute?: string,
-      commonSchool?: Array<Object>,
-      date?: Date,
-      time_published?: string,
-      company_data?: {
-        name?: string,
-      },
-      job_type?: string,
-      applicants?: Array<Object>,
-    },
+  info?: Job,
   loading?: boolean,
 };
 
@@ -43,34 +30,44 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
       children={
           info && (
             <div>
-              <BookmarkButton className="bookmark-btn" id={info.id}/>
-              <Link href={`/student/jobs/${info.id}`}>
+              <BookmarkButton className="bookmark-btn" id={info.pk}/>
+              {/* <Link href={`/student/jobs/${info.id}`}> */}
                 <Meta
                   title={info.title || ""}
                   description={
                     <div>
                       <div className="date-posted">
                         {
-                          info?.time_published === undefined ? 
+                          info?.time_posted === null ? 
                             "Ngày không xác định" 
                           : 
-                            `Đăng vào ${moment(info.time_published).format("D/M/YYYY")}`
+                            `Đăng vào ${moment(info.time_posted).format("D/M/YYYY")}`
                         }
                       </div>
-                      <h4>{ info.company_data?.name || "Công ty trống" }</h4>
-                      <span>{ info.job_type || "Not Specified Status"}{" | "}{ info.location || "Unknown Location" }</span>
+                      <h4>{ info.company.name || "Công ty trống" }</h4>
+                      <span>
+                        { info.job_types.toString() || "Loại công việc trống"}
+                        {" | "}{info.address ? formatAddress(info.address, true) : "Không có địa điểm"}
+                      </span>
                       <div className="avatar-info-mini">
-                        <div>
-                          {info.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
-                        </div>
-                        {(info.applicants && info.applicants.length !== 0) &&
-                          <h4>{(info.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>
+                        {(info.expected_no_applicants && info.expected_no_applicants !== 0) && 
+                          <>
+                            <div>
+                              {new Array(Math.min(3, info.expected_no_applicants)).fill(
+                                <img src="/images/avatar.png" alt="Avatar" />
+                              )}
+                            </div>
+                            <h4>{
+                              formatNum(info.expected_no_applicants) + 
+                              " người cùng trường bạn"
+                            }</h4>
+                          </>
                         }
                       </div>
                     </div>
                   }
                 />
-              </Link>
+              {/* </Link> */}
             </div>
           )
       }

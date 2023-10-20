@@ -4,17 +4,6 @@ import { getCompany } from "./apiCompany";
 import moment from "moment";
 import { OpenAI } from "langchain/llms/openai";
 
-export const getJobList = async () => {
-  const response = await request.get(`/jobs/`);
-  const jobList = response.data;
-  // Fetch company name for each job
-  for (const job of jobList) {
-    job.company_data = await getCompany(job.company);
-    // job.is_bookmarked = (await checkIsBookmarked(job.id).catch(() => ({status: false}))).status;
-  }
-  return jobList;
-};
-
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobList = response.data;
@@ -177,6 +166,7 @@ export const getJobListWithApplicant = async () => {
 };
 
 export const getJob = async (id: number) => {
+  console.log("what")
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
   job.company_data = await getCompany(job.company);
