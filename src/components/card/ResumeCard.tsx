@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { PlusOutlined, CloudDownloadOutlined, CloudUploadOutlined, LoadingOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { StyledResumeCard } from "@styles/styled-components/styledBox";
@@ -7,18 +7,18 @@ import { FileDownloadButton, IconButton } from "@styles/styled-components/styled
 import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
 
 type ResumeCardProps = {
-  isEditable: boolean
+  isEditable?: boolean
 }
 
 export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   // States
-  const [selectedFile, setSelectedFile] = useState<File>(null); // Holding the formData of the selected file before uploading
-  const [uploadedFile, setUploadedFile] = useState<string>(null); // Holding the URL of uploaded resume for downloading
-  const [resetTimer, setResetTimer] = useState<number>(0); // For resetting the timer after each upload
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
+  const [uploadedFile, setUploadedFile] = useState<string | null>(null); // Holding the URL of uploaded resume for downloading
+  const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
 
   // Hooks
   const downloadQuery = useQuery({
-    queryKey: "resumeDownload",
+    queryKey: ["resumeDownload"],
     queryFn: getStudentResume,
     onSuccess: (res) => setUploadedFile(!res.endsWith("media/") && res),
     onError: (err) => console.log(`Download Error: ${err}`),
@@ -53,16 +53,16 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   });
 
   // Functions  
-  const selectResume = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const selectResume = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedFile(event.target.files?.[0] ?? null);
   };
   
-  const handleUpload = (event) => {
+  const handleUpload = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     uploadMutation.mutate();
   };
 
-  const handleDelete = () => {
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     Modal.confirm({
       centered: true,
@@ -152,7 +152,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
                 </a>
                 {isEditable && (
                   <Button 
-                    type="danger" 
+                    danger
                     shape="circle" 
                     loading={deleteMutation.isLoading} 
                     icon={<DeleteOutlined />} 

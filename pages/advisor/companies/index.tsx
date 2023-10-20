@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { companyColumns } from "@components/table/columnType";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { CompanyDataType } from "@components/table/dataType";
 import { getCompaniesForAdvisor } from "@services/apiCompany";
@@ -14,12 +14,11 @@ const Companies: NextPage = () => {
   const [data, setData] = useState<CompanyDataType[]>([]);
   const [dataset, setDataSet] = useState<CompanyDataType[]>([]);
   const companyQuery = useQuery({
-    // queryKey: ["companies"],
+    queryKey: ["companies"],
     queryFn: getCompaniesForAdvisor,
-    onSuccess: async (companies) => {
+    onSuccess: (companies) => {
       setData(companies);
       setDataSet(companies);
-
       setSearchResults(companies.map((company) => company.name));
     },
     onError: () => {},

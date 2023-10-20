@@ -1,5 +1,5 @@
 import react, { useState, useEffect } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { 
   Card as AntdCard, 
   Button, 
@@ -30,9 +30,9 @@ interface ProfileCardFormProps {
     itemType: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
-  fieldItems?: Record<string, unknown>,
-  postFunction: (input: Record<string, unknown>) => void,
-  deleteFunction: (input: Record<string, unknown>) => void,
+  fieldItems?: Record<string, any>,
+  postFunction: (...args: any[]) => void,
+  deleteFunction?: (id: number) => void,
   refetchFunction: () => void,
   dataArr: Record<string, unknown>[],
 };
@@ -47,9 +47,18 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
 
   // Hooks
   const [form] = Form.useForm();
+  const postFunction = async (input: string) => {
+    if (props.isAdd) {
+      return await props.postFunction(input);
+    } else if (props.fieldItems) {
+      return await props.postFunction(props.fieldItems.id, input);
+    }
+    return new Error("No field items found");
+  }
 
   const postMutation = useMutation({
-    mutationFn: (input) => props.isAdd ? props.postFunction(input) : props.postFunction(props.fieldItems.id, input),
+    mutationKey: ["postMutation"],
+    mutationFn: postFunction,
     onMutate: () => {
       setModalLoading(true);
     },
@@ -58,17 +67,27 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       props.refetchFunction();
       handleCancel();
     },
-    onError: (err) => console.log(`Submit Error: ${err}`)
+    onError: (err: any) => console.log(`Submit Error: ${err}`)
   });
 
+  const deleteFunction = async () => {
+    if (props.deleteFunction && !props.isAdd) {
+      return await props.deleteFunction(props.fieldItems?.id);
+    }
+    return new Error("delete mutation");
+  };
+
   const deleteMutation = useMutation({
-    mutationFn: () => props.deleteFunction(props.fieldItems?.id),
+    mutationKey: ["deleteMutation"],
+    mutationFn: deleteFunction,
     onSuccess: (data) => {
       props.refetchFunction();
       handleCancel();
     },
     onError: (err) => console.log(`Delete Error: ${err}`)
   })
+  if (!props.isAdd) {
+  }
 
   // Functions
   const getLabel = (itemName: string, isLowerCase: boolean): string => {

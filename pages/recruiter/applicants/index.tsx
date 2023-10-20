@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { ApplicantColumns, JobColumns, RecruiterCompanyColumns } from "@components/table/columnType";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getApplicantsForRecruiter, getRecruitersForCompany } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";

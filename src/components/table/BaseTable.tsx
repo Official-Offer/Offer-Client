@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
+import { ColumnsType } from "antd/es/table";
 import FilterType from "@components/filter/TypeFilter";
 import { FilterSearch } from "@components/search/FilterSearch";
 // import { TableRowSelection } from "antd/lib/table/interface";
@@ -9,7 +10,20 @@ import { IconButton } from "@styles/styled-components/styledButton";
 import { CheckCircleFilled, PlusOutlined } from "@ant-design/icons";
 import { TableRowSelection } from "antd/lib/table/interface";
 
-export const BaseTable: React.FC = ({
+type BaseTableProps = {
+  dataset: IntrinsicAttributes[];
+  columns: ColumnsType<IntrinsicAttributes>;
+  searchResults?: string[];
+  handleFilterType?: (values: string[]) => void;
+  handleFilterSearch?: (value: string) => void;
+  handleAdd?: () => void;
+  handleVerify?: () => void;
+  placeholder?: string;
+  isLoading?: boolean;
+  tableType?: string;
+};
+
+export const BaseTable: React.FC<BaseTableProps> = ({
   dataset,
   columns,
   searchResults,
@@ -19,8 +33,8 @@ export const BaseTable: React.FC = ({
   handleVerify,
   placeholder,
   isLoading,
-}: // placeholders,
-any) => {
+  tableType
+}) => {
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
   const rowSelection: TableRowSelection<any> = {
     onChange: (selectedRowKeys, selectedRows) => {

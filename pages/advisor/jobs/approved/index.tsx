@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getApprovedJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";

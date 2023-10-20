@@ -22,8 +22,12 @@ const SelectSchool: NextPage = () => {
   const [checkedList, setCheckedList] =
     useState<CheckboxValueType[]>(defaultCheckedList);
   const checkAll = schools.length === checkedList.length;
+<<<<<<< HEAD:pages/jobs/schoolSelect/index.tsx
+  const indeterminate = checkedList.length > 0; // < plainOptions.length;
+=======
   const indeterminate =
     checkedList.length > 0 && checkedList.length < schools.length;
+>>>>>>> 059b1ffa9db8799f3d3faf346036187802da52bd:pages/recruiter/postJobs/schoolSelect/index.tsx
 
   const onChange = (list: CheckboxValueType[]) => {
     setCheckedList(list);

@@ -1,5 +1,5 @@
-export interface JobDataType {
-  key: string | null;
+export interface JobDataType extends IntrinsicAttributes {
+  // key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -11,8 +11,8 @@ export interface JobDataType {
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
-export interface UnapprovedJobDataType {
-  key: string | null;
+export interface UnapprovedJobDataType extends IntrinsicAttributes {
+  // key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -24,8 +24,8 @@ export interface UnapprovedJobDataType {
   compatibility: string | null; //percentage
 }
 
-export interface ApprovedJobDataType {
-  key: string | null;
+export interface ApprovedJobDataType extends IntrinsicAttributes {
+  // key: string | null;
   // ID: string | null;
   posted_date: string | null;
   title: string | null;
@@ -37,8 +37,8 @@ export interface ApprovedJobDataType {
   // accepted: string | 0; //school/total
 }
 
-export interface ApplicantDataType {
-  key: string | null;
+export interface ApplicantDataType extends IntrinsicAttributes {
+  // key: string | null;
   // ID: string | null;
   name: string | null;
   school: string | null;
@@ -48,7 +48,7 @@ export interface ApplicantDataType {
   // tag: string | null; //Chua nop / Pending / Da nhan
 }
 
-export interface StudentDataType {
+export interface StudentDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -60,7 +60,7 @@ export interface StudentDataType {
   // tag: string | null;
 }
 
-export interface AdvisorCompanyDataType {
+export interface AdvisorCompanyDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -71,7 +71,7 @@ export interface AdvisorCompanyDataType {
   contacted: string | null; // Đã liên hệ, chưa liên hệ
 }
 
-export interface AdvisorSchoolDataType {
+export interface AdvisorSchoolDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -82,7 +82,7 @@ export interface AdvisorSchoolDataType {
   // tag: string | null;
 }
 
-export interface RecruiterSchoolDataType {
+export interface RecruiterSchoolDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -94,7 +94,7 @@ export interface RecruiterSchoolDataType {
   contacted: string | null; // Đã liên hệ, chưa liên hệ
 }
 
-export interface RecruiterCompanyDataType {
+export interface RecruiterCompanyDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -105,7 +105,7 @@ export interface RecruiterCompanyDataType {
   // tag: string | null;
 }
 
-export interface SchoolDataType {
+export interface SchoolDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -119,7 +119,7 @@ export interface SchoolDataType {
   // tag: string | null;
 }
 
-export interface CompanyDataType {
+export interface CompanyDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   name: string | null;
@@ -132,7 +132,7 @@ export interface CompanyDataType {
   compatibility: string | null;
 }
 
-export interface EventRecruiterDataType {
+export interface EventRecruiterDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   posted_date: string | null;
@@ -143,7 +143,7 @@ export interface EventRecruiterDataType {
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
 
-export interface EventAdvisorDataType {
+export interface EventAdvisorDataType extends IntrinsicAttributes {
   key: string | null;
   ID: string | null;
   posted_date: string | null;

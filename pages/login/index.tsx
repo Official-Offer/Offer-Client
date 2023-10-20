@@ -1,10 +1,18 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
+import { useEffect, useState } from "react";
+import { FootnoteForm, LogInForm } from "@components/forms";
+import { setCookie, getCookie } from "cookies-next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { studentLogin } from "services/apiStudent";
+=======
 import { useState } from "react";
 import { FootnoteForm } from "@components/forms";
 import { setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
+>>>>>>> 059b1ffa9db8799f3d3faf346036187802da52bd
 import { userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +30,7 @@ const Login: NextPage = () => {
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
-    // queryKey: ["login"],
+    mutationKey: ["login"],
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch

@@ -1,6 +1,13 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+<<<<<<< HEAD:pages/jobs/jobForm/index.tsx
+import { BasicInfoForm, FootnoteForm } from "@components/forms";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getUserDetails } from "services/apiUser";
+import { getStudentDetails, updateStudent } from "services/apiStudent";
+=======
 import { useMutation, useQuery, useQueryClient } from "react-query";
+>>>>>>> 059b1ffa9db8799f3d3faf346036187802da52bd:pages/recruiter/postJobs/jobForm/index.tsx
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { JobPostForm } from "@components/forms/JobPostForm";

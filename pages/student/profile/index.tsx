@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
@@ -33,6 +33,7 @@ const profile = {
 };
 
 const info = {
+  id: 0,
   name: "Thực tập sinh Kỹ sư Phần Mềm",
   institution: "Samsung",
   location: "TP. Hồ Chí Minh",
@@ -114,9 +115,9 @@ const expFieldItems = {
 }
 
 const StudentProfile: NextPage = () => {
-  const [studentDetails, setStudentDetails] = useState(null);
+  const [studentDetails, setStudentDetails] = useState<Record<string, any> | null>(null);
   const studentQuery = useQuery({
-    queryKey: "students/me",
+    queryKey: ["students/me"],
     queryFn: getStudentDetails,
     onSuccess: (res) => setStudentDetails(res),
     onError: (err) => console.log(`Error: ${err}`)
@@ -133,13 +134,13 @@ const StudentProfile: NextPage = () => {
               <img className="student-profile-avatar" src={profile.avatar} />
               <div className="student-profile-header">
                 <h2>{studentDetails?.name}</h2>
-                <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails.expected_graduation)).toDateString()}</span>
+                <span>{studentDetails?.expected_graduation === undefined ? "Ngày không xác định" : (new Date(studentDetails?.expected_graduation)).toDateString()}</span>
               </div>
               <div className="student-profile-info">
                 {
                   (studentDetails?.school?.length === 0) 
                   ? <h4>Trường không xác định</h4>
-                  : studentDetails?.school.map((eachSchool) => <h4>{eachSchool.name}</h4>)
+                  : studentDetails?.school.map((eachSchool: Record<string, string>) => <h4>{eachSchool.name}</h4>)
                 }
                 <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>

@@ -1,12 +1,12 @@
 import  React, { useState } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Modal, Button, Divider } from "antd";
 import moment from "moment";
 import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
 
 type ProfileCardProps = {
-  isEditable: boolean,
+  isEditable?: boolean,
   fieldTitle: string,
   fieldItemProps: {
     itemTitle: string,
@@ -19,30 +19,30 @@ type ProfileCardProps = {
     itemType: Record<string, string>,
     isRequired: Record<string, boolean>,
   },
-  getFunction: () => Record<string, unknown>[],
-  addFunction: (input: Record<string, unknown>) => Record<string, unknown>,
-  editFunction: (input: Record<string, unknown>) => Record<string, unknown>,
-  deleteFunction: (input: Record<string, unknown>) => Record<string, unknown>,
-  dataFunction: () => Record<string, unknown>[],
+  getFunction: () => Promise<Record<string, unknown>[]>,
+  addFunction: (input: Record<string, unknown>) => void
+  editFunction: (id: number, input: Record<string, unknown>) => void,
+  deleteFunction?: (id: number) => void
+  dataFunction: () => Promise<Record<string, unknown>[]>,
 }
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({ isEditable, fieldTitle, fieldItemProps, getFunction, addFunction, editFunction, deleteFunction, dataFunction }) => {
   const logoURL = "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
 
   // States
-  const [queryItemList, setQueryItemList] = useState<Record<string, unknown>[]>();
-  const [dataArr, setDataArr] = useState<Record<string, unknown>[]>();
+  const [queryItemList, setQueryItemList] = useState<Record<string, any>[]>([]);
+  const [dataArr, setDataArr] = useState<Record<string, unknown>[]>([]);
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
-  const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(queryItemList?.map(() => false));
+  const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(queryItemList.map(() => false));
 
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
   const itemsQuery = useQuery({
-    queryKey: fieldTitle,
+    queryKey: [fieldTitle],
     queryFn: getFunction,
-    onSuccess: (res) => (
-      setQueryItemList(res.map((item: Record<string, unknown>) => {
+    onSuccess: (res: Record<string, any>[]) => (
+      setQueryItemList(res.map((item) => {
         item.start_date = moment(item.start_date);
         item.end_date = moment(item.end_date);
         return item;
@@ -54,7 +54,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ isEditable, fieldTitle
 
   // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
   const dataQuery = useQuery({
-    queryKey: fieldItemProps.dataIDLabel,
+    queryKey: [fieldItemProps.dataIDLabel],
     queryFn: dataFunction,
     onSuccess: (data) => (typeof data === "object") && setDataArr(data),
     onError: (err) => console.log(`Data Error: ${err}`),

@@ -10,7 +10,7 @@ export const getCompany = async (id: number) => {
   return response.data.message;
 }
 
-export const getCompaniesForAdvisor = async (id: number) => {
+export const getCompaniesForAdvisor = async () => {
   // const companies = (await request.get(`/companies/`)).data;
   const companies = [
     { name: "VinGroup", desc: "rac" },

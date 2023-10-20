@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { UnapprovedJobColumns } from "@components/table/columnType";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getJobsForRecruiter, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import { UnapprovedJobDataType } from "@components/table/dataType";

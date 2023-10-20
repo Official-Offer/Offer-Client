@@ -1,8 +1,13 @@
 import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
+import { FootnoteForm, PasswordForm } from "@components/forms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+=======
 import { EmailForm, FootnoteForm, PasswordForm } from "@components/forms";
 import { useMutation, useQueryClient } from "react-query";
+>>>>>>> 059b1ffa9db8799f3d3faf346036187802da52bd
 import { setCookie } from "cookies-next";
 import { registerStudent } from "services/apiStudent";
 import { useSelector } from "react-redux";

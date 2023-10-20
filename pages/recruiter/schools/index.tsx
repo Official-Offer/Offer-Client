@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { schoolColumns } from "@components/table/columnType";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getSchoolsForRecruiter } from "@services/apiSchool";
 import { SchoolDataType } from "@components/table/dataType";
@@ -16,8 +16,8 @@ const Schools: NextPage = () => {
   const [data, setData] = useState<SchoolDataType[]>([]);
   const [dataset, setDataSet] = useState<SchoolDataType[]>([]);
   const schoolQuery = useQuery({
-    // queryKey: ["schools"],
-    queryFn: getSchoolsForRecruiter,
+    queryKey: ["schools"],
+    queryFn: () => getSchoolsForRecruiter(0),
     onSuccess: async (schools) => {
       console.log(schools);
       setData(schools);

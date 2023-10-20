@@ -15,10 +15,10 @@ interface IPasswordForm {
   isLoading: boolean;
 }
 
-export const PasswordForm: React.FC = ({
+export const PasswordForm: React.FC<IPasswordForm> = ({
   onSubmit,
   isLoading,
-}: IPasswordForm) => {
+}) => {
   const [password, setPassword] = useState("");
   const [reenteredPassword, setReenteredPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -27,13 +27,13 @@ export const PasswordForm: React.FC = ({
     setLoading(isLoading);
   }, [errorMessage, isLoading]);
 
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-  };
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value ?? "");
+  }
 
-  const handleReenteredPasswordChange = (value: string) => {
-    setReenteredPassword(value);
-  };
+  const handleReenteredPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setReenteredPassword(event.target.value ?? "");
+  }
 
   const handleSubmit = () => {
     // event.preventDefault();
@@ -46,7 +46,7 @@ export const PasswordForm: React.FC = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Nhập mật khẩu mới">

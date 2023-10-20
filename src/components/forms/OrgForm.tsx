@@ -25,8 +25,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
     "Ngoại Thương",
   ]);
   const [companies, setCompanies] = useState(["OpenAI", "Google", "Facebook"]);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     onSubmit(Org);
   };
 
@@ -35,7 +34,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item

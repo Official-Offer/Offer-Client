@@ -4,7 +4,7 @@ import { StudentDataType } from "@components/table/dataType";
 import { getStudentsFromSchool } from "@services/apiStudent";
 import { NextPage } from "next";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 //create a next page for the student home page, code below
 const Students: NextPage = () => {
@@ -14,7 +14,7 @@ const Students: NextPage = () => {
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
 
   const studentQuery = useQuery({
-    queryKey: "jobs",
+    queryKey: ["jobs"],
     queryFn: getStudentsFromSchool,
     onSuccess: (students) => {
       setData(students);

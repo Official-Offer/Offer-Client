@@ -1,63 +1,33 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import moment from "moment";
 import { Card as AntdCard, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 
 type InfoCardProps = {
-  info: {
-      id?: number,
+  info?: {
+      id: number,
+      title?: string,
       name?: string,
       institution?: string,
       location?: string,
       attribute?: string,
       commonSchool?: Array<Object>,
       date?: Date,
+      time_published?: string,
+      company_data?: {
+        name?: string,
+      },
+      job_type?: string,
+      applicants?: Array<Object>,
     },
-  loading: boolean,
+  loading?: boolean,
 };
 
 export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) => {
   const { Meta } = AntdCard;
-
-  // States
-  const [bookmarkClicked, setBookmarkClicked] = useState<boolean>(false);
-  const [isInitBookmarked, setIsInitBookmarked] = useState<boolean>(info && info.is_bookmarked);
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(info && info.is_bookmarked);
-
-  // Hooks
-  // Update bookmark when job data is ready
-  useEffect(() => {
-    setIsInitBookmarked(info?.is_bookmarked);
-    setIsBookmarked(info?.is_bookmarked);
-  }, [info]);
-
-  // Start timer when bookmark button is clicked, reset if clicked again in under 2 seconds
-  useEffect(() => {
-    if (bookmarkClicked === false) return;
-    // Prevent lags from user spam clicking the bookmark button by delaying API call by 2 seconds
-    let resetTimer;
-    resetTimer = setTimeout(() => {
-      if (isInitBookmarked === isBookmarked) return;
-      bookmarkMutation.mutate(info?.id);
-      setBookmarkClicked(false);
-      setIsInitBookmarked(isBookmarked);
-    }, 2000);
-    return () => clearTimeout(resetTimer);
-  }, [isBookmarked]);
-
-  const bookmarkMutation = useMutation({
-    mutationFn: (id) => isBookmarked ? bookmarkJob(id) : deleteBookmarkedJob(id),
-    onError: (err) => console.log(`Bookmark Error: ${err}`),
-  });
-
-  // Functions
-  const handleBookmark = () => {
-    setBookmarkClicked(true);
-    setIsBookmarked(!isBookmarked);
-  };
 
   return (
     <AntdCard
@@ -93,7 +63,9 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                         <div>
                           {info.applicants?.map((friend) => (<img src={"/images/avatar.png"}></img>))}
                         </div>
-                        {(info.applicants || []).length === 0 ? "" : <h4>{(info.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>}
+                        {(info.applicants && info.applicants.length !== 0) &&
+                          <h4>{(info.applicants).length + " người từ trường bạn đang làm việc tại đây"}</h4>
+                        }
                       </div>
                     </div>
                   }

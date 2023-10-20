@@ -42,7 +42,7 @@ export const generateJobDescription = async (inputDescription: any) => {
     const response = await llm.call(prompt);
     console.log(response)
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating job description:", error.message);
     throw error;
   }
@@ -198,7 +198,7 @@ export const checkIsBookmarked = async (id: number) => {
   return response.data;
 };
 
-export const bookmarkJob = async (id: number) => {
+export const bookmarkJob = async (id: number | string) => {
   const response = await request.post(`/jobs/bookmark/`, {
     job_id: id,
     created_by: 0,
@@ -212,7 +212,7 @@ export const postJob = async (body: any) => {
   return response.data;
 };
 
-export const unbookmarkJob = async (id: number) => {
+export const unbookmarkJob = async (id: number | string) => {
   const response = await request.delete(`/jobs/bookmark/${id}/`);
   return response.data;
 };
