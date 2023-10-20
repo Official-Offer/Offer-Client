@@ -39,7 +39,7 @@ export const PasswordForm: React.FC<IPasswordForm> = ({
     // event.preventDefault();
     // Passwords match, handle form submission here
     if (password !== reenteredPassword) {
-      setErrorMessage("Passwords do not match. Please try again.");
+      alert("Mật khẩu không khớp");
     } else {
       onSubmit(password);
     }
@@ -49,7 +49,7 @@ export const PasswordForm: React.FC<IPasswordForm> = ({
     <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item label="Nhập mật khẩu cho lần đăng nhập sau">
+          <Form.Item label="Nhập mật khẩu mới">
             <Input.Password
               className="form-password"
               placeholder="Mật khẩu"
@@ -68,12 +68,12 @@ export const PasswordForm: React.FC<IPasswordForm> = ({
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
-              onChange={handlePasswordChange}
+              onChange={handleReenteredPasswordChange}
             />
           </Form.Item>
         </div>
         <SubmitButton
-          text="Đăng ký"
+          text="Hoàn tất"
           isLoading={isLoading}
           onClick={handleSubmit}
         />

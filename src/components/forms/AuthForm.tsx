@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-import {
-  StyledSubmitButton,
-  SubmitButtonAntd,
-} from "@styles/styled-components/styledButton";
-import Image from "next/image";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
@@ -17,10 +11,12 @@ interface ILogInForm {
     password: React.SetStateAction<string>;
   }) => void;
   isLoading: boolean;
+  embedSignup?: boolean;
 }
 
-export const LogInForm: React.FC<ILogInForm> = ({ onSubmit, isLoading }) => {
+export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignup }) => {
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
@@ -28,12 +24,25 @@ export const LogInForm: React.FC<ILogInForm> = ({ onSubmit, isLoading }) => {
     setPassword(event.target.value ?? "");
   };
 
+  const handleReenterPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRePassword(event.target.value ?? "");
+  };
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value ?? "");
   };
 
-  const handleSubmit = () => {
-    console.log(email, password)
+  const handleSubmit = (event: React.SubmitEvent<HTMLInputElement>) => {
+    // event.preventDefault();
+    if (embedSignup && password !== rePassword) {
+      alert("Mật khẩu không khớp");
+      return;
+    }
+    //check if email has the right format
+    if (!email.includes("@")) {
+      alert("Email không hợp lệ");
+      return;
+    }
+
     onSubmit({ email, password });
   };
 
@@ -45,7 +54,7 @@ export const LogInForm: React.FC<ILogInForm> = ({ onSubmit, isLoading }) => {
             <Input
               required
               className="form-item"
-              placeholder={state.email}
+              placeholder={"Email"}
               onChange={handleEmailChange}
             />
           </Form.Item>
@@ -63,9 +72,22 @@ export const LogInForm: React.FC<ILogInForm> = ({ onSubmit, isLoading }) => {
             />
           </Form.Item>
         </div>
+        {embedSignup && <div className="form-input">
+          <Form.Item label="Nhập lại mật khẩu">
+            <Input.Password
+              required
+              className="form-password"
+              placeholder="Nhập lại mật khẩu"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={handleReenterPasswordChange}
+            />
+          </Form.Item>
+        </div>}
       </div>
       <SubmitButton
-        text="Đăng nhập"
+        text={embedSignup? "Tiếp tục" : "Đăng nhập"}
         isLoading={isLoading}
         onClick={handleSubmit}
       />

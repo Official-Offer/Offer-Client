@@ -1,5 +1,6 @@
 module.exports = {
-  URL_API_ADMIN: "http://official-offer.herokuapp.com/api",
+  URL_API_ADMIN: "http://offer-v2-f60717006b8c.herokuapp.com/api",
+  //  "http://official-offer.herokuapp.com/api",
   TOKEN_BEARER: "",
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: "1036786395892-092gmr86f8i4blf85hvasvrkk690u0od.apps.googleusercontent.com",
   NEXT_PUBLIC_GOOGLE_CLIENT_SECRET: "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",

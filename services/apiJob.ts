@@ -51,6 +51,7 @@ export const generateJobDescription = async (inputDescription: any) => {
 export const getUnapprovedJobs = async () => {
   // const response = await request.get(`/jobs/`);
   const jobList = ["1", "2", "3", "4"];
+  const jobID = ["1", "2", "3", "4"];
   const companies = [
     // "Chưa tạo danh sách",
     "VinAI",
@@ -63,11 +64,12 @@ export const getUnapprovedJobs = async () => {
     "ktto@umass.edu",
     "hto@umass.edu",
   ];
+  const title = ["SWE Intern", "Sales Intern", "SWE Full-time"];
   return jobList.map((job: any) => ({
-    // key: job.id,
-    // ID: job.id,
+    key: job,
+    // ID: jobID[Math.floor(Math.random() * jobID.length)],
     posted_date: moment(job.timestamp).format("D/M/YYYY") || "09/05/2002",
-    title: job.title || "Không tìm thấy",
+    title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
     // expected: 5,
@@ -78,8 +80,6 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
-  // const response = await request.get(`/jobs/`);
-  // const jobList = response.data;
   const jobList = [
     {
       timestamp: "",
@@ -130,7 +130,7 @@ export const getJobsForRecruiter = async () => {
     }
   }, "");
   const res = jobList.map((job: any) => ({
-    // key: job.id,
+    key: job,
     // ID: job.id,
     posted_date: moment(job.timestamp).format("D/M/YYYY"),
     title: job.title || "Không tìm thấy",
@@ -146,46 +146,23 @@ export const getApprovedJobs = async () => {
   // const jobList = response.data;
   const jobList = ["1", "2", "3", "4"];
   const companies = [
-    // "Chưa tạo danh sách",
     "VinAI",
     "FB",
     "Amz",
   ];
   const recruiters = [
-    // "Chưa tạo danh sách",
     "vvnguyen@umass.edu",
     "ktto@umass.edu",
     "hto@umass.edu",
   ];
   return jobList.map((job: any) => ({
-    // key: job.id,
-    // ID: job.id,
+    key: job,
     posted_date: moment(job.timestamp).format("D/M/YYYY") || "09/05/2002",
     title: job.title || "Không tìm thấy",
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
-    // expected: 5,
     applicants: "3 (tổng 100)",
-    // accepted: "70%",
-    // tag: tags[Math.floor(Math.random()*tags.length)],
   }));
-  // Fetch company name for each job
-  // var res = [];
-  // for (const job of jobList) {
-  //   res.push({
-  //     key: job.id,
-  //     ID: job.id,
-  //     posted_date: moment(job.timestamp).format("D/M/YYYY"),
-  //     title: job.title || "Không tìm thấy",
-  //     company: companies[Math.floor(Math.random() * companies.length)],
-  //     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
-  //     applicants: "2/100",
-  //     expected: 5,
-  //     accepted: "1/2",
-  //     // tag: tags[Math.floor(Math.random()*tags.length)],
-  //   });
-  // }
-  // return res;
 };
 
 export const getJobListWithApplicant = async () => {

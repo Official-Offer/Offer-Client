@@ -24,17 +24,13 @@ export const EmailForm: React.FC<IEmailForm> = ({ onSubmit, isLoading }) => {
     <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item label="Email">
+          <Form.Item label="Nhập email của bạn">
             <Input
               required
               className="form-item"
               onChange={handleEmailChange}
             />
           </Form.Item>
-          <Typography.Text type="secondary">
-            Sử dụng mail .edu sẽ giúp quá trình <br />
-            xác thực được nhanh chóng hơn.
-          </Typography.Text>
         </div>
         <SubmitButton
           text="Tiếp tục"

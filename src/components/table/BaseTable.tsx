@@ -51,8 +51,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
       console.log(selected, selectedRows, changeRows);
     },
   };
-  // console.log(searchResults)
-
+  
   return (
     <div>
       <div className="table-functions">
@@ -93,7 +92,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         )}
       </div>
       <Table
-        rowSelection={handleVerify && { ...rowSelection }}
+        rowSelection={handleVerify && rowSelection }
         columns={columns}
         dataSource={dataset}
         loading={isLoading}
