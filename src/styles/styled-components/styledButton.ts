@@ -84,7 +84,7 @@ type IconButtonProps = {
   fullWidth?: boolean,
   backgroundColor: string,
   disabled?: boolean,
-  onClick?: any | (event: MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void,
 }
 
 export const IconButton = styled.div<IconButtonProps>`
