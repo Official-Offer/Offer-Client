@@ -47,10 +47,18 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
 
   // Hooks
   const [form] = Form.useForm();
+  const postFunction = async (input: string) => {
+    if (props.isAdd) {
+      return await props.postFunction(input);
+    } else if (props.fieldItems) {
+      return await props.postFunction(props.fieldItems.id, input);
+    }
+    return new Error("No field items found");
+  }
 
   const postMutation = useMutation({
     mutationKey: ["postMutation"],
-    mutationFn: (input) => props.isAdd ? props.postFunction(input) : props.postFunction(props.fieldItems.id, input),
+    mutationFn: postFunction,
     onMutate: () => {
       setModalLoading(true);
     },
@@ -62,15 +70,23 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     onError: (err: any) => console.log(`Submit Error: ${err}`)
   });
 
-  if (!isAdd) {
-    const deleteMutation = useMutation({
-      mutationFn: () => props.deleteFunction(props.fieldItems?.id),
-      onSuccess: (data) => {
-        props.refetchFunction();
-        handleCancel();
-      },
-      onError: (err) => console.log(`Delete Error: ${err}`)
-    })
+  const deleteFunction = async () => {
+    if (props.deleteFunction && !props.isAdd) {
+      return await props.deleteFunction(props.fieldItems?.id);
+    }
+    return new Error("delete mutation");
+  };
+
+  const deleteMutation = useMutation({
+    mutationKey: ["deleteMutation"],
+    mutationFn: deleteFunction,
+    onSuccess: (data) => {
+      props.refetchFunction();
+      handleCancel();
+    },
+    onError: (err) => console.log(`Delete Error: ${err}`)
+  })
+  if (!props.isAdd) {
   }
 
   // Functions
