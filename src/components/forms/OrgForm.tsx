@@ -27,9 +27,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSuccess: async (orgs) => {
       setSchools(orgs.schools);
       setCompanies(orgs.companies);
+      console.log(orgs)
 
     },
-    onError: () => {},
+    onError: () => {
+      console.log("error")
+    },
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -24,6 +24,7 @@ export const updateEducation = async (body: any) => {
   return response.data;
 }
 
+
 export const getSchoolsForRecruiter = async (id: number) => {
   // const response = (await request.get(`/schools/`)).data;
   const schools = [

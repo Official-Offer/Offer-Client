@@ -17,6 +17,7 @@ import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { updateEducation } from "@services/apiSchool";
 import { updateCompany } from "@services/apiCompany";
+import { updateSchoolForAdvisor } from "@services/apiAdvisor";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -47,7 +48,8 @@ const Registration: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.message.token);
-      setCookie("id", data.message.id);
+      setCookie("id", data.message.pk);
+      setCookie("role", data.message.role);
       if (r.isStudent) {
         mutationOrg.mutate({
           token: data.message.token,
@@ -64,10 +66,10 @@ const Registration: NextPage = () => {
             account: data.message.id,
             org: r.isRecruiter
               ? {
-                  "company": org,
+                  company: org,
                 }
               : {
-                  "school": org,
+                  school: org,
                 },
           },
         });
@@ -80,7 +82,11 @@ const Registration: NextPage = () => {
   });
   const mutationOrg = useMutation({
     // queryKey: ["register"],
-    mutationFn: r.isStudent ? updateEducation : updateCompany,
+    mutationFn: r.isStudent
+      ? updateEducation
+      : r.isRecruiter
+      ? updateCompany
+      : updateSchoolForAdvisor,
     onSuccess: async (data) => {
       dispatch(setLoggedIn(true));
       const route = r.isStudent
@@ -89,7 +95,7 @@ const Registration: NextPage = () => {
         ? "/advisor/jobs/unapproved"
         : "/recruiter/jobs";
       router.replace(route).then(() => {
-        router.reload()
+        router.reload();
       });
     },
     onError: (error: any) => {

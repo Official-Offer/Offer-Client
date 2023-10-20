@@ -26,15 +26,18 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch
-      setCookie("access_token", data.token);
+      setCookie("cookieToken", data.access);
+      setCookie("id", data.pk);
+      setCookie("role", data.role);
       dispatch(setLoggedIn(true));
       router
         .push({
-          pathname: state.role.isStudent
-            ? "/student"
-            : state.role.isAdvisor
-            ? "/advisor/jobs/unapproved"
-            : "/recruiter/jobs",
+          pathname:
+            data.role == "student"
+              ? "/student"
+              : data.role == "advisor"
+              ? "/advisor/jobs/unapproved"
+              : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
