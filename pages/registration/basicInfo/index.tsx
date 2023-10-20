@@ -9,7 +9,7 @@ import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@services/apiUser";
 
 //create a next page for the student home page, code below

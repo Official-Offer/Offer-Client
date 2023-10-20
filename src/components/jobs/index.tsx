@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";

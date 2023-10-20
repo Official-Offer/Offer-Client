@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FootnoteForm } from "@components/forms";
 import { setCookie } from "cookies-next";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
