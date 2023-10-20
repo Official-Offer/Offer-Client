@@ -87,7 +87,7 @@ export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignu
         </div>}
       </div>
       <SubmitButton
-        text={embedSignup? "Tiếp tục" : "Đăng nhập"}
+        text={embedSignup? "Đăng ký" : "Đăng nhập"}
         isLoading={isLoading}
         onClick={handleSubmit}
       />

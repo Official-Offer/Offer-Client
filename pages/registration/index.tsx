@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { FootnoteForm } from "@components/forms";
-import { setCookie } from "cookies-next";
+import { FootnoteForm, OrgForm } from "@components/forms";
+import { getCookie, setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
@@ -15,17 +15,20 @@ import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Form, Input, Segmented } from "antd";
-import { SubmitButton } from "@components/button/SubmitButton";
+import { updateEducation } from "@services/apiSchool";
+import { updateCompany } from "@services/apiCompany";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
   const router = useRouter();
-  const [pwScreen, setScreen] = useState<boolean>(true);
+  const [pwScreen, setScreen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [org, setOrg] = useState<string>("");
+  const [token, setToken] = useState<string>("");
   const [r, setR] = useState<any>({
     isStudent: true,
     isAdvisor: false,
@@ -35,17 +38,58 @@ const Registration: NextPage = () => {
   // const queryClient = useQueryClient();
   // const state = useSelector((state: RootState) => state.account);
   const [rol, setRol] = useState<string>("Học sinh");
+  const state = useSelector((state: RootState) => state.account);
+
   const { data: session, status } = useSession();
   const mutation = useMutation({
     // queryKey: ["register"],
     mutationFn: registerUser,
     onSuccess: async (data) => {
       // Invalidate and refetch
-      console.log(data);
-      setCookie("access_token", data.message.token);
+      setCookie("cookieToken", data.message.token);
+      setCookie("id", data.message.id);
+      if (r.isStudent) {
+        mutationOrg.mutate({
+          token: data.message.token,
+          content: {
+            title: "string",
+            description: "string",
+            school: org,
+          },
+        });
+      } else {
+        mutationOrg.mutate({
+          token: data.message.token,
+          content: {
+            account: data.message.id,
+            org: r.isRecruiter
+              ? {
+                  "company": org,
+                }
+              : {
+                  "school": org,
+                },
+          },
+        });
+      }
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage(error.response.data.message);
+    },
+  });
+  const mutationOrg = useMutation({
+    // queryKey: ["register"],
+    mutationFn: r.isStudent ? updateEducation : updateCompany,
+    onSuccess: async (data) => {
       dispatch(setLoggedIn(true));
-      router.push("/registration/basicInfo").then(() => {
-        // router.reload();
+      const route = r.isStudent
+        ? "/student"
+        : r.isAdvisor
+        ? "/advisor/jobs/unapproved"
+        : "/recruiter/jobs";
+      router.replace(route).then(() => {
+        router.reload()
       });
     },
     onError: (error: any) => {
@@ -54,12 +98,6 @@ const Registration: NextPage = () => {
     },
   });
   if (status === "loading") return <h1> Đang tải ... </h1>;
-  // if (status === "authenticated") {
-  //   console.log("logged in with gg");
-  // setEmail(session?.user?.email);
-  // setPassword("google");
-  // router.push("/registration/basicInfo");
-  // }
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -69,6 +107,16 @@ const Registration: NextPage = () => {
         <div className="register-content-form">
           {pwScreen && status !== "authenticated" ? (
             <>
+              <p
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setScreen(false);
+                }}
+              >
+                <BackwardOutlined /> Quay lại
+              </p>
               <h1>Đăng ký</h1>
               <br />
               <Button
@@ -80,9 +128,24 @@ const Registration: NextPage = () => {
               </Button>
               <AuthForm
                 onSubmit={(item: { email: any; password: any }) => {
-                  setPassword(item.password);
-                  setEmail(item.email);
-                  setScreen(false);
+                  // setPassword(item.password);
+                  // setEmail(item.email);
+                  // setScreen(false);
+                  const role =
+                    rol == "Học sinh"
+                      ? "student"
+                      : rol == "Trường"
+                      ? "advisor"
+                      : "recruiter";
+                  console.log(r);
+                  dispatch(setRole(r));
+                  mutation.mutate({
+                    email: item.email,
+                    password: item.password,
+                    firstName,
+                    lastName,
+                    role,
+                  });
                 }}
                 isLoading={mutation.isLoading}
                 embedSignup={true}
@@ -90,18 +153,8 @@ const Registration: NextPage = () => {
             </>
           ) : (
             <>
-              <p
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setScreen(true);
-                }}
-              >
-                <BackwardOutlined /> Quay lại
-              </p>
               <div>
-                <h1>Thông tin cơ bản</h1>
+                <h1>Đăng ký</h1>
               </div>
               <Form className="form" onSubmit={() => {}} layout="vertical">
                 <div className="form-grid">
@@ -138,30 +191,16 @@ const Registration: NextPage = () => {
                         isRecruiter: value.toString() == "Nhà tuyển dụng",
                       };
                       setR(role);
-                      // dispatch(setRole(role));
+                      dispatch(setRole(role));
                     }}
                   />
                 </Form.Item>
-                <SubmitButton
-                  isLoading={mutation.isLoading}
-                  text={"Tiếp tục"}
-                  onClick={() => {
-                    const role =
-                      rol == "Học sinh"
-                        ? "student"
-                        : rol == "Trường"
-                        ? "advisor"
-                        : "recruiter";
-                    console.log(r);
-                    dispatch(setRole(r));
-                    mutation.mutate({
-                      email,
-                      password,
-                      firstName,
-                      lastName,
-                      role,
-                    });
+                <OrgForm
+                  onSubmit={(org) => {
+                    setScreen(true);
+                    setOrg(org);
                   }}
+                  isLoading={mutation.isLoading && mutationOrg.isLoading}
                 />
                 {/* <SubmitButton onClick={()=>{
                   //logout google nextjs

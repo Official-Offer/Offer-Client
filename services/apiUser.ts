@@ -35,3 +35,12 @@ export const changePassword = async (body: Record<string, string>) => {
   const response = await request.put(`/accounts/change-password/`, body);
   return response.data;
 }
+
+export const getOrgList = async () => {
+  const schools = (await request.get(`/schools/`)).data;
+  const companies = (await request.get(`/companies/`)).data;
+  return {
+    schools,
+    companies
+  };
+}

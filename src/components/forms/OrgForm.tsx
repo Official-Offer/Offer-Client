@@ -6,6 +6,7 @@ import { SubmitButton } from "@components/button/SubmitButton";
 import { useQuery } from "react-query";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
+import { getOrgList } from "@services/apiUser";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -16,18 +17,17 @@ export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
   isLoading,
 }: IOrgForm) => {
-  const [orgs, setOrgs] = useState<any>([]);
+  const [schools, setSchools] = useState<any>();
+  const [companies, setCompanies] = useState<any>();
   const [Org, setOrg] = useState<any>();
   const state = useSelector((state: RootState) => state.account);
-  const schoolQuery = useQuery({
-    queryKey: ["jobs"],
-    queryFn:
-      state.role.isAdvisor || state.role.isStudent
-        ? getSchoolList
-        : getCompanyList,
+  const orgQuery = useQuery({
+    queryKey: ["orgs"],
+    queryFn: getOrgList,
     onSuccess: async (orgs) => {
-      setOrgs(orgs);
-      console.log(orgs);
+      setSchools(orgs.schools);
+      setCompanies(orgs.companies);
+
     },
     onError: () => {},
   });
@@ -58,11 +58,23 @@ export const OrgForm: React.FC<IOrgForm> = ({
               bordered={false}
               onChange={handleOrgChange}
             >
-              {orgs.map((org: any) => (
-                <Select.Option className="form-select-dropdown" value={org.id}>
-                  {org.name}
-                </Select.Option>
-              ))}
+              {state.role.isStudent || state.role.isAdvisor
+                ? schools?.map((school: any) => (
+                    <Select.Option
+                      className="form-select-dropdown"
+                      value={school.id}
+                    >
+                      {school.name}
+                    </Select.Option>
+                  ))
+                : companies?.map((company: any) => (
+                    <Select.Option
+                      className="form-select-dropdown"
+                      value={company.id}
+                    >
+                      {company.name}
+                    </Select.Option>
+                  ))}
             </Select>
           </Form.Item>
           <Form.Item
@@ -78,8 +90,8 @@ export const OrgForm: React.FC<IOrgForm> = ({
         </div>
       </div>
       <SubmitButton
-        text="Đăng ký"
-        isLoading={schoolQuery.isLoading && isLoading}
+        text="Tiếp tục"
+        isLoading={orgQuery.isLoading && isLoading}
         onClick={handleSubmit}
       />
     </Form>

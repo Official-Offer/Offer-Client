@@ -10,6 +10,7 @@ interface ICAccount {
     isRecruiter: boolean;
   };
   loggedIn: boolean;
+  id?: number | null;
 }
 
 const initialState: ICAccount = {
@@ -22,6 +23,7 @@ const initialState: ICAccount = {
     isRecruiter: false,
   },
   loggedIn: false,
+  id: null,
 };
 
 const accountSlice = createSlice({
@@ -42,10 +44,13 @@ const accountSlice = createSlice({
     },
     setLoggedIn: (state, action) => {
       state.loggedIn = action.payload;
+    },
+    setID: (state, action) => {
+      state.id = action.payload;
     }
   },
 });
 
-export const { setRegisterEmail, setSchool, setCompany, setRole, setLoggedIn } = accountSlice.actions;
+export const { setRegisterEmail, setSchool, setCompany, setRole, setLoggedIn, setID } = accountSlice.actions;
 
 export default accountSlice.reducer;

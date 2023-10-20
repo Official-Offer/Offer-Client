@@ -1,4 +1,6 @@
+import { URL_API_ADMIN } from '@config';
 import request from './apiService'
+import axios from 'axios';
 
 export const getSchoolList = async () => {
   const response = await request.get(`/schools/`);
@@ -11,7 +13,14 @@ export const getSchool = async (id: number) => {
 }
 
 export const updateEducation = async (body: any) => {
-  const response = await request.post(`/students/education/`, body);
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+    headers: body.token &&
+        {
+          Authorization: `Bearer ${body.token}`,
+        },
+  });
+  const response = await request.post(`/students/educations/`, body.content);
   return response.data;
 }
 

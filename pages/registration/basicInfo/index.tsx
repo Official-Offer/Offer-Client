@@ -10,19 +10,22 @@ import { useMutation, useQuery } from "react-query";
 import { getCookie } from "cookies-next";
 import { BackwardOutlined } from "@ant-design/icons";
 import { updateEducation } from "@services/apiSchool";
+import { updateCompany } from "@services/apiCompany";
 
 const BasicInformation: NextPage = () => {
   const router = useRouter();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.account);
-  console.log("access token", getCookie("access_token"));
   const mutation = useMutation({
     // queryKey: ["register"],
-    mutationFn: updateEducation,
-    onSuccess: async (data) => {},
+    mutationFn: state.role.isStudent ? updateEducation : updateCompany,
+    onSuccess: async (data) => {
+      console.log("updated");
+      setSubmitted(true);
+    },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      console.log(error);
     },
   });
 
@@ -33,7 +36,7 @@ const BasicInformation: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {submitted ? (
+          {/* {submitted ? ( */}
             <>
               <h3>
                 Link xác nhận đã được gửi đến email của bạn, vui lòng check
@@ -45,7 +48,7 @@ const BasicInformation: NextPage = () => {
                 <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
               </p>
             </>
-          ) : (
+          {/* ) : (
             <>
               <p
                 style={{
@@ -62,20 +65,26 @@ const BasicInformation: NextPage = () => {
               </div>
               <OrgForm
                 onSubmit={(org) => {
-                  console.log(org)
                   if (state.role.isStudent || state.role.isAdvisor) {
-                    // dispatch(setSchool(org));
+                    mutation.mutate({
+                      title: "string",
+                      description: "string",
+                      school: org,
+                    });
                   } else {
-
-                    // dispatch(setCompany(org));
+                    mutation.mutate({
+                      account: id,
+                      content: {
+                        company: org,
+                      },
+                    });
                   }
-                  // setSubmitted(true);
                 }}
                 isLoading={mutation.isLoading}
               />
               <FootnoteForm />
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>

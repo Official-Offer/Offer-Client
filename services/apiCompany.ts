@@ -1,4 +1,6 @@
+import axios from 'axios';
 import request from './apiService'
+import { URL_API_ADMIN } from '@config';
 
 export const getCompanyList = async () => {
   const response = await request.get(`/companies/`);
@@ -8,6 +10,18 @@ export const getCompanyList = async () => {
 export const getCompany = async (id: number) => {
   const response = await request.get(`/companies/${id}`);
   return response.data.message;
+}
+
+export const updateCompany = async (body: any) => {
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+    headers: body.token &&
+        {
+          Authorization: `Bearer ${body.token}`,
+        },
+  });
+  const response = await request.patch(`/recruiters/${body.content.account}/`, body.content.org);
+  return response.data;
 }
 
 export const getCompaniesForAdvisor = async (id: number) => {
