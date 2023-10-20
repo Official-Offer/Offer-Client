@@ -1,0 +1,27 @@
+.fancy-antd-search {
+  display: flex;
+  justify-content: center;
+
+  .ant-input{
+    &-wrapper {
+      max-width: 700px;
+    }
+    &-affix-wrapper {
+      border-radius: 50px !important;
+      padding: 16px 24px;
+    }
+    &-suffix {
+      margin-right: 40px;
+    }
+    &-group-addon {
+      left: -50px !important;
+      z-index: 1;
+      background-color: transparent;
+
+      button {
+        border-radius: 50% !important;
+        padding: 12px;
+      }
+    }
+  }
+}
