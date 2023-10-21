@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
@@ -8,7 +8,7 @@ import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { Skeleton } from "antd";
 
-export const JobDescription: React.FC = ({ onClick }) => {
+export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");

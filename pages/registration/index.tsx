@@ -2,9 +2,10 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { FootnoteForm, OrgForm } from "@components/forms";
+import {  OrgForm } from "@components/forms";
 import { getCookie, setCookie } from "cookies-next";
-import { useMutation, useQueryClient } from "react-query";
+import { FootnoteForm } from "@components/forms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
@@ -218,7 +219,7 @@ const Registration: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <FootnoteForm />
+          <FootnoteForm type={""} />
         </div>
       </div>
     </div>

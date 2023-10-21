@@ -14,24 +14,24 @@ interface ILogInForm {
   embedSignup?: boolean;
 }
 
-export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignup }: ILogInForm) => {
+export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignup }) => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [email, setEmail] = useState("");
   const state = useSelector((state: RootState) => state.account);
 
-  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value ?? "");
   };
 
-  const handleReenterPasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setRePassword(event.target.value);
+  const handleReenterPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRePassword(event.target.value ?? "");
   };
-  const handleEmailChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setEmail(event.target.value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value ?? "");
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLInputElement>) => {
     // event.preventDefault();
     if (embedSignup && password !== rePassword) {
       alert("Mật khẩu không khớp");
@@ -47,7 +47,7 @@ export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignu
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Email">

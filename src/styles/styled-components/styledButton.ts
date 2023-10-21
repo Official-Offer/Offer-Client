@@ -80,12 +80,14 @@ export const TogglableButton = styled.button`
 `
 
 type IconButtonProps = {
-  round: boolean,
-  fullWidth: boolean,
+  round?: boolean,
+  fullWidth?: boolean,
   backgroundColor: string,
+  disabled?: boolean,
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void,
 }
 
-export const IconButton = styled.div`
+export const IconButton = styled.div<IconButtonProps>`
   width: ${({ fullWidth }) => fullWidth ? "100%": "auto"};
   height: 32px;
   background-color: ${({ backgroundColor }) => backgroundColor};
@@ -95,7 +97,7 @@ export const IconButton = styled.div`
   padding: 4px 16px;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
+  cursor: ${({ disabled }) => disabled ? "not-allowed" : "pointer"};
   transition: 0.3s ease;
   
   .btn-body {

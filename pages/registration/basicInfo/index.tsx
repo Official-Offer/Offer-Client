@@ -6,11 +6,13 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
 import { getCookie } from "cookies-next";
 import { BackwardOutlined } from "@ant-design/icons";
 import { updateEducation } from "@services/apiSchool";
 import { updateCompany } from "@services/apiCompany";
+import { useSession } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "@services/apiUser";
 
 const BasicInformation: NextPage = () => {
   const router = useRouter();
@@ -20,7 +22,7 @@ const BasicInformation: NextPage = () => {
   const mutation = useMutation({
     // queryKey: ["register"],
     mutationFn: state.role.isStudent ? updateEducation : updateCompany,
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       console.log("updated");
       setSubmitted(true);
     },
@@ -36,7 +38,6 @@ const BasicInformation: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {/* {submitted ? ( */}
             <>
               <h3>
                 Link xác nhận đã được gửi đến email của bạn, vui lòng check
@@ -48,43 +49,6 @@ const BasicInformation: NextPage = () => {
                 <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
               </p>
             </>
-          {/* ) : (
-            <>
-              <p
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  router.push("/registration");
-                }}
-              >
-                <BackwardOutlined /> Quay lại
-              </p>
-              <div>
-                <h1>Thông tin cơ bản</h1>
-              </div>
-              <OrgForm
-                onSubmit={(org) => {
-                  if (state.role.isStudent || state.role.isAdvisor) {
-                    mutation.mutate({
-                      title: "string",
-                      description: "string",
-                      school: org,
-                    });
-                  } else {
-                    mutation.mutate({
-                      account: id,
-                      content: {
-                        company: org,
-                      },
-                    });
-                  }
-                }}
-                isLoading={mutation.isLoading}
-              />
-              <FootnoteForm />
-            </>
-          )} */}
         </div>
       </div>
     </div>

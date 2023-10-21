@@ -7,14 +7,10 @@ import { setCompany, setDescription, setTitle } from "@redux/actions";
 interface IForm {
   onSubmit: () => void;
   onCancel: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
-export const JobPostForm: React.FC = ({
-  onSubmit,
-  onCancel,
-  isLoading,
-}: IForm) => {
+export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<string[]>([

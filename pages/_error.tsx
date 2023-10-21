@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import store from "@redux/store";
 // import { appWithTranslation } from "@i18n";
 import LayoutGlobal from "src/common/LayoutGlobal";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 
@@ -21,7 +21,7 @@ function ErrorPage() {
   const queryClient = new QueryClient();
 
   return (
-    <ConfigProvider theme={AntdTheme}>
+    <ConfigProvider>
       {/* <Script
         strategy="afterInteractive"
         src="https://accounts.google.com/gsi/client"

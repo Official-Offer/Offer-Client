@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Menu, Form, Input, Button } from 'antd';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { changePassword } from '@services/apiUser';
 import { UserOutlined, CheckOutlined } from '@ant-design/icons';
 
@@ -19,7 +19,7 @@ const Settings: NextPage = () => {
   const [oldPassWrong, setOldPassWrong] = useState(false);
 
   const changePassMutation = useMutation({
-    mutationFn: (formData) => changePassword(formData),
+    mutationFn: (formData: Record<string, string>) => changePassword(formData),
     // mutationFn: (formData) => Promise.response(formData),
     onSuccess: (data) => {
       setOldPassWrong(false);
@@ -28,8 +28,8 @@ const Settings: NextPage = () => {
         form.resetFields();
       }, 1500);
     },
-    onError: (error) => {
-      if (error.response?.data && error.response.data.old_password) {
+    onError: (error: any) => {
+      if (error.response.data && error.response.data.old_password) {
         setOldPassWrong(true);
         console.log("Change password error: Wrong password");
       }

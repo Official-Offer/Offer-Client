@@ -7,8 +7,8 @@ console.log(TOKEN_BEARER);
 
 export default axios.create({
   baseURL: URL_API_ADMIN,
-  headers: TOKEN_BEARER &&
+  headers: TOKEN_BEARER ?
       {
         Authorization: `Bearer ${TOKEN_BEARER}`,
-      },
+      } : {},
 });

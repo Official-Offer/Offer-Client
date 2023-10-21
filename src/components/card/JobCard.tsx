@@ -5,7 +5,22 @@ import moment from "moment";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 
 type JobCardProp = {
-  jobData: Record<string, unknown>,
+  jobData: {
+    id: number,
+    title?: string,
+    name?: string,
+    institution?: string,
+    location?: string,
+    attribute?: string,
+    commonSchool?: Array<Object>,
+    date?: Date,
+    time_published?: string,
+    company_data?: {
+      name?: string,
+    },
+    job_type?: string,
+    applicants?: Array<Object>,
+  },
   active: boolean, //use this to pass in parameters from the job site
   onClick: () => void,
   bookmarkClicked?: boolean,
@@ -20,17 +35,17 @@ export const JobCard: React.FC<JobCardProp> = ({ jobData, active, onClick, bookm
     <div className={`job-portal-list-card ${active ? "active" : ""}`} onClick={onClick}>
       <div className="job-portal-list-card-main">
         <h3 className="job-portal-list-card-title">
-          {jobData?.title ?? "Tiêu đề trống"}
+          {jobData.title ?? "Tiêu đề trống"}
         </h3>
         <div className="job-portal-list-card-detail">
-          <div>{jobData?.company_data?.name ?? "Công ty trống"}</div>
-          <div>{jobData?.location ?? "Vị trí trống"}</div>
-          <div>{jobData?.job_type ?? "Hình thức trống"}</div>
+          <div>{jobData.company_data?.name ?? "Công ty trống"}</div>
+          <div>{jobData.location ?? "Vị trí trống"}</div>
+          <div>{jobData.job_type ?? "Hình thức trống"}</div>
         </div>
       </div>
       <BookmarkButton
         className="job-portal-list-card-bookmark"
-        id={jobData?.id}
+        id={jobData.id}
         isClickedByOther={bookmarkClicked}
         setIsClickedByOther={setBookmarkClicked}
         setClickOther={setJobContentBookmarkClicked}

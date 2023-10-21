@@ -45,7 +45,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item

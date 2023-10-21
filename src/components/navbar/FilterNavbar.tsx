@@ -5,7 +5,7 @@ import { TogglableButton } from "@styles/styled-components/styledButton";
 
 type FilterNavbarProps = {
   filters: Record<string, unknown>[],
-  searchFunc: () => void,
+  searchFunc?: () => void,
 }
 
 export const FilterNavbar: React.FC<FilterNavbarProps> = ({ filters, searchFunc }) => {

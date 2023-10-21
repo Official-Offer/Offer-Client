@@ -9,19 +9,19 @@ interface IEmailForm {
   isLoading: boolean;
 }
 
-export const EmailForm: React.FC = ({ onSubmit, isLoading }: IEmailForm) => {
+export const EmailForm: React.FC<IEmailForm> = ({ onSubmit, isLoading }) => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     onSubmit(email);
   };
 
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value ?? "");
   };
+
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Nhập email của bạn">

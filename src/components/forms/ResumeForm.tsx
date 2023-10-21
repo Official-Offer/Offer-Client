@@ -7,11 +7,10 @@ interface IResumeForm {
   onSubmit: (resume: string) => void;
 }
 
-export const ResumeForm:React.FC = ({ onSubmit }: IResumeForm) => {
+export const ResumeForm:React.FC<IResumeForm> = ({ onSubmit }) => {
   const [resume, setResume] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     onSubmit(resume);
   };
 
@@ -39,7 +38,7 @@ export const ResumeForm:React.FC = ({ onSubmit }: IResumeForm) => {
 
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onFinish={handleSubmit}>
         <div className="form-flex">
           <div className="form-input">
             <label>

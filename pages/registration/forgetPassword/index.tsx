@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { EmailForm, FootnoteForm, PasswordForm } from "@components/forms";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useState } from "react";

@@ -15,26 +15,26 @@ interface IBasicInfoForm {
     roles: string,
     // is_reviewer: boolean
   ) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
-export const BasicInfoForm: React.FC = ({
+export const BasicInfoForm: React.FC<IBasicInfoForm> = ({
   onSubmit,
   isLoading,
-}: IBasicInfoForm) => {
-  const [first_name, setFirstName] = useState("");
-  const [last_name, setLastName] = useState("");
-  const [phone_number, setPhoneNumber] = useState("");
-  // const [expected_graduation, setGradYear] = useState("");
-  const [roles, setRoles] = useState("");
-  const [major, setMajor] = useState("");
-  // const [is_reviewer, setIsReviewer] = useState(false);
+}) => {
+  const [first_name, setFirstName] = useState<string>("");
+  const [last_name, setLastName] = useState<string>("");
+  const [phone_number, setPhoneNumber] = useState<string>("");
+  // const [expected_graduation, setGradYear] = useState<string>("");
+  const [roles, setRoles] = useState<string>("");
+  const [major, setMajor] = useState<string>("");
+  // const [is_reviewer, setIsReviewer] = useState<string>(false);
   const state = useSelector((state: RootState) => state.account);
-  const [majors, setMajors] = useState(["CNTT", "Kinh tế", "Luật"]);
-  const [positions, setPositions] = useState(["Thành viên", "Trưởng nhóm"]);
+  const [majors, setMajors] = useState<string[]>(["CNTT", "Kinh tế", "Luật"]);
+  const [positions, setPositions] = useState<string[]>(["Thành viên", "Trưởng nhóm"]);
 
-  const handleFirstNameChange = (value: React.SetStateAction<string>) => {
-    setFirstName(value);
+  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value ?? "");
   };
 
   // const handleGradYearChange = (event: {
@@ -43,13 +43,13 @@ export const BasicInfoForm: React.FC = ({
   //   setGradYear(event.target.value);
   // };
 
-  const handleLastNameChange = (value: React.SetStateAction<string>) => {
-    setLastName(value);
-  };
+  const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value ?? "");
+  }
 
-  const handleRoleChange = (value: React.SetStateAction<string>) => {
-    setRoles(value);
-  };
+  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRoles(event.target.value ?? "");
+  }
 
   // const handleReviewerChange = (event: {
   //   target: { value: React.SetStateAction<string> };
@@ -57,16 +57,15 @@ export const BasicInfoForm: React.FC = ({
   //   setIsReviewer(event.target.value == "true");
   // };
 
-  const handleMajorChange = (value: React.SetStateAction<string>) => {
-    setMajor(value);
-  };
+  const handleMajorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMajor(event.target.value ?? "");
+  }
 
-  const handlePhoneNumberChange = (value: React.SetStateAction<string>) => {
-    setPhoneNumber(value);
-  };
+  const handlePhoneNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(event.target.value ?? "");
+  }
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     onSubmit(
       first_name,
       last_name,
@@ -79,7 +78,7 @@ export const BasicInfoForm: React.FC = ({
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit} layout="vertical">
+    <Form className="form" onFinish={handleSubmit} layout="vertical">
       <div className="form-grid">
         <Form.Item label="Họ" className="form-input">
           <Input

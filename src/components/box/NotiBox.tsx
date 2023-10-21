@@ -10,7 +10,7 @@ type NotiBoxProps = {
   content: HTMLDivElement,
 }
 
-export const NotiBox: React.FC = ({ large, read, hasDot, content }) => {
+export const NotiBox: React.FC<NotiBoxProps> = ({ large, read, hasDot, content }) => {
   return (
     <StyledNotiBox large={large} read={read}>
       <Image className="avatar" width="48px" height="48px" src="/images/avatar.png" />

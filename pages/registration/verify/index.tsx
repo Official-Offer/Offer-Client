@@ -5,7 +5,7 @@ import PinInput from "react-pin-input";
 import { Typography } from "antd";
 import {FootnoteForm} from "@components/forms/FootnoteForm";
 import { useContext, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserDetails, verifyEmail } from "services/apiUser";
 
 const EmailVerify: NextPage = () => {

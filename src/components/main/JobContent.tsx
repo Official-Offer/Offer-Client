@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useMutation } from "react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button, Modal, Skeleton, Upload } from "antd";
 import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -8,8 +8,8 @@ import { BookmarkButton } from "@components/button/BookmarkButton";
 import { IconButton } from "@styles/styled-components/styledButton";
 
 type JobContentProps = {
-  isLoading: boolean,
-  jobData: Record<string, unknown>,
+  isLoading?: boolean,
+  jobData?: Record<string, unknown>,
   bookmarkClicked?: boolean,
   setBookmarkClicked?: (isBookmarked: boolean) => void,
   setJobCardBookmarkClicked?: (isBookmarked: boolean) => void,
