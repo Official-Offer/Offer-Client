@@ -3,8 +3,7 @@ import axios from "axios";
 import { getCookie } from 'cookies-next';
 
 const TOKEN_BEARER = getCookie("cookieToken");
-console.log(TOKEN_BEARER);
-
+// localStorage.getItem("cookieToken") || 
 export default axios.create({
   baseURL: URL_API_ADMIN,
   headers: TOKEN_BEARER ?

@@ -40,6 +40,11 @@ export const Nav: React.FC = (props: any): ReactElement => {
       deleteCookie("cookieToken");
       deleteCookie("role");
       deleteCookie("id");
+      
+      localStorage.removeItem("cookieToken");
+      localStorage.removeItem("id");
+      localStorage.removeItem("role");
+
       router.push("/login").then(() => {
         router.reload();
       });
