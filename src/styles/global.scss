@@ -31,6 +31,7 @@ em {
 @import "./scss/Components/cover";
 @import "./scss/Components/filter";
 @import "./scss/Components/table";
+@import "./scss/Components/custom";
 
 /* Helper */
 @import "./scss/Helper/button";
@@ -43,6 +44,7 @@ em {
 
 /* Layouts */
 @import "./scss/Layouts/main";
+@import "./scss/Layouts/basic";
 @import "./scss/Layouts/list";
 @import "./scss/Layouts/applicant";
 @import "./scss/Layouts/job";

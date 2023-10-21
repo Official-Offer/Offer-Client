@@ -1,26 +1,12 @@
 import { useRef } from "react";
 import { Button } from "antd";
-import { BookmarkOutlined } from "@components/icons/BookmarkOutlined";
 import moment from "moment";
+import { Job } from "@types/dataTypes";
+import { BookmarkOutlined } from "@components/icons/BookmarkOutlined";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 
 type JobCardProp = {
-  jobData: {
-    id: number,
-    title?: string,
-    name?: string,
-    institution?: string,
-    location?: string,
-    attribute?: string,
-    commonSchool?: Array<Object>,
-    date?: Date,
-    time_published?: string,
-    company_data?: {
-      name?: string,
-    },
-    job_type?: string,
-    applicants?: Array<Object>,
-  },
+  jobData: Job,
   active: boolean, //use this to pass in parameters from the job site
   onClick: () => void,
   bookmarkClicked?: boolean,

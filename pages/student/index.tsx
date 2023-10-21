@@ -1,11 +1,10 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
-import { Card as AntdCard, Button } from "antd";
+import { Card as AntdCard, Button, Grid, Input } from "antd";
 import { EventCard, InfoCard } from "@components/card";
-import { CardTray } from "@components/list";
 import { getStudentDetails } from "services/apiStudent";
-import { getJobList } from "@services/apiJob";
+import { getJobs } from "@services/apiJob";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUserDetails } from "@services/apiUser";
@@ -116,13 +115,12 @@ const scholarshipList = [
 
 //create a next page for the student home page, code below
 const Home: NextPage = () => {
-  const [jobList, setJobList] = useState<any[]>([]);
   // Fetching jobs list
   const jobQuery = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobList,
-    onSuccess: (response) => setJobList(response),
+    queryKey: ["jobs list"],
+    queryFn: getJobs,
     onError: (error) => console.log(`Error: ${error}`),
+    refetchOnWindowFocus: false,
   });
   const { data: session, status } = useSession();
   console.log(session);
@@ -146,24 +144,22 @@ const Home: NextPage = () => {
           />
         </section>
         <section>
-          <h2>Đề Xuất Công Việc</h2>
-          <CardTray 
-            cardList={
-              jobQuery.isLoading ? 
-                Array(8).fill(<InfoCard loading />) 
-              : 
-                jobList.filter((job) => !job.is_closed).map((job) => <InfoCard info={job} />)
-            }
-          />
-          <div className="link-arrow">
-            <Link href="student/jobs">Xem thêm công việc</Link>
-          </div>
+            <h2 className="header">Tìm công việc mơ ước của bạn</h2>
+            <Input.Search
+              className="fancy-antd-search"
+              allowClear
+              placeholder="Tìm công việc"
+              enterButton
+              size="large"
+            />
         </section>
         <section>
-          <h2>Sự Kiện</h2>
-          <CardTray cardList={eventList.map((info) => <EventCard info={info} />)} cardsDisplayNum={0} isLoading={false} />
-          <div className="link-arrow">
-            <Link href="student/events">Xem thêm sự kiện</Link>
+          <div className="basic-grid">
+            {
+              jobQuery.data ? (
+                jobQuery.data.map((jobData) => <InfoCard info={jobData} />)
+              ) : new Array(4).fill(<InfoCard loading />)
+            }
           </div>
         </section>
       </div>
@@ -172,14 +168,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-// export const getServerSideProps = async (context) => {
-//   const session = await getServerSession(context);
-//   // const userDetails = await getUserDetails(session.user.email);
-//   return {
-//     props: {
-//       session,
-//       // userDetails,
-//     },
-//   };
-// }
