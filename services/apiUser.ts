@@ -21,6 +21,11 @@ export const userLogIn = async (body: any) => {
   return response.data;
 }
 
+export const userLogOut = async () => {
+  const response = await request.post(`/accounts/logout/`);
+  return response.data;
+}
+
 export const verifyEmail = async (body: any) => {
   const response = await request.post(`/accounts/verifyEmail/`, body);
   return response.data;
