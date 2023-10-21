@@ -14,8 +14,10 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import { removeCookies } from "cookies-next";
+import { deleteCookie, removeCookies } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
+import { userLogOut } from "@services/apiUser";
 
 const { Sider } = Layout;
 
@@ -30,6 +32,23 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
+  const mutation = useMutation({
+    // queryKey: ["login"],
+    mutationFn: userLogOut,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      deleteCookie("cookieToken");
+      deleteCookie("role");
+      deleteCookie("id");
+      router.push("/login").then(() => {
+        router.reload();
+      });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+  });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
     // "Trang chủ",
@@ -59,16 +78,15 @@ export const Nav: React.FC = (props: any): ReactElement => {
     label: titles[index],
     onClick: (e) => {
       if (index == 4) {
-        // removeCookies(null, "token");
         if (status == "authenticated") {
-          signOut();
-        }
-        else {
+          signOut().then(() => {
+            router.push("/login");
+          });
+        } else {
           //sign out traditional way
+          mutation.mutate();
         }
-        router.push("/login");
-      }
-      else if (!(index == 0 && role == "advisor")) {
+      } else if (!(index == 0 && role == "advisor")) {
         router.push(`/${role}${path[index]}`);
       }
     },

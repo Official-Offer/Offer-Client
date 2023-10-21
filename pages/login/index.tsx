@@ -27,15 +27,18 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       // Invalidate and refetch
-      setCookie("access_token", data.token);
+      setCookie("cookieToken", data.access);
+      setCookie("id", data.pk);
+      setCookie("role", data.role);
       dispatch(setLoggedIn(true));
       router
         .push({
-          pathname: state.role.isStudent
-          ? "/student"
-          : state.role.isAdvisor
-          ? "/advisor/jobs/unapproved"
-          : "/recruiter/jobs"
+          pathname:
+            data.role == "student"
+              ? "/student"
+              : data.role == "advisor"
+              ? "/advisor/jobs/unapproved"
+              : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
@@ -60,7 +63,7 @@ const Login: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           <h1>Đăng nhập</h1>
-          <br/>
+          <br />
           <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
             {" "}
             Đăng nhập với Google{" "}
@@ -68,7 +71,7 @@ const Login: NextPage = () => {
           <AuthForm
             onSubmit={(item: { email: any; password: any }) => {
               return mutation.mutate({
-                email:  item.email,
+                email: item.email,
                 password: item.password,
               });
             }}
@@ -77,7 +80,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <FootnoteForm embedLogin={true}/>
+          <FootnoteForm embedLogin={true} />
         </div>
       </div>
     </div>

@@ -1,10 +1,24 @@
 import { setCookie } from "cookies-next";
 import request from "./apiService";
+import axios from "axios";
+import { URL_API_ADMIN } from "@config";
 
 export const registerAdvisor = async (body: any) => {
   const response = await request.post(`/advisors/register/`, body);
   return response.data;
 };
+
+export const updateSchoolForAdvisor = async (body: any) => {
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+    headers: body.token &&
+        {
+          Authorization: `Bearer ${body.token}`,
+        },
+  });
+  const response = await request.patch(`/advisors/${body.content.account}/`, body.content.org);
+  return response.data;
+}
 
 export const updateAdvisor = async (body: any) => {
   const response = await request.put(`/advisors/me/`, body);

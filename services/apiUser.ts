@@ -21,6 +21,11 @@ export const userLogIn = async (body: any) => {
   return response.data;
 }
 
+export const userLogOut = async () => {
+  const response = await request.post(`/accounts/logout/`);
+  return response.data;
+}
+
 export const verifyEmail = async (body: any) => {
   const response = await request.post(`/accounts/verifyEmail/`, body);
   return response.data;
@@ -34,4 +39,13 @@ export const updateUser = async (body: any) => {
 export const changePassword = async (body: Record<string, string> | void) => {
   const response = await request.put(`/accounts/change-password/`, body);
   return response.data;
+}
+
+export const getOrgList = async () => {
+  const schools = (await request.get(`/schools/`)).data;
+  const companies = (await request.get(`/companies/`)).data;
+  return {
+    schools,
+    companies
+  };
 }

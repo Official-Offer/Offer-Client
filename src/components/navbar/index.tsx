@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 import React, { useState, useRef } from "react";
-import { removeCookies } from "cookies-next";
+import { deleteCookie, removeCookies } from "cookies-next";
 import { Menu, Input, Button, Dropdown } from "antd";
 import {
   // SearchOutlined,
@@ -12,11 +12,13 @@ import {
   // CloseOutlined,
 } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
+import { useMutation } from "@tanstack/react-query";
+import { userLogOut } from "@services/apiUser";
 // import { NotiBox } from "@components/box";
 // import { Card, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
 
 type NavbarProps = {
-  searchBarHidden: boolean,
+  searchBarHidden: boolean;
 };
 
 // const notiList = [{ read: true }, { read: false }, { read: true }];
@@ -30,6 +32,23 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     ? "recruiter"
     : "advisor";
 
+  const mutation = useMutation({
+    // queryKey: ["login"],
+    mutationFn: userLogOut,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      deleteCookie("cookieToken");
+      deleteCookie("role");
+      deleteCookie("id");
+      router.push("/login").then(() => {
+        router.reload();
+      });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      // queryClient.invalidateQueries({ queryKey: ["login"] });
+    },
+  });
   const { status } = useSession();
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 
@@ -44,8 +63,8 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
-  const listMenu: MenuMiddleNav["items"] = 
-    router.pathname.includes("recruiter") || router.pathname.includes("advisor") 
+  const listMenu: MenuMiddleNav["items"] =
+    router.pathname.includes("recruiter") || router.pathname.includes("advisor")
       ? []
       : [
           {
@@ -73,34 +92,31 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
     router.pathname == "/" ? (
     <></>
   ) : (
-    <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")} >
+    <div className={"navbar-splitter" + (searchBarHidden ? " no-shadow" : "")}>
       <Menu
         defaultSelectedKeys={[`${router.route}`]}
         mode="horizontal"
         className="navbar left-menu"
       >
         {router.pathname.includes("recruiter") ||
-          router.pathname.includes("advisor") ? (
-            null
-          ) : (
-            <Menu.Item key={"/student/"} className="m-0">
-              {false ? (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="m-0"
-                  href={"/student/"}
-                >
-                  {"Home"}
-                </a>
-              ) : (
-                <Link href={"/student/"}>
-                  <a className="m-0">{"Home"}</a>
-                </Link>
-              )}
-            </Menu.Item>
-          )
-        }
+        router.pathname.includes("advisor") ? null : (
+          <Menu.Item key={"/student/"} className="m-0">
+            {false ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="m-0"
+                href={"/student/"}
+              >
+                {"Home"}
+              </a>
+            ) : (
+              <Link href={"/student/"}>
+                <a className="m-0">{"Home"}</a>
+              </Link>
+            )}
+          </Menu.Item>
+        )}
         <GeneralSearch hidden={searchBarHidden} />
       </Menu>
       <Menu
@@ -247,15 +263,17 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Menu.Item>
               <Menu.Item>
                 <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
-              </Menu.Item> 
+              </Menu.Item>
               <Menu.Item>
                 <div
                   onClick={() => {
-                    removeCookies("access_token");
-                    if (status === "authenticated") {
+                    if (status == "authenticated") {
                       signOut().then(() => {
                         router.push("/login");
                       });
+                    } else {
+                      //sign out traditional way
+                      mutation.mutate();
                     }
                     router.push("/login");
                   }}

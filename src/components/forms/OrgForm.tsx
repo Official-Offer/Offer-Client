@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { FormInput } from "@styles/styled-components/styledForm";
-// import { SubmitButton } from "@styles/styled-components/styledButton";
 import { Form, Input, Select, Typography } from "antd";
-import { FootnoteForm } from "./FootnoteForm";
-import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { useQuery } from "@tanstack/react-query";
+import { getSchoolList } from "@services/apiSchool";
+import { getCompanyList } from "@services/apiCompany";
+import { getOrgList } from "@services/apiUser";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -17,15 +17,26 @@ export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
   isLoading,
 }: IOrgForm) => {
-  const [Org, setOrg] = useState("");
+  const [schools, setSchools] = useState<any>();
+  const [companies, setCompanies] = useState<any>();
+  const [Org, setOrg] = useState<any>();
   const state = useSelector((state: RootState) => state.account);
-  const [schools, setSchools] = useState([
-    "Bách Khoa",
-    "Sư Phạm",
-    "Ngoại Thương",
-  ]);
-  const [companies, setCompanies] = useState(["OpenAI", "Google", "Facebook"]);
-  const handleSubmit = () => {
+  const orgQuery = useQuery({
+    queryKey: ["orgs"],
+    queryFn: getOrgList,
+    onSuccess: async (orgs) => {
+      setSchools(orgs.schools);
+      setCompanies(orgs.companies);
+      console.log(orgs)
+
+    },
+    onError: () => {
+      console.log("error")
+    },
+  });
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onSubmit(Org);
   };
 
@@ -43,7 +54,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
                 ? "Kết nối với trường của bạn"
                 : "Kết nối với công ty của bạn"
             }
-            required
           >
             <Select
               showSearch
@@ -52,20 +62,20 @@ export const OrgForm: React.FC<IOrgForm> = ({
               onChange={handleOrgChange}
             >
               {state.role.isStudent || state.role.isAdvisor
-                ? schools.map((school) => (
+                ? schools?.map((school: any) => (
                     <Select.Option
                       className="form-select-dropdown"
-                      value={school}
+                      value={school.id}
                     >
-                      {school}
+                      {school.name}
                     </Select.Option>
                   ))
-                : companies.map((company) => (
+                : companies?.map((company: any) => (
                     <Select.Option
                       className="form-select-dropdown"
-                      value={company}
+                      value={company.id}
                     >
-                      {company}
+                      {company.name}
                     </Select.Option>
                   ))}
             </Select>
@@ -83,8 +93,8 @@ export const OrgForm: React.FC<IOrgForm> = ({
         </div>
       </div>
       <SubmitButton
-        text="Đăng ký"
-        isLoading={isLoading}
+        text="Tiếp tục"
+        isLoading={orgQuery.isLoading && isLoading}
         onClick={handleSubmit}
       />
     </Form>
