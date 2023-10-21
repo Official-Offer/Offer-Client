@@ -16,7 +16,7 @@ import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import { deleteCookie, removeCookies } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
 
 const { Sider } = Layout;

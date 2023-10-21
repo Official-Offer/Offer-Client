@@ -3,7 +3,7 @@ import { Form, Input, Select, Typography } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
 import { getOrgList } from "@services/apiUser";

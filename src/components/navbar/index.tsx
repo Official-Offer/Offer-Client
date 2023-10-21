@@ -12,7 +12,7 @@ import {
   // CloseOutlined,
 } from "@ant-design/icons";
 import { GeneralSearch } from "@components/search/GeneralSearch";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
 // import { NotiBox } from "@components/box";
 // import { Card, MessagePanel, MessageBox } from "@styles/styled-components/styledBox";
