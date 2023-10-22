@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import moment from "moment";
 import Link from "next/link";
-import { getBookmarkedList, unbookmarkJob } from "services/apiJob";
+import { getBookmarkedList, unbookmarkJob } from "@services/apiJob";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { StyledListCard } from "@styles/styled-components/styledBox";
 import { StyledMenuButton } from "@styles/styled-components/styledButton";
+import { formatDate } from "@utils/formatters";
 
 type BookmarkedCardProps = {
   bookmark?: {
@@ -82,10 +82,10 @@ const BookmarkedJobs: NextPage = () => {
             </div>
             <div className="content-dates">
               <div className="date-posted">
-                Đăng vào {moment(bookmark?.job_info?.time_published).format("D/M/YYYY")}
+                Đăng vào {formatDate(bookmark?.job_info?.time_published, "D/M/YYYY")}
               </div>
               <div className="date-saved">
-                Lưu vào {moment(bookmark?.timestamp).format("D/M/YYYY")}
+                Lưu vào {formatDate(bookmark?.timestamp, "D/M/YYYY")}
               </div>
             </div>
           </div>

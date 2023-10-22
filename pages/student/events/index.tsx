@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { FilterNavbar } from "@components/navbar/FilterNavbar";
 import { EventCard } from "@components/card/EventCard";
 import { Row, Col } from "antd";
-import { JobContent } from "@components/main/JobContent";
+import { JobContent } from "@components/content/JobContent";
 import { useState } from "react";
 //create a next page for the student home page, code below
 const StudentEvents: NextPage = () => {

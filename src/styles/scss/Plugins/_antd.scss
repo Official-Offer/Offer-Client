@@ -76,3 +76,17 @@
     }
   }
 }
+
+.ant-input {
+  &-affix-wrapper {
+    border: 2px solid #{$grey-light};
+  }
+}
+
+.ant-radio {
+  &-button-wrapper {
+    border: 1.5px solid #{$grey-light};
+    border-top-width: 1.02px;
+    border-left-width: 0;
+  }
+}

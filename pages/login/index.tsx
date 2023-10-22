@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { FootnoteForm, LogInForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "services/apiStudent";
@@ -13,7 +12,9 @@ import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
+import { FootnoteForm, LogInForm } from "@components/forms";
 import { AuthForm } from "@components/forms/AuthForm";
+import { LoadingPage } from "@components/loading/LoadingPage";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -51,7 +52,7 @@ const Login: NextPage = () => {
     },
   });
   const { data: session, status } = useSession();
-  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "loading") return <LoadingPage />;
   if (status === "authenticated") {
     router.push("/student");
   }
