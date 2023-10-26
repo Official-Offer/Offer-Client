@@ -15,6 +15,10 @@ export default NextAuth({
     GoogleProvider({
       clientId: NEXT_PUBLIC_GOOGLE_CLIENT_ID,
       clientSecret: NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+      authorizationUrl:
+        'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
+      scope:
+        'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly',
     }),
     AzureADProvider({
       clientId: AZURE_AD_CLIENT_ID,
@@ -23,19 +27,20 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    //   async jwt(token, user, account, profile, isNewUser) {
-    //     var user_token = token.token.account;
-    //     return token;
-    //   },
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
+        console.log(token);
+        console.log(account);
         token.accessToken = account.access_token;
         token.id = profile.id;
       }
       return token;
     },
     async session({ session, token, user }) {
+      console.log(token)
+      console.log( user)
+      console.log(session)
       session.accessToken = token.accessToken;
       session.user.id = token.id;
 

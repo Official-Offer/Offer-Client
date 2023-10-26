@@ -11,9 +11,9 @@ import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import { signIn, useSession } from "next-auth/react";
-import { setLoggedIn } from "@redux/actions";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -31,13 +31,13 @@ const Login: NextPage = () => {
       setCookie("cookieToken", data.access);
       setCookie("id", data.pk);
       setCookie("role", data.role);
-      localStorage.setItem("cookieToken", data.message.token);
-      localStorage.setItem("id", data.message.pk);
-      localStorage.setItem("role", data.message.role);
+      // localStorage.setItem("cookieToken", data.message.token);
+      // localStorage.setItem("id", data.message.pk);
+      // localStorage.setItem("role", data.message.role);
       // dispatch(setLoggedIn(true));
       router
         .push({
-          pathname:
+          pathname: 
             data.role == "student"
               ? "/student"
               : data.role == "advisor"
@@ -55,14 +55,14 @@ const Login: NextPage = () => {
     },
   });
 
-  const socialQuery = useQuery({
-    queryKey: ["socialLogin"],
-    queryFn: () => socialLogIn(session && session?.accessToken),
-    onSuccess: async (data) => {
-      console.log(data);
-    },
-    onError: () => {},
-  });
+  // const socialQuery = useQuery({
+  //   queryKey: ["socialLogin"],
+  //   queryFn: () => socialLogIn(session && session?.accessToken),
+  //   onSuccess: async (data) => {
+  //     console.log(data);
+  //   },
+  //   onError: () => {},
+  // });
 
 
   const { data: session, status } = useSession();
@@ -100,6 +100,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
+          <SubmitButton text="sign out" onClick={()=>{signOut()}}/>
           <FootnoteForm embedLogin={true} type={""} />
         </div>
       </div>
