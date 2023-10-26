@@ -72,8 +72,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
           <Form.Item
             label={
               isStudent || isAdvisor
-                ? "Kết nối với trường của bạn"
-                : "Kết nối với công ty của bạn"
+                ? "Trường"
+                : // "Kết nối với trường của bạn"
+                  "Công ty"
+              // "Kết nối với công ty của bạn"
             }
           >
             <Select

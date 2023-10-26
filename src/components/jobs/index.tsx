@@ -18,6 +18,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const [benefits, setBenefits] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [deadline, setDeadline] = useState<string>("");
   const [majors, setMajors] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
@@ -52,7 +53,8 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       setLevel(jobDesc.level);
       setReq(jobDesc.requirements);
       setBenefits(jobDesc.benefits);
-      setMajors(jobDesc.majors);
+      // setMajors(jobDesc.majors);
+      setDeadline(jobDesc.deadline);
       setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
@@ -203,19 +205,19 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               )}
             </div>
             <div>
-              <h3>Ngành học liên quan</h3>
+              <h3>Hạn nộp</h3>
               {editing ? (
                 <Input
                   required
-                  value={majors}
+                  value={deadline}
                   className="form-job"
                   onChange={(event) => {
-                    setMajors(event.target.value);
+                    setDeadline(event.target.value);
                   }}
                 />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{majors}</p>
+                  <p>{deadline}</p>
                 </LoadingLine>
               )}
             </div>
@@ -299,17 +301,17 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
           onClick={() => {
             postJobQuery.mutate({
               title,
-              company,
+              type,
               salary,
               level,
+              deadline,
               requirements,
               benefits,
-              type,
               location,
-              majors,
-              exp,
+              required_majors: majors,
+              required_experience: exp,
               howTo,
-              jd,
+              description: jd,
             });
           }}
           isLoading={postJobQuery.isLoading}
