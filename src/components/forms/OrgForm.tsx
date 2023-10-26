@@ -80,16 +80,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
                   ))}
             </Select>
           </Form.Item>
-          <Form.Item
-            label="Không tìm thấy tên trường? Nhập dưới đây"
-            className="form-input full-width"
-          >
-            <Input
-              required
-              className="form-item"
-              // onChange={handlePhoneNumberChange}
-            />
-          </Form.Item>
         </div>
       </div>
       <SubmitButton

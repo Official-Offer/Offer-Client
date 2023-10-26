@@ -100,7 +100,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <SubmitButton text="sign out" onClick={()=>{signOut()}}/>
+          {/* <SubmitButton text="sign out" onClick={()=>{signOut()}}/> */}
           <FootnoteForm embedLogin={true} type={""} />
         </div>
       </div>

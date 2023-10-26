@@ -60,7 +60,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const titles = [
     // "Đăng tuyển",
     "Công việc",
-    isRecruiter ? "Ứng Viên" : "Học sinh",
+    // isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     // "Tài khoản",
     "Đăng xuất",
@@ -68,7 +68,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const path = [
     // "/postJobs",
     "/jobs",
-    isRecruiter ? "/applicants" : "/students",
+    // isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
     // "/profile",
     "/logout",
@@ -76,7 +76,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const items: MenuProps["items"] = [
     BarChartOutlined,
     TeamOutlined,
-    UploadOutlined,
+    // UploadOutlined,
     // UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
@@ -143,7 +143,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               round
               className="table-add-btn"
               backgroundColor={"#D30B81"}
-              style={{margin: 'auto', width: '150px'}}
+              style={{margin: 'auto', width: '150px', marginBottom: '10px'}}
               onClick={() => {
                 router.push(`/${role}/postJobs/jobForm`);
               }}

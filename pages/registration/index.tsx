@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {  OrgForm } from "@components/forms";
+import { OrgForm } from "@components/forms";
 import { getCookie, setCookie } from "cookies-next";
 import { FootnoteForm } from "@components/forms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -37,9 +37,8 @@ const Registration: NextPage = () => {
     isRecruiter: false,
   });
   const dispatch = useDispatch();
-  // const queryClient = useQueryClient();
-  // const state = useSelector((state: RootState) => state.account);
   const [rol, setRol] = useState<string>("Học sinh");
+  const [selectRole, setSelectRole] = useState<boolean>(false);
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
@@ -51,9 +50,9 @@ const Registration: NextPage = () => {
       setCookie("cookieToken", data.message.token);
       setCookie("id", data.message.pk);
       setCookie("role", data.message.role);
-      localStorage.setItem("cookieToken", data.message.token);
-      localStorage.setItem("id", data.message.pk);
-      localStorage.setItem("role", data.message.role);
+      // localStorage.setItem("cookieToken", data.message.token);
+      // localStorage.setItem("id", data.message.pk);
+      // localStorage.setItem("role", data.message.role);
       if (r.isStudent) {
         mutationOrg.mutate({
           token: data.message.token,
@@ -117,6 +116,9 @@ const Registration: NextPage = () => {
         <div className="register-content-form">
           {pwScreen && status !== "authenticated" ? (
             <>
+              <div>
+                <h1>Đăng ký</h1>
+              </div>
               <p
                 style={{
                   cursor: "pointer",
@@ -127,15 +129,21 @@ const Registration: NextPage = () => {
               >
                 <BackwardOutlined /> Quay lại
               </p>
-              <h1>Đăng ký</h1>
-              <br />
-              <Button
-                icon={<GoogleOutlined />}
-                onClick={() => signIn("google")}
-              >
-                {" "}
-                Đăng ký với Google{" "}
-              </Button>
+              <Form className="form" onSubmit={() => {}} layout="vertical">
+                {/* <div className="form-grid"> */}
+                <Form.Item required label="Họ Tên" className="form-input">
+                  <Input
+                    required
+                    className="form-item"
+                    onChange={(event) => {
+                      const fname = event.target.value.split(" ")[0];
+                      const lname = event.target.value.split(" ")[1];
+                      setFirstName(fname);
+                      setLastName(lname);
+                    }}
+                  />
+                </Form.Item>
+              </Form>
               <AuthForm
                 onSubmit={(item: { email: any; password: any }) => {
                   // setPassword(item.password);
@@ -163,21 +171,69 @@ const Registration: NextPage = () => {
             </>
           ) : (
             <>
-              <div>
-                <h1>Đăng ký</h1>
-              </div>
-              <Form className="form" onSubmit={() => {}} layout="vertical">
-                <div className="form-grid">
-                  <Form.Item required label="Họ" className="form-input">
-                    <Input
-                      required
-                      className="form-item"
-                      onChange={(event) => {
-                        setFirstName(event.target.value);
-                      }}
-                    />
-                  </Form.Item>
-                  <Form.Item required label="Tên" className="form-input">
+              <h1>Đăng ký</h1>
+              <OrgForm
+                onSubmit={(org) => {
+                  setScreen(true);
+                  setOrg(org);
+                }}
+                isLoading={mutation.isLoading && mutationOrg.isLoading}
+              />
+              <p
+                style={{
+                  cursor: "pointer",
+                  color: "#1890ff",
+                  textDecoration: "underline",
+                }}
+                onClick={() => {
+                  setSelectRole(true);
+                }}
+              >
+                Là nhà tuyển dụng hoặc đại diện trường?
+              </p>
+              {selectRole && (
+                <Segmented
+                  options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
+                  onResize={undefined}
+                  size={"large"}
+                  onResizeCapture={undefined}
+                  onChange={(value) => {
+                    setRol(value.toString());
+                    const role = {
+                      isStudent: value.toString() == "Học sinh",
+                      isAdvisor: value.toString() == "Trường",
+                      isRecruiter: value.toString() == "Nhà tuyển dụng",
+                    };
+                    setR(role);
+                    dispatch(setRole(role));
+                  }}
+                />
+              )}
+            </>
+          )}
+          {errorMessage && (
+            <p className="register-content-error">{errorMessage}</p>
+          )}
+          <FootnoteForm type={""} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Registration;
+
+{
+  /* <Button
+                icon={<GoogleOutlined />}
+                onClick={() => signIn("google")}
+              >
+                {" "}
+                Đăng ký với Google{" "}
+              </Button> */
+}
+{
+  /* <Form.Item required label="Tên" className="form-input">
                     <Input
                       required
                       className="form-item"
@@ -186,8 +242,13 @@ const Registration: NextPage = () => {
                       }}
                     />
                   </Form.Item>
-                </div>
-                <Form.Item required label="Chọn vai trò" className="form-input">
+                </div> */
+}
+{
+  /* </div> */
+}
+{
+  /* <Form.Item required label="Chọn vai trò" className="form-input">
                   <Segmented
                     options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
                     onResize={undefined}
@@ -204,29 +265,11 @@ const Registration: NextPage = () => {
                       dispatch(setRole(role));
                     }}
                   />
-                </Form.Item>
-                <OrgForm
-                  onSubmit={(org) => {
-                    setScreen(true);
-                    setOrg(org);
-                  }}
-                  isLoading={mutation.isLoading && mutationOrg.isLoading}
-                />
-                {/* <SubmitButton onClick={()=>{
+                </Form.Item> */
+}
+{
+  /* <SubmitButton onClick={()=>{
                   //logout google nextjs
                   signOut();
-                }} text={"Log out"}/> */}
-              </Form>
-            </>
-          )}
-          {errorMessage && (
-            <p className="register-content-error">{errorMessage}</p>
-          )}
-          <FootnoteForm type={""} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Registration;
+                }} text={"Log out"}/> */
+}
