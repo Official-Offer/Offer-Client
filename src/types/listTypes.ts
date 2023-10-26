@@ -1,4 +1,4 @@
-export type JobFilter = {
+export type JobFilters = {
   jobTypes: string[];
   industries: string;
   locations: string;

@@ -6,7 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import type { Address, Job } from "@types/dataTypes";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { JobContent } from "@components/content/JobContent";
-import { formatAddress, formatNum, formatDate } from "@utils/formatters";
+import { formatAddress, formatNum, dateDist } from "@utils/formatters";
 
 type InfoCardProps = {
   info?: Job,
@@ -42,13 +42,17 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                           info.time_posted === null ? 
                             "Ngày không xác định" 
                           : 
-                            `Đăng vào ${formatDate(info.time_posted, "D/M/YYYY")}`
+                            `Đăng ${dateDist(info.time_posted)}`
                         }
                       </div>
                       <h4>{ info.company.name || "Công ty trống" }</h4>
                       <span>
                         { info.job_types.toString() || "Loại công việc trống"}
-                        {" | "}{info.address ? formatAddress(info.address, true) : "Không có địa điểm"}
+                        {" | "}
+                        {
+                          info.address ? formatAddress(info.address, true) : (
+                            info.company.address ? formatAddress(info.company.address, true) : "Không có địa điểm"
+                        )}
                       </span>
                       <div className="avatar-info-mini">
                         {(info.expected_no_applicants && info.expected_no_applicants !== 0) && 

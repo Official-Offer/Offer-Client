@@ -21,14 +21,20 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
-}
 
-.hstack {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  &-hstack-stretch-center {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    flex-wrap: nowrap;
+    gap: 12px;
 
-  &.center {
-    justify-content: center;
+    span:not(:first-child):not(:last-child) {
+      width: 100%;
+    }
+  }
+
+  &-medium {
+    min-width: 400px;
   }
 }

@@ -21,6 +21,11 @@ export const userLogIn = async (body: any) => {
   return response.data;
 }
 
+export const socialLogIn = async (body: any) => {
+  const response = await request.get(`/accounts/auth/google/${body}`);
+  return response.data;
+}
+
 export const userLogOut = async () => {
   const response = await request.post(`/accounts/logout/`);
   return response.data;

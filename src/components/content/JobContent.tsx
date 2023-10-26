@@ -35,9 +35,10 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
       >
         <div className="job-portal-description-title">
           <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
+          <h3>{jobData?.company.name}</h3>
         </div>
         <div className="job-portal-description-date">
-          <span>Đăng vào {formatDate(jobData?.time_posted, "D/M/YYYY")}</span>
+          <span>Đăng vào {formatDate(jobData?.time_posted, "D/M/YYYY", true)}</span>
           <span>&emsp;•&emsp;</span>
           <span>
             {

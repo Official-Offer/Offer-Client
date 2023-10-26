@@ -9,7 +9,7 @@ import { EventCard, InfoCard } from "@components/card";
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
 import { getJobs } from "@services/apiJob";
-import { useFilterJobs } from "@hooks/useFilterJobs";
+import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import type { Job } from "@types/dataTypes";
 
 const DHBK = {
@@ -57,7 +57,7 @@ const scholarshipList = [
 //create a next page for the student home page, code below
 const Home: NextPage = () => {
   // States
-  const { filteredJobs, setJobs, setSearchTerm, setFilter } = useFilterJobs();
+  const { displayedJobs, setJobs, setSearchTerm } = useDisplayJobs();
 
   // Fetching jobs list
   const jobQuery = useQuery({
@@ -111,7 +111,7 @@ const Home: NextPage = () => {
           <div className="layout-grid">
             {
               jobQuery.isLoading ? new Array(4).fill(<InfoCard loading />) : (
-                filteredJobs.map((jobData) => <InfoCard info={jobData} />)
+                displayedJobs.map((jobData) => <InfoCard info={jobData} />)
               )
             }
           </div>

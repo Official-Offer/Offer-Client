@@ -51,6 +51,9 @@ const Registration: NextPage = () => {
       setCookie("cookieToken", data.message.token);
       setCookie("id", data.message.pk);
       setCookie("role", data.message.role);
+      localStorage.setItem("cookieToken", data.message.token);
+      localStorage.setItem("id", data.message.pk);
+      localStorage.setItem("role", data.message.role);
       if (r.isStudent) {
         mutationOrg.mutate({
           token: data.message.token,

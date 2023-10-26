@@ -61,10 +61,10 @@
         border-radius: 12px !important;
         padding: 0px 24px !important;
         border: 0px;
-        background-image: linear-gradient(to bottom, $pinkish-red 0%, $purple-color 60%, color-mix(in hsl, $purple-color, $pinkish-red) 100%);
+        background-image: linear-gradient(to bottom, $pinkish-red 0%, color-mix(in hsl, $purple-color 90%, $pinkish-red) 50%, $pinkish-red 120%);
         background-size: 100% 200%;
         font-weight: 600;
-        transition: 0.5s background-position, 0.3s all;
+        transition: 0.3s;
         box-shadow: 0 3px 4px 0 rgba(0,0,0,0.3);
 
         &[ant-click-animating-without-extra-node='true']::after{display:none;}
@@ -72,7 +72,7 @@
         &:hover {
           background-position: 0% 100%;
           box-shadow: 0 3px 12px 0 rgba(0,0,0,0.5);
-          scale: 1.02;
+          scale: 1.03;
         }
 
         &:active {
