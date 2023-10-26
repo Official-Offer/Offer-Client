@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { Form, Input, Select } from "antd";
-import { setCompany, setDescription, setTitle } from "@redux/actions";
+import { DatePicker, Form, Input, Select } from "antd";
+import {
+  setCompany,
+  setTitle,
+  setDescription,
+  setDeadline,
+} from "@redux/actions";
+import moment from "moment";
+import locale from 'antd/es/date-picker/locale/vi_VN';
 
 interface IForm {
   onSubmit: () => void;
@@ -10,11 +17,30 @@ interface IForm {
   isLoading?: boolean;
 }
 
-export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) => {
+export const JobPostForm: React.FC<IForm> = ({
+  onSubmit,
+  onCancel,
+  isLoading,
+}) => {
   const dispatch = useDispatch();
+
+  const { RangePicker } = DatePicker;
+
+  // const locale = {
+  //   ...en_US.DatePicker,
+  //   lang: {
+  //     ...en_US.DatePicker.lang,
+  //     monthFormat: "MMMM",
+  //   },
+  // };
 
   const handleTitleChange = (event: any) => {
     dispatch(setTitle(event.target.value));
+  };
+
+  const handleDeadlineChange = (value: any) => {
+    console.log(moment(value).format("DD-MM-YYYY"));
+    dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
   };
 
   const handleDescChange = (event: any) => {
@@ -50,6 +76,9 @@ export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) 
             ))}
           </Select>
         </Form.Item> */}
+        <Form.Item label="Hạn chót">
+          <DatePicker locale={locale} onChange={handleDeadlineChange} />
+        </Form.Item>
         <Form.Item label="Miêu tả" className="form-input full-width">
           <Input.TextArea
             rows={6}

@@ -6,11 +6,14 @@ import { BackwardOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import { Input, Skeleton } from "antd";
+import { DatePicker, Input, Skeleton } from "antd";
+import moment from "moment";
+import locale from 'antd/es/date-picker/locale/vi_VN';
 
 export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
-  const [title, setTitle] = useState<string>(state.title || "");
+  // console.log(state.deadline);
+  const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
   const [company, setCompany] = useState<string>(state.company || "");
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
@@ -18,7 +21,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const [benefits, setBenefits] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
-  const [deadline, setDeadline] = useState<string>("");
+  const [deadline, setDeadline] = useState<string>(state.deadline);
   const [majors, setMajors] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
@@ -53,8 +56,8 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       setLevel(jobDesc.level);
       setReq(jobDesc.requirements);
       setBenefits(jobDesc.benefits);
-      // setMajors(jobDesc.majors);
-      setDeadline(jobDesc.deadline);
+      setMajors(jobDesc.majors);
+      // setDeadline(jobDesc.deadline);
       setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
@@ -116,6 +119,23 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
         </div>
         <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
+        <div>
+          {editing ? (
+            <div style={{marginBottom: "10px"}}>
+              <p>Hạn nộp</p>
+              <DatePicker
+                locale={locale}
+                onChange={(value) => {
+                  setDeadline(moment(value).format("DD-MM-YYYY"));
+                }}
+              />
+            </div>
+          ) : (
+            <LoadingLine loading={jobQuery.isLoading}>
+              <p>Hạn nộp: {deadline}</p>
+            </LoadingLine>
+          )}
+        </div>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
           <div className="job-desc-grid">
@@ -205,19 +225,19 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               )}
             </div>
             <div>
-              <h3>Hạn nộp</h3>
+              <h3>Ngành học liên quan</h3>
               {editing ? (
                 <Input
                   required
-                  value={deadline}
+                  value={majors}
                   className="form-job"
                   onChange={(event) => {
-                    setDeadline(event.target.value);
+                    setMajors(event.target.value);
                   }}
                 />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{deadline}</p>
+                  <p>{majors}</p>
                 </LoadingLine>
               )}
             </div>
@@ -304,7 +324,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               type,
               salary,
               level,
-              deadline,
+              deadline: state.deadline,
               requirements,
               benefits,
               location,

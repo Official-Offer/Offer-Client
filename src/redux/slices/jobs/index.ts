@@ -4,12 +4,14 @@ interface ICJob {
   title: string;
   company: string;
   description: string;
+  deadline: string;
 }
 
 const initialState: ICJob = {
   title: "",
   company: "",
-  description: ""
+  description: "",
+  deadline: "",
 };
 
 const jobSlice = createSlice({
@@ -25,9 +27,12 @@ const jobSlice = createSlice({
     setDescription: (state, action) => {
       state.description = action.payload;
     },
+    setDeadline: (state, action) => {
+      state.deadline = action.payload;
+    },
   },
 });
 
-export const { setTitle, setCompany, setDescription } = jobSlice.actions;
+export const { setTitle, setCompany, setDescription, setDeadline } = jobSlice.actions;
 
 export default jobSlice.reducer;

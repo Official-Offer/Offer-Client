@@ -15,14 +15,14 @@ export const generateJobDescription = async (inputDescription: any) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
-    những trường sau đây: salary (string), level (Thực tập//Nhân viên chính thức), 
+    những trường sau đây: salary (type string), level (Thực tập//Nhân viên chính thức), 
     requirements (string), benefits (string), location (string), 
-    type (Full-time, Part-time), deadline (MM/DD/YYYY), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm), howTo (cách ứng tuyển)
+    type (Full-time, Part-time), majors (most related majors), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm), howTo (cách ứng tuyển)
     Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
+    Tất cả thông tin đều là tiếng việt.
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
   `;
-  // majors (most related majors)
   console.log(prompt);
   const llm = new OpenAI({
     modelName: "gpt-3.5-turbo",
