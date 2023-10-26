@@ -14,6 +14,7 @@ import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { LoadingPage } from "@components/loading/LoadingPage";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -66,7 +67,7 @@ const Login: NextPage = () => {
 
 
   const { data: session, status } = useSession();
-  if (status === "loading") return <h1> loading... please wait</h1>;
+  if (status === "loading") return <LoadingPage />;
   if (status === "authenticated") {
     console.log(session.accessToken);
     // setSocialToken(session?.accessToken);

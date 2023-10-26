@@ -23,6 +23,21 @@
       background: #DDDDDD;
     }
   }
+
+  &-lg {
+    &.round-border {
+      border-radius: 8px;
+    }
+  }
+
+  &.right-icon {
+    span:last-child {
+      margin-left: 4px;
+      svg {
+        font-size: 0.75rem;
+      }
+    }
+  }
 }
 
 .ant-modal {
@@ -74,5 +89,60 @@
         background-color: hsl(199, 100%, 90%);
       }
     }
+  }
+}
+
+.ant-input {
+  &-affix-wrapper {
+    border: 2px solid #{$grey-light};
+  }
+}
+
+.ant-radio {
+  &-button {
+    &-wrapper {
+      border: 1.5px solid #{$grey-light};
+      border-top-width: 1.02px;
+      border-left-width: 0;
+
+      span{
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+      }
+    }
+  }
+}
+
+.ant-space {
+  &.justify-center {
+    width: 100%;
+    justify-content: center;
+  }
+
+  &.justify-stretch {
+    justify-content: stretch;
+    flex-wrap: nowrap !important;
+
+    .stretch-center {
+      width: 100%;
+    }
+  }
+
+  &-compact {
+    &.round-border {
+      label:first-child {
+        border-radius: 8px 0 0 8px !important;
+      }
+      label:last-child {
+        border-radius: 0 8px 8px 0 !important;
+      }
+    }
+  }
+}
+
+.ant-popover {
+  &-inner {
+    border-radius: 8px;
   }
 }

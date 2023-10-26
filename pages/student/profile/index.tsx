@@ -173,16 +173,7 @@ const StudentProfile: NextPage = () => {
           dataFunction={getCompanyList}
         />
       </section>
-      <section className="split-layout-sticky student-job">
-        <div className="student-job-section">
-          <Link href="/students/jobs">Jobs Applied</Link>
-          <InfoCard info={info} />
-        </div>
-        <div className="student-job-section">
-          <Link href="/students/jobs">Jobs Saved</Link>
-          <InfoCard info={info} />
-        </div>
-      </section>
+      <section className="split-layout-sticky"></section>
     </main>
   );
 };

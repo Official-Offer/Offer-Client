@@ -28,7 +28,7 @@ function ErrorPage() {
       > */}
       <QueryClientProvider client={queryClient}>
         <StyledThemeProvider>
-          <div className="center-fullscreen">
+          <div className="layout-fullscreen center">
             <h1>Trang này không tồn tại</h1>
             <div className="link-arrow">
               <h2>

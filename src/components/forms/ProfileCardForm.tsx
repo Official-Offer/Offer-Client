@@ -11,8 +11,8 @@ import {
   Checkbox,
   DatePicker,
 } from "antd";
-import moment from "moment";
 import { CloseOutlined } from "@ant-design/icons";
+import { formatDate } from "@utils/formatters";
 
 interface ProfileCardFormProps {
   open: boolean,
@@ -136,8 +136,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     form
       .validateFields()
       .then((formData) => {
-        formData.start_date = moment(formData.start_date).format("YYYY-MM-DD");
-        formData.end_date = moment(formData.start_date).format("YYYY-MM-DD");
+        formData.start_date = formatDate(formData.start_date, "YYYY-MM-DD");
+        formData.end_date = formatDate(formData.end_date, "YYYY-MM-DD");
         postMutation.mutate(formData);
       })
       .catch((err) => console.log("Form Error: ", err))

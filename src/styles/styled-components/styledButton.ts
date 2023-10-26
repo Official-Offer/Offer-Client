@@ -60,19 +60,23 @@ export const ContinueButton = styled.button`
 `
 
 export const TogglableButton = styled.button`
-  width: 100px;
   height: 30px;
+  padding: 0px 12px;
+
+  border-radius: 40px;
+  border: none;
 
   line-height: 29px;
   text-align: center;
   align-items: center;
 
-  border-radius: 40px;
-  border: none;
-
   cursor: pointer;
   color: ${(props) => props.checked ? "white" : "black"} ;
   background-color: ${(props) => props.checked ? "#f63d74" : "#EDEDED"};
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 
   &:hover {
     filter: brightness(0.87);

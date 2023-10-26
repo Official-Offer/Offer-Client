@@ -1,5 +1,5 @@
 import request from "./apiService";
-import moment from "moment";
+import { formatDate } from "@utils/formatters";
 
 export const getAdvisorEvents = async () => {
   const response = await request.get(`/events/`);
@@ -21,7 +21,7 @@ export const getAdvisorEvents = async () => {
     res.push({
       key: event.id,
       ID: event.id,
-      posted_date: moment(event.timestamp).format("D/M/YYYY"),
+      posted_date: formatDate(event.timestamp, "D/M/YYYY"),
       title: event.title || "Không tìm thấy",
       company: companies[Math.floor(Math.random()*companies.length)],
       no_attendants: 10,
@@ -52,7 +52,7 @@ export const getRecruiterEvents = async () => {
     res.push({
       key: event.id,
       ID: event.id,
-      posted_date: moment(event.timestamp).format("D/M/YYYY"),
+      posted_date: formatDate(event.timestamp, "D/M/YYYY"),
       title: event.title || "Không tìm thấy",
       school: schools[Math.floor(Math.random()*schools.length)],
       no_attendants: 10,
