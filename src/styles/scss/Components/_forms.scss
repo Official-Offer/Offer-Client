@@ -59,6 +59,17 @@
     border-radius: 8px;
     border: 1px solid #000000;
   }
+  &-job {
+    width: 50%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    &-long {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #000000;
+    }
+  }
   &-item {
     padding: 8px;
     width: 100%;

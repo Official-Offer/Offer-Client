@@ -6,7 +6,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import { Skeleton } from "antd";
+import { Input, Skeleton } from "antd";
 
 export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);
@@ -18,6 +18,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
   const [location, setLocation] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
+  const [howTo, setHowTo] = useState<string>("");
   const [jd, setJd] = useState<string>(
     state.description ||
       `[HCM] Cơ hội trở thành "teammate" với Con Cưng cho sinh viên năm 3!!!
@@ -51,6 +52,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
       setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
+      setHowTo(jobDesc.howTo);
     },
     onError: () => {},
     reloadOnWindowFocus: false,
@@ -78,10 +80,10 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             <div>
               <h3>Luơng</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={salary}
+                  className="form-job"
                   onChange={(event) => {
                     setSalary(event.target.value);
                   }}
@@ -95,14 +97,14 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             <div>
               <h3>Cấp bậc</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={level}
+                  className="form-job"
                   onChange={(event) => {
                     setLevel(event.target.value);
                   }}
-                ></input>
+                />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
                   <p>{level}</p>
@@ -112,10 +114,10 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             <div>
               <h3>Hình thức</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={type}
+                  className="form-job"
                   onChange={(event) => {
                     setType(event.target.value);
                   }}
@@ -129,10 +131,10 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             <div>
               <h3>Kinh nghiệm</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={exp}
+                  className="form-job"
                   onChange={(event) => {
                     setExp(event.target.value);
                   }}
@@ -148,10 +150,10 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             <div>
               <h3>Địa điểm</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={location}
+                  className="form-job"
                   onChange={(event) => {
                     setLocation(event.target.value);
                   }}
@@ -167,10 +169,11 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
         <div>
           <h2>Quyền lợi</h2>
           {editing ? (
-            <input
-              type="text"
-              className="job-desc-input"
+            <Input.TextArea
+              rows={6}
+              required
               value={benefits}
+              className="form-job-long"
               onChange={(event) => {
                 setBenefits(event.target.value);
               }}
@@ -184,10 +187,11 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
         <div>
           <h2>Yêu cầu</h2>
           {editing ? (
-            <input
-              type="text"
-              className="job-desc-input"
+            <Input.TextArea
+              rows={6}
+              required
               value={requirements}
+              className="form-job-long"
               onChange={(event) => {
                 setReq(event.target.value);
               }}
@@ -200,9 +204,39 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
         </div>
         <div>
           <h2>Mô tả</h2>
-          <Skeleton loading={jobQuery.isLoading} active>
-            <pre>{jd}</pre>
-          </Skeleton>
+          {editing ? (
+            <Input.TextArea
+              rows={6}
+              required
+              value={jd}
+              className="form-job-long"
+              onChange={(event) => {
+                setJd(event.target.value);
+              }}
+            />
+          ) : (
+            <Skeleton loading={jobQuery.isLoading} active>
+              <pre>{jd}</pre>
+            </Skeleton>
+          )}
+        </div>
+        <div>
+          <h2>Cách ứng tuyển</h2>
+          {editing ? (
+            <Input.TextArea
+              rows={6}
+              required
+              value={howTo}
+              className="form-job-long"
+              onChange={(event) => {
+                setHowTo(event.target.value);
+              }}
+            />
+          ) : (
+            <Skeleton loading={jobQuery.isLoading} active>
+              <pre>{howTo}</pre>
+            </Skeleton>
+          )}
         </div>
       </div>
       <div className="job-desc-button">

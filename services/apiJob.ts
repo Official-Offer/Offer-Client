@@ -3,6 +3,7 @@ import { getCompany } from "./apiCompany";
 // import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 import { OpenAI } from "langchain/llms/openai";
 import { formatDate } from "@utils/formatters";
+import moment from "moment";
 
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
@@ -16,7 +17,7 @@ export const generateJobDescription = async (inputDescription: any) => {
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
     những trường sau đây: salary (string), level (Thực tập//Nhân viên chính thức), 
     requirements (string), benefits (string), location (string), 
-    type (Full-time, Part-time), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm). 
+    type (Full-time, Part-time), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm), howTo (cách ứng tuyển)
     Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
@@ -123,7 +124,7 @@ export const getJobsForRecruiter = async () => {
   const res = jobs.map((job: any) => ({
     key: job,
     // ID: job.id,
-    posted_date: formatDate(job.created_at, "D/M/YYYY"),
+    posted_date: moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     // unapproved_schools: unapprovedSchoolString,
     // approved_schools: approvedSchoolString,
