@@ -20,18 +20,27 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [schools, setSchools] = useState<any>();
   const [companies, setCompanies] = useState<any>();
   const [Org, setOrg] = useState<any>();
+  const [proposedOrg, setProposedOrg] = useState<string>("");
+  const [notFound, setNotFound] = useState<boolean>(false);
   const state = useSelector((state: RootState) => state.account);
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
     onSuccess: async (orgs) => {
-      setSchools(orgs.schools);
-      setCompanies(orgs.companies);
-      console.log(orgs)
-
+      // add "school is not found" into the list
+      const schoolList = orgs.schools;
+      const companyList = orgs.companies;
+      //push the "not found" option to the list at the top
+      schoolList.push({ id: 0, name: "Trường không có trong danh sách" });
+      companyList.push({
+        id: "0",
+        name: "Công ty không có trong danh sách",
+      });
+      setSchools(schoolList);
+      setCompanies(companyList);
     },
     onError: () => {
-      console.log("error")
+      console.log("error");
     },
   });
 
@@ -41,6 +50,9 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   const handleOrgChange = (value: any) => {
+    if (value == 0) {
+      setNotFound(true);
+    }
     setOrg(value);
   };
 
@@ -80,6 +92,17 @@ export const OrgForm: React.FC<IOrgForm> = ({
                   ))}
             </Select>
           </Form.Item>
+          {notFound && (
+            <Form.Item label="Không có trong danh sách? Điền tên dưới đây">
+              <Input
+                required
+                className="form-item"
+                onChange={(event) => {
+                  setProposedOrg(event.target.value);
+                }}
+              />
+            </Form.Item>
+          )}
         </div>
       </div>
       <SubmitButton
@@ -90,3 +113,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
     </Form>
   );
 };
+
+{
+  /* <Typography.Text type="secondary">
+              {state.role.isStudent || state.role.isAdvisor
+                ? ("Không tìm thấy trường của bạn trong danh sách? Hãy liên hệ với chúng tôi để thêm trường.")
+                : "Không tìm thấy công ty của bạn trong danh sách? Hãy liên hệ với chúng tôi để thêm công ty."}
+            </Typography.Text> */
+}

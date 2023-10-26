@@ -233,41 +233,6 @@ export default Registration;
               </Button> */
 }
 {
-  /* <Form.Item required label="Tên" className="form-input">
-                    <Input
-                      required
-                      className="form-item"
-                      onChange={(event) => {
-                        setLastName(event.target.value);
-                      }}
-                    />
-                  </Form.Item>
-                </div> */
-}
-{
-  /* </div> */
-}
-{
-  /* <Form.Item required label="Chọn vai trò" className="form-input">
-                  <Segmented
-                    options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
-                    onResize={undefined}
-                    size={"large"}
-                    onResizeCapture={undefined}
-                    onChange={(value) => {
-                      setRol(value.toString());
-                      const role = {
-                        isStudent: value.toString() == "Học sinh",
-                        isAdvisor: value.toString() == "Trường",
-                        isRecruiter: value.toString() == "Nhà tuyển dụng",
-                      };
-                      setR(role);
-                      dispatch(setRole(role));
-                    }}
-                  />
-                </Form.Item> */
-}
-{
   /* <SubmitButton onClick={()=>{
                   //logout google nextjs
                   signOut();
