@@ -21,7 +21,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const [benefits, setBenefits] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
-  const [deadline, setDeadline] = useState<string>(state.deadline);
+  // const [deadline, setDeadline] = useState<string>(state.deadline);
   const [majors, setMajors] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
@@ -119,7 +119,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
         </div>
         <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
-        <div>
+        {/* <div>
           {editing ? (
             <div style={{marginBottom: "10px"}}>
               <p>Hạn nộp</p>
@@ -135,7 +135,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               <p>Hạn nộp: {deadline}</p>
             </LoadingLine>
           )}
-        </div>
+        </div> */}
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
           <div className="job-desc-grid">

@@ -38,10 +38,10 @@ export const JobPostForm: React.FC<IForm> = ({
     dispatch(setTitle(event.target.value));
   };
 
-  const handleDeadlineChange = (value: any) => {
-    console.log(moment(value).format("DD-MM-YYYY"));
-    dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
-  };
+  // const handleDeadlineChange = (value: any) => {
+  //   console.log(moment(value).format("DD-MM-YYYY"));
+  //   dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
+  // };
 
   const handleDescChange = (event: any) => {
     dispatch(setDescription(event.target.value));
@@ -76,9 +76,9 @@ export const JobPostForm: React.FC<IForm> = ({
             ))}
           </Select>
         </Form.Item> */}
-        <Form.Item label="Hạn chót">
+        {/* <Form.Item label="Hạn chót">
           <DatePicker locale={locale} onChange={handleDeadlineChange} />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label="Miêu tả" className="form-input full-width">
           <Input.TextArea
             rows={6}
