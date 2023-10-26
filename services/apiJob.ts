@@ -22,7 +22,7 @@ export const generateJobDescription = async (inputDescription: any) => {
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
   `;
-  console.log(prompt)
+  console.log(prompt);
   const llm = new OpenAI({
     modelName: "gpt-3.5-turbo",
     openAIApiKey: apiKey,
@@ -30,7 +30,7 @@ export const generateJobDescription = async (inputDescription: any) => {
 
   try {
     const response = await llm.call(prompt);
-    console.log(response)
+    console.log(response);
     return response;
   } catch (error: any) {
     console.error("Error generating job description:", error.message);
@@ -71,14 +71,15 @@ export const getUnapprovedJobs = async () => {
 
 export const getJobsForRecruiter = async () => {
   const response = await request.get(`/jobs/`);
-  const jobs = response.data;
-  const jobList = [
+  console.log(response.data.message)
+
+  const jobs = response.data.message || [
     {
-      timestamp: "",
+      created_at: "",
       title: "SWE Intern",
     },
     {
-      timestamp: "",
+      created_at: "",
       title: "Sales Intern",
     },
   ];
@@ -133,20 +134,27 @@ export const getJobsForRecruiter = async () => {
   return res;
 };
 
+export const getRecruiterJobs = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobs = response.data.message;
+  console.log(response.data.message)
+  const res = jobs.map((job: any) => ({
+    key: job,
+    posted_date: moment(job.created_at).format("DD/MM/YYYY"),
+    title: job.title || "Không tìm thấy",
+    company: job.company.name,
+    recruiter: job.created_by.first_name + " " + job.created_by.last_name,
+    applicants: 20,
+    verified: false,
+  }));
+  return res;
+};
 export const getApprovedJobs = async () => {
   // const response = await request.get(`/jobs/`);
   // const jobList = response.data;
   const jobList = ["1", "2", "3", "4"];
-  const companies = [
-    "VinAI",
-    "FB",
-    "Amz",
-  ];
-  const recruiters = [
-    "vvnguyen@umass.edu",
-    "ktto@umass.edu",
-    "hto@umass.edu",
-  ];
+  const companies = ["VinAI", "FB", "Amz"];
+  const recruiters = ["vvnguyen@umass.edu", "ktto@umass.edu", "hto@umass.edu"];
   return jobList.map((job: any) => ({
     key: job,
     posted_date: formatDate(job.timestamp, "D/M/YYYY") || "09/05/2002",
@@ -169,7 +177,7 @@ export const getJobListWithApplicant = async () => {
 };
 
 export const getJob = async (id: number) => {
-  console.log("what")
+  console.log("what");
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
   job.company_data = await getCompany(job.company);
@@ -200,7 +208,6 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
-  console.log("job posted");
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };
@@ -266,5 +273,5 @@ const majorList = [
   "Ngành Tài chính - Ngân hàng",
   "Ngành Marketing",
   "Ngành Kỹ thuật hóa học",
-  "Ngành Kỹ thuật công nghiệp"
+  "Ngành Kỹ thuật công nghiệp",
 ];

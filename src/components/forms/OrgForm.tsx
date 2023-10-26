@@ -7,22 +7,31 @@ import { useQuery } from "@tanstack/react-query";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
 import { getOrgList } from "@services/apiUser";
+import { useRouter } from "next/router";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
   isLoading: boolean;
+  type?: string;
 }
 
 export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
   isLoading,
+  type,
 }: IOrgForm) => {
+  const router = useRouter();
+  const state = useSelector((state: RootState) => state.account);
   const [schools, setSchools] = useState<any>();
   const [companies, setCompanies] = useState<any>();
   const [Org, setOrg] = useState<any>();
   const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const state = useSelector((state: RootState) => state.account);
+  const isStudent =
+    state.role.isRecruiter || router.pathname.includes("student");
+  const isRecruiter =
+    state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
@@ -62,7 +71,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
         <div className="form-input">
           <Form.Item
             label={
-              state.role.isStudent || state.role.isAdvisor
+              isStudent || isAdvisor
                 ? "Kết nối với trường của bạn"
                 : "Kết nối với công ty của bạn"
             }
@@ -73,7 +82,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
               bordered={false}
               onChange={handleOrgChange}
             >
-              {state.role.isStudent || state.role.isAdvisor
+              {isStudent || isAdvisor
                 ? schools?.map((school: any) => (
                     <Select.Option
                       className="form-select-dropdown"
@@ -106,7 +115,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
         </div>
       </div>
       <SubmitButton
-        text="Tiếp tục"
+        text={type ? "Cập nhật" : "Tiếp tục"}
         isLoading={orgQuery.isLoading && isLoading}
         onClick={handleSubmit}
       />

@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { generateJobDescription } from "@services/apiJob";
+import { generateJobDescription, postJob } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { BackwardOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ import { Input, Skeleton } from "antd";
 
 export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
+  const [title, setTitle] = useState<string>(state.title || "");
+  const [company, setCompany] = useState<string>(state.company || "");
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
   const [requirements, setReq] = useState<string>("");
@@ -60,6 +62,18 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
     reloadOnWindowFocus: false,
   });
 
+  const postJobQuery = useMutation({
+    mutationKey: ["post-job"],
+    mutationFn: postJob,
+    onSuccess: async (data) => {
+      console.log(data);
+      onClick();
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+    },
+  });
+
   return (
     <div className="job-desc">
       <p
@@ -78,9 +92,22 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       </div>
       <div className="job-desc-content">
         <div className="job-desc-heading">
-          <h2>
-            {state.title || `Thực tập sinh Kỹ sư Phần Mềm chi nhánh TP.HCM`}
-          </h2>
+          {editing ? (
+            <Input
+              required
+              value={title}
+              className="form-job"
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+            />
+          ) : jobQuery.isLoading ? (
+            <h2>
+              Hãy kiên nhẫn một chút, OfferAI đang tạo JD tối ưu cho bạn...
+            </h2>
+          ) : (
+            <h2>{state.title}</h2>
+          )}
           <p onClick={() => (editing ? setEditing(false) : setEditing(true))}>
             Chỉnh sửa <EditOutlined />
           </p>
@@ -270,8 +297,22 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       <div className="job-desc-button">
         <SubmitButton
           onClick={() => {
-            onClick();
+            postJobQuery.mutate({
+              title,
+              company,
+              salary,
+              level,
+              requirements,
+              benefits,
+              type,
+              location,
+              majors,
+              exp,
+              howTo,
+              jd,
+            });
           }}
+          isLoading={postJobQuery.isLoading}
           text={"Tiếp tục"}
         />
       </div>

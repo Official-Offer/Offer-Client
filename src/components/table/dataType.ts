@@ -11,6 +11,20 @@ export interface JobDataType extends IntrinsicAttributes {
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
+export interface RecruiterJobDataType extends IntrinsicAttributes {
+  // key: string | null;
+  // ID: string | null;
+  posted_date: string | null;
+  title: string | null;
+  // address: string;
+  company: string | null;
+  recruiter: string | null;
+  applicants: string | null; //school/total
+  verified: boolean | false; // Đã xác thực, chưa xác thực
+  // expected: number | 0;
+  // accepted: string | 0; //school/total
+}
+
 export interface UnapprovedJobDataType extends IntrinsicAttributes {
   // key: string | null;
   // ID: string | null;

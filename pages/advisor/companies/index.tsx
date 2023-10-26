@@ -1,6 +1,4 @@
 import { NextPage } from "next";
-import { BaseTable } from "@components/table/BaseTable";
-import { companyColumns } from "@components/table/columnType";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { CompanyDataType } from "@components/table/dataType";
@@ -8,6 +6,7 @@ import { getCompaniesForAdvisor } from "@services/apiCompany";
 import { FilterSearch } from "@components/search/FilterSearch";
 import { Avatar, Card } from "antd";
 import { AntDesignOutlined } from "@ant-design/icons";
+import { LoadingLine } from "@components/loading/LoadingLine";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -51,16 +50,17 @@ const Companies: NextPage = () => {
       </div>
       <div className="recruiter-schools-grid">
         {data.map((company) => (
-          <Card className="recruiter-schools-card">
-            <Avatar
-              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-              icon={<AntDesignOutlined />}
-            />
-            <div className="recruiter-schools-card-info">
-              <b>{company.name}</b>
-              <p>{company.description}</p>
-            </div>
-          </Card>
+          // <LoadingLine loading={companyQuery.isLoading}>
+            <Card className="recruiter-schools-card">
+              <Avatar
+                size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+                icon={<AntDesignOutlined />}
+              />
+              <div className="recruiter-schools-card-info">
+                <b>{company.name}</b>
+                <p>{company.description}</p>
+              </div>
+            </Card>
         ))}
       </div>
     </div>

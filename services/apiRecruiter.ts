@@ -1,4 +1,4 @@
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import request from "./apiService";
 
 export const registerRecruiter = async (body: any) => {
@@ -11,9 +11,11 @@ export const updateRecruiter = async (body: any) => {
   return response.data;
 };
 
-export const getRecruiterDetails = async () => {
-  const response = await request.get(`/recruiters/me/`);
-  return response.data.Response;
+export const getRecruiter = async () => {
+  const id = getCookie("id");
+  const response = (await request.get(`/recruiters/${id}/`)).data;
+  return response;
+  // return response.data.Response;
 };
 
 export const recruiterLogin = async (body: any) => {

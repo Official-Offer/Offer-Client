@@ -6,6 +6,10 @@ import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
 import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
+import Profile from "../profile/index";
+import { getRecruiter } from "@services/apiRecruiter";
+import { setCompany, setID, setRole } from "@redux/actions";
+import { useDispatch } from "react-redux";
 
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
@@ -20,7 +24,27 @@ const Jobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-      setSearchResults(jobs.map(job=>job.title));
+      setSearchResults(jobs.map((job) => job.title));
+    },
+    onError: () => {},
+  });
+
+  const dispatch = useDispatch();
+
+  const profileQuery = useQuery({
+    queryKey: ["profile"],
+    queryFn: getRecruiter,
+    onSuccess: async (info) => {
+      console.log(info);
+      dispatch(setID(info.account.id));
+      dispatch(
+        setRole({
+          isStudent: false,
+          isAdvisor: false,
+          isRecruiter: true,
+        })
+      );
+      dispatch(setCompany(info.company.name));
     },
     onError: () => {},
   });
@@ -31,15 +55,15 @@ const Jobs: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter(item =>
+    const filteredData = dataset.filter((item) =>
       item.title?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
   };
 
   const handleAddJob = () => {
-    router.push('/recruiter/postJobs/jobForm');
-  }
+    router.push("/recruiter/postJobs/jobForm");
+  };
 
   return (
     <div className="applicant">
@@ -54,7 +78,7 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"RecruiterJobs"}
-          isLoading={jobQuery.isLoading}
+          isLoading={jobQuery.isLoading && profileQuery.isLoading}
         />
       </div>
     </div>

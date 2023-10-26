@@ -13,12 +13,6 @@ interface IForm {
 export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) => {
   const dispatch = useDispatch();
 
-  const [companies, setCompanies] = useState<string[]>([
-    "Apple",
-    "Amz",
-    "Meta",
-  ]);
-
   const handleTitleChange = (event: any) => {
     dispatch(setTitle(event.target.value));
   };

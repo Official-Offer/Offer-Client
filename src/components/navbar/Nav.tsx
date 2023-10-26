@@ -3,6 +3,7 @@ import {
   BarChartOutlined,
   LockOutlined,
   PlusOutlined,
+  SnippetsOutlined,
   TeamOutlined,
   UnlockOutlined,
   UploadOutlined,
@@ -43,9 +44,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
       deleteCookie("role");
       deleteCookie("id");
 
-      localStorage.removeItem("cookieToken");
-      localStorage.removeItem("id");
-      localStorage.removeItem("role");
+      // localStorage.removeItem("cookieToken");
+      // localStorage.removeItem("id");
+      // localStorage.removeItem("role");
 
       router.push("/login").then(() => {
         router.reload();
@@ -62,7 +63,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "Công việc",
     // isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    // "Tài khoản",
+    "Tài khoản",
     "Đăng xuất",
   ];
   const path = [
@@ -70,21 +71,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "/jobs",
     // isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
-    // "/profile",
+    "/profile",
     "/logout",
   ];
   const items: MenuProps["items"] = [
-    BarChartOutlined,
+    // BarChartOutlined,
+    SnippetsOutlined,
     TeamOutlined,
     // UploadOutlined,
-    // UserOutlined,
+    UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index == 4) {
+      if (index == 3) {
         if (status == "authenticated") {
           signOut().then(() => {
             router.push("/login");
@@ -93,31 +95,35 @@ export const Nav: React.FC = (props: any): ReactElement => {
           //sign out traditional way
           mutation.mutate();
         }
-      } else if (!(index == 0 && role == "advisor")) {
+      } else {
         router.push(`/${role}${path[index]}`);
       }
+
+      // else if (!(index == 0 && role == "advisor")) {
+      //   router.push(`/${role}${path[index]}`);
+      // }
     },
-    children:
-      index == 0 && role == "advisor"
-        ? [
-            {
-              label: "Chưa duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/${role}${path[index]}/unapproved`);
-              },
-              key: `/${role}${path[index]}/unapproved`,
-            },
-            {
-              label: "Đã duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/${role}${path[index]}/approved`);
-              },
-              key: `/${role}${path[index]}/approved`,
-            },
-          ]
-        : undefined,
+    // children:
+    //   index == 0 && role == "advisor"
+    //     ? [
+    //         {
+    //           label: "Chưa duyệt",
+    //           icon: React.createElement(icon),
+    //           onClick: (e) => {
+    //             router.push(`/${role}${path[index]}/unapproved`);
+    //           },
+    //           key: `/${role}${path[index]}/unapproved`,
+    //         },
+    //         {
+    //           label: "Đã duyệt",
+    //           icon: React.createElement(icon),
+    //           onClick: (e) => {
+    //             router.push(`/${role}${path[index]}/approved`);
+    //           },
+    //           key: `/${role}${path[index]}/approved`,
+    //         },
+    //       ]
+    //     : undefined,
   }));
 
   console.log(router.pathname);
@@ -143,7 +149,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               round
               className="table-add-btn"
               backgroundColor={"#D30B81"}
-              style={{margin: 'auto', width: '150px', marginBottom: '10px'}}
+              style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
               onClick={() => {
                 router.push(`/${role}/postJobs/jobForm`);
               }}
@@ -157,7 +163,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
             </IconButton>
             <Menu
               defaultSelectedKeys={[`/${role}`]}
-              defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
+              // defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
               selectedKeys={[router.pathname]}
               mode="inline"
               inlineCollapsed={collapsed}
