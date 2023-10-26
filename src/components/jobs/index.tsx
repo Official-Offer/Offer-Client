@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { EditOutlined } from "@ant-design/icons";
+import { BackwardOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { Input, Skeleton } from "antd";
 
-export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
+export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
@@ -16,6 +16,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
   const [benefits, setBenefits] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const [majors, setMajors] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
   const [howTo, setHowTo] = useState<string>("");
@@ -49,6 +50,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
       setLevel(jobDesc.level);
       setReq(jobDesc.requirements);
       setBenefits(jobDesc.benefits);
+      setMajors(jobDesc.majors);
       setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
@@ -60,6 +62,17 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
 
   return (
     <div className="job-desc">
+      <p
+        style={{
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          onBack();
+          // setScreen(false);
+        }}
+      >
+        <BackwardOutlined /> Quay lại
+      </p>
       <div className="job-desc-nav">
         <h1>Xem trước</h1>
       </div>
@@ -72,7 +85,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
             Chỉnh sửa <EditOutlined />
           </p>
         </div>
-        <h4>Đăng vào 2 ngày trước</h4>
+        <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
@@ -145,8 +158,6 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
                 </LoadingLine>
               )}
             </div>
-          </div>
-          <div className="job-desc-single">
             <div>
               <h3>Địa điểm</h3>
               {editing ? (
@@ -161,6 +172,23 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
                   <p>{location}</p>
+                </LoadingLine>
+              )}
+            </div>
+            <div>
+              <h3>Ngành học liên quan</h3>
+              {editing ? (
+                <Input
+                  required
+                  value={majors}
+                  className="form-job"
+                  onChange={(event) => {
+                    setMajors(event.target.value);
+                  }}
+                />
+              ) : (
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{majors}</p>
                 </LoadingLine>
               )}
             </div>

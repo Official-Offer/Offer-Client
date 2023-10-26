@@ -10,6 +10,9 @@ const JobDesc: NextPage = () => {
       onClick={() => {
         router.push("/advisor/postJobs/schoolSelect");
       }}
+      onBack={() => {
+        router.push("/advisor/postJobs/jobForm");
+      }}
     />
   );
 };
