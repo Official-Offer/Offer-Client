@@ -125,19 +125,19 @@
   }
 
   &-description {
-    height: calc(100dvh - 128px);
+    height: calc(80dvh - 128px);
     overflow-y: auto;
-    padding: 6% 16%;
+    margin: 32px 20px 20px 20px;
 
     &-title {
       h2 {
-        margin-bottom: 16px;
+        margin-bottom: 0.5rem;
         font-size: 2.25rem;
       }
 
       h3 {
         margin-bottom: 8px;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
       }
     }
 

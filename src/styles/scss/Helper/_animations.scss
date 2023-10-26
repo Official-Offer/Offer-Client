@@ -1,0 +1,33 @@
+// Functions
+@mixin animate($animation, $duration, $method, $times) {
+  animation: $animation $duration $method $times;
+}
+
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+      @content;
+  }
+}
+
+// Classes
+.flip {
+  &-3d-wrapper {
+    perspective: 800px;
+
+    span {
+      perspective: 800px;
+    }
+  }
+
+  &-infinite {
+    @include keyframes(flip) {
+      0% {
+        transform: rotate3d(0, 1, 0, 0deg);
+      }
+      100% {
+        transform: rotate3d(0, 1, 0, 180deg);
+      }
+    }
+    @include animate(flip, 1s, ease-in-out, infinite);
+  }
+}

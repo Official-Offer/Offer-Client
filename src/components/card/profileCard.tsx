@@ -1,9 +1,9 @@
 import  React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Card as AntdCard, Modal, Button, Divider } from "antd";
-import moment from "moment";
+import { Card as AntdCard, Button, Divider } from "antd";
 import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
+import { formatDate } from "@utils/formatters";
 
 type ProfileCardProps = {
   isEditable?: boolean,
@@ -145,9 +145,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ isEditable, fieldTitle
                             item.start_date.length !== 0 && (
                               <div>
                                 <span>{
-                                  moment(item.start_date).format("MM/YYYY") + 
+                                  formatDate(item.start_date, "MM/YYYY") +
                                   " - " + 
-                                  (item.is_current ? "Hiện tại" : moment(item.end_date).format("MM/YYYY"))
+                                  (item.is_current ? "Hiện tại" : formatDate(item.end_date, "MM/YYYY"))
                                 }</span>
                               </div>
                             )

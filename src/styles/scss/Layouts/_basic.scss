@@ -1,7 +1,40 @@
-.basic {
+.layout {
+  &-fullscreen {
+    height: calc(100dvh - 64px);
+    width: 100dvw;
+
+    &.center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+
+  &-largescreen {
+    width: max(30%, 400px) !important;
+  }
+
   &-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
+  }
+
+  &-hstack-stretch-center {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    flex-wrap: nowrap;
+    gap: 12px;
+
+    span:not(:first-child):not(:last-child) {
+      width: 100%;
+    }
+  }
+
+  &-medium {
+    min-width: 400px;
   }
 }
