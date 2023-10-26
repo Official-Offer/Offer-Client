@@ -2,6 +2,7 @@ import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
   LockOutlined,
+  PlusOutlined,
   TeamOutlined,
   UnlockOutlined,
   UploadOutlined,
@@ -18,6 +19,7 @@ import { deleteCookie, removeCookies } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
+import { IconButton } from "@styles/styled-components/styledButton";
 
 const { Sider } = Layout;
 
@@ -40,7 +42,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
       deleteCookie("cookieToken");
       deleteCookie("role");
       deleteCookie("id");
-      
+
       localStorage.removeItem("cookieToken");
       localStorage.removeItem("id");
       localStorage.removeItem("role");
@@ -56,26 +58,26 @@ export const Nav: React.FC = (props: any): ReactElement => {
   });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    // "Trang chủ",
+    // "Đăng tuyển",
     "Công việc",
     isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    "Tài khoản",
+    // "Tài khoản",
     "Đăng xuất",
   ];
   const path = [
-    // "",
+    // "/postJobs",
     "/jobs",
     isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
-    "/profile",
+    // "/profile",
     "/logout",
   ];
   const items: MenuProps["items"] = [
     BarChartOutlined,
     TeamOutlined,
     UploadOutlined,
-    UserOutlined,
+    // UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
@@ -137,6 +139,22 @@ export const Nav: React.FC = (props: any): ReactElement => {
             <div className="navbar-sider-logo">
               <Image src="/images/logo.png" width={40} height={40} />
             </div>
+            <IconButton
+              round
+              className="table-add-btn"
+              backgroundColor={"#D30B81"}
+              style={{margin: 'auto', width: '150px'}}
+              onClick={() => {
+                router.push(`/${role}/postJobs/jobForm`);
+              }}
+            >
+              <div className="table-add-btn-body">
+                <span>Tạo công việc</span>
+                <span>
+                  <PlusOutlined />
+                </span>
+              </div>
+            </IconButton>
             <Menu
               defaultSelectedKeys={[`/${role}`]}
               defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}

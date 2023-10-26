@@ -95,16 +95,16 @@ export const JobColumns: ColumnsType<JobDataType> = [
     dataIndex: "title",
     key: "title",
   },
-  {
-    title: "Trường chưa duyệt",
-    dataIndex: "unapproved_schools",
-    key: "unapproved_schools",
-  },
-  {
-    title: "Trường đã duyệt",
-    dataIndex: "approved_schools",
-    key: "approved_schools",
-  },
+  // {
+  //   title: "Trường chưa duyệt",
+  //   dataIndex: "unapproved_schools",
+  //   key: "unapproved_schools",
+  // },
+  // {
+  //   title: "Trường đã duyệt",
+  //   dataIndex: "approved_schools",
+  //   key: "approved_schools",
+  // },
   {
     title: "Ứng viên",
     dataIndex: "applicants",

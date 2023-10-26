@@ -25,19 +25,19 @@ export const updateCompany = async (body: any) => {
 }
 
 export const getCompaniesForAdvisor = async (id: number) => {
-  // const companies = (await request.get(`/companies/`)).data;
-  const companies = [
-    { name: "VinGroup", desc: "rac" },
-    { name: "Vinamilk", desc: "rac" },
-    { name: "VNG", desc: "rac" },
-    { name: "Garena", desc: "rac" },
-    { name: "Shoppee", desc: "rac" },
-  ];
-  return companies.map((company)=>({
+  const companies = (await request.get(`/companies/`)).data;
+  // const companies = [
+  //   { name: "VinGroup", desc: "rac" },
+  //   { name: "Vinamilk", desc: "rac" },
+  //   { name: "VNG", desc: "rac" },
+  //   { name: "Garena", desc: "rac" },
+  //   { name: "Shoppee", desc: "rac" },
+  // ];
+  return companies.map((company: any)=>({
       key: "1",
       ID: "2",
       name: company.name,
-      description: company.desc,
+      description: company.description,
       recruiters: 3,
       unapproved_jobs: 200,
       approved_jobs: 10000,

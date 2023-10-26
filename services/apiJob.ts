@@ -69,6 +69,8 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
+  const response = await request.get(`/jobs/`);
+  const jobs = response.data;
   const jobList = [
     {
       timestamp: "",
@@ -118,13 +120,13 @@ export const getJobsForRecruiter = async () => {
       return acc + "";
     }
   }, "");
-  const res = jobList.map((job: any) => ({
+  const res = jobs.map((job: any) => ({
     key: job,
     // ID: job.id,
-    posted_date: moment(job.timestamp).format("D/M/YYYY"),
+    posted_date: moment(job.created_at).format("D/M/YYYY"),
     title: job.title || "Không tìm thấy",
-    unapproved_schools: unapprovedSchoolString,
-    approved_schools: approvedSchoolString,
+    // unapproved_schools: unapprovedSchoolString,
+    // approved_schools: approvedSchoolString,
     applicants: 20,
   }));
   return res;

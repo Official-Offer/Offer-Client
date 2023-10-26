@@ -1,5 +1,9 @@
 .table {
-
+  &-add-btn {
+    margin-bottom: 20px;
+    width: 20px;
+    // margin-left: auto;
+  }
   &-functions {
     display: flex;
     margin-bottom: 20px;
