@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription, postJob } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { BackwardOutlined, EditOutlined } from "@ant-design/icons";
+import { BackwardOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
@@ -113,9 +113,9 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
           ) : (
             <h2>{state.title}</h2>
           )}
-          <p onClick={() => (editing ? setEditing(false) : setEditing(true))}>
-            Chỉnh sửa <EditOutlined />
-          </p>
+          <div onClick={() => (editing ? setEditing(false) : setEditing(true))}>
+            {editing ? <p> Hoàn tất chỉnh sửa <CheckOutlined/></p> : (<p>Chỉnh sửa <EditOutlined /></p>)}
+          </div>
         </div>
         <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
@@ -324,7 +324,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               type,
               salary,
               level,
-              deadline: state.deadline,
+              // deadline: state.deadline,
               requirements,
               benefits,
               location,
