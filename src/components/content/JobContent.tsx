@@ -6,7 +6,7 @@ import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icon
 import { ResumeForm } from "@components/forms/ResumeForm";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { IconButton } from "@styles/styled-components/styledButton";
-import { formatAddress, formatNum, formatDate } from "@utils/formatters";
+import { formatAddress, formatNum, formatDate, formatAPIData } from "@utils/formatters";
 import type { Job } from "@types/dataTypes";
 
 type JobContentProps = {
@@ -122,7 +122,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
             </div>
             <div>
               <h4>Hình thức làm việc:</h4>
-              <div>{jobData?.job_types && jobData.job_types.length > 0 ? jobData.job_types.toString() : "Không có"}</div>
+              <div>{jobData?.job_types && jobData.job_types.length > 0 ? formatAPIData(jobData.job_type) : "Không có"}</div>
             </div>
           </div>
           <div className="full-width">

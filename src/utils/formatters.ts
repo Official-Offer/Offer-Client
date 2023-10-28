@@ -58,3 +58,24 @@ export const dateDist = (date: string | undefined | null): string => {
     return `${Math.floor(diff / 365)} năm trước`;
   }
 };
+
+export const formatAPIData = (data: string) => {
+  switch (data) {
+    case "fulltime":
+      return "Toàn thời gian";
+    case "parttime":
+      return "Bán thời gian";
+    case "contract":
+      return "Hợp đồng";
+    case "internship":
+      return "Thực tập";
+    case "remote":
+      return "Làm việc từ xa (Remote)";
+    case "onsite":
+      return "Làm việc tại văn phòng (Onsite)";
+    case "hybrid":
+      return "Làm việc hỗn hợp (Hybrid)";
+    default:
+      return data;
+  }
+}

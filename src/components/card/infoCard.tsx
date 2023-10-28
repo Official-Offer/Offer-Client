@@ -6,7 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import type { Address, Job } from "@types/dataTypes";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { JobContent } from "@components/content/JobContent";
-import { formatAddress, formatNum, dateDist } from "@utils/formatters";
+import { formatAddress, formatNum, dateDist, formatAPIData } from "@utils/formatters";
 
 type InfoCardProps = {
   info?: Job,
@@ -47,7 +47,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                       </div>
                       <h4>{ info.company.name || "Công ty trống" }</h4>
                       <span>
-                        { info.job_types.toString() || "Loại công việc trống"}
+                        { formatAPIData(info.job_type) || "Loại công việc trống"}
                         {" | "}
                         {
                           info.address ? formatAddress(info.address, true) : (
