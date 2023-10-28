@@ -15,7 +15,6 @@ export const getRecruiter = async () => {
   const id = getCookie("id");
   const response = (await request.get(`/recruiters/${id}/`)).data;
   return response;
-  // return response.data.Response;
 };
 
 export const recruiterLogin = async (body: any) => {

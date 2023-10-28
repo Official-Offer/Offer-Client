@@ -177,7 +177,7 @@ const Registration: NextPage = () => {
                   setScreen(true);
                   setOrg(org);
                 }}
-                isLoading={mutation.isLoading && mutationOrg.isLoading}
+                isLoading={mutation.isLoading || mutationOrg.isLoading}
               />
               <p
                 style={{

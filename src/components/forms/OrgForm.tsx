@@ -83,6 +83,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
               className="form-select"
               bordered={false}
               onChange={handleOrgChange}
+              loading={orgQuery.isLoading}
             >
               {isStudent || isAdvisor
                 ? schools?.map((school: any) => (
@@ -118,7 +119,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       </div>
       <SubmitButton
         text={type ? "Cập nhật" : "Tiếp tục"}
-        isLoading={orgQuery.isLoading && isLoading}
+        isLoading={orgQuery.isLoading || isLoading}
         onClick={handleSubmit}
       />
     </Form>

@@ -24,7 +24,7 @@ const Jobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-      setSearchResults(jobs.map((job) => job.title));
+      setSearchResults(jobs.map((job: { title: any; }) => job.title));
     },
     onError: () => {},
   });
@@ -79,7 +79,7 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"RecruiterJobs"}
-          isLoading={jobQuery.isLoading && profileQuery.isLoading}
+          isLoading={jobQuery.isLoading || profileQuery.isLoading}
         />
       </div>
     </div>
