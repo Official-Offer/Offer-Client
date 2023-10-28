@@ -61,7 +61,7 @@ export const getUnapprovedJobs = async () => {
   return jobList.map((job: any) => ({
     key: job,
     // ID: jobID[Math.floor(Math.random() * jobID.length)],
-    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
+    posted_date: formatDate(job.created_at, "D/M/YYYY"),
     title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
@@ -128,7 +128,7 @@ export const getJobsForRecruiter = async () => {
   const res = jobs.map((job: any) => ({
     key: job,
     // ID: job.id,
-    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
+    posted_date: formatDate(job.created_at, "D/M/YYYY"),
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     // unapproved_schools: unapprovedSchoolString,
@@ -144,7 +144,7 @@ export const getRecruiterJobs = async () => {
   console.log(response.data.message);
   const res = jobs.map((job: any) => ({
     key: job,
-    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
+    posted_date: formatDate(job.created_at, "D/M/YYYY"),
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     company: job.company.name,
@@ -162,7 +162,7 @@ export const getApprovedJobs = async () => {
   const recruiters = ["vvnguyen@umass.edu", "ktto@umass.edu", "hto@umass.edu"];
   return jobList.map((job: any) => ({
     key: job,
-    posted_date: formatDate(job.timestamp, "D/M/YYYY") || "09/05/2002",
+    posted_date: formatDate(job.created_at, "D/M/YYYY") || "09/05/2002",
     title: job.title || "Không tìm thấy",
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
