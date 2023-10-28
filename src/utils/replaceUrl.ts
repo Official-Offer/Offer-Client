@@ -1,6 +1,6 @@
 export const replaceUrl = (param: string, value?: string) => {
   const { as, url } = window.history.state;
-  const baseUrl = process.env.BASE_URL || "https://offer-beta.vercel.com/";
+  const baseUrl = process.env.BASE_URL || "https://offer-beta.vercel.app/";
   const urlObj = new URL(url, baseUrl);
   const queryParams = new URLSearchParams(urlObj.search);
 
