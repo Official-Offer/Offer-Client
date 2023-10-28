@@ -18,10 +18,10 @@ const PostJobs: NextPage = () => {
       <div className="recruiter-form">
         <JobPostForm
           onCancel={(): void => {
-            router.push("/advisor/jobs");
+            router.push("/recruiter/jobs");
           }}
           onSubmit={(): void => {
-            router.push("/advisor/postJobs/jobDesc");
+            router.push("/recruiter/postJobs/jobDesc");
           }}
         />
       </div>

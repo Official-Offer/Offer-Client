@@ -133,7 +133,7 @@ export const JobPostForm: React.FC<IForm> = ({
           <Select
             // mode="multiple"
             // value={company}
-            className="form-select"
+            // className="form-select"
             placeholder="Công ty"
             onChange={handleCompanyChange}
             options={companies}
@@ -141,7 +141,7 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item>
         <Form.Item label="Địa điểm" required>
           <Select
-            className="form-select"
+            // className="form-select"
             mode="multiple"
             placeholder="Hà Nội"
             onChange={handleAddressChange}
@@ -151,7 +151,7 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Cấp bậc" className="form-input" required>
           <Select
             // mode="multiple"
-            className="form-select"
+            // className="form-select"
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}
@@ -176,7 +176,7 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item> */}
         <Form.Item label="Ngành học liên quan">
           <Select
-            className="form-select"
+            // className="form-select"
             mode="multiple"
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
