@@ -3,10 +3,12 @@ import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import type { Address, Job } from "@types/dataTypes";
+import type { Address, Job } from "src/types/dataTypes";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { JobContent } from "@components/content/JobContent";
-import { formatAddress, formatNum, dateDist } from "@utils/formatters";
+import { formatAddress } from "@utils/formatters/stringFormat";
+import { formatNum, dateDist } from "@utils/formatters/numberFormat";
+import { translateJobType } from "@utils/formatters/translateFormat";
 
 type InfoCardProps = {
   info?: Job,
@@ -47,7 +49,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                       </div>
                       <h4>{ info.company.name || "Công ty trống" }</h4>
                       <span>
-                        { info.job_types.toString() || "Loại công việc trống"}
+                        { translateJobType(info.job_type) || "Không xác định"}
                         {" | "}
                         {
                           info.address ? formatAddress(info.address, true) : (
@@ -63,7 +65,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                               )}
                             </div>
                             <h4>{
-                              formatNum(info.expected_no_applicants) + 
+                              formatNum(info.expected_no_applicants, false) + 
                               " người cùng trường bạn"
                             }</h4>
                           </>
@@ -85,66 +87,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
         footer={null}
         className="layout-largescreen"
       >
-        {/* <div className="modal-info">
-          <div className="modal-info-header">
-            <div className="modal-info-header-left">
-              <h1>{info?.title}</h1>
-              <span>
-                <h3>{info?.company.name}</h3>
-                <span>{`Đăng vào ${formatDate(info?.time_posted, "D/M/YYYY", true)}`}</span>
-              </span>
-            </div>
-          </div>
-          <div className="modal-info-body">
-            <div className="modal-info-body-left">
-              <div className="modal-info-body-left-header">
-                <h3>Thông tin công việc</h3>
-                <span>
-                  {
-                    info?.time_posted === null ? 
-                      "Ngày không xác định" 
-                    : 
-                      `Đăng vào ${formatDate(info?.time_posted, "D/M/YYYY")}`
-                  }
-                </span>
-              </div>
-              <div className="modal-info-body-left-content">
-                <h4>Mô tả công việc</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.description || "Trống"}} />
-              </div>
-              <div className="modal-info-body-left-content">
-                <h4>Yêu cầu công việc</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.requirements || "Trống"}} />
-              </div>
-              <div className="modal-info-body-left-content">
-                <h4>Quyền lợi được hưởng</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.benefits || "Trống"}} />
-              </div>
-            </div>
-            <div className="modal-info-body-right">
-              <div className="modal-info-body-right-header">
-                <h3>Thông tin công ty</h3>
-              </div>
-              <div className="modal-info-body-right-content">
-                <h4>Giới thiệu</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.company.description || ""}} />
-              </div>
-              <div className="modal-info-body-right-content">
-                <h4>Địa chỉ</h4>
-                <div dangerouslySetInnerHTML={{__html: formatAddress(info?.company.address as Address, true)}} />
-              </div>
-              <div className="modal-info-body-right-content">
-                <h4>Website</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.company.website || ""}} />
-              </div>
-              <div className="modal-info-body-right-content">
-                <h4>Số điện thoại</h4>
-                <div dangerouslySetInnerHTML={{__html: info?.company.phone || ""}} />
-              </div>
-            </div>
-          </div>
-        </div> */}
-        <JobContent jobData={info} />
+        <JobContent jobData={info} isMinimized />
       </Modal>
     </>
   );

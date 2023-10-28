@@ -16,7 +16,12 @@ import { SliderMarks } from "antd/lib/slider";
 import { setJobId } from "@redux/actions";
 // import locale from "antd/es/date-picker/locale/vi_VN";
 
-export const JobDescription: React.FC<any> = ({ onClick, onBack }) => {
+interface JobDescriptionProps {
+  onClick: () => void;
+  onBack: () => void;
+}
+
+export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const accountState = useSelector((state: RootState) => state.account);
   // console.log(state.deadline);
@@ -63,9 +68,10 @@ export const JobDescription: React.FC<any> = ({ onClick, onBack }) => {
 
   const dispatch = useDispatch();
 
-  const jobQuery = useQuery({
-    queryKey: ["job-description"],
-    queryFn: () => generateJobDescription(title+jd),
+  const jobQuery = useQuery(
+    ["job-description"],
+    () => generateJobDescription(title+jd),
+    {
     onSuccess: async (job) => {
       const jobDesc = JSON.parse(job);
       // setSalary(jobDesc.salary);
@@ -81,8 +87,7 @@ export const JobDescription: React.FC<any> = ({ onClick, onBack }) => {
       // setHowTo(jobDesc.howTo);
     },
     onError: () => {},
-    reloadOnWindowFocus: false,
-  });
+});
 
   const postJobQuery = useMutation({
     mutationKey: ["post-job"],

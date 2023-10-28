@@ -3,7 +3,12 @@ import { Input } from "antd";
 
 const Search = Input.Search;
 
-export const SearchBar = ({ placeholder, onSearch, ...props }) => (
+type SearchBarProps = {
+  placeholder: string;
+  onSearch: (value: string) => void;
+};
+
+export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, ...props }) => (
   <div {...props}>
     <Search
       placeholder={placeholder}

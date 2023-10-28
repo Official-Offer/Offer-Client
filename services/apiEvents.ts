@@ -1,5 +1,5 @@
 import request from "./apiService";
-import { formatDate } from "@utils/formatters";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 export const getAdvisorEvents = async () => {
   const response = await request.get(`/events/`);

@@ -129,7 +129,7 @@ const Registration: NextPage = () => {
               >
                 <BackwardOutlined /> Quay lại
               </p>
-              <Form className="form" onSubmit={() => {}} layout="vertical">
+              <Form className="form" layout="vertical">
                 {/* <div className="form-grid"> */}
                 <Form.Item required label="Họ Tên" className="form-input">
                   <Input

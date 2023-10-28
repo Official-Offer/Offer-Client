@@ -13,7 +13,7 @@ type NotiBoxProps = {
 export const NotiBox: React.FC<NotiBoxProps> = ({ large, read, hasDot, content }) => {
   return (
     <StyledNotiBox large={large} read={read}>
-      <Image className="avatar" width="48px" height="48px" src="/images/avatar.png" />
+      <Image className="avatar" width={48} height={48} src="/images/avatar.png" alt="avatar" />
       <div className="preview">
         <Link className="preview-link" href="/student/notifications"><div className="preview-link"></div></Link>
         {content}

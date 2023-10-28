@@ -38,7 +38,7 @@ export const ResumeForm:React.FC<IResumeForm> = ({ onSubmit }) => {
 
   return (
     <div>
-      <form className="form" onFinish={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form-flex">
           <div className="form-input">
             <label>

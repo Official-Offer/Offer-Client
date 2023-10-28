@@ -6,7 +6,7 @@ import Image from "next/image";
 type SubmitButtonProps = {
   text?: string;
   isLoading?: boolean;
-  onClick?: (event: { preventDefault: () => void }) => void;
+  onClick?: (event: any) => void;
   type?: number;
 }
 
@@ -19,6 +19,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({text, isLoading, onCl
     width: '150px',
     borderRadius: '10px',
     background: 'var(--theme, linear-gradient(180deg, #EA0A8E 0%, #7289DA 100%));',
+    gradient: true
   } : {
 
   }

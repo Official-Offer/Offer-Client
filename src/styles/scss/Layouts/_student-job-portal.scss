@@ -4,11 +4,38 @@
   &-navbar {
     top: 64px;
     width: 100%;
-    gap: 20px;
+    gap: 12px;
     padding: 0 40px;
     z-index: 100;
     background: white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    input::placeholder, input::-webkit-input-placeholder {
+      color: $grey-dark !important;
+    }
+
+    .ant-select {
+      &-selector {
+        padding-left: 12px;
+        border: 1px solid $grey-color !important;
+        height: 40px;
+      }
+      &-selection {
+        &-search {
+          display: flex;
+          align-items: center;
+          margin-inline-start: 0px;
+        }
+        &-overflow-item {
+          display: flex;
+          align-items: center;
+        }
+        &-placeholder {
+          color: $grey-dark;
+        }
+        span { color: $grey-dark; }
+      }
+    }
   }
 
   &-fusion {
@@ -74,7 +101,7 @@
 
       &-detail {
         color: black;
-        font-size: 0.75rem;
+        font-size: 0.85rem;
       }
 
       &-bookmark {
@@ -125,9 +152,14 @@
   }
 
   &-description {
-    height: calc(80dvh - 128px);
+    height: calc(100dvh - 128px);
     overflow-y: auto;
-    margin: 32px 20px 20px 20px;
+    padding: 64px;
+    
+    &.minimized {
+      height: 100%;
+      padding: 32px;
+    }
 
     &-title {
       h2 {
@@ -139,10 +171,25 @@
         margin-bottom: 8px;
         font-size: 1.25rem;
       }
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: black;
+
+        svg {
+          font-size: 1.5rem;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     &-date {
-      margin-bottom: 32px;
+      margin-bottom: 1rem;
       font-weight: 500;
     }
 
@@ -186,11 +233,21 @@
         font-weight: bold;
 
         &.apply {
-          background-color: #d30b81;
+          background-color: $pinkish-red;
+
+          &:hover {
+            background-color: color-mix(in hsl, $pinkish-red 90%, rgb(0, 0, 0));
+            scale: 1.02;
+          }
         }
   
         &.inbox {
-          background-color: #7277f1;
+          background-color: $purple-color;
+
+          &:hover {
+            background-color: color-mix(in hsl, $purple-color 90%, rgb(0, 0, 0));
+            scale: 1.02;
+          }
         }
       }
 

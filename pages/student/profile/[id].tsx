@@ -33,19 +33,6 @@ const profile = {
   jobs: ["SWE", "Sales"],
 };
 
-const info = {
-  id: 0,
-  name: "Thực tập sinh Kỹ sư Phần Mềm",
-  institution: "Samsung",
-  location: "TP. Hồ Chí Minh",
-  attribute: "Full-Time/Part-Time/Remote",
-  commonSchool: [
-    {name: "Tom Ngo", avatar: "/images/avatar.png"}, 
-    {name: "Kien To", avatar: "/images/avatar.png"}
-  ],
-  date: new Date('2023-2-27'),
-  cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
-};
 
 const eduFieldItems = {
   itemTitle: "Trường",
@@ -176,15 +163,7 @@ const StudentIDProfile: NextPage = () => {
           dataFunction={getCompanyList}
         />
       </section>
-      <section className="split-layout-sticky student-job">
-        <div className="student-job-section">
-          <Link href="/students/jobs">Jobs Applied</Link>
-          <InfoCard info={info} />
-        </div>
-        <div className="student-job-section">
-          <Link href="/students/jobs">Jobs Saved</Link>
-          <InfoCard info={info} />
-        </div>
+      <section className="split-layout-sticky">
       </section>
     </main>
   );

@@ -2,8 +2,7 @@ import request from "./apiService";
 import { getCompany } from "./apiCompany";
 // import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 import { OpenAI } from "langchain/llms/openai";
-import { formatDate } from "@utils/formatters";
-import moment from "moment";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
@@ -11,7 +10,7 @@ export const getJobs = async () => {
   return jobList;
 };
 
-export const generateJobDescription = async (inputDescription: any) => {
+export const generateJobDescription = async (inputDescription: string) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
@@ -62,7 +61,7 @@ export const getUnapprovedJobs = async () => {
   return jobList.map((job: any) => ({
     key: job,
     // ID: jobID[Math.floor(Math.random() * jobID.length)],
-    posted_date: moment(job.timestamp).format("DD/MM/YYYY") || "09/05/2002",
+    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
     title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
@@ -129,7 +128,8 @@ export const getJobsForRecruiter = async () => {
   const res = jobs.map((job: any) => ({
     key: job,
     // ID: job.id,
-    posted_date: moment(job.created_at).format("DD/MM/YYYY"),
+    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
+    // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     // unapproved_schools: unapprovedSchoolString,
     // approved_schools: approvedSchoolString,
@@ -144,7 +144,8 @@ export const getRecruiterJobs = async () => {
   console.log(response.data.message);
   const res = jobs.map((job: any) => ({
     key: job,
-    posted_date: moment(job.created_at).format("DD/MM/YYYY"),
+    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
+    // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     company: job.company.name,
     recruiter: job.created_by.first_name + " " + job.created_by.last_name,
@@ -181,7 +182,6 @@ export const getJobListWithApplicant = async () => {
 };
 
 export const getJob = async (id: number) => {
-  console.log("what");
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
   job.company_data = await getCompany(job.company);
@@ -227,7 +227,6 @@ export const unbookmarkJob = async (id: number | string) => {
 };
 
 export const deleteJob = async (id: any) => {
-  console.log("job deleted");
   const response = await request.delete(`/jobs/`, id);
   return response.data;
 };

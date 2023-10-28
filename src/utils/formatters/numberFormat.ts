@@ -1,28 +1,23 @@
 import moment from "moment";
-import type { Address } from "@types/dataTypes";
 
-export const formatAddress = (address: Address, short?: boolean): string => {
-  if (!address) {
-    return "Địa điểm không tồn tại";
+export const formatNum = (number: number | undefined | null, long: boolean, alt?: string): string => {
+  if (!number || isNaN(number)) {
+    return alt || "Không xác định";
   }
-  if (short) {
-    return address.city ? `${address.city}, ${address.country}` : `${address.country}`;
-  }
-  return `${address.street}, ${address.city}, ${address.province}, ${address.country}`;
-};
-
-export const formatNum = (number: number | undefined | null): string => {
-  if (number === null || isNaN(number)) {
-    return "??";
-  }
-  if (number < 1000000) {
+  if (long) {
     return number.toLocaleString('vi-VN');
+  }
+  if (number < 1000) {
+    return number.toLocaleString('vi-VN');
+  } else if (number < 1000000) {
+    const thousand = (number / 1000);
+    return thousand.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " nghìn";
   } else if (number < 1000000000) {
-    const million = (number / 1000000).toFixed(2);
-    return million.toLocaleString('vi-VN') + " triệu";
+    const million = (number / 1000000);
+    return million.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " triệu";
   } else {
-    const billion = (number / 1000000000).toFixed(2);
-    return billion.toLocaleString('vi-VN') + " tỷ";
+    const billion = (number / 1000000000);
+    return billion.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " tỷ";
   }
 };
 

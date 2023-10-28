@@ -12,14 +12,14 @@ type GeneralSearchProps = {
 export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
   // States
   const [searchInput, setSearchInput] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<Record<string, object[]>>({});
+  const [searchResult, setSearchResult] = useState<Record<string, Record<string, any>[]>>({});
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [hideBar, setHideBar] = useState<boolean>(true);
 
   // Hooks
   const searchQuery = useQuery({
     queryKey: ["search"],
-    queryFn: () => searchInput !== "" && getSearch(searchInput),
+    queryFn: () => getSearch(searchInput),
     onSuccess: (res) => {
       setSearchResult(res);
     },

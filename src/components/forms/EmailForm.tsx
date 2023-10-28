@@ -6,7 +6,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 interface IEmailForm {
   onSubmit: (email: string) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export const EmailForm: React.FC<IEmailForm> = ({ onSubmit, isLoading }) => {

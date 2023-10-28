@@ -41,7 +41,7 @@ export default NextAuth({
       console.log(token)
       console.log( user)
       console.log(session)
-      session.accessToken = token.accessToken;
+      session.user.accessToken = token.accessToken;
       session.user.id = token.id;
 
       return session;
