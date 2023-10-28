@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { nextReplaceUrl } from "next-replace-url";
 import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input, Popover, Radio, Slider, Space } from "antd";
+import { Button, Input, Popover, Radio, Select, Slider, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { getJobs } from "@services/apiJob";
 import { InfoCard } from "@components/card/InfoCard";
@@ -37,7 +37,7 @@ const StudentJobs: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
     queryFn: getJobs,
-    onSuccess: (jobData) => setJobs(jobData),
+    onSuccess: (jobData) => setJobs(jobData.message),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
@@ -48,11 +48,11 @@ const StudentJobs: NextPage = () => {
     }
   };
 
-  const handleFilterLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterLocation = (locationArr: string[]) => {
     setFilters((filter) => {
-      const locations = filter.locations;
-      locations[event.target.name] = !(locations[event.target.name] ?? false);
-      return { ...filter, locations };
+      const filterLocations = filter.locations;
+      Object.keys(filterLocations).forEach((location) => filterLocations[location] = locationArr.includes(location));
+      return { ...filter, filterLocations };
     });
   }
 
@@ -90,7 +90,16 @@ const StudentJobs: NextPage = () => {
           />
           <Space direction="vertical" className="justify-center">
             <Space wrap align="center" className="justify-center">
-              <Popover
+              <Select
+                mode="tags"
+                showArrow
+                size="large"
+                placeholder="Địa điểm"
+                className="round-border"
+                onChange={handleFilterLocation}
+                options={Object.keys(filters.locations).map((location) => ({ value: location, label: location }))}
+              />
+              {/* <Popover
                 content={
                   <Space wrap>
                     {
@@ -119,7 +128,7 @@ const StudentJobs: NextPage = () => {
                   </span>
                   <span><DownOutlined/></span>
                 </Button>
-              </Popover>
+              </Popover> */}
               <Popover
                 content={
                   <div className="layout-medium layout-hstack-stretch-center">

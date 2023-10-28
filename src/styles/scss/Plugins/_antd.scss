@@ -115,6 +115,10 @@
 }
 
 .ant-space {
+  &-align-stretch {
+    align-items: stretch;
+  }
+
   &.justify-center {
     width: 100%;
     justify-content: center;
@@ -139,10 +143,33 @@
       }
     }
   }
+
+  &-item {
+    .ant-select {
+      min-width: 200px;
+      width: calc(fit-content() + 12px);
+    }
+  }
 }
 
 .ant-popover {
   &-inner {
     border-radius: 8px;
+  }
+}
+
+.ant-select {
+  &-lg {
+    &.round-border {
+      .ant-select-selector {
+        border-radius: 8px;
+      }
+    }
+  }
+
+  &-selection {
+    &-item {
+      border-radius: 6px !important;
+    }
   }
 }

@@ -5,7 +5,7 @@ import type { JobFilters } from "@types/listTypes";
 
 export const useDisplayJobs = () => {
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
-  const [displayedJobs, setDisplayedJobs] = useState<Job[]>(originalJobs);
+  const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filters, setFilters] = useState<JobFilters>({
     jobTypes: {},
@@ -18,7 +18,6 @@ export const useDisplayJobs = () => {
 
   const setJobs = (jobList: Job[]) => {
     setOriginalJobs(jobList);
-
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
     for (let i = 0; i < jobList.length; i++) {
@@ -54,12 +53,12 @@ export const useDisplayJobs = () => {
 
   useEffect(() => {
     const displayed = originalJobs.filter((job) => {
-      if (filters.jobType && !job.job_types.some((type) => filters.jobTypes[type])) {
-        return false;
-      }
-      if (filters.industry && !job.industries.some((industry) => filters.industries[industry])) {
-        return false;
-      }
+      // if (filters.jobType && !job.job_types.some((type) => filters.jobTypes[type])) {
+      //   return false;
+      // }
+      // if (filters.industry && !job.industries.some((industry) => filters.industries[industry])) {
+      //   return false;
+      // }
       // Locations filter logic: If one is true, filter by that one. If all are false | null, don't filter
       if (
         filters.locations && 
@@ -72,15 +71,15 @@ export const useDisplayJobs = () => {
       if (searchTerm && !job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
         return false;
       }
-      if (filters.salary.length > 0) {
-        const [min, max] = filters.salary;
-        if (min && job.salary < min) {
-          return false;
-        }
-        if (max && job.salary > max) {
-          return false;
-        }
-      }
+      // if (filters.salary.length > 0) {
+      //   const [min, max] = filters.salary;
+      //   if (min && job.salary < min) {
+      //     return false;
+      //   }
+      //   if (max && job.salary > max) {
+      //     return false;
+      //   }
+      // }
       return true;
     }).sort((a, b) => {
       if (sort === "date-posted") {
