@@ -7,7 +7,7 @@ import { Card as AntdCard, Button, Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { StyledListCard } from "@styles/styled-components/styledBox";
 import { StyledMenuButton } from "@styles/styled-components/styledButton";
-import { formatDate } from "@utils/formatters";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 type BookmarkedCardProps = {
   bookmark?: {
@@ -66,7 +66,7 @@ const BookmarkedJobs: NextPage = () => {
   // Components
   const BookmarkedCard: React.FC<BookmarkedCardProps> = ({ bookmark }) => (
     <StyledListCard hasLink>
-      <>
+      {/* <>
         <Link href={`/student/jobs/${bookmark?.job_info?.id}`}>
           <div className="link-wrapped">
             <div className="content-img">
@@ -93,7 +93,7 @@ const BookmarkedJobs: NextPage = () => {
         <div className="close-btn" id={bookmark?.job_id} onClick={handleUnbookmark}>
           <CloseOutlined />
         </div>
-      </>
+      </> */}
     </StyledListCard>
   );
 

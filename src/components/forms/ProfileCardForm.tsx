@@ -12,7 +12,7 @@ import {
   DatePicker,
 } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { formatDate } from "@utils/formatters";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 interface ProfileCardFormProps {
   open: boolean,

@@ -21,7 +21,6 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  padding: 0 20px;
   top: 0;
   left: 0;
   width: 100%;
@@ -33,7 +32,10 @@
 
   &.no-shadow {
     box-shadow: none;
-    border-bottom: 3px;
+
+    .navbar {
+      border-bottom: solid 1px $grey-light;
+    }
   }
 }
 
@@ -44,7 +46,8 @@
   align-items: center;
 
   &.left-menu {
-    width: 20%;
+    padding-left: 20px;
+    width: 25%;
   }
 
   &.center-menu {
@@ -53,8 +56,9 @@
   }
 
   &.right-menu {
+    padding-right: 20px;
     justify-content: flex-end;
-    width: 20%;
+    width: 25%;
 
     .ant-menu-item {
       &::after {
@@ -107,7 +111,7 @@
   &.hide-bar {
     max-width: 32px;
     min-width: 32px;
-    padding-left: 9px;
+    padding-left: 8px;
   }
 }
 

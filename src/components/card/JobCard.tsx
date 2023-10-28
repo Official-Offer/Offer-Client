@@ -4,6 +4,8 @@ import moment from "moment";
 import { Job } from "@types/dataTypes";
 import { BookmarkOutlined } from "@components/icons/BookmarkOutlined";
 import { BookmarkButton } from "@components/button/BookmarkButton";
+import { formatAddress } from "@utils/formatters/stringFormat";
+import { translateJobType } from "@utils/formatters/translateFormat";
 
 type JobCardProp = {
   jobData: Job,
@@ -24,9 +26,9 @@ export const JobCard: React.FC<JobCardProp> = ({ jobData, active, onClick, bookm
           {jobData.title ?? "Tiêu đề trống"}
         </h3>
         <div className="job-portal-list-card-detail">
-          <div>{jobData.company_data?.name ?? "Công ty trống"}</div>
-          <div>{jobData.location ?? "Vị trí trống"}</div>
-          <div>{jobData.job_type ?? "Hình thức trống"}</div>
+          <div>{jobData.company.name ?? "Công ty trống"}</div>
+          <div>{formatAddress(jobData.location || jobData.company.address, true)}</div>
+          <div>{translateJobType(jobData.job_type)}</div>
         </div>
       </div>
       <BookmarkButton

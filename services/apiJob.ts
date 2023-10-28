@@ -2,7 +2,7 @@ import request from "./apiService";
 import { getCompany } from "./apiCompany";
 // import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 import { OpenAI } from "langchain/llms/openai";
-import { formatDate } from "@utils/formatters";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
@@ -166,7 +166,6 @@ export const getJobListWithApplicant = async () => {
 };
 
 export const getJob = async (id: number) => {
-  console.log("what")
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
   job.company_data = await getCompany(job.company);
@@ -197,7 +196,6 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
-  console.log("job posted");
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };
@@ -208,7 +206,6 @@ export const unbookmarkJob = async (id: number | string) => {
 };
 
 export const deleteJob = async (id: any) => {
-  console.log("job deleted");
   const response = await request.delete(`/jobs/`, id);
   return response.data;
 };

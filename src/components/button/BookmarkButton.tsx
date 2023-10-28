@@ -49,13 +49,11 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
     return () => clearTimeout(resetTimer);
   }, [isBookmarked]);
 
-  if (setIsClickedByOther) {
-    useEffect(() => {
-      if (!isClickedByOther) return;
-      setIsBookmarked(!isBookmarked);
-      setIsClickedByOther(false);
-    }, [isClickedByOther]);
-  }
+  useEffect(() => {
+    if (!isClickedByOther || !setIsClickedByOther) return;
+    setIsBookmarked(!isBookmarked);
+    setIsClickedByOther(false);
+  }, [isClickedByOther]);
 
   // Functions
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -66,16 +64,17 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
   };
 
   return (
-    <button 
-      className={className} 
-      type="button" 
-      disabled={bookmarkQuery.isLoading} 
-      onClick={handleClick}
-      {...rest}
-    >
-      {
-        isBookmarked ? <BookmarkFilled /> : <BookmarkOutlined />
-      }
-    </button>
+    <div></div>
+    // <button 
+    //   className={className} 
+    //   type="button" 
+    //   disabled={bookmarkQuery.isLoading} 
+    //   onClick={handleClick}
+    //   {...rest}
+    // >
+    //   {
+    //     isBookmarked ? <BookmarkFilled /> : <BookmarkOutlined />
+    //   }
+    // </button>
   )
 }

@@ -1,23 +1,28 @@
+import Link from "next/link";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button, Modal, Skeleton, Upload } from "antd";
+import { SelectOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
 import { ResumeForm } from "@components/forms/ResumeForm";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { IconButton } from "@styles/styled-components/styledButton";
-import { formatAddress, formatNum, formatDate, formatAPIData } from "@utils/formatters";
+import { formatAddress } from "@utils/formatters/stringFormat";
+import { formatNum, formatDate, dateDist } from "@utils/formatters/numberFormat";
+import { translateJobType, translateMajors } from "@utils/formatters/translateFormat";
 import type { Job } from "@types/dataTypes";
 
 type JobContentProps = {
   isLoading?: boolean,
+  isMinimized?: boolean,
   jobData?: Job,
   bookmarkClicked?: boolean,
   setBookmarkClicked?: (isBookmarked: boolean) => void,
   setJobCardBookmarkClicked?: (isBookmarked: boolean) => void,
 };
 
-export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, bookmarkClicked, setBookmarkClicked, setJobCardBookmarkClicked }) => {
+export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, jobData, bookmarkClicked, setBookmarkClicked, setJobCardBookmarkClicked }) => {
   // Mock data
   const avatarURL = Array(Math.min(jobData?.expected_no_applicants ?? 0, 3)).fill("/images/avatar.png");
   
@@ -25,21 +30,42 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
   const [isVisible, setIsVisible] = useState<boolean>(false);
   
   return (
-    <div className="job-portal-description">
+    <div className={"job-portal-description " + (isMinimized ? "minimized" : "")}>
+      {isLoading && (
+        <>
+          <Skeleton
+            active
+            loading={true}
+          />
+          <Skeleton
+            active
+            loading={true}
+          />
+        </>
+      )}
       <Skeleton 
         active
         loading={isLoading}
         paragraph={{
-          rows: 18,
+          rows: 10,
         }}
       >
         <div className="job-portal-description-title">
-          <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
+          {
+            isMinimized ? (
+              <Link href={`/student/jobs${jobData?.pk ? `?id=${jobData.pk}` : ""}`}>
+                <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
+                <span><SelectOutlined /></span>
+              </Link>
+            ) : (
+              <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
+            )
+          }
           <h3>{jobData?.company.name}</h3>
         </div>
         <div className="job-portal-description-date">
           <span>Đăng vào {formatDate(jobData?.time_posted, "D/M/YYYY", true)}</span>
-          <span>&emsp;•&emsp;</span>
+          <span>&ensp;•&ensp;</span>
           <span>
             {
               moment(jobData?.deadline).diff(moment()) <= 0 ? "Đã đóng đơn" :
@@ -50,13 +76,13 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
         <img className="job-portal-description-logo" src="/images/samsing.png" />
         <div className="job-portal-description-employees avatar-info-mini">
           <div>
-            {avatarURL.map((url) => (
-              <img src={url}></img>
-            ))}
+            {new Array(Math.min(3, jobData?.company.no_employees ?? 3)).fill(
+              <img src="/images/avatar.png" alt="Avatar" />
+            )}
           </div>
           <h4>
             {
-              formatNum(jobData?.company.no_applicants)
+              formatNum(jobData?.company.no_employees)
             } người đang làm việc trong công ty này
           </h4>
         </div>
@@ -67,12 +93,12 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
           >
             Ứng tuyển
           </Button>
-          <Button
+          {/* <Button
             className="inbox"
             icon={<SendOutlined />}
           >
             Nhắn tin
-          </Button>
+          </Button> */}
           <BookmarkButton
             className="job-portal-list-card-bookmark"
             id={jobData?.id}
@@ -108,38 +134,34 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
           <div className="job-portal-description-info-section">
             <div>
               <h4>Mức lương:</h4>
-              <div>{formatNum(jobData?.salary)}</div>
+              <div>{formatNum(jobData?.salary, false, "Thỏa thuận")}</div>
             </div>
             <div>
               <h4>Cấp bậc:</h4>
               <div>Undergrad</div>
             </div>
+            <div>
+              <h4>Địa điểm:</h4>
+              <div>{formatAddress(jobData?.company.address)}</div>
+            </div>
           </div>
           <div className="job-portal-description-info-section">
             <div>
-              <h4>Số lượng nhân viên:</h4>
-              <div>{formatNum(jobData?.expected_no_applicants)}</div>
+              <h4>Hình thức làm việc:</h4>
+              <div>{translateJobType(jobData?.job_type)}</div>
             </div>
             <div>
-              <h4>Hình thức làm việc:</h4>
-              <div>{jobData?.job_types && jobData.job_types.length > 0 ? formatAPIData(jobData.job_type) : "Không có"}</div>
+              <h4>Mô hình làm việc:</h4>
+              <div>{translateJobType(jobData?.work_type)}</div>
             </div>
-          </div>
-          <div className="full-width">
-            <h4>Địa điểm:</h4>
-            <div>{formatAddress(jobData?.company.address)}</div>
+            <div>
+              <h4>Yêu cầu ngành học:</h4>
+              <div>{translateMajors(jobData?.required_majors)}</div>
+            </div>
           </div>
         </section>
         <section className="job-portal-description-section">
           <div className="job-portal-description-title">
-            <h3>Mô Tả</h3>
-          </div>
-          <div className="job-portal-description-detail">
-            {jobData?.description}
-          </div>
-        </section>
-        <section>
-        <div className="job-portal-description-title">
             <h3>Yêu Cầu</h3>
           </div>
           <div className="job-portal-description-detail">
@@ -147,6 +169,14 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, jobData, book
             cupiditate, consequuntur fugit illum rerum laudantium. Cumque
             repudiandae, iusto, velit excepturi dignissimos maiores quisquam, optio
             labore nobis nisi ducimus possimus tempora.
+          </div>
+        </section>
+        <section>
+          <div className="job-portal-description-title">
+            <h3>Mô Tả</h3>
+          </div>
+          <div className="job-portal-description-detail">
+            {jobData?.description}
           </div>
         </section>
       </Skeleton>

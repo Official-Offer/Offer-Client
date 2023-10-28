@@ -157,7 +157,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     <>
       <Navbar
         searchBarHidden={
-          router.pathname.includes("/student/jobs/[id]") ||
+          router.pathname.includes("/student/jobs") ||
           router.pathname.includes("/student/events/[id]")
         }
       />

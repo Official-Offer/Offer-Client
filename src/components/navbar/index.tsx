@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </a>
             ) : (
               <Link href={"/student/"}>
-                <a className="m-0">{"Home"}</a>
+                Home
               </Link>
             )}
           </Menu.Item>
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                   </a>
                 ) : (
                   <Link href={menu.link}>
-                    <a className="m-0">{menu.name}</a>
+                    {menu.name}
                   </Link>
                 )}
               </Menu.Item>
