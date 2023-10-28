@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const PostJobs: NextPage = () => {
       <div className="recruiter-form">
         <JobPostForm
           onCancel={(): void => {
-            router.push("/advisor/jobs/approved");
+            router.push("/advisor/jobs");
           }}
           onSubmit={(): void => {
             router.push("/advisor/postJobs/jobDesc");

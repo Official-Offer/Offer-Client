@@ -10,27 +10,30 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import { DatePicker, Input, Skeleton } from "antd";
+import { DatePicker, Input, Skeleton, Slider } from "antd";
 import moment from "moment";
-import locale from "antd/es/date-picker/locale/vi_VN";
+import { SliderMarks } from "antd/lib/slider";
+// import locale from "antd/es/date-picker/locale/vi_VN";
 
 export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
+  const accountState = useSelector((state: RootState) => state.account);
   // console.log(state.deadline);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
-  const [company, setCompany] = useState<string>(state.company || "");
-  const [salary, setSalary] = useState<string>("");
-  const [level, setLevel] = useState<string>("");
+  // const [company, setCompany] = useState<string>(state.company || "");
+  const [salary, setSalary] = useState<number>(state.salary);
+  const [upperSalary, setUpperSalary] = useState<number>(state.upperSalary);
+  const [level, setLevel] = useState<string>(state.level || "");
   const [requirements, setReq] = useState<string>("");
   const [benefits, setBenefits] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  // const [deadline, setDeadline] = useState<string>(state.deadline);
-  const [majors, setMajors] = useState<string>("");
-  const [discipline, setDiscipline] = useState<string>("");
+  const [type, setType] = useState<string>(state.type || "");
+  const [location, setLocation] = useState<string>(state.address || "");
+  const [deadline, setDeadline] = useState<string>(state.deadline || "");
+  const [majors, setMajors] = useState<string>(state.major || "");
+  // const [discipline, setDiscipline] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
-  const [howTo, setHowTo] = useState<string>("");
+  // const [howTo, setHowTo] = useState<string>("");
   const [jd, setJd] = useState<string>(
     state.description ||
       `[HCM] Cơ hội trở thành "teammate" với Con Cưng cho sinh viên năm 3!!!
@@ -52,22 +55,27 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   Nhanh tay gửi CV về: careers@concung.com hoặc inbox mình để trao đổi thêm nhé!!!`
   );
 
+  const marks: SliderMarks = {
+    0: "0",
+    100: "100",
+  };
+
   const jobQuery = useQuery({
     queryKey: ["job-description"],
-    queryFn: () => generateJobDescription(jd),
+    queryFn: () => generateJobDescription(title+jd),
     onSuccess: async (job) => {
       const jobDesc = JSON.parse(job);
-      setSalary(jobDesc.salary);
-      setLevel(jobDesc.level);
+      // setSalary(jobDesc.salary);
+      // setLevel(jobDesc.level);
       setReq(jobDesc.requirements);
       setBenefits(jobDesc.benefits);
       // setDiscipline(jobDesc.discipline);
       // setMajors(jobDesc.majors);
       // setDeadline(jobDesc.deadline);
-      setType(jobDesc.type);
+      // setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
-      setHowTo(jobDesc.howTo);
+      // setHowTo(jobDesc.howTo);
     },
     onError: () => {},
     reloadOnWindowFocus: false,
@@ -134,12 +142,12 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
         </div>
         <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
-        {/* <div>
+        <div>
           {editing ? (
-            <div style={{marginBottom: "10px"}}>
+            <div style={{ marginBottom: "10px" }}>
               <p>Hạn nộp</p>
               <DatePicker
-                locale={locale}
+                // locale={locale}
                 onChange={(value) => {
                   setDeadline(moment(value).format("DD-MM-YYYY"));
                 }}
@@ -150,24 +158,33 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               <p>Hạn nộp: {deadline}</p>
             </LoadingLine>
           )}
-        </div> */}
+        </div>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
           <div className="job-desc-grid">
             <div>
               <h3>Luơng</h3>
               {editing ? (
-                <Input
-                  required
-                  value={salary}
-                  className="form-job"
-                  onChange={(event) => {
-                    setSalary(event.target.value);
+                // <Input
+                //   required
+                //   value={salary}
+                //   className="form-job"
+                //   onChange={(event) => {
+                //     setSalary(event.target.value);
+                //   }}
+                // />
+                <Slider
+                  range
+                  defaultValue={[0, 100]}
+                  marks={marks}
+                  onAfterChange={(value)=>{
+                    setSalary(value[0]);
+                    setUpperSalary(value[1]);
                   }}
                 />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{salary}</p>
+                  <p>{`${salary} - ${upperSalary} triệu VNĐ/tháng`}</p>
                 </LoadingLine>
               )}
             </div>
@@ -206,6 +223,40 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               )}
             </div>
             <div>
+              <h3>Ngành học liên quan</h3>
+              {editing ? (
+                <Input
+                  required
+                  value={majors}
+                  className="form-job"
+                  onChange={(event) => {
+                    setMajors(event.target.value);
+                  }}
+                />
+              ) : (
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{majors}</p>
+                </LoadingLine>
+              )}
+            </div>
+            <div>
+              <h3>Địa điểm</h3>
+              {editing ? (
+                <Input
+                  required
+                  value={location}
+                  className="form-job"
+                  onChange={(event) => {
+                    setLocation(event.target.value);
+                  }}
+                />
+              ) : (
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{location}</p>
+                </LoadingLine>
+              )}
+            </div>
+            <div>
               <h3>Kinh nghiệm</h3>
               {editing ? (
                 <Input
@@ -222,58 +273,9 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
                 </LoadingLine>
               )}
             </div>
-            {/* <div>
-              <h3>Lĩnh vực</h3>
-              {editing ? (
-                <Input
-                  required
-                  value={discipline}
-                  className="form-job"
-                  onChange={(event) => {
-                    setDiscipline(event.target.value);
-                  }}
-                />
-              ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{discipline}</p>
-                </LoadingLine>
-              )}
-            </div> */}
-            {/* <div>
-              <h3>Ngành học liên quan</h3>
-              {editing ? (
-                <Input
-                  required
-                  value={majors}
-                  className="form-job"
-                  onChange={(event) => {
-                    setMajors(event.target.value);
-                  }}
-                />
-              ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{majors}</p>
-                </LoadingLine>
-              )}
-            </div> */}
           </div>
-          <div className="job-desc-single">
-                <h3>Địa điểm</h3>
-                {editing ? (
-                  <Input
-                    required
-                    value={location}
-                    className="form-job"
-                    onChange={(event) => {
-                      setLocation(event.target.value);
-                    }}
-                  />
-                ) : (
-                  <LoadingLine loading={jobQuery.isLoading}>
-                    <p>{location}</p>
-                  </LoadingLine>
-                )}
-            </div>
+          {/* <div className="job-desc-single"> */}
+          {/* </div> */}
         </div>
         <div>
           <h2>Quyền lợi</h2>
@@ -329,7 +331,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
             </Skeleton>
           )}
         </div>
-        <div>
+        {/* <div>
           <h2>Cách ứng tuyển</h2>
           {editing ? (
             <Input.TextArea
@@ -346,24 +348,31 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               <pre>{howTo}</pre>
             </Skeleton>
           )}
-        </div>
+        </div> */}
       </div>
       <div className="job-desc-button">
         <SubmitButton
           onClick={() => {
+            console.log(state.address)
             postJobQuery.mutate({
-              title,
-              type,
+              title: title.slice(0,99),
+              level: level=="Thực tập"? "internship": level=="Nhân viên chính thức" ? "newgrad" : "experienced",
+              job_type: type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
+              // work_type,
               salary,
-              level,
-              // deadline: state.deadline,
-              requirements,
-              benefits,
-              location,
-              // required_majors: majors,
-              required_experience: exp,
-              howTo,
+              address: {
+                city: state.address[0],
+              },
+              upper_salary: state.upperSalary,
               description: jd,
+              benefits,
+              company: 1, // state.companyId
+              requirements,
+              location,
+              contact_person: accountState.id,
+              // required_majors: state.major,
+              // required_experience: exp,
+              // howTo,
             });
           }}
           isLoading={postJobQuery.isLoading}

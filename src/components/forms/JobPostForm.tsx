@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { DatePicker, Form, Input, Select, SelectProps } from "antd";
+import { DatePicker, Form, Input, Select, SelectProps, Slider } from "antd";
 import {
   setCompany,
   setTitle,
   setDescription,
   setDeadline,
+  setLevel,
+  setAddress,
+  setSalary,
+  setMajor,
+  setType,
+  setReqs,
+  setBenefits,
+  setUpperSalary,
 } from "@redux/actions";
 import moment from "moment";
-import locale from "antd/es/date-picker/locale/vi_VN";
+import { SliderMarks } from "antd/lib/slider";
+// import locale from "antd/es/date-picker/locale/vi_VN";
 
 interface IForm {
   onSubmit: () => void;
@@ -23,28 +32,75 @@ export const JobPostForm: React.FC<IForm> = ({
   isLoading,
 }) => {
   const dispatch = useDispatch();
+  const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
 
   const { RangePicker } = DatePicker;
+  const [levels, setLevels] = useState<any>(
+    f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"])
+  );
+  const [location, setLocation] = useState<any>(
+    f(["Hà nội", "TP.HCM", "Đà Nẵng"])
+  );
+  const [types, setTypes] = useState<any>(
+    f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"])
+  );
+  const [majors, setMajors] = useState<any>(
+    f([
+      "Công nghệ thông tin",
+      "Kinh tế",
+      "Marketing",
+      "Quản trị kinh doanh",
+      "Luật",
+    ])
+  );
 
-  // const locale = {
-  //   ...en_US.DatePicker,
-  //   lang: {
-  //     ...en_US.DatePicker.lang,
-  //     monthFormat: "MMMM",
-  //   },
-  // };
+  const marks: SliderMarks = {
+    0: "0",
+    100: "100",
+  };
 
   const handleTitleChange = (event: any) => {
     dispatch(setTitle(event.target.value));
   };
 
-  // const handleDeadlineChange = (value: any) => {
-  //   console.log(moment(value).format("DD-MM-YYYY"));
-  //   dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
-  // };
+  const handleDeadlineChange = (value: any) => {
+    // console.log(moment(value).format("DD-MM-YYYY"));
+    dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
+  };
 
   const handleDescChange = (event: any) => {
     dispatch(setDescription(event.target.value));
+  };
+
+  const handleLevelChange = (value: any) => {
+    dispatch(setLevel(value));
+  };
+
+  const handleAddressChange = (value: any) => {
+    console.log(value)
+    dispatch(setAddress(value));
+  };
+
+  const handleSalaryChange = (value: any) => {
+    console.log(value)
+    dispatch(setSalary(value[0]));
+    dispatch(setUpperSalary(value[1]));
+  };
+
+  const handleMajorChange = (value: any) => {
+    dispatch(setMajor(value));
+  };
+
+  const handleTypeChange = (value: any) => {
+    dispatch(setType(value));
+  };
+
+  const handleReqsChange = (value: any) => {
+    dispatch(setReqs(value));
+  };
+
+  const handleBenefitsChange = (value: any) => {
+    dispatch(setBenefits(value));
   };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
@@ -57,51 +113,82 @@ export const JobPostForm: React.FC<IForm> = ({
     event.preventDefault();
   };
 
-  const options: SelectProps["options"] = [];
-
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      label: i.toString(36) + i,
-      value: i.toString(36) + i,
-    });
-  }
-
-  const handleChange = (value: string[]) => {
-    console.log(`selected ${value}`);
-  };
-
   return (
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
-        <Form.Item label="Tiêu đề" className="form-input full-width">
+        <Form.Item label="Tiêu đề" required className="form-input full-width">
           <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
-        {/* <Form.Item label="Ngành">
+        <Form.Item label="Cấp bậc" required>
           <Select
             mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Chọn ngành"
-            onChange={handleChange}
-            options={options}
+            className="form-select"
+            placeholder="Thực tập"
+            onChange={handleLevelChange}
+            options={levels}
           />
-        </Form.Item> */}
-        {/* <Form.Item label="Công ty" className="form-input">
+        </Form.Item>
+        <Form.Item label="Địa điểm" required>
           <Select
             className="form-select"
-            bordered={false}
-            onChange={handleCompanyChange}
-          >
-            {companies.map((comp) => (
-              <Select.Option className="form-select-dropdown" value={comp}>
-                {comp}
-              </Select.Option>
-            ))}
-          </Select>
+            mode="multiple"
+            placeholder="Hà Nội"
+            onChange={handleAddressChange}
+            options={location}
+          />
+        </Form.Item>
+        <Form.Item label="Mức lương (triệu đồng/tháng)">
+          <Slider range defaultValue={[0, 100]} marks={marks} onAfterChange={handleSalaryChange}/>
+          {/* <Select
+            className="form-select"
+            mode="multiple"
+            placeholder="1.000.000 - 3.000.000 VNĐ/tháng"
+            onChange={handleSalaryChange}
+            options={salaries}
+          /> */}
+        </Form.Item>
+        <Form.Item label="Tính chất công việc">
+          <Select
+            className="form-select"
+            mode="multiple"
+            placeholder="Fulltime"
+            onChange={handleTypeChange}
+            options={types}
+          />
+        </Form.Item>
+        <Form.Item label="Ngành học liên quan">
+          <Select
+            className="form-select"
+            mode="multiple"
+            placeholder="Công nghệ thông tin"
+            onChange={handleMajorChange}
+            options={majors}
+          />
+        </Form.Item>
+        <Form.Item label="Hạn chót">
+          <DatePicker
+            className="form-select"
+            // locale={locale}
+            onChange={handleDeadlineChange}
+          />
+        </Form.Item>
+        {/* <Form.Item label="Yêu cầu" className="form-input full-width">
+          <Input.TextArea
+            rows={3}
+            required
+            className="form-item-long"
+            onChange={handleReqsChange}
+          />
+        </Form.Item>
+        <Form.Item label="Quyền lợi" className="form-input full-width">
+          <Input.TextArea
+            rows={3}
+            required
+            className="form-item-long"
+            onChange={handleBenefitsChange}
+          />
         </Form.Item> */}
-        {/* <Form.Item label="Hạn chót">
-          <DatePicker locale={locale} onChange={handleDeadlineChange} />
-        </Form.Item> */}
-        <Form.Item label="Miêu tả" className="form-input full-width">
+        <Form.Item required label="Miêu tả" className="form-input full-width">
           <Input.TextArea
             rows={6}
             required

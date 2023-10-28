@@ -15,15 +15,17 @@ export const generateJobDescription = async (inputDescription: any) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
-    những trường sau đây: salary (tiếng việt), level (internship/newgrad/experienced), 
-    requirements (tiếng việt), benefits (tiếng việt), location (tiếng việt), 
-    job_type (fulltime/parttime/contract), discipline (tiếng việt), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển)
+    những trường sau đây: location (string), requirements (string), benefits (string), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm). 
     Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
   `;
+  // salary (tiếng việt), level (internship/newgrad/experienced), location (tiếng việt), job_type (fulltime/parttime/contract), discipline (tiếng việt), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển),
   // requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm)
   // Thực tập//Nhân viên chính thức
+  // salary (tiếng việt), level (internship/newgrad/experienced),
+  //  requirements (tiếng việt), benefits (tiếng việt), location (tiếng việt),
+  //  job_type (fulltime/parttime/contract), discipline (tiếng việt), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển)
   console.log(prompt);
   const llm = new OpenAI({
     modelName: "gpt-3.5-turbo",
@@ -73,7 +75,7 @@ export const getUnapprovedJobs = async () => {
 
 export const getJobsForRecruiter = async () => {
   const response = await request.get(`/jobs/`);
-  console.log(response.data.message)
+  console.log(response.data.message);
 
   const jobs = response.data.message || [
     {
@@ -139,7 +141,7 @@ export const getJobsForRecruiter = async () => {
 export const getRecruiterJobs = async () => {
   const response = await request.get(`/jobs/`);
   const jobs = response.data.message;
-  console.log(response.data.message)
+  console.log(response.data.message);
   const res = jobs.map((job: any) => ({
     key: job,
     posted_date: moment(job.created_at).format("DD/MM/YYYY"),
