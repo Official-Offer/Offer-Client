@@ -8,7 +8,7 @@ import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
 import Profile from "../profile/index";
 import { getRecruiter } from "@services/apiRecruiter";
-import { setCompany, setID, setRole } from "@redux/actions";
+import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
 
 //create a next page for the student home page, code below
@@ -45,6 +45,7 @@ const Jobs: NextPage = () => {
         })
       );
       dispatch(setCompany(info.company.name));
+      dispatch(setCompanyId(info.company.id));
     },
     onError: () => {},
   });

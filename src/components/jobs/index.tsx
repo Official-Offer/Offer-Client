@@ -7,15 +7,16 @@ import {
   CheckOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { DatePicker, Input, Skeleton, Slider } from "antd";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
+import { setJobId } from "@redux/actions";
 // import locale from "antd/es/date-picker/locale/vi_VN";
 
-export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
+export const JobDescription: React.FC<any> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const accountState = useSelector((state: RootState) => state.account);
   // console.log(state.deadline);
@@ -28,7 +29,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const [benefits, setBenefits] = useState<string>("");
   const [type, setType] = useState<string>(state.type || "");
   const [location, setLocation] = useState<string>(state.address || "");
-  const [deadline, setDeadline] = useState<string>(state.deadline || "");
+  const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<string>(state.major || "");
   // const [discipline, setDiscipline] = useState<string>("");
   const [exp, setExp] = useState<string>("");
@@ -60,6 +61,8 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
     100: "100",
   };
 
+  const dispatch = useDispatch();
+
   const jobQuery = useQuery({
     queryKey: ["job-description"],
     queryFn: () => generateJobDescription(title+jd),
@@ -72,7 +75,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       // setDiscipline(jobDesc.discipline);
       // setMajors(jobDesc.majors);
       // setDeadline(jobDesc.deadline);
-      // setType(jobDesc.type);
+      setType(jobDesc.type);
       setLocation(jobDesc.location);
       setExp(jobDesc.requiredExperience);
       // setHowTo(jobDesc.howTo);
@@ -86,6 +89,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
     mutationFn: postJob,
     onSuccess: async (data) => {
       console.log(data);
+      dispatch(setJobId(data.id));
       onClick();
     },
     onError: (error: any) => {
@@ -149,13 +153,15 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               <DatePicker
                 // locale={locale}
                 onChange={(value) => {
-                  setDeadline(moment(value).format("DD-MM-YYYY"));
+                  if (value) {
+                    setDeadline(value.toDate());
+                  }
                 }}
               />
             </div>
           ) : (
             <LoadingLine loading={jobQuery.isLoading}>
-              <p>Hạn nộp: {deadline}</p>
+              <p>Hạn nộp: {moment(deadline).format("DD-MM-YYYY")}</p>
             </LoadingLine>
           )}
         </div>
@@ -357,26 +363,28 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
             postJobQuery.mutate({
               title: title.slice(0,99),
               level: level=="Thực tập"? "internship": level=="Nhân viên chính thức" ? "newgrad" : "experienced",
-              job_type: type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
+              job_type: type,
+              // type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
               // work_type,
               salary,
-              address: {
-                city: state.address[0],
-              },
+              // address: {
+              //   city: state.address[0],
+              // },
               upper_salary: state.upperSalary,
               description: jd,
               benefits,
-              company: 1, // state.companyId
+              company: state.companyId,
               requirements,
               location,
               contact_person: accountState.id,
+              deadline,
               // required_majors: state.major,
               // required_experience: exp,
               // howTo,
             });
           }}
           isLoading={postJobQuery.isLoading}
-          text={"Tiếp tục"}
+          text={"Đăng tuyển"}
         />
       </div>
     </div>

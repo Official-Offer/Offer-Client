@@ -15,7 +15,7 @@ export const generateJobDescription = async (inputDescription: any) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
-    những trường sau đây: location (string), requirements (string), benefits (string), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm). 
+    những trường sau đây: location (string), requirements (string), benefits (string), type(choose among "fulltime", "parttime", "contract"), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm). 
     Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
@@ -213,6 +213,11 @@ export const bookmarkJob = async (id: number | string) => {
 
 export const postJob = async (body: any) => {
   const response = await request.post(`/jobs/`, body);
+  return response.data;
+};
+
+export const addSchoolsToJob = async (body: any) => {
+  const response = await request.patch(`/jobs/${body.id}/`, body.content);
   return response.data;
 };
 

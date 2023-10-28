@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { DatePicker, Form, Input, Select, SelectProps, Slider } from "antd";
 import {
@@ -15,9 +15,12 @@ import {
   setReqs,
   setBenefits,
   setUpperSalary,
+  setCompanyId,
 } from "@redux/actions";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
+import { OrgForm } from "./OrgForm";
+import { RootState } from "@redux/reducers";
 // import locale from "antd/es/date-picker/locale/vi_VN";
 
 interface IForm {
@@ -35,6 +38,18 @@ export const JobPostForm: React.FC<IForm> = ({
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
 
   const { RangePicker } = DatePicker;
+  const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
+  const [companies, setCompanies] = useState<any>(
+    [
+      { value: 1, label: "Meta" },
+      { value: 2, label: "Tesla" },
+      { value: 3, label: "Amazon" },
+      { value: 4, label: "VinaCapital" },
+    ]
+  );
+  // const [company, setCompani] = useState<any>([
+  //   { value: [1, "Meta"], label: "Meta" },
+  // ]);
   const [levels, setLevels] = useState<any>(
     f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"])
   );
@@ -65,7 +80,7 @@ export const JobPostForm: React.FC<IForm> = ({
 
   const handleDeadlineChange = (value: any) => {
     // console.log(moment(value).format("DD-MM-YYYY"));
-    dispatch(setDeadline(moment(value).format("DD-MM-YYYY")));
+    dispatch(setDeadline(value.toDate()));
   };
 
   const handleDescChange = (event: any) => {
@@ -77,12 +92,12 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleAddressChange = (value: any) => {
-    console.log(value)
+    console.log(value);
     dispatch(setAddress(value));
   };
 
   const handleSalaryChange = (value: any) => {
-    console.log(value)
+    console.log(value);
     dispatch(setSalary(value[0]));
     dispatch(setUpperSalary(value[1]));
   };
@@ -90,17 +105,12 @@ export const JobPostForm: React.FC<IForm> = ({
   const handleMajorChange = (value: any) => {
     dispatch(setMajor(value));
   };
+  const state = useSelector((state: RootState) => state.jobs);
 
-  const handleTypeChange = (value: any) => {
-    dispatch(setType(value));
-  };
-
-  const handleReqsChange = (value: any) => {
-    dispatch(setReqs(value));
-  };
-
-  const handleBenefitsChange = (value: any) => {
-    dispatch(setBenefits(value));
+  const handleCompanyChange = (value: any) => {
+    dispatch(setCompany(companyList[value - 1]));
+    dispatch(setCompanyId(value));
+    // console.log(state.company);
   };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
@@ -119,13 +129,14 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Tiêu đề" required className="form-input full-width">
           <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
-        <Form.Item label="Cấp bậc" required>
+        <Form.Item label="Công ty" className="form-input" required>
           <Select
-            mode="multiple"
+            // mode="multiple"
+            // value={company}
             className="form-select"
-            placeholder="Thực tập"
-            onChange={handleLevelChange}
-            options={levels}
+            placeholder="Công ty"
+            onChange={handleCompanyChange}
+            options={companies}
           />
         </Form.Item>
         <Form.Item label="Địa điểm" required>
@@ -137,17 +148,24 @@ export const JobPostForm: React.FC<IForm> = ({
             options={location}
           />
         </Form.Item>
-        <Form.Item label="Mức lương (triệu đồng/tháng)">
-          <Slider range defaultValue={[0, 100]} marks={marks} onAfterChange={handleSalaryChange}/>
-          {/* <Select
+        <Form.Item label="Cấp bậc" className="form-input" required>
+          <Select
+            // mode="multiple"
             className="form-select"
-            mode="multiple"
-            placeholder="1.000.000 - 3.000.000 VNĐ/tháng"
-            onChange={handleSalaryChange}
-            options={salaries}
-          /> */}
+            placeholder="Thực tập"
+            onChange={handleLevelChange}
+            options={levels}
+          />
         </Form.Item>
-        <Form.Item label="Tính chất công việc">
+        <Form.Item label="Mức lương (triệu đồng/tháng)">
+          <Slider
+            range
+            defaultValue={[0, 100]}
+            marks={marks}
+            onAfterChange={handleSalaryChange}
+          />
+        </Form.Item>
+        {/* <Form.Item label="Tính chất công việc">
           <Select
             className="form-select"
             mode="multiple"
@@ -155,7 +173,7 @@ export const JobPostForm: React.FC<IForm> = ({
             onChange={handleTypeChange}
             options={types}
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label="Ngành học liên quan">
           <Select
             className="form-select"
@@ -172,22 +190,6 @@ export const JobPostForm: React.FC<IForm> = ({
             onChange={handleDeadlineChange}
           />
         </Form.Item>
-        {/* <Form.Item label="Yêu cầu" className="form-input full-width">
-          <Input.TextArea
-            rows={3}
-            required
-            className="form-item-long"
-            onChange={handleReqsChange}
-          />
-        </Form.Item>
-        <Form.Item label="Quyền lợi" className="form-input full-width">
-          <Input.TextArea
-            rows={3}
-            required
-            className="form-item-long"
-            onChange={handleBenefitsChange}
-          />
-        </Form.Item> */}
         <Form.Item required label="Miêu tả" className="form-input full-width">
           <Input.TextArea
             rows={6}

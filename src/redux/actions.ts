@@ -10,6 +10,7 @@ export {
   setTitle,
   setCompany,
   setDescription,
+  setCompanyId,
   setDeadline,
   setLevel,
   setAddress,
@@ -18,5 +19,6 @@ export {
   setType,
   setReqs,
   setBenefits,
-  setUpperSalary
+  setUpperSalary,
+  setJobId
 } from "@redux/slices/jobs";

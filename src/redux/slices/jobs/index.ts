@@ -4,7 +4,8 @@ interface ICJob {
   title: string;
   company: string;
   description: string;
-  deadline: string;
+  companyId: number;
+  deadline?: Date | null;
   level: string;
   address: string;
   salary: number;
@@ -13,13 +14,16 @@ interface ICJob {
   reqs: string;
   benefits: string;
   upperSalary: number;
+  jobId?: number;
 }
 
 const initialState: ICJob = {
   title: "",
   company: "",
   description: "",
-  deadline: "",
+  jobId: 0,
+  companyId: 1,
+  deadline: new Date(),
   level: "",
   address: "",
   salary: 0,
@@ -39,6 +43,12 @@ const jobSlice = createSlice({
     },
     setCompany: (state, action) => {
       state.company = action.payload;
+    },
+    setJobId: (state, action) => {
+      state.jobId = action.payload;
+    },
+    setCompanyId: (state, action) => {
+      state.companyId = action.payload;
     },
     setDescription: (state, action) => {
       state.description = action.payload;
@@ -73,6 +83,6 @@ const jobSlice = createSlice({
   },
 });
 
-export const { setTitle, setCompany, setDescription, setDeadline, setLevel, setAddress, setSalary, setMajor, setType, setReqs, setBenefits, setUpperSalary} = jobSlice.actions;
+export const { setTitle, setCompany, setCompanyId, setDescription, setJobId, setDeadline, setLevel, setAddress, setSalary, setMajor, setType, setReqs, setBenefits, setUpperSalary} = jobSlice.actions;
 
 export default jobSlice.reducer;
