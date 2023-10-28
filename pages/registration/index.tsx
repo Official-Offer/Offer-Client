@@ -190,11 +190,9 @@ const Registration: NextPage = () => {
                 <Form.Item required label="Chọn vai trò" className="form-input">
                   <Segmented
                     options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
-                    onResize={undefined}
                     size={"large"}
-                    onResizeCapture={undefined}
                     onChange={(value) => {
-                      setRol(value.toString());
+                      setRole(value.toString());
                       const role = {
                         isStudent: value.toString() == "Học sinh",
                         isAdvisor: value.toString() == "Trường",
