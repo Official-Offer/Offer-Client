@@ -13,7 +13,7 @@ const ForgetPassword: NextPage = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
-    mutationFn: () => {},
+    mutationFn: async () => {},
     onSuccess: async (data: any) => {
       queryClient.invalidateQueries({ queryKey: ["register"] });
     },

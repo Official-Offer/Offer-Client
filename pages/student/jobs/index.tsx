@@ -1,46 +1,61 @@
 import { NextPage } from "next";
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from "next/router";
-import { nextReplaceUrl } from "next-replace-url";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Input, Popover, Radio, Select, Slider, Space } from "antd";
+import { Button, Input, Popover, Radio, Select, Skeleton, Slider, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { getJobs } from "@services/apiJob";
-import { InfoCard } from "@components/card/InfoCard";
+import { JobFilterNavbar } from "@components/navbar/JobFilterNavbar";
+import { JobCard } from "@components/card/JobCard";
+import { JobContent } from "@components/content/JobContent";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { TogglableButton } from "@styles/styled-components/styledButton";
-import { formatAddress } from "@utils/formatters";
-
-const jobFilterArr = [
-  {
-    name: "Full/Part",
-    checked: true,
-  },
-  {
-    name: "Intern",
-    checked: false,
-  },
-  {
-    name: "1k+",
-    checked: false,
-  },
-  {
-    name: "On-campus",
-    checked: false,
-  },
-];
-
+import { formatAddress } from "@utils/formatters/stringFormat";
+import { replaceUrl } from "@utils/replaceUrl";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
 
 const StudentJobs: NextPage = () => {
-  const { displayedJobs, setJobs, setSearchTerm, filters, sort, setFilters, setSort } = useDisplayJobs();
+  const searchParams = useSearchParams();
+  const jobId = parseInt(searchParams.get("id") ?? "0");
+  const router = useRouter();
+
+  const display = useDisplayJobs();
+  const { displayedJobs, setJobs, setSearchTerm, filters, sort, setFilters, setSort } = display;
+
+  const [jobIndexMap, setJobIndexMap] = useState<Map<number, number>>(new Map<number, number>());
+  const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
+  const [jobCardBookmarkClicked, setJobCardBookmarkClicked] = useState<boolean>(false);
+  const [jobContentBookmarkClicked, setJobContentBookmarkClicked] = useState<boolean>(false);
+
+  const setIndexMap = (jobData: Job[]) => {
+    for (let i = 0; i < displayedJobs.length; i++) {
+      jobIndexMap.set(displayedJobs[i].pk, i);
+    }
+    setJobIndexMap(new Map(jobIndexMap));
+    setActiveCardIndex(jobIndexMap.get(jobId) ?? 0);
+  };
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
     queryFn: getJobs,
-    onSuccess: (jobData) => setJobs(jobData.message),
+    onSuccess: (jobData) => setJobs(jobData.message.sort((a: Job, b: Job) => a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0)),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    setIndexMap(displayedJobs);
+    replaceUrl("id", displayedJobs?.[0]?.pk ? `${displayedJobs[0].pk}` : undefined);
+  }, [displayedJobs]);
+
+  const updatePage = (id: number | unknown) => {
+    if (typeof id === "number") {
+      setActiveCardIndex(jobIndexMap.get(id) ?? 0);
+      replaceUrl("id", `${id}`);
+    }
+  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.trim() === "") {
@@ -49,7 +64,7 @@ const StudentJobs: NextPage = () => {
   };
 
   const handleFilterLocation = (locationArr: string[]) => {
-    setFilters((filter) => {
+    setFilters((filter: JobFilters) => {
       const filterLocations = filter.locations;
       Object.keys(filterLocations).forEach((location) => filterLocations[location] = locationArr.includes(location));
       return { ...filter, filterLocations };
@@ -57,10 +72,10 @@ const StudentJobs: NextPage = () => {
   }
 
   const handleFilterSalary = (value: number[]) => {
-    setFilters((filter) => {
+    setFilters((filter: JobFilters) => {
       const salary = filter.salary;
-      salary.min = value[0];
-      salary.max = value[1];
+      salary[0] = value[0];
+      salary[1] = value[1];
       return { ...filter, salary };
     });
   }
@@ -76,128 +91,46 @@ const StudentJobs: NextPage = () => {
   }
   
   return (
-    <div className="main">
-      <div className="main__content">
-        <section className="main-mt">
-          <Input.Search
-            className="gradient-antd-search"
-            allowClear
-            placeholder="Tìm công việc"
-            enterButton="Tìm kiếm"
-            size="large"
-            onChange={handleSearch}
-            onSearch={(value: string) => setSearchTerm(value)}
-          />
-          <Space direction="vertical" className="justify-center">
-            <Space wrap align="center" className="justify-center">
-              <Select
-                mode="tags"
-                showArrow
-                size="large"
-                placeholder="Địa điểm"
-                className="round-border"
-                onChange={handleFilterLocation}
-                options={Object.keys(filters.locations).map((location) => ({ value: location, label: location }))}
-              />
-              {/* <Popover
-                content={
-                  <Space wrap>
-                    {
-                      Object.keys(filters.locations).length === 0 ? <span>Không có địa điểm để chọn</span> :
-                        Object.keys(filters.locations).map((location) => (
-                          <TogglableButton
-                            name={location}
-                            checked={filters.locations[location]}
-                            onClick={handleFilterLocation}
-                          >
-                            {location}
-                          </TogglableButton>
-                        ))
-                    }
-                  </Space>
-                }
-                trigger="hover"
-                placement="bottom"
-              >
-                <Button 
-                  size="large"
-                  className="round-border right-icon"
-                >
-                  <span>
-                    Địa điểm
-                  </span>
-                  <span><DownOutlined/></span>
-                </Button>
-              </Popover> */}
-              <Popover
-                content={
-                  <div className="layout-medium layout-hstack-stretch-center">
-                    <span>{filters.salary[0]}</span>
-                    <span>
-                      <Slider 
-                        range
-                        autoAdjustOverflow
-                        min={2000}
-                        max={4000}
-                        step={100}
-                        defaultValue={filters.salary}
-                        onChange={handleFilterSalary}
-                      />
-                    </span>
-                    <span>{filters.salary[1]}</span>
-                  </div>
-                }
-                minWidth="1000px"
-                trigger="hover"
-                placement="bottom"
-              >
-                <Button 
-                  size="large"
-                  className="round-border right-icon"
-                >
-                  <span>
-                    Mức lương
-                  </span>
-                  <span><DownOutlined/></span>
-                </Button>
-              </Popover>
-            </Space>
-            <Space wrap align="center" className="justify-center">
-              <Radio.Group
-                defaultValue="related"
-                buttonStyle="solid"
-                size="large"
-              >
-                <Space.Compact className="round-border">
-                  <Radio.Button value="all">Tất cả</Radio.Button>
-                  <Radio.Button value="related">Liên quan</Radio.Button>
-                </Space.Compact>
-              </Radio.Group>
-                <Radio.Group
-                  buttonStyle="solid"
-                  size="large"
-                  value={sort}
-                  onChange={handleSort}
-                >
-                  <Space.Compact className="round-border">
-                    <Radio.Button value="date-posted" onClick={() => removeSort("date-posted")}>Ngày đăng</Radio.Button>
-                    <Radio.Button value="date-updated" onClick={() => removeSort("date-updated")}>Ngày cập nhật</Radio.Button>
-                    <Radio.Button value="salary-desc" onClick={() => removeSort("salary-desc")}>Lương cao đến thấp</Radio.Button>
-                    <Radio.Button value="salary-asc" onClick={() => removeSort("salary-asc")}>Lương thấp đến cao</Radio.Button>
-                  </Space.Compact>
-                </Radio.Group>
-            </Space>
-          </Space>
-        </section>
-        <section>
-          <div className="layout-grid">
+    <div>
+      <JobFilterNavbar displayHook={display} />
+      <div className="job-portal split-layout no-padding">
+        <div className="split-layout-item flex-sm no-padding">
+          <ul className="job-portal-list">
+            <li className="job-portal-list-result">
+              {
+                jobQuery.isLoading ? "Đang tải..." :
+                  `${displayedJobs?.length ?? "Không có"} kết quả`
+              }
+            </li>
             {
-              jobQuery.isLoading ? new Array(4).fill(<InfoCard loading />) : (
-                displayedJobs.map((jobData) => <InfoCard info={jobData} />)
-              )
+              // If the jobs are still loading, show the skeletons
+              !jobQuery.isLoading ? 
+                displayedJobs.map((job: any, i: number) => (
+                  <li>
+                    <JobCard
+                      jobData={job}
+                      active={i === activeCardIndex} 
+                      onClick={() => updatePage(job.pk)}
+                      bookmarkClicked={i === activeCardIndex ? jobCardBookmarkClicked : undefined}
+                      setBookmarkClicked={i === activeCardIndex ? setJobCardBookmarkClicked : undefined}
+                      setJobContentBookmarkClicked={i === activeCardIndex ? setJobContentBookmarkClicked : undefined}
+                    />
+                  </li>
+                ))
+              : 
+                Array(4).fill(<li><Skeleton className="job-portal-list-loading" active/></li>)
             }
-          </div>
-        </section>
+          </ul>
+        </div>
+        <div className="split-layout-item flex-xl no-padding">
+          <JobContent
+            isLoading={jobQuery.isLoading} 
+            jobData={displayedJobs?.[activeCardIndex]}
+            bookmarkClicked={jobContentBookmarkClicked}
+            setBookmarkClicked={setJobContentBookmarkClicked}
+            setJobCardBookmarkClicked={setJobCardBookmarkClicked}
+          />
+        </div>
       </div>
     </div>
   );

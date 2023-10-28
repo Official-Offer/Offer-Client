@@ -166,7 +166,7 @@ const Registration: NextPage = () => {
               <div>
                 <h1>Đăng ký</h1>
               </div>
-              <Form className="form" onSubmit={() => {}} layout="vertical">
+              <Form className="form" onFinish={() => {}} layout="vertical">
                 <div className="form-grid">
                   <Form.Item required label="Họ" className="form-input">
                     <Input

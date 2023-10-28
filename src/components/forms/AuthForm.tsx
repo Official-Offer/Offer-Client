@@ -31,7 +31,7 @@ export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignu
     setEmail(event.target.value ?? "");
   };
 
-  const handleSubmit = (event: React.SubmitEvent<HTMLInputElement>) => {
+  const handleSubmit = (values: Record<string, any>) => {
     // event.preventDefault();
     if (embedSignup && password !== rePassword) {
       alert("Mật khẩu không khớp");

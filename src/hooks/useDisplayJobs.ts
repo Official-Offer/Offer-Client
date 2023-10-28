@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { formatAddress } from "@utils/formatters";
-import type { Job } from "@types/dataTypes";
-import type { JobFilters } from "@types/listTypes";
+import { formatAddress } from "@utils/formatters/stringFormat";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
 
 export const useDisplayJobs = () => {
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
@@ -9,12 +9,13 @@ export const useDisplayJobs = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filters, setFilters] = useState<JobFilters>({
     jobTypes: {},
-    industries: {},
+    workTypes: {},
+    // industries: {},
     locations: {},
-    salary: [],
+    salary: [0, 0],
     // yoes: {},
   });
-  const [sort, setSort] = useState<string>("date-posted");
+  const [sort, setSort] = useState<string>("");
 
   const setJobs = (jobList: Job[]) => {
     setOriginalJobs(jobList);
@@ -22,24 +23,21 @@ export const useDisplayJobs = () => {
     const newFilters = filters;
     for (let i = 0; i < jobList.length; i++) {
       const job = jobList[i];
-      if (job.job_types) {
-        for (let j = 0; j < job.job_types.length; j++) {
-          const type = job.job_types[j];
+      if (job.job_type) {
+        const type = job.job_type;
+        if (type !== "{}") 
           newFilters.jobTypes[type] = false;
-        }
       }
-    }
-    for (let i = 0; i < jobList.length; i++) {
-      const job = jobList[i];
-      if (job.industries) {
-        for (let j = 0; j < job.industries.length; j++) {
-          const industry = job.industries[j];
-          newFilters.industries[industry] = false;
-        }
+      if (job.work_type) {
+        const type = job.work_type;
+        newFilters.workTypes[type] = false;
       }
-    }
-    for (let i = 0; i < jobList.length; i++) {
-      const job = jobList[i];
+      // if (job.industries) {
+      //   for (let j = 0; j < job.industries.length; j++) {
+      //     const industry = job.industries[j];
+      //     newFilters.industries[industry] = false;
+      //   }
+      // }
       if (job.address) {
         newFilters.locations[formatAddress(job.address, true)] = false;
       }
@@ -53,15 +51,25 @@ export const useDisplayJobs = () => {
 
   useEffect(() => {
     const displayed = originalJobs.filter((job) => {
-      // if (filters.jobType && !job.job_types.some((type) => filters.jobTypes[type])) {
-      //   return false;
-      // }
+      if (
+        Object.keys(filters.jobTypes).length !== 0 &&
+        !Object.values(filters.jobTypes).every((value) => !value) &&
+        !filters.jobTypes[job.job_type]
+      ) {
+        return false;
+      }
+      if (
+        Object.keys(filters.workTypes).length !== 0 &&
+        !Object.values(filters.workTypes).every((value) => !value) &&
+        !filters.workTypes[job.work_type]
+      ) {
+        return false;
+      }
       // if (filters.industry && !job.industries.some((industry) => filters.industries[industry])) {
       //   return false;
       // }
       // Locations filter logic: If one is true, filter by that one. If all are false | null, don't filter
       if (
-        filters.locations && 
         Object.keys(filters.locations).length !== 0 &&
         !Object.values(filters.locations).every((value) => !value) &&
         !((job.address && filters.locations[formatAddress(job.address, true)]) || (job.company.address && filters.locations[formatAddress(job.company.address, true)]))
@@ -81,18 +89,18 @@ export const useDisplayJobs = () => {
       //   }
       // }
       return true;
-    }).sort((a, b) => {
+    }).sort((a: Job, b: Job) => {
       if (sort === "date-posted") {
         return new Date(b.time_posted).getTime() - new Date(a.time_posted).getTime();
       }
-      if (sort.dateUpdated) {
+      if (sort === "date_posted") {
         return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
       }
-      if (sort.salaryDesc) {
-        return b.salary - a.salary;
+      if (sort === "salary-desc") {
+        return b.lower_salary - a.lower_salary;
       }
-      if (sort.salaryAsc) {
-        return a.salary - b.salary;
+      if (sort === "salary-asc") {
+        return a.lower_salary - b.lower_salary;
       }
       return 0;
     });

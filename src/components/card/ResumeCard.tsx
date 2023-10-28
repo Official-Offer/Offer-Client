@@ -104,7 +104,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
                   round
                   backgroundColor="#7277F1"
                   disabled={uploadMutation.isLoading} 
-                  onClick={(selectedFile && !uploadMutation.isLoading) && handleUpload}
+                  onClick={(event: any) => (selectedFile && !uploadMutation.isLoading) && handleUpload(event)}
                 >
                   {
                     uploadMutation.isLoading ? (

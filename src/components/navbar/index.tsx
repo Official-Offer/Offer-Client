@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
-  const listMenu: MenuMiddleNav["items"] =
+  const listMenu: Record<string, any>[] =
     router.pathname.includes("recruiter") || router.pathname.includes("advisor")
       ? []
       : [
@@ -112,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </a>
             ) : (
               <Link href={"/student/"}>
-                <a className="m-0">{"Home"}</a>
+                Home
               </Link>
             )}
           </Menu.Item>
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                   </a>
                 ) : (
                   <Link href={menu.link}>
-                    <a className="m-0">{menu.name}</a>
+                    {menu.name}
                   </Link>
                 )}
               </Menu.Item>
@@ -240,8 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           </Menu.Item>
         </Dropdown> */}
         <Dropdown
-          trigger="click"
-          onClick={() => console.log(router.pathname)}
+          trigger={["click"]}
           overlayClassName="avatar-dropdown"
           overlay={
             <Menu>

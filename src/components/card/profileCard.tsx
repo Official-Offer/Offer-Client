@@ -1,9 +1,10 @@
 import  React, { useState } from "react";
+import moment from "moment";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Divider } from "antd";
 import { ProfileCardForm } from "@components/forms";
 import { ArrowLeftOutlined, ArrowRightOutlined, PlusOutlined, EditOutlined } from "@ant-design/icons";
-import { formatDate } from "@utils/formatters";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 type ProfileCardProps = {
   isEditable?: boolean,
