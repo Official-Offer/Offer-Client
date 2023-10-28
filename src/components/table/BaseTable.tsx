@@ -11,9 +11,9 @@ import { CheckCircleFilled, PlusOutlined } from "@ant-design/icons";
 import { TableRowSelection } from "antd/lib/table/interface";
 
 type BaseTableProps = {
-  dataset: IntrinsicAttributes[];
-  columns: ColumnsType<IntrinsicAttributes>;
-  searchResults?: string[];
+  dataset: any[];
+  columns: ColumnsType<any>;
+  searchResults: string[];
   handleFilterType?: (values: string[]) => void;
   handleFilterSearch?: (value: string) => void;
   handleAdd?: () => void;
@@ -58,7 +58,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         <div className="table-functions-search">
           {handleFilterSearch && (
             <FilterSearch
-              placeholder={placeholder}
+              placeholder={placeholder ?? ""}
               onSearch={(event: any) => {
                 handleFilterSearch(event.target.value);
               }}

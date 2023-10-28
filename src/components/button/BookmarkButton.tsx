@@ -27,6 +27,7 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
     },
     onError: (error) => console.log(`Bookmark Error: ${error}`),
     refetchOnWindowFocus: false,
+    enabled: false
   });
 
   const bookmarkMutation = useMutation({

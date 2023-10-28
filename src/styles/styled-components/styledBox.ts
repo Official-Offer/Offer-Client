@@ -21,7 +21,7 @@ export const Card = styled.div`
   flex-direction: column;
 `;
 
-export const StyledNotiBox = styled.div<JSXElement | Record<string, boolean>>`
+export const StyledNotiBox = styled.div<{ large: boolean, read: boolean }>`
   display: flex;
   align-items: center;
   padding: ${({large}) => large ? "24px" : "12px"};
@@ -105,7 +105,7 @@ export const MessagePanel = styled.div`
   }
 `;
 
-export const MessageBox = styled.div`
+export const MessageBox = styled.div<{ seen?: boolean }>`
   display: flex;
   align-items: center;
   padding: 12px;
@@ -175,7 +175,7 @@ export const StyledResumeCard = styled.div`
   }
 `;
 
-export const StyledListCard = styled.div<JSXElement | Record<string, boolean>>`
+export const StyledListCard = styled.div<{ hasLink?: boolean, applicant?: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
@@ -262,10 +262,10 @@ export const StyledListCard = styled.div<JSXElement | Record<string, boolean>>`
 `;
 
 type SearchDropdownProps = {
-  background: string;
+  background?: string;
 }
 
-export const SearchDropdown: typeof AntdCard = styled(AntdCard)<CardProps & SearchDropdownProps>`
+export const SearchDropdown = styled(AntdCard)<CardProps & SearchDropdownProps>`
   text-align: center;
   
   ul {

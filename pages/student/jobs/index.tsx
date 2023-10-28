@@ -13,10 +13,12 @@ import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { TogglableButton } from "@styles/styled-components/styledButton";
 import { formatAddress } from "@utils/formatters/stringFormat";
 import { replaceUrl } from "@utils/replaceUrl";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
 
 const StudentJobs: NextPage = () => {
   const searchParams = useSearchParams();
-  const jobId = parseInt(searchParams.get("id"));
+  const jobId = parseInt(searchParams.get("id") ?? "0");
   const router = useRouter();
 
   const display = useDisplayJobs();
@@ -38,19 +40,20 @@ const StudentJobs: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
     queryFn: getJobs,
-    onSuccess: (jobData) => setJobs(jobData.message.sort((a, b) => a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0)),
+    onSuccess: (jobData) => setJobs(jobData.message.sort((a: Job, b: Job) => a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0)),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
     setIndexMap(displayedJobs);
+    replaceUrl("id", displayedJobs?.[0]?.pk ? `${displayedJobs[0].pk}` : undefined);
   }, [displayedJobs]);
 
   const updatePage = (id: number | unknown) => {
     if (typeof id === "number") {
       setActiveCardIndex(jobIndexMap.get(id) ?? 0);
-      replaceUrl("id", id);
+      replaceUrl("id", `${id}`);
     }
   };
 
@@ -61,7 +64,7 @@ const StudentJobs: NextPage = () => {
   };
 
   const handleFilterLocation = (locationArr: string[]) => {
-    setFilters((filter) => {
+    setFilters((filter: JobFilters) => {
       const filterLocations = filter.locations;
       Object.keys(filterLocations).forEach((location) => filterLocations[location] = locationArr.includes(location));
       return { ...filter, filterLocations };
@@ -69,10 +72,10 @@ const StudentJobs: NextPage = () => {
   }
 
   const handleFilterSalary = (value: number[]) => {
-    setFilters((filter) => {
+    setFilters((filter: JobFilters) => {
       const salary = filter.salary;
-      salary.min = value[0];
-      salary.max = value[1];
+      salary[0] = value[0];
+      salary[1] = value[1];
       return { ...filter, salary };
     });
   }

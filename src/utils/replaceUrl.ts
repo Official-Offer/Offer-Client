@@ -1,12 +1,14 @@
-export const replaceUrl = (param: string, value: string) => {
+export const replaceUrl = (param: string, value?: string) => {
   const { as, url } = window.history.state;
-  const baseUrl = "http://localhost:3000/"
+  const baseUrl = process.env.BASE_URL || "https://offer-beta.vercel.com/";
   const urlObj = new URL(url, baseUrl);
   const queryParams = new URLSearchParams(urlObj.search);
 
-  queryParams.set(param, value);
+  if (value) {
+    queryParams.set(param, value);
+    urlObj.search = queryParams.toString();
+  }
 
-  urlObj.search = queryParams.toString();
   const newUrl = urlObj.toString();
 
   window.history.replaceState({ as: newUrl, url: newUrl }, '', newUrl);

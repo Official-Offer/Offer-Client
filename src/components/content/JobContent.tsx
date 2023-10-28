@@ -11,7 +11,7 @@ import { IconButton } from "@styles/styled-components/styledButton";
 import { formatAddress } from "@utils/formatters/stringFormat";
 import { formatNum, formatDate, dateDist } from "@utils/formatters/numberFormat";
 import { translateJobType, translateMajors } from "@utils/formatters/translateFormat";
-import type { Job } from "@types/dataTypes";
+import type { Job } from "src/types/dataTypes";
 
 type JobContentProps = {
   isLoading?: boolean,
@@ -82,7 +82,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           </div>
           <h4>
             {
-              formatNum(jobData?.company.no_employees)
+              formatNum(jobData?.company.no_employees, false)
             } người đang làm việc trong công ty này
           </h4>
         </div>
@@ -99,13 +99,15 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           >
             Nhắn tin
           </Button> */}
-          <BookmarkButton
-            className="job-portal-list-card-bookmark"
-            id={jobData?.id}
-            isClickedByOther={bookmarkClicked}
-            setIsClickedByOther={setBookmarkClicked}
-            setClickOther={setJobCardBookmarkClicked}
-          />
+          {jobData && (
+            <BookmarkButton
+              className="job-portal-list-card-bookmark"
+              id={jobData.pk}
+              isClickedByOther={bookmarkClicked}
+              setIsClickedByOther={setBookmarkClicked}
+              setClickOther={setJobCardBookmarkClicked}
+            />
+          )}
           <Modal
             title="Ứng tuyển"
             open={isVisible}
@@ -134,7 +136,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           <div className="job-portal-description-info-section">
             <div>
               <h4>Mức lương:</h4>
-              <div>{formatNum(jobData?.salary, false, "Thỏa thuận")}</div>
+              <div>{formatNum(jobData?.lower_salary, false, "Thỏa thuận")}</div>
             </div>
             <div>
               <h4>Cấp bậc:</h4>

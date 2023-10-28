@@ -1,8 +1,9 @@
 import { Button } from 'antd'
+import React from "react"
 import styled from 'styled-components'
 import { ButtonProps } from 'antd/lib/button';
 
-export const StyledSubmitButton = styled.button`
+export const StyledSubmitButton = styled.button<any>`
   color: white;
   border: none;
   text-align: center;
@@ -47,7 +48,7 @@ export const SubmitButtonAntd: typeof Button = styled(Button)<ButtonProps>`
   }
 `
 
-export const ContinueButton = styled.button`
+export const ContinueButton = styled.button<any>`
 // props
   background-color: ${props => props.backgroundColor || "#d30b81"};
   color: white;
@@ -64,7 +65,7 @@ export const ContinueButton = styled.button`
   }
 `
 
-export const TogglableButton = styled.button`
+export const TogglableButton = styled.button<{ checked?: boolean }>`
   height: 30px;
   padding: 0px 12px;
 
@@ -93,7 +94,7 @@ type IconButtonProps = {
   fullWidth?: boolean,
   backgroundColor: string,
   disabled?: boolean,
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void,
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
 export const IconButton = styled.div<IconButtonProps>`

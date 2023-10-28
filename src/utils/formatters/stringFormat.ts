@@ -1,6 +1,6 @@
-import type { Address } from "@types/dataTypes";
+import type { Address } from "src/types/dataTypes";
 
-export const formatAddress = (address: Address, short?: boolean): string => {
+export const formatAddress = (address: Address | undefined, short?: boolean): string => {
   if (!address) {
     return "Địa điểm không tồn tại";
   }

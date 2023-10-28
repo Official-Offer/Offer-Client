@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
-  const listMenu: MenuMiddleNav["items"] =
+  const listMenu: Record<string, any>[] =
     router.pathname.includes("recruiter") || router.pathname.includes("advisor")
       ? []
       : [
@@ -240,8 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           </Menu.Item>
         </Dropdown> */}
         <Dropdown
-          trigger="click"
-          onClick={() => console.log(router.pathname)}
+          trigger={["click"]}
           overlayClassName="avatar-dropdown"
           overlay={
             <Menu>

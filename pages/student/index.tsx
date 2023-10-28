@@ -12,7 +12,9 @@ import { getUserDetails } from "@services/apiUser";
 import { getJobs } from "@services/apiJob";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { translateJobType } from "@utils/formatters/translateFormat";
-import type { Job } from "@types/dataTypes";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
+import type { RadioChangeEvent } from "antd/lib/radio";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -64,7 +66,7 @@ const Home: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
     queryFn: getJobs,
-    onSuccess: (jobData) => setJobs(jobData.message),
+    onSuccess: (jobData: Record<string, any>) => setJobs(jobData.message),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
@@ -76,27 +78,27 @@ const Home: NextPage = () => {
   };
 
   const handleFilter = (filterArr: string[], filterType: number) => { // default | 0: job_type, 1: work_type, 2: location
-    setFilters((filter) => {
+    setFilters((filters: JobFilters) => {
       let filterDict = filters.jobTypes;
 
       if (filterType === 1) filterDict = filters.workTypes;
       if (filterType === 2) filterDict = filters.locations;
 
       Object.keys(filterDict).forEach((key) => filterDict[key] = filterArr.includes(key));
-      return { ...filter };
+      return { ...filters };
     });
   }
 
   const handleFilterSalary = (value: number[]) => {
-    setFilters((filter) => {
-      const salary = filter.salary;
-      salary.min = value[0];
-      salary.max = value[1];
-      return { ...filter, salary };
+    setFilters((filters: JobFilters) => {
+      const salary = filters.salary;
+      salary[0] = value[0];
+      salary[1] = value[1];
+      return { ...filters };
     });
   }
 
-  const handleSort = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSort = (event: React.ChangeEvent<HTMLInputElement> | RadioChangeEvent) => {
     setSort(event.target.value);
   };
 
@@ -174,7 +176,6 @@ const Home: NextPage = () => {
                     <span>
                       <Slider 
                         range
-                        autoAdjustOverflow
                         min={2000}
                         max={4000}
                         step={100}
@@ -185,7 +186,6 @@ const Home: NextPage = () => {
                     <span>{filters.salary[1]}</span>
                   </div>
                 }
-                minWidth="1000px"
                 trigger="hover"
                 placement="bottom"
               >

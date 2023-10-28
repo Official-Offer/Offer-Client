@@ -23,4 +23,4 @@ export const translateJobType = (data: string | null | undefined) => {
   }
 };
 
-export const translateMajors = (data: string[] | undefined): string => data && data.length !== 0 ? data.toString() : "Không yêu cầu";
+export const translateMajors = (data: number[] | undefined): string => data && data.length !== 0 ? data.toString() : "Không yêu cầu";

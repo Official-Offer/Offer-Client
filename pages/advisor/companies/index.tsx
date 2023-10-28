@@ -1,22 +1,23 @@
 import { NextPage } from "next";
+import { useState } from "react";
 import { BaseTable } from "@components/table/BaseTable";
 import { companyColumns } from "@components/table/columnType";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { CompanyDataType } from "@components/table/dataType";
 import { getCompaniesForAdvisor } from "@services/apiCompany";
 import { FilterSearch } from "@components/search/FilterSearch";
 import { Avatar, Card } from "antd";
 import { AntDesignOutlined } from "@ant-design/icons";
+import type { Company } from "src/types/dataTypes";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<CompanyDataType[]>([]);
-  const [dataset, setDataSet] = useState<CompanyDataType[]>([]);
+  const [data, setData] = useState<Company[]>([]);
+  const [dataset, setDataSet] = useState<Company[]>([]);
   const companyQuery = useQuery({
     queryKey: ["companies"],
-    queryFn: getCompaniesForAdvisor,
-    onSuccess: (companies) => {
+    queryFn: () => getCompaniesForAdvisor(0),
+    onSuccess: (companies: Company[]) => {
       setData(companies);
       setDataSet(companies);
       setSearchResults(companies.map((company) => company.name));

@@ -8,7 +8,11 @@ import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { Skeleton } from "antd";
 
-export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
+interface JobDescriptionProps {
+  onClick: () => void;
+}
+
+export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);
   const [salary, setSalary] = useState<string>("");
   const [level, setLevel] = useState<string>("");
@@ -39,22 +43,23 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick }) => {
   Nhanh tay gửi CV về: careers@concung.com hoặc inbox mình để trao đổi thêm nhé!!!`
   );
 
-  const jobQuery = useQuery({
-    queryKey: ["job-description"],
-    queryFn: () => generateJobDescription(jd),
-    onSuccess: async (job) => {
-      const jobDesc = JSON.parse(job);
-      setSalary(jobDesc.salary);
-      setLevel(jobDesc.level);
-      setReq(jobDesc.requirements);
-      setBenefits(jobDesc.benefits);
-      setType(jobDesc.type);
-      setLocation(jobDesc.location);
-      setExp(jobDesc.requiredExperience);
-    },
-    onError: () => {},
-    reloadOnWindowFocus: false,
-  });
+  const jobQuery = useQuery(
+    ["job description"],
+    () => generateJobDescription(jd),
+    {
+      onSuccess: (job: string) => {
+        const jobDesc = JSON.parse(job);
+        setSalary(jobDesc.salary);
+        setLevel(jobDesc.level);
+        setReq(jobDesc.requirements);
+        setBenefits(jobDesc.benefits);
+        setType(jobDesc.type);
+        setLocation(jobDesc.location);
+        setExp(jobDesc.requiredExperience);
+      },
+      onError: (error: unknown) => console.log(`Error: ${error}`),
+    }
+  );
 
   return (
     <div className="job-desc">

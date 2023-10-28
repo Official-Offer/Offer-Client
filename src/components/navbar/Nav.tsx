@@ -135,7 +135,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
-              <Image src="/images/logo.png" width={40} height={40} />
+              <Image src="/images/logo.png" width={40} height={40} alt="logo"/>
             </div>
             <Menu
               defaultSelectedKeys={[`/${role}`]}

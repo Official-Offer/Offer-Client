@@ -10,7 +10,7 @@ export const getJobs = async () => {
   return jobList;
 };
 
-export const generateJobDescription = async (inputDescription: any) => {
+export const generateJobDescription = async (inputDescription: string) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
@@ -57,7 +57,7 @@ export const getUnapprovedJobs = async () => {
   return jobList.map((job: any) => ({
     key: job,
     // ID: jobID[Math.floor(Math.random() * jobID.length)],
-    posted_date: formatDate(job.timestamp) || "09/05/2002",
+    posted_date: formatDate(job.timestamp, "D/M/YYYY"),
     title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],

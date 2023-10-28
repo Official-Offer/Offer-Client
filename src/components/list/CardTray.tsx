@@ -10,22 +10,26 @@ type TrayProps = {
 };
 
 export const CardTray: React.FC<TrayProps> = ({cardList, cardsDisplayNum, isLoading}) => {
-  const cardTrayRef = useRef(null);
+  const cardTrayRef = useRef<HTMLDivElement | null>(null);
   const { Meta } = AntdCard;
 
-  const scrollLeft = (e) => {
+  const scrollLeft = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    cardTrayRef.current.scrollBy({
-      left: -cardTrayRef.current.clientWidth,
-      behavior: "smooth"
-    });
+    if (cardTrayRef.current) {
+      cardTrayRef.current.scrollBy({
+        left: -cardTrayRef.current.clientWidth,
+        behavior: "smooth"
+      });
+    }
   };
-  const scrollRight = (e) => {
+  const scrollRight = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault();
-    cardTrayRef.current.scrollBy({
-      left: cardTrayRef.current.clientWidth,
-      behavior: "smooth"
-    });
+    if (cardTrayRef.current) {
+      cardTrayRef.current.scrollBy({
+        left: cardTrayRef.current.clientWidth,
+        behavior: "smooth"
+      });
+    }
   };
 
   return (

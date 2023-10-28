@@ -37,6 +37,14 @@ interface ProfileCardFormProps {
   dataArr: Record<string, unknown>[],
 };
 
+interface DataInputProps {
+  name: string,
+  label: string,
+  isRequired?: boolean,
+  isMulti?: boolean,
+  optionArr: Record<string, unknown>[],
+};
+
 // Form for editing or adding for different fields in profile page
 export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   // States
@@ -144,7 +152,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   );
 
   // Components
-  const DataInput = ({ name, label, isRequired, isMulti, optionArr }): React.FC => (
+  const DataInput: React.FC<DataInputProps> = ({ name, label, isRequired, isMulti, optionArr }) => (
     <Form.Item
       name={name}
       label={label}
@@ -156,7 +164,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       ]}
     >
       <Select
-        mode={isMulti && "multiple"}
+        mode={isMulti ? "multiple" : undefined}
         showSearch
         optionFilterProp="label"
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
@@ -171,7 +179,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     </Form.Item>
   );
 
-  const ItemInput = ({ itemName }): React.FC => {
+  const ItemInput: React.FC<{ itemName: string }> = ({ itemName }) => {
     switch (props.fieldItemProps.itemType[itemName]) {
       case "number":
         return (
@@ -228,7 +236,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       onCancel={handleCancel}
       confirmLoading={postMutation.isLoading}
       footer={[
-        <div class="main-panel-form-delete-btn">
+        <div className="main-panel-form-delete-btn">
           {!props.isAdd && 
             <Button 
               type="text"
@@ -253,7 +261,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         layout="vertical"
         disabled={postMutation.isLoading}
         initialValues={
-          !props.isAdd && props.fieldItems
+          !props.isAdd ? props.fieldItems : {}
         }
       >
         {/* Item's Title - meaning the string display as the header */}
@@ -316,14 +324,14 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         <Form.Item
           name="start_date"
           label={getLabel("start_date", false)}
-          validateStatus={!areValidDates && "error"}
+          validateStatus={!areValidDates ? "error" : ""}
         >
           <DatePicker format="DD/MM/YYYY" onChange={validateDates}/>
         </Form.Item>
         <Form.Item
           name="end_date"
           label={getLabel("end_date", false) + (isCurrent ? " (dự định)" : "")}
-          validateStatus={!areValidDates && "error"}
+          validateStatus={!areValidDates ? "error" : ""}
           help={!areValidDates && `Xin hãy nhập đúng hai ngày (${getLabel("start_date", false)} trước ${getLabel("end_date", false).toLowerCase()})`}
           hidden={props.fieldItemProps.disableEndDate && isCurrent}
         >

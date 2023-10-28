@@ -3,18 +3,19 @@ import { Input, Select, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { TogglableButton } from "@styles/styled-components/styledButton";
 import { translateJobType } from "@utils/formatters/translateFormat";
-import type { Job } from "@types/dataTypes";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
 
 type JobFilterNavbarProps = {
   displayHook: {
-    displayedJobs: Job[],
-    setJobs: (jobs: Job[]) => void,
-    searchTerm: string,
-    setSearchTerm: (searchTerm: string) => void,
-    filters: Record<string, boolean>,
-    setFilters: (filters: Record<string, boolean>) => void,
+    displayedJobs?: Job[],
+    setJobs?: (jobs: Job[]) => void,
+    searchTerm?: string,
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
+    filters: JobFilters,
+    setFilters: React.Dispatch<React.SetStateAction<JobFilters>>,
     sort: string,
-    setSort: (sort: string) => void,
+    setSort: React.Dispatch<React.SetStateAction<string>>,
   }
 }
 
@@ -28,14 +29,14 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
   };
 
   const handleFilter = (filterArr: string[], filterType: number) => { // default | 0: job_type, 1: work_type, 2: location
-    setFilters((filter) => {
-      let filterDict = filter.jobTypes;
+    setFilters((filters: JobFilters) => {
+      let filterDict = filters.jobTypes;
 
-      if (filterType === 1) filterDict = filter.workTypes;
-      if (filterType === 2) filterDict = filter.locations;
+      if (filterType === 1) filterDict = filters.workTypes;
+      if (filterType === 2) filterDict = filters.locations;
 
       Object.keys(filterDict).forEach((key) => filterDict[key] = filterArr.includes(key));
-      return { ...filter };
+      return { ...filters };
     });
   }
   
@@ -49,7 +50,7 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
         onChange={handleSearchChange}
         onSearch={(value) => setSearchTerm(value)}
       />
-      <Space wrap align="stretch">
+      <Space wrap className="align-stretch">
         <Select
           mode="multiple"
           showArrow

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { formatAddress } from "@utils/formatters/stringFormat";
-import type { Job } from "@types/dataTypes";
-import type { JobFilters } from "@types/filterTypes";
+import type { Job } from "src/types/dataTypes";
+import type { JobFilters } from "src/types/filterTypes";
 
 export const useDisplayJobs = () => {
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
@@ -12,7 +12,7 @@ export const useDisplayJobs = () => {
     workTypes: {},
     // industries: {},
     locations: {},
-    salary: [],
+    salary: [0, 0],
     // yoes: {},
   });
   const [sort, setSort] = useState<string>("");
@@ -32,12 +32,12 @@ export const useDisplayJobs = () => {
         const type = job.work_type;
         newFilters.workTypes[type] = false;
       }
-      if (job.industries) {
-        for (let j = 0; j < job.industries.length; j++) {
-          const industry = job.industries[j];
-          newFilters.industries[industry] = false;
-        }
-      }
+      // if (job.industries) {
+      //   for (let j = 0; j < job.industries.length; j++) {
+      //     const industry = job.industries[j];
+      //     newFilters.industries[industry] = false;
+      //   }
+      // }
       if (job.address) {
         newFilters.locations[formatAddress(job.address, true)] = false;
       }
@@ -89,7 +89,7 @@ export const useDisplayJobs = () => {
       //   }
       // }
       return true;
-    }).sort((a, b) => {
+    }).sort((a: Job, b: Job) => {
       if (sort === "date-posted") {
         return new Date(b.time_posted).getTime() - new Date(a.time_posted).getTime();
       }
@@ -97,10 +97,10 @@ export const useDisplayJobs = () => {
         return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
       }
       if (sort === "salary-desc") {
-        return b.salary - a.salary;
+        return b.lower_salary - a.lower_salary;
       }
       if (sort === "salary-asc") {
-        return a.salary - b.salary;
+        return a.lower_salary - b.lower_salary;
       }
       return 0;
     });

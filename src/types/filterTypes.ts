@@ -1,11 +1,11 @@
 export type JobFilters = {
   jobTypes: Record<string, boolean>;
   workTypes: Record<string, boolean>;
-  discipline: number;
+  // discipline: number;
   locations: Record<string, boolean>;
   salary: [
     number,
     number
   ];
-  yoes: number[];
+  // yoes: number[];
 };

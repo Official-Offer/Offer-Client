@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const formatNum = (number: number | undefined | null, long: boolean, alt?: string): string => {
-  if (number === null || isNaN(number)) {
+  if (!number || isNaN(number)) {
     return alt || "Không xác định";
   }
   if (long) {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import type { Address, Job } from "@types/dataTypes";
+import type { Address, Job } from "src/types/dataTypes";
 import { BookmarkButton } from "@components/button/BookmarkButton";
 import { JobContent } from "@components/content/JobContent";
 import { formatAddress } from "@utils/formatters/stringFormat";
@@ -65,7 +65,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
                               )}
                             </div>
                             <h4>{
-                              formatNum(info.expected_no_applicants) + 
+                              formatNum(info.expected_no_applicants, false) + 
                               " người cùng trường bạn"
                             }</h4>
                           </>

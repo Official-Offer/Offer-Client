@@ -4,7 +4,7 @@ export const getSearch = async (query: string) => {
   const response = await request.get(`/search/?q=${query}`);
   const APIResults = response.data;
 
-  const searchResults: Record<string, string[]> = {};
+  const searchResults: Record<string, Record<string, any>[]> = {};
   let maxResultNum = 5;
   for (let i = 0; maxResultNum > 0 && i < APIResults.length; i++) {
     const key = Object.keys(APIResults[i])[0];

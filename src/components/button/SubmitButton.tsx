@@ -6,7 +6,7 @@ import Image from "next/image";
 type SubmitButtonProps = {
   text?: string;
   isLoading?: boolean;
-  onClick?: (event: { preventDefault: () => void }) => void;
+  onClick?: (event: any) => void;
   type?: number;
 }
 
