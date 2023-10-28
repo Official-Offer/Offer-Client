@@ -60,7 +60,10 @@ export const getRecruitersForCompany = async () => {
   return res;
 };
 
-export const getApplicantsForRecruiter = async () => {
+export const getApplicantsForRecruiter = async (id: any) => {
+  const response = await request.get(`/jobs/${id}/applications/`);
+  const applicantList = response.data.message;
+
   const applicants = [
     {
       name: "Kien",
@@ -84,11 +87,21 @@ export const getApplicantsForRecruiter = async () => {
       compatibility: "40%",
     },
   ];
-  return applicants.map((app) => ({
-    name: app.name,
-    school: app.school,
-    job: app.job,
+  // return applicants.map((app) => ({
+  //   name: app.name,
+  //   school: app.school,
+  //   job: app.job,
+  //   resume: app.resume,
+  //   compatibility: app.compatibility,
+  // }));
+  console.log(applicantList);
+  return applicantList.map((app: any) => ({
+    key: app.id,
+    applied_at: app.created_at,
+    name: app.student,
+    school: app.student.school,
+    job: app.job.title,
     resume: app.resume,
-    compatibility: app.compatibility,
+    // compatibility: app.compatibility,
   }));
 };

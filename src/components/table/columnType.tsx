@@ -301,6 +301,12 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
   //   key: "ID",
   // },
   {
+    title: "Nộp vào lúc",
+    dataIndex: "applied_at",
+    key: "applied_at",
+    // render: (text) => <a>{text}</a>,
+  },
+  {
     title: "Tên",
     dataIndex: "name",
     key: "name",
