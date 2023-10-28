@@ -2,13 +2,17 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateJobDescription, postJob } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { BackwardOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  BackwardOutlined,
+  CheckOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { DatePicker, Input, Skeleton } from "antd";
 import moment from "moment";
-import locale from 'antd/es/date-picker/locale/vi_VN';
+import locale from "antd/es/date-picker/locale/vi_VN";
 
 export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
@@ -23,6 +27,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
   const [location, setLocation] = useState<string>("");
   // const [deadline, setDeadline] = useState<string>(state.deadline);
   const [majors, setMajors] = useState<string>("");
+  const [discipline, setDiscipline] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
   const [howTo, setHowTo] = useState<string>("");
@@ -56,7 +61,8 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
       setLevel(jobDesc.level);
       setReq(jobDesc.requirements);
       setBenefits(jobDesc.benefits);
-      setMajors(jobDesc.majors);
+      // setDiscipline(jobDesc.discipline);
+      // setMajors(jobDesc.majors);
       // setDeadline(jobDesc.deadline);
       setType(jobDesc.type);
       setLocation(jobDesc.location);
@@ -114,7 +120,16 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
             <h2>{state.title}</h2>
           )}
           <div onClick={() => (editing ? setEditing(false) : setEditing(true))}>
-            {editing ? <p> Hoàn tất chỉnh sửa <CheckOutlined/></p> : (<p>Chỉnh sửa <EditOutlined /></p>)}
+            {editing ? (
+              <p>
+                {" "}
+                Hoàn tất chỉnh sửa <CheckOutlined />
+              </p>
+            ) : (
+              <p>
+                Chỉnh sửa <EditOutlined />
+              </p>
+            )}
           </div>
         </div>
         <h4>Mới đăng</h4>
@@ -207,24 +222,24 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
                 </LoadingLine>
               )}
             </div>
-            <div>
-              <h3>Địa điểm</h3>
+            {/* <div>
+              <h3>Lĩnh vực</h3>
               {editing ? (
                 <Input
                   required
-                  value={location}
+                  value={discipline}
                   className="form-job"
                   onChange={(event) => {
-                    setLocation(event.target.value);
+                    setDiscipline(event.target.value);
                   }}
                 />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{location}</p>
+                  <p>{discipline}</p>
                 </LoadingLine>
               )}
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <h3>Ngành học liên quan</h3>
               {editing ? (
                 <Input
@@ -240,8 +255,25 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
                   <p>{majors}</p>
                 </LoadingLine>
               )}
-            </div>
+            </div> */}
           </div>
+          <div className="job-desc-single">
+                <h3>Địa điểm</h3>
+                {editing ? (
+                  <Input
+                    required
+                    value={location}
+                    className="form-job"
+                    onChange={(event) => {
+                      setLocation(event.target.value);
+                    }}
+                  />
+                ) : (
+                  <LoadingLine loading={jobQuery.isLoading}>
+                    <p>{location}</p>
+                  </LoadingLine>
+                )}
+            </div>
         </div>
         <div>
           <h2>Quyền lợi</h2>
@@ -328,7 +360,7 @@ export const JobDescription: React.FC<JSXComponent> = ({ onClick, onBack }) => {
               requirements,
               benefits,
               location,
-              required_majors: majors,
+              // required_majors: majors,
               required_experience: exp,
               howTo,
               description: jd,

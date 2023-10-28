@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { DatePicker, Form, Input, Select } from "antd";
+import { DatePicker, Form, Input, Select, SelectProps } from "antd";
 import {
   setCompany,
   setTitle,
@@ -9,7 +9,7 @@ import {
   setDeadline,
 } from "@redux/actions";
 import moment from "moment";
-import locale from 'antd/es/date-picker/locale/vi_VN';
+import locale from "antd/es/date-picker/locale/vi_VN";
 
 interface IForm {
   onSubmit: () => void;
@@ -57,12 +57,34 @@ export const JobPostForm: React.FC<IForm> = ({
     event.preventDefault();
   };
 
+  const options: SelectProps["options"] = [];
+
+  for (let i = 10; i < 36; i++) {
+    options.push({
+      label: i.toString(36) + i,
+      value: i.toString(36) + i,
+    });
+  }
+
+  const handleChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" className="form-input full-width">
           <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
+        {/* <Form.Item label="Ngành">
+          <Select
+            mode="multiple"
+            style={{ width: "100%" }}
+            placeholder="Chọn ngành"
+            onChange={handleChange}
+            options={options}
+          />
+        </Form.Item> */}
         {/* <Form.Item label="Công ty" className="form-input">
           <Select
             className="form-select"

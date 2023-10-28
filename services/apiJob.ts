@@ -15,11 +15,10 @@ export const generateJobDescription = async (inputDescription: any) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
-    những trường sau đây: salary (type string), level (intern, newgrad, experienced), 
-    requirements (string), benefits (string), location (string), 
-    type (Full-time, Part-time), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển)
+    những trường sau đây: salary (tiếng việt), level (internship/newgrad/experienced), 
+    requirements (tiếng việt), benefits (tiếng việt), location (tiếng việt), 
+    job_type (fulltime/parttime/contract), discipline (tiếng việt), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển)
     Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
-    Tất cả thông tin đều là tiếng việt.
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
   `;
