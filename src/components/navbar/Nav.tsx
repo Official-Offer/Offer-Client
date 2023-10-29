@@ -2,6 +2,8 @@ import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
   LockOutlined,
+  PlusOutlined,
+  SnippetsOutlined,
   TeamOutlined,
   UnlockOutlined,
   UploadOutlined,
@@ -18,6 +20,7 @@ import { deleteCookie, removeCookies } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
+import { IconButton } from "@styles/styled-components/styledButton";
 
 const { Sider } = Layout;
 
@@ -40,10 +43,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
       deleteCookie("cookieToken");
       deleteCookie("role");
       deleteCookie("id");
-      
-      localStorage.removeItem("cookieToken");
-      localStorage.removeItem("id");
-      localStorage.removeItem("role");
+
+      // localStorage.removeItem("cookieToken");
+      // localStorage.removeItem("id");
+      // localStorage.removeItem("role");
 
       router.push("/login").then(() => {
         router.reload();
@@ -56,25 +59,26 @@ export const Nav: React.FC = (props: any): ReactElement => {
   });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    // "Trang chủ",
+    // "Đăng tuyển",
     "Công việc",
-    isRecruiter ? "Ứng Viên" : "Học sinh",
+    // isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",
     "Đăng xuất",
   ];
   const path = [
-    // "",
+    // "/postJobs",
     "/jobs",
-    isRecruiter ? "/applicants" : "/students",
+    // isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
     "/profile",
     "/logout",
   ];
   const items: MenuProps["items"] = [
-    BarChartOutlined,
+    // BarChartOutlined,
+    SnippetsOutlined,
     TeamOutlined,
-    UploadOutlined,
+    // UploadOutlined,
     UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
@@ -82,7 +86,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index == 4) {
+      if (index == 3) {
         if (status == "authenticated") {
           signOut().then(() => {
             router.push("/login");
@@ -91,31 +95,35 @@ export const Nav: React.FC = (props: any): ReactElement => {
           //sign out traditional way
           mutation.mutate();
         }
-      } else if (!(index == 0 && role == "advisor")) {
+      } else {
         router.push(`/${role}${path[index]}`);
       }
+
+      // else if (!(index == 0 && role == "advisor")) {
+      //   router.push(`/${role}${path[index]}`);
+      // }
     },
-    children:
-      index == 0 && role == "advisor"
-        ? [
-            {
-              label: "Chưa duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/${role}${path[index]}/unapproved`);
-              },
-              key: `/${role}${path[index]}/unapproved`,
-            },
-            {
-              label: "Đã duyệt",
-              icon: React.createElement(icon),
-              onClick: (e) => {
-                router.push(`/${role}${path[index]}/approved`);
-              },
-              key: `/${role}${path[index]}/approved`,
-            },
-          ]
-        : undefined,
+    // children:
+    //   index == 0 && role == "advisor"
+    //     ? [
+    //         {
+    //           label: "Chưa duyệt",
+    //           icon: React.createElement(icon),
+    //           onClick: (e) => {
+    //             router.push(`/${role}${path[index]}/unapproved`);
+    //           },
+    //           key: `/${role}${path[index]}/unapproved`,
+    //         },
+    //         {
+    //           label: "Đã duyệt",
+    //           icon: React.createElement(icon),
+    //           onClick: (e) => {
+    //             router.push(`/${role}${path[index]}/approved`);
+    //           },
+    //           key: `/${role}${path[index]}/approved`,
+    //         },
+    //       ]
+    //     : undefined,
   }));
 
   console.log(router.pathname);
@@ -137,9 +145,25 @@ export const Nav: React.FC = (props: any): ReactElement => {
             <div className="navbar-sider-logo">
               <Image src="/images/logo.png" width={40} height={40} alt="logo"/>
             </div>
+            <IconButton
+              round
+              className="table-add-btn"
+              backgroundColor={"#D30B81"}
+              style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
+              onClick={() => {
+                router.push(`/${role}/postJobs/jobForm`);
+              }}
+            >
+              <div className="table-add-btn-body">
+                <span>Tạo công việc</span>
+                <span>
+                  <PlusOutlined />
+                </span>
+              </div>
+            </IconButton>
             <Menu
               defaultSelectedKeys={[`/${role}`]}
-              defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
+              // defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}
               selectedKeys={[router.pathname]}
               mode="inline"
               inlineCollapsed={collapsed}

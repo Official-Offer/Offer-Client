@@ -26,19 +26,20 @@ export const updateEducation = async (body: any) => {
 
 
 export const getSchoolsForRecruiter = async (id: number) => {
-  // const response = (await request.get(`/schools/`)).data;
-  const schools = [
-    { name: "Bach Khoa", desc: "trường đại học kỹ thuật" },
-    { name: "Ngoai Thuong", desc: "trường đại học kỹ thuật" },
-    { name: "Kinh Te Quoc Dan", desc: "trường đại học kỹ thuật" },
-    { name: "UMass", desc: "trường đại học kỹ thuật" },
-    { name: "HSGS", desc: "trường đại học kỹ thuật" },
-  ];
-  return schools.map((school)=>({
+  const schools = (await request.get(`/schools/`)).data;
+  console.log(schools)
+  // const schools = [
+  //   { name: "Bach Khoa", desc: "trường đại học kỹ thuật" },
+  //   { name: "Ngoai Thuong", desc: "trường đại học kỹ thuật" },
+  //   { name: "Kinh Te Quoc Dan", desc: "trường đại học kỹ thuật" },
+  //   { name: "UMass", desc: "trường đại học kỹ thuật" },
+  //   { name: "HSGS", desc: "trường đại học kỹ thuật" },
+  // ];
+  return schools.map((school: any)=>({
     key: "1",
     ID: "1",
     name: school.name,
-    description: school.desc,
+    description: school.description,
     advisors: 200,
     no_students: 10000,
     students_applicants: 2000,
