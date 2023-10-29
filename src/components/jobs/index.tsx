@@ -371,11 +371,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack 
               job_type: type,
               // type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
               // work_type,
-              salary,
+              lower_salary: salary,
               // address: {
               //   city: state.address[0],
               // },
-              upper_salary: state.upperSalary,
+              upper_salary: upperSalary,
               description: jd,
               benefits,
               company: state.companyId,
