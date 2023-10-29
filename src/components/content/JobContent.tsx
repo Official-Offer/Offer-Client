@@ -93,12 +93,15 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           >
             Ứng tuyển
           </Button>
-          {/* <Button
-            className="inbox"
-            icon={<SendOutlined />}
-          >
-            Nhắn tin
-          </Button> */}
+          {
+            isMinimized && (
+              <Link href={`/student/jobs${jobData?.pk ? `?id=${jobData.pk}` : ""}`}>
+                <Button className="inbox">
+                  Chi Tiết
+                </Button>
+              </Link>
+            )
+          }
           {jobData && (
             <BookmarkButton
               className="job-portal-list-card-bookmark"
