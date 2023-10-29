@@ -39,10 +39,18 @@
     font-weight: $fw-bold-1;
   }
 
-  .ant-card-body {
-    display: flex;
-    flex-direction: column;
-    padding: 16px 24px;
+  .ant-card {
+    &-body {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 24px;
+    }
+    &-meta-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   .date-posted {

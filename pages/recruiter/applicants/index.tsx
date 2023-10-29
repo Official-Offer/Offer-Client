@@ -3,8 +3,9 @@ import { BaseTable } from "@components/table/BaseTable";
 import { ApplicantColumns, JobColumns, RecruiterCompanyColumns } from "@components/table/columnType";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { getApplicantsForRecruiter, getRecruitersForCompany } from "@services/apiRecruiter";
+import { getApplicantsForJob, getRecruitersForCompany } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";
+import { formatFullName } from "@utils/formatters/stringFormat";
 
 const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -13,12 +14,11 @@ const Applicants: NextPage = () => {
 
   const applicantQuery = useQuery({
     queryKey: ["applicants"],
-    queryFn: getApplicantsForRecruiter,
-    onSuccess: async (recruiters) => {
-      setData(recruiters);
-      setDataSet(recruiters);
-
-      setSearchResults(recruiters.map(recruiter=>recruiter.name));
+    queryFn: getApplicantsForJob,
+    onSuccess: async (applicants: ApplicantDataType[]) => {
+      setData(applicants);
+      setDataSet(applicants);
+      setSearchResults(applicants.map(applicant => formatFullName(applicant.student.account)));
     },
     onError: () => {},
   });
@@ -29,7 +29,7 @@ const Applicants: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(item =>
-      item.name?.toLowerCase().includes(value.toLowerCase())
+      value.toLowerCase() === formatFullName(item.student.account).toLowerCase()
     );
     setData(filteredData);
   };
