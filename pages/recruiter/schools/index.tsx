@@ -22,7 +22,7 @@ const Schools: NextPage = () => {
       console.log(schools);
       setData(schools);
       setDataSet(schools);
-      setSearchResults(schools.map((school) => school.name));
+      setSearchResults(schools.map((school: any) => school.name));
     },
     onError: () => {},
   });
