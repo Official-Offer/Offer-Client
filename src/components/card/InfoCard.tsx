@@ -85,7 +85,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
         centered
         onCancel={() => setOpenModal(false)}
         footer={null}
-        className="layout-largescreen"
       >
         <JobContent jobData={info} isMinimized />
       </Modal>
