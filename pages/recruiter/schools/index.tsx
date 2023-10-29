@@ -58,6 +58,7 @@ const Schools: NextPage = () => {
   return (
     <div className="recruiter-schools">
       <h2>Trường</h2>
+      
       <div className="recruiter-schools-search">
         <FilterSearch
           placeholder={"Tìm trường"}
