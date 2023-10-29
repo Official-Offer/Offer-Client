@@ -145,8 +145,13 @@ export const getJobsForRecruiter = async () => {
   return res;
 };
 
-export const getRecruiterJobs = async () => {
-  const response = await request.get(`/jobs/`);
+export const getAdvisorJobs = async () => {
+  const advisor = parseInt(getCookie('id') as string);
+  const response = await request.get(`/jobs/`, {
+    params: {
+      created_by: advisor,
+    },
+  });
   const jobs = response.data.message;
   console.log(response.data.message);
   const res = jobs.map((job: any) => ({
@@ -161,6 +166,7 @@ export const getRecruiterJobs = async () => {
   }));
   return res;
 };
+
 export const getApprovedJobs = async () => {
   // const response = await request.get(`/jobs/`);
   // const jobList = response.data;

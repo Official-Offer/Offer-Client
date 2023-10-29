@@ -59,7 +59,7 @@ export const getRecruitersForCompany = async () => {
   return res;
 };
 
-export const getApplicantsForRecruiter = async (id: any) => {
+export const getApplicantsForJob = async (id: any) => {
   const response = await request.get(`/jobs/${id}/applications/`);
   const applicantList = response.data.message;
 

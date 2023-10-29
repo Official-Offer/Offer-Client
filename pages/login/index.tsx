@@ -42,7 +42,7 @@ const Login: NextPage = () => {
             data.role == "student"
               ? "/student"
               : data.role == "advisor"
-              ? "/advisor/jobs/unapproved"
+              ? "/advisor/jobs"
               : "/recruiter/jobs",
         })
         .then(() => {

@@ -8,7 +8,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
-    getApplicantsForJob,
+  getApplicantsForJob,
   getRecruitersForCompany,
 } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";
@@ -28,10 +28,10 @@ const Applicants: NextPage = () => {
     {
       onSuccess: async (applicants) => {
         console.log(applicants);
-          setData(applicants);
-          setDataSet(applicants);
+        //   setData(recruiters);
+        //   setDataSet(recruiters);
 
-          setSearchResults(applicants.map((applicant: { name: any; })=>applicant.name));
+        //   setSearchResults(recruiters.map(recruiter=>recruiter.name));
       },
       onError: () => {},
     }

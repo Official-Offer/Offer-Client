@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { useQuery } from "@tanstack/react-query";
-import { getApprovedJobs, getRecruiterJobs, getUnapprovedJobs } from "@services/apiJob";
+import { getAdvisorJobs, getApprovedJobs, getUnapprovedJobs } from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";
 import { ApprovedJobDataType, RecruiterJobDataType } from "@components/table/dataType";
@@ -15,13 +15,13 @@ const Jobs: NextPage = () => {
   // DataType[]
   const jobQuery = useQuery({
     queryKey: ["jobs", searchChange],
-    queryFn: getRecruiterJobs,
+    queryFn: getAdvisorJobs,
     onSuccess: async (jobs) => {
       console.log(jobs);
       setData(jobs);
       setDataSet(jobs);
 
-      setSearchResults(jobs.map((job) => job.title));
+      setSearchResults(jobs.map((job: { title: any; }) => job.title));
     },
     onError: () => {},
   });

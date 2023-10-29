@@ -102,8 +102,11 @@ export const BaseTable: React.FC<BaseTableProps> = ({
               if (
                 tableType === "RecruiterJobs" ||
                 tableType === "AdvisorJobs"
-              )
-                router.push(`/recruiter/applicants/${record.key.pk}`);
+              ) {
+                const role =
+                  tableType === "RecruiterJobs" ? "recruiter" : "advisor";
+                router.push(`/${role}/applicants/${record.key.pk}`);
+              }
             }, // click row
           };
         }}

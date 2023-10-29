@@ -95,7 +95,7 @@ const Registration: NextPage = () => {
       const route = r.isStudent
         ? "/student"
         : r.isAdvisor
-        ? "/advisor/jobs/unapproved"
+        ? "/advisor/jobs"
         : "/recruiter/jobs";
       router.replace(route).then(() => {
         router.reload();
