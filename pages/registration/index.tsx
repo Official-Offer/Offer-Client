@@ -194,9 +194,7 @@ const Registration: NextPage = () => {
               {selectRole && (
                 <Segmented
                   options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
-                  onResize={undefined}
                   size={"large"}
-                  onResizeCapture={undefined}
                   onChange={(value) => {
                     setRol(value.toString());
                     const role = {

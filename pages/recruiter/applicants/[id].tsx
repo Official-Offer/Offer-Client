@@ -13,6 +13,7 @@ import {
 } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";
 import { useRouter } from "next/router";
+import { formatFullName } from "@utils/formatters/stringFormat";
 
 const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -22,28 +23,24 @@ const Applicants: NextPage = () => {
   // make id an integer instead of string
   const id = parseInt(router.query.id as string);
 
-  const applicantQuery = useQuery(
-    ["applicants"],
-    () => getApplicantsForJob(id),
-    {
-      onSuccess: async (applicants) => {
-        console.log(applicants);
-          setData(applicants);
-          setDataSet(applicants);
-
-          setSearchResults(applicants.map((applicant: { name: any; })=>applicant.name));
-      },
-      onError: () => {},
-    }
-  );
+  const applicantQuery = useQuery({
+    queryKey: ["applicants"],
+    queryFn: getApplicantsForJob,
+    onSuccess: async (applicants: ApplicantDataType[]) => {
+      setData(applicants);
+      setDataSet(applicants);
+      setSearchResults(applicants.map(applicant => formatFullName(applicant.student.account)));
+    },
+    onError: () => {},
+  });
 
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter((item) =>
-      item.name?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(item =>
+      value.toLowerCase() === formatFullName(item.student.account).toLowerCase()
     );
     setData(filteredData);
   };

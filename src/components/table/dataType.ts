@@ -1,3 +1,5 @@
+import { User, Job, Student } from "src/types/dataTypes";
+
 export interface JobDataType {
   // key: string | null;
   // ID: string | null;
@@ -48,15 +50,17 @@ export interface ApprovedJobDataType {
 }
 
 export interface ApplicantDataType {
-  key: string | null;
-  // ID: string | null;
-  applied_at: string | null;
-  name: string | null;
-  school: string | null;
-  job: string | null;
-  resume: string | null;
-  // compatibility: string | null; //percentage
-  // tag: string | null; //Chua nop / Pending / Da nhan
+  id: number;
+  job: Job;
+  student: Student;
+  is_submitted: boolean;
+  created_at: string;  // Assuming ISO format date-time string
+  updated_at: string;  // Assuming ISO format date-time string
+  time_opened: string; // Assuming ISO format date-time string
+  time_submitted?: string | null; // Assuming ISO format date-time string
+  resume?: string | null;        // URL to the resume
+  cover_letter?: string | null;  // URL to the cover letter
+  questionnaire_answer?: number | null;
 }
 
 export interface StudentDataType {

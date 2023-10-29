@@ -8,17 +8,18 @@ import { SchoolDataType } from "@components/table/dataType";
 import { Avatar, Card } from "antd";
 import { FilterSearch } from "@components/search/FilterSearch";
 import { AntDesignOutlined } from "@ant-design/icons";
+import type { School } from "src/types/dataTypes";
 
 // SchoolDataType
 //create a next page for the student home page, code below
 const Schools: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
-  const [data, setData] = useState<SchoolDataType[]>([]);
-  const [dataset, setDataSet] = useState<SchoolDataType[]>([]);
+  const [data, setData] = useState<School[]>([]);
+  const [dataset, setDataSet] = useState<School[]>([]);
   const schoolQuery = useQuery({
     queryKey: ["schools"],
     queryFn: () => getSchoolsForRecruiter(0),
-    onSuccess: async (schools) => {
+    onSuccess: async (schools: School[]) => {
       console.log(schools);
       setData(schools);
       setDataSet(schools);
