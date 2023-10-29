@@ -11,6 +11,16 @@ export interface JobDataType {
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
+
+export interface RecruiterJobDataType {
+  posted_date: string | null;
+  title: string | null;
+  company: string | null;
+  recruiter: string | null;
+  applicants: number | 0;
+  verified: boolean | null;
+} 
+
 export interface UnapprovedJobDataType {
   // key: string | null;
   // ID: string | null;
@@ -38,13 +48,14 @@ export interface ApprovedJobDataType {
 }
 
 export interface ApplicantDataType {
-  // key: string | null;
+  key: string | null;
   // ID: string | null;
+  applied_at: string | null;
   name: string | null;
   school: string | null;
   job: string | null;
   resume: string | null;
-  compatibility: string | null; //percentage
+  // compatibility: string | null; //percentage
   // tag: string | null; //Chua nop / Pending / Da nhan
 }
 

@@ -1,27 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { generateJobDescription } from "@services/apiJob";
+import { generateJobDescription, postJob } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { EditOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
+import {
+  BackwardOutlined,
+  CheckOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import { Skeleton } from "antd";
+import { DatePicker, Input, Skeleton, Slider } from "antd";
+import moment from "moment";
+import { SliderMarks } from "antd/lib/slider";
+import { setJobId } from "@redux/actions";
+// import locale from "antd/es/date-picker/locale/vi_VN";
 
 interface JobDescriptionProps {
   onClick: () => void;
+  onBack: () => void;
 }
 
-export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
+export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack }) => {
   const state = useSelector((state: RootState) => state.jobs);
-  const [salary, setSalary] = useState<string>("");
-  const [level, setLevel] = useState<string>("");
+  const accountState = useSelector((state: RootState) => state.account);
+  // console.log(state.deadline);
+  const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
+  // const [company, setCompany] = useState<string>(state.company || "");
+  const [salary, setSalary] = useState<number>(state.salary);
+  const [upperSalary, setUpperSalary] = useState<number>(state.upperSalary);
+  const [level, setLevel] = useState<string>(state.level || "");
   const [requirements, setReq] = useState<string>("");
   const [benefits, setBenefits] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [type, setType] = useState<string>(state.type || "");
+  const [location, setLocation] = useState<string>(state.address || "");
+  const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
+  const [majors, setMajors] = useState<string>(state.major || "");
+  // const [discipline, setDiscipline] = useState<string>("");
   const [exp, setExp] = useState<string>("");
   const [editing, setEditing] = useState<boolean>(false);
+  // const [howTo, setHowTo] = useState<string>("");
   const [jd, setJd] = useState<string>(
     state.description ||
       `[HCM] Cơ hội trở thành "teammate" với Con Cưng cho sinh viên năm 3!!!
@@ -43,71 +61,155 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
   Nhanh tay gửi CV về: careers@concung.com hoặc inbox mình để trao đổi thêm nhé!!!`
   );
 
+  const marks: SliderMarks = {
+    0: "0",
+    100: "100",
+  };
+
+  const dispatch = useDispatch();
+
   const jobQuery = useQuery(
-    ["job description"],
-    () => generateJobDescription(jd),
+    ["job-description"],
+    () => generateJobDescription(title+jd),
     {
-      onSuccess: (job: string) => {
-        const jobDesc = JSON.parse(job);
-        setSalary(jobDesc.salary);
-        setLevel(jobDesc.level);
-        setReq(jobDesc.requirements);
-        setBenefits(jobDesc.benefits);
-        setType(jobDesc.type);
-        setLocation(jobDesc.location);
-        setExp(jobDesc.requiredExperience);
-      },
-      onError: (error: unknown) => console.log(`Error: ${error}`),
-    }
-  );
+    onSuccess: async (job) => {
+      const jobDesc = JSON.parse(job);
+      // setSalary(jobDesc.salary);
+      // setLevel(jobDesc.level);
+      setReq(jobDesc.requirements);
+      setBenefits(jobDesc.benefits);
+      // setDiscipline(jobDesc.discipline);
+      // setMajors(jobDesc.majors);
+      // setDeadline(jobDesc.deadline);
+      setType(jobDesc.type);
+      setLocation(jobDesc.location);
+      setExp(jobDesc.requiredExperience);
+      // setHowTo(jobDesc.howTo);
+    },
+    onError: () => {},
+});
+
+  const postJobQuery = useMutation({
+    mutationKey: ["post-job"],
+    mutationFn: postJob,
+    onSuccess: async (data) => {
+      console.log(data);
+      dispatch(setJobId(data.id));
+      onClick();
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+    },
+  });
 
   return (
     <div className="job-desc">
+      <p
+        style={{
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          onBack();
+          // setScreen(false);
+        }}
+      >
+        <BackwardOutlined /> Quay lại
+      </p>
       <div className="job-desc-nav">
         <h1>Xem trước</h1>
       </div>
       <div className="job-desc-content">
         <div className="job-desc-heading">
-          <h2>
-            {state.title || `Thực tập sinh Kỹ sư Phần Mềm chi nhánh TP.HCM`}
-          </h2>
-          <p onClick={() => (editing ? setEditing(false) : setEditing(true))}>
-            Chỉnh sửa <EditOutlined />
-          </p>
+          {editing ? (
+            <Input
+              required
+              value={title}
+              className="form-job"
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+            />
+          ) : jobQuery.isLoading ? (
+            <h2>
+              Hãy kiên nhẫn một chút, OfferAI đang tạo JD tối ưu cho bạn...
+            </h2>
+          ) : (
+            <h2>{state.title}</h2>
+          )}
+          <div onClick={() => (editing ? setEditing(false) : setEditing(true))}>
+            {editing ? (
+              <p>
+                {" "}
+                Hoàn tất chỉnh sửa <CheckOutlined />
+              </p>
+            ) : (
+              <p>
+                Chỉnh sửa <EditOutlined />
+              </p>
+            )}
+          </div>
         </div>
-        <h4>Đăng vào 2 ngày trước</h4>
+        <h4>Mới đăng</h4>
         <p>{state.company || `Samsung`}</p>
+        <div>
+          {editing ? (
+            <div style={{ marginBottom: "10px" }}>
+              <p>Hạn nộp</p>
+              <DatePicker
+                // locale={locale}
+                onChange={(value) => {
+                  if (value) {
+                    setDeadline(value.toDate());
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <LoadingLine loading={jobQuery.isLoading}>
+              <p>Hạn nộp: {moment(deadline).format("DD-MM-YYYY")}</p>
+            </LoadingLine>
+          )}
+        </div>
         <SubmitButton text={"Nộp đơn"} />
         <div className="job-desc-pink">
           <div className="job-desc-grid">
             <div>
               <h3>Luơng</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
-                  value={salary}
-                  onChange={(event) => {
-                    setSalary(event.target.value);
+                // <Input
+                //   required
+                //   value={salary}
+                //   className="form-job"
+                //   onChange={(event) => {
+                //     setSalary(event.target.value);
+                //   }}
+                // />
+                <Slider
+                  range
+                  defaultValue={[0, 100]}
+                  marks={marks}
+                  onAfterChange={(value)=>{
+                    setSalary(value[0]);
+                    setUpperSalary(value[1]);
                   }}
                 />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{salary}</p>
+                  <p>{`${salary} - ${upperSalary} triệu VNĐ/tháng`}</p>
                 </LoadingLine>
               )}
             </div>
             <div>
               <h3>Cấp bậc</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={level}
+                  className="form-job"
                   onChange={(event) => {
                     setLevel(event.target.value);
                   }}
-                ></input>
+                />
               ) : (
                 <LoadingLine loading={jobQuery.isLoading}>
                   <p>{level}</p>
@@ -117,10 +219,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
             <div>
               <h3>Hình thức</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={type}
+                  className="form-job"
                   onChange={(event) => {
                     setType(event.target.value);
                   }}
@@ -132,12 +234,46 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
               )}
             </div>
             <div>
+              <h3>Ngành học liên quan</h3>
+              {editing ? (
+                <Input
+                  required
+                  value={majors}
+                  className="form-job"
+                  onChange={(event) => {
+                    setMajors(event.target.value);
+                  }}
+                />
+              ) : (
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{majors}</p>
+                </LoadingLine>
+              )}
+            </div>
+            <div>
+              <h3>Địa điểm</h3>
+              {editing ? (
+                <Input
+                  required
+                  value={location}
+                  className="form-job"
+                  onChange={(event) => {
+                    setLocation(event.target.value);
+                  }}
+                />
+              ) : (
+                <LoadingLine loading={jobQuery.isLoading}>
+                  <p>{location}</p>
+                </LoadingLine>
+              )}
+            </div>
+            <div>
               <h3>Kinh nghiệm</h3>
               {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
+                <Input
+                  required
                   value={exp}
+                  className="form-job"
                   onChange={(event) => {
                     setExp(event.target.value);
                   }}
@@ -149,33 +285,17 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
               )}
             </div>
           </div>
-          <div className="job-desc-single">
-            <div>
-              <h3>Địa điểm</h3>
-              {editing ? (
-                <input
-                  type="text"
-                  className="job-desc-input"
-                  value={location}
-                  onChange={(event) => {
-                    setLocation(event.target.value);
-                  }}
-                />
-              ) : (
-                <LoadingLine loading={jobQuery.isLoading}>
-                  <p>{location}</p>
-                </LoadingLine>
-              )}
-            </div>
-          </div>
+          {/* <div className="job-desc-single"> */}
+          {/* </div> */}
         </div>
         <div>
           <h2>Quyền lợi</h2>
           {editing ? (
-            <input
-              type="text"
-              className="job-desc-input"
+            <Input.TextArea
+              rows={6}
+              required
               value={benefits}
+              className="form-job-long"
               onChange={(event) => {
                 setBenefits(event.target.value);
               }}
@@ -189,10 +309,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
         <div>
           <h2>Yêu cầu</h2>
           {editing ? (
-            <input
-              type="text"
-              className="job-desc-input"
+            <Input.TextArea
+              rows={6}
+              required
               value={requirements}
+              className="form-job-long"
               onChange={(event) => {
                 setReq(event.target.value);
               }}
@@ -205,17 +326,70 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick }) => {
         </div>
         <div>
           <h2>Mô tả</h2>
-          <Skeleton loading={jobQuery.isLoading} active>
-            <pre>{jd}</pre>
-          </Skeleton>
+          {editing ? (
+            <Input.TextArea
+              rows={6}
+              required
+              value={jd}
+              className="form-job-long"
+              onChange={(event) => {
+                setJd(event.target.value);
+              }}
+            />
+          ) : (
+            <Skeleton loading={jobQuery.isLoading} active>
+              <pre>{jd}</pre>
+            </Skeleton>
+          )}
         </div>
+        {/* <div>
+          <h2>Cách ứng tuyển</h2>
+          {editing ? (
+            <Input.TextArea
+              rows={6}
+              required
+              value={howTo}
+              className="form-job-long"
+              onChange={(event) => {
+                setHowTo(event.target.value);
+              }}
+            />
+          ) : (
+            <Skeleton loading={jobQuery.isLoading} active>
+              <pre>{howTo}</pre>
+            </Skeleton>
+          )}
+        </div> */}
       </div>
       <div className="job-desc-button">
         <SubmitButton
           onClick={() => {
-            onClick();
+            console.log(state.address)
+            postJobQuery.mutate({
+              title: title.slice(0,99),
+              level: level=="Thực tập"? "internship": level=="Nhân viên chính thức" ? "newgrad" : "experienced",
+              job_type: type,
+              // type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
+              // work_type,
+              lower_salary: salary,
+              // address: {
+              //   city: state.address[0],
+              // },
+              upper_salary: upperSalary,
+              description: jd,
+              benefits,
+              company: state.companyId,
+              requirements,
+              location,
+              contact_person: accountState.id,
+              deadline,
+              // required_majors: state.major,
+              // required_experience: exp,
+              // howTo,
+            });
           }}
-          text={"Tiếp tục"}
+          isLoading={postJobQuery.isLoading}
+          text={"Đăng tuyển"}
         />
       </div>
     </div>

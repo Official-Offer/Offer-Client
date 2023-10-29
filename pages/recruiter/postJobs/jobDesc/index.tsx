@@ -9,7 +9,10 @@ const JobDesc: NextPage = (comp) => {
   return (
     <JobDescription
       onClick={() => {
-        router.push("/advisor/postJobs/schoolSelect");
+        router.push("/recruiter/postJobs/schoolSelect");
+      }}
+      onBack={() => {
+        router.push("/recruiter/postJobs/jobForm");
       }}
     />
   );

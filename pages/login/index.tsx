@@ -42,7 +42,7 @@ const Login: NextPage = () => {
             data.role == "student"
               ? "/student"
               : data.role == "advisor"
-              ? "/advisor/jobs/unapproved"
+              ? "/advisor/jobs"
               : "/recruiter/jobs",
         })
         .then(() => {
@@ -101,7 +101,7 @@ const Login: NextPage = () => {
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
-          <SubmitButton text="sign out" onClick={()=>{signOut()}}/>
+          {/* <SubmitButton text="sign out" onClick={()=>{signOut()}}/> */}
           <FootnoteForm embedLogin={true} type={""} />
         </div>
       </div>

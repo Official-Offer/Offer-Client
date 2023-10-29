@@ -9,6 +9,7 @@ import { FilterSearch } from "@components/search/FilterSearch";
 import { IconButton } from "@styles/styled-components/styledButton";
 import { CheckCircleFilled, PlusOutlined } from "@ant-design/icons";
 import { TableRowSelection } from "antd/lib/table/interface";
+import { useRouter } from "next/router";
 
 type BaseTableProps = {
   dataset: any[];
@@ -33,8 +34,9 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   handleVerify,
   placeholder,
   isLoading,
-  tableType
+  tableType,
 }) => {
+  const router = useRouter();
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
   const rowSelection: TableRowSelection<any> = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -45,13 +47,14 @@ export const BaseTable: React.FC<BaseTableProps> = ({
       );
     },
     onSelect: (record, selected, selectedRows) => {
+      // router.push(`/recruiter/applicants/${record.id}`)
       console.log(record, selected, selectedRows);
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
       console.log(selected, selectedRows, changeRows);
     },
   };
-  
+
   return (
     <div>
       <div className="table-functions">
@@ -92,7 +95,21 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         )}
       </div>
       <Table
-        rowSelection={handleVerify && rowSelection }
+        rowSelection={handleVerify && rowSelection}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              if (
+                tableType === "RecruiterJobs" ||
+                tableType === "AdvisorJobs"
+              ) {
+                const role =
+                  tableType === "RecruiterJobs" ? "recruiter" : "advisor";
+                router.push(`/${role}/applicants/${record.key.pk}`);
+              }
+            }, // click row
+          };
+        }}
         columns={columns}
         dataSource={dataset}
         loading={isLoading}
