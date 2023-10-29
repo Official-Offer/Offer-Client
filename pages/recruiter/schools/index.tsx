@@ -23,7 +23,7 @@ const Schools: NextPage = () => {
       console.log(schools);
       setData(schools);
       setDataSet(schools);
-      setSearchResults(schools.map((school) => school.name));
+      setSearchResults(schools.map((school: any) => school.name));
     },
     onError: () => {},
   });
@@ -59,6 +59,7 @@ const Schools: NextPage = () => {
   return (
     <div className="recruiter-schools">
       <h2>Trường</h2>
+      
       <div className="recruiter-schools-search">
         <FilterSearch
           placeholder={"Tìm trường"}
