@@ -55,7 +55,7 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleVerify={handleVerifyJob}
         //   handleAdd={handleAddJob}
-          tableType={"approvedJob"}
+          tableType={"AdvisorJobs"}
           isLoading={jobQuery.isLoading}
         />
       </div>

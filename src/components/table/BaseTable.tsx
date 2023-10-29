@@ -34,7 +34,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   handleVerify,
   placeholder,
   isLoading,
-  tableType
+  tableType,
 }) => {
   const router = useRouter();
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
@@ -54,7 +54,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
       console.log(selected, selectedRows, changeRows);
     },
   };
-  
+
   return (
     <div>
       <div className="table-functions">
@@ -95,7 +95,18 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         )}
       </div>
       <Table
-        rowSelection={handleVerify && rowSelection }
+        rowSelection={handleVerify && rowSelection}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              if (
+                tableType === "RecruiterJobs" ||
+                tableType === "AdvisorJobs"
+              )
+                router.push(`/recruiter/applicants/${record.key.pk}`);
+            }, // click row
+          };
+        }}
         columns={columns}
         dataSource={dataset}
         loading={isLoading}

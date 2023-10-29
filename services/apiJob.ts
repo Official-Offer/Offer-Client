@@ -3,6 +3,8 @@ import { getCompany } from "./apiCompany";
 // import { URL_API_ADMIN, TOKEN_BEARER } from "config/index";
 import { OpenAI } from "langchain/llms/openai";
 import { formatDate } from "@utils/formatters/numberFormat";
+import { getCookie } from "cookies-next";
+import parse from 'html-react-parser';
 
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
@@ -73,7 +75,12 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
-  const response = await request.get(`/jobs/`);
+  const recruiter = parseInt(getCookie('id') as string);
+  const response = await request.get(`/jobs/`, {
+    params: {
+      created_by: recruiter,
+    },
+  });
   console.log(response.data.message);
 
   const jobs = response.data.message || [
