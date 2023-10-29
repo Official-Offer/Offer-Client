@@ -1,5 +1,5 @@
 module.exports = {
-  URL_API_ADMIN: "http://offer-v2-f60717006b8c.herokuapp.com/api",
+  URL_API_ADMIN: "https://offer-v2-f60717006b8c.herokuapp.com/api",
   //  "http://official-offer.herokuapp.com/api",
   TOKEN_BEARER: "",
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: "711443174018-r577ahjedp8n1g688qlmritcnptak50g.apps.googleusercontent.com",
