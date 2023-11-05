@@ -63,7 +63,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "Công việc",
     // isRecruiter ? "Ứng Viên" : "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    "Tài khoản",
+    // "Tài khoản",
     "Đăng xuất",
   ];
   const path = [
@@ -71,7 +71,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "/jobs",
     // isRecruiter ? "/applicants" : "/students",
     isRecruiter ? "/schools" : "/companies",
-    "/profile",
+    // "/profile",
     "/logout",
   ];
   const items: MenuProps["items"] = [
@@ -79,7 +79,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     SnippetsOutlined,
     TeamOutlined,
     // UploadOutlined,
-    UserOutlined,
+    // UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,

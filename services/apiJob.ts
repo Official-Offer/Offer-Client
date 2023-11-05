@@ -17,7 +17,7 @@ export const generateJobDescription = async (inputDescription: string) => {
   const prompt = `
     Lấy những thông tin sau và trả kết quả ở dạng JSON với 
     những trường sau đây: location (string), requirements (string), benefits (string), type(choose among "fulltime", "parttime", "contract"), requiredExperience (Ít hơn 1 năm, 1-3 năm, Hơn 3 năm). 
-    Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON.
+    Hãy chỉnh sữa format chữ sao cho chữ đầu luôn được viết hoa và tất cả chữ khác được viết đúng tiêu chuẩn cho tất cả các trường trong JSON. Tất cả string được giữ nguyên format. (không bỏ dấu cách)
     Đoạn thông tin cần được chỉnh sửa được đặt ở sau đây: 
     ${inputDescription}
   `;
