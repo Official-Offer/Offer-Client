@@ -21,10 +21,6 @@
       // margin-left: 150px;
     }
   }
-
-  // &-applicant {
-  /* row data */
-  // }
 }
 
 .ant-table-content {
@@ -38,13 +34,11 @@
 }
 .ant-table-content {
   cursor: pointer;
-
   //   border-radius: 50%;
   //   background-color: aquamarine;
 }
 .ant-table {
   cursor: pointer;
-
   // border-radius: 50%;
   border-radius: 15px !important;
 }
@@ -61,7 +55,6 @@
 //   }
 .ant-table-thead > tr > th {
   cursor: pointer;
-
   position: relative;
   border-radius: 15px !important;
   color: black(0, 0, 0, 0.85);
