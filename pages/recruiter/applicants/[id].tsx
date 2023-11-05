@@ -43,7 +43,7 @@ const Applicants: NextPage = () => {
         }));
         setData(apps);
         setDataSet(apps);
-        setJobTitle(applicants[0].job.title);
+        setJobTitle(applicants[0]?.job?.title || " ");
         setSearchResults(
           applicants.map(
             (applicant: any) => applicant.student.account.firstName
