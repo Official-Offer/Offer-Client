@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             routeSelected: "/student/companies",
           },
           {
-            name: "Đăng tin tuyển dụng",
+            name: "Liên hệ",
             link: "/student/contact",
             newTab: false,
             routeSelected: "/student/contact",

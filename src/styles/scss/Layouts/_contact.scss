@@ -1,0 +1,44 @@
+.contact {
+  display: flex;
+  margin-top: 20px;
+  &-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    font-size: 45px;
+  }
+  &-content {
+    flex: 2;
+    display: flex;
+    align-items: center; /* center vertically */
+    justify-content: center; /* center horizontally */
+    &-error {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #b91c1c;
+      font-size: 12px;
+      padding: 5px;
+
+      &.small {
+        font-size: 12px;
+        padding: 5px;
+      }
+
+      &.large {
+        font-size: 24px;
+        padding: 20px;
+      }
+    }
+    &-form {
+      h1 {
+        text-align: center;
+      }
+      &-pincode {
+        text-align: center;
+      }
+    }
+  }
+}
