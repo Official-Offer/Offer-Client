@@ -80,7 +80,8 @@ const Registration: NextPage = () => {
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      setErrorMessage(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      setErrorMessage("Email đã tồn tại.");
     },
   });
   const mutationOrg = useMutation({
@@ -103,7 +104,7 @@ const Registration: NextPage = () => {
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
-      setErrorMessage(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
     },
   });
   if (status === "loading") return <h1> Đang tải ... </h1>;
@@ -146,6 +147,7 @@ const Registration: NextPage = () => {
               </Form>
               <AuthForm
                 onSubmit={(item: { email: any; password: any }) => {
+                  setErrorMessage("");
                   // setPassword(item.password);
                   // setEmail(item.email);
                   // setScreen(false);
@@ -210,7 +212,9 @@ const Registration: NextPage = () => {
             </>
           )}
           {errorMessage && (
-            <p className="register-content-error">{errorMessage}</p>
+            <>
+              <p className="register-content-error">{errorMessage}</p>
+            </>
           )}
           <FootnoteForm type={""} />
         </div>

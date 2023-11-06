@@ -41,8 +41,18 @@ export const updateUser = async (body: any) => {
   return response.data;
 }
 
+export const forgetPassword = async (body: any) => {
+  const response = await request.post(`/accounts/forgot_password/`, body);
+  return response.data;
+}
+
+export const resetPassword = async (body: any) => {
+  const response = await request.put(`/accounts/reset_password/`, body);
+  return response.data;
+}
+
 export const changePassword = async (body: Record<string, string> | void) => {
-  const response = await request.put(`/accounts/change-password/`, body);
+  const response = await request.put(`/accounts/change_password/`, body);
   return response.data;
 }
 

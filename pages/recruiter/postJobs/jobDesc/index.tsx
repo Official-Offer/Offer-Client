@@ -12,7 +12,8 @@ const JobDesc: NextPage = (comp) => {
         router.push("/recruiter/postJobs/schoolSelect");
       }}
       onBack={() => {
-        router.push("/recruiter/postJobs/jobForm");
+        router.back();
+        // router.push("/recruiter/postJobs/jobForm");
       }}
     />
   );

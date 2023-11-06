@@ -326,12 +326,13 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     title: "CV",
     dataIndex: "resume",
     key: "resume",
+    render: (src) => <a href={src}>CV</a>
   },
-  {
-    title: "Độ phù hợp",
-    dataIndex: "compatibility",
-    key: "compatibility",
-  },
+  // {
+  //   title: "Độ phù hợp",
+  //   dataIndex: "compatibility",
+  //   key: "compatibility",
+  // },
   // {
   //   title: "Giai đoạn",
   //   key: "tags",

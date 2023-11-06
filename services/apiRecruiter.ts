@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from "cookies-next";
 import request from "./apiService";
+import { formatDate } from "@utils/formatters/numberFormat";
 
 export const registerRecruiter = async (body: any) => {
   const response = await request.post(`/recruiters/register/`, body);
@@ -60,8 +61,10 @@ export const getRecruitersForCompany = async () => {
 };
 
 export const getApplicantsForJob = async (id: any) => {
+  console.log(id);
   const response = await request.get(`/jobs/${id}/applications/`);
   const applicantList = response.data.message;
+  console.log(applicantList);
 
   const applicants = [
     {
@@ -94,13 +97,5 @@ export const getApplicantsForJob = async (id: any) => {
   //   compatibility: app.compatibility,
   // }));
   console.log(applicantList);
-  return applicantList.map((app: any) => ({
-    key: app.id,
-    applied_at: app.created_at,
-    name: app.student,
-    school: app.student.school,
-    job: app.job.title,
-    resume: app.resume,
-    // compatibility: app.compatibility,
-  }));
+  return applicantList;
 };
