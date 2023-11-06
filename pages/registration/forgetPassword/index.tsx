@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useState } from "react";
+import { forgetPassword } from "@services/apiUser";
 //create a next page for the student home page, code below
 const ForgetPassword: NextPage = () => {
   const router = useRouter();
@@ -13,9 +14,11 @@ const ForgetPassword: NextPage = () => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
-    mutationFn: async () => {},
+    mutationFn: forgetPassword,
     onSuccess: async (data: any) => {
+      console.log("email have been sent");
       queryClient.invalidateQueries({ queryKey: ["register"] });
+      setSubmitted(true);
     },
     onError: (error: any) => {
       queryClient.invalidateQueries({ queryKey: ["register"] });
@@ -32,11 +35,10 @@ const ForgetPassword: NextPage = () => {
           <h1>Quên Mật khẩu</h1>
           <EmailForm
             onSubmit={(email: string) => {
-              console.log(email);
-              setSubmitted(true);
-              // mutation.mutate({
-              //   email: email,
-              // });
+              // console.log(email);
+              mutation.mutate({
+                email: email,
+              });
             }}
           />
           {submitted && (
