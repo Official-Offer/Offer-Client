@@ -47,7 +47,7 @@ export const forgetPassword = async (body: any) => {
 }
 
 export const resetPassword = async (body: any) => {
-  const response = await request.post(`/accounts/reset_password/`, body);
+  const response = await request.put(`/accounts/reset_password/`, body);
   return response.data;
 }
 

@@ -12,16 +12,17 @@ import { registerAdvisor } from "@services/apiAdvisor";
 import { registerRecruiter } from "@services/apiRecruiter";
 import { resetPassword } from "@services/apiUser";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { setID } from '@redux/actions';
 
 //create a next page for the student home page, code below
-const ChangePassword: NextPage = () => {
+const ResetPassword: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  //extract token
   const { token } = router.query;
+  console.log(token);
   const mutation = useMutation({
     mutationFn: resetPassword,
     onSuccess: async (data) => {
@@ -43,7 +44,7 @@ const ChangePassword: NextPage = () => {
         <div className="register-content-form">
           {submitted ? (
             <>
-              <h2 style={{ color: "Purple" }}>Mật khẩu thay đổi thành công.</h2>
+              <h2 style={{ color: "purple" }}>Mật khẩu thay đổi thành công.</h2>
               <br />
               <div
                 style={{
@@ -54,7 +55,7 @@ const ChangePassword: NextPage = () => {
                 }}
               >
                 <SubmitButton
-                  text="Đăng nhập"
+                  text="Quay lại đăng nhập"
                   onClick={() => {
                     router.push("/login");
                   }}
@@ -68,12 +69,12 @@ const ChangePassword: NextPage = () => {
                 isLoading={mutation.isLoading}
                 onSubmit={(password: string) => {
                   console.log(password);
-                  setSubmitted(true);
-                  // mutation.mutate({
-                  //   new_password: password,
-                  //   confirm_password: password,
-                  //   token,
-                  // });
+                  // setSubmitted(true);
+                  mutation.mutate({
+                    new_password: password,
+                    confirm_password: password,
+                    token,
+                  });
                 }}
               />
               {errorMessage && (
@@ -87,4 +88,4 @@ const ChangePassword: NextPage = () => {
   );
 };
 
-export default ChangePassword;
+export default ResetPassword;
