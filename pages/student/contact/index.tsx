@@ -2,6 +2,7 @@ import { SubmitButton } from "@components/button/SubmitButton";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { Button, Form, Input } from "antd";
 import { NextPage } from "next";
+import router from 'next/router';
 
 const Contact: NextPage = () => {
   return (
@@ -15,7 +16,9 @@ const Contact: NextPage = () => {
           </h1>
           <br />
           <div className="contact-button">
-            <Button size="large" color="pink">
+            <Button size="large" color="pink" onClick={()=>{
+                router.push('/registration')
+            }}>
               Đăng kí để đăng tin tuyển dụng
             </Button>
           </div>
