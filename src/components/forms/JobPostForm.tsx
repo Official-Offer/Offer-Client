@@ -22,6 +22,9 @@ import { SliderMarks } from "antd/lib/slider";
 import { OrgForm } from "./OrgForm";
 import { RootState } from "@redux/reducers";
 // import locale from "antd/es/date-picker/locale/vi_VN";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 interface IForm {
   onSubmit: () => void;
@@ -38,36 +41,18 @@ export const JobPostForm: React.FC<IForm> = ({
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
 
   const { RangePicker } = DatePicker;
-  const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
-  const [companies, setCompanies] = useState<any>(
-    [
-      { value: 1, label: "Meta" },
-      { value: 2, label: "Tesla" },
-      { value: 3, label: "Amazon" },
-      { value: 4, label: "VinaCapital" },
-    ]
-  );
-  // const [company, setCompani] = useState<any>([
-  //   { value: [1, "Meta"], label: "Meta" },
-  // ]);
-  const [levels, setLevels] = useState<any>(
-    f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"])
-  );
-  const [location, setLocation] = useState<any>(
-    f(["Hà nội", "TP.HCM", "Đà Nẵng"])
-  );
-  const [types, setTypes] = useState<any>(
-    f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"])
-  );
-  const [majors, setMajors] = useState<any>(
-    f([
-      "Công nghệ thông tin",
-      "Kinh tế",
-      "Marketing",
-      "Quản trị kinh doanh",
-      "Luật",
-    ])
-  );
+  const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
+  const majors = f([
+    "Công nghệ thông tin",
+    "Kinh tế",
+    "Marketing",
+    "Quản trị kinh doanh",
+    "Luật",
+  ]);
+  const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
+  const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
+
+  const [desc, setDesc] = useState<any>("");
 
   const marks: SliderMarks = {
     0: "0",
@@ -78,13 +63,18 @@ export const JobPostForm: React.FC<IForm> = ({
     dispatch(setTitle(event.target.value));
   };
 
+  const handleTypeChange = (value: any) => {
+    dispatch(setType(value));
+  };
+
   const handleDeadlineChange = (value: any) => {
     // console.log(moment(value).format("DD-MM-YYYY"));
     dispatch(setDeadline(value.toDate()));
   };
 
-  const handleDescChange = (event: any) => {
-    dispatch(setDescription(event.target.value));
+  const handleDescChange = (value: any) => {
+    setDesc(value);
+    dispatch(setDescription(value));
   };
 
   const handleLevelChange = (value: any) => {
@@ -107,15 +97,21 @@ export const JobPostForm: React.FC<IForm> = ({
   };
   const state = useSelector((state: RootState) => state.jobs);
 
-  const handleCompanyChange = (value: any) => {
-    dispatch(setCompany(companyList[value - 1]));
-    dispatch(setCompanyId(value));
-    // console.log(state.company);
-  };
+  // const handleCompanyChange = (value: any) => {
+  //   dispatch(setCompany(companyList[value - 1]));
+  //   dispatch(setCompanyId(value));
+  //   // console.log(state.company);
+  // };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
-    onSubmit();
-    event.preventDefault();
+    //don't let user continue if they haven't filled in all the required fields
+    if (!state.title || !state.address || !state.level || !state.description) {
+      alert("Vui lòng điền thông tin cần thiết");
+      return;
+    } else {
+      onSubmit();
+      event.preventDefault();
+    }
   };
 
   const handleCancel = (event: { preventDefault: () => void }) => {
@@ -129,7 +125,7 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Tiêu đề" required className="form-input full-width">
           <Input required className="form-item" onChange={handleTitleChange} />
         </Form.Item>
-        <Form.Item label="Công ty" className="form-input" required>
+        {/* <Form.Item label="Công ty" className="form-input" required>
           <Select
             // mode="multiple"
             // value={company}
@@ -138,20 +134,18 @@ export const JobPostForm: React.FC<IForm> = ({
             onChange={handleCompanyChange}
             options={companies}
           />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label="Địa điểm" required>
           <Select
             // className="form-select"
             mode="multiple"
             placeholder="Hà Nội"
             onChange={handleAddressChange}
-            options={location}
+            options={locations}
           />
         </Form.Item>
         <Form.Item label="Cấp bậc" className="form-input" required>
           <Select
-            // mode="multiple"
-            // className="form-select"
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}
@@ -165,15 +159,15 @@ export const JobPostForm: React.FC<IForm> = ({
             onAfterChange={handleSalaryChange}
           />
         </Form.Item>
-        {/* <Form.Item label="Tính chất công việc">
+        <Form.Item label="Tính chất công việc">
           <Select
-            className="form-select"
+            // className="form-select"
             mode="multiple"
             placeholder="Fulltime"
             onChange={handleTypeChange}
             options={types}
           />
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item label="Ngành học liên quan">
           <Select
             // className="form-select"
@@ -191,12 +185,7 @@ export const JobPostForm: React.FC<IForm> = ({
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <Input.TextArea
-            rows={6}
-            required
-            className="form-item-long"
-            onChange={handleDescChange}
-          />
+          <ReactQuill value={desc} onChange={handleDescChange} />
         </Form.Item>
       </div>
       <div className="form-submit-button">

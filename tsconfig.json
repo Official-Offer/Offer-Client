@@ -94,7 +94,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", 
+    "**/*.tsx", "src/components/text/editor.jsx", 
     // "src/styles/styled-components/styledButton.ts",
   ],
   "exclude": [

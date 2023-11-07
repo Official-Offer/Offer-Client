@@ -1,4 +1,4 @@
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import request from "./apiService";
 import axios from "axios";
 import { URL_API_ADMIN } from "@config";
@@ -7,6 +7,13 @@ export const registerAdvisor = async (body: any) => {
   const response = await request.post(`/advisors/register/`, body);
   return response.data;
 };
+
+export const getAdvisor = async () => {
+  const id = getCookie("id");
+  const response = (await request.get(`/advisors/${id}/`)).data;
+  return response;
+};
+
 
 export const updateSchoolForAdvisor = async (body: any) => {
   const request = axios.create({
