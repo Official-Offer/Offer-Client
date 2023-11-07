@@ -57,7 +57,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   ]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
   const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
-  const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"]
+  const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
   const companies = f(companyList);
 
   const handleCompanyChange = (value: any) => {
@@ -98,7 +98,22 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         <BackwardOutlined /> Quay lại
       </p>
       <div className="job-desc-nav">
-        <h1>Xem trước</h1>
+        <h2 style={{ fontSize: "25px" }}>Xem trước</h2>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => (editing ? setEditing(false) : setEditing(true))}
+        >
+          {editing ? (
+            <h3>
+              {" "}
+              Hoàn tất chỉnh sửa <CheckOutlined />
+            </h3>
+          ) : (
+            <h3>
+              Chỉnh sửa <EditOutlined />
+            </h3>
+          )}
+        </div>
       </div>
       <div className="job-desc-content">
         <div className="job-desc-heading">
@@ -112,30 +127,22 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               }}
             />
           ) : (
-            <h2>{state.title}</h2>
+            <h2 onClick={() => (editing ? setEditing(false) : setEditing(true))}>{title} <EditOutlined /></h2>
           )}
-          <div onClick={() => (editing ? setEditing(false) : setEditing(true))}>
-            {editing ? (
-              <p>
-                {" "}
-                Hoàn tất chỉnh sửa <CheckOutlined />
-              </p>
-            ) : (
-              <p>
-                Chỉnh sửa <EditOutlined />
-              </p>
-            )}
-          </div>
         </div>
         <h4>Mới đăng</h4>
-        {editing ? <Select
+        {editing ? (
+          <Select
             // mode="multiple"
             // value={company}
             // className="form-select"
             placeholder="Công ty"
             onChange={handleCompanyChange}
             options={companies}
-          />: (<p>{company}</p>)}
+          />
+        ) : (
+          <p>{company}</p>
+        )}
         <div>
           {editing ? (
             <div style={{ marginBottom: "10px" }}>
@@ -160,7 +167,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               <h3>Luơng</h3>
               {editing ? (
                 <Slider
-                className="job-desc-form"
+                  className="job-desc-form"
                   range
                   defaultValue={[0, 100]}
                   marks={marks}
