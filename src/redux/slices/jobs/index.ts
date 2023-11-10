@@ -7,10 +7,10 @@ interface ICJob {
   companyId: number;
   deadline?: Date | null;
   level: string;
-  address: string;
+  address: string[];
   salary: number;
-  major: string;
-  type: string;
+  major: number[];
+  type: string[];
   reqs: string;
   benefits: string;
   upperSalary: number;
@@ -25,10 +25,10 @@ const initialState: ICJob = {
   companyId: 1,
   deadline: new Date(),
   level: "",
-  address: "",
+  address: ["Hà Nội"],
   salary: 0,
-  major: "",
-  type: "",
+  major: [1],
+  type: ["fulltime"],
   reqs: "",
   benefits: "",
   upperSalary: 0,

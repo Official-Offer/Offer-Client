@@ -46,7 +46,7 @@ export const PasswordForm: React.FC<IPasswordForm> = ({
   };
 
   return (
-    <Form className="form" onFinish={handleSubmit} layout="vertical">
+    <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item required label="Nhập mật khẩu mới">

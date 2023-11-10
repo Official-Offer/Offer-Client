@@ -6,6 +6,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 50px;
+    &-btn {
+      border: 2px solid;
+      border-radius: 5px;
+    }
   }
   h1 {
     font-size: 45px;

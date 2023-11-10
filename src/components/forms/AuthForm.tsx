@@ -47,7 +47,7 @@ export const AuthForm: React.FC<ILogInForm> = ({ onSubmit, isLoading, embedSignu
   };
 
   return (
-    <Form className="form" onFinish={handleSubmit} layout="vertical">
+    <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Email">

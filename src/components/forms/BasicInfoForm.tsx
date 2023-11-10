@@ -78,7 +78,7 @@ export const BasicInfoForm: React.FC<IBasicInfoForm> = ({
   };
 
   return (
-    <Form className="form" onFinish={handleSubmit} layout="vertical">
+    <Form className="form" layout="vertical">
       <div className="form-grid">
         <Form.Item label="Họ" className="form-input">
           <Input

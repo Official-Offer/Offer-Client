@@ -6,6 +6,9 @@ import { useState } from "react";
 import router from "next/router";
 import { ApprovedJobDataType, RecruiterJobDataType } from "@components/table/dataType";
 import { ApprovedJobColumns, RecruiterJobColumns } from "@components/table/columnType";
+import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
+import { useDispatch } from "react-redux";
+import { getAdvisor } from "@services/apiAdvisor";
 
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -38,11 +41,31 @@ const Jobs: NextPage = () => {
     setData(filteredData);
   };
 
+  const dispatch = useDispatch();
+
+  const profileQuery = useQuery({
+    queryKey: ["profile"],
+    queryFn: getAdvisor,
+    onSuccess: async (info) => {
+      console.log(info);
+      dispatch(setID(info.account.id));
+      dispatch(
+        setRole({
+          isStudent: false,
+          isAdvisor: true,
+          isRecruiter: false,
+        })
+      );
+      dispatch(setCompany(info.company.name));
+      dispatch(setCompanyId(info.company.id));
+    },
+    onError: () => {},
+  });
+
+
   const handleVerifyJob = () => {
 }
-  const handleAddJob = () => {
-    router.push("/advisor/postJobs/jobForm");
-  };
+  
 
   return (
     <div className="advisor">
@@ -54,9 +77,8 @@ const Jobs: NextPage = () => {
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleVerify={handleVerifyJob}
-        //   handleAdd={handleAddJob}
           tableType={"AdvisorJobs"}
-          isLoading={jobQuery.isLoading}
+          isLoading={jobQuery.isLoading || profileQuery.isLoading}
         />
       </div>
     </div>

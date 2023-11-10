@@ -13,6 +13,7 @@ import { updateCompany } from "@services/apiCompany";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@services/apiUser";
+import RichTextEditor from "@components/text/textEditor";
 
 const BasicInformation: NextPage = () => {
   const router = useRouter();
@@ -38,8 +39,8 @@ const BasicInformation: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-            <>
-              <h3>
+          <>
+            <h3>
                 Link xác nhận đã được gửi đến email của bạn, vui lòng check
                 email để kích hoạt tài khoản.{" "}
               </h3>
@@ -48,7 +49,7 @@ const BasicInformation: NextPage = () => {
               <p>
                 <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
               </p>
-            </>
+          </>
         </div>
       </div>
     </div>

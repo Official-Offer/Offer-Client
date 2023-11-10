@@ -42,9 +42,7 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
-  const mutation = useMutation({
-    // queryKey: ["register"],
-    mutationFn: registerUser,
+  const mutation = useMutation(["register"], registerUser, {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.message.token);
@@ -81,16 +79,17 @@ const Registration: NextPage = () => {
     onError: (error: any) => {
       console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
-      setErrorMessage("Email đã tồn tại.");
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
   });
-  const mutationOrg = useMutation({
-    // queryKey: ["register"],
-    mutationFn: r.isStudent
+  const mutationOrg = useMutation(
+    ["registerOrg"],
+    r.isStudent
       ? updateEducation
       : r.isRecruiter
       ? updateCompany
       : updateSchoolForAdvisor,
+    {
     onSuccess: async (data) => {
       dispatch(setLoggedIn(true));
       const route = r.isStudent
@@ -126,6 +125,7 @@ const Registration: NextPage = () => {
                 }}
                 onClick={() => {
                   setScreen(false);
+                  setErrorMessage("");
                 }}
               >
                 <BackwardOutlined /> Quay lại
