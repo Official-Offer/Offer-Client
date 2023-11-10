@@ -1,3 +1,4 @@
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { Button, Form, Input } from "antd";
@@ -16,10 +17,10 @@ const Contact: NextPage = () => {
           </h1>
           <br />
           <div className="contact-button">
-            <Button size="large" color="pink" onClick={()=>{
+            <Button size="large" onClick={()=>{
                 router.push('/registration')
             }}>
-              Đăng kí để đăng tin tuyển dụng
+              Đăng kí/đăng nhập để đăng tin tuyển dụng <ArrowRightOutlined/>
             </Button>
           </div>
           {/* <h1>Liên hệ</h1> */}
