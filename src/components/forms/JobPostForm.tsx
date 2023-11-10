@@ -42,16 +42,23 @@ export const JobPostForm: React.FC<IForm> = ({
 
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const majors = f([
-    "Công nghệ thông tin",
-    "Kinh tế",
-    "Marketing",
-    "Quản trị kinh doanh",
-    "Luật",
-  ]);
+  // const majorList = [
+  //   "Công nghệ thông tin",
+  //   "Kinh tế",
+  //   "Marketing",
+  //   "Quản trị kinh doanh",
+  //   "Luật",
+  // ];
+  // const [major, setMajor] = useState<string[]>(["Công nghệ thông tin"]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
   const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
-
+  const majors = [
+    { value: 1, label: "Công nghệ thông tin" },
+    { value: 2, label: "Kinh tế" },
+    { value: 3, label: "Marketing" },
+    { value: 4, label: "Quản trị kinh doanh" },
+    { value: 5, label: "Luật" },
+  ];
   const [desc, setDesc] = useState<any>("");
 
   const marks: SliderMarks = {
@@ -93,7 +100,9 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleMajorChange = (value: any) => {
+    console.log(value)
     dispatch(setMajor(value));
+    // setMajor(majorList[value - 1]);
   };
   const state = useSelector((state: RootState) => state.jobs);
 

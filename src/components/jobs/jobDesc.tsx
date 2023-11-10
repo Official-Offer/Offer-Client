@@ -29,17 +29,30 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   onBack,
 }) => {
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
-
+  const majorList = [
+    { value: 1, label: "Công nghệ thông tin" },
+    { value: 2, label: "Kinh tế" },
+    { value: 3, label: "Marketing" },
+    { value: 4, label: "Quản trị kinh doanh" },
+    { value: 5, label: "Luật" },
+  ];
   const state = useSelector((state: RootState) => state.jobs);
   const accountState = useSelector((state: RootState) => state.account);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
   const [salary, setSalary] = useState<number>(state.salary);
   const [upperSalary, setUpperSalary] = useState<number>(state.upperSalary);
   const [level, setLevel] = useState<string>(state.level || "");
-  const [type, setType] = useState<string>("parttime");
-  const [location, setLocation] = useState<string>(state.address || "");
+  const [type, setType] = useState<string[]>(state.type || ["fulltime"]);
+  const [location, setLocation] = useState<string[]>(
+    state.address || ["Hà Nội"]
+  );
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
-  const [majors, setMajors] = useState<string>(state.major || "");
+  const [majors, setMajors] = useState<number[]>(state.major || [1]);
+  const [majorNames, setMajorNames] = useState<string[]>(
+    state.major.map((major) => majorList[major - 1].label + ", ") || [
+      "Công nghệ thông tin",
+    ]
+  );
   const [company, setCompany] = useState<string>(state.company || `Samsung`);
   const [companyId, setCompanyId] = useState<number>(state.companyId || 1);
   const [editing, setEditing] = useState<boolean>(false);
@@ -48,17 +61,15 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const majorList = f([
-    "Công nghệ thông tin",
-    "Kinh tế",
-    "Marketing",
-    "Quản trị kinh doanh",
-    "Luật",
-  ]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
   const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
   const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
-  const companies = f(companyList);
+  const companies = [
+    { value: 1, label: "Meta" },
+    { value: 2, label: "Tesla" },
+    { value: 3, label: "Amazon" },
+    { value: 4, label: "VinaCapital" },
+  ];
 
   const handleCompanyChange = (value: any) => {
     setCompany(companyList[value - 1]);
@@ -127,7 +138,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               }}
             />
           ) : (
-            <h2 onClick={() => (editing ? setEditing(false) : setEditing(true))}>{title} <EditOutlined /></h2>
+            <h2
+              onClick={() => (editing ? setEditing(false) : setEditing(true))}
+            >
+              {title} <EditOutlined />
+            </h2>
           )}
         </div>
         <h4>Mới đăng</h4>
@@ -185,7 +200,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               {editing ? (
                 <Select
                   className="job-desc-form"
-                  mode="multiple"
+                  // mode="multiple"
                   placeholder="Thực tập"
                   onChange={(value) => {
                     setLevel(value);
@@ -202,7 +217,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                 <Select
                   className="job-desc-form"
                   mode="multiple"
-                  placeholder="Công nghệ thông tin"
+                  placeholder="Fulltime"
                   onChange={(value) => {
                     setType(value);
                   }}
@@ -221,11 +236,14 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                   placeholder="Công nghệ thông tin"
                   onChange={(value) => {
                     setMajors(value);
+                    setMajorNames(
+                      value.map((major: number) => majorList[major - 1].label + ", ")
+                    );
                   }}
                   options={majorList}
                 />
               ) : (
-                <p>{majors}</p>
+                <p>{majorNames}</p>
               )}
             </div>
             <div>
@@ -266,8 +284,18 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             console.log(state.address);
             postJobQuery.mutate({
               title,
-              level: level[0],
-              job_type: type[0],
+              level:
+                level == "Thực tập"
+                  ? "internship"
+                  : level == "Nhân viên chính thức"
+                  ? "newgrad"
+                  : "experienced",
+              job_type:
+                type[0] == "Hợp đồng"
+                  ? "contract"
+                  : type[0] == "volunteer"
+                  ? "volunteer"
+                  : type[0],
               lower_salary: salary,
               address: {
                 city: location[0],
@@ -277,7 +305,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               company: companyId,
               contact_person: accountState.id || 1,
               deadline,
-              required_majors: majors[0],
+              required_majors: majors,
             });
           }}
           isLoading={postJobQuery.isLoading}
