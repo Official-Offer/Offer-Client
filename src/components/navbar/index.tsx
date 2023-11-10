@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
       deleteCookie("role");
       deleteCookie("id");
       router.push("/login").then(() => {
-        router.reload();
+        // router.reload();
       });
     },
     onError: (error: any) => {
@@ -117,9 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 {"Home"}
               </a>
             ) : (
-              <Link href={"/student/"}>
-                Home
-              </Link>
+              <Link href={"/student/"}>Home</Link>
             )}
           </Menu.Item>
         )}
@@ -144,9 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                     {menu.name}
                   </a>
                 ) : (
-                  <Link href={menu.link}>
-                    {menu.name}
-                  </Link>
+                  <Link href={menu.link}>{menu.name}</Link>
                 )}
               </Menu.Item>
             )

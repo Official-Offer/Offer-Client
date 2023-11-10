@@ -66,7 +66,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   return (
-    <Form className="form" onFinish={handleSubmit} layout="vertical">
+    <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item
@@ -125,11 +125,3 @@ export const OrgForm: React.FC<IOrgForm> = ({
     </Form>
   );
 };
-
-{
-  /* <Typography.Text type="secondary">
-              {state.role.isStudent || state.role.isAdvisor
-                ? ("Không tìm thấy trường của bạn trong danh sách? Hãy liên hệ với chúng tôi để thêm trường.")
-                : "Không tìm thấy công ty của bạn trong danh sách? Hãy liên hệ với chúng tôi để thêm công ty."}
-            </Typography.Text> */
-}

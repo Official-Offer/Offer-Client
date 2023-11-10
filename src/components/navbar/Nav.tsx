@@ -49,7 +49,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
       // localStorage.removeItem("role");
 
       router.push("/login").then(() => {
-        router.reload();
+        // router.reload();
       });
     },
     onError: (error: any) => {
@@ -86,13 +86,20 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index == 3) {
+      if (index == 2) {
         if (status == "authenticated") {
           signOut().then(() => {
             router.push("/login");
           });
         } else {
-          //sign out traditional way
+          // sign out traditional way
+          console.log("unauthenticated by google")
+          // deleteCookie("cookieToken");
+          // deleteCookie("role");
+          // deleteCookie("id");
+          // router.push("/login").then(() => {
+          //   router.reload();
+          // });
           mutation.mutate();
         }
       } else {
@@ -143,7 +150,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
-              <Image src="/images/logo.png" width={40} height={40} alt="logo"/>
+              <Image src="/images/logo.png" width={40} height={40} alt="logo" />
             </div>
             <IconButton
               round

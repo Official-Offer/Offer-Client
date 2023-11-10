@@ -21,7 +21,7 @@ export const EmailForm: React.FC<IEmailForm> = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <Form className="form" onFinish={handleSubmit} layout="vertical">
+    <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
           <Form.Item required label="Nhập email của bạn">
