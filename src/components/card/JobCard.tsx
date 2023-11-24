@@ -22,9 +22,9 @@ export const JobCard: React.FC<JobCardProp> = ({ jobData, active, onClick, bookm
   return (
     <div className={`job-portal-list-card ${active ? "active" : ""}`} onClick={onClick}>
       <div className="job-portal-list-card-main">
-        <h3 className="job-portal-list-card-title">
+        <div className="job-portal-list-card-title">
           {jobData.title ?? "Tiêu đề trống"}
-        </h3>
+        </div>
         <div className="job-portal-list-card-detail">
           <div>{jobData.company.name ?? "Công ty trống"}</div>
           <div>{formatAddress(jobData.address || jobData.company.address, true)}</div>

@@ -81,6 +81,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ info, loading, ...rest }) =>
         {...rest}
       />
       <Modal
+        className="ant-modal-big"
         open={openModal}
         centered
         onCancel={() => setOpenModal(false)}

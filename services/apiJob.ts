@@ -244,6 +244,11 @@ export const deleteJob = async (id: any) => {
   return response.data;
 };
 
+export const applyJob = async (data: any) => {
+  const response = await request.post(`/job-applications/`, data);
+  return response.data;
+}
+
 const majorList = [
   "Ngành Khoa học máy tính",
   "Ngành Kinh tế",

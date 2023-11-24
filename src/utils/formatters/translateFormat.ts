@@ -1,3 +1,5 @@
+import type { Major } from "src/types/dataTypes";
+
 export const translateJobType = (data: string | null | undefined) => {
   switch (data) {
     case null:
@@ -23,4 +25,9 @@ export const translateJobType = (data: string | null | undefined) => {
   }
 };
 
-export const translateMajors = (data: number[] | undefined): string => data && data.length !== 0 ? data.toString() : "Không yêu cầu";
+export const translateMajors = (data: Major[] | undefined): string => {
+  if (data && data.length !== 0) {
+    return data.map((x) => x.name).join(", ");
+  }
+  return "Không yêu cầu";
+};
