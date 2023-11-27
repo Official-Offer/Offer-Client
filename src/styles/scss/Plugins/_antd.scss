@@ -41,25 +41,33 @@
 }
 
 .ant-modal {
-  width: 50vw !important;
+  &-big {
+    width: 700px !important;
+  }
+
   &-content {
     border-radius: 8px;
   }
+
   &-header {
     border-radius: 8px 8px 0px 0px;
   }
+
   &-footer {
     border-radius: 0px 0px 8px 8px;
     display: flex;
     justify-content: right;
   }
+
   &-title {
     font-weight: $fw-bold-0;
   }
+
   &-confirm {
     .ant-modal-body {
       padding: 24px 24px 20px;
     }
+
     &-content {
       display: flex;
     }

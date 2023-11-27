@@ -47,6 +47,12 @@ export type Resume = {
   resume: string;
 }
 
+export type Major = {
+  id: number;
+  name: string;
+  disciplines?: number[]
+}
+
 export type Student = {
   account: User;
   pk: number; // Title suggests this might represent the "Account" field, you may want to ensure this.
@@ -109,7 +115,7 @@ export type Job = {
   deadline?: string; // Optional based on x-nullable
   company: Company; // Optional
   contact_person?: number; // Optional
-  required_majors: number[];
+  required_majors: Major[];
   required_skills: number[];
   disciplines: number[];
   request_approval_from: number[];

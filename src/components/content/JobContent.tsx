@@ -2,11 +2,16 @@ import Link from "next/link";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button, Modal, Skeleton, Upload } from "antd";
+import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
 import { SelectOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { UploadOutlined, SendOutlined, FileDoneOutlined } from "@ant-design/icons";
+
+import { applyJob } from '@services/apiJob';
+
+import { ApplyForm } from "@components/forms/ApplyForm";
 import { ResumeForm } from "@components/forms/ResumeForm";
 import { BookmarkButton } from "@components/button/BookmarkButton";
+
 import { IconButton } from "@styles/styled-components/styledButton";
 import { formatAddress } from "@utils/formatters/stringFormat";
 import { formatNum, formatDate, dateDist } from "@utils/formatters/numberFormat";
@@ -55,7 +60,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
             isMinimized ? (
               <Link href={`/student/jobs${jobData?.pk ? `?id=${jobData.pk}` : ""}`}>
                 <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
-                <span><SelectOutlined /></span>
+                {/* <span><SelectOutlined /></span> */}
               </Link>
             ) : (
               <h2>{jobData?.title ?? "Tiêu đề trống"}</h2>
@@ -111,29 +116,13 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
               setClickOther={setJobCardBookmarkClicked}
             />
           )}
-          <Modal
-            title="Ứng tuyển"
+          <ApplyForm 
+            jobId={jobData?.pk} 
             open={isVisible}
-            onOk={() => {setIsVisible(false)}}
+            // submitFunction={() => console.log("ehehehehe")}
+            submitFunction={applyJob}
             onCancel={() => {setIsVisible(false)}}
-            footer={[
-              <IconButton backgroundColor="#D30B81">
-                <div className="btn-body">
-                  <span>Nộp đơn</span>
-                  <span><FileDoneOutlined /></span>
-                </div>
-              </IconButton>
-            ]}
-          >
-            <Upload.Dragger
-              listType="picture"
-              onChange={(info) => console.log(info)}
-            >
-              <UploadOutlined />
-              <h4>Vui lòng tải lên CV của bạn</h4>
-              <div>Bạn có thể kéo và thả file ở đây</div>
-            </Upload.Dragger>
-          </Modal>
+          />
         </div>
         <section className="job-portal-description-info">
           <div className="job-portal-description-info-section">
@@ -180,9 +169,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           <div className="job-portal-description-title">
             <h3>Mô Tả</h3>
           </div>
-          <div className="job-portal-description-detail">
-            {jobData?.description}
-          </div>
+          <div className="job-portal-description-detail" dangerouslySetInnerHTML={{ __html: jobData?.description ?? "" }} />
         </section>
       </Skeleton>
     </div>
