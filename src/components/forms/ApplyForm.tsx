@@ -4,11 +4,12 @@ import { useMutation } from '@tanstack/react-query';
 import type { UploadChangeParam, UploadFile } from 'antd/es/upload';
 import { CheckOutlined, FileDoneOutlined, LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { IconButton } from '@styles/styled-components/styledButton';
+import { AxiosError } from "src/types/errorTypes";
 
 type ApplyFormProps = {
   jobId?: number,
   open: boolean,
-  submitFunction: (data: any) => void,
+  submitFunction: (data: any) => Promise<any>,
   onCancel: () => void,
 }
 
@@ -26,8 +27,8 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({ jobId, open, submitFunctio
     }
   }
 
-  const resumeMutation = useMutation({
-    mutationKey: "resume",
+  const resumeMutation = useMutation<any, AxiosError, FormData>({
+    mutationKey: ["resume"],
     mutationFn: submitFunction,
     onSuccess: () => {
       setTimeout(() => {
@@ -42,8 +43,8 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({ jobId, open, submitFunctio
   const handleApply = () => {
     if (resume) {
       const applyData = new FormData();
-      applyData.append("is_submitted", true);
-      applyData.append("job", jobId);
+      applyData.append("is_submitted", "true");
+      applyData.append("job", `${jobId}`);
       applyData.append("resume", resume);
       resumeMutation.mutate(applyData);
     }
