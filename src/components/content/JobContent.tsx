@@ -110,7 +110,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           {jobData && (
             <BookmarkButton
               className="job-portal-list-card-bookmark"
-              id={jobData.pk}
+              id={jobData?.pk}
               isClickedByOther={bookmarkClicked}
               setIsClickedByOther={setBookmarkClicked}
               setClickOther={setJobCardBookmarkClicked}
@@ -118,8 +118,7 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
           )}
           <ApplyForm 
             jobId={jobData?.pk} 
-            open={isVisible}
-            // submitFunction={() => console.log("ehehehehe")}
+            open={jobData && isVisible ? true : false}
             submitFunction={applyJob}
             onCancel={() => {setIsVisible(false)}}
           />
