@@ -6,7 +6,7 @@ import { CheckOutlined, FileDoneOutlined, LoadingOutlined, UploadOutlined } from
 import { IconButton } from '@styles/styled-components/styledButton';
 
 type ApplyFormProps = {
-  jobId: number,
+  jobId?: number,
   open: boolean,
   submitFunction: (data: any) => void,
   onCancel: () => void,
