@@ -6,7 +6,10 @@ name: Test if deployable
 
 on:
   # Runs on pushes targeting the default branch
-  pull-request:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
