@@ -117,9 +117,8 @@ export const JobContent: React.FC<JobContentProps> = ({ isLoading, isMinimized, 
             />
           )}
           <ApplyForm 
-            jobId={jobData?.pk} 
-            open={isVisible}
-            // submitFunction={() => console.log("ehehehehe")}
+            jobId={jobData.pk} 
+            open={jobData && isVisible}
             submitFunction={applyJob}
             onCancel={() => {setIsVisible(false)}}
           />
