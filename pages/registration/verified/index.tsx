@@ -33,8 +33,8 @@ const VerifyPassword: NextPage = () => {
                 state.role.isStudent
                   ? router.push("/student")
                   : state.role.isAdvisor
-                  ? router.push("/advisor/jobs")
-                  : router.push("/recruiter/jobs");
+                    ? router.push("/advisor/jobs")
+                    : router.push("/recruiter/jobs");
               }}
             />
           </div>

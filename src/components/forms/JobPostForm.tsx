@@ -100,7 +100,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleMajorChange = (value: any) => {
-    console.log(value)
+    console.log(value);
     dispatch(setMajor(value));
     // setMajor(majorList[value - 1]);
   };

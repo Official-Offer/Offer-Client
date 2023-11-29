@@ -3,13 +3,13 @@
   width: fit-content;
   // justify-content: center;
   // margin-bottom: 20px;
-  
+
   .ant-input {
     &-wrapper {
       position: relative;
       max-width: 500px;
     }
-    
+
     &-affix-wrapper {
       height: 40px;
       border: solid 1px $grey-color;
@@ -33,7 +33,7 @@
       right: 36px !important;
       z-index: 1;
       background-color: transparent;
-      
+
       button {
         padding: 9px;
         border-radius: 50% !important;
@@ -63,41 +63,50 @@
     &-affix-wrapper {
       border-radius: 12px !important;
       padding: 12px 16px;
-      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.08);
+      box-shadow:
+        0 3px 8px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.08);
 
       &:hover {
         border: solid 2px $purple-color;
       }
     }
-    
+
     &-group-addon {
       height: 100%;
       width: fit-content;
       margin-left: 8px;
       background-color: transparent;
       z-index: 1;
-      
+
       button {
         height: 100%;
         border-radius: 12px !important;
         padding: 0px 24px !important;
         border: 0px;
-        background-image: linear-gradient(to bottom, $pinkish-red 0%, color-mix(in hsl, $purple-color 90%, $pinkish-red) 50%, $pinkish-red 120%);
+        background-image: linear-gradient(
+          to bottom,
+          $pinkish-red 0%,
+          color-mix(in hsl, $purple-color 90%, $pinkish-red) 50%,
+          $pinkish-red 120%
+        );
         background-size: 100% 200%;
         font-weight: 600;
         transition: 0.3s;
-        box-shadow: 0 3px 4px 0 rgba(0,0,0,0.3);
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.3);
 
-        &[ant-click-animating-without-extra-node='true']::after{display:none;}
+        &[ant-click-animating-without-extra-node="true"]::after {
+          display: none;
+        }
 
         &:hover {
           background-position: 0% 100%;
-          box-shadow: 0 3px 12px 0 rgba(0,0,0,0.5);
+          box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.5);
           scale: 1.03;
         }
 
         &:active {
-          box-shadow: 0 3px 4px 0 rgba(0,0,0,0.3);
+          box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.3);
           scale: 0.98;
         }
       }

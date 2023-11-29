@@ -46,13 +46,13 @@ const Applicants: NextPage = () => {
         setJobTitle(applicants[0]?.job?.title || " ");
         setSearchResults(
           applicants.map(
-            (applicant: any) => applicant.student.account.firstName
+            (applicant: any) => applicant.student.account.firstName,
             // formatFullName(applicant.student.account)
-          )
+          ),
         );
       },
       onError: () => {},
-    }
+    },
   );
 
   const handleFilterSearch = (value: string) => {
@@ -63,7 +63,7 @@ const Applicants: NextPage = () => {
     const filteredData = dataset.filter(
       (item) =>
         value.toLowerCase() ===
-        formatFullName(item.student.account).toLowerCase()
+        formatFullName(item.student.account).toLowerCase(),
     );
     setData(filteredData);
   };

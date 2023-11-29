@@ -8,18 +8,20 @@ import type { JobFilters } from "src/types/filterTypes";
 
 type JobFilterNavbarProps = {
   displayHook: {
-    displayedJobs?: Job[],
-    setJobs?: (jobs: Job[]) => void,
-    searchTerm?: string,
-    setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
-    filters: JobFilters,
-    setFilters: React.Dispatch<React.SetStateAction<JobFilters>>,
-    sort: string,
-    setSort: React.Dispatch<React.SetStateAction<string>>,
-  }
-}
+    displayedJobs?: Job[];
+    setJobs?: (jobs: Job[]) => void;
+    searchTerm?: string;
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+    filters: JobFilters;
+    setFilters: React.Dispatch<React.SetStateAction<JobFilters>>;
+    sort: string;
+    setSort: React.Dispatch<React.SetStateAction<string>>;
+  };
+};
 
-export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook }) => {
+export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({
+  displayHook,
+}) => {
   const { setSearchTerm, filters, setFilters, sort, setSort } = displayHook;
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +30,21 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
     }
   };
 
-  const handleFilter = (filterArr: string[], filterType: number) => { // default | 0: job_type, 1: work_type, 2: location
+  const handleFilter = (filterArr: string[], filterType: number) => {
+    // default | 0: job_type, 1: work_type, 2: location
     setFilters((filters: JobFilters) => {
       let filterDict = filters.jobTypes;
 
       if (filterType === 1) filterDict = filters.workTypes;
       if (filterType === 2) filterDict = filters.locations;
 
-      Object.keys(filterDict).forEach((key) => filterDict[key] = filterArr.includes(key));
+      Object.keys(filterDict).forEach(
+        (key) => (filterDict[key] = filterArr.includes(key)),
+      );
       return { ...filters };
     });
-  }
-  
+  };
+
   return (
     <div className="job-portal-navbar navbar">
       <Input.Search
@@ -57,7 +62,10 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
           placeholder="Địa điểm"
           className="round"
           onChange={(value) => handleFilter(value, 2)}
-          options={Object.keys(filters.locations).map((location) => ({ value: location, label: location }))}
+          options={Object.keys(filters.locations).map((location) => ({
+            value: location,
+            label: location,
+          }))}
         />
         <Select
           mode="multiple"
@@ -65,7 +73,10 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
           placeholder="Hình thức làm việc"
           className="round"
           onChange={(value) => handleFilter(value, 0)}
-          options={Object.keys(filters.jobTypes).map((jobType) => ({ value: jobType, label: translateJobType(jobType) }))}
+          options={Object.keys(filters.jobTypes).map((jobType) => ({
+            value: jobType,
+            label: translateJobType(jobType),
+          }))}
         />
         <Select
           mode="multiple"
@@ -73,7 +84,10 @@ export const JobFilterNavbar: React.FC<JobFilterNavbarProps> = ({ displayHook })
           placeholder="Mô hình làm việc"
           className="round"
           onChange={(value) => handleFilter(value, 1)}
-          options={Object.keys(filters.workTypes).map((workType) => ({ value: workType, label: translateJobType(workType) }))}
+          options={Object.keys(filters.workTypes).map((workType) => ({
+            value: workType,
+            label: translateJobType(workType),
+          }))}
         />
       </Space>
     </div>

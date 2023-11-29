@@ -43,7 +43,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
       console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
-        selectedRows
+        selectedRows,
       );
     },
     onSelect: (record, selected, selectedRows) => {

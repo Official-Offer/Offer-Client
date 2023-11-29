@@ -9,6 +9,7 @@
     align-items: center; /* center vertically */
     justify-content: center; /* center horizontally */
     height: 100vh;
+    overflow-y: auto;
     &-error {
       background-color: #fee2e2;
       color: #b91c1c;
@@ -27,12 +28,22 @@
       }
     }
     &-form {
+      min-width: 240px;
       h1 {
+        margin-bottom: 25px;
         text-align: center;
       }
       &-pincode {
         text-align: center;
       }
     }
+  }
+
+  button[type="submit"] {
+    margin-top: 4px;
+  }
+
+  .footnote {
+    margin-top: 60px;
   }
 }

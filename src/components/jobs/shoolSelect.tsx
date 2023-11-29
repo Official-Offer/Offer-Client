@@ -23,8 +23,8 @@ const defaultCheckedList = ["Bach Khoa", "Ngoai Thuong"];
 import type { JSXElementConstructor, ReactNode } from "react";
 
 type JSXComponent = JSXElementConstructor<{
-    children?: ReactNode;
-    [prop: string]: any;
+  children?: ReactNode;
+  [prop: string]: any;
 }>;
 
 export const SelectSchool: React.FC<any> = ({ onClick }) => {
@@ -44,7 +44,7 @@ export const SelectSchool: React.FC<any> = ({ onClick }) => {
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
     setCheckedList(e.target.checked ? schools : []);
     setSchoolId(
-      e.target.checked ? schools.map((item, index) => index + 1) : []
+      e.target.checked ? schools.map((item, index) => index + 1) : [],
     );
     console.log(schoolId);
   };

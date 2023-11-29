@@ -44,20 +44,20 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [level, setLevel] = useState<string>(state.level || "");
   const [type, setType] = useState<string[]>(state.type || ["fulltime"]);
   const [location, setLocation] = useState<string[]>(
-    state.address || ["Hà Nội"]
+    state.address || ["Hà Nội"],
   );
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
     state.major.map((major) => majorList[major - 1].label + ", ") || [
       "Công nghệ thông tin",
-    ]
+    ],
   );
   const [company, setCompany] = useState<string>(state.company || `Samsung`);
   const [companyId, setCompanyId] = useState<number>(state.companyId || 1);
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
-    state.description || "Mô tả công việc mẫu"
+    state.description || "Mô tả công việc mẫu",
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
@@ -237,7 +237,9 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                   onChange={(value) => {
                     setMajors(value);
                     setMajorNames(
-                      value.map((major: number) => majorList[major - 1].label + ", ")
+                      value.map(
+                        (major: number) => majorList[major - 1].label + ", ",
+                      ),
                     );
                   }}
                   options={majorList}
@@ -288,14 +290,14 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                 level == "Thực tập"
                   ? "internship"
                   : level == "Nhân viên chính thức"
-                  ? "newgrad"
-                  : "experienced",
+                    ? "newgrad"
+                    : "experienced",
               job_type:
                 type[0] == "Hợp đồng"
                   ? "contract"
                   : type[0] == "volunteer"
-                  ? "volunteer"
-                  : type[0],
+                    ? "volunteer"
+                    : type[0],
               lower_salary: salary,
               address: {
                 city: location[0],

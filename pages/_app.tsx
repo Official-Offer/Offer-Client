@@ -13,13 +13,16 @@ import LayoutGlobal from "src/common/LayoutGlobal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-function MyApp({ Component, pageProps }: AppProps<{ session: Session; }>): JSX.Element {
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{ session: Session }>): JSX.Element {
   const AntdTheme = {
     token: {
       colorPrimary: "#D30B81",
     },
   };
-  console.log(pageProps)
+  console.log(pageProps);
   const { session } = pageProps;
   const queryClient = new QueryClient();
 

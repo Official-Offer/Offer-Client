@@ -14,7 +14,7 @@ export const FilterSearch: React.FC<ISearch> = ({
   placeholder,
   onSearch,
   // searchResults,
-  size
+  size,
 }: ISearch) => {
   return (
     <Input.Search

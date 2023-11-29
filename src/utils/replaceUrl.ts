@@ -11,5 +11,5 @@ export const replaceUrl = (param: string, value?: string) => {
 
   const newUrl = urlObj.toString();
 
-  window.history.replaceState({ as: newUrl, url: newUrl }, '', newUrl);
+  window.history.replaceState({ as: newUrl, url: newUrl }, "", newUrl);
 };

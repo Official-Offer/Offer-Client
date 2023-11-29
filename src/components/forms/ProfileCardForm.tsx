@@ -1,9 +1,9 @@
 import react, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { 
-  Card as AntdCard, 
-  Button, 
-  Modal, 
+import {
+  Card as AntdCard,
+  Button,
+  Modal,
   Form,
   Input,
   InputNumber,
@@ -15,42 +15,44 @@ import { CloseOutlined } from "@ant-design/icons";
 import { formatDate } from "@utils/formatters/numberFormat";
 
 interface ProfileCardFormProps {
-  open: boolean,
-  closeForm: () => void,
-  isAdd: boolean,
-  fieldTitle: string,
+  open: boolean;
+  closeForm: () => void;
+  isAdd: boolean;
+  fieldTitle: string;
   fieldItemProps: {
-    itemTitle: string,
-    dataIDLabel: string,
-    dataName: string,
-    disableEndDate: boolean,
-    layout: string[],
-    labelToAPI: Record<string, string>,
-    APIToLabel: Record<string, string>,
-    itemType: Record<string, string>,
-    isRequired: Record<string, boolean>,
-  },
-  fieldItems?: Record<string, any>,
-  postFunction: (...args: any[]) => void,
-  deleteFunction?: (id: number) => void,
-  refetchFunction: () => void,
-  dataArr: Record<string, unknown>[],
-};
+    itemTitle: string;
+    dataIDLabel: string;
+    dataName: string;
+    disableEndDate: boolean;
+    layout: string[];
+    labelToAPI: Record<string, string>;
+    APIToLabel: Record<string, string>;
+    itemType: Record<string, string>;
+    isRequired: Record<string, boolean>;
+  };
+  fieldItems?: Record<string, any>;
+  postFunction: (...args: any[]) => void;
+  deleteFunction?: (id: number) => void;
+  refetchFunction: () => void;
+  dataArr: Record<string, unknown>[];
+}
 
 interface DataInputProps {
-  name: string,
-  label: string,
-  isRequired?: boolean,
-  isMulti?: boolean,
-  optionArr: Record<string, unknown>[],
-};
+  name: string;
+  label: string;
+  isRequired?: boolean;
+  isMulti?: boolean;
+  optionArr: Record<string, unknown>[];
+}
 
 // Form for editing or adding for different fields in profile page
 export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   // States
   const [modalLoading, setModalLoading] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-  const [isCurrent, setIsCurrent] = useState<boolean>(!props.isAdd && props.fieldItems?.is_current);
+  const [isCurrent, setIsCurrent] = useState<boolean>(
+    !props.isAdd && props.fieldItems?.is_current,
+  );
   const [areValidDates, setAreValidDates] = useState<boolean>(true);
 
   // Hooks
@@ -62,7 +64,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       return await props.postFunction(props.fieldItems.id, input);
     }
     return new Error("No field items found");
-  }
+  };
 
   const postMutation = useMutation({
     mutationKey: ["postMutation"],
@@ -75,7 +77,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       props.refetchFunction();
       handleCancel();
     },
-    onError: (err: any) => console.log(`Submit Error: ${err}`)
+    onError: (err: any) => console.log(`Submit Error: ${err}`),
   });
 
   const deleteFunction = async () => {
@@ -92,8 +94,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       props.refetchFunction();
       handleCancel();
     },
-    onError: (err) => console.log(`Delete Error: ${err}`)
-  })
+    onError: (err) => console.log(`Delete Error: ${err}`),
+  });
   if (!props.isAdd) {
   }
 
@@ -101,7 +103,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   const getLabel = (itemName: string, isLowerCase: boolean): string => {
     const label = props.fieldItemProps.APIToLabel[itemName];
     if (label === "itemTitle") {
-      return isLowerCase ? props.fieldItemProps.itemTitle?.toLowerCase() : props.fieldItemProps.itemTitle;
+      return isLowerCase
+        ? props.fieldItemProps.itemTitle?.toLowerCase()
+        : props.fieldItemProps.itemTitle;
     }
     return isLowerCase ? label?.toLowerCase() : label;
   };
@@ -112,7 +116,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     if (startDate && endDate) {
       setAreValidDates(startDate <= endDate);
     }
-  }
+  };
 
   const parseDate = (date: Date): string => {
     const year = date.getFullYear();
@@ -126,12 +130,13 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     setAreValidDates(true);
     form.resetFields();
     props.closeForm();
-  }
+  };
 
   const handleDelete = () => {
     Modal.confirm({
       centered: true,
-      content: `Bạn chắc chắn bạn muốn xóa mục ${props.fieldTitle?.toLowerCase()} của bạn tại ${props.fieldItems?.[props.fieldItemProps.dataName]}?`,
+      content: `Bạn chắc chắn bạn muốn xóa mục ${props.fieldTitle?.toLowerCase()} của bạn tại ${props
+        .fieldItems?.[props.fieldItemProps.dataName]}?`,
       okText: `Xóa`,
       cancelText: `Không, cảm ơn`,
       onOk() {
@@ -140,7 +145,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     });
   };
 
-  const handleOk = () => (
+  const handleOk = () =>
     form
       .validateFields()
       .then((formData) => {
@@ -148,19 +153,24 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         formData.end_date = formatDate(formData.end_date, "YYYY-MM-DD");
         postMutation.mutate(formData);
       })
-      .catch((err) => console.log("Form Error: ", err))
-  );
+      .catch((err) => console.log("Form Error: ", err));
 
   // Components
-  const DataInput: React.FC<DataInputProps> = ({ name, label, isRequired, isMulti, optionArr }) => (
+  const DataInput: React.FC<DataInputProps> = ({
+    name,
+    label,
+    isRequired,
+    isMulti,
+    optionArr,
+  }) => (
     <Form.Item
       name={name}
       label={label}
       rules={[
         {
           required: isRequired,
-          message: `Vui lòng nhập ${label.toLowerCase()}`
-        }
+          message: `Vui lòng nhập ${label.toLowerCase()}`,
+        },
       ]}
     >
       <Select
@@ -169,12 +179,14 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         optionFilterProp="label"
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
         loading={props.dataArr === undefined}
-        options={
-          (optionArr ?? ['1']).map((dataItem) => ({
-            value: name === props.fieldItemProps.dataIDLabel ? dataItem.id : dataItem,
-            label: name === props.fieldItemProps.dataIDLabel ? dataItem.name : dataItem,
-          }))
-        }
+        options={(optionArr ?? ["1"]).map((dataItem) => ({
+          value:
+            name === props.fieldItemProps.dataIDLabel ? dataItem.id : dataItem,
+          label:
+            name === props.fieldItemProps.dataIDLabel
+              ? dataItem.name
+              : dataItem,
+        }))}
       />
     </Form.Item>
   );
@@ -183,7 +195,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     switch (props.fieldItemProps.itemType[itemName]) {
       case "number":
         return (
-          <Form.Item 
+          <Form.Item
             name={itemName}
             label={getLabel(itemName, false)}
             rules={[
@@ -193,9 +205,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
               },
             ]}
           >
-            <InputNumber
-              controls={false}
-            />
+            <InputNumber controls={false} />
           </Form.Item>
         );
       case "object":
@@ -210,7 +220,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         );
       default:
         return (
-          <Form.Item 
+          <Form.Item
             name={itemName}
             label={getLabel(itemName, false)}
             rules={[
@@ -229,7 +239,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
   return (
     <Modal
       className="main-panel-form"
-      title={(props.isAdd ? "Thêm " :"Chỉnh Sửa ") + props.fieldTitle}
+      title={(props.isAdd ? "Thêm " : "Chỉnh Sửa ") + props.fieldTitle}
       centered
       open={props.open}
       onOk={handleOk}
@@ -237,22 +247,20 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       confirmLoading={postMutation.isLoading}
       footer={[
         <div className="main-panel-form-delete-btn">
-          {!props.isAdd && 
-            <Button 
+          {!props.isAdd && (
+            <Button
               type="text"
               loading={deleteMutation.isLoading}
               onClick={handleDelete}
             >
               Xóa mục này
             </Button>
-          }
+          )}
         </div>,
-        <Button onClick={handleCancel}>
-          Bỏ qua
-        </Button>,
+        <Button onClick={handleCancel}>Bỏ qua</Button>,
         <Button type="primary" loading={modalLoading} onClick={handleOk}>
           {props.isAdd ? "Thêm" : "Lưu"}
-        </Button>
+        </Button>,
       ]}
     >
       <Form
@@ -260,54 +268,48 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         name="profileForm"
         layout="vertical"
         disabled={postMutation.isLoading}
-        initialValues={
-          !props.isAdd ? props.fieldItems : {}
-        }
+        initialValues={!props.isAdd ? props.fieldItems : {}}
       >
         {/* Item's Title - meaning the string display as the header */}
-        {
-          props.fieldItemProps.labelToAPI.itemTitle === props.fieldItemProps.dataName ?
+        {props.fieldItemProps.labelToAPI.itemTitle ===
+        props.fieldItemProps.dataName ? (
+          <DataInput
+            name={props.fieldItemProps.dataIDLabel}
+            label={props.fieldItemProps.itemTitle}
+            isRequired={true}
+            isMulti={false}
+            optionArr={props.dataArr}
+          />
+        ) : (
+          <Form.Item
+            name={props.fieldItemProps.labelToAPI.itemTitle}
+            label={props.fieldItemProps.itemTitle}
+            rules={[
+              {
+                required: true,
+                message: `Vui lòng nhập ${props.fieldItemProps.itemTitle.toLowerCase()}`,
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        )}
+        {/* All the fields in between */}
+        {props.fieldItemProps.layout.map((itemName) =>
+          itemName === props.fieldItemProps.dataName ? (
             <DataInput
               name={props.fieldItemProps.dataIDLabel}
-              label={props.fieldItemProps.itemTitle}
+              label={props.fieldItemProps.APIToLabel[itemName]}
               isRequired={true}
               isMulti={false}
               optionArr={props.dataArr}
             />
-          :
-            <Form.Item
-              name={props.fieldItemProps.labelToAPI.itemTitle}
-              label={props.fieldItemProps.itemTitle}
-              rules={[
-                {
-                  required: true,
-                  message: `Vui lòng nhập ${props.fieldItemProps.itemTitle.toLowerCase()}`
-                }
-              ]}
-            >
-              <Input />
-            </Form.Item>
-        }
-        {/* All the fields in between */}
-        {
-          props.fieldItemProps.layout.map((itemName) => (
-            itemName === props.fieldItemProps.dataName ?
-              <DataInput
-                name={props.fieldItemProps.dataIDLabel}
-                label={props.fieldItemProps.APIToLabel[itemName]}
-                isRequired={true}
-                isMulti={false}
-                optionArr={props.dataArr}
-              />
-            :
-              <ItemInput itemName={itemName} />
-          ))
-        }
+          ) : (
+            <ItemInput itemName={itemName} />
+          ),
+        )}
         {/* Current, Start date, End date, Description */}
-        <Form.Item
-          name="is_current"
-          valuePropName="checked"
-        >
+        <Form.Item name="is_current" valuePropName="checked">
           <Checkbox
             onChange={(event) => {
               setIsCurrent(event.target.checked);
@@ -326,22 +328,28 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           label={getLabel("start_date", false)}
           validateStatus={!areValidDates ? "error" : ""}
         >
-          <DatePicker format="DD/MM/YYYY" onChange={validateDates}/>
+          <DatePicker format="DD/MM/YYYY" onChange={validateDates} />
         </Form.Item>
         <Form.Item
           name="end_date"
           label={getLabel("end_date", false) + (isCurrent ? " (dự định)" : "")}
           validateStatus={!areValidDates ? "error" : ""}
-          help={!areValidDates && `Xin hãy nhập đúng hai ngày (${getLabel("start_date", false)} trước ${getLabel("end_date", false).toLowerCase()})`}
+          help={
+            !areValidDates &&
+            `Xin hãy nhập đúng hai ngày (${getLabel(
+              "start_date",
+              false,
+            )} trước ${getLabel("end_date", false).toLowerCase()})`
+          }
           hidden={props.fieldItemProps.disableEndDate && isCurrent}
         >
-          <DatePicker format="DD/MM/YYYY" onChange={validateDates}/>
+          <DatePicker format="DD/MM/YYYY" onChange={validateDates} />
         </Form.Item>
         <Form.Item
           name="description"
           label={`Mô tả ${props.fieldItemProps.itemTitle.toLowerCase()}`}
         >
-          <Input.TextArea allowClear/>
+          <Input.TextArea allowClear />
         </Form.Item>
       </Form>
     </Modal>

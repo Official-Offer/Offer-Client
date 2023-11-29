@@ -3,7 +3,7 @@ import { Select, Tag } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 const options = [
-  { label: "Vòng đơn", value: "red"},
+  { label: "Vòng đơn", value: "red" },
   { label: "Vòng phỏng vấn", value: "blue" },
   { label: "Đã nhận", value: "green" },
 ];
@@ -31,7 +31,7 @@ type FilterTypeProps = {
   onSearch?: (value: string[]) => void;
 };
 
-const FilterType: React.FC<FilterTypeProps> = ({onSearch, ...props }) => (
+const FilterType: React.FC<FilterTypeProps> = ({ onSearch, ...props }) => (
   <div {...props}>
     <Select
       mode="multiple"

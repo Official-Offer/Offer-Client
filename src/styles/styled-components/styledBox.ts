@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Card as AntdCard } from 'antd';
-import { CardProps } from 'antd/lib/card';
-import { border, color, layout, space } from 'styled-system';
+import styled from "styled-components";
+import { Card as AntdCard } from "antd";
+import { CardProps } from "antd/lib/card";
+import { border, color, layout, space } from "styled-system";
 
 export const Box = styled.div`
   display: flex;
@@ -21,18 +21,18 @@ export const Card = styled.div`
   flex-direction: column;
 `;
 
-export const StyledNotiBox = styled.div<{ large: boolean, read: boolean }>`
+export const StyledNotiBox = styled.div<{ large: boolean; read: boolean }>`
   display: flex;
   align-items: center;
-  padding: ${({large}) => large ? "24px" : "12px"};
+  padding: ${({ large }) => (large ? "24px" : "12px")};
   position: relative;
-  background-color: ${({read}) => read ? "white" : "#FAD4E6"};
+  background-color: ${({ read }) => (read ? "white" : "#FAD4E6")};
   transition: 0.2s;
   cursor: pointer;
-  gap: ${({large}) => large ? "20px" : "16px"};
+  gap: ${({ large }) => (large ? "20px" : "16px")};
 
   &:hover {
-    background-color: ${({read}) => read ? "#00000014" : "#F6AACD"};
+    background-color: ${({ read }) => (read ? "#00000014" : "#F6AACD")};
   }
 
   .avatar {
@@ -69,7 +69,7 @@ export const StyledNotiBox = styled.div<{ large: boolean, read: boolean }>`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${({read}) => read ? "transparent" : "#D30B81"};
+    background-color: ${({ read }) => (read ? "transparent" : "#D30B81")};
   }
 `;
 
@@ -100,7 +100,7 @@ export const MessagePanel = styled.div`
   .mes-search-bar {
     padding: 0px 12px;
     .search-bar {
-      background-color: #F1F1F1;
+      background-color: #f1f1f1;
     }
   }
 `;
@@ -114,7 +114,7 @@ export const MessageBox = styled.div<{ seen?: boolean }>`
   cursor: pointer;
   gap: 10px;
   color: black;
-  font-weight: ${({seen}) => seen ? "400" : "700"};
+  font-weight: ${({ seen }) => (seen ? "400" : "700")};
   max-height: 9rem;
 
   &:hover {
@@ -152,7 +152,7 @@ export const MessageBox = styled.div<{ seen?: boolean }>`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${({seen}) => seen ? "transparent" : "#D30B81"};
+    background-color: ${({ seen }) => (seen ? "transparent" : "#D30B81")};
   }
 `;
 
@@ -165,7 +165,7 @@ export const StyledResumeCard = styled.div`
   padding: 16px;
   color: white;
   border-radius: 8px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #313C49 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #313c49 100%);
 
   h3 {
     font-size: 1.4rem;
@@ -175,19 +175,23 @@ export const StyledResumeCard = styled.div`
   }
 `;
 
-export const StyledListCard = styled.div<{ hasLink?: boolean, applicant?: boolean }>`
+export const StyledListCard = styled.div<{
+  hasLink?: boolean;
+  applicant?: boolean;
+}>`
   display: flex;
   align-items: center;
   position: relative;
   border-radius: 8px;
-  padding: ${({hasLink}) => hasLink ? "0px" : "24px"};
-  background-color: ${({applicant}) => applicant ? "white" : "transparent"};
-  margin-bottom: ${({applicant}) => applicant ? "20px" : ""};
+  padding: ${({ hasLink }) => (hasLink ? "0px" : "24px")};
+  background-color: ${({ applicant }) => (applicant ? "white" : "transparent")};
+  margin-bottom: ${({ applicant }) => (applicant ? "20px" : "")};
 
   &:hover {
     backdrop-filter: brightness(0.90); 
     cursor: pointer;
-    background-color: ${({applicant}) => applicant ? "#D9D9D9" : "transparent"};
+    background-color: ${({ applicant }) =>
+      applicant ? "#D9D9D9" : "transparent"};
 
     .close-btn {
         display: initial;
@@ -200,7 +204,7 @@ export const StyledListCard = styled.div<{ hasLink?: boolean, applicant?: boolea
   .link-wrapped {
     display: flex;
     align-items: center;
-    padding: ${({hasLink}) => hasLink ? "24px" : "0px"};
+    padding: ${({ hasLink }) => (hasLink ? "24px" : "0px")};
     width: 100%;
   }
 
@@ -263,22 +267,22 @@ export const StyledListCard = styled.div<{ hasLink?: boolean, applicant?: boolea
 
 type SearchDropdownProps = {
   background?: string;
-}
+};
 
 export const SearchDropdown = styled(AntdCard)<CardProps & SearchDropdownProps>`
   text-align: center;
-  
+
   ul {
     padding: 0;
     margin-bottom: 0;
     text-align: left;
     list-style: none;
-    background: ${({background}) => background};
-  
+    background: ${({ background }) => background};
+
     li {
       padding: 8px 24px;
-      background: ${({background}) => background};
-  
+      background: ${({ background }) => background};
+
       &:hover {
         cursor: pointer;
         filter: brightness(0.87);

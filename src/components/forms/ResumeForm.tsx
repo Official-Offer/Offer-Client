@@ -7,7 +7,7 @@ interface IResumeForm {
   onSubmit: (resume: string) => void;
 }
 
-export const ResumeForm:React.FC<IResumeForm> = ({ onSubmit }) => {
+export const ResumeForm: React.FC<IResumeForm> = ({ onSubmit }) => {
   const [resume, setResume] = useState("");
 
   const handleSubmit = () => {
@@ -65,4 +65,4 @@ export const ResumeForm:React.FC<IResumeForm> = ({ onSubmit }) => {
       </form>
     </div>
   );
-}
+};

@@ -27,8 +27,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [Org, setOrg] = useState<any>();
   const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const isStudent =
-    state.role.isStudent || router.pathname.includes("student");
+  const isStudent = state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");

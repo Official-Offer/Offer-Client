@@ -1,26 +1,26 @@
 .text {
-    &-red1 {
-        color: $red-color1;
-    }
-    &-red {
-        color: #F63D74;
-    }
+  &-red1 {
+    color: $red-color1;
+  }
+  &-red {
+    color: #f63d74;
+  }
 }
 
 .balance-color {
-    color: $green-color;
-    border: 1px solid $green-color;
+  color: $green-color;
+  border: 1px solid $green-color;
 }
 
 .link-arrow {
-    text-align: right;
-    margin: 0 60px;
-    a {
-        color: $purple-color;
-        font-weight: $fw-bold-1;
-        text-decoration: underline;
-        &::after {
-        content: " →";
-        }
+  text-align: right;
+  margin: 0 60px;
+  a {
+    color: $purple-color;
+    font-weight: $fw-bold-1;
+    text-decoration: underline;
+    &::after {
+      content: " →";
     }
+  }
 }

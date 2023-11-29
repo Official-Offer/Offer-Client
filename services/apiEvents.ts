@@ -8,13 +8,13 @@ export const getAdvisorEvents = async () => {
     // "Chưa tạo danh sách",
     "VinAI",
     "FB",
-    "Amz"
+    "Amz",
   ];
   const tags = [
     // "Chưa tạo danh sách",
     "Peding",
     "unapproved",
-    "approved"
+    "approved",
   ];
   var res = [];
   for (const event of eventList) {
@@ -23,10 +23,10 @@ export const getAdvisorEvents = async () => {
       ID: event.id,
       posted_date: formatDate(event.timestamp, "D/M/YYYY"),
       title: event.title || "Không tìm thấy",
-      company: companies[Math.floor(Math.random()*companies.length)],
+      company: companies[Math.floor(Math.random() * companies.length)],
       no_attendants: 10,
       compatibility: "70%",
-      tag: tags[Math.floor(Math.random()*tags.length)],
+      tag: tags[Math.floor(Math.random() * tags.length)],
     });
   }
   return res;
@@ -39,13 +39,13 @@ export const getRecruiterEvents = async () => {
     // "Chưa tạo danh sách",
     "VinUni",
     "FBUni",
-    "UMass"
+    "UMass",
   ];
   const tags = [
     // "Chưa tạo danh sách",
     "Peding",
     "unapproved",
-    "approved"
+    "approved",
   ];
   var res = [];
   for (const event of eventList) {
@@ -54,12 +54,11 @@ export const getRecruiterEvents = async () => {
       ID: event.id,
       posted_date: formatDate(event.timestamp, "D/M/YYYY"),
       title: event.title || "Không tìm thấy",
-      school: schools[Math.floor(Math.random()*schools.length)],
+      school: schools[Math.floor(Math.random() * schools.length)],
       no_attendants: 10,
       compatibility: "70%",
-      tag: tags[Math.floor(Math.random()*tags.length)],
+      tag: tags[Math.floor(Math.random() * tags.length)],
     });
   }
   return res;
 };
-

@@ -20,7 +20,7 @@ const Students: NextPage = () => {
       setData(students);
       setDataSet(students);
 
-      setSearchResults(students.map(student=>student.name));
+      setSearchResults(students.map((student) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
   });
@@ -30,8 +30,8 @@ const Students: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter((item) =>
-      item.name?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };

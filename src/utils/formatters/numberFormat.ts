@@ -1,27 +1,41 @@
 import moment from "moment";
 
-export const formatNum = (number: number | undefined | null, long: boolean, alt?: string): string => {
+export const formatNum = (
+  number: number | undefined | null,
+  long: boolean,
+  alt?: string,
+): string => {
   if (!number || isNaN(number)) {
     return alt || "Không xác định";
   }
   if (long) {
-    return number.toLocaleString('vi-VN');
+    return number.toLocaleString("vi-VN");
   }
   if (number < 1000) {
-    return number.toLocaleString('vi-VN');
+    return number.toLocaleString("vi-VN");
   } else if (number < 1000000) {
-    const thousand = (number / 1000);
-    return thousand.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " nghìn";
+    const thousand = number / 1000;
+    return (
+      thousand.toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " nghìn"
+    );
   } else if (number < 1000000000) {
-    const million = (number / 1000000);
-    return million.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " triệu";
+    const million = number / 1000000;
+    return (
+      million.toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " triệu"
+    );
   } else {
-    const billion = (number / 1000000000);
-    return billion.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + " tỷ";
+    const billion = number / 1000000000;
+    return (
+      billion.toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " tỷ"
+    );
   }
 };
 
-export const formatDate = (date: string | undefined | null, format: string, timeDist?: boolean): string => {
+export const formatDate = (
+  date: string | undefined | null,
+  format: string,
+  timeDist?: boolean,
+): string => {
   if (date) {
     let dateDist: string = "";
     if (timeDist) {

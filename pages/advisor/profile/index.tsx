@@ -11,7 +11,7 @@ const Profile: NextPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  
+
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
   return (
@@ -47,7 +47,7 @@ const Profile: NextPage = () => {
         </Form.Item>
         <OrgForm
           onSubmit={function (org: string): void {
-            console.log("done")
+            console.log("done");
             // throw new Error("Function not implemented.");
           }}
           type="update"

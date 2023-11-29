@@ -83,6 +83,21 @@ const jobSlice = createSlice({
   },
 });
 
-export const { setTitle, setCompany, setCompanyId, setDescription, setJobId, setDeadline, setLevel, setAddress, setSalary, setMajor, setType, setReqs, setBenefits, setUpperSalary} = jobSlice.actions;
+export const {
+  setTitle,
+  setCompany,
+  setCompanyId,
+  setDescription,
+  setJobId,
+  setDeadline,
+  setLevel,
+  setAddress,
+  setSalary,
+  setMajor,
+  setType,
+  setReqs,
+  setBenefits,
+  setUpperSalary,
+} = jobSlice.actions;
 
 export default jobSlice.reducer;

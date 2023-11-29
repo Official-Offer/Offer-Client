@@ -1,7 +1,11 @@
 @charset "UTF-8";
 /* Global */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: 700;
   margin: 0;
 }
@@ -52,7 +56,9 @@ a {
   min-width: 23.65%;
   max-height: 322px;
   cursor: pointer;
-  transition: scale 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  transition:
+    scale 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out;
 }
 .info-card:hover {
   scale: 1.05;
@@ -61,7 +67,7 @@ a {
 .info-card .ant-card-cover img {
   height: 100px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 8px 8px 0 0;
 }
 .info-card span {
@@ -78,9 +84,9 @@ a {
   left: 12px;
   padding: 4px 8px;
   border-radius: 4px;
-  color: #FFFDFD;
+  color: #fffdfd;
   font-style: italic;
-  background-color: #7277F1;
+  background-color: #7277f1;
 }
 
 .event-card {
@@ -104,11 +110,12 @@ a {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  background-color: #FF4652;
+  background-color: #ff4652;
   border-radius: 8px 0 0 8px;
   padding: 10px;
 }
-.event-card .event-date h2, .event-card .event-date h3 {
+.event-card .event-date h2,
+.event-card .event-date h3 {
   color: white !important;
 }
 .event-card .event-info {
@@ -156,37 +163,37 @@ a {
   padding: 10px 20px !important;
 }
 .navbar .ant-menu-item.ant-dropdown-open .icon-btn .anticon {
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 .navbar .ant-menu-item .ant-btn {
   border-radius: 50%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .search-bar {
   border-radius: 40px;
   min-width: 200px;
   max-width: 300px;
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 .search-bar::-moz-placeholder {
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 .search-bar::placeholder {
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 .search-bar .anticon {
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 .search-bar input {
   background-color: transparent;
 }
 .search-bar input::-moz-placeholder {
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 .search-bar input::placeholder {
-  color: #5B5B5B;
+  color: #5b5b5b;
 }
 .search-bar.hide-bar {
   max-width: 32px;
@@ -205,14 +212,17 @@ a {
   font-weight: 600;
 }
 .avatar-dropdown .ant-dropdown-menu-item-divider {
-  background-color: #5B5B5B;
+  background-color: #5b5b5b;
 }
 
 .noti-dropdown {
   width: 360px;
   max-width: calc(100vw - 24px);
   border-radius: 8px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
 }
 
 .panel-header {
@@ -223,7 +233,7 @@ a {
   width: 100%;
 }
 .panel-header a {
-  color: #D30B81;
+  color: #d30b81;
   font-weight: 600;
 }
 .panel-header a:hover {
@@ -233,7 +243,7 @@ a {
 .uni-cover .ant-card-cover > img {
   height: 255px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .uni-cover .cover-spacing {
   display: flex;
@@ -245,8 +255,8 @@ a {
   position: absolute;
   left: 20px;
   bottom: 20px;
-  background-color: #FFF;
-  border: 1px #ADADAD solid;
+  background-color: #fff;
+  border: 1px #adadad solid;
   border-radius: 4px;
   padding: 20px 32px;
 }
@@ -266,7 +276,7 @@ a {
   border-radius: 40px;
   width: 36px;
   height: 36px;
-  background-color: #DDDDDD;
+  background-color: #dddddd;
   font-weight: 700;
 }
 .scroll-btn.prev-btn {
@@ -287,14 +297,14 @@ a {
   transition: 0.4s;
 }
 .icon-btn .anticon:hover {
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 
 .avatar-info-mini {
   display: flex;
   padding: 0 8px;
   -moz-column-gap: 10px;
-       column-gap: 10px;
+  column-gap: 10px;
 }
 .avatar-info-mini img {
   margin-left: -5px;
@@ -328,7 +338,7 @@ a {
   flex-direction: column;
   align-items: center;
   padding: 0 32px;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 .main-home .main__content {
   padding: 0;
@@ -343,7 +353,7 @@ a {
   margin: 0 60px;
 }
 .main-home .main__content section .see-more a {
-  color: #7277F1;
+  color: #7277f1;
   font-weight: 700;
   text-decoration: underline;
 }
@@ -368,7 +378,7 @@ a {
   display: flex;
   align-items: flex-start;
   padding: 48px 40px;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 .student-profile .sticky-panel {
   position: sticky;
@@ -398,7 +408,7 @@ a {
   height: 75px;
   border-radius: 8px 8px 0px 0px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .student-profile .sticky-panel-job {
   display: flex;
@@ -597,7 +607,7 @@ a {
   display: flex;
   flex-direction: row;
   -moz-column-gap: 10px;
-       column-gap: 10px;
+  column-gap: 10px;
 }
 .job-portal-description-employees-avatars {
   margin: 0 0 25px 5px;
@@ -609,7 +619,7 @@ a {
   display: flex;
   flex-direction: row;
   -moz-column-gap: 30px;
-       column-gap: 30px;
+  column-gap: 30px;
   margin-bottom: 20px;
 }
 .job-portal-description-actions .ant-modal-content {
@@ -645,7 +655,7 @@ a {
 .job-portal-description-important .flex {
   display: flex;
   -moz-column-gap: 200px;
-       column-gap: 200px;
+  column-gap: 200px;
 }
 .job-portal-description-important .title {
   font-weight: bold;
@@ -653,7 +663,7 @@ a {
 
 a {
   text-decoration: none;
-}/*# sourceMappingURL=global.css.map */
+} /*# sourceMappingURL=global.css.map */
 
 #components-layout-demo-top-side-2 .logo {
   float: left;

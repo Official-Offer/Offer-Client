@@ -8,21 +8,30 @@ type SubmitButtonProps = {
   isLoading?: boolean;
   onClick?: (event: any) => void;
   type?: number;
-}
+};
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({text, isLoading, onClick, type}: any) => {
-  const styles = type == 2 ? {
-    width: '150px',
-    background: 'gray',
-    borderRadius: '10px'
-  } : type == 3 ? {
-    width: '150px',
-    borderRadius: '10px',
-    background: 'var(--theme, linear-gradient(180deg, #EA0A8E 0%, #7289DA 100%));',
-    gradient: true
-  } : {
-
-  }
+export const SubmitButton: React.FC<SubmitButtonProps> = ({
+  text,
+  isLoading,
+  onClick,
+  type,
+}: any) => {
+  const styles =
+    type == 2
+      ? {
+          width: "150px",
+          background: "gray",
+          borderRadius: "10px",
+        }
+      : type == 3
+        ? {
+            width: "150px",
+            borderRadius: "10px",
+            background:
+              "var(--theme, linear-gradient(180deg, #EA0A8E 0%, #7289DA 100%));",
+            gradient: true,
+          }
+        : {};
   return (
     <StyledSubmitButton
       disabled={isLoading}

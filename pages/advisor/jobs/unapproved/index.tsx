@@ -20,7 +20,7 @@ const UnapprovedJobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-      setSearchResults(jobs.map(job=>job.title));
+      setSearchResults(jobs.map((job) => job.title));
     },
     onError: () => {},
   });
@@ -31,14 +31,13 @@ const UnapprovedJobs: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter(item =>
-      item.title?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.title?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
 
-  const handleVerifyJob = () => {
-  }
+  const handleVerifyJob = () => {};
 
   return (
     <div className="applicant">

@@ -13,7 +13,7 @@ export type User = {
   twitter?: string | null; // string($uri), maxLength: 200, x-nullable
   facebook?: string | null; // string($uri), maxLength: 200, x-nullable
   website?: string | null; // string($uri), maxLength: 200, x-nullable
-}
+};
 
 export type Address = {
   id: number;
@@ -40,24 +40,31 @@ export type School = {
   website?: string | null; // with maxLength of 200, x-nullable
   linkedin?: string | null; // with maxLength of 200, x-nullable
   facebook?: string | null; // with maxLength of 200, x-nullable
-}
+};
 
 export type Resume = {
   pk: number;
   resume: string;
-}
+};
 
 export type Major = {
   id: number;
   name: string;
-  disciplines?: number[]
-}
+  disciplines?: number[];
+};
 
 export type Student = {
   account: User;
   pk: number; // Title suggests this might represent the "Account" field, you may want to ensure this.
   expected_graduation_date?: string | null; // x-nullable
-  school_year?: 'freshman' | 'sophomore' | 'junior' | 'senior' | 'master' | 'phd' | null; // Assuming an enum of 6 possible values
+  school_year?:
+    | "freshman"
+    | "sophomore"
+    | "junior"
+    | "senior"
+    | "master"
+    | "phd"
+    | null; // Assuming an enum of 6 possible values
   school: School;
   gpa: string; // readOnly
   educations: any[]; // Need the actual structure of this array
@@ -66,8 +73,8 @@ export type Student = {
   projects: any[]; // Need the actual structure of this array
   certifications: any[]; // Need the actual structure of this array
   interests: any[]; // Need the actual structure of this array
-  active_resume: Resume; 
-}
+  active_resume: Resume;
+};
 
 export type Company = {
   id: number;
@@ -103,7 +110,13 @@ export type Job = {
   payment_type?: string;
   description?: string; // Optional
   requirement?: string; // Optional
-  required_school_year: ('freshman' | 'sophomore' | 'junior' | 'senior' | 'master' | 'phd');
+  required_school_year:
+    | "freshman"
+    | "sophomore"
+    | "junior"
+    | "senior"
+    | "master"
+    | "phd";
   travel_requirement: boolean;
   travel_support?: boolean; // Optional
   benefits?: string; // Optional

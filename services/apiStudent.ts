@@ -37,9 +37,9 @@ export const getApplicantsFromJobs = async (id: number) => {
       school: student.default_school?.name || "No School",
       major: student.major,
       expected_graduation: student.expected_graduation,
-      compatibility: '80%',
+      compatibility: "80%",
       tag: "Vòng đơn",
-    },);
+    });
   }
   return studentList;
 };
@@ -59,18 +59,16 @@ export const getStudentsFromSchool = async () => {
   //     jobs_accepted: 2,
   //   },);
   // }
-  const schoolApplicants = [
-    "1", "2", "3", "4"
-  ]
-  return schoolApplicants.map((student)=>({
-      key: "123" || "234",
-      ID:  "123" || "234",
-      name: "ktto" || "thuan vo" || "No name",
-      major: "Biology" || "Math" || "CS",
-      resume: "CV(1)",
-      expected_graduation: "2014" || "2025",
-      jobs_applied: 20,
-      // jobs_accepted: 2,
+  const schoolApplicants = ["1", "2", "3", "4"];
+  return schoolApplicants.map((student) => ({
+    key: "123" || "234",
+    ID: "123" || "234",
+    name: "ktto" || "thuan vo" || "No name",
+    major: "Biology" || "Math" || "CS",
+    resume: "CV(1)",
+    expected_graduation: "2014" || "2025",
+    jobs_applied: 20,
+    // jobs_accepted: 2,
   }));
 };
 
@@ -108,7 +106,7 @@ export const getStudentEducations = async () => {
 
 export const editStudentEducation = async (
   id: number,
-  input: Record<string, unknown>
+  input: Record<string, unknown>,
 ) => {
   const response = await request.put(`/students/educations/${id}/`, input);
   return response.data;
@@ -137,7 +135,7 @@ export const getStudentExperiences = async () => {
 
 export const editStudentExperience = async (
   id: number,
-  input: Record<string, unknown>
+  input: Record<string, unknown>,
 ) => {
   const response = await request.put(`/students/experiences/${id}/`, input);
   return response.data;
