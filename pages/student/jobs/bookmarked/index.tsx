@@ -22,12 +22,13 @@ type BookmarkedCardProps = {
       };
     };
     timestamp?: string;
-  }
-}
+  };
+};
 
 const BookmarkedJobs: NextPage = () => {
   // States
-  const [bookmarkedList, setBookmarkedList] = useState<Record<string, unknown>[]>();
+  const [bookmarkedList, setBookmarkedList] =
+    useState<Record<string, unknown>[]>();
 
   // Hooks
   const queryClient = useQueryClient();
@@ -43,7 +44,8 @@ const BookmarkedJobs: NextPage = () => {
 
   const unbookmarkJobMutation = useMutation({
     mutationFn: unbookmarkJob,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarkedJobs"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["bookmarkedJobs"] }),
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
 
@@ -59,7 +61,7 @@ const BookmarkedJobs: NextPage = () => {
       cancelText: "Hủy",
       onOk() {
         unbookmarkJobMutation.mutate(id);
-      }
+      },
     });
   };
 
@@ -109,20 +111,21 @@ const BookmarkedJobs: NextPage = () => {
       <section className="split-layout-item flex-xl">
         <AntdCard
           className="main-panel-card"
-          loading={bookmarkedListQuery.isLoading || bookmarkedListQuery.isRefetching || unbookmarkJobMutation.isLoading}
-          title={
-            <h2>Việc đã lưu</h2>
+          loading={
+            bookmarkedListQuery.isLoading ||
+            bookmarkedListQuery.isRefetching ||
+            unbookmarkJobMutation.isLoading
           }
+          title={<h2>Việc đã lưu</h2>}
         >
-          {
-            bookmarkedList?.length === 0 ? "Chưa có công việc nào đã được lưu" :
-            bookmarkedList?.map((job) => (
-              <BookmarkedCard bookmark={job} />
-            ))
-          }
+          {bookmarkedList?.length === 0
+            ? "Chưa có công việc nào đã được lưu"
+            : bookmarkedList?.map((job) => <BookmarkedCard bookmark={job} />)}
         </AntdCard>
       </section>
-      <section className="split-layout-sticky">{/* Empty to center the main section */}</section>
+      <section className="split-layout-sticky">
+        {/* Empty to center the main section */}
+      </section>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 .form {
-  margin: 15px 0 10px 0;
+  margin: 12px 0 12px 0;
 
   &-flex {
     display: flex;
@@ -84,6 +84,7 @@
   }
 
   &-submit-button {
+    margin-top: 4px;
     display: flex;
     &-spinner {
       animation-name: spin;

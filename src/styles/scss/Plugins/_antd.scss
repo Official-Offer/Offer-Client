@@ -1,196 +1,202 @@
-.ant-card {
-  border-radius: 8px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  .ant-card-head {
-    border-bottom: none;
-  }
-  
-  .ant-card-meta-title {
-    font-weight: $fw-bold-1;
-    font-size: 1.5em;
-    white-space: normal;
-  }
-}
-
-.ant-dropdown {
-  position: fixed !important;
-}
-
-.ant-btn {
-  &-text {
-    &:hover {
-      background: #DDDDDD;
-    }
-  }
-
-  &-lg {
-    &.round-border {
-      border-radius: 8px;
-    }
-  }
-
-  &.right-icon {
-    span:last-child {
-      margin-left: 4px;
-      svg {
-        font-size: 0.75rem;
-      }
-    }
-  }
-}
-
-.ant-modal {
-  &-big {
-    width: 700px !important;
-  }
-
-  &-content {
+.ant {
+  &-card {
     border-radius: 8px;
-  }
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-  &-header {
-    border-radius: 8px 8px 0px 0px;
-  }
-
-  &-footer {
-    border-radius: 0px 0px 8px 8px;
-    display: flex;
-    justify-content: right;
-  }
-
-  &-title {
-    font-weight: $fw-bold-0;
-  }
-
-  &-confirm {
-    .ant-modal-body {
-      padding: 24px 24px 20px;
+    &-head {
+      border-bottom: none;
     }
 
-    &-content {
-      display: flex;
+    &-meta-title {
+      font-weight: $fw-bold-1;
+      font-size: 1.5em;
+      white-space: normal;
     }
   }
-}
 
-.ant-divider {
-  &-horizontal {
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  &-dropdown {
+    position: fixed !important;
   }
-}
 
-.ant-upload {
-  .anticon-upload {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-  }
-}
-
-.ant-menu-inline {
-  .ant-menu-item {
-    &:hover {
-      background-color: $grey-light;
-    }
-
-    &-selected {
+  &-btn {
+    &-text {
       &:hover {
-        background-color: hsl(199, 100%, 90%);
+        background: #dddddd;
       }
     }
-  }
-}
 
-.ant-input {
-  &-affix-wrapper {
-    border: 2px solid #{$grey-light};
-  }
-}
-
-.ant-radio {
-  &-button {
-    &-wrapper {
-      border: 1.5px solid #{$grey-light};
-      border-top-width: 1.02px;
-      border-left-width: 0;
-
-      span{
-        -webkit-user-select: none; /* Safari */
-        -ms-user-select: none; /* IE 10 and IE 11 */
-        user-select: none; /* Standard syntax */
-      }
-    }
-  }
-}
-
-.ant-space {
-  &.align-stretch {
-    align-items: stretch;
-    div {
-      height: 100%;
-    }
-  }
-
-  &.justify-center {
-    width: 100%;
-    justify-content: center;
-  }
-
-  &.justify-stretch {
-    justify-content: stretch;
-    flex-wrap: nowrap !important;
-
-    .stretch-center {
-      width: 100%;
-    }
-  }
-
-  &-compact {
-    &.round-border {
-      label:first-child {
-        border-radius: 8px 0 0 8px !important;
-      }
-      label:last-child {
-        border-radius: 0 8px 8px 0 !important;
-      }
-    }
-  }
-
-  &-item {
-    .ant-select {
-      min-width: 250px;
-      width: calc(fit-content() + 12px);
-    }
-  }
-}
-
-.ant-popover {
-  &-inner {
-    border-radius: 8px;
-  }
-}
-
-.ant-select {
-  &.round {
-    .ant-select-selector {
-      border-radius: 50px;
-    }
-  }
-  &-lg {
-    &.round-border {
-      .ant-select-selector {
+    &-lg {
+      &.round-border {
         border-radius: 8px;
       }
     }
 
-    span {
-      color: black;
+    &.right-icon {
+      span:last-child {
+        margin-left: 4px;
+        svg {
+          font-size: 0.75rem;
+        }
+      }
     }
   }
 
-  &-selection {
-    &-item {
-      border-radius: 6px !important;
+  &-modal {
+    &-big {
+      width: 700px !important;
     }
+
+    &-content {
+      border-radius: 8px;
+    }
+
+    &-header {
+      border-radius: 8px 8px 0px 0px;
+    }
+
+    &-footer {
+      border-radius: 0px 0px 8px 8px;
+      display: flex;
+      justify-content: right;
+    }
+
+    &-title {
+      font-weight: $fw-bold-0;
+    }
+
+    &-confirm {
+      .ant-modal-body {
+        padding: 24px 24px 20px;
+      }
+
+      &-content {
+        display: flex;
+      }
+    }
+  }
+
+  &-divider {
+    &-horizontal {
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &-upload {
+    .anticon-upload {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+  }
+
+  &-menu-inline {
+    .ant-menu-item {
+      &:hover {
+        background-color: $grey-light;
+      }
+
+      &-selected {
+        &:hover {
+          background-color: hsl(199, 100%, 90%);
+        }
+      }
+    }
+  }
+
+  &-input {
+    &-affix-wrapper {
+      border: 2px solid #{$grey-light};
+    }
+  }
+
+  &-radio {
+    &-button {
+      &-wrapper {
+        border: 1.5px solid #{$grey-light};
+        border-top-width: 1.02px;
+        border-left-width: 0;
+
+        span {
+          -webkit-user-select: none; /* Safari */
+          -ms-user-select: none; /* IE 10 and IE 11 */
+          user-select: none; /* Standard syntax */
+        }
+      }
+    }
+  }
+
+  &-space {
+    &.align-stretch {
+      align-items: stretch;
+      div {
+        height: 100%;
+      }
+    }
+
+    &.justify-center {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &.justify-stretch {
+      justify-content: stretch;
+      flex-wrap: nowrap !important;
+
+      .stretch-center {
+        width: 100%;
+      }
+    }
+
+    &-compact {
+      &.round-border {
+        label:first-child {
+          border-radius: 8px 0 0 8px !important;
+        }
+        label:last-child {
+          border-radius: 0 8px 8px 0 !important;
+        }
+      }
+    }
+
+    &-item {
+      .ant-select {
+        min-width: 250px;
+        width: calc(fit-content() + 12px);
+      }
+    }
+  }
+
+  &-popover {
+    &-inner {
+      border-radius: 8px;
+    }
+  }
+
+  &-select {
+    &.round {
+      .ant-select-selector {
+        border-radius: 50px;
+      }
+    }
+    &-lg {
+      &.round-border {
+        .ant-select-selector {
+          border-radius: 8px;
+        }
+      }
+
+      span {
+        color: black;
+      }
+    }
+
+    &-selection {
+      &-item {
+        border-radius: 6px !important;
+      }
+    }
+  }
+
+  &-alert {
+    margin-top: 4px;
   }
 }

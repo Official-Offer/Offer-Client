@@ -1,14 +1,28 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
-import { PlusOutlined, CloudDownloadOutlined, CloudUploadOutlined, LoadingOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
+  LoadingOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { StyledResumeCard } from "@styles/styled-components/styledBox";
-import { FileDownloadButton, IconButton } from "@styles/styled-components/styledButton";
-import { getStudentResume, updateStudentResume, deleteStudentResume } from "@services/apiStudent";
+import {
+  FileDownloadButton,
+  IconButton,
+} from "@styles/styled-components/styledButton";
+import {
+  getStudentResume,
+  updateStudentResume,
+  deleteStudentResume,
+} from "@services/apiStudent";
 
 type ResumeCardProps = {
-  isEditable?: boolean
-}
+  isEditable?: boolean;
+};
 
 export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   // States
@@ -25,7 +39,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  
+
   const uploadMutation = useMutation({
     mutationFn: async () => {
       if (selectedFile) {
@@ -37,13 +51,15 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
     onSuccess: () => {
       downloadQuery.refetch();
       if (resetTimer) clearTimeout(resetTimer);
-      setResetTimer(setTimeout(() => {
-        setSelectedFile(null);
-      }, 2000));
+      setResetTimer(
+        setTimeout(() => {
+          setSelectedFile(null);
+        }, 2000),
+      );
     },
     onError: (err) => console.log(`Upload Error: ${err}`),
   });
-  
+
   const deleteMutation = useMutation({
     mutationFn: deleteStudentResume,
     onSuccess: () => {
@@ -52,17 +68,21 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
 
-  // Functions  
+  // Functions
   const selectResume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target.files?.[0] ?? null);
   };
-  
-  const handleUpload = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+  const handleUpload = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.preventDefault();
     uploadMutation.mutate();
   };
 
-  const handleDelete = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleDelete = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.preventDefault();
     Modal.confirm({
       centered: true,
@@ -82,86 +102,94 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
       title={
         <div className="main-panel-header">
           <h2>CV</h2>
-          {
-            isEditable && (              
-              <div className="btn-list-horizontal">
-                <div className="file-btn">
-                  <input type="file" id="file-input" onChange={selectResume} />
-                  <label htmlFor="file-input">
-                    <IconButton
-                      round
-                      backgroundColor="#D30B81" 
-                      disabled={uploadMutation.isLoading}
-                    >
-                      <div className="btn-body">
-                        <span>{selectedFile?.name ?? "Chọn CV"}</span>
-                        <span><PlusOutlined /></span>
-                      </div>
-                    </IconButton>
-                  </label>
-                </div>
-                <IconButton
-                  round
-                  backgroundColor="#7277F1"
-                  disabled={uploadMutation.isLoading} 
-                  onClick={(event: any) => (selectedFile && !uploadMutation.isLoading) && handleUpload(event)}
-                >
-                  {
-                    uploadMutation.isLoading ? (
-                      <div className="btn-body">
-                        <span>Đang tải lên...</span>
-                        <span><LoadingOutlined /></span>
-                      </div>
-                    ) : (
-                      (selectedFile && uploadMutation.isSuccess) ? (
-                        <div className="btn-body">
-                          <span>Tải lên thành công</span>
-                          <span><CheckOutlined /></span>
-                        </div>
-                      ) : (
-                        <div className="btn-body">
-                          <span>Tải lên</span>
-                          <span><CloudUploadOutlined /></span>
-                        </div>
-                      )
-                    )
-                  }
-                </IconButton>
+          {isEditable && (
+            <div className="btn-list-horizontal">
+              <div className="file-btn">
+                <input type="file" id="file-input" onChange={selectResume} />
+                <label htmlFor="file-input">
+                  <IconButton
+                    round
+                    backgroundColor="#D30B81"
+                    disabled={uploadMutation.isLoading}
+                  >
+                    <div className="btn-body">
+                      <span>{selectedFile?.name ?? "Chọn CV"}</span>
+                      <span>
+                        <PlusOutlined />
+                      </span>
+                    </div>
+                  </IconButton>
+                </label>
               </div>
-            )
-          }
+              <IconButton
+                round
+                backgroundColor="#7277F1"
+                disabled={uploadMutation.isLoading}
+                onClick={(event: any) =>
+                  selectedFile &&
+                  !uploadMutation.isLoading &&
+                  handleUpload(event)
+                }
+              >
+                {uploadMutation.isLoading ? (
+                  <div className="btn-body">
+                    <span>Đang tải lên...</span>
+                    <span>
+                      <LoadingOutlined />
+                    </span>
+                  </div>
+                ) : selectedFile && uploadMutation.isSuccess ? (
+                  <div className="btn-body">
+                    <span>Tải lên thành công</span>
+                    <span>
+                      <CheckOutlined />
+                    </span>
+                  </div>
+                ) : (
+                  <div className="btn-body">
+                    <span>Tải lên</span>
+                    <span>
+                      <CloudUploadOutlined />
+                    </span>
+                  </div>
+                )}
+              </IconButton>
+            </div>
+          )}
         </div>
       }
       children={
         downloadQuery.isLoading ? (
           <div>Đang tải...</div>
+        ) : !uploadedFile || uploadedFile.length < 0 ? (
+          <div>Vui lòng tải lên CV</div>
         ) : (
-          !uploadedFile || uploadedFile.length < 0 ? (
-            <div>Vui lòng tải lên CV</div>
-          ) : (
-            <StyledResumeCard>
-              <h3>CV hiện tại</h3>
-              <div className="btn-list-horizontal">
-                <a className="btn-list-horizontal-expand" href={uploadedFile} target="_blank">
-                  <IconButton round fullWidth backgroundColor="#8799AE">
-                    <div className="btn-body">
-                      <span>Tải xuống</span>
-                      <CloudDownloadOutlined className="icon-md"/>
-                    </div>
-                  </IconButton>
-                </a>
-                {isEditable && (
-                  <Button 
-                    danger
-                    shape="circle" 
-                    loading={deleteMutation.isLoading} 
-                    icon={<DeleteOutlined />} 
-                    onClick={handleDelete} 
-                  />
-                )}
-              </div>
-            </StyledResumeCard>
-          )
+          <StyledResumeCard>
+            <h3>CV hiện tại</h3>
+            <div className="btn-list-horizontal">
+              <a
+                className="btn-list-horizontal-expand"
+                href={uploadedFile}
+                target="_blank"
+              >
+                <IconButton round fullWidth backgroundColor="#8799AE">
+                  <div className="btn-body">
+                    <span>Tải xuống</span>
+                    <CloudDownloadOutlined className="icon-md" />
+                  </div>
+                </IconButton>
+              </a>
+              {isEditable && (
+                <Button
+                  danger
+                  shape="circle"
+                  loading={deleteMutation.isLoading}
+                  icon={<DeleteOutlined />}
+                  onClick={handleDelete}
+                />
+              )}
+            </div>
+          </StyledResumeCard>
         )
       }
     />

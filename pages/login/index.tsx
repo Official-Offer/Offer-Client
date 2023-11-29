@@ -38,12 +38,12 @@ const Login: NextPage = () => {
       // dispatch(setLoggedIn(true));
       router
         .push({
-          pathname: 
+          pathname:
             data.role == "student"
               ? "/student"
               : data.role == "advisor"
-              ? "/advisor/jobs"
-              : "/recruiter/jobs",
+                ? "/advisor/jobs"
+                : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
@@ -64,7 +64,6 @@ const Login: NextPage = () => {
   //   },
   //   onError: () => {},
   // });
-
 
   const { data: session, status } = useSession();
   if (status === "loading") return <LoadingPage />;
@@ -90,7 +89,7 @@ const Login: NextPage = () => {
             Đăng nhập với Google{" "}
           </Button> */}
           <AuthForm
-            onSubmit={(item: { email: any; password: any }) => {
+            onSubmit={(item: { email: string; password: string }) => {
               return mutation.mutate({
                 email: item.email,
                 password: item.password,

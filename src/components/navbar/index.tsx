@@ -29,8 +29,8 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const path = router.pathname.includes("student")
     ? "student"
     : router.pathname.includes("recruiter")
-    ? "recruiter"
-    : "advisor";
+      ? "recruiter"
+      : "advisor";
 
   const mutation = useMutation({
     // queryKey: ["login"],

@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,86 +15,38 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@config": [
-        "config"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@services": [
-        "services"
-      ],
-      "@services/*": [
-        "services/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@components": [
-        "src/components"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@public": [
-        "public"
-      ],
-      "@definitions/*": [
-        "src/definitions/*"
-      ],
-      "@definitions": [
-        "src/definitions"
-      ],
-      "@hooks": [
-        "src/hooks"
-      ],
-      "@hooks/*": [
-        "src/hooks/*"
-      ],
-      "@interfaces/*": [
-        "src/interfaces/*"
-      ],
-      "@interfaces": [
-        "src/interfaces"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@styles": [
-        "src/styles"
-      ],
-      "@redux/*": [
-        "src/redux/*"
-      ],
-      "@redux": [
-        "src/redux"
-      ],
-      "@i18n": [
-        "./i18n"
-      ],
-      "@test/*": [
-        "test/*"
-      ],
-      "@test": [
-        "test"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@utils": [
-        "src/utils"
-      ]
+      "@config": ["config"],
+      "@config/*": ["config/*"],
+      "@services": ["services"],
+      "@services/*": ["services/*"],
+      "@components/*": ["src/components/*"],
+      "@components": ["src/components"],
+      "@public/*": ["public/*"],
+      "@public": ["public"],
+      "@definitions/*": ["src/definitions/*"],
+      "@definitions": ["src/definitions"],
+      "@hooks": ["src/hooks"],
+      "@hooks/*": ["src/hooks/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@interfaces": ["src/interfaces"],
+      "@styles/*": ["src/styles/*"],
+      "@styles": ["src/styles"],
+      "@redux/*": ["src/redux/*"],
+      "@redux": ["src/redux"],
+      "@i18n": ["./i18n"],
+      "@test/*": ["test/*"],
+      "@test": ["test"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils"]
     },
     "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "src/components/text/editor.jsx", 
+    "**/*.tsx",
+    // "src/components/text/editor.jsx"
     // "src/styles/styled-components/styledButton.ts",
   ],
-  "exclude": [
-    "node_modules",
-    "test/*"
-  ]
+  "exclude": ["node_modules", "test/*"]
 }

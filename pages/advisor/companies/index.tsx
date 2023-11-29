@@ -30,8 +30,8 @@ const Companies: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter((item) =>
-      item.name?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
@@ -52,16 +52,16 @@ const Companies: NextPage = () => {
       <div className="recruiter-schools-grid">
         {data.map((company) => (
           // <LoadingLine loading={companyQuery.isLoading}>
-            <Card className="recruiter-schools-card">
-              <Avatar
-                size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                icon={<AntDesignOutlined />}
-              />
-              <div className="recruiter-schools-card-info">
-                <b>{company.name}</b>
-                <p>{company.description}</p>
-              </div>
-            </Card>
+          <Card className="recruiter-schools-card">
+            <Avatar
+              size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+              icon={<AntDesignOutlined />}
+            />
+            <div className="recruiter-schools-card-info">
+              <b>{company.name}</b>
+              <p>{company.description}</p>
+            </div>
+          </Card>
         ))}
       </div>
     </div>

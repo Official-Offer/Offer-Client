@@ -13,7 +13,6 @@ export interface JobDataType {
   // tag: string; -> TODO: promoted/unpromoted tags once launched
 }
 
-
 export interface RecruiterJobDataType {
   posted_date: string | null;
   title: string | null;
@@ -21,7 +20,7 @@ export interface RecruiterJobDataType {
   recruiter: string | null;
   applicants: number | 0;
   verified: boolean | null;
-} 
+}
 
 export interface UnapprovedJobDataType {
   // key: string | null;
@@ -54,12 +53,12 @@ export interface ApplicantDataType {
   job: Job;
   student: Student;
   is_submitted: boolean;
-  created_at: string;  // Assuming ISO format date-time string
-  updated_at: string;  // Assuming ISO format date-time string
+  created_at: string; // Assuming ISO format date-time string
+  updated_at: string; // Assuming ISO format date-time string
   time_opened: string; // Assuming ISO format date-time string
   time_submitted?: string | null; // Assuming ISO format date-time string
-  resume?: string | null;        // URL to the resume
-  cover_letter?: string | null;  // URL to the cover letter
+  resume?: string | null; // URL to the resume
+  cover_letter?: string | null; // URL to the cover letter
   questionnaire_answer?: number | null;
 }
 
@@ -80,7 +79,7 @@ export interface AdvisorCompanyDataType {
   ID: string | null;
   name: string | null;
   school: string | null;
-  role: string | null; 
+  role: string | null;
   // compatibility: string | null;
   email: string | null;
   contacted: string | null; // Đã liên hệ, chưa liên hệ
@@ -90,7 +89,7 @@ export interface AdvisorSchoolDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  role: string | null; 
+  role: string | null;
   email_verified: boolean | null;
   role_verified: boolean | null;
   managed_students: string[] | null;
@@ -103,7 +102,7 @@ export interface RecruiterSchoolDataType {
   name: string | null;
   company: string | null;
   role: string | null;
-  // compatibility: string | null; 
+  // compatibility: string | null;
   jobs_posted: number | null; // in this school
   email: string | null;
   contacted: string | null; // Đã liên hệ, chưa liên hệ
@@ -113,7 +112,7 @@ export interface RecruiterCompanyDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
-  role: string | null; 
+  role: string | null;
   email_verified: boolean | null;
   role_verified: boolean | null;
   jobs_posted: number | null;
@@ -143,7 +142,7 @@ export interface CompanyDataType {
   recruiters: number | 0;
   unapproved_jobs: number | 0; // in this school
   approved_jobs: number | 0; // in this school
-  student_employees: number | 0; 
+  student_employees: number | 0;
   compatibility: string | null;
 }
 
@@ -168,4 +167,3 @@ export interface EventAdvisorDataType {
   compatibility: string | null;
   tag: string | null; //pending/posted(unapproved)/posted(approved)
 }
-

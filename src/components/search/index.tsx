@@ -8,7 +8,11 @@ type SearchBarProps = {
   onSearch: (value: string) => void;
 };
 
-export const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch, ...props }) => (
+export const SearchBar: React.FC<SearchBarProps> = ({
+  placeholder,
+  onSearch,
+  ...props
+}) => (
   <div {...props}>
     <Search
       placeholder={placeholder}

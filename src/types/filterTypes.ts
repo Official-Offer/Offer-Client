@@ -3,9 +3,6 @@ export type JobFilters = {
   workTypes: Record<string, boolean>;
   // discipline: number;
   locations: Record<string, boolean>;
-  salary: [
-    number,
-    number
-  ];
+  salary: [number, number];
   // yoes: number[];
 };

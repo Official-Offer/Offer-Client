@@ -326,7 +326,7 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
     title: "CV",
     dataIndex: "resume",
     key: "resume",
-    render: (src) => <a href={src}>CV</a>
+    render: (src) => <a href={src}>CV</a>,
   },
   // {
   //   title: "Độ phù hợp",
@@ -776,8 +776,8 @@ export const EventRecruiterColumns: ColumnsType<EventRecruiterDataType> = [
         tag === "Đang duyệt"
           ? "volcano"
           : tag === "Không được duyệt"
-          ? "blue"
-          : "green";
+            ? "blue"
+            : "green";
       return (
         <Tag color={color} key={tag}>
           {tag?.toUpperCase()}
@@ -841,8 +841,8 @@ export const EventAdvisorColumns: ColumnsType<EventAdvisorDataType> = [
         tag === "Đang duyệt"
           ? "volcano"
           : tag === "Không được duyệt"
-          ? "blue"
-          : "green";
+            ? "blue"
+            : "green";
       return (
         <Tag color={color} key={tag}>
           {tag?.toUpperCase()}

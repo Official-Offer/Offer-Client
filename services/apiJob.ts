@@ -4,7 +4,7 @@ import { getCompany } from "./apiCompany";
 import { OpenAI } from "langchain/llms/openai";
 import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 export const getJobs = async () => {
   const response = await request.get(`/jobs/`);
@@ -75,7 +75,7 @@ export const getUnapprovedJobs = async () => {
 };
 
 export const getJobsForRecruiter = async () => {
-  const recruiter = parseInt(getCookie('id') as string);
+  const recruiter = parseInt(getCookie("id") as string);
   const response = await request.get(`/jobs/`, {
     params: {
       created_by: recruiter,
@@ -146,7 +146,7 @@ export const getJobsForRecruiter = async () => {
 };
 
 export const getAdvisorJobs = async () => {
-  const advisor = parseInt(getCookie('id') as string);
+  const advisor = parseInt(getCookie("id") as string);
   const response = await request.get(`/jobs/`, {
     params: {
       created_by: advisor,
@@ -244,10 +244,10 @@ export const deleteJob = async (id: any) => {
   return response.data;
 };
 
-export const applyJob = async (data: any) => {
+export const postJobApp = async (data: any) => {
   const response = await request.post(`/job-applications/`, data);
   return response.data;
-}
+};
 
 const majorList = [
   "Ngành Khoa học máy tính",

@@ -5,7 +5,7 @@ export const translateJobType = (data: string | null | undefined) => {
     case null:
     case undefined:
     case "{}":
-      return "Không xác định"
+      return "Không xác định";
     case "fulltime":
       return "Toàn thời gian";
     case "parttime":

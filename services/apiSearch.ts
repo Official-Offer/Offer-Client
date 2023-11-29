@@ -1,4 +1,4 @@
-import request from './apiService';
+import request from "./apiService";
 
 export const getSearch = async (query: string) => {
   const response = await request.get(`/search/?q=${query}`);
@@ -11,8 +11,7 @@ export const getSearch = async (query: string) => {
     for (let j = 0; maxResultNum > 0 && j < APIResults[i][key].nbHits; j++) {
       if (searchResults[key]) {
         searchResults[key].push(APIResults[i][key].hits[j]);
-      }
-      else {
+      } else {
         searchResults[key] = [APIResults[i][key].hits[j]];
       }
       maxResultNum--;
@@ -22,4 +21,4 @@ export const getSearch = async (query: string) => {
   console.log(searchResults);
 
   return searchResults;
-}
+};

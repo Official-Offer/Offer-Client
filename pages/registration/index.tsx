@@ -87,25 +87,26 @@ const Registration: NextPage = () => {
     r.isStudent
       ? updateEducation
       : r.isRecruiter
-      ? updateCompany
-      : updateSchoolForAdvisor,
+        ? updateCompany
+        : updateSchoolForAdvisor,
     {
-    onSuccess: async (data) => {
-      dispatch(setLoggedIn(true));
-      const route = r.isStudent
-        ? "/student"
-        : r.isAdvisor
-        ? "/advisor/jobs"
-        : "/recruiter/jobs";
-      router.replace(route).then(() => {
-        router.reload();
-      });
+      onSuccess: async (data) => {
+        dispatch(setLoggedIn(true));
+        const route = r.isStudent
+          ? "/student"
+          : r.isAdvisor
+            ? "/advisor/jobs"
+            : "/recruiter/jobs";
+        router.replace(route).then(() => {
+          router.reload();
+        });
+      },
+      onError: (error: any) => {
+        console.log(error.response.data.message);
+        // setErrorMessage(error.response.data.message);
+      },
     },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
-      // setErrorMessage(error.response.data.message);
-    },
-  });
+  );
   if (status === "loading") return <h1> Đang tải ... </h1>;
   return (
     <div className="register">
@@ -130,7 +131,7 @@ const Registration: NextPage = () => {
               >
                 <BackwardOutlined /> Quay lại
               </p>
-              <Form className="form" layout="vertical">
+              <Form className="form form-margin" layout="vertical">
                 {/* <div className="form-grid"> */}
                 <Form.Item required label="Họ Tên" className="form-input">
                   <Input
@@ -155,8 +156,8 @@ const Registration: NextPage = () => {
                     rol == "Học sinh"
                       ? "student"
                       : rol == "Trường"
-                      ? "advisor"
-                      : "recruiter";
+                        ? "advisor"
+                        : "recruiter";
                   console.log(r);
                   dispatch(setRole(r));
                   mutation.mutate({

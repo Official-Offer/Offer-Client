@@ -31,9 +31,14 @@ export const BasicInfoForm: React.FC<IBasicInfoForm> = ({
   // const [is_reviewer, setIsReviewer] = useState<string>(false);
   const state = useSelector((state: RootState) => state.account);
   const [majors, setMajors] = useState<string[]>(["CNTT", "Kinh tế", "Luật"]);
-  const [positions, setPositions] = useState<string[]>(["Thành viên", "Trưởng nhóm"]);
+  const [positions, setPositions] = useState<string[]>([
+    "Thành viên",
+    "Trưởng nhóm",
+  ]);
 
-  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFirstNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setFirstName(event.target.value ?? "");
   };
 
@@ -45,11 +50,11 @@ export const BasicInfoForm: React.FC<IBasicInfoForm> = ({
 
   const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLastName(event.target.value ?? "");
-  }
+  };
 
   const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRoles(event.target.value ?? "");
-  }
+  };
 
   // const handleReviewerChange = (event: {
   //   target: { value: React.SetStateAction<string> };
@@ -59,11 +64,13 @@ export const BasicInfoForm: React.FC<IBasicInfoForm> = ({
 
   const handleMajorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMajor(event.target.value ?? "");
-  }
+  };
 
-  const handlePhoneNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneNumberChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setPhoneNumber(event.target.value ?? "");
-  }
+  };
 
   const handleSubmit = () => {
     onSubmit(

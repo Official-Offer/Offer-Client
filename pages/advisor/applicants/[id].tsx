@@ -1,13 +1,9 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import {
-  ApplicantColumns,
-} from "@components/table/columnType";
+import { ApplicantColumns } from "@components/table/columnType";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import {
-  getApplicantsForJob,
-} from "@services/apiRecruiter";
+import { getApplicantsForJob } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";
 import { useRouter } from "next/router";
 import { formatFullName } from "@utils/formatters/stringFormat";
@@ -43,13 +39,13 @@ const Applicants: NextPage = () => {
         setJobTitle(applicants[0]?.job?.title || " ");
         setSearchResults(
           applicants.map(
-            (applicant: any) => applicant.student.account.firstName
+            (applicant: any) => applicant.student.account.firstName,
             // formatFullName(applicant.student.account)
-          )
+          ),
         );
       },
       onError: () => {},
-    }
+    },
   );
 
   const handleFilterSearch = (value: string) => {
@@ -60,7 +56,7 @@ const Applicants: NextPage = () => {
     const filteredData = dataset.filter(
       (item) =>
         value.toLowerCase() ===
-        formatFullName(item.student.account).toLowerCase()
+        formatFullName(item.student.account).toLowerCase(),
     );
     setData(filteredData);
   };

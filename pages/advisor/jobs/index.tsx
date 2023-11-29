@@ -1,11 +1,21 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { useQuery } from "@tanstack/react-query";
-import { getAdvisorJobs, getApprovedJobs, getUnapprovedJobs } from "@services/apiJob";
+import {
+  getAdvisorJobs,
+  getApprovedJobs,
+  getUnapprovedJobs,
+} from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";
-import { ApprovedJobDataType, RecruiterJobDataType } from "@components/table/dataType";
-import { ApprovedJobColumns, RecruiterJobColumns } from "@components/table/columnType";
+import {
+  ApprovedJobDataType,
+  RecruiterJobDataType,
+} from "@components/table/dataType";
+import {
+  ApprovedJobColumns,
+  RecruiterJobColumns,
+} from "@components/table/columnType";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
 import { getAdvisor } from "@services/apiAdvisor";
@@ -24,7 +34,7 @@ const Jobs: NextPage = () => {
       setData(jobs);
       setDataSet(jobs);
 
-      setSearchResults(jobs.map((job: { title: any; }) => job.title));
+      setSearchResults(jobs.map((job: { title: any }) => job.title));
     },
     onError: () => {},
   });
@@ -35,8 +45,8 @@ const Jobs: NextPage = () => {
       return;
     }
     // setData(dataset.filter((item) => item.title === value));
-    const filteredData = dataset.filter((item) =>
-      item.title?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.title?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
@@ -54,7 +64,7 @@ const Jobs: NextPage = () => {
           isStudent: false,
           isAdvisor: true,
           isRecruiter: false,
-        })
+        }),
       );
       dispatch(setCompany(info.company.name));
       dispatch(setCompanyId(info.company.id));
@@ -62,10 +72,7 @@ const Jobs: NextPage = () => {
     onError: () => {},
   });
 
-
-  const handleVerifyJob = () => {
-}
-  
+  const handleVerifyJob = () => {};
 
   return (
     <div className="advisor">

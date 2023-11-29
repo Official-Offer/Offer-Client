@@ -1,4 +1,4 @@
- import { NextPage } from "next";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";

@@ -50,8 +50,8 @@ const Schools: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter((item) =>
-      item.name?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
@@ -59,7 +59,7 @@ const Schools: NextPage = () => {
   return (
     <div className="recruiter-schools">
       <h2>Trường</h2>
-      
+
       <div className="recruiter-schools-search">
         <FilterSearch
           placeholder={"Tìm trường"}

@@ -22,15 +22,16 @@ export const useTheme = () => {
 export const StyledThemeProvider: React.FC<{}> = ({ children }) => {
   const [theme, setTheme] = React.useState("light");
 
-  const toggle = () => {
+  const toggle = React.useCallback(() => {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
-  };
+  }, []);
+
   const values = React.useMemo(
     () => ({
       theme,
       toggle,
     }),
-    [toggle, theme]
+    [toggle, theme],
   );
 
   return (

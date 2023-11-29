@@ -22,7 +22,9 @@
   min-width: 23.65%;
   max-height: 322px;
   cursor: pointer;
-  transition: scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    scale 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 
   &:hover {
     scale: 1.05;
@@ -98,7 +100,9 @@
 
 .event-card {
   cursor: pointer;
-  transition: scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    scale 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 
   &:hover {
     scale: 1.05;
@@ -107,7 +111,7 @@
 
   .ant-card-body {
     padding: 0;
-    &>div {
+    & > div {
       display: flex;
       gap: 12px;
     }
@@ -120,7 +124,8 @@
     justify-content: center;
 
     font-weight: $fw-bold-1;
-    h2,h3 {
+    h2,
+    h3 {
       color: white !important;
     }
     background-color: $red-color;

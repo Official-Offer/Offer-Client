@@ -41,14 +41,14 @@ const BasicInformation: NextPage = () => {
         <div className="register-content-form">
           <>
             <h3>
-                Link xác nhận đã được gửi đến email của bạn, vui lòng check
-                email để kích hoạt tài khoản.{" "}
-              </h3>
-              <br />
-              Không nhận được email?{" "}
-              <p>
-                <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
-              </p>
+              Link xác nhận đã được gửi đến email của bạn, vui lòng check email
+              để kích hoạt tài khoản.{" "}
+            </h3>
+            <br />
+            Không nhận được email?{" "}
+            <p>
+              <a style={{ color: "blue" }}>Nhấn vào đây để gửi lại email.</a>
+            </p>
           </>
         </div>
       </div>

@@ -4,11 +4,14 @@ import Link from "next/link";
 type FootnoteFormProps = {
   type?: string;
   embedLogin?: boolean;
-}
+};
 
-export const FootnoteForm: React.FC<FootnoteFormProps> = ({ type, embedLogin }) => {
+export const FootnoteForm: React.FC<FootnoteFormProps> = ({
+  type,
+  embedLogin,
+}) => {
   return (
-    <div>
+    <div className="footnote">
       <hr />
       {embedLogin ? (
         <div>

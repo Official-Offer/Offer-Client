@@ -16,9 +16,9 @@ export default NextAuth({
       clientId: NEXT_PUBLIC_GOOGLE_CLIENT_ID,
       clientSecret: NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
       authorizationUrl:
-        'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
+        "https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code",
       scope:
-        'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly',
+        "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly",
     }),
     AzureADProvider({
       clientId: AZURE_AD_CLIENT_ID,
@@ -38,9 +38,9 @@ export default NextAuth({
       return token;
     },
     async session({ session, token, user }) {
-      console.log(token)
-      console.log( user)
-      console.log(session)
+      console.log(token);
+      console.log(user);
+      console.log(session);
       session.user.accessToken = token.accessToken;
       session.user.id = token.id;
 

@@ -33,7 +33,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const role = isRecruiter ? "recruiter" : "advisor";
   const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar)
+    import("@components").then((mod: any) => mod.Navbar),
   ) as any;
   const mutation = useMutation({
     // queryKey: ["login"],
@@ -93,7 +93,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
           });
         } else {
           // sign out traditional way
-          console.log("unauthenticated by google")
+          console.log("unauthenticated by google");
           // deleteCookie("cookieToken");
           // deleteCookie("role");
           // deleteCookie("id");

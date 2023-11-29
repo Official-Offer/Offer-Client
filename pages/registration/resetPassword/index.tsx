@@ -12,7 +12,7 @@ import { registerAdvisor } from "@services/apiAdvisor";
 import { registerRecruiter } from "@services/apiRecruiter";
 import { resetPassword } from "@services/apiUser";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { setID } from '@redux/actions';
+import { setID } from "@redux/actions";
 
 //create a next page for the student home page, code below
 const ResetPassword: NextPage = () => {

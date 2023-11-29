@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { checkIsBookmarked, bookmarkJob, unbookmarkJob } from "@services/apiJob";
+import {
+  checkIsBookmarked,
+  bookmarkJob,
+  unbookmarkJob,
+} from "@services/apiJob";
 import { BookmarkOutlined, BookmarkFilled } from "@components/icons";
 
 type BookmarkButtonProps = {
-  id: number,
-  className?: string,
-  isClickedByOther?: boolean,
-  setIsClickedByOther?: (isBookmarked: boolean) => void,
-  setClickOther?: (isBookmarked: boolean) => void,
+  id: number;
+  className?: string;
+  isClickedByOther?: boolean;
+  setIsClickedByOther?: (isBookmarked: boolean) => void;
+  setClickOther?: (isBookmarked: boolean) => void;
 };
 
-export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, isClickedByOther, setIsClickedByOther, setClickOther, ...rest }) => {
+export const BookmarkButton: React.FC<BookmarkButtonProps> = ({
+  id,
+  className,
+  isClickedByOther,
+  setIsClickedByOther,
+  setClickOther,
+  ...rest
+}) => {
   // States
   const [bookmarkClicked, setBookmarkClicked] = useState<boolean>(false); // Prevent mutating during first initial load
   const [isInitBookmarked, setIsInitBookmarked] = useState<boolean>(false); // Avoid unnecessary API calls if users double click
@@ -27,11 +38,12 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
     },
     onError: (error) => console.log(`Bookmark Error: ${error}`),
     refetchOnWindowFocus: false,
-    enabled: false
+    enabled: false,
   });
 
   const bookmarkMutation = useMutation({
-    mutationFn: (id: number | string) => (isBookmarked ? bookmarkJob(id) : unbookmarkJob(id)),
+    mutationFn: (id: number | string) =>
+      isBookmarked ? bookmarkJob(id) : unbookmarkJob(id),
     onSuccess: () => bookmarkQuery.refetch(),
     onError: (err) => console.log(`Bookmark Error: ${err}`),
   });
@@ -57,7 +69,9 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
   }, [isClickedByOther]);
 
   // Functions
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.stopPropagation();
     setBookmarkClicked(true);
     setIsBookmarked(!isBookmarked);
@@ -66,10 +80,10 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
 
   return (
     <div></div>
-    // <button 
-    //   className={className} 
-    //   type="button" 
-    //   disabled={bookmarkQuery.isLoading} 
+    // <button
+    //   className={className}
+    //   type="button"
+    //   disabled={bookmarkQuery.isLoading}
     //   onClick={handleClick}
     //   {...rest}
     // >
@@ -77,5 +91,5 @@ export const BookmarkButton: React.FC<BookmarkButtonProps> = ({ id, className, i
     //     isBookmarked ? <BookmarkFilled /> : <BookmarkOutlined />
     //   }
     // </button>
-  )
-}
+  );
+};

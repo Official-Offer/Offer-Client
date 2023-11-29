@@ -32,9 +32,7 @@ function ErrorPage() {
             <h1>Trang này không tồn tại</h1>
             <div className="link-arrow">
               <h2>
-                <Link href="./">
-                    Quay lại trang chủ
-                </Link>
+                <Link href="./">Quay lại trang chủ</Link>
               </h2>
             </div>
           </div>

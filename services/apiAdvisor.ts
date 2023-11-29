@@ -14,18 +14,19 @@ export const getAdvisor = async () => {
   return response;
 };
 
-
 export const updateSchoolForAdvisor = async (body: any) => {
   const request = axios.create({
     baseURL: URL_API_ADMIN,
-    headers: body.token &&
-        {
-          Authorization: `Bearer ${body.token}`,
-        },
+    headers: body.token && {
+      Authorization: `Bearer ${body.token}`,
+    },
   });
-  const response = await request.patch(`/advisors/${body.content.account}/`, body.content.org);
+  const response = await request.patch(
+    `/advisors/${body.content.account}/`,
+    body.content.org,
+  );
   return response.data;
-}
+};
 
 export const updateAdvisor = async (body: any) => {
   const response = await request.put(`/advisors/me/`, body);

@@ -29,11 +29,13 @@ export const PasswordForm: React.FC<IPasswordForm> = ({
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value ?? "");
-  }
+  };
 
-  const handleReenteredPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleReenteredPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setReenteredPassword(event.target.value ?? "");
-  }
+  };
 
   const handleSubmit = () => {
     // event.preventDefault();

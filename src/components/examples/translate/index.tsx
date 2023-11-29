@@ -41,5 +41,5 @@ const I18NExampleComponent: React.FC<{ t: TFunction }> = ({ t }) => {
 };
 
 export const I18NExample = withTranslation(["common", "home"])(
-  I18NExampleComponent
+  I18NExampleComponent,
 );

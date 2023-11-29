@@ -24,7 +24,7 @@ const Jobs: NextPage = () => {
     onSuccess: async (jobs) => {
       setData(jobs);
       setDataSet(jobs);
-      setSearchResults(jobs.map((job: { title: any; }) => job.title));
+      setSearchResults(jobs.map((job: { title: any }) => job.title));
     },
     onError: () => {},
   });
@@ -42,7 +42,7 @@ const Jobs: NextPage = () => {
           isStudent: false,
           isAdvisor: false,
           isRecruiter: true,
-        })
+        }),
       );
       dispatch(setCompany(info.company.name));
       dispatch(setCompanyId(info.company.id));
@@ -56,8 +56,8 @@ const Jobs: NextPage = () => {
       setData(dataset);
       return;
     }
-    const filteredData = dataset.filter((item) =>
-      item.title?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.title?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };

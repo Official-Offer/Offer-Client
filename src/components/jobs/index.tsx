@@ -2,8 +2,7 @@ import React from "react";
 
 export const JobDescription: React.FC<any> = () => {
   return <></>;
-}
-
+};
 
 // import { useMutation, useQuery } from "@tanstack/react-query";
 // import { useState } from "react";
@@ -376,7 +375,7 @@ export const JobDescription: React.FC<any> = () => {
 //               title: title.slice(0,99),
 //               level: level=="Thực tập"? "internship": level=="Nhân viên chính thức" ? "newgrad" : "experienced",
 //               job_type: type,
-//               // type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime", 
+//               // type=="Hợp đồng" || type=="Tình nguyện" ? "contract": type=="fulltime" ? "fulltime" : "parttime",
 //               // work_type,
 //               lower_salary: salary,
 //               // address: {

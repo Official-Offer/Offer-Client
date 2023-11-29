@@ -48,14 +48,14 @@ const ApprovedJobs: NextPage = () => {
       return;
     }
     // setData(dataset.filter((item) => item.title === value));
-    const filteredData = dataset.filter((item) =>
-      item.title?.toLowerCase().includes(value.toLowerCase())
+    const filteredData = dataset.filter(
+      (item) => item.title?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
 
   const handleAddJob = () => {
-    router.push('/advisor/postJobs/jobForm');
+    router.push("/advisor/postJobs/jobForm");
   };
 
   return (
