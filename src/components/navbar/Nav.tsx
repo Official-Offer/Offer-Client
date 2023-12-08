@@ -59,7 +59,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index == 2) {
+      if (index == 4) {
         if (status == "authenticated") {
           signOut().then(() => {
             router.push("/login");
