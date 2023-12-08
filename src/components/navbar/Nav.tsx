@@ -1,13 +1,10 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
-  BarChartOutlined,
   DesktopOutlined,
-  LockOutlined,
   PlusOutlined,
   SnippetsOutlined,
   TeamOutlined,
   UnlockOutlined,
-  UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -52,7 +49,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "/logout",
   ];
   const items: MenuProps["items"] = [
-    // BarChartOutlined,
     SnippetsOutlined,
     TeamOutlined,
     DesktopOutlined,
