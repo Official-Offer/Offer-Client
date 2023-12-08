@@ -36,23 +36,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar),
   ) as any;
-  // const mutation = useMutation({
-  //   // queryKey: ["login"],
-  //   mutationFn: userLogOut,
-  //   onSuccess: async (data) => {
-  //     // Invalidate and refetch
-  //     deleteCookie("cookieToken");
-  //     deleteCookie("role");
-  //     deleteCookie("id");
-
-  //     router.push("/login").then(() => {
-  //     });
-  //   },
-  //   onError: (error: any) => {
-  //     console.log(error.response.data.message);
-  //     // queryClient.invalidateQueries({ queryKey: ["login"] });
-  //   },
-  // });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
     "Công việc",
@@ -86,45 +69,17 @@ export const Nav: React.FC = (props: any): ReactElement => {
             router.push("/login");
           });
         } else {
-          // sign out traditional way
-          // console.log("unauthenticated by google");
           deleteCookie("cookieToken");
           deleteCookie("role");
           deleteCookie("id");
           router.push("/login").then(() => {
             // router.reload();
           });
-          // mutation.mutate();
         }
       } else {
         router.push(`/${role}${path[index]}`);
       }
-
-      // else if (!(index == 0 && role == "advisor")) {
-      //   router.push(`/${role}${path[index]}`);
-      // }
     },
-    // children:
-    //   index == 0 && role == "advisor"
-    //     ? [
-    //         {
-    //           label: "Chưa duyệt",
-    //           icon: React.createElement(icon),
-    //           onClick: (e) => {
-    //             router.push(`/${role}${path[index]}/unapproved`);
-    //           },
-    //           key: `/${role}${path[index]}/unapproved`,
-    //         },
-    //         {
-    //           label: "Đã duyệt",
-    //           icon: React.createElement(icon),
-    //           onClick: (e) => {
-    //             router.push(`/${role}${path[index]}/approved`);
-    //           },
-    //           key: `/${role}${path[index]}/approved`,
-    //         },
-    //       ]
-    //     : undefined,
   }));
 
   console.log(router.pathname);
@@ -135,12 +90,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ) {
     return (
       <div>
-        {/* <Navbar
-        searchBarHidden={
-          router.pathname.includes("/student/jobs/[id]") ||
-          router.pathname.includes("/student/events/[id]")
-        }
-      /> */}
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
