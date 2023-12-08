@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useState } from "react";
 import {
   BarChartOutlined,
+  DesktopOutlined,
   LockOutlined,
   PlusOutlined,
   SnippetsOutlined,
@@ -35,51 +36,44 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar),
   ) as any;
-  const mutation = useMutation({
-    // queryKey: ["login"],
-    mutationFn: userLogOut,
-    onSuccess: async (data) => {
-      // Invalidate and refetch
-      deleteCookie("cookieToken");
-      deleteCookie("role");
-      deleteCookie("id");
+  // const mutation = useMutation({
+  //   // queryKey: ["login"],
+  //   mutationFn: userLogOut,
+  //   onSuccess: async (data) => {
+  //     // Invalidate and refetch
+  //     deleteCookie("cookieToken");
+  //     deleteCookie("role");
+  //     deleteCookie("id");
 
-      // localStorage.removeItem("cookieToken");
-      // localStorage.removeItem("id");
-      // localStorage.removeItem("role");
-
-      router.push("/login").then(() => {
-        // router.reload();
-      });
-    },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
-    },
-  });
+  //     router.push("/login").then(() => {
+  //     });
+  //   },
+  //   onError: (error: any) => {
+  //     console.log(error.response.data.message);
+  //     // queryClient.invalidateQueries({ queryKey: ["login"] });
+  //   },
+  // });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    // "Đăng tuyển",
     "Công việc",
-    // isRecruiter ? "Ứng Viên" : "Học sinh",
+    "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    // "Tài khoản",
+    "Tài khoản",
     "Đăng xuất",
   ];
   const path = [
-    // "/postJobs",
     "/jobs",
-    // isRecruiter ? "/applicants" : "/students",
+    "/students",
     isRecruiter ? "/schools" : "/companies",
-    // "/profile",
+    "/profile",
     "/logout",
   ];
   const items: MenuProps["items"] = [
     // BarChartOutlined,
     SnippetsOutlined,
     TeamOutlined,
-    // UploadOutlined,
-    // UserOutlined,
+    DesktopOutlined,
+    UserOutlined,
     UnlockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
@@ -93,14 +87,14 @@ export const Nav: React.FC = (props: any): ReactElement => {
           });
         } else {
           // sign out traditional way
-          console.log("unauthenticated by google");
-          // deleteCookie("cookieToken");
-          // deleteCookie("role");
-          // deleteCookie("id");
-          // router.push("/login").then(() => {
-          //   router.reload();
-          // });
-          mutation.mutate();
+          // console.log("unauthenticated by google");
+          deleteCookie("cookieToken");
+          deleteCookie("role");
+          deleteCookie("id");
+          router.push("/login").then(() => {
+            // router.reload();
+          });
+          // mutation.mutate();
         }
       } else {
         router.push(`/${role}${path[index]}`);
