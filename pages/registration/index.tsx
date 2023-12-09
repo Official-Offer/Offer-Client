@@ -88,15 +88,15 @@ const Registration: NextPage = () => {
     {
       onSuccess: async (data) => {
         dispatch(setLoggedIn(true));
-        // router.push("/registration/verifyEmail");
-        const route = r.isStudent
-          ? "/student"
-          : r.isAdvisor
-            ? "/advisor/jobs"
-            : "/recruiter/jobs";
-        router.replace(route).then(() => {
-          router.reload();
-        });
+        router.push("/registration/verifyEmail");
+        // const route = r.isStudent
+        //   ? "/student"
+        //   : r.isAdvisor
+        //     ? "/advisor/jobs"
+        //     : "/recruiter/jobs";
+        // router.replace(route).then(() => {
+        //   router.reload();
+        // });
       },
       onError: (error: any) => {
         console.log(error.response.data.message);

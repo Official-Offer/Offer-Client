@@ -44,24 +44,21 @@ export const getApplicantsFromJobs = async (id: number) => {
 };
 
 export const getStudentsFromSchool = async (school: any) => {
-  console.log(school);
   const response = (await request.get(`/students/`, {
     params: {
       school, 
     },
   })).data.results;
   console.log(response);
-  const schoolApplicants = ["1", "2", "3", "4"];
+  // const schoolApplicants = ["1", "2", "3", "4"];
   return response.map((student: any) => ({
-    key: student.account,
-    // ID: "123" || "234",
-    name: "kien",
-    // major: "Biology" || "Math" || "CS",
-    // resume: "CV(1)",
-    expected_graduation: student.expected_graduation,
-    transcript: student.transcript,
-    // jobs_applied: 20,
-    // jobs_accepted: 2,
+    key: student.account.id,
+    name: student.account.first_name + " " + student.account.last_name,
+    email: student.account.email,
+    major: "Biology",
+    resume: student.active_resume,
+    expected_graduation: student.expected_graduation || "2025",
+    // transcript: student.transcript,
   }));
 };
 

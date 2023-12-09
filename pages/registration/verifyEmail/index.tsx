@@ -59,17 +59,24 @@ const VerifyPassword: NextPage = () => {
                 height: "100%",
               }}
             >
-              <SubmitButton
-                text="Quay lại trang chủ"
-                // isLoading={isLoading}
-                onClick={() => {
-                  state.role.isStudent
-                    ? router.push("/student")
-                    : state.role.isAdvisor
-                      ? router.push("/advisor/jobs")
-                      : router.push("/recruiter/jobs");
-                }}
-              />
+              {errorMessage ? (
+                <SubmitButton text="Gửi lại link xác nhận" 
+                onClick={()=>{
+                  
+                }}/>
+              ) : (
+                <SubmitButton
+                  text="Quay lại trang chủ"
+                  // isLoading={isLoading}
+                  onClick={() => {
+                    state.role.isStudent
+                      ? router.push("/student")
+                      : state.role.isAdvisor
+                        ? router.push("/advisor/jobs")
+                        : router.push("/recruiter/jobs");
+                  }}
+                />
+              )}
             </div>
           )}
         </div>

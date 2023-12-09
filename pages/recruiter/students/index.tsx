@@ -15,7 +15,8 @@ const Students: NextPage = () => {
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
   const [school, setSchool] = useState<Number>(1);
 
-  const studentQuery = useQuery(["jobs"], {
+  const studentQuery = useQuery(
+    ["jobs", school], {
     queryFn: () => getStudentsFromSchool(school),
     onSuccess: (students) => {
       setData(students);
@@ -51,9 +52,9 @@ const Students: NextPage = () => {
             // setSchool(value);
           }}
         >
-          <Select.Option value="1">UMass Amherst</Select.Option>
+          <Select.Option value="1">Harvard</Select.Option>
           <Select.Option value="2">Harvard</Select.Option>
-          {/* <Select.Option value="tom">Tom</Select.Option> */}
+          <Select.Option value="3">UMass Amherst</Select.Option>
         </Select>
       </div>
       <br />
