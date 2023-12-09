@@ -9,7 +9,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUser, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "antd";
 import { BackwardOutlined, GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
@@ -48,9 +47,6 @@ const Registration: NextPage = () => {
       setCookie("cookieToken", data.message.token);
       setCookie("id", data.message.pk);
       setCookie("role", data.message.role);
-      // localStorage.setItem("cookieToken", data.message.token);
-      // localStorage.setItem("id", data.message.pk);
-      // localStorage.setItem("role", data.message.role);
       if (r.isStudent) {
         mutationOrg.mutate({
           token: data.message.token,
@@ -105,7 +101,7 @@ const Registration: NextPage = () => {
         console.log(error.response.data.message);
         // setErrorMessage(error.response.data.message);
       },
-    },
+    }
   );
   if (status === "loading") return <h1> Đang tải ... </h1>;
   return (
@@ -147,11 +143,21 @@ const Registration: NextPage = () => {
                 </Form.Item>
               </Form>
               <AuthForm
-                onSubmit={(item: { email: any; password: any }) => {
-                  setErrorMessage("");
-                  // setPassword(item.password);
-                  // setEmail(item.email);
-                  // setScreen(false);
+                onSubmit={(item: { email: any; password: any; error: any }) => {
+                  if (!item) {
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  if (!firstName && !lastName) {
+                    console.log(firstName, lastName)
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  if (item.error) {
+                    setErrorMessage(item.error);
+                    return;
+                  }
+                  // setErrorMessage("");
                   const role =
                     rol == "Học sinh"
                       ? "student"
@@ -177,8 +183,13 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
-                  setScreen(true);
+                  if (!org) {
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  setErrorMessage("");
                   setOrg(org);
+                  setScreen(true);
                 }}
                 isLoading={mutation.isLoading || mutationOrg.isLoading}
               />
@@ -225,19 +236,3 @@ const Registration: NextPage = () => {
 };
 
 export default Registration;
-
-{
-  /* <Button
-                icon={<GoogleOutlined />}
-                onClick={() => signIn("google")}
-              >
-                {" "}
-                Đăng ký với Google{" "}
-              </Button> */
-}
-{
-  /* <SubmitButton onClick={()=>{
-                  //logout google nextjs
-                  signOut();
-                }} text={"Log out"}/> */
-}

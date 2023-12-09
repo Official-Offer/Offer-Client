@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { useSelector } from "react-redux";
-import { RootState } from "@redux/reducers";
 import { Form, Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-// import { ReactComponent as Loader } from '/icons'
+
 interface ILogInForm {
   onSubmit: (emailAndPassword: {
     email: string;
     password: string;
+    error: string;
   }) => void;
   isLoading: boolean;
   embedSignup?: boolean;
@@ -22,9 +21,7 @@ export const AuthForm: React.FC<ILogInForm> = ({
   const [password, setPassword] = useState<string>("");
   const [rePassword, setRePassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [errorEmail, setErrorEmail] = useState<boolean>(false);
-  const [errorPassword, setErrorPassword] = useState<boolean>(false);
-  const state = useSelector((state: RootState) => state.account);
+  const [error, setError] = useState<string>("");
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value ?? "");
@@ -41,17 +38,21 @@ export const AuthForm: React.FC<ILogInForm> = ({
 
   const handleSubmit = (values: Record<string, any>) => {
     // event.preventDefault();
-    if (embedSignup && password !== rePassword) {
-      alert("Mật khẩu không khớp");
-      return;
+    console.log("first")
+    //check if all fields are filled
+    if (!email || !password) {
+      setError("Vui lòng điền đầy đủ thông tin");
+    }
+    else if (embedSignup && password !== rePassword) {
+      setError("Mật khẩu không khớp");
     }
     //check if email has the right format
-    if (!email.includes("@")) {
-      alert("Email không hợp lệ");
-      return;
+    else if (!email.includes("@")) {
+      setError("Email không hợp lệ");
     }
-
-    onSubmit({ email, password });
+    console.log("second")
+    // setError("");
+    onSubmit({ email, password, error});
   };
 
   return (
