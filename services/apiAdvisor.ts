@@ -29,7 +29,8 @@ export const updateSchoolForAdvisor = async (body: any) => {
 };
 
 export const updateAdvisor = async (body: any) => {
-  const response = await request.put(`/advisors/me/`, body);
+  const id = getCookie("id");
+  const response = await request.patch(`/advisors/${id}/`, body);
   return response.data;
 };
 

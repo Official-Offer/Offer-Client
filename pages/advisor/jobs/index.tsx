@@ -61,8 +61,8 @@ const Jobs: NextPage = () => {
       console.log(info);
       setCookie("id", info.account.id);
       setCookie("role", "advisor");
-      setCookie("orgName", info.company.name);
-      setCookie("orgId", info.company.id);
+      setCookie("orgName", info.school.name);
+      setCookie("orgId", info.school.id);
 
       dispatch(setID(info.account.id));
       dispatch(
@@ -72,8 +72,8 @@ const Jobs: NextPage = () => {
           isRecruiter: false,
         }),
       );
-      dispatch(setCompany(info.company.name));
-      dispatch(setCompanyId(info.company.id));
+      dispatch(setCompany(info.school.name));
+      dispatch(setCompanyId(info.school.id));
     },
     onError: () => {},
   });

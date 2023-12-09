@@ -32,9 +32,6 @@ const Login: NextPage = () => {
       setCookie("cookieToken", data.access);
       setCookie("id", data.pk);
       setCookie("role", data.role);
-      // localStorage.setItem("cookieToken", data.message.token);
-      // localStorage.setItem("id", data.message.pk);
-      // localStorage.setItem("role", data.message.role);
       // dispatch(setLoggedIn(true));
       router
         .push({

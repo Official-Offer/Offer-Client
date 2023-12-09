@@ -18,6 +18,7 @@ import { setJobId } from "@redux/actions";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import { getCookie } from "cookies-next";
 
 interface JobDescriptionProps {
   onClick: () => void;
@@ -44,20 +45,22 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [level, setLevel] = useState<string>(state.level || "");
   const [type, setType] = useState<string[]>(state.type || ["fulltime"]);
   const [location, setLocation] = useState<string[]>(
-    state.address || ["Hà Nội"],
+    state.address || ["Hà Nội"]
   );
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
     state.major.map((major) => majorList[major - 1].label + ", ") || [
       "Công nghệ thông tin",
-    ],
+    ]
   );
   const [company, setCompany] = useState<string>(state.company || `Samsung`);
-  const [companyId, setCompanyId] = useState<number>(state.companyId || 1);
+  const [companyId, setCompanyId] = useState<number>(
+    getCookie("orgId") ? Number(getCookie("orgId")) : state.companyId || 1
+  );
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
-    state.description || "Mô tả công việc mẫu",
+    state.description || "Mô tả công việc mẫu"
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
@@ -238,8 +241,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => majorList[major - 1].label + ", ",
-                      ),
+                        (major: number) => majorList[major - 1].label + ", "
+                      )
                     );
                   }}
                   options={majorList}
