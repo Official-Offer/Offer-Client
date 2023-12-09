@@ -149,7 +149,7 @@ const Registration: NextPage = () => {
                     return;
                   }
                   if (!firstName && !lastName) {
-                    console.log(firstName, lastName)
+                    // console.log(firstName, lastName)
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;
                   }
@@ -164,7 +164,7 @@ const Registration: NextPage = () => {
                       : rol == "Trường"
                         ? "advisor"
                         : "recruiter";
-                  console.log(r);
+                  // console.log(r);
                   dispatch(setRole(r));
                   mutation.mutate({
                     email: item.email,

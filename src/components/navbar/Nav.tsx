@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
   DesktopOutlined,
   PlusOutlined,
@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import { deleteCookie, removeCookies } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
@@ -69,7 +69,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
           deleteCookie("role");
           deleteCookie("id");
           router.push("/login").then(() => {
-            // router.reload();
+            router.reload();
           });
         }
       } else {
@@ -78,11 +78,19 @@ export const Nav: React.FC = (props: any): ReactElement => {
     },
   }));
 
+  // useEffect to check if the user is logged in, else redirect to login page
+  // useEffect(() => {
+  //   if (status != "authenticated" && !getCookie("cookieToken")) {
+  //     router.push("/login");
+  //   }
+  // }, [getCookie("cookieToken")]);
+
+
   console.log(router.pathname);
 
   if (
     router.pathname.includes("recruiter") ||
-    router.pathname.includes("advisor")
+    router.pathname.includes("advisor") 
   ) {
     return (
       <div>
