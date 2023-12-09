@@ -14,7 +14,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
-import { Form, Input, Segmented } from "antd";
+import { Button, Form, Input, Segmented } from "antd";
 import { updateEducation } from "@services/apiSchool";
 import { updateCompany } from "@services/apiCompany";
 import { updateSchoolForAdvisor } from "@services/apiAdvisor";
@@ -88,14 +88,15 @@ const Registration: NextPage = () => {
     {
       onSuccess: async (data) => {
         dispatch(setLoggedIn(true));
-        const route = r.isStudent
-          ? "/student"
-          : r.isAdvisor
-            ? "/advisor/jobs"
-            : "/recruiter/jobs";
-        router.replace(route).then(() => {
-          router.reload();
-        });
+        router.push("/registration/verifyEmail");
+        // const route = r.isStudent
+        //   ? "/student"
+        //   : r.isAdvisor
+        //     ? "/advisor/jobs"
+        //     : "/recruiter/jobs";
+        // router.replace(route).then(() => {
+        //   router.reload();
+        // });
       },
       onError: (error: any) => {
         console.log(error.response.data.message);
@@ -127,6 +128,15 @@ const Registration: NextPage = () => {
               >
                 <BackwardOutlined /> Quay lại
               </p>
+              {/* Add google sign in button below */}
+              <Button
+                icon={<GoogleOutlined />}
+                onClick={() => signIn("google")}
+              >
+                {" "}
+                Đăng ký với Google{" "}
+              </Button>
+
               <Form className="form form-margin" layout="vertical">
                 {/* <div className="form-grid"> */}
                 <Form.Item required label="Họ Tên" className="form-input">
@@ -169,8 +179,8 @@ const Registration: NextPage = () => {
                   mutation.mutate({
                     email: item.email,
                     password: item.password,
-                    firstName,
-                    lastName,
+                    first_name: firstName,
+                    last_name: lastName,
                     role,
                   });
                 }}

@@ -20,7 +20,7 @@ const Students: NextPage = () => {
       setData(students);
       setDataSet(students);
 
-      setSearchResults(students.map((student) => student.name));
+      setSearchResults(students.map((student: { name: any; }) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
   });

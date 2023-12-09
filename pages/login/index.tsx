@@ -83,11 +83,11 @@ const Login: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           <h1>Đăng nhập</h1>
-          {/* <br />
+          <br />
           <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
             {" "}
             Đăng nhập với Google{" "}
-          </Button> */}
+          </Button>
           <AuthForm
             onSubmit={(item: { email: string; password: string }) => {
               return mutation.mutate({
