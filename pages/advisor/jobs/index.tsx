@@ -19,6 +19,7 @@ import {
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
 import { getAdvisor } from "@services/apiAdvisor";
+import { setCookie } from "cookies-next";
 
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -58,6 +59,11 @@ const Jobs: NextPage = () => {
     queryFn: getAdvisor,
     onSuccess: async (info) => {
       console.log(info);
+      setCookie("id", info.account.id);
+      setCookie("role", "advisor");
+      setCookie("orgName", info.company.name);
+      setCookie("orgId", info.company.id);
+
       dispatch(setID(info.account.id));
       dispatch(
         setRole({

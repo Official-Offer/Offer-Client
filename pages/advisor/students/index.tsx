@@ -5,6 +5,8 @@ import { getStudentsFromSchool } from "@services/apiStudent";
 import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Select } from "antd";
+import { getCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const Students: NextPage = () => {
@@ -13,13 +15,17 @@ const Students: NextPage = () => {
   const [data, setData] = useState<StudentDataType[]>([]);
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
 
-  const studentQuery = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getStudentsFromSchool,
+  const [school, setSchool] = useState<Number>(
+    getCookie("orgId") ? Number(getCookie("orgId")) : 1
+  );
+
+  const studentQuery = useQuery(
+    ["jobs"], {
+    queryFn: () => getStudentsFromSchool(school),
     onSuccess: (students) => {
       setData(students);
       setDataSet(students);
-
+      console.log(students);
       setSearchResults(students.map((student: { name: any; }) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
@@ -31,25 +37,26 @@ const Students: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
   };
   return (
     <div className="applicant">
       <h1 className="applicant-title">Học sinh</h1>
-      <div className="applicant-table">
-        <BaseTable
-          dataset={data}
-          columns={StudentColumns}
-          placeholder={"Tìm học sinh"}
-          // handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearch}
-          searchResults={searchResults}
-          tableType={"Students"}
-          isLoading={studentQuery.isLoading}
-        />
-      </div>
+      <br />
+        <div className="applicant-table">
+          <BaseTable
+            dataset={data}
+            columns={StudentColumns}
+            placeholder={"Tìm học sinh"}
+            // handleFilterType={handleFilterType}
+            handleFilterSearch={handleFilterSearch}
+            searchResults={searchResults}
+            tableType={"Students"}
+            isLoading={studentQuery.isLoading}
+          />
+        </div>
     </div>
   );
 };

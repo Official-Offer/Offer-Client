@@ -10,6 +10,7 @@ import Profile from "../profile/index";
 import { getRecruiter } from "@services/apiRecruiter";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
+import { setCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
@@ -36,6 +37,11 @@ const Jobs: NextPage = () => {
     queryFn: getRecruiter,
     onSuccess: async (info) => {
       console.log(info);
+      setCookie("id", info.account.id);
+      setCookie("role", "advisor");
+      setCookie("orgName", info.company.name);
+      setCookie("orgId", info.company.id);
+      
       dispatch(setID(info.account.id));
       dispatch(
         setRole({
