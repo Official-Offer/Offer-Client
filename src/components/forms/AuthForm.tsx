@@ -38,7 +38,6 @@ export const AuthForm: React.FC<ILogInForm> = ({
 
   const handleSubmit = (values: Record<string, any>) => {
     // event.preventDefault();
-    console.log("first")
     //check if all fields are filled
     if (!email || !password) {
       setError("Vui lòng điền đầy đủ thông tin");
@@ -50,8 +49,9 @@ export const AuthForm: React.FC<ILogInForm> = ({
     else if (!email.includes("@")) {
       setError("Email không hợp lệ");
     }
-    console.log("second")
-    // setError("");
+    else {
+      setError("");
+    }
     onSubmit({ email, password, error});
   };
 

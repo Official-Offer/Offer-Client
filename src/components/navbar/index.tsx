@@ -32,23 +32,23 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
       ? "recruiter"
       : "advisor";
 
-  const mutation = useMutation({
-    // queryKey: ["login"],
-    mutationFn: userLogOut,
-    onSuccess: async (data) => {
-      // Invalidate and refetch
-      deleteCookie("cookieToken");
-      deleteCookie("role");
-      deleteCookie("id");
-      router.push("/login").then(() => {
-        // router.reload();
-      });
-    },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
-    },
-  });
+  // const mutation = useMutation({
+  //   // queryKey: ["login"],
+  //   mutationFn: userLogOut,
+  //   onSuccess: async (data) => {
+  //     // Invalidate and refetch
+  //     deleteCookie("cookieToken");
+  //     deleteCookie("role");
+  //     deleteCookie("id");
+  //     router.push("/login").then(() => {
+  //       router.reload();
+  //     });
+  //   },
+  //   onError: (error: any) => {
+  //     console.log(error.response.data.message);
+  //     // queryClient.invalidateQueries({ queryKey: ["login"] });
+  //   },
+  // });
   const { status } = useSession();
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 
@@ -274,7 +274,13 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                       });
                     } else {
                       //sign out traditional way
-                      mutation.mutate();
+                      // mutation.mutate();
+                      deleteCookie("cookieToken");
+                      deleteCookie("role");
+                      deleteCookie("id");
+                      router.push("/login").then(() => {
+                        router.reload();
+                      });
                     }
                     router.push("/login");
                   }}

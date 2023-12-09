@@ -22,7 +22,7 @@ const ResetPassword: NextPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { token } = router.query;
-  console.log(token);
+  // console.log(token);
   const mutation = useMutation({
     mutationFn: resetPassword,
     onSuccess: async (data) => {

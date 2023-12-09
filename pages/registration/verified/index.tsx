@@ -9,6 +9,8 @@ import { RootState } from "@redux/reducers";
 const VerifyPassword: NextPage = () => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
+  const { token } = router.query;
+
   return (
     <div className="register">
       <div className="register-sideBar">
