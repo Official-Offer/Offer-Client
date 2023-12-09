@@ -32,7 +32,7 @@ export const userLogOut = async () => {
 };
 
 export const verifyEmail = async (otp: any) => {
-  const response = await request.post(`/accounts/verifyEmail/`, {
+  const response = await request.post(`/accounts/verify_email/`, {
     otp,
   });
   return response.data;

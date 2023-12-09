@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useMutation } from "@tanstack/react-query";
 import { verifyEmail } from "@services/apiUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //create a next page for the student home page, code below
 const VerifyPassword: NextPage = () => {
@@ -24,11 +24,17 @@ const VerifyPassword: NextPage = () => {
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
+      setSubmitted(true);
       setErrorMessage("Xác nhận email không thành công.");
       // setErrorMessage(error.response.data.message);
     },
   });
 
+  useEffect(() => {
+    if (otp) {
+      mutation.mutate();
+    }
+  }, [otp]);
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -38,7 +44,9 @@ const VerifyPassword: NextPage = () => {
         <div className="register-content-form">
           <h1 style={{ color: "Purple" }}>
             {submitted
-              ? `Email đã được xác nhận.`
+              ? errorMessage
+                ? `Xác nhận email không thành công.`
+                : `Email đã được xác nhận.`
               : `Link xác nhận đã được gửi đến email của bạn `}
           </h1>
           <br />
