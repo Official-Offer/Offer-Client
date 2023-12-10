@@ -11,6 +11,7 @@ const PostJobs: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
+  const { school } = router.query;
 
   return (
     <div className="recruiter-job-post">
@@ -22,7 +23,8 @@ const PostJobs: NextPage = () => {
             // router.push("/advisor/jobs");
           }}
           onSubmit={(): void => {
-            router.push("/advisor/postJobs/jobDesc");
+            router.push(`/advisor/postJobs/jobDesc/`);
+            // router.push(`/advisor/postJobs/jobDesc/${school}`);
           }}
         />
       </div>

@@ -19,6 +19,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { getCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 interface JobDescriptionProps {
   onClick: () => void;
@@ -29,6 +30,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   onClick,
   onBack,
 }) => {
+  const router = useRouter();
+  const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const majorList = [
     { value: 1, label: "Công nghệ thông tin" },
@@ -311,6 +314,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               contact_person: accountState.id || 1,
               deadline,
               required_majors: majors,
+              request_approval_from: school ? Number(school) : null,
             });
           }}
           isLoading={postJobQuery.isLoading}

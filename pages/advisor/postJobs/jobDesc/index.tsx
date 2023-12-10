@@ -10,6 +10,7 @@ const JobDesc: NextPage = () => {
     <JobDescription
       onClick={() => {
         router.push("/advisor/postJobs/schoolSelect");
+        // router.push("/advisor/jobs");
       }}
       onBack={() => {
         router.back();
