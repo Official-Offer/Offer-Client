@@ -61,22 +61,22 @@ const Profile: NextPage = () => {
         <Form.Item label="Họ">
           <Input
             required
-            placeholder={fname}
-            value={fname}
+            placeholder={lname}
+            value={lname}
             className="form-item"
             onChange={(event) => {
-              setFName(event.target.value);
+              setLName(event.target.value);
             }}
           />
         </Form.Item>
         <Form.Item label="Tên">
           <Input
             required
-            placeholder={lname}
-            value={lname}
+            placeholder={fname}
+            value={fname}
             className="form-item"
             onChange={(event) => {
-              setLName(event.target.value);
+              setFName(event.target.value);
             }}
           />
         </Form.Item>
@@ -107,12 +107,15 @@ const Profile: NextPage = () => {
         <OrgForm
           onSubmit={function (org: string): void {
             setOrg(org);
+            console.log(fname, lname);
             profileMutation.mutate({
-              first_name: fname,
-              last_name: lname,
-              email: email,
-              self_description: selfDescription,
-              phone_number: phoneNumber,
+              account: {
+                first_name: fname,
+                last_name: lname,
+                email,
+                self_description: selfDescription,
+                phone_number: phoneNumber,
+              },
               school: org,
             });
           }}

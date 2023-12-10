@@ -6,7 +6,7 @@ import { Form, Input } from "antd";
 import { OrgForm } from "@components/forms";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getRecruiter } from "@services/apiRecruiter";
+import { getRecruiter, updateRecruiter } from "@services/apiRecruiter";
 import { updateCompany } from "@services/apiCompany";
 
 //create a next page for the student home page, code below
@@ -37,7 +37,7 @@ const Profile: NextPage = () => {
 
   const profileMutation = useMutation({
     mutationKey: ["update"],
-    mutationFn: updateCompany,
+    mutationFn: updateRecruiter,
     onSuccess: async (data) => {
       console.log(data);
     },
@@ -109,11 +109,13 @@ const Profile: NextPage = () => {
           onSubmit={function (org: string): void {
             setOrg(org);
             profileMutation.mutate({
-              first_name: fname,
-              last_name: lname,
-              email,
-              self_description: selfDescription,
-              phone_number: phoneNumber,
+              account: {
+                first_name: fname,
+                last_name: lname,
+                email,
+                self_description: selfDescription,
+                phone_number: phoneNumber,
+              },
               company: org,
             });
           }}
