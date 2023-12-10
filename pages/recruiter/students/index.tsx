@@ -13,7 +13,7 @@ const Students: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
   const [data, setData] = useState<StudentDataType[]>([]);
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
-  const [school, setSchool] = useState<Number>(1);
+  const [school, setSchool] = useState<Number>();
 
   const studentQuery = useQuery(
     ["jobs", school], {
@@ -26,7 +26,6 @@ const Students: NextPage = () => {
     },
     onError: (error) => console.log(`Error: ${error}`),
   });
-  console.log(jobList);
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
