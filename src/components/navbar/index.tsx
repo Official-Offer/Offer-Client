@@ -50,7 +50,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   },
   // });
   const { status } = useSession();
-  const loggedIn = !!getCookie("cookieToken");
+  const role = getCookie("role");
+  const conflict = role !== "student";
+
+  const loggedIn = !!getCookie("cookieToken") && !conflict;
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 
   // const handleMesSearchChange = (event) => {

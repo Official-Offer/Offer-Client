@@ -4,4 +4,3 @@ export { Button } from "./button";
 export { Card } from "./card";
 export { Footer } from "./footer";
 export { SearchBar } from "./search";
-// asdda

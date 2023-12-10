@@ -27,7 +27,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
   const r = getCookie("role");
-  const loggedIn = !!getCookie("cookieToken");
   const isRecruiter =
     r == "recruiter" ||
     state.role.isRecruiter ||
@@ -36,6 +35,12 @@ export const Nav: React.FC = (props: any): ReactElement => {
     r == "advisor" ||
     state.role.isAdvisor ||
     router.pathname.includes("advisor");
+  const conflict =
+    (router.pathname.includes("recruiter") &&
+      (r == "advisor" || state.role.isAdvisor)) ||
+    (router.pathname.includes("advisor") &&
+      (r == "recruiter" || state.role.isRecruiter));
+  const loggedIn = !!getCookie("cookieToken") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
   const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
@@ -137,9 +142,13 @@ export const Nav: React.FC = (props: any): ReactElement => {
             ) : (
               <div style={{ margin: "auto", marginTop: "100px" }}>
                 Bạn cần đăng nhập để sử dụng chức năng này{" "}
-                <Button onClick={()=>{
-                  router.push("/login");
-                }}>Đăng nhập</Button>
+                <Button
+                  onClick={() => {
+                    router.push("/login");
+                  }}
+                >
+                  Đăng nhập
+                </Button>
               </div>
             )}
           </Layout>
