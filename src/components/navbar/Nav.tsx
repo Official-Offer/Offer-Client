@@ -25,9 +25,9 @@ const { Sider } = Layout;
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
-  const isRecruiter =
-    state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
+  const r = getCookie("role");
+  const isRecruiter = r == "recruiter" || state.role.isRecruiter || router.pathname.includes("recruiter");
+  const isAdvisor = r == "advisor" || state.role.isAdvisor || router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
   const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
