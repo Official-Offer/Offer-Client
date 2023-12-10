@@ -65,6 +65,7 @@ const Login: NextPage = () => {
   const { data: session, status } = useSession();
   if (status === "loading") return <LoadingPage />;
   if (status === "authenticated") {
+    console.log(session);
     // console.log(session.accessToken);
     // setSocialToken(session?.accessToken);
     // socialMutation.mutate({
