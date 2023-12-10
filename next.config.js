@@ -6,6 +6,16 @@ module.exports = {
         destination: "/student",
         permanent: true,
       },
+      {
+        source: "/recruiter",
+        destination: "/recruiter/jobs",
+        permanent: true,
+      },
+      {
+        source: "/advisor",
+        destination: "/advisor/jobs",
+        permanent: true,
+      },
     ];
   },
   env: {
