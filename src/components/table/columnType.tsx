@@ -92,7 +92,7 @@ export const JobColumns: ColumnsType<JobDataType> = [
     key: "posted_date",
   },
   {
-    title: "Tiêu đề",
+    title: "Tiêu đề công việc",
     dataIndex: "title",
     key: "title",
   },
@@ -125,7 +125,7 @@ export const RecruiterJobColumns: ColumnsType<RecruiterJobDataType> = [
     key: "posted_date",
   },
   {
-    title: "Tiêu đề",
+    title: "Tiêu đề công việc",
     dataIndex: "title",
     key: "title",
   },
