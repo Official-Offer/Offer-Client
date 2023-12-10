@@ -392,6 +392,7 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     title: "CV",
     dataIndex: "resume",
     key: "resume",
+    render: (src) => <a href={src}>CV</a>,
   },
   {
     title: "Năm tốt nghiệp",
