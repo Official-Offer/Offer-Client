@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
   DesktopOutlined,
+  LockOutlined,
   PlusOutlined,
   SnippetsOutlined,
   TeamOutlined,
@@ -26,12 +27,19 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
   const r = getCookie("role");
-  const isRecruiter = r == "recruiter" || state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = r == "advisor" || state.role.isAdvisor || router.pathname.includes("advisor");
+  const loggedIn = !!getCookie("cookieToken");
+  const isRecruiter =
+    r == "recruiter" ||
+    state.role.isRecruiter ||
+    router.pathname.includes("recruiter");
+  const isAdvisor =
+    r == "advisor" ||
+    state.role.isAdvisor ||
+    router.pathname.includes("advisor");
   const role = isRecruiter ? "recruiter" : "advisor";
   const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar),
+    import("@components").then((mod: any) => mod.Navbar)
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
@@ -39,21 +47,21 @@ export const Nav: React.FC = (props: any): ReactElement => {
     "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",
-    "Đăng xuất",
+    loggedIn ? "Đăng xuất" : "Đăng nhập",
   ];
   const path = [
     "/jobs",
     "/students",
     isRecruiter ? "/schools" : "/companies",
     "/profile",
-    "/logout",
+    loggedIn ? "/logout" : "/login",
   ];
   const items: MenuProps["items"] = [
     SnippetsOutlined,
     TeamOutlined,
     DesktopOutlined,
     UserOutlined,
-    UnlockOutlined,
+    loggedIn ? UnlockOutlined : LockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
@@ -85,12 +93,11 @@ export const Nav: React.FC = (props: any): ReactElement => {
   //   }
   // }, [getCookie("cookieToken")]);
 
-
   console.log(router.pathname);
 
   if (
     router.pathname.includes("recruiter") ||
-    router.pathname.includes("advisor") 
+    router.pathname.includes("advisor")
   ) {
     return (
       <div>
@@ -125,7 +132,16 @@ export const Nav: React.FC = (props: any): ReactElement => {
             />
           </Sider>
           <Layout className="navbar-with-sider">
-            <div>{props.children}</div>
+            {loggedIn ? (
+              <div>{props.children}</div>
+            ) : (
+              <div style={{ margin: "auto", marginTop: "100px" }}>
+                Bạn cần đăng nhập để sử dụng chức năng này{" "}
+                <Button onClick={()=>{
+                  router.push("/login");
+                }}>Đăng nhập</Button>
+              </div>
+            )}
           </Layout>
         </Layout>
       </div>
