@@ -38,7 +38,7 @@ const Jobs: NextPage = () => {
     onSuccess: async (info) => {
       console.log(info);
       setCookie("id", info.account.id);
-      setCookie("role", "advisor");
+      setCookie("role", "recruiter");
       setCookie("orgName", info.company.name);
       setCookie("orgId", info.company.id);
       

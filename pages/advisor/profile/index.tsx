@@ -16,6 +16,8 @@ const Profile: NextPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [org, setOrg] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
+  const [updated, setUpdated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
@@ -80,7 +82,6 @@ const Profile: NextPage = () => {
             }}
           />
         </Form.Item>
-        {/* add self description */}
         <Form.Item label="Mô tả bản thân">
           <Input.TextArea
             rows={3}
@@ -107,7 +108,6 @@ const Profile: NextPage = () => {
         <OrgForm
           onSubmit={function (org: string): void {
             setOrg(org);
-            console.log(fname, lname);
             profileMutation.mutate({
               account: {
                 first_name: fname,
@@ -120,8 +120,10 @@ const Profile: NextPage = () => {
             });
           }}
           type="update"
-          isLoading={false}
+          isLoading={profileMutation.isLoading || profileQuery.isLoading}
         />
+        {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </Form>
     </div>
   );

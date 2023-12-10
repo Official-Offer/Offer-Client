@@ -7,7 +7,6 @@ import { OrgForm } from "@components/forms";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getRecruiter, updateRecruiter } from "@services/apiRecruiter";
-import { updateCompany } from "@services/apiCompany";
 
 //create a next page for the student home page, code below
 const Profile: NextPage = () => {
@@ -17,6 +16,8 @@ const Profile: NextPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [org, setOrg] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
+  const [updated, setUpdated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
@@ -40,9 +41,11 @@ const Profile: NextPage = () => {
     mutationFn: updateRecruiter,
     onSuccess: async (data) => {
       console.log(data);
+      setUpdated(true);
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
+      setErrorMessage("Cập nhật thất bại"); // error.response.data.message
     },
   });
   return (
@@ -81,7 +84,6 @@ const Profile: NextPage = () => {
             }}
           />
         </Form.Item>
-        {/* add self description */}
         <Form.Item label="Mô tả bản thân">
           <Input.TextArea
             rows={3}
@@ -108,6 +110,7 @@ const Profile: NextPage = () => {
         <OrgForm
           onSubmit={function (org: string): void {
             setOrg(org);
+            setUpdated(false);
             profileMutation.mutate({
               account: {
                 first_name: fname,
@@ -120,8 +123,10 @@ const Profile: NextPage = () => {
             });
           }}
           type="update"
-          isLoading={false}
+          isLoading={profileMutation.isLoading || profileQuery.isLoading}
         />
+        {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </Form>
     </div>
   );

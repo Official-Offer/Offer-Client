@@ -27,10 +27,18 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
   const role = getCookie("role");
-  const isStudent = role == 'student' || state.role.isStudent || router.pathname.includes("student");
+  const isStudent =
+    role == "student" ||
+    state.role.isStudent ||
+    router.pathname.includes("student");
   const isRecruiter =
-  role == 'recruiter' || state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = role == 'advisor' || state.role.isAdvisor || router.pathname.includes("advisor");
+    role == "recruiter" ||
+    state.role.isRecruiter ||
+    router.pathname.includes("recruiter");
+  const isAdvisor =
+    role == "advisor" ||
+    state.role.isAdvisor ||
+    router.pathname.includes("advisor");
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
@@ -68,15 +76,9 @@ export const OrgForm: React.FC<IOrgForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item
-            label={
-              isStudent || isAdvisor
-                ? "Trường"
-                : 
-                  "Công ty"
-            }
-          >
+          <Form.Item label={isStudent || isAdvisor ? "Trường" : "Công ty"}>
             <Select
+              // value={Org}
               showSearch
               className="form-select"
               bordered={false}
