@@ -60,7 +60,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ];
   const path = [
     "/jobs",
-    "/students",
+    "/studs",
     isRecruiter ? "/schools" : "/companies",
     "/profile",
     loggedIn ? "/logout" : "/login",
