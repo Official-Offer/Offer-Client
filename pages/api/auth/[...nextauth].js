@@ -8,9 +8,6 @@ import {
   AZURE_AD_CLIENT_SECRET,
   AZURE_AD_TENANT_ID,
 } from "@config/index";
-import Cookies from "js-cookie";
-import { setCookie } from "cookies-next";
-var user_credential = [];
 
 export default NextAuth({
   providers: [

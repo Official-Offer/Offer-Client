@@ -56,15 +56,16 @@ const Registration: NextPage = () => {
       setCookie("orgId", org);
       setCookie("orgName", "Umass");
       dispatch(setLoggedIn(true));
-      const route =
-        data.role === "student"
-          ? "/student"
-          : data.role === "advisor"
-            ? "/advisor/jobs"
-            : "/recruiter/jobs";
-      router.replace(route).then(() => {
-        // router.reload();
-      });
+      router.push("/registration/verifyEmail");
+      // const route =
+      //   data.role === "student"
+      //     ? "/student"
+      //     : data.role === "advisor"
+      //       ? "/advisor/jobs"
+      //       : "/recruiter/jobs";
+      // router.replace(route).then(() => {
+      //   // router.reload();
+      // });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -77,7 +78,7 @@ const Registration: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.message.token);
-      setCookie("id", data.message.pk);
+      setCookie("id", data.message.id);
       setCookie("role", data.message.role);
       setCookie("orgId", org);
       setCookie("orgName", "Umass");
@@ -123,15 +124,15 @@ const Registration: NextPage = () => {
     {
       onSuccess: async (data) => {
         dispatch(setLoggedIn(true));
-        // router.push("/registration/verifyEmail");
-        const route = r.isStudent
-          ? "/student"
-          : r.isAdvisor
-            ? "/advisor/jobs"
-            : "/recruiter/jobs";
-        router.replace(route).then(() => {
-          router.reload();
-        });
+        router.push("/registration/verifyEmail");
+        // const route = r.isStudent
+        //   ? "/student"
+        //   : r.isAdvisor
+        //     ? "/advisor/jobs"
+        //     : "/recruiter/jobs";
+        // router.replace(route).then(() => {
+        //   router.reload();
+        // });
       },
       onError: (error: any) => {
         console.log(error.response.data.message);
