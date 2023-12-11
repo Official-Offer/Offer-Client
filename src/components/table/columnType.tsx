@@ -92,7 +92,7 @@ export const JobColumns: ColumnsType<JobDataType> = [
     key: "posted_date",
   },
   {
-    title: "Tiêu đề",
+    title: "Tiêu đề công việc",
     dataIndex: "title",
     key: "title",
   },
@@ -125,7 +125,7 @@ export const RecruiterJobColumns: ColumnsType<RecruiterJobDataType> = [
     key: "posted_date",
   },
   {
-    title: "Tiêu đề",
+    title: "Tiêu đề công việc",
     dataIndex: "title",
     key: "title",
   },
@@ -367,16 +367,21 @@ export const ApplicantColumns: ColumnsType<ApplicantDataType> = [
 ];
 
 export const StudentColumns: ColumnsType<StudentDataType> = [
-  {
-    title: "ID",
-    dataIndex: "ID",
-    key: "ID",
-  },
+  // {
+  //   title: "ID",
+  //   dataIndex: "ID",
+  //   key: "ID",
+  // },
   {
     title: "Tên",
     dataIndex: "name",
     key: "name",
     // render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
   },
   {
     title: "Ngành học",
@@ -387,17 +392,18 @@ export const StudentColumns: ColumnsType<StudentDataType> = [
     title: "CV",
     dataIndex: "resume",
     key: "resume",
+    render: (src) => <a href={src}>CV</a>,
   },
   {
     title: "Năm tốt nghiệp",
     dataIndex: "expected_graduation",
     key: "expected_graduation",
   },
-  {
-    title: "Việc đã ứng tuyển",
-    dataIndex: "jobs_applied",
-    key: "jobs_applied",
-  },
+  // {
+  //   title: "Việc đã ứng tuyển",
+  //   dataIndex: "jobs_applied",
+  //   key: "jobs_applied",
+  // },
   // {
   //   title: "Việc đã được nhận",
   //   dataIndex: "jobs_accepted",

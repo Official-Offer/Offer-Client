@@ -11,7 +11,7 @@ export const FootnoteForm: React.FC<FootnoteFormProps> = ({
   embedLogin,
 }) => {
   return (
-    <div className="footnote">
+    <div>
       <hr />
       {embedLogin ? (
         <div>

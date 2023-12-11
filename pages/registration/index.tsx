@@ -6,16 +6,15 @@ import { OrgForm } from "@components/forms";
 import { getCookie, setCookie } from "cookies-next";
 import { FootnoteForm } from "@components/forms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { registerUser, userLogIn } from "@services/apiUser";
+import { registerUser, socialAuth, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "antd";
 import { BackwardOutlined, GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
-import { Form, Input, Segmented } from "antd";
+import { Button, Form, Input, Segmented } from "antd";
 import { updateEducation } from "@services/apiSchool";
 import { updateCompany } from "@services/apiCompany";
 import { updateSchoolForAdvisor } from "@services/apiAdvisor";
@@ -30,7 +29,8 @@ const Registration: NextPage = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [org, setOrg] = useState<string>("");
-  const [token, setToken] = useState<string>("");
+  // const [idToken, setToken] = useState<string>(getCookie("idToken") ?? "");
+  // const idToken = getCookie("idToken") ?? "";
   const [r, setR] = useState<any>({
     isStudent: true,
     isAdvisor: false,
@@ -42,15 +42,46 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
+  console.log("data", session);
+  console.log("status", status);
+
+  const socialMutation = useMutation(["socialLogin"], {
+    mutationFn: socialAuth,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      console.log("social login testing", data);
+      setCookie("cookieToken", data.access);
+      setCookie("id", data.id);
+      setCookie("role", data.role);
+      setCookie("orgId", org);
+      setCookie("orgName", "Umass");
+      dispatch(setLoggedIn(true));
+      const route =
+        data.role === "student"
+          ? "/student"
+          : data.role === "advisor"
+            ? "/advisor/jobs"
+            : "/recruiter/jobs";
+      router.replace(route).then(() => {
+        // router.reload();
+      });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
+    },
+  });
+
   const mutation = useMutation(["register"], registerUser, {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.message.token);
       setCookie("id", data.message.pk);
       setCookie("role", data.message.role);
-      // localStorage.setItem("cookieToken", data.message.token);
-      // localStorage.setItem("id", data.message.pk);
-      // localStorage.setItem("role", data.message.role);
+      setCookie("orgId", org);
+      setCookie("orgName", "Umass");
+
       if (r.isStudent) {
         mutationOrg.mutate({
           token: data.message.token,
@@ -92,6 +123,7 @@ const Registration: NextPage = () => {
     {
       onSuccess: async (data) => {
         dispatch(setLoggedIn(true));
+        // router.push("/registration/verifyEmail");
         const route = r.isStudent
           ? "/student"
           : r.isAdvisor
@@ -105,9 +137,29 @@ const Registration: NextPage = () => {
         console.log(error.response.data.message);
         // setErrorMessage(error.response.data.message);
       },
-    },
+    }
   );
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      const role =
+        rol == "Học sinh"
+          ? "student"
+          : rol == "Trường"
+            ? "advisor"
+            : "recruiter";
+      // console.log("authenticated", session?.user?.accessToken, role);
+      socialMutation.mutate({
+        //@ts-ignore
+        auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
+        role,
+      });
+      // router.push("/student");
+    }
+  }, [status]);
+
   if (status === "loading") return <h1> Đang tải ... </h1>;
+
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -115,7 +167,8 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen && status !== "authenticated" ? (
+          {pwScreen ? (
+            // && status !== "authenticated"
             <>
               <div>
                 <h1>Đăng ký</h1>
@@ -131,6 +184,17 @@ const Registration: NextPage = () => {
               >
                 <BackwardOutlined /> Quay lại
               </p>
+              {/* Add google sign in button below */}
+              <Button
+                icon={<GoogleOutlined />}
+                onClick={() => {
+                  signIn("google");
+                }}
+              >
+                {" "}
+                Đăng ký với Google{" "}
+              </Button>
+
               <Form className="form form-margin" layout="vertical">
                 {/* <div className="form-grid"> */}
                 <Form.Item required label="Họ Tên" className="form-input">
@@ -147,24 +211,34 @@ const Registration: NextPage = () => {
                 </Form.Item>
               </Form>
               <AuthForm
-                onSubmit={(item: { email: any; password: any }) => {
-                  setErrorMessage("");
-                  // setPassword(item.password);
-                  // setEmail(item.email);
-                  // setScreen(false);
+                onSubmit={(item: { email: any; password: any; error: any }) => {
+                  if (!item) {
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  if (!firstName && !lastName) {
+                    // console.log(firstName, lastName)
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  if (item.error) {
+                    setErrorMessage(item.error);
+                    return;
+                  }
+                  // setErrorMessage("");
                   const role =
                     rol == "Học sinh"
                       ? "student"
                       : rol == "Trường"
                         ? "advisor"
                         : "recruiter";
-                  console.log(r);
+                  // console.log(r);
                   dispatch(setRole(r));
                   mutation.mutate({
                     email: item.email,
                     password: item.password,
-                    firstName,
-                    lastName,
+                    first_name: firstName,
+                    last_name: lastName,
                     role,
                   });
                 }}
@@ -177,8 +251,13 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
-                  setScreen(true);
+                  if (!org) {
+                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    return;
+                  }
+                  setErrorMessage("");
                   setOrg(org);
+                  setScreen(true);
                 }}
                 isLoading={mutation.isLoading || mutationOrg.isLoading}
               />
@@ -225,19 +304,3 @@ const Registration: NextPage = () => {
 };
 
 export default Registration;
-
-{
-  /* <Button
-                icon={<GoogleOutlined />}
-                onClick={() => signIn("google")}
-              >
-                {" "}
-                Đăng ký với Google{" "}
-              </Button> */
-}
-{
-  /* <SubmitButton onClick={()=>{
-                  //logout google nextjs
-                  signOut();
-                }} text={"Log out"}/> */
-}

@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { useQuery } from "@tanstack/react-query";
-import { getSchoolList } from "@services/apiSchool";
-import { getCompanyList } from "@services/apiCompany";
 import { getOrgList } from "@services/apiUser";
 import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -27,10 +26,19 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [Org, setOrg] = useState<any>();
   const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
-  const isStudent = state.role.isStudent || router.pathname.includes("student");
+  const role = getCookie("role");
+  const isStudent =
+    role == "student" ||
+    state.role.isStudent ||
+    router.pathname.includes("student");
   const isRecruiter =
-    state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
+    role == "recruiter" ||
+    state.role.isRecruiter ||
+    router.pathname.includes("recruiter");
+  const isAdvisor =
+    role == "advisor" ||
+    state.role.isAdvisor ||
+    router.pathname.includes("advisor");
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
@@ -68,16 +76,9 @@ export const OrgForm: React.FC<IOrgForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item
-            label={
-              isStudent || isAdvisor
-                ? "Trường"
-                : // "Kết nối với trường của bạn"
-                  "Công ty"
-              // "Kết nối với công ty của bạn"
-            }
-          >
+          <Form.Item label={isStudent || isAdvisor ? "Trường" : "Công ty"}>
             <Select
+              // value={Org}
               showSearch
               className="form-select"
               bordered={false}

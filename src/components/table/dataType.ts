@@ -66,10 +66,12 @@ export interface StudentDataType {
   key: string | null;
   ID: string | null;
   name: string | null;
+  email: string | null;
   major: string | null;
   resume: string | null;
   expected_graduation: string | null;
-  jobs_applied: number | null;
+  // transcript: string | null;
+  // jobs_applied: number | null;
   // jobs_accepted: number | null;
   // tag: string | null;
 }

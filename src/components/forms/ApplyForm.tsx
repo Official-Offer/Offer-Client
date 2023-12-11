@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 import { IconButton } from "@styles/styled-components/styledButton";
 import { AxiosError } from "src/types/errorTypes";
+import { getCookie } from "cookies-next";
+import router, { useRouter } from "next/router";
 
 type ApplyFormProps = {
   jobId?: number;
@@ -25,6 +27,10 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
   onCancel,
 }) => {
   const [resume, setResume] = useState<any>(null);
+  const [loggedIn, setLoggedIn] = useState<boolean>(
+    getCookie("cookieToken") ? true : false
+  );
+  const router = useRouter();
 
   const handleCancel = () => {
     setResume(null);
@@ -59,7 +65,7 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
     }
   };
 
-  return (
+  return loggedIn ? (
     <Modal
       title="Ứng tuyển"
       open={open}
@@ -111,7 +117,7 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
         <Alert
           message={
             resumeMutation.error?.response?.data?.message.includes(
-              "You have already applied for this job",
+              "You have already applied for this job"
             )
               ? "Bạn đã nộp đơn ứng tuyển cho công việc này rồi"
               : "Đã có lỗi tải lên hệ thống. Vui lòng thử lại"
@@ -124,5 +130,22 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
         ""
       )}
     </Modal>
+  ) : (
+    <Modal
+      title="Bạn cần đăng nhập để ứng tuyển"
+      open={open}
+      onCancel={handleCancel}
+      footer={[
+        <IconButton backgroundColor="#D30B81" onClick={()=>{
+          router.push("/login");
+        }}>
+          <div className="btn-body">
+            <span>
+              Đăng nhập
+            </span>
+          </div>
+        </IconButton>,
+      ]}
+    />
   );
 };

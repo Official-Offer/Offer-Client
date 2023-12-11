@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
-import React, { useState, useRef } from "react";
-import { deleteCookie, removeCookies } from "cookies-next";
+import React, { useState, useRef, useEffect } from "react";
+import { deleteCookie, getCookie, removeCookies } from "cookies-next";
 import { Menu, Input, Button, Dropdown } from "antd";
 import {
   // SearchOutlined,
@@ -32,24 +32,16 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
       ? "recruiter"
       : "advisor";
 
-  const mutation = useMutation({
-    // queryKey: ["login"],
-    mutationFn: userLogOut,
-    onSuccess: async (data) => {
-      // Invalidate and refetch
-      deleteCookie("cookieToken");
-      deleteCookie("role");
-      deleteCookie("id");
-      router.push("/login").then(() => {
-        // router.reload();
-      });
-    },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
-    },
-  });
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+  const role = getCookie("role");
+  const conflict = role !== "student";
+  console.log("social login", session);
+  const loggedIn =
+    (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
+
+  console.log("loggedIn?")
+  console.log(getCookie("cookieToken"));
+
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 
   // const handleMesSearchChange = (event) => {
@@ -86,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           //   routeSelected: "/student/companies",
           // },
           {
-            name: "Liên hệ / Đăng tuyển",
+            name: "Liên hệ",
             link: "/student/contact",
             newTab: false,
             routeSelected: "/student/contact",
@@ -241,54 +233,82 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             <Button type="text" className="icon-btn" icon={<BellOutlined />} />
           </Menu.Item>
         </Dropdown> */}
-        <Dropdown
-          trigger={["click"]}
-          overlayClassName="avatar-dropdown"
-          overlay={
-            <Menu>
-              <Menu.Item>
-                <Link href={`/${path}/profile`}>Hồ Sơ</Link>
-              </Menu.Item>
-              {/* <Menu.Item>
+        {loggedIn ? (
+          <Dropdown
+            trigger={["click"]}
+            overlayClassName="avatar-dropdown"
+            overlay={
+              <Menu>
+                <Menu.Item>
+                  <Link href={`/${path}/profile`}>Hồ Sơ</Link>
+                </Menu.Item>
+                {/* <Menu.Item>
                 <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
               </Menu.Item> */}
-              <Menu.Item>
-                <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item>
-                <Link href={`/settings`}>Cài Đặt</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link href={`/${path}/profile`}>Điều Khoản Sử Dụng</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <div
-                  onClick={() => {
-                    if (status == "authenticated") {
-                      signOut().then(() => {
-                        router.push("/login");
-                      });
-                    } else {
-                      //sign out traditional way
-                      mutation.mutate();
-                    }
-                    router.push("/login");
-                  }}
-                >
-                  Đăng Xuất
-                </div>
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <Menu.Item>
-            <Button type="primary" icon={<SmileFilled />} />
-          </Menu.Item>
-        </Dropdown>
+                <Menu.Item>
+                  <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item>
+                  <Link href={`/settings`}>Cài Đặt</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link href={`/${path}/profile`}>Điều Khoản Sử Dụng</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link href={`/${path}/profile`}>Hỗ Trợ</Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <div
+                    onClick={() => {
+                      if (status == "authenticated") {
+                        deleteCookie("cookieToken");
+                        deleteCookie("role");
+                        deleteCookie("id");
+                        signOut();
+                      } else {
+                        //sign out traditional way
+                        // mutation.mutate();
+                        deleteCookie("cookieToken");
+                        deleteCookie("role");
+                        deleteCookie("id");
+                        router.push("/login").then(() => {
+                          router.reload();
+                        });
+                      }
+                      router.push("/login");
+                    }}
+                  >
+                    Đăng Xuất
+                  </div>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Menu.Item>
+              <Button type="primary" icon={<SmileFilled />} />
+            </Menu.Item>
+          </Dropdown>
+        ) : (
+          <div>
+            <Button
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                router.push("/registration");
+              }}
+            >
+              Đăng ký
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Đăng nhập
+            </Button>
+          </div>
+        )}
       </Menu>
     </div>
   );

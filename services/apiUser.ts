@@ -21,8 +21,8 @@ export const userLogIn = async (body: any) => {
   return response.data;
 };
 
-export const socialLogIn = async (body: any) => {
-  const response = await request.get(`/accounts/auth/google/${body}`);
+export const socialAuth = async (body: any) => {
+  const response = await request.post(`/accounts/google/`, body);
   return response.data;
 };
 
@@ -31,8 +31,10 @@ export const userLogOut = async () => {
   return response.data;
 };
 
-export const verifyEmail = async (body: any) => {
-  const response = await request.post(`/accounts/verifyEmail/`, body);
+export const verifyEmail = async (otp: any) => {
+  const response = await request.post(`/accounts/verify_email/`, {
+    otp,
+  });
   return response.data;
 };
 

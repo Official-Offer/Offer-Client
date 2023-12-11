@@ -8,6 +8,8 @@ import {
   AZURE_AD_CLIENT_SECRET,
   AZURE_AD_TENANT_ID,
 } from "@config/index";
+import Cookies from "js-cookie";
+import { setCookie } from "cookies-next";
 var user_credential = [];
 
 export default NextAuth({
@@ -30,31 +32,22 @@ export default NextAuth({
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
-        console.log(token);
-        console.log(account);
-        token.accessToken = account.access_token;
+        // console.log("id_token", account.id_token);
+        token.accessToken = account.id_token;
         token.id = profile.id;
+        token.refreshToken = account.refresh_token;
       }
       return token;
     },
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
+    },
     async session({ session, token, user }) {
-      console.log(token);
-      console.log(user);
-      console.log(session);
+      // console.log("token", token);
       session.user.accessToken = token.accessToken;
       session.user.id = token.id;
 
       return session;
-      // user_credential = {
-      //   provider: token.token.account.provider,
-      // };
-      // if (token.token.account.access_token) {
-      //   user_credential["auth_token"] = token.token.account.access_token;
-      // }
-      // if (token.token.account.id_token) {
-      //   user_credential["auth_token"] = token.token.account.id_token;
-      // }
-      // return user_credential;
     },
   },
 });

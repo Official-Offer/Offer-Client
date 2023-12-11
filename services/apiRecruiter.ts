@@ -8,7 +8,8 @@ export const registerRecruiter = async (body: any) => {
 };
 
 export const updateRecruiter = async (body: any) => {
-  const response = await request.put(`/recruiters/me/`, body);
+  const id = getCookie("id");
+  const response = await request.patch(`/recruiters/${id}/`, body);
   return response.data;
 };
 

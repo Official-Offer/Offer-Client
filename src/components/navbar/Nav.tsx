@@ -1,12 +1,11 @@
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
-  BarChartOutlined,
+  DesktopOutlined,
   LockOutlined,
   PlusOutlined,
   SnippetsOutlined,
   TeamOutlined,
   UnlockOutlined,
-  UploadOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -16,122 +15,96 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import { deleteCookie, removeCookies } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
 import { IconButton } from "@styles/styled-components/styledButton";
+import { get } from "lodash";
 
 const { Sider } = Layout;
 
 export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
+  const r = getCookie("role");
   const isRecruiter =
-    state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
+    r == "recruiter" ||
+    state.role.isRecruiter ||
+    router.pathname.includes("recruiter");
+  const isAdvisor =
+    r == "advisor" ||
+    state.role.isAdvisor ||
+    router.pathname.includes("advisor");
+  const conflict =
+    (router.pathname.includes("recruiter") &&
+      (r == "advisor" || state.role.isAdvisor)) ||
+    (router.pathname.includes("advisor") &&
+      (r == "recruiter" || state.role.isRecruiter)) ||
+    (router.pathname.includes("student") &&
+      (r == "recruiter" || state.role.isRecruiter)) ||
+    (router.pathname.includes("student") &&
+      (r == "advisor" || state.role.isAdvisor));
+  const {data: session, status} = useSession();
+  console.log(getCookie("cookieToken"));
+  console.log(getCookie("role"));
+  const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
-  const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar),
+    import("@components").then((mod: any) => mod.Navbar)
   ) as any;
-  const mutation = useMutation({
-    // queryKey: ["login"],
-    mutationFn: userLogOut,
-    onSuccess: async (data) => {
-      // Invalidate and refetch
-      deleteCookie("cookieToken");
-      deleteCookie("role");
-      deleteCookie("id");
-
-      // localStorage.removeItem("cookieToken");
-      // localStorage.removeItem("id");
-      // localStorage.removeItem("role");
-
-      router.push("/login").then(() => {
-        // router.reload();
-      });
-    },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
-      // queryClient.invalidateQueries({ queryKey: ["login"] });
-    },
-  });
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    // "Đăng tuyển",
-    "Công việc",
-    // isRecruiter ? "Ứng Viên" : "Học sinh",
+    "Ứng viên",
+    "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
-    // "Tài khoản",
-    "Đăng xuất",
+    "Tài khoản",
+    loggedIn ? "Đăng xuất" : "Đăng nhập",
   ];
   const path = [
-    // "/postJobs",
     "/jobs",
-    // isRecruiter ? "/applicants" : "/students",
+    "/studs",
     isRecruiter ? "/schools" : "/companies",
-    // "/profile",
-    "/logout",
+    "/profile",
+    loggedIn ? "/logout" : "/login",
   ];
   const items: MenuProps["items"] = [
-    // BarChartOutlined,
     SnippetsOutlined,
     TeamOutlined,
-    // UploadOutlined,
-    // UserOutlined,
-    UnlockOutlined,
+    DesktopOutlined,
+    UserOutlined,
+    loggedIn ? UnlockOutlined : LockOutlined,
   ].map((icon, index) => ({
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
     onClick: (e) => {
-      if (index == 2) {
+      if (index == 4) {
         if (status == "authenticated") {
-          signOut().then(() => {
-            router.push("/login");
-          });
+          deleteCookie("cookieToken");
+          deleteCookie("role");
+          deleteCookie("id");
+          signOut();
         } else {
-          // sign out traditional way
-          console.log("unauthenticated by google");
-          // deleteCookie("cookieToken");
-          // deleteCookie("role");
-          // deleteCookie("id");
-          // router.push("/login").then(() => {
-          //   router.reload();
-          // });
-          mutation.mutate();
+          deleteCookie("cookieToken");
+          deleteCookie("role");
+          deleteCookie("id");
+          router.push("/login").then(() => {
+            router.reload();
+          });
         }
       } else {
         router.push(`/${role}${path[index]}`);
       }
-
-      // else if (!(index == 0 && role == "advisor")) {
-      //   router.push(`/${role}${path[index]}`);
-      // }
     },
-    // children:
-    //   index == 0 && role == "advisor"
-    //     ? [
-    //         {
-    //           label: "Chưa duyệt",
-    //           icon: React.createElement(icon),
-    //           onClick: (e) => {
-    //             router.push(`/${role}${path[index]}/unapproved`);
-    //           },
-    //           key: `/${role}${path[index]}/unapproved`,
-    //         },
-    //         {
-    //           label: "Đã duyệt",
-    //           icon: React.createElement(icon),
-    //           onClick: (e) => {
-    //             router.push(`/${role}${path[index]}/approved`);
-    //           },
-    //           key: `/${role}${path[index]}/approved`,
-    //         },
-    //       ]
-    //     : undefined,
   }));
+
+  // useEffect to check if the user is logged in, else redirect to login page
+  // useEffect(() => {
+  //   if (status != "authenticated" && !getCookie("cookieToken")) {
+  //     router.push("/login");
+  //   }
+  // }, [getCookie("cookieToken")]);
 
   console.log(router.pathname);
 
@@ -141,12 +114,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ) {
     return (
       <div>
-        {/* <Navbar
-        searchBarHidden={
-          router.pathname.includes("/student/jobs/[id]") ||
-          router.pathname.includes("/student/events/[id]")
-        }
-      /> */}
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
@@ -178,11 +145,42 @@ export const Nav: React.FC = (props: any): ReactElement => {
             />
           </Sider>
           <Layout className="navbar-with-sider">
-            <div>{props.children}</div>
+            {loggedIn ? (
+              <div>{props.children}</div>
+            ) : (
+              <div style={{ margin: "auto", marginTop: "100px" }}>
+                Bạn cần đăng nhập để sử dụng chức năng này{" "}
+                <Button
+                  onClick={() => {
+                    router.push("/login");
+                  }}
+                >
+                  Đăng nhập
+                </Button>
+              </div>
+            )}
           </Layout>
         </Layout>
       </div>
     );
+  } else if (
+    router.pathname !== "/student" &&
+    router.pathname !== "/student/contact" &&
+    !router.pathname.includes("login") &&
+    !router.pathname.includes("registration") &&
+    !loggedIn
+  ) {
+    router.push("/login");
+    <div style={{ margin: "auto", marginTop: "100px" }}>
+      Bạn cần đăng nhập để sử dụng chức năng này{" "}
+      <Button
+        onClick={() => {
+          router.push("/login");
+        }}
+      >
+        Đăng nhập
+      </Button>
+    </div>;
   }
   return (
     <>
