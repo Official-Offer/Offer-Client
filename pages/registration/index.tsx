@@ -56,16 +56,16 @@ const Registration: NextPage = () => {
       setCookie("orgId", org);
       setCookie("orgName", "Umass");
       dispatch(setLoggedIn(true));
-      router.push("/registration/verifyEmail");
-      // const route =
-      //   data.role === "student"
-      //     ? "/student"
-      //     : data.role === "advisor"
-      //       ? "/advisor/jobs"
-      //       : "/recruiter/jobs";
-      // router.replace(route).then(() => {
-      //   // router.reload();
-      // });
+      // router.push("/registration/verifyEmail");
+      const route =
+        data.role === "student"
+          ? "/student"
+          : data.role === "advisor"
+            ? "/advisor/jobs"
+            : "/recruiter/jobs";
+      router.replace(route).then(() => {
+        // router.reload();
+      });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);

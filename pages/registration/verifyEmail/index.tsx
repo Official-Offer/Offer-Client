@@ -44,7 +44,7 @@ const VerifyPassword: NextPage = () => {
         <div className="register-content-form">
           <h1 style={{ color: "Purple" }}>
             {submitted
-              ? errorMessage ?? `Email đã được xác nhận.`
+              ? errorMessage ? errorMessage : `Email đã được xác nhận.`
               : `Link xác nhận đã được gửi đến email của bạn `}
           </h1>
           <br />
