@@ -31,10 +31,8 @@ export const userLogOut = async () => {
   return response.data;
 };
 
-export const verifyEmail = async (otp: any) => {
-  const response = await request.post(`/accounts/verify_email/`, {
-    otp,
-  });
+export const verifyEmail = async (body: any) => {
+  const response = await request.post(`/accounts/verify_email/`, body);
   return response.data;
 };
 
