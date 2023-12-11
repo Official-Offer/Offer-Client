@@ -148,8 +148,9 @@ const Registration: NextPage = () => {
           : rol == "Trường"
             ? "advisor"
             : "recruiter";
-      console.log("authenticated", session?.user?.accessToken, role);
+      // console.log("authenticated", session?.user?.accessToken, role);
       socialMutation.mutate({
+        //@ts-ignore
         auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
         role,
       });
@@ -295,13 +296,6 @@ const Registration: NextPage = () => {
               <p className="register-content-error">{errorMessage}</p>
             </>
           )}
-          {/* <Button
-            onClick={() => {
-              signOut();
-            }}
-          >
-            Dang xuat{" "}
-          </Button> */}
           <FootnoteForm type={""} />
         </div>
       </div>

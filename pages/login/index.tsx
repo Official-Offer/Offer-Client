@@ -6,7 +6,7 @@ import { FootnoteForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "services/apiStudent";
-import { socialAuth, socialLogIn, userLogIn } from "@services/apiUser";
+import { socialAuth, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
@@ -85,9 +85,11 @@ const Login: NextPage = () => {
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status === "authenticated") {
-      console.log("authenticated", session?.user?.accessToken);
+      //@ts-ignore
+      const accessToken = session?.user?.accessToken;
+      console.log("authenticated", accessToken); 
       socialMutation.mutate({
-        auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
+        auth_token: accessToken,
       });
       // router.push("/student");
     }
