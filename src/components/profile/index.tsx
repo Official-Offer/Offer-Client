@@ -28,7 +28,7 @@ export const ProfilePage: React.FC<any> = () => {
     queryKey: ["profile"],
     queryFn: isRecruiter ? getRecruiter : getAdvisor,
     onSuccess: async (info) => {
-      console.log(info);
+      console.log("info", info);
       setFName(info.account.first_name);
       setLName(info.account.last_name);
       setEmail(info.account.email);

@@ -29,7 +29,7 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.access);
-      setCookie("id", data.pk);
+      setCookie("id", data.pk ?? data.id);
       setCookie("role", data.role);
       // dispatch(setLoggedIn(true));
       router
