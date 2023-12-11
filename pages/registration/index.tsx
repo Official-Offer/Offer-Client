@@ -6,7 +6,7 @@ import { OrgForm } from "@components/forms";
 import { getCookie, setCookie } from "cookies-next";
 import { FootnoteForm } from "@components/forms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { registerUser, userLogIn } from "@services/apiUser";
+import { registerUser, socialAuth, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { BackwardOutlined, GoogleOutlined } from "@ant-design/icons";
@@ -29,7 +29,8 @@ const Registration: NextPage = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [org, setOrg] = useState<string>("");
-  const [token, setToken] = useState<string>("");
+  // const [idToken, setToken] = useState<string>(getCookie("idToken") ?? "");
+  // const idToken = getCookie("idToken") ?? "";
   const [r, setR] = useState<any>({
     isStudent: true,
     isAdvisor: false,
@@ -41,6 +42,37 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
+  console.log("data", session);
+  console.log("status", status);
+
+  const socialMutation = useMutation(["socialLogin"], {
+    mutationFn: socialAuth,
+    onSuccess: async (data) => {
+      // Invalidate and refetch
+      console.log("social login testing", data);
+      setCookie("cookieToken", data.access);
+      setCookie("id", data.id);
+      setCookie("role", data.role);
+      setCookie("orgId", org);
+      setCookie("orgName", "Umass");
+      dispatch(setLoggedIn(true));
+      const route =
+        data.role === "student"
+          ? "/student"
+          : data.role === "advisor"
+            ? "/advisor/jobs"
+            : "/recruiter/jobs";
+      router.replace(route).then(() => {
+        // router.reload();
+      });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
+    },
+  });
+
   const mutation = useMutation(["register"], registerUser, {
     onSuccess: async (data) => {
       // Invalidate and refetch
@@ -107,7 +139,26 @@ const Registration: NextPage = () => {
       },
     }
   );
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      const role =
+        rol == "Học sinh"
+          ? "student"
+          : rol == "Trường"
+            ? "advisor"
+            : "recruiter";
+      console.log("authenticated", session?.user?.accessToken, role);
+      socialMutation.mutate({
+        auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
+        role,
+      });
+      // router.push("/student");
+    }
+  }, [status]);
+
   if (status === "loading") return <h1> Đang tải ... </h1>;
+
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -115,7 +166,8 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen && status !== "authenticated" ? (
+          {pwScreen ? (
+            // && status !== "authenticated"
             <>
               <div>
                 <h1>Đăng ký</h1>
@@ -134,7 +186,9 @@ const Registration: NextPage = () => {
               {/* Add google sign in button below */}
               <Button
                 icon={<GoogleOutlined />}
-                onClick={() => signIn("google")}
+                onClick={() => {
+                  signIn("google");
+                }}
               >
                 {" "}
                 Đăng ký với Google{" "}
@@ -241,6 +295,13 @@ const Registration: NextPage = () => {
               <p className="register-content-error">{errorMessage}</p>
             </>
           )}
+          {/* <Button
+            onClick={() => {
+              signOut();
+            }}
+          >
+            Dang xuat{" "}
+          </Button> */}
           <FootnoteForm type={""} />
         </div>
       </div>

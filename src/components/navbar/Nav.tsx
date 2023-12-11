@@ -20,6 +20,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
 import { IconButton } from "@styles/styled-components/styledButton";
+import { get } from "lodash";
 
 const { Sider } = Layout;
 
@@ -44,9 +45,11 @@ export const Nav: React.FC = (props: any): ReactElement => {
       (r == "recruiter" || state.role.isRecruiter)) ||
     (router.pathname.includes("student") &&
       (r == "advisor" || state.role.isAdvisor));
-  const loggedIn = !!getCookie("cookieToken") && !conflict;
+  const {data: session, status} = useSession();
+  console.log(getCookie("cookieToken"));
+  console.log(getCookie("role"));
+  const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
-  const { data: session, status } = useSession();
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
   ) as any;
@@ -78,9 +81,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
     onClick: (e) => {
       if (index == 4) {
         if (status == "authenticated") {
-          signOut().then(() => {
-            router.push("/login");
-          });
+          deleteCookie("cookieToken");
+          deleteCookie("role");
+          deleteCookie("id");
+          signOut();
         } else {
           deleteCookie("cookieToken");
           deleteCookie("role");

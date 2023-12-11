@@ -6,7 +6,7 @@ import { FootnoteForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "services/apiStudent";
-import { socialLogIn, userLogIn } from "@services/apiUser";
+import { socialAuth, socialLogIn, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
@@ -20,7 +20,6 @@ import { LoadingPage } from "@components/loading/LoadingPage";
 const Login: NextPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
-  const [socialToken, setSocialToken] = useState<string>("");
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const state = useSelector((state: RootState) => state.account);
@@ -53,26 +52,48 @@ const Login: NextPage = () => {
     },
   });
 
-  // const socialQuery = useQuery({
-  //   queryKey: ["socialLogin"],
-  //   queryFn: () => socialLogIn(session && session?.accessToken),
-  //   onSuccess: async (data) => {
-  //     console.log(data);
-  //   },
-  //   onError: () => {},
-  // });
+  const socialMutation = useMutation(["login"], {
+    mutationFn: socialAuth,
+    onSuccess: async (data) => {
+      console.log("logged in", data);
+      // Invalidate and refetch
+      setCookie("cookieToken", data.access);
+      setCookie("id", data.id);
+      setCookie("role", data.role);
+      // setCookie("orgId", org);
+      setCookie("orgName", "Umass");
+      router
+        .push({
+          pathname:
+            data.role == "student"
+              ? "/student"
+              : data.role == "advisor"
+                ? "/advisor/jobs"
+                : "/recruiter/jobs",
+        })
+        .then(() => {
+          // router.reload();
+        });
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      // setErrorMessage(error.response.data.message);
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
+    },
+  });
 
   const { data: session, status } = useSession();
+  useEffect(() => {
+    if (status === "authenticated") {
+      console.log("authenticated", session?.user?.accessToken);
+      socialMutation.mutate({
+        auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
+      });
+      // router.push("/student");
+    }
+  }, [status]);
   if (status === "loading") return <LoadingPage />;
-  if (status === "authenticated") {
-    console.log(session);
-    // console.log(session.accessToken);
-    // setSocialToken(session?.accessToken);
-    // socialMutation.mutate({
-    //   code: session?.accessToken
-    // });
-    // router.push("/student");
-  }
+
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -82,7 +103,12 @@ const Login: NextPage = () => {
         <div className="register-content-form">
           <h1>Đăng nhập</h1>
           <br />
-          <Button icon={<GoogleOutlined />} onClick={() => signIn("google")}>
+          <Button
+            icon={<GoogleOutlined />}
+            onClick={() => {
+              signIn("google");
+            }}
+          >
             {" "}
             Đăng nhập với Google{" "}
           </Button>

@@ -21,8 +21,8 @@ export const userLogIn = async (body: any) => {
   return response.data;
 };
 
-export const socialLogIn = async (body: any) => {
-  const response = await request.get(`/accounts/auth/google/${body}`);
+export const socialAuth = async (body: any) => {
+  const response = await request.post(`/accounts/google/`, body);
   return response.data;
 };
 

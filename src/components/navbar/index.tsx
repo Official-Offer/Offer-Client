@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { deleteCookie, getCookie, removeCookies } from "cookies-next";
 import { Menu, Input, Button, Dropdown } from "antd";
 import {
@@ -32,28 +32,16 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
       ? "recruiter"
       : "advisor";
 
-  // const mutation = useMutation({
-  //   // queryKey: ["login"],
-  //   mutationFn: userLogOut,
-  //   onSuccess: async (data) => {
-  //     // Invalidate and refetch
-  //     deleteCookie("cookieToken");
-  //     deleteCookie("role");
-  //     deleteCookie("id");
-  //     router.push("/login").then(() => {
-  //       router.reload();
-  //     });
-  //   },
-  //   onError: (error: any) => {
-  //     console.log(error.response.data.message);
-  //     // queryClient.invalidateQueries({ queryKey: ["login"] });
-  //   },
-  // });
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const role = getCookie("role");
   const conflict = role !== "student";
+  console.log("social login", session);
+  const loggedIn =
+    (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
 
-  const loggedIn = !!getCookie("cookieToken") && !conflict;
+  console.log("loggedIn?")
+  console.log(getCookie("cookieToken"));
+
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 
   // const handleMesSearchChange = (event) => {
@@ -90,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           //   routeSelected: "/student/companies",
           // },
           {
-            name: "Liên hệ / Đăng tuyển",
+            name: "Liên hệ",
             link: "/student/contact",
             newTab: false,
             routeSelected: "/student/contact",
@@ -274,9 +262,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                   <div
                     onClick={() => {
                       if (status == "authenticated") {
-                        signOut().then(() => {
-                          router.push("/login");
-                        });
+                        deleteCookie("cookieToken");
+                        deleteCookie("role");
+                        deleteCookie("id");
+                        signOut();
                       } else {
                         //sign out traditional way
                         // mutation.mutate();
@@ -302,12 +291,22 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           </Dropdown>
         ) : (
           <div>
-            <Button style={{ marginRight: "10px" }} onClick={()=>{
-              router.push("/registration");
-            }}>Đăng ký</Button>
-            <Button type="primary" onClick={()=>{
-              router.push("/login");
-            }}>Đăng nhập</Button>
+            <Button
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                router.push("/registration");
+              }}
+            >
+              Đăng ký
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Đăng nhập
+            </Button>
           </div>
         )}
       </Menu>
