@@ -113,7 +113,7 @@ export const JobColumns: ColumnsType<JobDataType> = [
   },
 ];
 
-export const RecruiterJobColumns: ColumnsType<RecruiterJobDataType> = [
+export const AdvisorJobColumns: ColumnsType<RecruiterJobDataType> = [
   // {
   //   title: "ID",
   //   dataIndex: "ID",

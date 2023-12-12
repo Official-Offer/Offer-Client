@@ -1,10 +1,11 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getAdvisorJobs,
   getApprovedJobs,
   getUnapprovedJobs,
+  verifyJobs,
 } from "@services/apiJob";
 import { useState } from "react";
 import router from "next/router";
@@ -14,7 +15,7 @@ import {
 } from "@components/table/dataType";
 import {
   ApprovedJobColumns,
-  RecruiterJobColumns,
+  AdvisorJobColumns,
 } from "@components/table/columnType";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
@@ -31,7 +32,7 @@ const Jobs: NextPage = () => {
     queryKey: ["jobs", searchChange],
     queryFn: getAdvisorJobs,
     onSuccess: async (jobs) => {
-      console.log(jobs);
+      // console.log("job query", jobs);
       setData(jobs);
       setDataSet(jobs);
 
@@ -58,7 +59,8 @@ const Jobs: NextPage = () => {
     queryKey: ["profile"],
     queryFn: getAdvisor,
     onSuccess: async (info) => {
-      console.log(info);
+      // console.log("info", info.account.id);
+      console.log(info.school.name)
       setCookie("id", info.account.id);
       setCookie("role", "advisor");
       setCookie("orgName", info.school.name);
@@ -78,7 +80,24 @@ const Jobs: NextPage = () => {
     onError: () => {},
   });
 
-  const handleVerifyJob = () => {};
+  const verifyMutation = useMutation({
+    mutationKey: ["verify"],
+    mutationFn: verifyJobs,
+    onSuccess: async (data: any) => {
+      console.log("verify", data);
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+    },
+  });
+
+  const handleVerifyJob = (id: any, is_approved: boolean) => {
+    verifyMutation.mutate({
+      id,
+      is_approved
+    });
+    // router.reload();
+  };
 
   return (
     <div className="advisor">
@@ -86,7 +105,7 @@ const Jobs: NextPage = () => {
       <div className="advisor-table">
         <BaseTable
           dataset={data}
-          columns={RecruiterJobColumns}
+          columns={AdvisorJobColumns}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           handleVerify={handleVerifyJob}

@@ -63,7 +63,7 @@ export const getUnapprovedJobs = async () => {
   return jobList.map((job: any) => ({
     key: job,
     // ID: jobID[Math.floor(Math.random() * jobID.length)],
-    posted_date: formatDate(job.created_at, "D/M/YYYY"),
+    posted_date: formatDate(job.updated_at, "D/M/YYYY"),
     title: title[Math.floor(Math.random() * title.length)],
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
@@ -135,7 +135,7 @@ export const getJobsForRecruiter = async () => {
   const res = jobs.map((job: any) => ({
     key: job,
     // ID: job.id,
-    posted_date: formatDate(job.created_at, "D/M/YYYY"),
+    posted_date: formatDate(job.updated_at, "D/M/YYYY"),
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     // unapproved_schools: unapprovedSchoolString,
@@ -146,24 +146,27 @@ export const getJobsForRecruiter = async () => {
 };
 
 export const getAdvisorJobs = async () => {
-  const advisor = parseInt(getCookie("id") as string);
+  const school = parseInt(getCookie("orgId") as string);
+  console.log(school)
   const response = await request.get(`/jobs/`, {
     params: {
-      created_by: advisor,
+      school,
     },
   });
   const jobs = response.data.message;
-  console.log(response.data.message);
+
+  console.log("jobs", jobs);
   const res = jobs.map((job: any) => ({
     key: job,
-    posted_date: formatDate(job.created_at, "D/M/YYYY"),
+    posted_date: formatDate(job.updated_at, "D/M/YYYY"),
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     company: job.company.name,
-    recruiter: job.created_by.first_name + " " + job.created_by.last_name,
+    recruiter: "Không tìm thấy", // job.contact_person.first_name + " " + job.contact_person.last_name
     applicants: 20,
-    verified: false,
+    verified: job.is_verified_by.filter((j: any) => j.pk == school).length > 0,
   }));
+  // console.log("res", res)
   return res;
 };
 
@@ -175,7 +178,7 @@ export const getApprovedJobs = async () => {
   const recruiters = ["vvnguyen@umass.edu", "ktto@umass.edu", "hto@umass.edu"];
   return jobList.map((job: any) => ({
     key: job,
-    posted_date: formatDate(job.created_at, "D/M/YYYY") || "09/05/2002",
+    posted_date: formatDate(job.updated_at, "D/M/YYYY") || "09/05/2002",
     title: job.title || "Không tìm thấy",
     company: companies[Math.floor(Math.random() * companies.length)],
     recruiter: recruiters[Math.floor(Math.random() * recruiters.length)],
@@ -200,6 +203,13 @@ export const getJob = async (id: number) => {
   job.company_data = await getCompany(job.company);
   return job;
 };
+
+export const verifyJobs = async (body: any) => {
+  const response = await request.post(`/jobs/${body.id}/approve/`, {
+    approve: body.is_approved,
+  });
+  return response.data;
+}
 
 export const getBookmarkedList = async () => {
   const response = await request.get(`/jobs/bookmark/`);
@@ -230,7 +240,8 @@ export const postJob = async (body: any) => {
 };
 
 export const addSchoolsToJob = async (body: any) => {
-  const response = await request.patch(`/jobs/${body.id}/`, body.content);
+  // const response = await request.patch(`/jobs/${body.id}/`, body.content);
+  const response = await request.post(`/jobs/${body.id}/request_approval/`, body.content);
   return response.data;
 };
 
