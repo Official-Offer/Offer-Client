@@ -87,7 +87,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         </div> */}
         {(handleAdd || handleVerify) && (
           <div className="table-functions-add">
-            <IconButton
+            {handleVerify && <IconButton
               round
               className=""
               backgroundColor={"#DE3163"}
@@ -103,7 +103,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
                   <MinusCircleFilled />
                 </span>
               </div>
-            </IconButton>
+            </IconButton>}
 
             <IconButton
               round
