@@ -162,9 +162,9 @@ export const getAdvisorJobs = async () => {
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     company: job.company.name,
-    recruiter: "Không tìm thấy", // job.contact_person.first_name + " " + job.contact_person.last_name
+    recruiter: job.created_by.last_name + " " + job.created_by.first_name || "Không tìm thấy", // job.contact_person.first_name + " " + job.contact_person.last_name
     applicants: 20,
-    verified: job.is_verified_by.filter((j: any) => j.pk == school).length > 0,
+    verified: job.is_approved_by ? job.is_approved_by.filter((id: any) => id === school).length > 0 : false,
   }));
   // console.log("res", res)
   return res;

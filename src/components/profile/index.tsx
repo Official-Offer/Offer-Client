@@ -1,7 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { RootState } from "@redux/reducers";
 import { Form, Input } from "antd";
 import { OrgForm } from "@components/forms";
 import { useState } from "react";

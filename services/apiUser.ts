@@ -64,3 +64,8 @@ export const getOrgList = async () => {
     companies,
   };
 };
+
+export const contact = async (body: any) => {
+  const response = await request.post(`/contacts/`, body);
+  return response.data;
+}
