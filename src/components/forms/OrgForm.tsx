@@ -26,7 +26,9 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [Org, setOrg] = useState<any>();
   const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
+
   const role = getCookie("role");
+  const orgId = Number(getCookie("orgId")) - 1;
   const isStudent =
     role == "student" ||
     state.role.isStudent ||
@@ -39,6 +41,13 @@ export const OrgForm: React.FC<IOrgForm> = ({
     role == "advisor" ||
     state.role.isAdvisor ||
     router.pathname.includes("advisor");
+  const orgName = 
+    type == "update"
+      ? isStudent || isAdvisor
+        ? schools?.[orgId].name
+        : companies?.[orgId].name
+      : "";
+
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
@@ -65,20 +74,27 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSubmit(Org);
   };
 
-  const handleOrgChange = (value: any) => {
+  const   handleOrgChange = (value: any) => {
     if (value == 0) {
       setNotFound(true);
     }
     setOrg(value);
   };
 
+  // console.log(schools?.[orgId].name)
   return (
     <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item label={isStudent || isAdvisor ? "Trường" : "Công ty"}>
+          <Form.Item
+            label={
+              isStudent || isAdvisor
+                ? `Trường: ${orgName}`
+                : `Công ty: ${orgName}`
+            }
+          >
             <Select
-              // value={Org}
+              // defaultValue={orgName}
               showSearch
               className="form-select"
               bordered={false}

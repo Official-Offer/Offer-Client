@@ -1,11 +1,33 @@
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { SubmitButton } from "@components/button/SubmitButton";
+import { contact } from "@services/apiUser";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
+import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Input } from "antd";
 import { NextPage } from "next";
 import router from "next/router";
+import { useState } from "react";
 
 const Contact: NextPage = () => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [phone, setPhone] = useState("");
+  const [title, setTitle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const contactMutation = useMutation({
+    mutationKey: ["contact"],
+    mutationFn: contact,
+    onSuccess: async (data: any) => {
+      // Invalidate and refetch
+      router.reload();
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage("Gửi thất bại");
+    },
+  });
+
   return (
     <div className="contact">
       <div className="contact-content">
@@ -35,19 +57,69 @@ const Contact: NextPage = () => {
           <Form className="form" onFinish={() => {}} layout="vertical">
             <div className="form-flex">
               <div className="form-input">
-                <Form.Item label="Nhập email hoặc số điện thoại">
-                  <Input required className="form-item" onChange={() => {}} />
+                <div className="form-grid">
+                  <Form.Item required label="Email">
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item label="Số điện thoại">
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(event) => {
+                        setPhone(event.target.value);
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+                {/* Title */}
+                <Form.Item required label="Tiêu đề">
+                  <Input
+                    required
+                    className="form-item"
+                    onChange={(event) => {
+                      setTitle(event.target.value);
+                    }}
+                  />
                 </Form.Item>
+
                 <Form.Item label="Lời nhắn">
                   <Input.TextArea
                     rows={4}
                     required
                     className="form-item"
-                    onChange={() => {}}
+                    onChange={(event) => {
+                      setMessage(event.target.value);
+                    }}
                   />
                 </Form.Item>
               </div>
-              <SubmitButton text="Gửi" />
+              {contactMutation.isSuccess && (
+                <p style={{ color: "green" }}>
+                  Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể
+                </p>
+              )}
+              {errorMessage && (
+            <p className="register-content-error">{errorMessage}</p>
+          )}
+              <SubmitButton
+                isLoading={contactMutation.isLoading}
+                text="Gửi"
+                onClick={() => {
+                  console.log(phone, email);
+                  contactMutation.mutate({
+                    title,
+                    message,
+                    sender_email: email,
+                    sender_phone: phone,
+                  });
+                }}
+              />
             </div>
           </Form>
         </div>

@@ -32,7 +32,7 @@ const Jobs: NextPage = () => {
     queryKey: ["jobs", searchChange],
     queryFn: getAdvisorJobs,
     onSuccess: async (jobs) => {
-      // console.log("job query", jobs);
+      console.log("job query", jobs);
       setData(jobs);
       setDataSet(jobs);
 
