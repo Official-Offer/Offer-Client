@@ -7,7 +7,11 @@ import { FilterSearch } from "@components/search/FilterSearch";
 // import { ApplicantDataType, UnapprovedJobDataType } from "./dataType";
 // import { SubmitButton } from "@components/button/SubmitButton";
 import { IconButton } from "@styles/styled-components/styledButton";
-import { CheckCircleFilled, PlusOutlined } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  MinusCircleFilled,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { TableRowSelection } from "antd/lib/table/interface";
 import { useRouter } from "next/router";
 
@@ -18,7 +22,7 @@ type BaseTableProps = {
   handleFilterType?: (values: string[]) => void;
   handleFilterSearch?: (value: string) => void;
   handleAdd?: () => void;
-  handleVerify?: () => void;
+  handleVerify?: (id: string, is_approved: boolean) => void;
   placeholder?: string;
   isLoading?: boolean;
   tableType?: string;
@@ -37,20 +41,23 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   tableType,
 }) => {
   const router = useRouter();
+  const [jobIDs, setJobIDs] = useState<string[]>([]);
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
   const rowSelection: TableRowSelection<any> = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
-        selectedRows,
+        selectedRows
       );
     },
     onSelect: (record, selected, selectedRows) => {
       // router.push(`/recruiter/applicants/${record.id}`)
+      setJobIDs(selectedRows.map((row) => row.key.pk));
       console.log(record, selected, selectedRows);
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
+      setJobIDs(selectedRows.map((row) => row.key.pk));
       console.log(selected, selectedRows, changeRows);
     },
   };
@@ -79,19 +86,43 @@ export const BaseTable: React.FC<BaseTableProps> = ({
           )}
         </div> */}
         {(handleAdd || handleVerify) && (
-          <IconButton
-            round
-            className="table-functions-add"
-            backgroundColor={handleAdd ? "#D30B81" : "green"}
-            onClick={handleAdd || handleVerify}
-          >
-            <div className="btn-body">
-              <span>{handleAdd ? `Tạo công việc` : `Duyệt công việc`}</span>
-              <span>
-                {handleAdd ? <PlusOutlined /> : <CheckCircleFilled />}
-              </span>
-            </div>
-          </IconButton>
+          <div className="table-functions-add">
+            <IconButton
+              round
+              className=""
+              backgroundColor={"#DE3163"}
+              onClick={() => {
+                jobIDs.forEach((id) => {
+                  handleVerify?.(id, false);
+                });
+              }}
+            >
+              <div className="btn-body">
+                <span>Từ chối</span>
+                <span>
+                  <MinusCircleFilled />
+                </span>
+              </div>
+            </IconButton>
+
+            <IconButton
+              round
+              className=""
+              backgroundColor={handleAdd ? "#D30B81" : "#228B22"}
+              onClick={handleAdd ? handleAdd : () => {
+                jobIDs.forEach((id) => {
+                  handleVerify?.(id, true);
+                });
+              }}
+            >
+              <div className="btn-body">
+                <span>{handleAdd ? `Tạo công việc` : `Duyệt công việc`}</span>
+                <span>
+                  {handleAdd ? <PlusOutlined /> : <CheckCircleFilled />}
+                </span>
+              </div>
+            </IconButton>
+          </div>
         )}
       </div>
       <Table

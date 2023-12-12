@@ -19,6 +19,12 @@
     &-add {
       margin-left: auto;
       // margin-left: 150px;
+      //make elements inside inline and has gap between them
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
     }
   }
 }

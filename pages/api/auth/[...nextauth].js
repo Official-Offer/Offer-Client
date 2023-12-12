@@ -25,6 +25,7 @@ export default NextAuth({
       tenantId: AZURE_AD_TENANT_ID,
     }),
   ],
+  secret: process.env.NEXT_PUBLIC_SECRET,
   callbacks: {
     async jwt({ token, account, profile }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
