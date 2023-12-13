@@ -58,9 +58,9 @@ const Registration: NextPage = () => {
       dispatch(setLoggedIn(true));
       // router.push("/registration/verifyEmail");
       const route =
-        data.role === "student"
+        data.role === "student" || r.isStudent
           ? "/student"
-          : data.role === "advisor"
+          : data.role === "advisor" || r.isAdvisor
             ? "/advisor/jobs"
             : "/recruiter/jobs";
       router.replace(route).then(() => {

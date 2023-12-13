@@ -89,9 +89,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
           deleteCookie("cookieToken");
           deleteCookie("role");
           deleteCookie("id");
-          router.push("/login").then(() => {
+          // router.push("/login").then(() => {
             router.reload();
-          });
+          // });
         }
       } else {
         router.push(`/${role}${path[index]}`);

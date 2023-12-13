@@ -33,9 +33,9 @@ const Login: NextPage = () => {
       router
         .push({
           pathname:
-            data.role == "student"
+            data.role == "student" || state.role.isStudent
               ? "/student"
-              : data.role == "advisor"
+              : data.role == "advisor" || state.role.isAdvisor
                 ? "/advisor/jobs"
                 : "/recruiter/jobs",
         })
