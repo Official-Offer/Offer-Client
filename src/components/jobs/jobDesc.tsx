@@ -41,7 +41,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     { value: 5, label: "Luật" },
   ];
   const state = useSelector((state: RootState) => state.jobs);
-  const accountState = useSelector((state: RootState) => state.account);
+  const accountState = useSeulector((state: RootState) => state.account);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
   const [salary, setSalary] = useState<number>(state.salary);
   const [upperSalary, setUpperSalary] = useState<number>(state.upperSalary);

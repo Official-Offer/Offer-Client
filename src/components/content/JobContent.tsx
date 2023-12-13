@@ -54,6 +54,7 @@ export const JobContent: React.FC<JobContentProps> = ({
   // States
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
+  console.log("jobData", jobData);
   return (
     <div
       className={"job-portal-description " + (isMinimized ? "minimized" : "")}

@@ -272,9 +272,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                         deleteCookie("cookieToken");
                         deleteCookie("role");
                         deleteCookie("id");
-                        router.push("/login").then(() => {
+                        // router.push("/login").then(() => {
                           router.reload();
-                        });
+                        // });
                       }
                       router.push("/login");
                     }}
