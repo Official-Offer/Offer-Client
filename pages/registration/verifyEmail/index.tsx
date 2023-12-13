@@ -36,7 +36,7 @@ const VerifyPassword: NextPage = () => {
       mutation.mutate({otp});
     }
   }, [otp]);
-  
+
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -64,7 +64,7 @@ const VerifyPassword: NextPage = () => {
               ) : (
                 <SubmitButton
                   text="Quay lại trang chủ"
-                  // isLoading={isLoading}
+                  isLoading={false}
                   onClick={() => {
                     // router.push("/login");
                     const role = getCookie("role");
