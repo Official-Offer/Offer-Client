@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { FootnoteForm } from "@components/forms";
 import { setCookie, getCookie } from "cookies-next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { studentLogin } from "services/apiStudent";
 import { socialAuth, userLogIn } from "@services/apiUser";
 import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +12,6 @@ import { Button } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
-import { SubmitButton } from "@components/button/SubmitButton";
 import { LoadingPage } from "@components/loading/LoadingPage";
 
 //create a next page for the student home page, code below
@@ -60,14 +58,13 @@ const Login: NextPage = () => {
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
-      // setCookie("orgId", org);
       setCookie("orgName", "Umass");
       router
         .push({
           pathname:
-            data.role == "student"
+            data.role == "student" || state.role.isStudent
               ? "/student"
-              : data.role == "advisor"
+              : data.role == "advisor" || state.role.isAdvisor
                 ? "/advisor/jobs"
                 : "/recruiter/jobs",
         })

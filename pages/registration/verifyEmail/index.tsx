@@ -7,6 +7,7 @@ import { RootState } from "@redux/reducers";
 import { useMutation } from "@tanstack/react-query";
 import { verifyEmail } from "@services/apiUser";
 import { useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const VerifyPassword: NextPage = () => {
@@ -35,6 +36,7 @@ const VerifyPassword: NextPage = () => {
       mutation.mutate({otp});
     }
   }, [otp]);
+  
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -61,15 +63,16 @@ const VerifyPassword: NextPage = () => {
                 <SubmitButton text="Gửi lại link xác nhận" onClick={() => {}} />
               ) : (
                 <SubmitButton
-                  text="Quay lại đăng nhập"
+                  text="Quay lại trang chủ"
                   // isLoading={isLoading}
                   onClick={() => {
-                    router.push("/login");
-                    // state.role.isStudent
-                    //   ? router.push("/student")
-                    //   : state.role.isAdvisor
-                    //     ? router.push("/advisor/jobs")
-                    //     : router.push("/recruiter/jobs");
+                    // router.push("/login");
+                    const role = getCookie("role");
+                    state.role.isStudent || role === "student"
+                      ? router.push("/student")
+                      : state.role.isAdvisor || role === "advisor"
+                        ? router.push("/advisor/jobs")
+                        : router.push("/recruiter/jobs");
                   }}
                 />
               )}
