@@ -46,8 +46,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
     (router.pathname.includes("student") &&
       (r == "advisor" || state.role.isAdvisor));
   const {data: session, status} = useSession();
-  console.log(getCookie("cookieToken"));
-  console.log(getCookie("role"));
+  // console.log(getCookie("cookieToken"));
+  // console.log(getCookie("role"));
   const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
@@ -125,7 +125,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               backgroundColor={"#D30B81"}
               style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
               onClick={() => {
-                router.push(`/${role}/postJobs/jobForm`);
+                router.push(`/${role}/postJobs/orgSelect`);
               }}
             >
               <div className="table-add-btn-body">

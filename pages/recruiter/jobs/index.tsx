@@ -69,7 +69,7 @@ const Jobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push("/recruiter/postJobs/jobForm");
+    router.push("/recruiter/postJobs/orgSelect");
   };
 
   return (
