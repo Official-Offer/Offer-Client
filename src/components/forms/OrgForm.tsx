@@ -25,7 +25,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [schools, setSchools] = useState<any>();
   const [companies, setCompanies] = useState<any>();
   const [Org, setOrg] = useState<any>();
-  const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState("");
@@ -46,8 +45,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  //write submitted
 
   const orgName =
     type == "update"
