@@ -23,8 +23,9 @@ import { OrgForm } from "./OrgForm";
 import { RootState } from "@redux/reducers";
 import locale from "antd/es/date-picker/locale/vi_VN";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import ReactQuill from 'react-quill';
 
 interface IForm {
   onSubmit: () => void;
@@ -194,7 +195,7 @@ export const JobPostForm: React.FC<IForm> = ({
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <ReactQuill value={desc} onChange={handleDescChange} />
+          <ReactQuill className="form-desc" theme="snow" value={desc} onChange={handleDescChange} />
         </Form.Item>
       </div>
       <div className="form-submit-button">

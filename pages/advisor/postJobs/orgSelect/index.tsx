@@ -1,16 +1,17 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import SelectSchool from "@components/jobs/shoolSelect";
+import SelectOrg from "@components/jobs/orgSelect";
 
-const SchoolSelect: NextPage = () => {
+const OrgSelect: NextPage = () => {
   const router = useRouter();
 
   return (
     <div className="recruiter-job-post">
       <div className="recruiter-form">
-        <SelectSchool
+        <SelectOrg
           onClick={(): void => {
-            router.push("/advisor/jobs");
+            // router.push("/advisor/jobs");
+            router.push("/advisor/postJobs/jobForm");
           }}
         />
       </div>
@@ -18,4 +19,4 @@ const SchoolSelect: NextPage = () => {
   );
 };
 
-export default SchoolSelect;
+export default OrgSelect;

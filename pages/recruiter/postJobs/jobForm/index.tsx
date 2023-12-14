@@ -22,8 +22,9 @@ const PostJobs: NextPage = () => {
             router.back();
           }}
           onSubmit={(): void => {
-            router.push(`/recruiter/postJobs/jobDesc`);
-            // router.push(`/recruiter/postJobs/jobDesc?school=${school}`);
+            school
+              ? router.push(`/recruiter/postJobs/jobDesc?school=${school}`)
+              : router.push(`/recruiter/postJobs/jobDesc`);
           }}
         />
       </div>

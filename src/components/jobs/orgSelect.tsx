@@ -27,7 +27,7 @@ type JSXComponent = JSXElementConstructor<{
   [prop: string]: any;
 }>;
 
-export const SelectSchool: React.FC<any> = ({ onClick }) => {
+export const SelectOrg: React.FC<any> = ({ onClick }) => {
   const [checkedList, setCheckedList] =
     useState<CheckboxValueType[]>(defaultCheckedList);
   const [schoolId, setSchoolId] = useState<number[]>([]);
@@ -109,4 +109,4 @@ export const SelectSchool: React.FC<any> = ({ onClick }) => {
   );
 };
 
-export default SelectSchool;
+export default SelectOrg;
