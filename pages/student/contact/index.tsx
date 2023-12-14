@@ -63,18 +63,15 @@ const Contact: NextPage = () => {
                   Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể
                 </p>
               )}
-              {errorMessage && (
-                <p className="register-content-error">{errorMessage}</p>
-              )}
             </>
           ) : (
             <Form className="form" onFinish={() => {}} layout="vertical">
               <div className="form-flex">
                 <div className="form-input">
                   <div className="form-grid">
-                    <Form.Item required label="Email">
+                    <Form.Item label="Email">
                       <Input
-                        required
+                        // required
                         className="form-item"
                         onChange={(event) => {
                           setEmail(event.target.value);
@@ -83,7 +80,7 @@ const Contact: NextPage = () => {
                     </Form.Item>
                     <Form.Item label="Số điện thoại">
                       <Input
-                        required
+                        // required
                         className="form-item"
                         onChange={(event) => {
                           setPhone(event.target.value);
@@ -105,7 +102,6 @@ const Contact: NextPage = () => {
                   <Form.Item label="Lời nhắn">
                     <Input.TextArea
                       rows={4}
-                      required
                       className="form-item"
                       onChange={(event) => {
                         setMessage(event.target.value);
@@ -113,11 +109,22 @@ const Contact: NextPage = () => {
                     />
                   </Form.Item>
                 </div>
+                {errorMessage && (
+                  <p className="register-content-error">{errorMessage}</p>
+                )}
                 <SubmitButton
                   isLoading={contactMutation.isLoading}
                   text="Gửi"
                   onClick={() => {
-                    console.log(phone, email);
+                    // console.log(phone, email);
+                    if (!phone && !email) {
+                      setErrorMessage("Vui lòng nhập email hoặc số điện thoại");
+                      return;
+                    }
+                    if (!title) {
+                      setErrorMessage("Vui lòng nhập tiêu đề");
+                      return;
+                    }
                     contactMutation.mutate({
                       title,
                       message,
