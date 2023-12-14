@@ -97,10 +97,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   const handleOrgChange = (value: any) => {
-    if (value == 0) {
+    if (value == 0 && !isStudent) {
       setNotFound(true);
+    } else {
+      setNotFound(false);
+      setOrg(value);
     }
-    setOrg(value);
   };
 
   const orgy = isRecruiter ? "Công ty" : "Trường";
