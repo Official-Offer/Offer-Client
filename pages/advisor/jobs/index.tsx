@@ -60,10 +60,11 @@ const Jobs: NextPage = () => {
     queryFn: getAdvisor,
     onSuccess: async (info) => {
       // console.log("info", info.account.id);
-      console.log(info.school.name)
+      console.log("info", info);
+      const orgName = info.school.name ?? "";
       setCookie("id", info.account.id);
       setCookie("role", "advisor");
-      setCookie("orgName", info.school.name);
+      setCookie("orgName", orgName);
       setCookie("orgId", info.school.id);
 
       dispatch(setID(info.account.id));

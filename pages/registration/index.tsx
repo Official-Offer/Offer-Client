@@ -18,6 +18,7 @@ import { Button, Form, Input, Segmented } from "antd";
 import { updateEducation } from "@services/apiSchool";
 import { updateCompany } from "@services/apiCompany";
 import { updateSchoolForAdvisor } from "@services/apiAdvisor";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -29,8 +30,6 @@ const Registration: NextPage = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [org, setOrg] = useState<string>("");
-  // const [idToken, setToken] = useState<string>(getCookie("idToken") ?? "");
-  // const idToken = getCookie("idToken") ?? "";
   const [r, setR] = useState<any>({
     isStudent: true,
     isAdvisor: false,
@@ -39,6 +38,7 @@ const Registration: NextPage = () => {
   const dispatch = useDispatch();
   const [rol, setRol] = useState<string>("Học sinh");
   const [selectRole, setSelectRole] = useState<boolean>(false);
+  // const [func, setFunc] = useState<any>(null);
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
@@ -47,25 +47,46 @@ const Registration: NextPage = () => {
 
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
-    onSuccess: async (data) => {
+    onSuccess: async (data: any) => {
       // Invalidate and refetch
       console.log("social login testing", data);
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
-      setCookie("orgId", org);
-      setCookie("orgName", "Umass");
+      // setCookie("orgName", "Umass");
       dispatch(setLoggedIn(true));
-      // router.push("/registration/verifyEmail");
-      const route =
-        data.role === "student" || r.isStudent
-          ? "/student"
-          : data.role === "advisor" || r.isAdvisor
-            ? "/advisor/jobs"
-            : "/recruiter/jobs";
-      router.replace(route).then(() => {
-        // router.reload();
-      });
+      const org = getCookie("orgId");
+      console.log("org", org)
+      const r = {
+        isStudent: data.role == "student",
+        isAdvisor: data.role == "advisor",
+        isRecruiter: data.role == "recruiter",
+      };
+      setR(r);
+      if (r.isStudent) {
+        mutationOrg.mutate({
+          token: data.access,
+          content: {
+            title: "string",
+            description: "string",
+            school: org,
+          },
+        });
+      } else {
+        mutationOrg.mutate({
+          token: data.access,
+          content: {
+            account: data.id,
+            org: r.isRecruiter
+              ? {
+                  company: org,
+                }
+              : {
+                  school: org,
+                },
+          },
+        });
+      }
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -114,9 +135,11 @@ const Registration: NextPage = () => {
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
   });
+
+  console.log("mutation org", r)
   const mutationOrg = useMutation(
-    ["registerOrg"],
-    r.isStudent
+    ["registerOrg", r],
+    r.isStudent 
       ? updateEducation
       : r.isRecruiter
         ? updateCompany
@@ -124,15 +147,18 @@ const Registration: NextPage = () => {
     {
       onSuccess: async (data) => {
         dispatch(setLoggedIn(true));
-        router.push("/registration/verifyEmail");
-        // const route = r.isStudent
-        //   ? "/student"
-        //   : r.isAdvisor
-        //     ? "/advisor/jobs"
-        //     : "/recruiter/jobs";
-        // router.replace(route).then(() => {
-        //   router.reload();
-        // });
+        if (status !== "authenticated") {
+          router.push("/registration/verifyEmail");
+        }
+        else {
+          router.push(
+            r.isStudent
+              ? "/student"
+              : r.isAdvisor
+                ? "/advisor/jobs"
+                : "/recruiter/jobs",
+          );
+        }
       },
       onError: (error: any) => {
         console.log(error.response.data.message);
@@ -143,13 +169,8 @@ const Registration: NextPage = () => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      const role =
-        rol == "Học sinh"
-          ? "student"
-          : rol == "Trường"
-            ? "advisor"
-            : "recruiter";
-      // console.log("authenticated", session?.user?.accessToken, role);
+      const role = getCookie("role");
+      setCookie("orgId", org);
       socialMutation.mutate({
         //@ts-ignore
         auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
@@ -161,6 +182,7 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <h1> Đang tải ... </h1>;
 
+  // console.log("rol", rol)
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -189,6 +211,14 @@ const Registration: NextPage = () => {
               <Button
                 icon={<GoogleOutlined />}
                 onClick={() => {
+                  const role =
+                    rol == "Học sinh"
+                      ? "student"
+                      : rol == "Trường"
+                        ? "advisor"
+                        : "recruiter";
+                  setCookie("role", role);
+                  console.log("role", role);
                   signIn("google");
                 }}
               >
@@ -279,6 +309,7 @@ const Registration: NextPage = () => {
                   options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
                   size={"large"}
                   onChange={(value) => {
+                    // console.log("value", value)
                     setRol(value.toString());
                     const role = {
                       isStudent: value.toString() == "Học sinh",
@@ -286,6 +317,7 @@ const Registration: NextPage = () => {
                       isRecruiter: value.toString() == "Nhà tuyển dụng",
                     };
                     setR(role);
+                    console.log("R", role);
                     dispatch(setRole(role));
                   }}
                 />
@@ -297,6 +329,7 @@ const Registration: NextPage = () => {
               <p className="register-content-error">{errorMessage}</p>
             </>
           )}
+          <Button  onClick={()=>{signOut()}}>Dang Xuat</Button>
           <FootnoteForm type={""} />
         </div>
       </div>

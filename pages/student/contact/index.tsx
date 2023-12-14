@@ -40,7 +40,7 @@ const Contact: NextPage = () => {
             tại các trường đại học trên cả nước
           </h1>
           <br />
-          <div className="contact-button">
+          {/* <div className="contact-button">
             <Button
               className="contact-button-btn"
               size="large"
@@ -50,7 +50,7 @@ const Contact: NextPage = () => {
             >
               Đăng kí/đăng nhập để đăng tin tuyển dụng <ArrowRightOutlined />
             </Button>
-          </div>
+          </div> */}
           {/* <h1>Liên hệ</h1> */}
           <h2>Liên hệ</h2>
           <p>Email: kiento0905.hec@gmail.com</p>
