@@ -21,7 +21,7 @@ import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
 import { OrgForm } from "./OrgForm";
 import { RootState } from "@redux/reducers";
-// import locale from "antd/es/date-picker/locale/vi_VN";
+import locale from "antd/es/date-picker/locale/vi_VN";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -132,7 +132,7 @@ export const JobPostForm: React.FC<IForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" required className="form-input full-width">
-          <Input required className="form-item" onChange={handleTitleChange} />
+          <Input required onChange={handleTitleChange} />
         </Form.Item>
         {/* <Form.Item label="Công ty" className="form-input" required>
           <Select
@@ -188,8 +188,8 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item>
         <Form.Item label="Hạn chót">
           <DatePicker
-            className="form-select"
-            // locale={locale}
+            className="form-date-picker"
+            locale={locale}
             onChange={handleDeadlineChange}
           />
         </Form.Item>

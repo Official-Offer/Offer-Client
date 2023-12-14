@@ -74,7 +74,9 @@ const Jobs: NextPage = () => {
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Công việc</h1>
+      <h1 className="applicant-title">Ứng viên</h1>
+      <p>Chọn công việc để xem ứng viên</p>
+      {/* <br /> */}
       <div className="applicant-table">
         <BaseTable
           dataset={data}

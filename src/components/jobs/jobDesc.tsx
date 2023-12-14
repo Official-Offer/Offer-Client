@@ -314,7 +314,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               contact_person: accountState.id || 1,
               deadline,
               required_majors: majors,
-              // request_approval_from: school ? Number(school) : null,
+              request_approval_from: school ? [Number(school)] : [],
             });
           }}
           isLoading={postJobQuery.isLoading}

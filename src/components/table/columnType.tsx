@@ -87,14 +87,19 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //   key: "ID",
   // },
   {
+    title: "Công việc",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Số lượng ứng viên",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
     title: "Ngày tạo",
     dataIndex: "posted_date",
     key: "posted_date",
-  },
-  {
-    title: "Tiêu đề công việc",
-    dataIndex: "title",
-    key: "title",
   },
   // {
   //   title: "Trường chưa duyệt",
@@ -106,11 +111,6 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //   dataIndex: "approved_schools",
   //   key: "approved_schools",
   // },
-  {
-    title: "Ứng viên",
-    dataIndex: "applicants",
-    key: "applicants",
-  },
 ];
 
 export const AdvisorJobColumns: ColumnsType<RecruiterJobDataType> = [

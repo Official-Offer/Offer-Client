@@ -82,7 +82,9 @@
       border: 1px solid #000000;
     }
   }
-
+  &-date-picker {
+    width: 100%;
+  }
   &-submit-button {
     margin-top: 4px;
     display: flex;
