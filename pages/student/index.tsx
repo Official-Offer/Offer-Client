@@ -86,7 +86,7 @@ const Home: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
     queryFn: getJobs,
-    onSuccess: (jobData: Record<string, any>) => setJobs(jobData.message),
+    onSuccess: (jobData: Record<string, any>) => setJobs(jobData.results),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });

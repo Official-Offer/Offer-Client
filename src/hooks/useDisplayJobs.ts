@@ -18,6 +18,7 @@ export const useDisplayJobs = () => {
   const [sort, setSort] = useState<string>("");
 
   const setJobs = (jobList: Job[]) => {
+    console.log(jobList)
     setOriginalJobs(jobList);
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
@@ -49,6 +50,7 @@ export const useDisplayJobs = () => {
   };
 
   useEffect(() => {
+    console.log(originalJobs)
     const displayed = originalJobs
       .filter((job) => {
         if (
