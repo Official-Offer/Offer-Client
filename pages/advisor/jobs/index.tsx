@@ -53,7 +53,7 @@ const Jobs: NextPage = () => {
     setData(filteredData);
   };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const profileQuery = useQuery({
   //   queryKey: ["profile"],

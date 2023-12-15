@@ -58,11 +58,13 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   );
   const [company, setCompany] = useState<string>(state.company || `Samsung`);
   const [companyId, setCompanyId] = useState<number>(
-    state.companyId
-      ? state.companyId
-      : getCookie("orgId")
-        ? Number(getCookie("orgId"))
-        : 1
+    router.pathname.includes("recruiter")
+      ? Number(getCookie("orgId"))
+      : state.companyId
+        ? state.companyId
+        : getCookie("orgId")
+          ? Number(getCookie("orgId"))
+          : 1
   );
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
@@ -118,7 +120,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         <BackwardOutlined /> Quay lại
       </p>
       <div className="job-desc-nav">
-        <h2 style={{ fontSize: "25px"}}>Xem lại</h2>
+        <h2 style={{ fontSize: "25px" }}>Xem lại</h2>
         <div
           style={{ cursor: "pointer" }}
           onClick={() => (editing ? setEditing(false) : setEditing(true))}
@@ -135,7 +137,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
           )}
         </div>
       </div>
-      <br/>
+      <br />
       <div className="job-desc-content">
         <div className="job-desc-heading">
           {editing ? (
@@ -166,7 +168,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             options={companies}
           />
         ) : ( */}
-          <p>{company}</p>
+        <p>{company}</p>
         <div>
           {editing ? (
             <div style={{ marginBottom: "10px" }}>

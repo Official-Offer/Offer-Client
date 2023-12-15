@@ -49,10 +49,7 @@ const Registration: NextPage = () => {
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
-      // setCookie("orgName", orgName);
       dispatch(setLoggedIn(true));
-      // const org = getCookie("orgId");
-      // console.log("org", org);
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -91,11 +88,11 @@ const Registration: NextPage = () => {
   useEffect(() => {
     if (status === "authenticated") {
       const role = getCookie("role");
-      setCookie("orgId", org.key);
       socialMutation.mutate({
         //@ts-ignore
         auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
         role,
+        org_id: Number(org.key),
       });
       // router.push("/student");
     }
@@ -140,6 +137,8 @@ const Registration: NextPage = () => {
                         : "recruiter";
                   setCookie("role", role);
                   console.log("role", role);
+                  setCookie("orgName", org.label);
+                  setCookie("orgId", org.key);
                   signIn("google");
                 }}
               >
