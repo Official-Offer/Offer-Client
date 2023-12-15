@@ -15,10 +15,6 @@ import { setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Button, Form, Input, Segmented } from "antd";
-import { updateEducation } from "@services/apiSchool";
-import { updateCompany } from "@services/apiCompany";
-import { updateSchoolForAdvisor } from "@services/apiAdvisor";
-import { SubmitButton } from "@components/button/SubmitButton";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -29,7 +25,7 @@ const Registration: NextPage = () => {
   const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [org, setOrg] = useState<string>("");
+  const [org, setOrg] = useState<any>();
   const [r, setR] = useState<any>({
     isStudent: true,
     isAdvisor: false,
@@ -49,44 +45,14 @@ const Registration: NextPage = () => {
     mutationFn: socialAuth,
     onSuccess: async (data: any) => {
       // Invalidate and refetch
-      console.log("social login testing", data);
+      // console.log("social login testing", data);
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
-      // setCookie("orgName", "Umass");
+      // setCookie("orgName", orgName);
       dispatch(setLoggedIn(true));
-      const org = getCookie("orgId");
-      console.log("org", org)
-      const r = {
-        isStudent: data.role == "student",
-        isAdvisor: data.role == "advisor",
-        isRecruiter: data.role == "recruiter",
-      };
-      setR(r);
-      if (r.isStudent) {
-        mutationOrg.mutate({
-          token: data.access,
-          content: {
-            title: "string",
-            description: "string",
-            school: org,
-          },
-        });
-      } else {
-        mutationOrg.mutate({
-          token: data.access,
-          content: {
-            account: data.id,
-            org: r.isRecruiter
-              ? {
-                  company: org,
-                }
-              : {
-                  school: org,
-                },
-          },
-        });
-      }
+      // const org = getCookie("orgId");
+      // console.log("org", org);
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -101,32 +67,18 @@ const Registration: NextPage = () => {
       setCookie("cookieToken", data.message.token);
       setCookie("id", data.message.id);
       setCookie("role", data.message.role);
-      setCookie("orgId", org);
-      setCookie("orgName", "Umass");
-
-      if (r.isStudent) {
-        mutationOrg.mutate({
-          token: data.message.token,
-          content: {
-            title: "string",
-            description: "string",
-            school: org,
-          },
-        });
+      setCookie("orgId", org.key);
+      setCookie("orgName", org.label);
+      if (status !== "authenticated") {
+        router.push("/registration/verifyEmail");
       } else {
-        mutationOrg.mutate({
-          token: data.message.token,
-          content: {
-            account: data.message.id,
-            org: r.isRecruiter
-              ? {
-                  company: org,
-                }
-              : {
-                  school: org,
-                },
-          },
-        });
+        router.push(
+          r.isStudent
+            ? "/student"
+            : r.isAdvisor
+              ? "/advisor/jobs"
+              : "/recruiter/jobs"
+        );
       }
     },
     onError: (error: any) => {
@@ -136,41 +88,10 @@ const Registration: NextPage = () => {
     },
   });
 
-  console.log("mutation org", r)
-  const mutationOrg = useMutation(
-    ["registerOrg", r],
-    r.isStudent 
-      ? updateEducation
-      : r.isRecruiter
-        ? updateCompany
-        : updateSchoolForAdvisor,
-    {
-      onSuccess: async (data) => {
-        dispatch(setLoggedIn(true));
-        if (status !== "authenticated") {
-          router.push("/registration/verifyEmail");
-        }
-        else {
-          router.push(
-            r.isStudent
-              ? "/student"
-              : r.isAdvisor
-                ? "/advisor/jobs"
-                : "/recruiter/jobs",
-          );
-        }
-      },
-      onError: (error: any) => {
-        console.log(error.response.data.message);
-        // setErrorMessage(error.response.data.message);
-      },
-    }
-  );
-
   useEffect(() => {
     if (status === "authenticated") {
       const role = getCookie("role");
-      setCookie("orgId", org);
+      setCookie("orgId", org.key);
       socialMutation.mutate({
         //@ts-ignore
         auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
@@ -265,12 +186,14 @@ const Registration: NextPage = () => {
                         : "recruiter";
                   // console.log(r);
                   dispatch(setRole(r));
+                  console.log("org key", org.key)
                   mutation.mutate({
                     email: item.email,
                     password: item.password,
                     first_name: firstName,
                     last_name: lastName,
                     role,
+                    org_id: Number(org.key),
                   });
                 }}
                 isLoading={mutation.isLoading}
@@ -282,6 +205,7 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
+                  console.log("org", org)
                   if (!org) {
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;
@@ -290,7 +214,7 @@ const Registration: NextPage = () => {
                   setOrg(org);
                   setScreen(true);
                 }}
-                isLoading={mutation.isLoading || mutationOrg.isLoading}
+                isLoading={mutation.isLoading}
               />
               <p
                 style={{
@@ -329,7 +253,13 @@ const Registration: NextPage = () => {
               <p className="register-content-error">{errorMessage}</p>
             </>
           )}
-          <Button  onClick={()=>{signOut()}}>Dang Xuat</Button>
+          <Button
+            onClick={() => {
+              signOut();
+            }}
+          >
+            Dang Xuat
+          </Button>
           <FootnoteForm type={""} />
         </div>
       </div>

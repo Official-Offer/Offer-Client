@@ -98,7 +98,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       setNotFound(true);
     } else {
       setNotFound(false);
-      setOrg(value.key);
+      setOrg(value);
     }
   };
 
