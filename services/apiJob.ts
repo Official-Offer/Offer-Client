@@ -6,11 +6,18 @@ import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
 import parse from "html-react-parser";
 
-export const getJobs = async () => {
-  const response = await request.get(`/jobs/`);
+export const getJobs = async (page: Number, pageSize: Number) => {
+  const response = await request.get(`/jobs/`, {
+    params: {
+      page,
+      page_size: pageSize,
+    },
+  });
   const jobList = response.data;
   return jobList;
 };
+
+
 
 export const generateJobDescription = async (inputDescription: string) => {
   const apiKey = "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"; // Replace with your OpenAI API key

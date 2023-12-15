@@ -4,6 +4,8 @@ import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
 
 export const useDisplayJobs = () => {
+  const [page, setPage] = useState<number>(2);
+  const [pageSize, setPageSize] = useState<number>(12);
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
   const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -18,7 +20,6 @@ export const useDisplayJobs = () => {
   const [sort, setSort] = useState<string>("");
 
   const setJobs = (jobList: Job[]) => {
-    console.log(jobList)
     setOriginalJobs(jobList);
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
@@ -124,6 +125,10 @@ export const useDisplayJobs = () => {
   }, [originalJobs, filters, sort, searchTerm]);
 
   return {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
     displayedJobs,
     setJobs,
     setSearchTerm,
