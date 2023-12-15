@@ -63,7 +63,7 @@ const StudentJobs: NextPage = () => {
     queryFn: getJobs,
     onSuccess: (jobData) =>
       setJobs(
-        jobData.message.sort((a: Job, b: Job) =>
+        jobData.results.sort((a: Job, b: Job) =>
           a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0,
         ),
       ),

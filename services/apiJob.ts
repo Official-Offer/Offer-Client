@@ -81,7 +81,7 @@ export const getJobsForRecruiter = async () => {
       created_by: recruiter,
     },
   });
-  console.log(response.data.results);
+  console.log(response.data.message);
 
   const jobs = response.data.results || [
     {
