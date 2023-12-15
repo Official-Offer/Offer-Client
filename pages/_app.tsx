@@ -7,11 +7,12 @@ import { ConfigProvider } from "antd";
 import { StyledThemeProvider } from "@definitions/styled-components";
 import "@styles/global.scss";
 import { Provider } from "react-redux";
-import store from "@redux/store";
+import store, { persistor } from "@redux/store";
 // import { appWithTranslation } from "@i18n";
 import LayoutGlobal from "src/common/LayoutGlobal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { PersistGate } from "redux-persist/integration/react";
 
 function MyApp({
   Component,
@@ -35,11 +36,13 @@ function MyApp({
       <QueryClientProvider client={queryClient}>
         <StyledThemeProvider>
           <Provider store={store}>
-            <SessionProvider session={session}>
-              <LayoutGlobal>
-                <Component {...pageProps} />
-              </LayoutGlobal>
-            </SessionProvider>
+            <PersistGate loading={null} persistor={persistor}>
+              <SessionProvider session={session}>
+                <LayoutGlobal>
+                  <Component {...pageProps} />
+                </LayoutGlobal>
+              </SessionProvider>
+            </PersistGate>
           </Provider>
         </StyledThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />

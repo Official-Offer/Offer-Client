@@ -46,12 +46,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const orgName =
-    type == "update"
-      ? isStudent || isAdvisor
-        ? schools?.[orgId].name
-        : companies?.[orgId].name
-      : "";
+  // const orgName =
+  //   type == "update"
+  //     ? isStudent || isAdvisor
+  //       ? schools?.[orgId].name
+  //       : companies?.[orgId].name
+  //     : "";
 
   const orgQuery = useQuery({
     queryKey: ["orgs"],
@@ -94,11 +94,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
   };
 
   const handleOrgChange = (value: any) => {
-    if (value == 0 && !isStudent) {
+    if (value.key == 0 && !isStudent) {
       setNotFound(true);
     } else {
       setNotFound(false);
-      setOrg(value);
+      setOrg(value.key);
     }
   };
 
@@ -111,12 +111,13 @@ export const OrgForm: React.FC<IOrgForm> = ({
           <Form.Item
             label={
               isStudent || isAdvisor
-                ? `Trường: ${orgName}`
-                : `Công ty: ${orgName}`
+                ? `Trường`
+                : `Công ty`
             }
           >
             <Select
               // defaultValue={orgName}
+              labelInValue={true}
               showSearch
               className="form-select"
               bordered={false}
@@ -126,16 +127,18 @@ export const OrgForm: React.FC<IOrgForm> = ({
               {isStudent || isAdvisor
                 ? schools?.map((school: any) => (
                     <Select.Option
+                      key={school.id}
                       className="form-select-dropdown"
-                      value={school.id}
+                      value={school.name}
                     >
                       {school.name}
                     </Select.Option>
                   ))
                 : companies?.map((company: any) => (
                     <Select.Option
+                      key={company.id}
                       className="form-select-dropdown"
-                      value={company.id}
+                      value={company.name}
                     >
                       {company.name}
                     </Select.Option>

@@ -21,6 +21,7 @@ export const ProfilePage: React.FC<any> = () => {
   const role = getCookie("role");
   const isRecruiter =
     role == "recruiter" || router.pathname.includes("recruiter");
+  const orgName = getCookie("orgName");
 
   const profileQuery = useQuery({
     queryKey: ["profile"],
@@ -45,8 +46,8 @@ export const ProfilePage: React.FC<any> = () => {
       console.log(data);
     },
     onError: (error: any) => {
-    setErrorMessage("Cập nhật thất bại");
-    //   setErrorMessage(error.response.data.message);
+      setErrorMessage("Cập nhật thất bại");
+      //   setErrorMessage(error.response.data.message);
       console.log(error.response.data.message);
     },
   });
@@ -54,6 +55,7 @@ export const ProfilePage: React.FC<any> = () => {
     <div className="recruiter-schools">
       <h2>Hồ sơ</h2>
       <Form className="form" onFinish={() => {}} layout="vertical">
+        <p>{isRecruiter ? `Công ty: ${orgName}` : `Trường: ${orgName}`}</p>
         <Form.Item label="Email">
           <Input
             disabled
@@ -109,7 +111,7 @@ export const ProfilePage: React.FC<any> = () => {
             }}
           />
         </Form.Item>
-        <OrgForm
+        {/* <OrgForm
           onSubmit={function (org: string): void {
             setOrg(org);
             setUpdated(false);
@@ -138,7 +140,7 @@ export const ProfilePage: React.FC<any> = () => {
           }}
           type="update"
           isLoading={profileMutation.isLoading || profileQuery.isLoading}
-        />
+        /> */}
         {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </Form>

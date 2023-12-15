@@ -6,8 +6,8 @@ interface ICJob {
   description: string;
   companyId: number;
   deadline?: Date | null;
-  level: string;
-  address: string[];
+  level: string[];
+  address: string;
   salary: number;
   major: number[];
   type: string[];
@@ -15,6 +15,7 @@ interface ICJob {
   benefits: string;
   upperSalary: number;
   jobId?: number;
+  schoolIds?: number[];
 }
 
 const initialState: ICJob = {
@@ -24,14 +25,15 @@ const initialState: ICJob = {
   jobId: 0,
   companyId: 1,
   deadline: new Date(),
-  level: "",
-  address: ["Hà Nội"],
+  level: [],
+  address: "Hà Nội",
   salary: 0,
   major: [1],
-  type: ["fulltime"],
+  type: [],
   reqs: "",
   benefits: "",
   upperSalary: 0,
+  schoolIds: [],
 };
 
 const jobSlice = createSlice({
@@ -80,6 +82,9 @@ const jobSlice = createSlice({
     setBenefits: (state, action) => {
       state.benefits = action.payload;
     },
+    setSchoolIds: (state, action) => {
+      state.schoolIds = action.payload;
+    }
   },
 });
 
@@ -98,6 +103,7 @@ export const {
   setReqs,
   setBenefits,
   setUpperSalary,
+  setSchoolIds
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

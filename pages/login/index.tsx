@@ -33,9 +33,9 @@ const Login: NextPage = () => {
       router
         .push({
           pathname:
-            data.role == "student" || state.role.isStudent
+            data.role == "student"
               ? "/student"
-              : data.role == "advisor" || state.role.isAdvisor
+              : data.role == "advisor"
                 ? "/advisor/jobs"
                 : "/recruiter/jobs",
         })
@@ -81,6 +81,7 @@ const Login: NextPage = () => {
 
   const { data: session, status } = useSession();
   useEffect(() => {
+    
     if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;

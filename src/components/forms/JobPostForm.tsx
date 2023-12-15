@@ -72,6 +72,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleTypeChange = (value: any) => {
+    console.log(value);
     dispatch(setType(value));
   };
 
@@ -86,6 +87,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleLevelChange = (value: any) => {
+    console.log(value);
     dispatch(setLevel(value));
   };
 
@@ -106,12 +108,6 @@ export const JobPostForm: React.FC<IForm> = ({
     // setMajor(majorList[value - 1]);
   };
   const state = useSelector((state: RootState) => state.jobs);
-
-  // const handleCompanyChange = (value: any) => {
-  //   dispatch(setCompany(companyList[value - 1]));
-  //   dispatch(setCompanyId(value));
-  //   // console.log(state.company);
-  // };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
     //don't let user continue if they haven't filled in all the required fields
@@ -135,20 +131,9 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Tiêu đề" required className="form-input full-width">
           <Input required onChange={handleTitleChange} />
         </Form.Item>
-        {/* <Form.Item label="Công ty" className="form-input" required>
-          <Select
-            // mode="multiple"
-            // value={company}
-            // className="form-select"
-            placeholder="Công ty"
-            onChange={handleCompanyChange}
-            options={companies}
-          />
-        </Form.Item> */}
         <Form.Item label="Địa điểm" required>
           <Select
-            // className="form-select"
-            mode="multiple"
+            // mode="multiple"
             placeholder="Hà Nội"
             onChange={handleAddressChange}
             options={locations}
@@ -156,6 +141,7 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item>
         <Form.Item label="Cấp bậc" className="form-input" required>
           <Select
+            mode="multiple"
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}

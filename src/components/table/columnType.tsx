@@ -111,6 +111,20 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //   dataIndex: "approved_schools",
   //   key: "approved_schools",
   // },
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: ApprovedJobsActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
 ];
 
 export const AdvisorJobColumns: ColumnsType<RecruiterJobDataType> = [
@@ -163,20 +177,20 @@ export const AdvisorJobColumns: ColumnsType<RecruiterJobDataType> = [
       );
     },
   },
-  // {
-  //   title: "Hành động",
-  //   key: "action",
-  //   render: (_, record) => (
-  //     // {record.name}
-  //     <Space size="middle">
-  //       <Dropdown menu={{ items: ApprovedJobsActionItems }}>
-  //         <a>
-  //           <MoreOutlined />
-  //         </a>
-  //       </Dropdown>
-  //     </Space>
-  //   ),
-  // },
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
 ];
 
 export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [

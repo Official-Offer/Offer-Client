@@ -38,16 +38,17 @@ export const Nav: React.FC = (props: any): ReactElement => {
     router.pathname.includes("advisor");
   const conflict =
     (router.pathname.includes("recruiter") &&
-      (r == "advisor" || state.role.isAdvisor)) ||
+      (r == "advisor")) ||
     (router.pathname.includes("advisor") &&
-      (r == "recruiter" || state.role.isRecruiter)) ||
+      (r == "recruiter")) ||
     (router.pathname.includes("student") &&
-      (r == "recruiter" || state.role.isRecruiter)) ||
+      (r == "recruiter")) ||
     (router.pathname.includes("student") &&
-      (r == "advisor" || state.role.isAdvisor));
+      (r == "advisor"));
   const {data: session, status} = useSession();
   // console.log(getCookie("cookieToken"));
   // console.log(getCookie("role"));
+  console.log(conflict, r, state.role)
   const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
@@ -89,9 +90,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
           deleteCookie("cookieToken");
           deleteCookie("role");
           deleteCookie("id");
-          // router.push("/login").then(() => {
+          router.push("/login").then(() => {
             router.reload();
-          // });
+          });
         }
       } else {
         router.push(`/${role}${path[index]}`);

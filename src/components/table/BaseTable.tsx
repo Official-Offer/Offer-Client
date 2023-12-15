@@ -9,6 +9,7 @@ import { FilterSearch } from "@components/search/FilterSearch";
 import { IconButton } from "@styles/styled-components/styledButton";
 import {
   CheckCircleFilled,
+  DeleteOutlined,
   MinusCircleFilled,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -23,6 +24,7 @@ type BaseTableProps = {
   handleFilterSearch?: (value: string) => void;
   handleAdd?: () => void;
   handleVerify?: (id: string, is_approved: boolean) => void;
+  handleDelete?: () => void;
   placeholder?: string;
   isLoading?: boolean;
   tableType?: string;
@@ -36,6 +38,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   handleFilterSearch,
   handleAdd,
   handleVerify,
+  handleDelete,
   placeholder,
   isLoading,
   tableType,
@@ -85,7 +88,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
             />
           )}
         </div> */}
-        {(handleAdd || handleVerify) && (
+        {(handleAdd || handleVerify || handleDelete) && (
           <div className="table-functions-add">
             {handleVerify && <IconButton
               round
@@ -108,17 +111,17 @@ export const BaseTable: React.FC<BaseTableProps> = ({
             <IconButton
               round
               className=""
-              backgroundColor={handleAdd ? "#D30B81" : "#228B22"}
-              onClick={handleAdd ? handleAdd : () => {
+              backgroundColor={handleAdd ? "#D30B81" : handleDelete ? "#DE3163" : "#228B22"}
+              onClick={handleAdd ? handleAdd : handleDelete ? handleDelete : () => {
                 jobIDs.forEach((id) => {
                   handleVerify?.(id, true);
                 });
               }}
             >
               <div className="btn-body">
-                <span>{handleAdd ? `Tạo công việc` : `Duyệt công việc`}</span>
+                <span>{handleAdd ? `Tạo công việc` : handleDelete ? `Xoá công việc`: `Duyệt công việc`}</span>
                 <span>
-                  {handleAdd ? <PlusOutlined /> : <CheckCircleFilled />}
+                  {handleAdd ? <PlusOutlined /> : handleDelete ? <DeleteOutlined /> : <CheckCircleFilled />}
                 </span>
               </div>
             </IconButton>

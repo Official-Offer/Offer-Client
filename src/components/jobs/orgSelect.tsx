@@ -1,110 +1,116 @@
-import { NextPage } from "next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
-import { Checkbox, Divider } from "antd";
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import type { CheckboxValueType } from "antd/es/checkbox/Group";
+import { Checkbox, Divider, Form, Select } from "antd";
 import { useState } from "react";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { useMutation } from "@tanstack/react-query";
-import { addSchoolsToJob } from "@services/apiJob";
-
-const CheckboxGroup = Checkbox.Group;
-
-const schools = [
-  "Bach Khoa",
-  "Ngoai Thuong",
-  "Kinh Te Quoc Dan",
-  "UMass",
-  "HSGS",
-];
-const defaultCheckedList = ["Bach Khoa", "Ngoai Thuong"];
-//create a next page for the student home page, code below
-import type { JSXElementConstructor, ReactNode } from "react";
-
-type JSXComponent = JSXElementConstructor<{
-  children?: ReactNode;
-  [prop: string]: any;
-}>;
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { getOrgList } from "@services/apiUser";
+import { setCompany, setCompanyId, setSchoolIds } from "@redux/actions";
 
 export const SelectOrg: React.FC<any> = ({ onClick }) => {
-  const [checkedList, setCheckedList] =
-    useState<CheckboxValueType[]>(defaultCheckedList);
-  const [schoolId, setSchoolId] = useState<number[]>([]);
-  const checkAll = schools.length === checkedList.length;
-  const indeterminate =
-    checkedList.length > 0 && checkedList.length < schools.length;
-
-  const onChange = (list: CheckboxValueType[]) => {
-    setCheckedList(list);
-    setSchoolId(list.map((item) => schools.indexOf(item as string) + 1));
-    console.log(schoolId);
-  };
-
-  const onCheckAllChange = (e: CheckboxChangeEvent) => {
-    setCheckedList(e.target.checked ? schools : []);
-    setSchoolId(
-      e.target.checked ? schools.map((item, index) => index + 1) : [],
-    );
-    console.log(schoolId);
-  };
-
   const state = useSelector((state: RootState) => state.jobs);
+  const router = useRouter();
+  const [schools, setSchools] = useState<any>();
+  const [companies, setCompanies] = useState<any>();
+  const [selectedOrgIds, setSelectedOrgIds] = useState<any>();
+  const [companyName, setCompanyName] = useState<string>("");
+  const dispatch = useDispatch();
 
-  const jobQuery = useMutation({
-    mutationKey: ["school-job"],
-    mutationFn: addSchoolsToJob,
-    onSuccess: async (data) => {
-      // dispatch(setJobId(data.id));
-      onClick();
+  const orgQuery = useQuery({
+    queryKey: ["orgs"],
+    queryFn: getOrgList,
+    onSuccess: async (orgs) => {
+      // add "school is not found" into the list
+      const schoolList = orgs.schools;
+      const companyList = orgs.companies;
+
+      setSchools(schoolList);
+      setCompanies(companyList);
     },
-    onError: (error: any) => {
-      console.log(error.response.data.message);
+    onError: () => {
+      console.log("error");
     },
   });
 
+  const isRecruiter = router.pathname.includes("recruiter") ? true : false;
+
   return (
     <div className="job-school">
-      <h2>Chọn trường để đăng công việc</h2>
+      <h2>{`Chọn ${isRecruiter ? `trường` : `công ty`} để đăng công việc`}</h2>
       <br />
-      <Checkbox
-        indeterminate={indeterminate}
-        onChange={onCheckAllChange}
-        checked={checkAll}
-      >
-        Chọn tất cả
-      </Checkbox>
-      {/* <Checkbox
-        indeterminate={indeterminate}
-        onChange={onCheckAllChange}
-        checked={checkAll}
-      >
-        Chọn trường công nghệ (recommended)
-      </Checkbox> */}
-      {/* <Checkbox
-        indeterminate={indeterminate}
-        onChange={onCheckAllChange}
-        checked={checkAll}
-      >
-        Chọn trường kinh tế
-      </Checkbox> */}
-      <Divider />
-      <CheckboxGroup
-        options={schools}
-        value={checkedList}
-        onChange={onChange}
-      />
-      <br />
-      <SubmitButton
-        text={"Đăng công việc"}
-        isLoading={jobQuery.isLoading}
-        onClick={() => {
-          jobQuery.mutate({
-            id: state.jobId,
-            schools: schoolId,
-          });
-        }}
-      />
+      {isRecruiter && (
+        <Checkbox onChange={() => {}}>
+          Đăng công việc lên diễn đàn chung
+        </Checkbox>
+      )}
+      {/* <hr/> */}
+      <Form className="form" layout="vertical">
+        <div className="form-flex">
+          <div className="form-input">
+            <Form.Item
+              label={isRecruiter ? "Chọn 1 hoặc nhiều trường" : "Công ty"}
+            >
+              <Select
+                // defaultValue={orgName}
+                labelInValue={true}
+                mode={isRecruiter ? "multiple" : undefined}
+                showSearch
+                className="form-select"
+                bordered={false}
+                onChange={(value: any) => {
+                  console.log(value);
+                  if (isRecruiter) {
+                    setSelectedOrgIds(
+                      value.map((item: { key: any }) => Number(item.key))
+                    );
+                  } else {
+                    setCompanyName(value.label);
+                    setSelectedOrgIds(Number(value.key));
+                  }
+                }}
+                loading={orgQuery.isLoading}
+              >
+                {isRecruiter
+                  ? schools?.map((school: any) => (
+                      <Select.Option
+                        key={school.id}
+                        className="form-select-dropdown"
+                        value={school.name}
+                      >
+                        {school.name}
+                      </Select.Option>
+                    ))
+                  : companies?.map((company: any) => (
+                      <Select.Option
+                        key={company.id}
+                        className="form-select-dropdown"
+                        value={company.name}
+                      >
+                        {company.name}
+                      </Select.Option>
+                    ))}
+              </Select>
+            </Form.Item>
+          </div>
+        </div>
+        <SubmitButton
+          text={"Tiếp tục"}
+          isLoading={orgQuery.isLoading}
+          onClick={() => {
+            if (!selectedOrgIds) {
+              return;
+            }
+            if (isRecruiter) {
+              dispatch(setSchoolIds(selectedOrgIds));
+            } else {
+              dispatch(setCompanyId(selectedOrgIds));
+              dispatch(setCompany(companyName))
+            }
+            onClick();
+          }}
+        />
+      </Form>
     </div>
   );
 };

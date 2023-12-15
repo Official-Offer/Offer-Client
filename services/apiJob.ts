@@ -81,9 +81,9 @@ export const getJobsForRecruiter = async () => {
       created_by: recruiter,
     },
   });
-  console.log(response.data.message);
+  console.log(response.data.results);
 
-  const jobs = response.data.message || [
+  const jobs = response.data.results || [
     {
       created_at: "",
       title: "SWE Intern",
@@ -251,7 +251,7 @@ export const unbookmarkJob = async (id: number | string) => {
 };
 
 export const deleteJob = async (id: any) => {
-  const response = await request.delete(`/jobs/`, id);
+  const response = await request.delete(`/jobs/${id}/`);
   return response.data;
 };
 

@@ -5,7 +5,7 @@ import {
   JobColumns,
   RecruiterCompanyColumns,
 } from "@components/table/columnType";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
   getApplicantsForJob,
@@ -16,6 +16,8 @@ import { useRouter } from "next/router";
 import { formatFullName } from "@utils/formatters/stringFormat";
 import { formatDate } from "@utils/formatters/numberFormat";
 import { BackwardOutlined } from "@ant-design/icons";
+import { on } from "events";
+import { deleteJob } from "@services/apiJob";
 
 const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -25,6 +27,7 @@ const Applicants: NextPage = () => {
   const router = useRouter();
   // make id an integer instead of string
   const id = parseInt(router.query.id as string);
+  const [message, setMessage] = useState<string>("");
 
   console.log(id);
   const applicantQuery = useQuery(
@@ -55,6 +58,18 @@ const Applicants: NextPage = () => {
     },
   );
 
+  const deleteJobMutation = useMutation(() => deleteJob(id), {
+    onSuccess: () => {
+      console.log("delete job successfully");
+      setMessage("Xóa công việc thành công");
+      // queryClient.invalidateQueries("jobs");
+    },
+    onError: (error) => {
+      console.log(error);
+      // message.error("Có lỗi xảy ra");
+    },
+  });
+
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);
@@ -67,6 +82,11 @@ const Applicants: NextPage = () => {
     );
     setData(filteredData);
   };
+
+  const handleDeleteJob = () => {
+    deleteJobMutation.mutate();
+    // router.back();
+  }
 
   return (
     <div className="applicant">
@@ -83,18 +103,19 @@ const Applicants: NextPage = () => {
       </p>
       {/* <h3>Ứng viên cho công việc </h3> */}
       <h3 className="applicant-title">Ứng viên cho công việc {jobTitle}</h3>
-      <div className="applicant-table">
+      {message ? <p>{message}</p> : <div className="applicant-table">
         <BaseTable
           dataset={data}
           columns={ApplicantColumns}
           placeholder={"Tìm ứng viên"}
           // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
+          handleDelete={handleDeleteJob}
           searchResults={searchResults}
           tableType={"Applicants"}
-          isLoading={applicantQuery.isLoading}
+          isLoading={applicantQuery.isLoading || deleteJobMutation.isLoading}
         />
-      </div>
+      </div>}
     </div>
   );
 };
