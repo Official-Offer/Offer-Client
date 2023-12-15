@@ -55,31 +55,31 @@ const Jobs: NextPage = () => {
 
   const dispatch = useDispatch();
 
-  const profileQuery = useQuery({
-    queryKey: ["profile"],
-    queryFn: getAdvisor,
-    onSuccess: async (info) => {
-      // console.log("info", info.account.id);
-      console.log("info", info);
-      const orgName = info.school.name ?? "";
-      setCookie("id", info.account.id);
-      setCookie("role", "advisor");
-      setCookie("orgName", orgName);
-      setCookie("orgId", info.school.id);
+  // const profileQuery = useQuery({
+  //   queryKey: ["profile"],
+  //   queryFn: getAdvisor,
+  //   onSuccess: async (info) => {
+  //     // console.log("info", info.account.id);
+  //     console.log("info", info);
+  //     const orgName = info.school.name ?? "";
+  //     setCookie("id", info.account.id);
+  //     setCookie("role", "advisor");
+  //     setCookie("orgName", orgName);
+  //     setCookie("orgId", info.school.id);
 
-      dispatch(setID(info.account.id));
-      dispatch(
-        setRole({
-          isStudent: false,
-          isAdvisor: true,
-          isRecruiter: false,
-        }),
-      );
-      dispatch(setCompany(info.school.name));
-      dispatch(setCompanyId(info.school.id));
-    },
-    onError: () => {},
-  });
+  //     dispatch(setID(info.account.id));
+  //     dispatch(
+  //       setRole({
+  //         isStudent: false,
+  //         isAdvisor: true,
+  //         isRecruiter: false,
+  //       }),
+  //     );
+  //     dispatch(setCompany(info.school.name));
+  //     dispatch(setCompanyId(info.school.id));
+  //   },
+  //   onError: () => {},
+  // });
 
   const verifyMutation = useMutation({
     mutationKey: ["verify"],
@@ -111,7 +111,8 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleVerify={handleVerifyJob}
           tableType={"AdvisorJobs"}
-          isLoading={jobQuery.isLoading || profileQuery.isLoading}
+          isLoading={jobQuery.isLoading}
+            //  || profileQuery.isLoading}
         />
       </div>
     </div>
