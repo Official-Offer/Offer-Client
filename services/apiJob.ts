@@ -81,9 +81,9 @@ export const getJobsForRecruiter = async () => {
       created_by: recruiter,
     },
   });
-  console.log(response.data.message);
+  // console.log(response.data.message);
 
-  const jobs = response.data.message || [
+  const jobs = response.data.results || [
     {
       created_at: "",
       title: "SWE Intern",
@@ -153,7 +153,7 @@ export const getAdvisorJobs = async () => {
       school,
     },
   });
-  const jobs = response.data.message;
+  const jobs = response.data.results;
 
   console.log("jobs", jobs);
   const res = jobs.map((job: any) => ({
