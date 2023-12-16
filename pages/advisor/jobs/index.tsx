@@ -79,7 +79,7 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleVerify={handleVerifyJob}
           tableType={"AdvisorJobs"}
-          isLoading={jobQuery.isLoading}
+          isLoading={jobQuery.isLoading || verifyMutation.isLoading}
         />
       </div>
     </div>
