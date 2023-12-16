@@ -32,7 +32,6 @@ const Registration: NextPage = () => {
   const dispatch = useDispatch();
   const [rol, setRol] = useState<string>("Học sinh");
   const [selectRole, setSelectRole] = useState<boolean>(false);
-  // const [func, setFunc] = useState<any>(null);
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();

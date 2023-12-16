@@ -43,10 +43,10 @@ const Login: NextPage = () => {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie("orgName", data.organization?.name);
-        setCookie("orgId", data.organization?.id);
-        dispatch(setCompany(data.organization?.name));
-        dispatch(setCompanyId(data.organization?.id));
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
+        setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
@@ -81,10 +81,10 @@ const Login: NextPage = () => {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie("orgName", data.organization?.name);
-        setCookie("orgId", data.organization?.id);
-        dispatch(setCompany(data.organization?.name));
-        dispatch(setCompanyId(data.organization?.id));
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
+        setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
