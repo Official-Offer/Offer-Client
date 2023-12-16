@@ -45,7 +45,7 @@ const Registration: NextPage = () => {
       // Invalidate and refetch
       setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
       // console.log(data.access);
-      setCookie("id", data.id);
+      setCookie("id", data.pk ? data.pk : data.id);
       setCookie("role", data.role);
       dispatch(setLoggedIn(true));
       router
@@ -71,7 +71,7 @@ const Registration: NextPage = () => {
     onSuccess: async (data) => {
       // Invalidate and refetch
       setCookie("cookieToken", data.message.access_token ? data.message.access_token : data.message.access ? data.message.access : data.message.token);
-      setCookie("id", data.message.id);
+      setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
       setCookie("orgId", org.key);
       setCookie("orgName", org.label);

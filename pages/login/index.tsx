@@ -40,8 +40,8 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       console.log(data);
       setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
-      setCookie("id", data.id);
-      dispatch(setID(data.id));
+      setCookie("id", data.pk ? data.pk : data.id);
+      // dispatch(setID(data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
@@ -78,8 +78,8 @@ const Login: NextPage = () => {
       // Invalidate and refetch
       setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
       setToken(data.access_token ? data.access_token : data.access ? data.access : data.token);
-      setCookie("id", data.id);
-      dispatch(setID(data.id));
+      setCookie("id",  data.pk ? data.pk : data.id);
+      // dispatch(setID( data.pk ? data.pk : data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
