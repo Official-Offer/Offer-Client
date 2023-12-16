@@ -19,12 +19,15 @@ import { EventCard, InfoCard } from "@components/card";
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
 import { getJobs } from "@services/apiJob";
+import { getCompanyList } from "@services/apiCompany";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
+import { useDisplayCompanies } from "@hooks/useDisplayJobs";
 import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
 import type { RadioChangeEvent } from "antd/lib/radio";
-
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
   cover:
@@ -74,6 +77,10 @@ const scholarshipList = [
 const Home: NextPage = () => {
   // States
   const {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
     displayedJobs,
     setJobs,
     setSearchTerm,
@@ -82,6 +89,10 @@ const Home: NextPage = () => {
     setFilters,
     setSort,
   } = useDisplayJobs();
+  const {
+    companies,
+    setCompanies,
+  } = useDisplayCompanies();
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
@@ -90,6 +101,15 @@ const Home: NextPage = () => {
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
+
+  const companyQuery = useQuery({
+    queryKey: ["companies list"],
+    queryFn: getCompanyList,
+    onSuccess: (companyData: Record<string, any>) => setCompanies(companyData.results),
+    onError: (error) => console.log(`Error: ${error}`),
+    refetchOnWindowFocus: false,
+  });
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.trim() === "") {
@@ -136,6 +156,7 @@ const Home: NextPage = () => {
   const { data: session, status } = useSession();
   console.log(session);
 
+  // paginate the job list
   return (
     <main className="main">
       <div className="main__content">
@@ -154,135 +175,20 @@ const Home: NextPage = () => {
             }
           />
         </section>
-        <section className="main-mt">
-          <h2 className="header">Tìm công việc mơ ước của bạn</h2>
-          <Input.Search
-            className="gradient-antd-search"
-            allowClear
-            placeholder="Tìm công việc"
-            enterButton="Tìm kiếm"
-            size="large"
-            onChange={handleSearchChange}
-            onSearch={(value: string) => setSearchTerm(value)}
-          />
-          <Space direction="vertical" className="justify-center">
-            <Space wrap align="center" className="justify-center">
-              <Select
-                mode="multiple"
-                showArrow
-                size="large"
-                placeholder="Địa điểm"
-                className="round-border"
-                onChange={(value) => handleFilter(value, 2)}
-                options={Object.keys(filters.locations).map((location) => ({
-                  value: location,
-                  label: location,
-                }))}
-              />
-              <Select
-                mode="multiple"
-                showArrow
-                size="large"
-                placeholder="Hình thức làm việc"
-                className="round-border"
-                onChange={(value) => handleFilter(value, 0)}
-                options={Object.keys(filters.jobTypes).map((jobType) => ({
-                  value: jobType,
-                  label: translateJobType(jobType),
-                }))}
-              />
-              <Select
-                mode="multiple"
-                showArrow
-                size="large"
-                placeholder="Mô hình làm việc"
-                className="round-border"
-                onChange={(value) => handleFilter(value, 1)}
-                options={Object.keys(filters.workTypes).map((workType) => ({
-                  value: workType,
-                  label: translateJobType(workType),
-                }))}
-              />
-              <Popover
-                content={
-                  <div className="layout-medium layout-hstack-stretch-center">
-                    <span>{filters.salary[0]}</span>
-                    <span>
-                      <Slider
-                        range
-                        min={2000}
-                        max={4000}
-                        step={100}
-                        defaultValue={filters.salary}
-                        onChange={handleFilterSalary}
-                      />
-                    </span>
-                    <span>{filters.salary[1]}</span>
-                  </div>
-                }
-                trigger="hover"
-                placement="bottom"
-              >
-                <Button size="large" className="round-border right-icon">
-                  <span>Mức lương</span>
-                  <span>
-                    <DownOutlined />
-                  </span>
-                </Button>
-              </Popover>
-            </Space>
-            <Space wrap align="center" className="justify-center">
-              <Radio.Group
-                defaultValue="related"
-                buttonStyle="solid"
-                size="large"
-              >
-                <Space.Compact className="round-border">
-                  <Radio.Button value="all">Tất cả</Radio.Button>
-                  <Radio.Button value="related">Liên quan</Radio.Button>
-                </Space.Compact>
-              </Radio.Group>
-              <Radio.Group
-                buttonStyle="solid"
-                size="large"
-                value={sort}
-                onChange={handleSort}
-              >
-                <Space.Compact className="round-border">
-                  <Radio.Button
-                    value="date-posted"
-                    onClick={() => removeSort("date-posted")}
-                  >
-                    Ngày đăng
-                  </Radio.Button>
-                  <Radio.Button
-                    value="date-updated"
-                    onClick={() => removeSort("date-updated")}
-                  >
-                    Ngày cập nhật
-                  </Radio.Button>
-                  <Radio.Button
-                    value="salary-desc"
-                    onClick={() => removeSort("salary-desc")}
-                  >
-                    Lương cao đến thấp
-                  </Radio.Button>
-                  <Radio.Button
-                    value="salary-asc"
-                    onClick={() => removeSort("salary-asc")}
-                  >
-                    Lương thấp đến cao
-                  </Radio.Button>
-                </Space.Compact>
-              </Radio.Group>
-            </Space>
-          </Space>
-        </section>
         <section>
-          <div className="layout-grid">
+          <h2 className="header">Cơ hội thực tập dành riêng cho bạn</h2>
+          <div className="layout-grid" >
             {jobQuery.isLoading
               ? new Array(4).fill(<InfoCard loading />)
               : displayedJobs.map((jobData) => <InfoCard info={jobData} />)}
+          </div>
+        </section>
+        <section>
+          <h2 className="header">Các công ty hàng đầu</h2>
+          <div className="layout-grid" >
+            {companyQuery.isLoading
+              ? new Array(4).fill(<InfoCard loading />)
+              : companies.map((companyData) => <div><img src={companyData.logo}></img>{companyData.name}</div>)}
           </div>
         </section>
       </div>

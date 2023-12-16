@@ -3,7 +3,9 @@ import request from "./apiService";
 import { URL_API_ADMIN } from "@config";
 
 export const getCompanyList = async () => {
-  const response = await request.get(`/companies/`);
+  const response = await request.get(
+    '/companies,'
+  );
   return response.data;
 };
 

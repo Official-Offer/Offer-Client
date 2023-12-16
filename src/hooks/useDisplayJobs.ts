@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { formatAddress } from "@utils/formatters/stringFormat";
 import type { Job } from "src/types/dataTypes";
-import type { JobFilters } from "src/types/filterTypes";
-
+import type { JobFilters, CompanyFilters } from "src/types/filterTypes";
+import type { Company } from "src/types/dataTypes";
 export const useDisplayJobs = () => {
+  const [page, setPage] = useState<number>(2);
+  const [pageSize, setPageSize] = useState<number>(12);
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
   const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -18,7 +20,6 @@ export const useDisplayJobs = () => {
   const [sort, setSort] = useState<string>("");
 
   const setJobs = (jobList: Job[]) => {
-    console.log(jobList)
     setOriginalJobs(jobList);
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
@@ -124,6 +125,10 @@ export const useDisplayJobs = () => {
   }, [originalJobs, filters, sort, searchTerm]);
 
   return {
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
     displayedJobs,
     setJobs,
     setSearchTerm,
@@ -133,3 +138,17 @@ export const useDisplayJobs = () => {
     setSort,
   };
 };
+
+export const useDisplayCompanies = () => {
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(12);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  return {
+    // page,
+    // setPage,
+    // pageSize,
+    // setPageSize,
+    companies,
+    setCompanies,
+  };
+}
