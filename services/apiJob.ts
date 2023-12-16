@@ -235,6 +235,7 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
+  console.log(getCookie("cookieToken"));
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };

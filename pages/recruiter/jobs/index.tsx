@@ -6,7 +6,6 @@ import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
 import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
-import Profile from "../profile/index";
 import { getRecruiter } from "@services/apiRecruiter";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";

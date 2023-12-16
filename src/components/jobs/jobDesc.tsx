@@ -14,7 +14,7 @@ import { DatePicker, Input, Select, Skeleton, Slider } from "antd";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
 import { setJobId } from "@redux/actions";
-import locale from "antd/es/date-picker/locale/vi_VN";
+// import locale from "antd/es/date-picker/locale/vi_VN";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -56,7 +56,9 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
       "Công nghệ thông tin",
     ]
   );
-  const [company, setCompany] = useState<string>(state.company || `Samsung`);
+  const [company, setCompany] = useState<string | undefined>(
+    state.company || "Công ty mẫu"
+  );
   const [companyId, setCompanyId] = useState<number>(
     router.pathname.includes("recruiter")
       ? Number(getCookie("orgId"))
@@ -174,7 +176,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             <div style={{ marginBottom: "10px" }}>
               <p>Hạn nộp</p>
               <DatePicker
-                locale={locale}
+                // locale={locale}
                 onChange={(value) => {
                   if (value) {
                     setDeadline(value.toDate());

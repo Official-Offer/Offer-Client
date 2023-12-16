@@ -44,12 +44,19 @@ const Registration: NextPage = () => {
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
     onSuccess: async (data: any) => {
+      console.log(data)
       // Invalidate and refetch
-      // console.log("social login testing", data);
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
       dispatch(setLoggedIn(true));
+      router.push(
+        data.role == "student"
+          ? "/student"
+          : data.role == "advisor"
+            ? "/advisor/jobs"
+            : "/recruiter/jobs"
+      );
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -66,6 +73,7 @@ const Registration: NextPage = () => {
       setCookie("role", data.message.role);
       setCookie("orgId", org.key);
       setCookie("orgName", org.label);
+      dispatch(setCompany(org.label))
       if (status !== "authenticated") {
         router.push("/registration/verifyEmail");
       } else {
@@ -88,11 +96,13 @@ const Registration: NextPage = () => {
   useEffect(() => {
     if (status === "authenticated") {
       const role = getCookie("role");
+      const orgId = Number(getCookie("orgId"));
+      console.log(role, orgId)
       socialMutation.mutate({
         //@ts-ignore
-        auth_token: session?.user?.accessToken, // Update 'session?.accessToken' to 'session?.user?.accessToken'
+        auth_token: session?.user?.accessToken, 
         role,
-        org_id: Number(org.key),
+        org_id: orgId,
       });
       // router.push("/student");
     }
@@ -100,7 +110,6 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <h1> Đang tải ... </h1>;
 
-  // console.log("rol", rol)
   return (
     <div className="register">
       <div className="register-sideBar">
@@ -108,8 +117,7 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen ? (
-            // && status !== "authenticated"
+          {pwScreen && status !== "authenticated" ? (
             <>
               <div>
                 <h1>Đăng ký</h1>
@@ -138,6 +146,7 @@ const Registration: NextPage = () => {
                   setCookie("role", role);
                   console.log("role", role);
                   setCookie("orgName", org.label);
+                  dispatch(setCompany(org.label))
                   setCookie("orgId", org.key);
                   signIn("google");
                 }}
@@ -147,7 +156,6 @@ const Registration: NextPage = () => {
               </Button>
 
               <Form className="form form-margin" layout="vertical">
-                {/* <div className="form-grid"> */}
                 <Form.Item required label="Họ Tên" className="form-input">
                   <Input
                     required
@@ -168,7 +176,6 @@ const Registration: NextPage = () => {
                     return;
                   }
                   if (!firstName && !lastName) {
-                    // console.log(firstName, lastName)
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;
                   }
@@ -176,7 +183,6 @@ const Registration: NextPage = () => {
                     setErrorMessage(item.error);
                     return;
                   }
-                  // setErrorMessage("");
                   const role =
                     rol == "Học sinh"
                       ? "student"
