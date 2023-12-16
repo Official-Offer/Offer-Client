@@ -19,7 +19,9 @@ import { EventCard, InfoCard } from "@components/card";
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
 import { getJobs } from "@services/apiJob";
+import { getCompanyList } from "@services/apiCompany";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
+import { useDisplayCompanies } from "@hooks/useDisplayJobs";
 import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
@@ -87,6 +89,10 @@ const Home: NextPage = () => {
     setFilters,
     setSort,
   } = useDisplayJobs();
+  const {
+    companies,
+    setCompanies,
+  } = useDisplayCompanies();
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
@@ -95,6 +101,15 @@ const Home: NextPage = () => {
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
+
+  const companyQuery = useQuery({
+    queryKey: ["companies list"],
+    queryFn: () => getCompanyList(1, 36),
+    onSuccess: (companyData: Record<string, any>) => setCompanies(companyData.results),
+    onError: (error) => console.log(`Error: ${error}`),
+    refetchOnWindowFocus: false,
+  });
+
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.trim() === "") {
@@ -162,11 +177,18 @@ const Home: NextPage = () => {
         </section>
         <section>
           <h2 className="header">Cơ hội thực tập dành riêng cho bạn</h2>
-          {/* TODO: Add carousel and pagination */}
           <div className="layout-grid" >
             {jobQuery.isLoading
               ? new Array(4).fill(<InfoCard loading />)
               : displayedJobs.map((jobData) => <InfoCard info={jobData} />)}
+          </div>
+        </section>
+        <section>
+          <h2 className="header">Các công ty hàng đầu</h2>
+          <div className="layout-grid" >
+            {companyQuery.isLoading
+              ? new Array(4).fill(<InfoCard loading />)
+              : companies.map((companyData) => <div>{companyData.name}</div>)}
           </div>
         </section>
       </div>

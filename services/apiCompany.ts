@@ -2,8 +2,10 @@ import axios from "axios";
 import request from "./apiService";
 import { URL_API_ADMIN } from "@config";
 
-export const getCompanyList = async () => {
-  const response = await request.get(`/companies/`);
+export const getCompanyList = async (page: number, pageSize: number) => {
+  const response = await request.get(
+    `/companies/?page=${page}&page_size=${pageSize}`,
+  );
   return response.data;
 };
 
