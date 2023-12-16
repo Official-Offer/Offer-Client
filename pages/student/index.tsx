@@ -96,7 +96,7 @@ const Home: NextPage = () => {
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
-    queryFn: () => getJobs(1, 36),
+    queryFn: getJobs,
     onSuccess: (jobData: Record<string, any>) => setJobs(jobData.results),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
 
   const companyQuery = useQuery({
     queryKey: ["companies list"],
-    queryFn: () => getCompanyList(1, 36),
+    queryFn: getCompanyList,
     onSuccess: (companyData: Record<string, any>) => setCompanies(companyData.results),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
@@ -188,7 +188,7 @@ const Home: NextPage = () => {
           <div className="layout-grid" >
             {companyQuery.isLoading
               ? new Array(4).fill(<InfoCard loading />)
-              : companies.map((companyData) => <div>{companyData.name}</div>)}
+              : companies.map((companyData) => <div><img src={companyData.logo}></img>{companyData.name}</div>)}
           </div>
         </section>
       </div>

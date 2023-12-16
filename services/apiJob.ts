@@ -6,13 +6,8 @@ import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
 import parse from "html-react-parser";
 
-export const getJobs = async (page: Number, pageSize: Number) => {
-  const response = await request.get(`/jobs/`, {
-    params: {
-      page,
-      page_size: pageSize,
-    },
-  });
+export const getJobs = async () => {
+  const response = await request.get(`/jobs/`);
   const jobList = response.data;
   return jobList;
 };
