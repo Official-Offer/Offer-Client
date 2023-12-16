@@ -3,24 +3,16 @@ import { BaseTable } from "@components/table/BaseTable";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   getAdvisorJobs,
-  getApprovedJobs,
-  getUnapprovedJobs,
   verifyJobs,
 } from "@services/apiJob";
 import { useState } from "react";
-import router from "next/router";
 import {
-  ApprovedJobDataType,
   RecruiterJobDataType,
 } from "@components/table/dataType";
 import {
-  ApprovedJobColumns,
   AdvisorJobColumns,
 } from "@components/table/columnType";
-import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
-import { useDispatch } from "react-redux";
-import { getAdvisor } from "@services/apiAdvisor";
-import { getCookie, setCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -53,35 +45,9 @@ const Jobs: NextPage = () => {
     setData(filteredData);
   };
 
-  // const dispatch = useDispatch();
-
-  // const profileQuery = useQuery({
-  //   queryKey: ["profile"],
-  //   queryFn: getAdvisor,
-  //   onSuccess: async (info) => {
-  //     // console.log("info", info.account.id);
-  //     console.log("info", info);
-  //     const orgName = info.school.name ?? "";
-  //     setCookie("id", info.account.id);
-  //     setCookie("role", "advisor");
-  //     setCookie("orgName", orgName);
-  //     setCookie("orgId", info.school.id);
-
-  //     dispatch(setID(info.account.id));
-  //     dispatch(
-  //       setRole({
-  //         isStudent: false,
-  //         isAdvisor: true,
-  //         isRecruiter: false,
-  //       }),
-  //     );
-  //     dispatch(setCompany(info.school.name));
-  //     dispatch(setCompanyId(info.school.id));
-  //   },
-  //   onError: () => {},
-  // });
 
   console.log(getCookie("cookieToken"))
+  console.log(getCookie("orgName"));
 
   const verifyMutation = useMutation({
     mutationKey: ["verify"],
@@ -114,7 +80,6 @@ const Jobs: NextPage = () => {
           handleVerify={handleVerifyJob}
           tableType={"AdvisorJobs"}
           isLoading={jobQuery.isLoading}
-            //  || profileQuery.isLoading}
         />
       </div>
     </div>

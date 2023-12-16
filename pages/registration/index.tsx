@@ -11,7 +11,7 @@ import { RootState } from "@redux/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { BackwardOutlined, GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { setLoggedIn } from "@redux/actions";
+import { setCompanyId, setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Button, Form, Input, Segmented } from "antd";
@@ -21,8 +21,6 @@ const Registration: NextPage = () => {
   const router = useRouter();
   const [pwScreen, setScreen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [password, setPassword] = useState<string>("");
-  const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [org, setOrg] = useState<any>();
@@ -46,8 +44,8 @@ const Registration: NextPage = () => {
     onSuccess: async (data: any) => {
       console.log(data);
       // Invalidate and refetch
-      setCookie("cookieToken", data.access);
-      console.log(data.access);
+      setCookie("cookieToken", data.token ? data.token : data.access);
+      // console.log(data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
       dispatch(setLoggedIn(true));
@@ -78,6 +76,7 @@ const Registration: NextPage = () => {
       setCookie("role", data.message.role);
       setCookie("orgId", org.key);
       setCookie("orgName", org.label);
+      dispatch(setCompanyId(org.key));
       dispatch(setCompany(org.label));
       if (status !== "authenticated") {
         router.push("/registration/verifyEmail");
@@ -102,7 +101,6 @@ const Registration: NextPage = () => {
     if (status === "authenticated") {
       const role = getCookie("role");
       const orgId = Number(getCookie("orgId"));
-      console.log(role, orgId);
       socialMutation.mutate({
         //@ts-ignore
         auth_token: session?.user?.accessToken,
@@ -149,9 +147,9 @@ const Registration: NextPage = () => {
                         ? "advisor"
                         : "recruiter";
                   setCookie("role", role);
-                  console.log("role", role);
                   setCookie("orgName", org.label);
                   dispatch(setCompany(org.label));
+                  dispatch(setCompanyId(org.key));
                   setCookie("orgId", org.key);
                   signIn("google");
                 }}
@@ -159,7 +157,6 @@ const Registration: NextPage = () => {
                 {" "}
                 Đăng ký với Google{" "}
               </Button>
-
               <Form className="form form-margin" layout="vertical">
                 <Form.Item required label="Họ Tên" className="form-input">
                   <Input
@@ -196,7 +193,6 @@ const Registration: NextPage = () => {
                         : "recruiter";
                   // console.log(r);
                   dispatch(setRole(r));
-                  console.log("org key", org.key);
                   mutation.mutate({
                     email: item.email,
                     password: item.password,
@@ -251,7 +247,6 @@ const Registration: NextPage = () => {
                       isRecruiter: value.toString() == "Nhà tuyển dụng",
                     };
                     setR(role);
-                    console.log("R", role);
                     dispatch(setRole(role));
                   }}
                 />
@@ -263,13 +258,13 @@ const Registration: NextPage = () => {
               <p className="register-content-error">{errorMessage}</p>
             </>
           )}
-          <Button
+          {/* <Button
             onClick={() => {
               signOut();
             }}
           >
             Dang Xuat
-          </Button>
+          </Button> */}
           <FootnoteForm type={""} />
         </div>
       </div>

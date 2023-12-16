@@ -28,28 +28,21 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const router = useRouter();
   const state = useSelector((state: RootState) => state.account);
   const r = getCookie("role");
-  const isRecruiter =
-    r == "recruiter" ||
-    router.pathname.includes("recruiter");
-      // state.role.isRecruiter ||
-  const isAdvisor =
-    r == "advisor" ||
-    router.pathname.includes("advisor");
-      // state.role.isAdvisor ||
+  const isRecruiter = r == "recruiter" || router.pathname.includes("recruiter");
+  // state.role.isRecruiter ||
+  const isAdvisor = r == "advisor" || router.pathname.includes("advisor");
+  // state.role.isAdvisor ||
   const conflict =
-    (router.pathname.includes("recruiter") &&
-      (r == "advisor")) ||
-    (router.pathname.includes("advisor") &&
-      (r == "recruiter")) ||
-    (router.pathname.includes("student") &&
-      (r == "recruiter")) ||
-    (router.pathname.includes("student") &&
-      (r == "advisor"));
-  const {data: session, status} = useSession();
+    (router.pathname.includes("recruiter") && r == "advisor") ||
+    (router.pathname.includes("advisor") && r == "recruiter") ||
+    (router.pathname.includes("student") && r == "recruiter") ||
+    (router.pathname.includes("student") && r == "advisor");
+  const { data: session, status } = useSession();
   // console.log(getCookie("cookieToken"));
   // console.log(getCookie("role"));
-  console.log(conflict, r, state.role)
-  const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
+  console.log(conflict, r, state.role);
+  const loggedIn =
+    (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
     import("@components").then((mod: any) => mod.Navbar)
@@ -85,7 +78,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
           deleteCookie("cookieToken");
           deleteCookie("role");
           deleteCookie("id");
-          signOut();
+          router.push("/login").then(() => {
+            signOut();
+          });
         } else {
           deleteCookie("cookieToken");
           deleteCookie("role");

@@ -39,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const loggedIn =
     (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
 
-  console.log("loggedIn?")
+  console.log("loggedIn?");
   console.log(getCookie("cookieToken"));
 
   // const [hideMesPanel, setHideMesPanel] = useState(true);
@@ -265,18 +265,17 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                         deleteCookie("cookieToken");
                         deleteCookie("role");
                         deleteCookie("id");
-                        signOut();
+                        router.push("/login").then(() => signOut());
                       } else {
                         //sign out traditional way
                         // mutation.mutate();
                         deleteCookie("cookieToken");
                         deleteCookie("role");
                         deleteCookie("id");
-                        // router.push("/login").then(() => {
+                        router.push("/login").then(() => {
                           router.reload();
-                        // });
+                        });
                       }
-                      router.push("/login");
                     }}
                   >
                     Đăng Xuất
