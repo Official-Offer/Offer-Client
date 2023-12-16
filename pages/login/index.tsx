@@ -25,10 +25,13 @@ const Login: NextPage = () => {
     mutationKey: ["login"],
     mutationFn: userLogIn,
     onSuccess: async (data) => {
+      console.log(data);
       // Invalidate and refetch
       setCookie("cookieToken", data.access);
       setCookie("id", data.pk ?? data.id);
       setCookie("role", data.role);
+      setCookie("orgName", data.organization?.name);
+      setCookie("orgId", data.organization?.id);
       // dispatch(setLoggedIn(true));
       router
         .push({
@@ -58,18 +61,19 @@ const Login: NextPage = () => {
       setCookie("cookieToken", data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
-      setCookie("orgName", "Umass");
+      setCookie("orgName", data.organization?.name);
+      setCookie("orgId", data.organization?.id);
       router
         .push({
           pathname:
-            data.role == "student" || state.role.isStudent
+            data.role == "student"
               ? "/student"
-              : data.role == "advisor" || state.role.isAdvisor
+              : data.role == "advisor"
                 ? "/advisor/jobs"
                 : "/recruiter/jobs",
         })
         .then(() => {
-          // router.reload();
+          router.reload();
         });
     },
     onError: (error: any) => {

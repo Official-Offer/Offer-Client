@@ -9,7 +9,7 @@ import router from "next/router";
 import { getRecruiter } from "@services/apiRecruiter";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
@@ -31,6 +31,7 @@ const Jobs: NextPage = () => {
 
   const dispatch = useDispatch();
 
+  console.log(getCookie("cookieToken"));
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: getRecruiter,

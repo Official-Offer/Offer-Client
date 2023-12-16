@@ -30,12 +30,12 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const r = getCookie("role");
   const isRecruiter =
     r == "recruiter" ||
-    state.role.isRecruiter ||
     router.pathname.includes("recruiter");
+      // state.role.isRecruiter ||
   const isAdvisor =
     r == "advisor" ||
-    state.role.isAdvisor ||
     router.pathname.includes("advisor");
+      // state.role.isAdvisor ||
   const conflict =
     (router.pathname.includes("recruiter") &&
       (r == "advisor")) ||

@@ -44,19 +44,24 @@ const Registration: NextPage = () => {
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
     onSuccess: async (data: any) => {
-      console.log(data)
+      console.log(data);
       // Invalidate and refetch
       setCookie("cookieToken", data.access);
+      console.log(data.access);
       setCookie("id", data.id);
       setCookie("role", data.role);
       dispatch(setLoggedIn(true));
-      router.push(
-        data.role == "student"
-          ? "/student"
-          : data.role == "advisor"
-            ? "/advisor/jobs"
-            : "/recruiter/jobs"
-      );
+      router
+        .push(
+          data.role == "student"
+            ? "/student"
+            : data.role == "advisor"
+              ? "/advisor/jobs"
+              : "/recruiter/jobs"
+        )
+        .then(() => {
+          router.reload();
+        });
     },
     onError: (error: any) => {
       console.log(error.response.data.message);
@@ -73,7 +78,7 @@ const Registration: NextPage = () => {
       setCookie("role", data.message.role);
       setCookie("orgId", org.key);
       setCookie("orgName", org.label);
-      dispatch(setCompany(org.label))
+      dispatch(setCompany(org.label));
       if (status !== "authenticated") {
         router.push("/registration/verifyEmail");
       } else {
@@ -97,10 +102,10 @@ const Registration: NextPage = () => {
     if (status === "authenticated") {
       const role = getCookie("role");
       const orgId = Number(getCookie("orgId"));
-      console.log(role, orgId)
+      console.log(role, orgId);
       socialMutation.mutate({
         //@ts-ignore
-        auth_token: session?.user?.accessToken, 
+        auth_token: session?.user?.accessToken,
         role,
         org_id: orgId,
       });
@@ -146,7 +151,7 @@ const Registration: NextPage = () => {
                   setCookie("role", role);
                   console.log("role", role);
                   setCookie("orgName", org.label);
-                  dispatch(setCompany(org.label))
+                  dispatch(setCompany(org.label));
                   setCookie("orgId", org.key);
                   signIn("google");
                 }}
@@ -191,7 +196,7 @@ const Registration: NextPage = () => {
                         : "recruiter";
                   // console.log(r);
                   dispatch(setRole(r));
-                  console.log("org key", org.key)
+                  console.log("org key", org.key);
                   mutation.mutate({
                     email: item.email,
                     password: item.password,
@@ -210,7 +215,7 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
-                  console.log("org", org)
+                  console.log("org", org);
                   if (!org) {
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;

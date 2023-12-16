@@ -20,7 +20,7 @@ import {
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
 import { useDispatch } from "react-redux";
 import { getAdvisor } from "@services/apiAdvisor";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 const Jobs: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -80,6 +80,8 @@ const Jobs: NextPage = () => {
   //   },
   //   onError: () => {},
   // });
+
+  console.log(getCookie("cookieToken"))
 
   const verifyMutation = useMutation({
     mutationKey: ["verify"],
