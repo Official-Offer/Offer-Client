@@ -42,14 +42,13 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   ];
   const state = useSelector((state: RootState) => state.jobs);
   const accountState = useSelector((state: RootState) => state.account);
+  const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
   const [salary, setSalary] = useState<number>(state.salary);
   const [upperSalary, setUpperSalary] = useState<number>(state.upperSalary);
-  const [level, setLevel] = useState<string>(state.level || "");
+  const [level, setLevel] = useState<string[]>(state.level || []);
   const [type, setType] = useState<string[]>(state.type || ["fulltime"]);
-  const [location, setLocation] = useState<string[]>(
-    state.address || ["Hà Nội"]
-  );
+  const [location, setLocation] = useState<string>(state.address || "Hà Nội");
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
@@ -57,9 +56,17 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
       "Công nghệ thông tin",
     ]
   );
-  const [company, setCompany] = useState<string>(state.company || `Samsung`);
+  const [company, setCompany] = useState<string | undefined>(
+    state.company || "Công ty mẫu"
+  );
   const [companyId, setCompanyId] = useState<number>(
-    getCookie("orgId") ? Number(getCookie("orgId")) : state.companyId || 1
+    router.pathname.includes("recruiter")
+      ? Number(getCookie("orgId"))
+      : state.companyId
+        ? state.companyId
+        : getCookie("orgId")
+          ? Number(getCookie("orgId"))
+          : 1
   );
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
@@ -115,7 +122,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         <BackwardOutlined /> Quay lại
       </p>
       <div className="job-desc-nav">
-        <h2 style={{ fontSize: "25px" }}>Xem trước</h2>
+        <h2 style={{ fontSize: "25px" }}>Xem lại</h2>
         <div
           style={{ cursor: "pointer" }}
           onClick={() => (editing ? setEditing(false) : setEditing(true))}
@@ -132,6 +139,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
           )}
         </div>
       </div>
+      <br />
       <div className="job-desc-content">
         <div className="job-desc-heading">
           {editing ? (
@@ -152,7 +160,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
           )}
         </div>
         <h4>Mới đăng</h4>
-        {editing ? (
+        {/* {editing ? (
           <Select
             // mode="multiple"
             // value={company}
@@ -161,9 +169,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             onChange={handleCompanyChange}
             options={companies}
           />
-        ) : (
-          <p>{company}</p>
-        )}
+        ) : ( */}
+        <p>{company}</p>
         <div>
           {editing ? (
             <div style={{ marginBottom: "10px" }}>
@@ -181,7 +188,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             <p>Hạn nộp: {moment(deadline).format("DD/MM/YYYY")}</p>
           )}
         </div>
-        <SubmitButton text={"Nộp đơn"} />
+        {/* <SubmitButton text={"Nộp đơn"} /> */}
         <div className="job-desc-pink">
           <div className="job-desc-grid">
             <div>
@@ -206,7 +213,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               {editing ? (
                 <Select
                   className="job-desc-form"
-                  // mode="multiple"
+                  mode="multiple"
                   placeholder="Thực tập"
                   onChange={(value) => {
                     setLevel(value);
@@ -214,7 +221,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                   options={levels}
                 />
               ) : (
-                <p>{level}</p>
+                <p>{level.map((level) => level + ", ")}</p>
               )}
             </div>
             <div>
@@ -230,7 +237,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                   options={types}
                 />
               ) : (
-                <p>{type}</p>
+                <p>{type.map((type) => type + ", ")}</p>
               )}
             </div>
             <div>
@@ -259,7 +266,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               {editing ? (
                 <Select
                   className="job-desc-form"
-                  mode="multiple"
+                  // mode="multiple"
                   placeholder="Hà Nội"
                   onChange={(value) => {
                     setLocation(value);
@@ -289,32 +296,37 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
       <div className="job-desc-button">
         <SubmitButton
           onClick={() => {
-            console.log(state.address);
+            // console.log(state.address);
             postJobQuery.mutate({
               title,
-              level:
-                level == "Thực tập"
-                  ? "internship"
-                  : level == "Nhân viên chính thức"
-                    ? "newgrad"
-                    : "experienced",
-              job_type:
-                type[0] == "Hợp đồng"
-                  ? "contract"
-                  : type[0] == "volunteer"
-                    ? "volunteer"
-                    : type[0],
+              levels: levels.map((level: any) => {
+                if (level.value == "Thực tập") return "internship";
+                if (level.value == "Nhân viên chính thức") return "newgrad";
+                if (level.value == "Đã có kinh nghiệm") return "experienced";
+              }),
+              job_types: types.map((type: any) => {
+                if (type.value == "fulltime") return "fulltime";
+                if (type.value == "parttime") return "parttime";
+                if (type.value == "Hợp đồng") return "contract";
+                if (type.value == "Tình nguyện") return "volunteer";
+              }),
               lower_salary: salary,
               address: {
-                city: location[0],
+                city: location,
               },
               upper_salary: upperSalary,
               description: jd,
               company: companyId,
-              contact_person: accountState.id || 1,
+              contact_person: Number(getCookie("id")),
               deadline,
               required_majors: majors,
-              // request_approval_from: school ? Number(school) : null,
+              request_approval_from: router.pathname.includes("advisor")
+                ? [Number(getCookie("orgId"))]
+                : school
+                  ? [Number(school)]
+                  : schoolIds
+                    ? schoolIds
+                    : [],
             });
           }}
           isLoading={postJobQuery.isLoading}

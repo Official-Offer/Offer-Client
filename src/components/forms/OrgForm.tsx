@@ -3,10 +3,11 @@ import { Form, Input, Select, Typography } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getOrgList } from "@services/apiUser";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
+import { contact } from "../../../services/apiUser";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -24,35 +25,38 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [schools, setSchools] = useState<any>();
   const [companies, setCompanies] = useState<any>();
   const [Org, setOrg] = useState<any>();
-  const [proposedOrg, setProposedOrg] = useState<string>("");
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState("");
+  const [phone, setPhone] = useState("");
+  const [title, setTitle] = useState("");
 
   const role = getCookie("role");
   const orgId = Number(getCookie("orgId")) - 1;
+  console.log(state.role);
   const isStudent =
-    role == "student" ||
-    state.role.isStudent ||
-    router.pathname.includes("student");
+    state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
-    role == "recruiter" ||
-    state.role.isRecruiter ||
-    router.pathname.includes("recruiter");
+    state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor =
-    role == "advisor" ||
-    state.role.isAdvisor ||
-    router.pathname.includes("advisor");
-  const orgName = 
-    type == "update"
-      ? isStudent || isAdvisor
-        ? schools?.[orgId].name
-        : companies?.[orgId].name
-      : "";
+    state.role.isAdvisor || router.pathname.includes("advisor");
+
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // const orgName =
+  //   type == "update"
+  //     ? isStudent || isAdvisor
+  //       ? schools?.[orgId].name
+  //       : companies?.[orgId].name
+  //     : "";
 
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
     onSuccess: async (orgs) => {
       // add "school is not found" into the list
+      console.log(orgs);
       const schoolList = orgs.schools;
       const companyList = orgs.companies;
       //push the "not found" option to the list at the top
@@ -69,18 +73,35 @@ export const OrgForm: React.FC<IOrgForm> = ({
     },
   });
 
+  const contactMutation = useMutation({
+    mutationKey: ["contact"],
+    mutationFn: contact,
+    onSuccess: async (data: any) => {
+      // Invalidate and refetch
+      // router.reload();
+      setSubmitted(true);
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setErrorMessage("Gửi thất bại");
+    },
+  });
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(Org);
   };
 
-  const   handleOrgChange = (value: any) => {
-    if (value == 0) {
+  const handleOrgChange = (value: any) => {
+    if (value.key == 0 && !isStudent) {
       setNotFound(true);
+    } else {
+      setNotFound(false);
+      setOrg(value);
     }
-    setOrg(value);
   };
 
+  const orgy = isRecruiter ? "Công ty" : "Trường";
   // console.log(schools?.[orgId].name)
   return (
     <Form className="form" layout="vertical">
@@ -89,12 +110,13 @@ export const OrgForm: React.FC<IOrgForm> = ({
           <Form.Item
             label={
               isStudent || isAdvisor
-                ? `Trường: ${orgName}`
-                : `Công ty: ${orgName}`
+                ? `Trường`
+                : `Công ty`
             }
           >
             <Select
               // defaultValue={orgName}
+              labelInValue={true}
               showSearch
               className="form-select"
               bordered={false}
@@ -104,39 +126,99 @@ export const OrgForm: React.FC<IOrgForm> = ({
               {isStudent || isAdvisor
                 ? schools?.map((school: any) => (
                     <Select.Option
+                      key={school.id}
                       className="form-select-dropdown"
-                      value={school.id}
+                      value={school.name}
                     >
                       {school.name}
                     </Select.Option>
                   ))
                 : companies?.map((company: any) => (
                     <Select.Option
+                      key={company.id}
                       className="form-select-dropdown"
-                      value={company.id}
+                      value={company.name}
                     >
                       {company.name}
                     </Select.Option>
                   ))}
             </Select>
           </Form.Item>
-          {notFound && (
-            <Form.Item label="Không có trong danh sách? Điền tên dưới đây">
-              <Input
-                required
-                className="form-item"
-                onChange={(event) => {
-                  setProposedOrg(event.target.value);
-                }}
-              />
-            </Form.Item>
-          )}
+          {notFound &&
+            (submitted ? (
+              <>
+                {contactMutation.isSuccess && (
+                  <p style={{ color: "green" }}>
+                    Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể
+                  </p>
+                )}
+                {errorMessage && (
+                  <p className="register-content-error">{errorMessage}</p>
+                )}
+              </>
+            ) : (
+              <>
+                <p>Không có trong danh sách? Điền thông tin dưới đây:</p>
+                <div className="form-input">
+                  {/* <div className="form-grid"> */}
+                  <Form.Item required label="Email hoặc số điện thoại">
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(event) => {
+                        if (event.target.value.includes("@")) {
+                          setEmail(event.target.value);
+                        } else {
+                          setPhone(event.target.value);
+                        }
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item required label="Họ tên">
+                    <Input
+                      required
+                      className="form-item"
+                      onChange={(event) => {
+                        setTitle(event.target.value);
+                      }}
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    label={`Tên ${isRecruiter ? "Công ty" : "Trường"}`}
+                  >
+                    <Input
+                      // rows={4}
+                      required
+                      className="form-item"
+                      onChange={(event) => {
+                        setMessage(event.target.value);
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+              </>
+            ))}
         </div>
       </div>
       <SubmitButton
-        text={type ? "Cập nhật" : "Tiếp tục"}
-        isLoading={orgQuery.isLoading || isLoading}
-        onClick={handleSubmit}
+        text={notFound ? "Gửi" : type ? "Cập nhật" : "Tiếp tục"}
+        isLoading={
+          notFound ? contactMutation.isLoading : orgQuery.isLoading || isLoading
+        }
+        onClick={
+          notFound
+            ? () => {
+                contactMutation.mutate({
+                  title,
+                  message,
+                  sender_email: email,
+                  sender_phone: phone,
+                });
+                setSubmitted(true);
+              }
+            : handleSubmit
+        }
       />
     </Form>
   );

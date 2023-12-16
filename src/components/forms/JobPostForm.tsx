@@ -25,6 +25,7 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+// import ReactQuill from 'react-quill';
 
 interface IForm {
   onSubmit: () => void;
@@ -71,6 +72,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleTypeChange = (value: any) => {
+    console.log(value);
     dispatch(setType(value));
   };
 
@@ -85,6 +87,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleLevelChange = (value: any) => {
+    console.log(value);
     dispatch(setLevel(value));
   };
 
@@ -106,12 +109,6 @@ export const JobPostForm: React.FC<IForm> = ({
   };
   const state = useSelector((state: RootState) => state.jobs);
 
-  // const handleCompanyChange = (value: any) => {
-  //   dispatch(setCompany(companyList[value - 1]));
-  //   dispatch(setCompanyId(value));
-  //   // console.log(state.company);
-  // };
-
   const handleContinue = (event: { preventDefault: () => void }) => {
     //don't let user continue if they haven't filled in all the required fields
     if (!state.title || !state.address || !state.level || !state.description) {
@@ -132,22 +129,11 @@ export const JobPostForm: React.FC<IForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" required className="form-input full-width">
-          <Input required className="form-item" onChange={handleTitleChange} />
+          <Input required onChange={handleTitleChange} />
         </Form.Item>
-        {/* <Form.Item label="Công ty" className="form-input" required>
-          <Select
-            // mode="multiple"
-            // value={company}
-            // className="form-select"
-            placeholder="Công ty"
-            onChange={handleCompanyChange}
-            options={companies}
-          />
-        </Form.Item> */}
         <Form.Item label="Địa điểm" required>
           <Select
-            // className="form-select"
-            mode="multiple"
+            // mode="multiple"
             placeholder="Hà Nội"
             onChange={handleAddressChange}
             options={locations}
@@ -155,6 +141,7 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item>
         <Form.Item label="Cấp bậc" className="form-input" required>
           <Select
+            mode="multiple"
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}
@@ -188,13 +175,13 @@ export const JobPostForm: React.FC<IForm> = ({
         </Form.Item>
         <Form.Item label="Hạn chót">
           <DatePicker
-            className="form-select"
+            className="form-date-picker"
             // locale={locale}
             onChange={handleDeadlineChange}
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <ReactQuill value={desc} onChange={handleDescChange} />
+          <ReactQuill className="form-desc" theme="snow" value={desc} onChange={handleDescChange} />
         </Form.Item>
       </div>
       <div className="form-submit-button">

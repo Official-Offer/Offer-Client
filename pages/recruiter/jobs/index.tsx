@@ -6,11 +6,6 @@ import { getJobsForRecruiter } from "@services/apiJob";
 import { useState } from "react";
 import { JobDataType } from "@components/table/dataType";
 import router from "next/router";
-import Profile from "../profile/index";
-import { getRecruiter } from "@services/apiRecruiter";
-import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
-import { useDispatch } from "react-redux";
-import { setCookie } from "cookies-next";
 
 //create a next page for the student home page, code below
 const Jobs: NextPage = () => {
@@ -30,32 +25,6 @@ const Jobs: NextPage = () => {
     onError: () => {},
   });
 
-  const dispatch = useDispatch();
-
-  const profileQuery = useQuery({
-    queryKey: ["profile"],
-    queryFn: getRecruiter,
-    onSuccess: async (info) => {
-      console.log(info);
-      setCookie("id", info.account.id);
-      setCookie("role", "recruiter");
-      setCookie("orgName", info.company.name);
-      setCookie("orgId", info.company.id);
-      
-      dispatch(setID(info.account.id));
-      dispatch(
-        setRole({
-          isStudent: false,
-          isAdvisor: false,
-          isRecruiter: true,
-        }),
-      );
-      dispatch(setCompany(info.company.name));
-      dispatch(setCompanyId(info.company.id));
-    },
-    onError: () => {},
-  });
-
   //reimplemented search
   const handleFilterSearch = (value: string) => {
     if (!value) {
@@ -69,12 +38,14 @@ const Jobs: NextPage = () => {
   };
 
   const handleAddJob = () => {
-    router.push("/recruiter/postJobs/jobForm");
+    router.push("/recruiter/postJobs/orgSelect");
   };
 
   return (
     <div className="applicant">
-      <h1 className="applicant-title">Công việc</h1>
+      <h1 className="applicant-title">Ứng viên</h1>
+      <p>Chọn công việc để xem ứng viên</p>
+      {/* <br /> */}
       <div className="applicant-table">
         <BaseTable
           dataset={data}
@@ -85,7 +56,7 @@ const Jobs: NextPage = () => {
           searchResults={searchResults}
           handleAdd={handleAddJob}
           tableType={"RecruiterJobs"}
-          isLoading={jobQuery.isLoading || profileQuery.isLoading}
+          isLoading={jobQuery.isLoading}
         />
       </div>
     </div>

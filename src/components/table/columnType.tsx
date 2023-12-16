@@ -87,14 +87,19 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //   key: "ID",
   // },
   {
+    title: "Công việc",
+    dataIndex: "title",
+    key: "title",
+  },
+  {
+    title: "Số lượng ứng viên",
+    dataIndex: "applicants",
+    key: "applicants",
+  },
+  {
     title: "Ngày tạo",
     dataIndex: "posted_date",
     key: "posted_date",
-  },
-  {
-    title: "Tiêu đề công việc",
-    dataIndex: "title",
-    key: "title",
   },
   // {
   //   title: "Trường chưa duyệt",
@@ -107,9 +112,18 @@ export const JobColumns: ColumnsType<JobDataType> = [
   //   key: "approved_schools",
   // },
   {
-    title: "Ứng viên",
-    dataIndex: "applicants",
-    key: "applicants",
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: ApprovedJobsActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
   },
 ];
 
@@ -163,20 +177,20 @@ export const AdvisorJobColumns: ColumnsType<RecruiterJobDataType> = [
       );
     },
   },
-  // {
-  //   title: "Hành động",
-  //   key: "action",
-  //   render: (_, record) => (
-  //     // {record.name}
-  //     <Space size="middle">
-  //       <Dropdown menu={{ items: ApprovedJobsActionItems }}>
-  //         <a>
-  //           <MoreOutlined />
-  //         </a>
-  //       </Dropdown>
-  //     </Space>
-  //   ),
-  // },
+  {
+    title: "Hành động",
+    key: "action",
+    render: (_, record) => (
+      // {record.name}
+      <Space size="middle">
+        <Dropdown menu={{ items: UnapprovedJobsActionItems }}>
+          <a>
+            <MoreOutlined />
+          </a>
+        </Dropdown>
+      </Space>
+    ),
+  },
 ];
 
 export const UnapprovedJobColumns: ColumnsType<UnapprovedJobDataType> = [

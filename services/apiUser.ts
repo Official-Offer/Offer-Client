@@ -1,5 +1,7 @@
 import { setCookie } from "cookies-next";
 import request from "./apiService";
+import axios from "axios";
+import { URL_API_ADMIN } from "@config";
 
 export const registerUser = async (body: any) => {
   const response = await request.post(`/accounts/register/`, body);
@@ -61,7 +63,7 @@ export const getOrgList = async () => {
   const companies = (await request.get(`/companies/`)).data;
   return {
     schools,
-    companies,
+    companies: companies.results,
   };
 };
 
@@ -69,3 +71,20 @@ export const contact = async (body: any) => {
   const response = await request.post(`/contacts/`, body);
   return response.data;
 }
+
+// export const setRoleAndOrg = async (body: any) => {
+//   const response = await request.put(`/accounts/change_role/`, body);
+//   return response.data;
+// }
+
+export const setRoleAndOrgToken = async (body: any) => {
+  console.log(body)
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+    headers: body.token && {
+      Authorization: `Bearer ${body.token}`,
+    },
+  });
+  const response = await request.put(`/accounts/change_role_org/`, body.content);
+  return response.data;
+};

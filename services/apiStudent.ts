@@ -46,6 +46,7 @@ export const getApplicantsFromJobs = async (id: number) => {
 export const getStudentsFromSchool = async (school: any) => {
   const response = (await request.get(`/students/`, {
     params: {
+      page_size: 1000,
       school, 
     },
   })).data.results;

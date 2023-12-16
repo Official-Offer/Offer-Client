@@ -40,7 +40,7 @@ const Contact: NextPage = () => {
             tại các trường đại học trên cả nước
           </h1>
           <br />
-          <div className="contact-button">
+          {/* <div className="contact-button">
             <Button
               className="contact-button-btn"
               size="large"
@@ -50,7 +50,7 @@ const Contact: NextPage = () => {
             >
               Đăng kí/đăng nhập để đăng tin tuyển dụng <ArrowRightOutlined />
             </Button>
-          </div>
+          </div> */}
           {/* <h1>Liên hệ</h1> */}
           <h2>Liên hệ</h2>
           <p>Email: kiento0905.hec@gmail.com</p>
@@ -63,18 +63,15 @@ const Contact: NextPage = () => {
                   Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể
                 </p>
               )}
-              {errorMessage && (
-                <p className="register-content-error">{errorMessage}</p>
-              )}
             </>
           ) : (
             <Form className="form" onFinish={() => {}} layout="vertical">
               <div className="form-flex">
                 <div className="form-input">
                   <div className="form-grid">
-                    <Form.Item required label="Email">
+                    <Form.Item label="Email">
                       <Input
-                        required
+                        // required
                         className="form-item"
                         onChange={(event) => {
                           setEmail(event.target.value);
@@ -83,7 +80,7 @@ const Contact: NextPage = () => {
                     </Form.Item>
                     <Form.Item label="Số điện thoại">
                       <Input
-                        required
+                        // required
                         className="form-item"
                         onChange={(event) => {
                           setPhone(event.target.value);
@@ -105,7 +102,6 @@ const Contact: NextPage = () => {
                   <Form.Item label="Lời nhắn">
                     <Input.TextArea
                       rows={4}
-                      required
                       className="form-item"
                       onChange={(event) => {
                         setMessage(event.target.value);
@@ -113,11 +109,22 @@ const Contact: NextPage = () => {
                     />
                   </Form.Item>
                 </div>
+                {errorMessage && (
+                  <p className="register-content-error">{errorMessage}</p>
+                )}
                 <SubmitButton
                   isLoading={contactMutation.isLoading}
                   text="Gửi"
                   onClick={() => {
-                    console.log(phone, email);
+                    // console.log(phone, email);
+                    if (!phone && !email) {
+                      setErrorMessage("Vui lòng nhập email hoặc số điện thoại");
+                      return;
+                    }
+                    if (!title) {
+                      setErrorMessage("Vui lòng nhập tiêu đề");
+                      return;
+                    }
                     contactMutation.mutate({
                       title,
                       message,

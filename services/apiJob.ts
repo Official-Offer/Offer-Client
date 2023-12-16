@@ -83,7 +83,7 @@ export const getJobsForRecruiter = async () => {
       created_by: recruiter,
     },
   });
-  // console.log(response.data.message);
+  console.log(response.data.message);
 
   const jobs = response.data.results || [
     {
@@ -237,6 +237,7 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
+  console.log(getCookie("cookieToken"));
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };
@@ -253,7 +254,7 @@ export const unbookmarkJob = async (id: number | string) => {
 };
 
 export const deleteJob = async (id: any) => {
-  const response = await request.delete(`/jobs/`, id);
+  const response = await request.delete(`/jobs/${id}/`);
   return response.data;
 };
 

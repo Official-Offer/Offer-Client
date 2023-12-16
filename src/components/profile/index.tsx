@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAdvisor, updateAdvisor } from "@services/apiAdvisor";
 import { getCookie } from "cookies-next";
 import { getRecruiter, updateRecruiter } from "@services/apiRecruiter";
+import { SubmitButton } from "@components/button/SubmitButton";
 
 export const ProfilePage: React.FC<any> = () => {
   const [fname, setFName] = useState("");
@@ -21,6 +22,7 @@ export const ProfilePage: React.FC<any> = () => {
   const role = getCookie("role");
   const isRecruiter =
     role == "recruiter" || router.pathname.includes("recruiter");
+  const orgName = getCookie("orgName");
 
   const profileQuery = useQuery({
     queryKey: ["profile"],
@@ -45,8 +47,8 @@ export const ProfilePage: React.FC<any> = () => {
       console.log(data);
     },
     onError: (error: any) => {
-    setErrorMessage("Cập nhật thất bại");
-    //   setErrorMessage(error.response.data.message);
+      setErrorMessage("Cập nhật thất bại");
+      //   setErrorMessage(error.response.data.message);
       console.log(error.response.data.message);
     },
   });
@@ -54,6 +56,7 @@ export const ProfilePage: React.FC<any> = () => {
     <div className="recruiter-schools">
       <h2>Hồ sơ</h2>
       <Form className="form" onFinish={() => {}} layout="vertical">
+        <p>{isRecruiter ? `Công ty: ${orgName}` : `Trường: ${orgName}`}</p>
         <Form.Item label="Email">
           <Input
             disabled
@@ -109,9 +112,8 @@ export const ProfilePage: React.FC<any> = () => {
             }}
           />
         </Form.Item>
-        <OrgForm
-          onSubmit={function (org: string): void {
-            setOrg(org);
+        <SubmitButton
+          onClick={() => {
             setUpdated(false);
             setErrorMessage("");
             isRecruiter
@@ -123,7 +125,7 @@ export const ProfilePage: React.FC<any> = () => {
                     self_description: selfDescription,
                     phone_number: phoneNumber,
                   },
-                  company: org,
+                  // company: org,
                 })
               : profileMutation.mutate({
                   account: {
@@ -133,11 +135,11 @@ export const ProfilePage: React.FC<any> = () => {
                     self_description: selfDescription,
                     phone_number: phoneNumber,
                   },
-                  school: org,
+                  // school: org,
                 });
           }}
-          type="update"
           isLoading={profileMutation.isLoading || profileQuery.isLoading}
+          text="Cập nhật"
         />
         {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
