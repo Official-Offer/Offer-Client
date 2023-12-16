@@ -6,3 +6,7 @@ export type JobFilters = {
   salary: [number, number];
   // yoes: number[];
 };
+
+export type CompanyFilters = {
+  isVerified: boolean;
+}

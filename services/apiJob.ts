@@ -12,6 +12,8 @@ export const getJobs = async () => {
   return jobList;
 };
 
+
+
 export const generateJobDescription = async (inputDescription: string) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `

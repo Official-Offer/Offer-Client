@@ -116,7 +116,7 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
       {resumeMutation.isError ? (
         <Alert
           message={
-            resumeMutation.error?.response?.data?.message.includes(
+            resumeMutation.error?.response?.data?.message?.includes(
               "You have already applied for this job"
             )
               ? "Bạn đã nộp đơn ứng tuyển cho công việc này rồi"
