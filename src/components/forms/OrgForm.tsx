@@ -58,6 +58,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
     queryFn: getOrgList,
     onSuccess: async (orgs) => {
       // add "school is not found" into the list
+      console.log(orgs);
       const schoolList = orgs.schools;
       const companyList = orgs.companies;
       //push the "not found" option to the list at the top

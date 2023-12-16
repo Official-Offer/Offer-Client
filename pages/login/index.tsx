@@ -34,7 +34,7 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       console.log(data);
-      setCookie("cookieToken", data.token ? data.token : data.access);
+      setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
       setCookie("id", data.id);
       dispatch(setID(data.id));
       if (data.role == "guest") {
@@ -71,8 +71,8 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       console.log("social login", data);
       // Invalidate and refetch
-      setCookie("cookieToken", data.token ? data.token : data.access);
-      setToken(data.token ? data.token : data.access);
+      setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
+      setToken(data.access_token);
       setCookie("id", data.id);
       dispatch(setID(data.id));
       if (data.role == "guest") {
@@ -194,7 +194,7 @@ const Login: NextPage = () => {
                     token,
                     content: {
                       role: rol,
-                      // org_id: org.id,
+                      org_id: org.id,
                     },
                   });
                   // setScreen(true);

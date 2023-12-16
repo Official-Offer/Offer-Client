@@ -63,7 +63,7 @@ export const getOrgList = async () => {
   const companies = (await request.get(`/companies/`)).data;
   return {
     schools,
-    companies,
+    companies: companies.results,
   };
 };
 
@@ -72,10 +72,10 @@ export const contact = async (body: any) => {
   return response.data;
 }
 
-export const setRoleAndOrg = async (body: any) => {
-  const response = await request.put(`/accounts/change_role/`, body);
-  return response.data;
-}
+// export const setRoleAndOrg = async (body: any) => {
+//   const response = await request.put(`/accounts/change_role/`, body);
+//   return response.data;
+// }
 
 export const setRoleAndOrgToken = async (body: any) => {
   const request = axios.create({
@@ -84,6 +84,6 @@ export const setRoleAndOrgToken = async (body: any) => {
       Authorization: `Bearer ${body.token}`,
     },
   });
-  const response = await request.put(`/accounts/change_role/`, body.content);
+  const response = await request.put(`/accounts/change_role_org/`, body.content);
   return response.data;
 };
