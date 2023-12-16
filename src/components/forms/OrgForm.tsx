@@ -33,14 +33,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   const role = getCookie("role");
   const orgId = Number(getCookie("orgId")) - 1;
+  console.log(state.role);
   const isStudent =
-    // role == "student" ||
     state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
-    // role == "recruiter" ||
     state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor =
-    // role == "advisor" ||
     state.role.isAdvisor || router.pathname.includes("advisor");
 
   const [submitted, setSubmitted] = useState<boolean>(false);

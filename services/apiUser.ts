@@ -78,6 +78,7 @@ export const contact = async (body: any) => {
 // }
 
 export const setRoleAndOrgToken = async (body: any) => {
+  console.log(body)
   const request = axios.create({
     baseURL: URL_API_ADMIN,
     headers: body.token && {

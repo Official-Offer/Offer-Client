@@ -9,7 +9,7 @@ const persistConfig = {
     key: 'root',
     storage,
     // Specify the reducers you want to persist
-    whitelist: ['account', 'jobs'], // In this example, we persist the 'user' reducer
+    whitelist: ['jobs'], // In this example, we persist the 'user' reducer
   };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

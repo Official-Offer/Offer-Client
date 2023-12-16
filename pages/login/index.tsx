@@ -13,7 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Button, Segmented } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { LoadingPage } from "@components/loading/LoadingPage";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
@@ -27,7 +27,12 @@ const Login: NextPage = () => {
   const [rol, setRol] = useState<string>("student");
   const [selectRole, setSelectRole] = useState<boolean>(false);
   const [org, setOrg] = useState<any>();
-  const [token, setToken] = useState<string>("");
+  const [tok, setToken] = useState<string>("");
+  const [r, setR] = useState<any>({
+    isStudent: true,
+    isAdvisor: false,
+    isRecruiter: false,
+  });
 
   const mutation = useMutation({
     mutationKey: ["login"],
@@ -72,7 +77,7 @@ const Login: NextPage = () => {
       console.log("social login", data);
       // Invalidate and refetch
       setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
-      setToken(data.access_token);
+      setToken(data.access_token ? data.access_token : data.access ? data.access : data.token);
       setCookie("id", data.id);
       dispatch(setID(data.id));
       if (data.role == "guest") {
@@ -190,11 +195,12 @@ const Login: NextPage = () => {
                   dispatch(setCompany(org.label));
                   dispatch(setCompanyId(org.key));
                   setCookie("role", rol);
+                  // dispatch(setRole(r));
                   orgMutation.mutate({
-                    token,
+                    token: tok,
                     content: {
                       role: rol,
-                      org_id: org.id,
+                      org_id: Number(org.key),
                     },
                   });
                   // setScreen(true);
@@ -230,19 +236,20 @@ const Login: NextPage = () => {
                       isAdvisor: value.toString() == "Trường",
                       isRecruiter: value.toString() == "Nhà tuyển dụng",
                     };
+                    setR(role);
                     dispatch(setRole(role));
                   }}
                 />
               )}
             </>
           )}
-          {/* <Button
+          <Button
             onClick={() => {
               signOut();
             }}
           >
             Dang Xuat
-          </Button> */}
+          </Button>
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
