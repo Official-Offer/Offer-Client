@@ -3,19 +3,17 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FootnoteForm, OrgForm } from "@components/forms";
-import { setCookie, getCookie } from "cookies-next";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { setCookie } from "cookies-next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  setRoleAndOrg,
   setRoleAndOrgToken,
   socialAuth,
   userLogIn,
 } from "@services/apiUser";
-import { RootState } from "@redux/reducers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Segmented } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { LoadingPage } from "@components/loading/LoadingPage";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
