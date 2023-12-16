@@ -21,11 +21,11 @@ import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
 import { OrgForm } from "./OrgForm";
 import { RootState } from "@redux/reducers";
-import locale from "antd/es/date-picker/locale/vi_VN";
+// import locale from "antd/es/date-picker/locale/vi_VN";
 import dynamic from "next/dynamic";
-// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 
 interface IForm {
   onSubmit: () => void;
@@ -176,7 +176,7 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Hạn chót">
           <DatePicker
             className="form-date-picker"
-            locale={locale}
+            // locale={locale}
             onChange={handleDeadlineChange}
           />
         </Form.Item>
