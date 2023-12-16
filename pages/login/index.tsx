@@ -243,13 +243,13 @@ const Login: NextPage = () => {
               )}
             </>
           )}
-          <Button
+          {/* <Button
             onClick={() => {
               signOut();
             }}
           >
             Dang Xuat
-          </Button>
+          </Button> */}
           {errorMessage && (
             <p className="register-content-error">{errorMessage}</p>
           )}
