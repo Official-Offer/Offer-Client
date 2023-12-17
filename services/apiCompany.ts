@@ -29,7 +29,7 @@ export const updateCompany = async (body: any) => {
 };
 
 export const getCompaniesForAdvisor = async (id: number) => {
-  const companies = (await request.get(`/companies/`)).data;
+  const companies = (await request.get(`/companies/`)).data.results;
   // const companies = [
   //   { name: "VinGroup", desc: "rac" },
   //   { name: "Vinamilk", desc: "rac" },
