@@ -119,7 +119,8 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen && status !== "authenticated" ? (
+          {pwScreen  ? (
+            // && status !== "authenticated"
             <>
               <div>
                 <h1>Đăng ký</h1>
