@@ -25,6 +25,7 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import { majorList } from "@public/static/majorList";
 // import ReactQuill from 'react-quill';
 
 interface IForm {
@@ -43,23 +44,8 @@ export const JobPostForm: React.FC<IForm> = ({
 
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  // const majorList = [
-  //   "Công nghệ thông tin",
-  //   "Kinh tế",
-  //   "Marketing",
-  //   "Quản trị kinh doanh",
-  //   "Luật",
-  // ];
-  // const [major, setMajor] = useState<string[]>(["Công nghệ thông tin"]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
   const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
-  const majors = [
-    { value: 1, label: "Công nghệ thông tin" },
-    { value: 2, label: "Kinh tế" },
-    { value: 3, label: "Marketing" },
-    { value: 4, label: "Quản trị kinh doanh" },
-    { value: 5, label: "Luật" },
-  ];
   const [desc, setDesc] = useState<any>("");
 
   const marks: SliderMarks = {
@@ -103,8 +89,8 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleMajorChange = (value: any) => {
-    console.log(value);
-    dispatch(setMajor(value));
+    // console.log(value);
+    dispatch(setMajor(value.key));
     // setMajor(majorList[value - 1]);
   };
   const state = useSelector((state: RootState) => state.jobs);
@@ -167,10 +153,11 @@ export const JobPostForm: React.FC<IForm> = ({
         <Form.Item label="Ngành học liên quan">
           <Select
             // className="form-select"
+            labelInValue={true}
             mode="multiple"
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
-            options={majors}
+            options={majorList}
           />
         </Form.Item>
         <Form.Item label="Hạn chót">
@@ -181,7 +168,12 @@ export const JobPostForm: React.FC<IForm> = ({
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <ReactQuill className="form-desc" theme="snow" value={desc} onChange={handleDescChange} />
+          <ReactQuill
+            className="form-desc"
+            theme="snow"
+            value={desc}
+            onChange={handleDescChange}
+          />
         </Form.Item>
       </div>
       <div className="form-submit-button">

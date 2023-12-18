@@ -43,7 +43,14 @@ const Registration: NextPage = () => {
     onSuccess: async (data: any) => {
       console.log(data);
       // Invalidate and refetch
-      setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
+      setCookie(
+        "cookieToken",
+        data.access_token
+          ? data.access_token
+          : data.access
+            ? data.access
+            : data.token
+      );
       // console.log(data.access);
       setCookie("id", data.pk ? data.pk : data.id);
       setCookie("role", data.role);
@@ -70,7 +77,14 @@ const Registration: NextPage = () => {
   const mutation = useMutation(["register"], registerUser, {
     onSuccess: async (data) => {
       // Invalidate and refetch
-      setCookie("cookieToken", data.message.access_token ? data.message.access_token : data.message.access ? data.message.access : data.message.token);
+      setCookie(
+        "cookieToken",
+        data.message.access_token
+          ? data.message.access_token
+          : data.message.access
+            ? data.message.access
+            : data.message.token
+      );
       setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
       setCookie("orgId", org.key);
@@ -78,7 +92,9 @@ const Registration: NextPage = () => {
       dispatch(setCompanyId(org.key));
       dispatch(setCompany(org.label));
       if (status !== "authenticated") {
-        router.push("/registration/verifyEmail");
+        router.push("/registration/verifyEmail").then(() => {
+          router.reload();
+        });
       } else {
         router.push(
           r.isStudent
@@ -119,7 +135,7 @@ const Registration: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {pwScreen  ? (
+          {pwScreen ? (
             // && status !== "authenticated"
             <>
               <div>
