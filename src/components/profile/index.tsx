@@ -56,7 +56,7 @@ export const ProfilePage: React.FC<any> = () => {
     <div className="recruiter-schools">
       <h2>Hồ sơ</h2>
       <Form className="form" onFinish={() => {}} layout="vertical">
-        <p>{isRecruiter ? `Công ty: ${orgName}` : `Trường: ${orgName}`}</p>
+        <p>{isRecruiter ? `Công ty: ${org}` : `Trường: ${org}`}</p>
         <Form.Item label="Email">
           <Input
             disabled

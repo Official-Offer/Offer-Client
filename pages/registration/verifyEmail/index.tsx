@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { useMutation } from "@tanstack/react-query";
-import { verifyEmail } from "@services/apiUser";
+import { resendEmail, verifyEmail } from "@services/apiUser";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 
@@ -31,7 +31,22 @@ const VerifyPassword: NextPage = () => {
     },
   });
 
+  const resendMutation = useMutation(["resendVerifyEmail"], {
+    mutationFn: resendEmail,
+    onSuccess: async (data) => {
+      setSubmitted(true);
+      return;
+    },
+    onError: (error: any) => {
+      console.log(error.response.data.message);
+      setSubmitted(true);
+      setErrorMessage("Gửi lại email không thành công.");
+      // setErrorMessage(error.response.data.message);
+    },
+  });
+
   useEffect(() => {
+    console.log(otp)
     if (otp) {
       mutation.mutate({otp});
     }
@@ -60,7 +75,11 @@ const VerifyPassword: NextPage = () => {
               }}
             >
               {errorMessage ? (
-                <SubmitButton text="Gửi lại link xác nhận" onClick={() => {}} />
+                <SubmitButton text="Gửi lại link xác nhận" onClick={() => {
+                  resendMutation.mutate({});
+                  setErrorMessage("");
+                  setSubmitted(false);
+                }} />
               ) : (
                 <SubmitButton
                   text="Quay lại trang chủ"
@@ -68,9 +87,9 @@ const VerifyPassword: NextPage = () => {
                   onClick={() => {
                     // router.push("/login");
                     const role = getCookie("role");
-                    state.role.isStudent || role === "student"
+                    role === "student"
                       ? router.push("/student")
-                      : state.role.isAdvisor || role === "advisor"
+                      : role === "advisor"
                         ? router.push("/advisor/jobs")
                         : router.push("/recruiter/jobs");
                   }}

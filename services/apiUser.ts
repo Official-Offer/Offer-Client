@@ -38,6 +38,11 @@ export const verifyEmail = async (body: any) => {
   return response.data;
 };
 
+export const resendEmail = async (body: any) => {
+  const response = await request.post(`/accounts/resend_otp`);
+  return response.data;
+};
+
 export const updateUser = async (body: any) => {
   const response = await request.delete(`/accounts/me/`, body);
   return response.data;
