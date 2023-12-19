@@ -4,14 +4,14 @@ import { URL_API_ADMIN } from "@config";
 
 export const getCompanyList = async () => {
   const response = await request.get(
-    '/companies,'
+    '/companies'
   );
   return response.data;
 };
 
 export const getCompany = async (id: number) => {
   const response = await request.get(`/companies/${id}`);
-  return response.data.message;
+  return response.data.results;
 };
 
 export const updateCompany = async (body: any) => {
