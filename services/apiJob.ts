@@ -12,8 +12,6 @@ export const getJobs = async () => {
   return jobList;
 };
 
-
-
 export const generateJobDescription = async (inputDescription: string) => {
   const apiKey = "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"; // Replace with your OpenAI API key
   const prompt = `
@@ -262,56 +260,3 @@ export const postJobApp = async (data: any) => {
   const response = await request.post(`/job-applications/`, data);
   return response.data;
 };
-
-const majorList = [
-  "Ngành Khoa học máy tính",
-  "Ngành Kinh tế",
-  "Ngành Quản lý",
-  "Ngành Luật",
-  "Ngành Y học",
-  "Ngành Kỹ thuật điện tử",
-  "Ngành Nghệ thuật",
-  "Ngành Khoa học môi trường",
-  "Ngành Ngôn ngữ học",
-  "Ngành Toán học",
-  "Ngành Thông tin - truyền thông",
-  "Ngành Kỹ thuật xây dựng",
-  "Ngành Khoa học xã hội",
-  "Ngành Quản trị kinh doanh",
-  "Ngành Quản lý công nghiệp",
-  "Ngành Thú y",
-  "Ngành Kiến trúc",
-  "Ngành Công nghệ thực phẩm",
-  "Ngành Quan hệ quốc tế",
-  "Ngành Quản lý tài chính",
-  "Ngành Khoa học nông nghiệp",
-  "Ngành Quản trị nhân lực",
-  "Ngành Quản trị dự án",
-  "Ngành Ngôn ngữ và văn hóa",
-  "Ngành Điện tử - Viễn thông",
-  "Ngành Kỹ thuật máy tính",
-  "Ngành Khoa học đất",
-  "Ngành Nghệ thuật biểu diễn",
-  "Ngành Y học cổ truyền",
-  "Ngành Khoa học thể thao",
-  "Ngành Nghiên cứu thị trường",
-  "Ngành Kỹ thuật môi trường",
-  "Ngành Quản lý khách sạn",
-  "Ngành Báo chí và truyền hình",
-  "Ngành Thiết kế đồ họa",
-  "Ngành Điện tử - Viễn thông",
-  "Ngành Quản trị nhà hàng",
-  "Ngành Kỹ thuật xây dựng",
-  "Ngành Quản lý dự án",
-  "Ngành Thương mại",
-  "Ngành Quản lý chuỗi cung ứng",
-  "Ngành Khoa học dữ liệu",
-  "Ngành Công nghệ thông tin",
-  "Ngành Kỹ thuật điện",
-  "Ngành Kỹ thuật cơ khí",
-  "Ngành Quản trị văn phòng",
-  "Ngành Tài chính - Ngân hàng",
-  "Ngành Marketing",
-  "Ngành Kỹ thuật hóa học",
-  "Ngành Kỹ thuật công nghiệp",
-];

@@ -24,6 +24,9 @@ export const userLogIn = async (body: any) => {
 };
 
 export const socialAuth = async (body: any) => {
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+  });
   const response = await request.post(`/accounts/google/`, body);
   return response.data;
 };
@@ -64,6 +67,9 @@ export const changePassword = async (body: Record<string, string> | void) => {
 };
 
 export const getOrgList = async () => {
+  const request = axios.create({
+    baseURL: URL_API_ADMIN,
+  });
   const schools = (await request.get(`/schools/`)).data;
   const companies = (await request.get(`/companies/`)).data;
   return {

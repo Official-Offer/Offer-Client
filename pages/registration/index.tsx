@@ -3,7 +3,7 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { OrgForm } from "@components/forms";
-import { getCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { FootnoteForm } from "@components/forms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { registerUser, socialAuth, userLogIn } from "@services/apiUser";
@@ -167,6 +167,7 @@ const Registration: NextPage = () => {
                   dispatch(setCompany(org.label));
                   dispatch(setCompanyId(org.key));
                   setCookie("orgId", org.key);
+                  deleteCookie("cookieToken");
                   signIn("google");
                 }}
               >
