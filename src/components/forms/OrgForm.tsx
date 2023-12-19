@@ -31,8 +31,8 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [phone, setPhone] = useState("");
   const [title, setTitle] = useState("");
 
-  const role = getCookie("role");
-  const orgId = Number(getCookie("orgId")) - 1;
+  // const role = getCookie("role");
+  // const orgId = Number(getCookie("orgId")) - 1;
   console.log(state.role);
   const isStudent =
     state.role.isStudent || router.pathname.includes("student");
@@ -43,13 +43,6 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  // const orgName =
-  //   type == "update"
-  //     ? isStudent || isAdvisor
-  //       ? schools?.[orgId].name
-  //       : companies?.[orgId].name
-  //     : "";
 
   const orgQuery = useQuery({
     queryKey: ["orgs"],
