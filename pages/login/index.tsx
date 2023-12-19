@@ -3,7 +3,7 @@ import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FootnoteForm, OrgForm } from "@components/forms";
-import { setCookie } from "cookies-next";
+import { deleteCookie, setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   setRoleAndOrgToken,
@@ -136,7 +136,7 @@ const Login: NextPage = () => {
 
   const { data: session, status } = useSession();
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "authenticated") { 
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
       console.log("authenticated", accessToken);
@@ -146,6 +146,7 @@ const Login: NextPage = () => {
       // router.push("/student");
     }
   }, [status]);
+
   if (status === "loading") return <LoadingPage />;
 
   return (
@@ -162,6 +163,7 @@ const Login: NextPage = () => {
               <Button
                 icon={<GoogleOutlined />}
                 onClick={() => {
+                  deleteCookie("cookieToken");
                   signIn("google");
                 }}
               >
