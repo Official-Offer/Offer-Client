@@ -1,4 +1,4 @@
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { getSchool } from "./apiSchool";
 import { getCompany } from "./apiCompany";
 import request from "./apiService";
@@ -15,7 +15,9 @@ export const updateStudent = async (body: any) => {
 };
 
 export const getStudentDetails = async () => {
-  const response = (await request.get(`/students/me/`)).data.Response;
+  const id = getCookie("id");
+  const response = (await request.get(`/students/${id}/`)).data;
+  console.log("Student details", response);
   return response;
 };
 
@@ -47,7 +49,7 @@ export const getStudentsFromSchool = async (school: any) => {
   const response = (await request.get(`/students/`, {
     params: {
       page_size: 1000,
-      school, 
+      school,
     },
   })).data.results;
   console.log(response);

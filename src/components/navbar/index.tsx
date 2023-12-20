@@ -55,36 +55,38 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   //   setHideMesPanel(true);
   // };
 
+
   const listMenu: Record<string, any>[] =
     router.pathname.includes("recruiter") || router.pathname.includes("advisor")
       ? []
       : [
-          {
-            name: "Công việc",
-            link: "/student/jobs",
-            newTab: false,
-            routeSelected: "/student/jobs",
-          },
-          // {
-          //   name: "Sự kiện",
-          //   link: "/student/events",
-          //   newTab: false,
-          //   routeSelected: "/student/events",
-          // },
-          // {
-          //   name: "Công ty",
-          //   link: "/student/companies",
-          //   newTab: false,
-          //   routeSelected: "/student/companies",
-          // },
-          {
-            name: "Liên hệ",
-            link: "/student/contact",
-            newTab: false,
-            routeSelected: "/student/contact",
-          },
-        ];
-
+        {
+          name: "Công việc",
+          link: "/student/jobs",
+          newTab: false,
+          routeSelected: "/student/jobs",
+        },
+        // {
+        //   name: "Sự kiện",
+        //   link: "/student/events",
+        //   newTab: false,
+        //   routeSelected: "/student/events",
+        // },
+        // {
+        //   name: "Công ty",
+        //   link: "/student/companies",
+        //   newTab: false,
+        //   routeSelected: "/student/companies",
+        // },
+        {
+          name: "Liên hệ",
+          link: "/student/contact",
+          newTab: false,
+          routeSelected: "/student/contact",
+        },
+      ];
+  const avatar = loggedIn ? getCookie("avatar") : null;
+  console.log("avatar", avatar);
   return router.pathname.includes("registration") ||
     router.pathname.includes("login") ||
     router.pathname == "/" ? (
@@ -97,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
         className="navbar left-menu"
       >
         {router.pathname.includes("recruiter") ||
-        router.pathname.includes("advisor") ? null : (
+          router.pathname.includes("advisor") ? null : (
           <Menu.Item key={"/student/"} className="m-0">
             {false ? (
               <a
@@ -285,7 +287,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             }
           >
             <Menu.Item>
-              <Button type="primary" icon={<SmileFilled />} />
+              <Button type="primary" icon={<img src={avatar} alt="Your Alt Text" style={{ width: '100%', height: '120%' }} />} />
             </Menu.Item>
           </Dropdown>
         ) : (

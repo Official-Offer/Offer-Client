@@ -120,10 +120,11 @@ const StudentProfile: NextPage = () => {
     string,
     any
   > | null>(null);
+  const id = getCookie("id")
   const studentQuery = useQuery({
-    queryKey: ["students/me"],
+    queryKey: [`students/${id}`],
     queryFn: getStudentDetails,
-    onSuccess: (res) => setStudentDetails(res),
+    onSuccess: (res) => { setStudentDetails(res) },
     onError: (err) => console.log(`Error: ${err}`),
   });
 
@@ -132,39 +133,31 @@ const StudentProfile: NextPage = () => {
       <section className="split-layout-sticky student-profile">
         <AntdCard
           loading={studentQuery.isLoading}
-          cover={<img src={profile.cover} />}
+          cover={<img src={studentDetails?.account.cover_photo} />}
           children={
             <div>
-              <img className="student-profile-avatar" src={profile.avatar} />
+              <img className="student-profile-avatar" src={studentDetails?.account.avatar} />
               <div className="student-profile-header">
-                <h2>{studentDetails?.name}</h2>
+                <h2>{studentDetails?.account.first_name + " " + studentDetails?.account.last_name}</h2>
                 <span>
-                  {studentDetails?.expected_graduation === undefined
+                  {studentDetails?.expected_graduation_date === undefined
                     ? "Ngày không xác định"
                     : new Date(
-                        studentDetails?.expected_graduation,
-                      ).toDateString()}
+                      studentDetails?.expected_graduation_date,
+                    ).toDateString()}
                 </span>
               </div>
               <div className="student-profile-info">
-                {studentDetails?.school?.length === 0 ? (
-                  <h4>Trường không xác định</h4>
-                ) : (
-                  studentDetails?.school.map(
-                    (eachSchool: Record<string, string>) => (
-                      <h4>{eachSchool.name}</h4>
-                    ),
-                  )
-                )}
-                <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
+                {studentDetails?.school?.name ?? "Trường không xác định"}
+                <h4>{studentDetails?.majors?.map((major: { name: string }) => major.name).join(', ') ?? "Ngành không xác định"}</h4>
                 <h4>Đang tìm kiếm công việc:</h4>
-                <h4>{studentDetails?.desired_job ?? "Không xác định"}</h4>
+                <h4>{studentDetails?.desired_industries?.map((industry: { name: string }) => industry.name).join(', ' ?? "Chưa xác định")}</h4>
               </div>
             </div>
           }
         />
       </section>
-      <section className="split-layout-item flex-md">
+      <section className="split-layout-item flx-md">
         <ResumeCard isEditable />
         <ProfileCard
           isEditable
