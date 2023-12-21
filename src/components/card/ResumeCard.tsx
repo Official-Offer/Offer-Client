@@ -36,12 +36,13 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
   const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>([]); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
-
+  const [activeResumeIndex, setActiveResumeIndex] = useState<number>(0); // For switching between resumes
   // Hooks
   useEffect(() => {
     console.log("Resumes: ", resumes)
     if (resumes) {
       setUploadedFiles(resumes.resumes);
+      setActiveResumeIndex(resumes.active_resume.pk)
     }
   }, [resumes, isError, isLoading, isRefetching])
   const uploadMutation = useMutation({
@@ -171,7 +172,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
           <CardTray
             cardList={uploadedFiles.map((uploadedFile) => (
               <StyledResumeCard>
-                <h3>CV hiện tại</h3>
+                {uploadedFile.pk== activeResumeIndex && <h3>CV hiện tại</h3>}
                 <div className="btn-list-horizontal">
                   <a
                     className="btn-list-horizontal-expand"

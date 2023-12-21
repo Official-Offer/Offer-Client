@@ -144,6 +144,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
               );
             })
             .map((item, index) => {
+              const get_logo = (item: Record<string, any>) => {
+              return item[fieldItemProps.dataIDLabel]?.logo ?? logoURL;
+              }
               return (
                 <div>
                   {index !== 0 && <Divider />}
@@ -162,7 +165,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                   />
                   <div className="main-panel-info">
                     <div className="main-panel-info-logo">
-                      <img src={logoURL} />
+                      <img src={get_logo(item)} />
                     </div>
                     <div className="main-panel-info-center">
                       <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
