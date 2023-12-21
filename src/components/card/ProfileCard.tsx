@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Divider } from "antd";
@@ -26,10 +26,13 @@ type ProfileCardProps = {
     isRequired: Record<string, boolean>;
   };
   isLoading?: boolean;
-  data: Record<string, unknown>[];
+  isError?: boolean;
+  data?: Record<string, unknown>[];
+  refetchFunction: () => void;
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
   deleteFunction?: (id: number) => void;
+  dataFunction: () => Promise<Record<string, unknown>[]>;
 };
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -37,10 +40,13 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   fieldTitle,
   fieldItemProps,
   isLoading,
+  isError,
   data,
+  refetchFunction,
   addFunction,
   editFunction,
   deleteFunction,
+  dataFunction,
 }) => {
   const logoURL =
     "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
@@ -48,15 +54,28 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   // States
   const [queryItemList, setQueryItemList] = useState<Record<string, any>[]>([]);
   const [dataArr, setDataArr] = useState<Record<string, unknown>[]>([]);
-  
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(
     queryItemList.map(() => false),
   );
-
+  console.log("Data from educations: ", data)
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
+
+  useEffect(() => {
+    if (data) {
+      setQueryItemList(data);
+    }
+  }, [data, isLoading]);
+
+  // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
+  const dataQuery = useQuery({
+    queryKey: [fieldItemProps.dataIDLabel],
+    queryFn: dataFunction,
+    onSuccess: (data) => typeof data === "object" && setDataArr(data),
+    onError: (err) => console.log(`Data Error: ${err}`),
+  });
 
   // Functions
   const setOpenEditForm = (index: number | boolean) => {
@@ -87,7 +106,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             />
           )}
           {/* Popup adding form */}
-          {/* <ProfileCardForm
+          <ProfileCardForm
             open={openAddForm}
             closeForm={() => setOpenAddForm(false)}
             isAdd={true}
@@ -95,16 +114,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             fieldItemProps={fieldItemProps}
             fieldItems={queryItemList?.[0]}
             postFunction={addFunction}
-            refetchFunction={itemsQuery.refetch}
+            refetchFunction={refetchFunction} 
             dataArr={dataArr}
-          /> */}
+          />
         </div>
       }
     >
       <div className="main-panel-layout">
         {isLoading ? (
           <div>Đang tải...</div>
-        ) : queryItemList === undefined ? (
+        ) : queryItemList === undefined || isError ? (
           <div>Server hiện tại không đưa thông tin được.</div>
         ) : queryItemList.length === 0 ? (
           <div>Xin hãy thêm thông tin vào đây.</div>
@@ -138,7 +157,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                     fieldItems={queryItemList[index]}
                     postFunction={editFunction}
                     deleteFunction={deleteFunction}
-                    refetchFunction={itemsQuery.refetch}
+                    refetchFunction={refetchFunction}
                     dataArr={dataArr}
                   />
                   <div className="main-panel-info">

@@ -164,21 +164,27 @@ const StudentProfile: NextPage = () => {
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
           isLoading={studentQuery.isLoading}
-          data={studentQuery.data?.educations}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.educations}
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
+          dataFunction={getSchoolList}
         />
-        {/* <ProfileCard
+        <ProfileCard
           isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
-          getFunction={getStudentExperiences}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.experiences}
           addFunction={addStudentExperience}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperience}
           dataFunction={getCompanyList}
-        /> */}
+        />
       </section>
       <section className="split-layout-sticky"></section>
     </main>
