@@ -48,6 +48,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   // States
   const [queryItemList, setQueryItemList] = useState<Record<string, any>[]>([]);
   const [dataArr, setDataArr] = useState<Record<string, unknown>[]>([]);
+  
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(
     queryItemList.map(() => false),
@@ -86,7 +87,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             />
           )}
           {/* Popup adding form */}
-          <ProfileCardForm
+          {/* <ProfileCardForm
             open={openAddForm}
             closeForm={() => setOpenAddForm(false)}
             isAdd={true}
@@ -96,14 +97,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             postFunction={addFunction}
             refetchFunction={itemsQuery.refetch}
             dataArr={dataArr}
-          />
+          /> */}
         </div>
       }
     >
       <div className="main-panel-layout">
-        {itemsQuery.isLoading ? (
+        {isLoading ? (
           <div>Đang tải...</div>
-        ) : queryItemList === undefined || itemsQuery.isError ? (
+        ) : queryItemList === undefined ? (
           <div>Server hiện tại không đưa thông tin được.</div>
         ) : queryItemList.length === 0 ? (
           <div>Xin hãy thêm thông tin vào đây.</div>
