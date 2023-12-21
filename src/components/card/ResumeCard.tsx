@@ -22,9 +22,10 @@ import {
 
 type ResumeCardProps = {
   isEditable?: boolean;
+  resumes?: Record<string, any>[];
 };
 
-export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
+export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
   const [uploadedFile, setUploadedFile] = useState<string | null>(null); // Holding the URL of uploaded resume for downloading
@@ -94,7 +95,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
       },
     });
   };
-
+  //TODO: Render multiple resumes and allow user to upload.
   return (
     <AntdCard
       className="main-panel-card"
@@ -166,6 +167,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
         ) : (
           <StyledResumeCard>
             <h3>CV hiện tại</h3>
+            
             <div className="btn-list-horizontal">
               <a
                 className="btn-list-horizontal-expand"

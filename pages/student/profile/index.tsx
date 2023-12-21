@@ -158,18 +158,18 @@ const StudentProfile: NextPage = () => {
         />
       </section>
       <section className="split-layout-item flx-md">
-        <ResumeCard isEditable />
+        <ResumeCard isEditable resumes={studentDetails?.resumes} />
         <ProfileCard
           isEditable
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
-          getFunction={getStudentEducations}
+          isLoading={studentQuery.isLoading}
+          data={studentQuery.data?.educations}
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
-          dataFunction={getSchoolList}
         />
-        <ProfileCard
+        {/* <ProfileCard
           isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
@@ -178,7 +178,7 @@ const StudentProfile: NextPage = () => {
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperience}
           dataFunction={getCompanyList}
-        />
+        /> */}
       </section>
       <section className="split-layout-sticky"></section>
     </main>

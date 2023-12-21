@@ -25,22 +25,22 @@ type ProfileCardProps = {
     itemType: Record<string, string>;
     isRequired: Record<string, boolean>;
   };
-  getFunction: () => Promise<Record<string, unknown>[]>;
+  isLoading?: boolean;
+  data: Record<string, unknown>[];
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
   deleteFunction?: (id: number) => void;
-  dataFunction: () => Promise<Record<string, unknown>[]>;
 };
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
   isEditable,
   fieldTitle,
   fieldItemProps,
-  getFunction,
+  isLoading,
+  data,
   addFunction,
   editFunction,
   deleteFunction,
-  dataFunction,
 }) => {
   const logoURL =
     "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png";
@@ -56,29 +56,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
-  const itemsQuery = useQuery({
-    queryKey: [fieldTitle],
-    queryFn: getFunction,
-    onSuccess: (res: Record<string, any>[]) =>
-      setQueryItemList(
-        res.map((item) => {
-          item.start_date = moment(item.start_date);
-          item.end_date = moment(item.end_date);
-          return item;
-        }),
-      ),
-    onError: (err) =>
-      console.log(`Not able to load profileCard's data: ${err}`),
-    refetchOnWindowFocus: false,
-  });
-
-  // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
-  const dataQuery = useQuery({
-    queryKey: [fieldItemProps.dataIDLabel],
-    queryFn: dataFunction,
-    onSuccess: (data) => typeof data === "object" && setDataArr(data),
-    onError: (err) => console.log(`Data Error: ${err}`),
-  });
 
   // Functions
   const setOpenEditForm = (index: number | boolean) => {
@@ -96,7 +73,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   return (
     <AntdCard
       className="main-panel-card"
-      loading={itemsQuery.isLoading || itemsQuery.isRefetching}
+      loading={isLoading}
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
