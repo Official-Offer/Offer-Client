@@ -4,6 +4,9 @@ import axios from "axios";
 import { URL_API_ADMIN } from "@config";
 
 export const registerUser = async (body: any) => {
+  // const request = axios.create({
+  //   baseURL: URL_API_ADMIN,
+  // });
   const response = await request.post(`/accounts/register/`, body);
   return response.data;
 };
@@ -19,6 +22,9 @@ export const getUserDetails = async (userId: any) => {
 };
 
 export const userLogIn = async (body: any) => {
+  // const request = axios.create({
+  //   baseURL: URL_API_ADMIN,
+  // });
   const response = await request.post(`/accounts/login/`, body);
   return response.data;
 };
