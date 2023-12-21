@@ -20,26 +20,28 @@ import {
   deleteStudentResume,
 } from "@services/apiStudent";
 import { CardTray } from "@components/list";
+import type { Resume } from "src/types/dataTypes";
+
 type ResumeCardProps = {
   isEditable?: boolean;
   isLoading?: boolean;
   isError?: boolean;
   refetchFunction: () => void;
   isRefetching?: boolean;
-  resumes?: Record<string, unknown>[];
+  resumes?: Record<string, Resume[]>
 };
 
 export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isError, isLoading, isRefetching, refetchFunction }) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
-  const [uploadedFile, setUploadedFile] = useState<string | null>(null); // Holding the URL of uploaded resume for downloading
+  const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>([]); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
 
   // Hooks
-  useEffect(()=>{
+  useEffect(() => {
     console.log("Resumes: ", resumes)
     if (resumes) {
-      setUploadedFile(resumes.active_resume.resume);
+      setUploadedFiles(resumes.resumes);
     }
   }, [resumes, isError, isLoading, isRefetching])
   const uploadMutation = useMutation({
@@ -163,35 +165,39 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
       children={
         isLoading ? (
           <div>Đang tải...</div>
-        ) : !uploadedFile || uploadedFile.length < 0 ? (
+        ) : !uploadedFiles || uploadedFiles.length < 0 ? (
           <div>Vui lòng tải lên CV</div>
         ) : (
-          <StyledResumeCard>
-            <h3>CV hiện tại</h3>
-            <div className="btn-list-horizontal">
-              <a
-                className="btn-list-horizontal-expand"
-                href={uploadedFile}
-                target="_blank"
-              >
-                <IconButton round fullWidth backgroundColor="#8799AE">
-                  <div className="btn-body">
-                    <span>Tải xuống</span>
-                    <CloudDownloadOutlined className="icon-md" />
-                  </div>
-                </IconButton>
-              </a>
-              {isEditable && (
-                <Button
-                  danger
-                  shape="circle"
-                  loading={deleteMutation.isLoading}
-                  icon={<DeleteOutlined />}
-                  onClick={handleDelete}
-                />
-              )}
-            </div>
-          </StyledResumeCard>
+          <CardTray
+            cardList={uploadedFiles.map((uploadedFile) => (
+              <StyledResumeCard>
+                <h3>CV hiện tại</h3>
+                <div className="btn-list-horizontal">
+                  <a
+                    className="btn-list-horizontal-expand"
+                    href={uploadedFile.resume}
+                    target="_blank"
+                  >
+                    <IconButton round fullWidth backgroundColor="#8799AE">
+                      <div className="btn-body">
+                        <span>Tải xuống</span>
+                        <CloudDownloadOutlined className="icon-md" />
+                      </div>
+                    </IconButton>
+                  </a>
+                  {isEditable && (
+                    <Button
+                      danger
+                      shape="circle"
+                      loading={deleteMutation.isLoading}
+                      icon={<DeleteOutlined />}
+                      onClick={handleDelete}
+                    />
+                  )}
+                </div>
+              </StyledResumeCard>
+            ))}
+          />
         )
       }
     />
