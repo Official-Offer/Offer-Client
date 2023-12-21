@@ -158,7 +158,14 @@ const StudentProfile: NextPage = () => {
         />
       </section>
       <section className="split-layout-item flx-md">
-        <ResumeCard isEditable resumes={studentDetails?.resumes} />
+        <ResumeCard
+          isEditable
+          resumes={studentDetails?.resumes}
+          isError={studentQuery.isError}
+          isLoading={studentQuery.isLoading}
+          isRefetching={studentQuery.isRefetching}
+          refetchFunction={studentQuery.refetch}
+        />
         <ProfileCard
           isEditable
           fieldTitle="Giáo Dục"

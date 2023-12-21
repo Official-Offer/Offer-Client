@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import {
@@ -19,28 +19,29 @@ import {
   updateStudentResume,
   deleteStudentResume,
 } from "@services/apiStudent";
-
+import { CardTray } from "@components/list";
 type ResumeCardProps = {
   isEditable?: boolean;
-  resumes?: Record<string, any>[];
+  isLoading?: boolean;
+  isError?: boolean;
+  refetchFunction: () => void;
+  isRefetching?: boolean;
+  resumes?: Record<string, unknown>[];
 };
 
-export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) => {
+export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isError, isLoading, isRefetching, refetchFunction }) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
   const [uploadedFile, setUploadedFile] = useState<string | null>(null); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
 
   // Hooks
-  const downloadQuery = useQuery({
-    queryKey: ["resumeDownload"],
-    queryFn: getStudentResume,
-    onSuccess: (res) => setUploadedFile(!res.endsWith("media/") && res),
-    onError: (err) => console.log(`Download Error: ${err}`),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
+  useEffect(()=>{
+    console.log("Resumes: ", resumes)
+    if (resumes) {
+      setUploadedFile(resumes.active_resume.resume);
+    }
+  }, [resumes, isError, isLoading, isRefetching])
   const uploadMutation = useMutation({
     mutationFn: async () => {
       if (selectedFile) {
@@ -50,7 +51,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) =
       }
     },
     onSuccess: () => {
-      downloadQuery.refetch();
+      refetchFunction();
       if (resetTimer) clearTimeout(resetTimer);
       setResetTimer(
         setTimeout(() => {
@@ -64,7 +65,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) =
   const deleteMutation = useMutation({
     mutationFn: deleteStudentResume,
     onSuccess: () => {
-      downloadQuery.refetch();
+      refetchFunction();
     },
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
@@ -99,7 +100,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) =
   return (
     <AntdCard
       className="main-panel-card"
-      loading={downloadQuery.isLoading || downloadQuery.isRefetching}
+      loading={isLoading || isRefetching}
       title={
         <div className="main-panel-header">
           <h2>CV</h2>
@@ -160,14 +161,13 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes }) =
         </div>
       }
       children={
-        downloadQuery.isLoading ? (
+        isLoading ? (
           <div>Đang tải...</div>
         ) : !uploadedFile || uploadedFile.length < 0 ? (
           <div>Vui lòng tải lên CV</div>
         ) : (
           <StyledResumeCard>
             <h3>CV hiện tại</h3>
-            
             <div className="btn-list-horizontal">
               <a
                 className="btn-list-horizontal-expand"
