@@ -58,11 +58,11 @@ const eduFieldItems = {
   dataIDLabel: "school",
   dataName: "schoolName",
   disableEndDate: false,
-  layout: ["study_fields", "gpa"],
+  layout: ["majors", "gpa"],
   labelToAPI: {
     itemTitle: "schoolName",
     GPA: "gpa",
-    "Ngành học": "study_fields",
+    "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
     "Ngày tốt nghiệp": "end_date",
     "Tôi đang học trường này": "is_current",
@@ -70,7 +70,7 @@ const eduFieldItems = {
   APIToLabel: {
     schoolName: "itemTitle",
     gpa: "GPA",
-    study_fields: "Ngành học",
+    majors: "Ngành học",
     start_date: "Ngày bắt đầu",
     end_date: "Ngày tốt nghiệp",
     is_current: "Tôi đang học trường này",

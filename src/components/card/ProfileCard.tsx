@@ -65,6 +65,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   useEffect(() => {
     if (data) {
+      if (fieldItemProps.dataIDLabel === "school") {
+        for (let i = 0; i < data.length; i++) {
+          data[i].majors = data[i].majors?.map((item: any) => item.name)
+        }
+      }
       setQueryItemList(data);
     }
   }, [data, isLoading]);
@@ -114,7 +119,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             fieldItemProps={fieldItemProps}
             fieldItems={queryItemList?.[0]}
             postFunction={addFunction}
-            refetchFunction={refetchFunction} 
+            refetchFunction={refetchFunction}
             dataArr={dataArr}
           />
         </div>
@@ -145,7 +150,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             })
             .map((item, index) => {
               const get_logo = (item: Record<string, any>) => {
-              return item[fieldItemProps.dataIDLabel]?.logo ?? logoURL;
+                return item[fieldItemProps.dataIDLabel]?.logo ?? logoURL;
               }
               return (
                 <div>
