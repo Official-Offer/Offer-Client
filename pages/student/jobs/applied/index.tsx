@@ -13,10 +13,11 @@ import { StyledListCard } from "@styles/styled-components/styledBox";
 import { StyledMenuButton } from "@styles/styled-components/styledButton";
 import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
+import { FilterSearch } from "@components/search/FilterSearch";
 
 type AppliedCardProps = {
   applied?: {
-    created_at: string;
+    created_at?: string;
     job?: {
       id: string;
       pk?: string;
@@ -27,27 +28,17 @@ type AppliedCardProps = {
       };
     };
   };
-
-  //     job?: {
-  //     id: string;
-  //     pk?: string;
-  //     job?: {
-  //       id: string;
-  //       title: string;
-  //       location: string;
-  //       time_published: string;
-  //       company_data: {
-  //         name: string;
-  //       };
-  //     };
-  //     timestamp?: string;
-  //   };
 };
 
 const AppliedJobs: NextPage = () => {
   // States
   const [appliedList, setAppliedList] = useState<Record<string, unknown>[]>();
-
+  const [searchResults, setSearchResults] = useState<string[]>(
+    []
+  );
+  const [data, setData] = useState<Record<string, unknown>[]>([]);
+  // original data that remains unchanged
+  const [dataset, setDataSet] = useState<Record<string, unknown>[]>([]);
   // Hooks
   const queryClient = useQueryClient();
 
@@ -56,8 +47,10 @@ const AppliedJobs: NextPage = () => {
     queryKey: ["appliedJobs"],
     queryFn: () => getAppliedJobs(Number(id)),
     onSuccess: (res: any) => {
-      console.log(res);
-      setAppliedList(res);
+    //   console.log(res);
+    setData(res);
+    setDataSet(res);      
+    setSearchResults(res.map((applied: any) => applied.job.title));
     },
     onError: (err: any) =>
       console.log(`Not able to load bookmarkedJobs: ${err}`),
@@ -65,18 +58,16 @@ const AppliedJobs: NextPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  const unbookmarkJobMutation = useMutation({
-    mutationFn: unbookmarkJob,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["bookmarkedJobs"] }),
-    onError: (err) => console.log(`Delete Error: ${err}`),
-  });
-
-  //   const handleUnbookmark = (event: React.MouseEvent<HTMLDivElement>) => {
-  //     event.preventDefault();
-  //     const id = event.currentTarget.id;
-  //     setAppliedList(appliedList?.filter((job) => job?.job_id !== id));
-  //   };
+  const handleFilterSearch = (value: string) => {
+    if (!value) {
+      setData(dataset);
+      return;
+    }
+    const filteredData = dataset.filter(
+    (item: Record<string, unknown>) => (item.job as { title: string })?.title?.toLowerCase().includes(value.toLowerCase()),
+    );
+    setData(filteredData);
+  };
 
   // Components
   const AppliedCard: React.FC<AppliedCardProps> = ({ applied }) => (
@@ -119,14 +110,22 @@ const AppliedJobs: NextPage = () => {
 
   return (
     <div className="split-layout">
-      <section className="split-layout-sticky">
+      {/* <section className="split-layout-sticky">
         <AntdCard>
           <StyledMenuButton>
             <h3>Việc đã ứng tuyển</h3>
           </StyledMenuButton>
         </AntdCard>
-      </section>
-      <section className="split-layout-item flex-xl">
+      </section> */}
+      <section className="split-layout-item">
+        {/* Create a centered search bar here */}
+        <FilterSearch
+          placeholder={"Tìm kiếm công việc đã lưu"}
+          onSearch={(event: any) => {
+            handleFilterSearch(event.target.value);
+          }}
+          searchResults={searchResults}
+        />
         <AntdCard
           className="main-panel-card"
           loading={
@@ -136,9 +135,9 @@ const AppliedJobs: NextPage = () => {
           }
           title={<h2>Việc đã ứng tuyển</h2>}
         >
-          {appliedList?.length === 0
+          {data?.length === 0
             ? "Bạn chưa nộp công việc nào"
-            : appliedList?.map((job) => <AppliedCard applied={job} />)}
+            : data?.map((job) => <AppliedCard applied={job} />)}
         </AntdCard>
       </section>
       <section className="split-layout-sticky">
