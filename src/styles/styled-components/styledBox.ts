@@ -214,7 +214,15 @@ export const StyledListCard = styled.div<{
       min-height: 120px;
       min-width: 170px;
       border-radius: 8px;
-      background: black;
+      background: gray;
+      &-image{
+        margin: 19px 15px;
+        /* margin-top: 12px; */
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+        border-radius: 8px;
+      }
     }
 
     &-body {

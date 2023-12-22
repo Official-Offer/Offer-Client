@@ -59,7 +59,7 @@ const StudentJobs: NextPage = () => {
   };
 
   const jobQuery = useQuery({
-    queryKey: ["jobs list"],
+    queryKey: ["jobslist"],
     queryFn: getJobs,
     onSuccess: (jobData) =>
       setJobs(
