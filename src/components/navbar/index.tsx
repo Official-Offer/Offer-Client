@@ -246,7 +246,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                 <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
               </Menu.Item> */}
                 <Menu.Item>
-                  <Link href={`/${path}/profile`}>Công Việc Đã Ứng Tuyển</Link>
+                  <Link href={`/${path}/jobs/applied`}>Công Việc Đã Ứng Tuyển</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item>

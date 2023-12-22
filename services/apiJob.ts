@@ -221,6 +221,15 @@ export const getBookmarkedList = async () => {
   return bookmarkedList;
 };
 
+export const getAppliedJobs = async (id: number) => {
+  const response = await request.get(`/job-applications/`, {
+    params: {
+      applied_by: id,
+    },
+  });
+  return response.data;
+};
+
 export const checkIsBookmarked = async (id: number) => {
   const response = await request.get(`/jobs/bookmark/${id}/`);
   return response.data;
