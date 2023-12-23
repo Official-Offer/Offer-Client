@@ -8,6 +8,7 @@ import { Avatar, Card } from "antd";
 import { AntDesignOutlined } from "@ant-design/icons";
 import type { Company } from "src/types/dataTypes";
 import { LoadingLine } from "@components/loading/LoadingLine";
+import { Image } from "antd";
 
 const Companies: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -31,7 +32,7 @@ const Companies: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
   };
@@ -53,12 +54,21 @@ const Companies: NextPage = () => {
         {data.map((company) => (
           // <LoadingLine loading={companyQuery.isLoading}>
           <Card className="recruiter-schools-card">
-            <Avatar
+            {/* <Avatar
               size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-              icon={<AntDesignOutlined />}
-            />
+              icon={company.logo ? <Image src={company.logo ?? ""}/> : <AntDesignOutlined />}
+            /> */}
+            <div className="recruiter-schools-logo">
+              {company.logo ? (
+                <Image src={company.logo ?? ""} />
+              ) : (
+                <AntDesignOutlined/>
+              )}
+            </div>
             <div className="recruiter-schools-card-info">
               <b>{company.name}</b>
+              <br/>
+              <u>{company.email}</u>
               <p>{company.description}</p>
             </div>
           </Card>

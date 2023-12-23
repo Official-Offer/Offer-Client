@@ -33,16 +33,17 @@ export const getSchoolsForRecruiter = async (id: number) => {
   //   { name: "UMass", desc: "trường đại học kỹ thuật" },
   //   { name: "HSGS", desc: "trường đại học kỹ thuật" },
   // ];
-  return schools.map((school: any) => ({
-    key: "1",
-    ID: "1",
-    name: school.name,
-    description: school.description,
-    advisors: 200,
-    no_students: 10000,
-    students_applicants: 2000,
-    unapproved_jobs: 100,
-    approved_jobs: 150,
-    compatibility: "60%",
-  }));
+  return schools;
+  // .map((school: any) => ({
+  //   key: "1",
+  //   ID: "1",
+  //   name: school.name,
+  //   description: school.description,
+  //   advisors: 200,
+  //   no_students: 10000,
+  //   students_applicants: 2000,
+  //   unapproved_jobs: 100,
+  //   approved_jobs: 150,
+  //   compatibility: "60%",
+  // }));
 };

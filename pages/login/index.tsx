@@ -166,6 +166,9 @@ const Login: NextPage = () => {
 
   const { data: session, status } = useSession();
   useEffect(() => {
+    if (errorMessage) {
+      signIn("google");
+    }
     if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
