@@ -45,7 +45,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
   const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar)
+    import("@components").then((mod: any) => mod.Navbar),
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [

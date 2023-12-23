@@ -21,5 +21,5 @@ export {
   setBenefits,
   setUpperSalary,
   setJobId,
-  setSchoolIds
+  setSchoolIds,
 } from "@redux/slices/jobs";

@@ -46,9 +46,9 @@ const VerifyPassword: NextPage = () => {
   });
 
   useEffect(() => {
-    console.log(otp)
+    console.log(otp);
     if (otp) {
-      mutation.mutate({otp});
+      mutation.mutate({ otp });
     }
   }, [otp]);
 
@@ -61,7 +61,9 @@ const VerifyPassword: NextPage = () => {
         <div className="register-content-form">
           <h1 style={{ color: "Purple" }}>
             {submitted
-              ? errorMessage ? errorMessage : `Email đã được xác nhận.`
+              ? errorMessage
+                ? errorMessage
+                : `Email đã được xác nhận.`
               : `Link xác nhận đã được gửi đến email của bạn `}
           </h1>
           <br />
@@ -75,11 +77,14 @@ const VerifyPassword: NextPage = () => {
               }}
             >
               {errorMessage ? (
-                <SubmitButton text="Gửi lại link xác nhận" onClick={() => {
-                  resendMutation.mutate({});
-                  setErrorMessage("");
-                  setSubmitted(false);
-                }} />
+                <SubmitButton
+                  text="Gửi lại link xác nhận"
+                  onClick={() => {
+                    resendMutation.mutate({});
+                    setErrorMessage("");
+                    setSubmitted(false);
+                  }}
+                />
               ) : (
                 <SubmitButton
                   text="Quay lại trang chủ"

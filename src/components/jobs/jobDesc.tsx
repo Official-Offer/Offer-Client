@@ -55,10 +55,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [majorNames, setMajorNames] = useState<string[]>(
     state.major.map((major) => majorList[major - 1].label + ", ") || [
       "Công nghệ thông tin",
-    ]
+    ],
   );
   const [company, setCompany] = useState<string | undefined>(
-    state.company || "Công ty mẫu"
+    state.company || "Công ty mẫu",
   );
   const [companyId, setCompanyId] = useState<number>(
     router.pathname.includes("recruiter")
@@ -67,11 +67,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         ? state.companyId
         : getCookie("orgId")
           ? Number(getCookie("orgId"))
-          : 1
+          : 1,
   );
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
-    state.description || "Mô tả công việc mẫu"
+    state.description || "Mô tả công việc mẫu",
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
@@ -252,8 +252,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => majorList[major - 1].label + ", "
-                      )
+                        (major: number) => majorList[major - 1].label + ", ",
+                      ),
                     );
                   }}
                   options={majorList}

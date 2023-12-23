@@ -1,31 +1,15 @@
 /* Global */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "./scss/Helper/variables";
+@import "./scss/Helper/mixin";
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-weight: $fw-bold-1;
-  margin: 0;
-}
+.global {
+  background-color: $grey-light-background;
 
-body {
-  font-family: "Inter", sans-serif;
-}
-
-pre {
-  font-family: "Inter", sans-serif;
-}
-
-a {
-  text-decoration: none;
-}
-
-em {
-  font-style: normal;
-  font-weight: bold;
+  & > div,
+  > section {
+    background-color: white;
+  }
 }
 
 /* Components */
@@ -43,9 +27,11 @@ em {
 @import "./scss/Helper/text-color";
 @import "./scss/Helper/icons";
 @import "./scss/Helper/animations";
+@import "./scss/Helper/typography";
 
 /* Plugins */
 @import "./scss/Plugins/antd";
+@import "./scss/Plugins/carousel";
 
 /* Layouts */
 @import "./scss/Layouts/main";
@@ -64,3 +50,22 @@ em {
 @import "./scss/Layouts/student-job-portal";
 @import "./scss/Layouts/split-layout";
 @import "./scss/Layouts/form-page";
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  height: calc((100% - 30px) / 2) !important;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

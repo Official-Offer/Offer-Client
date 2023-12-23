@@ -33,9 +33,7 @@ type AppliedCardProps = {
 const AppliedJobs: NextPage = () => {
   // States
   const [appliedList, setAppliedList] = useState<Record<string, unknown>[]>();
-  const [searchResults, setSearchResults] = useState<string[]>(
-    []
-  );
+  const [searchResults, setSearchResults] = useState<string[]>([]);
   const [data, setData] = useState<Record<string, unknown>[]>([]);
   // original data that remains unchanged
   const [dataset, setDataSet] = useState<Record<string, unknown>[]>([]);
@@ -47,10 +45,10 @@ const AppliedJobs: NextPage = () => {
     queryKey: ["appliedJobs"],
     queryFn: () => getAppliedJobs(Number(id)),
     onSuccess: (res: any) => {
-    //   console.log(res);
-    setData(res);
-    setDataSet(res);      
-    setSearchResults(res.map((applied: any) => applied.job.title));
+      //   console.log(res);
+      setData(res);
+      setDataSet(res);
+      setSearchResults(res.map((applied: any) => applied.job.title));
     },
     onError: (err: any) =>
       console.log(`Not able to load bookmarkedJobs: ${err}`),
@@ -64,7 +62,10 @@ const AppliedJobs: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-    (item: Record<string, unknown>) => (item.job as { title: string })?.title?.toLowerCase().includes(value.toLowerCase()),
+      (item: Record<string, unknown>) =>
+        (item.job as { title: string })?.title
+          ?.toLowerCase()
+          .includes(value.toLowerCase()),
     );
     setData(filteredData);
   };

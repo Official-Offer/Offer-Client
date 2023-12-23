@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { NextPage } from "next";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
@@ -16,9 +16,10 @@ import {
 import { DownOutlined } from "@ant-design/icons";
 import { useSession } from "next-auth/react";
 import { EventCard, InfoCard } from "@components/card";
+import { Carousel } from "@components/list";
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
-import { getJobs } from "@services/apiJob";
+import { getJobs, getJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { useDisplayCompanies } from "@hooks/useDisplayJobs";
@@ -26,8 +27,8 @@ import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
 import type { RadioChangeEvent } from "antd/lib/radio";
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { BuildingOfficeIcon } from "@heroicons/react/24/solid";
+
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
   cover:
@@ -89,15 +90,15 @@ const Home: NextPage = () => {
     setFilters,
     setSort,
   } = useDisplayJobs();
-  const {
-    companies,
-    setCompanies,
-  } = useDisplayCompanies();
+
+  const { companies, setCompanies } = useDisplayCompanies();
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
-    queryFn: getJobs,
-    onSuccess: (jobData: Record<string, any>) => setJobs(jobData.results),
+    queryFn: () => getJobsPerPage(1, 12),
+    onSuccess: (jobData: Record<string, any>) => {
+      setJobs(jobData.results);
+    },
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
@@ -105,11 +106,11 @@ const Home: NextPage = () => {
   const companyQuery = useQuery({
     queryKey: ["companies list"],
     queryFn: getCompanyList,
-    onSuccess: (companyData: Record<string, any>) => setCompanies(companyData.results),
+    onSuccess: (companyData: Record<string, any>) =>
+      setCompanies(companyData.results),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
-
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.trim() === "") {
@@ -159,7 +160,7 @@ const Home: NextPage = () => {
   // paginate the job list
   return (
     <main className="main">
-      <div className="main__content">
+      <div className="main-content">
         <section>
           <AntdCard
             className="uni-cover"
@@ -170,26 +171,60 @@ const Home: NextPage = () => {
                   <img alt={"Logo of " + DHBK.name} src={DHBK.logo} />
                 </div>
                 <div className="logo-spacing"></div>
-                <h2>{DHBK.name}</h2>
+                <h2 className="card-title">{DHBK.name}</h2>
               </div>
             }
           />
         </section>
         <section>
-          <h2 className="header">Cơ hội thực tập dành riêng cho bạn</h2>
-          <div className="layout-grid" >
-            {jobQuery.isLoading
-              ? new Array(4).fill(<InfoCard loading />)
-              : displayedJobs.map((jobData) => <InfoCard info={jobData} />)}
-          </div>
+          <AntdCard className="section-card">
+            <h3 className="header">Cơ hội thực tập dành riêng cho bạn</h3>
+            <Carousel
+              items={
+                jobQuery.isLoading
+                  ? [
+                      <div className="layout-grid">
+                        {new Array(4).fill(<InfoCard loading />)}
+                      </div>,
+                    ]
+                  : [
+                      <div className="layout-grid">
+                        {displayedJobs.map((jobData) => (
+                          <InfoCard info={jobData} />
+                        ))}
+                      </div>,
+                    ]
+              }
+              itemSize="full"
+            />
+          </AntdCard>
         </section>
         <section>
-          <h2 className="header">Các công ty hàng đầu</h2>
-          <div className="layout-grid" >
-            {companyQuery.isLoading
-              ? new Array(4).fill(<InfoCard loading />)
-              : companies.map((companyData) => <div><img src={companyData.logo}></img>{companyData.name}</div>)}
-          </div>
+          <AntdCard className="section-card">
+            <h3 className="header">Các công ty hàng đầu</h3>
+            <Carousel
+              items={
+                companyQuery.isLoading
+                  ? new Array(4).fill(<AntdCard loading />)
+                  : companies.map((companyData) => (
+                      <AntdCard className="company-card" hoverable>
+                        <div className="company-logo">
+                          {companyData.logo ? (
+                            <img
+                              src={companyData.logo}
+                              alt={companyData.name}
+                            ></img>
+                          ) : (
+                            <BuildingOfficeIcon />
+                          )}
+                        </div>
+                        <h4 className="company-title">{companyData.name}</h4>
+                      </AntdCard>
+                    ))
+              }
+              itemSize="quarter"
+            />
+          </AntdCard>
         </section>
       </div>
     </main>

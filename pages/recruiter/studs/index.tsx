@@ -15,14 +15,13 @@ const Students: NextPage = () => {
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
   const [school, setSchool] = useState<Number>();
 
-  const studentQuery = useQuery(
-    ["jobs", school], {
+  const studentQuery = useQuery(["jobs", school], {
     queryFn: () => getStudentsFromSchool(school),
     onSuccess: (students) => {
       setData(students);
       setDataSet(students);
       console.log(students);
-      setSearchResults(students.map((student: { name: any; }) => student.name));
+      setSearchResults(students.map((student: { name: any }) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
   });
@@ -32,7 +31,7 @@ const Students: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };

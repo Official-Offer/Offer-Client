@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Choose your storage engine
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // Choose your storage engine
 
 import rootReducer from "./reducers";
 
 const persistConfig = {
-    key: 'root',
-    storage,
-    // Specify the reducers you want to persist
-    whitelist: ['jobs'], // In this example, we persist the 'user' reducer
-  };
+  key: "root",
+  storage,
+  // Specify the reducers you want to persist
+  whitelist: ["jobs"], // In this example, we persist the 'user' reducer
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

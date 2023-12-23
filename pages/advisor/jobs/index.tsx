@@ -1,17 +1,10 @@
 import { NextPage } from "next";
 import { BaseTable } from "@components/table/BaseTable";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  getAdvisorJobs,
-  verifyJobs,
-} from "@services/apiJob";
+import { getAdvisorJobs, verifyJobs } from "@services/apiJob";
 import { useState } from "react";
-import {
-  RecruiterJobDataType,
-} from "@components/table/dataType";
-import {
-  AdvisorJobColumns,
-} from "@components/table/columnType";
+import { RecruiterJobDataType } from "@components/table/dataType";
+import { AdvisorJobColumns } from "@components/table/columnType";
 import { getCookie } from "cookies-next";
 
 const Jobs: NextPage = () => {
@@ -45,8 +38,7 @@ const Jobs: NextPage = () => {
     setData(filteredData);
   };
 
-
-  console.log(getCookie("cookieToken"))
+  console.log(getCookie("cookieToken"));
   console.log(getCookie("orgName"));
 
   const verifyMutation = useMutation({
@@ -63,7 +55,7 @@ const Jobs: NextPage = () => {
   const handleVerifyJob = (id: any, is_approved: boolean) => {
     verifyMutation.mutate({
       id,
-      is_approved
+      is_approved,
     });
     // router.reload();
   };
