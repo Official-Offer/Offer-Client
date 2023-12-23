@@ -129,7 +129,7 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <h1> Đang tải ... </h1>;
 
-  return status == "authenticated" ? (
+  return status == "authenticated" && !errorMessage ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -273,7 +273,7 @@ const Registration: NextPage = () => {
               )}
             </>
           )}
-          {errorMessage && (
+          {(errorMessage && status !== 'authenticated') && (
             <>
               <p className="register-content-error">{errorMessage}</p>
             </>
