@@ -26,13 +26,13 @@ export const useDisplayJobs = () => {
     const newFilters = filters;
     for (let i = 0; i < jobList.length; i++) {
       const job = jobList[i];
-      if (job.job_type) {
-        const type = job.job_type;
-        if (type !== "{}") newFilters.jobTypes[type] = false;
+      if (job.job_types) {
+        const type = job.job_types;
+        // if (type !== "{}") newFilters.jobTypes[type] = false;
       }
-      if (job.work_type) {
-        const type = job.work_type;
-        newFilters.workTypes[type] = false;
+      if (job.work_types) {
+        const type = job.work_types;
+        // newFilters.workTypes[type] = false;
       }
       // if (job.industries) {
       //   for (let j = 0; j < job.industries.length; j++) {
@@ -57,15 +57,15 @@ export const useDisplayJobs = () => {
       .filter((job) => {
         if (
           Object.keys(filters.jobTypes).length !== 0 &&
-          !Object.values(filters.jobTypes).every((value) => !value) &&
-          !filters.jobTypes[job.job_type]
+          !Object.values(filters.jobTypes).every((value) => !value) 
+          // && !filters.jobTypes[job.job_type]
         ) {
           return false;
         }
         if (
           Object.keys(filters.workTypes).length !== 0 &&
-          !Object.values(filters.workTypes).every((value) => !value) &&
-          !filters.workTypes[job.work_type]
+          !Object.values(filters.workTypes).every((value) => !value) 
+          //  && !filters.workTypes[job.work_type]
         ) {
           return false;
         }

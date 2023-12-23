@@ -81,7 +81,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
                     <div className="bottom-section">
                       <h6>{info.company.name || "Công ty trống"}</h6>
                       <span>
-                        {translateJobType(info.job_type) || "Không xác định"}
+                        {info?.job_types?.map(job_type => translateJobType(job_type)) || "Không xác định"}
                         {" | "}
                         {info.address
                           ? formatAddress(info.address, true)
