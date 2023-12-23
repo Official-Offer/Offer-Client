@@ -113,7 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               ) : (
                 <Link href={"/student/"}>
                   <span>
-                    <OfferLogo />
+                    <OfferLogo width={36} height={36} />
                   </span>
                   {/* <span>Offer</span> */}
                 </Link>

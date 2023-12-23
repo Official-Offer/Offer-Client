@@ -57,7 +57,7 @@ export const JobContent: React.FC<JobContentProps> = ({
   ).fill("/images/avatar.png");
 
   // States
-  const [openApplyForm, setOpenApplyForm] = useState<boolean>(isApplying);
+  const [openApplyForm, setOpenApplyForm] = useState<boolean>(isApplying ?? false);
 
   console.log("jobData", jobData);
   return (

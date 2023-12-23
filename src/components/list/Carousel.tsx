@@ -12,11 +12,11 @@ import { Card as AntdCard, Button } from "antd";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 
 type CarouselProps = {
-  items: React.ReactNode[];
+  items: any[];
   itemSize?: "quarter" | "full";
 };
 
-export const Carousel: React.FC = ({ items, itemSize }) => {
+export const Carousel: React.FC<CarouselProps> = ({ items, itemSize }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     skipSnaps: true,
     slidesToScroll: 4,

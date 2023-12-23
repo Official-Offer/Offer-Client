@@ -14,7 +14,8 @@ export const replaceUrl = (
   }
 
   if (deleteOtherParams) {
-    for (const key of queryParams.keys()) {
+    const keys = Array.from(queryParams.keys());
+    for (const key of keys) {
       if (key !== param) {
         queryParams.delete(key);
       }
