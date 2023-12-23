@@ -34,12 +34,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
   // const role = getCookie("role");
   // const orgId = Number(getCookie("orgId")) - 1;
   console.log(state.role);
-  const isStudent =
-    state.role.isStudent || router.pathname.includes("student");
+  const isStudent = state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
-  const isAdvisor =
-    state.role.isAdvisor || router.pathname.includes("advisor");
+  const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -100,13 +98,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item
-            label={
-              isStudent || isAdvisor
-                ? `Trường`
-                : `Công ty`
-            }
-          >
+          <Form.Item label={isStudent || isAdvisor ? `Trường` : `Công ty`}>
             <Select
               // defaultValue={orgName}
               labelInValue={true}

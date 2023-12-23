@@ -87,7 +87,7 @@ export const getOrgList = async () => {
 export const contact = async (body: any) => {
   const response = await request.post(`/contacts/`, body);
   return response.data;
-}
+};
 
 // export const setRoleAndOrg = async (body: any) => {
 //   const response = await request.put(`/accounts/change_role/`, body);
@@ -95,13 +95,16 @@ export const contact = async (body: any) => {
 // }
 
 export const setRoleAndOrgToken = async (body: any) => {
-  console.log(body)
+  console.log(body);
   const request = axios.create({
     baseURL: URL_API_ADMIN,
     headers: body.token && {
       Authorization: `Bearer ${body.token}`,
     },
   });
-  const response = await request.put(`/accounts/change_role_org/`, body.content);
+  const response = await request.put(
+    `/accounts/change_role_org/`,
+    body.content,
+  );
   return response.data;
 };

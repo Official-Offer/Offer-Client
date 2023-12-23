@@ -7,7 +7,19 @@ import { getCookie } from "cookies-next";
 import parse from "html-react-parser";
 
 export const getJobs = async () => {
-  const response = await request.get(`/jobs/`);
+  const response = await request.get(`/jobs`);
+  const jobList = response.data;
+  return jobList;
+};
+
+export const getJobsPerPage = async (page: number, pageSize: number) => {
+  const response = await request.get(`/jobs`, {
+    params: {
+      page,
+      page_size: pageSize,
+      ordered_by: "created_at",
+    },
+  });
   const jobList = response.data;
   return jobList;
 };
@@ -147,7 +159,7 @@ export const getJobsForRecruiter = async () => {
 
 export const getAdvisorJobs = async () => {
   const school = parseInt(getCookie("orgId") as string);
-  console.log(school)
+  console.log(school);
   const response = await request.get(`/jobs/`, {
     params: {
       school,
@@ -162,9 +174,13 @@ export const getAdvisorJobs = async () => {
     // moment(job.created_at).format("DD/MM/YYYY"),
     title: job.title || "Không tìm thấy",
     company: job.company.name,
-    recruiter: job.created_by.last_name + " " + job.created_by.first_name || "Không tìm thấy", // job.contact_person.first_name + " " + job.contact_person.last_name
+    recruiter:
+      job.created_by.last_name + " " + job.created_by.first_name ||
+      "Không tìm thấy", // job.contact_person.first_name + " " + job.contact_person.last_name
     applicants: 20,
-    verified: job.is_approved_by ? job.is_approved_by.filter((id: any) => id === school).length > 0 : false,
+    verified: job.is_approved_by
+      ? job.is_approved_by.filter((id: any) => id === school).length > 0
+      : false,
   }));
   // console.log("res", res)
   return res;
@@ -209,7 +225,7 @@ export const verifyJobs = async (body: any) => {
     approve: body.is_approved,
   });
   return response.data;
-}
+};
 
 export const getBookmarkedList = async () => {
   const response = await request.get(`/jobs/bookmark/`);
@@ -251,7 +267,10 @@ export const postJob = async (body: any) => {
 
 export const addSchoolsToJob = async (body: any) => {
   // const response = await request.patch(`/jobs/${body.id}/`, body.content);
-  const response = await request.post(`/jobs/${body.id}/request_approval/`, body.content);
+  const response = await request.post(
+    `/jobs/${body.id}/request_approval/`,
+    body.content,
+  );
   return response.data;
 };
 

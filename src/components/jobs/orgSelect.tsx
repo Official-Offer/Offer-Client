@@ -62,7 +62,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                   console.log(value);
                   if (isRecruiter) {
                     setSelectedOrgIds(
-                      value.map((item: { key: any }) => Number(item.key))
+                      value.map((item: { key: any }) => Number(item.key)),
                     );
                   } else {
                     setCompanyName(value.label);
@@ -105,7 +105,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
               dispatch(setSchoolIds(selectedOrgIds));
             } else {
               dispatch(setCompanyId(selectedOrgIds));
-              dispatch(setCompany(companyName))
+              dispatch(setCompany(companyName));
             }
             onClick();
           }}

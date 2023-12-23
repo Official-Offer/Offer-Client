@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button, Modal, Skeleton, Upload } from "antd";
@@ -33,6 +34,7 @@ import type { Job } from "src/types/dataTypes";
 type JobContentProps = {
   isLoading?: boolean;
   isMinimized?: boolean;
+  isApplying?: boolean;
   jobData?: Job;
   bookmarkClicked?: boolean;
   setBookmarkClicked?: (isBookmarked: boolean) => void;
@@ -42,18 +44,21 @@ type JobContentProps = {
 export const JobContent: React.FC<JobContentProps> = ({
   isLoading,
   isMinimized,
+  isApplying,
   jobData,
   bookmarkClicked,
   setBookmarkClicked,
   setJobCardBookmarkClicked,
 }) => {
+  const router = useRouter();
+
   // Mock data
   const avatarURL = Array(
     Math.min(jobData?.expected_no_applicants ?? 0, 3)
   ).fill("/images/avatar.png");
 
   // States
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [openApplyForm, setOpenApplyForm] = useState<boolean>(isApplying ?? false);
 
   console.log("jobData", jobData);
   return (
@@ -88,7 +93,7 @@ export const JobContent: React.FC<JobContentProps> = ({
         </div>
         <div className="job-portal-description-date">
           <span>
-            Đăng vào {formatDate(jobData?.time_posted, "D/M/YYYY", true)}
+            Đăng vào {formatDate(jobData?.created_at, "D/M/YYYY", true)}
           </span>
           <span>&ensp;•&ensp;</span>
           <span>
@@ -107,13 +112,24 @@ export const JobContent: React.FC<JobContentProps> = ({
               <img src="/images/avatar.png" alt="Avatar" />
             )}
           </div>
-          <h4>
+          <h5>
             {formatNum(jobData?.company.no_employees, false)} người đang làm
             việc trong công ty này
-          </h4>
+          </h5>
         </div>
         <div className="job-portal-description-actions">
-          <Button className="apply" onClick={() => setIsVisible(true)}>
+          <Button
+            className="apply"
+            onClick={() =>
+              isMinimized
+                ? router.push(
+                    `/student/jobs${
+                      jobData?.pk ? `?id=${jobData.pk}` : ""
+                    }&apply=true`,
+                  )
+                : setOpenApplyForm(true)
+            }
+          >
             Ứng tuyển
           </Button>
           {isMinimized && (
@@ -134,10 +150,10 @@ export const JobContent: React.FC<JobContentProps> = ({
           )}
           <ApplyForm
             jobId={jobData?.pk}
-            open={jobData && isVisible ? true : false}
+            open={jobData && openApplyForm ? true : false}
             submitFunction={postJobApp}
             onCancel={() => {
-              setIsVisible(false);
+              setOpenApplyForm(false);
             }}
           />
         </div>
@@ -152,7 +168,7 @@ export const JobContent: React.FC<JobContentProps> = ({
               </div>
             </div>
             <div>
-              <h4>Cấp bậc:</h4>
+              <h5>Cấp bậc:</h5>
               <div>Undergrad</div>
             </div>
             <div>
@@ -162,15 +178,15 @@ export const JobContent: React.FC<JobContentProps> = ({
           </div>
           <div className="job-portal-description-info-section">
             <div>
-              <h4>Hình thức làm việc:</h4>
+              <h5>Hình thức làm việc:</h5>
               <div>{translateJobType(jobData?.job_type)}</div>
             </div>
             <div>
-              <h4>Mô hình làm việc:</h4>
+              <h5>Mô hình làm việc:</h5>
               <div>{translateJobType(jobData?.work_type)}</div>
             </div>
             <div>
-              <h4>Yêu cầu ngành học:</h4>
+              <h5>Yêu cầu ngành học:</h5>
               <div>{translateMajors(jobData?.required_majors)}</div>
             </div>
           </div>

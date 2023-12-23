@@ -1,0 +1,92 @@
+.embla {
+  overflow: hidden;
+
+  &__viewport {
+    position: relative;
+    padding-top: 12px;
+  }
+
+  &__container {
+    backface-visibility: hidden;
+    display: flex;
+    touch-action: pan-y;
+    margin-left: 24px;
+  }
+
+  &__slide {
+    padding-right: 16px;
+
+    &--full {
+      flex: 0 0 100%;
+    }
+
+    &--quarter {
+      flex: 0 0 24.5%;
+    }
+  }
+
+  &__prev,
+  &__next {
+    position: absolute;
+    top: 44.5%;
+    transition: 0.3s ease-out;
+
+    &:disabled {
+      opacity: 0;
+
+      transform: scale(0);
+      border: none;
+      padding: 0;
+
+      span {
+        width: 0;
+      }
+    }
+  }
+
+  &__prev {
+    left: 12px;
+    transform-origin: right center;
+    &:disabled {
+      left: 20px;
+    }
+  }
+
+  &__next {
+    right: 12px;
+    transform-origin: left center;
+    &:disabled {
+      right: 20px;
+    }
+  }
+
+  &__dots {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__dot {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &:after {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 0.2rem;
+      width: 100%;
+      height: 0.3rem;
+      content: "";
+    }
+
+    &--selected:after {
+      background: $pinkish-red;
+    }
+  }
+}

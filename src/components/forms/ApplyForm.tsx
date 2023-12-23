@@ -28,7 +28,7 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
 }) => {
   const [resume, setResume] = useState<any>(null);
   const [loggedIn, setLoggedIn] = useState<boolean>(
-    getCookie("cookieToken") ? true : false
+    getCookie("cookieToken") ? true : false,
   );
   const router = useRouter();
 
@@ -117,7 +117,7 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
         <Alert
           message={
             resumeMutation.error?.response?.data?.message?.includes(
-              "You have already applied for this job"
+              "You have already applied for this job",
             )
               ? "Bạn đã nộp đơn ứng tuyển cho công việc này rồi"
               : "Đã có lỗi tải lên hệ thống. Vui lòng thử lại"
@@ -136,13 +136,14 @@ export const ApplyForm: React.FC<ApplyFormProps> = ({
       open={open}
       onCancel={handleCancel}
       footer={[
-        <IconButton backgroundColor="#D30B81" onClick={()=>{
-          router.push("/login");
-        }}>
+        <IconButton
+          backgroundColor="#D30B81"
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
           <div className="btn-body">
-            <span>
-              Đăng nhập
-            </span>
+            <span>Đăng nhập</span>
           </div>
         </IconButton>,
       ]}

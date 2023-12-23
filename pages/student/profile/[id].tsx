@@ -6,7 +6,6 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
 import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
-import { CardTray } from "@components/list";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,

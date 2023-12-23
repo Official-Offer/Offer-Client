@@ -28,14 +28,17 @@ $grey-blue: #fffdfd;
 $grey-light-background: #f8f8f8;
 
 // Font size
-$fs_09: 0.9rem;
-$fs_08: 0.8rem;
-$fs_07: 0.7rem;
-$fs_06: 0.6rem;
-$fs_05: 0.5rem;
-$fs_04: 0.4rem;
-$fs_1_2: 1.2rem;
-$fs_1_5: 1.5rem;
+$fs-0: 0.625rem;
+$fs-1: 0.75rem;
+$fs-2: 0.875rem;
+$fs-3: 1rem;
+$fs-4: 1.125rem;
+$fs-5: 1.25rem;
+$fs-6: 1.5rem;
+$fs-7: 1.75rem;
+$fs-8: 2rem;
+$fs-9: 2.25rem;
+$fs-10: 2.625rem;
 
 // Width Percent
 $w_100: 100%;
@@ -50,13 +53,6 @@ $w_30: 30%;
 $w_20: 20%;
 $w_10: 10%;
 $w_5: 5%;
-
-// variable font-size
-$fs-0: 15px; //default
-$fs-1: 13px;
-$fs-2: 20px;
-$fs-3: 24px;
-$fs-4: 40px;
 
 //variable margin
 $mg-0: 2px;
@@ -73,6 +69,9 @@ $line-height-0: 1.43; //default
 
 //variable font-weight
 $fw-normal: normal;
-$fw-bold-0: 600;
-$fw-bold-1: 700;
-$fw-bold: bold;
+$fw-bold-0: 400; //default
+$fw-bold-1: 500;
+$fw-bold-2: 600;
+$fw-bold-3: 700;
+$fw-bold-4: 800;
+$fw-bold-5: 900;

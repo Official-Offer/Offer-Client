@@ -5,11 +5,7 @@ import { useEffect, useState } from "react";
 import { FootnoteForm, OrgForm } from "@components/forms";
 import { deleteCookie, setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  setRoleAndOrgToken,
-  socialAuth,
-  userLogIn,
-} from "@services/apiUser";
+import { setRoleAndOrgToken, socialAuth, userLogIn } from "@services/apiUser";
 import { useDispatch } from "react-redux";
 import { Button, Segmented } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
@@ -39,17 +35,33 @@ const Login: NextPage = () => {
     mutationFn: userLogIn,
     onSuccess: async (data) => {
       console.log(data);
-      setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
+      setCookie(
+        "cookieToken",
+        data.access_token
+          ? data.access_token
+          : data.access
+            ? data.access
+            : data.token,
+      );
       setCookie("id", data.pk ? data.pk : data.id);
       // dispatch(setID(data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
+        setCookie(
+          "orgName",
+          data.organization?.name ? data.organization?.name : "Name",
+        );
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
-        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
+        dispatch(
+          setCompany(
+            data.organization?.name ? data.organization?.name : "Name",
+          ),
+        );
+        dispatch(
+          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
+        );
         router
           .push({
             pathname:
@@ -76,18 +88,40 @@ const Login: NextPage = () => {
     onSuccess: async (data) => {
       console.log("social login", data);
       // Invalidate and refetch
-      setCookie("cookieToken", data.access_token ? data.access_token : data.access ? data.access : data.token);
-      setToken(data.access_token ? data.access_token : data.access ? data.access : data.token);
-      setCookie("id",  data.pk ? data.pk : data.id);
+      setCookie(
+        "cookieToken",
+        data.access_token
+          ? data.access_token
+          : data.access
+            ? data.access
+            : data.token,
+      );
+      setToken(
+        data.access_token
+          ? data.access_token
+          : data.access
+            ? data.access
+            : data.token,
+      );
+      setCookie("id", data.pk ? data.pk : data.id);
       // dispatch(setID( data.pk ? data.pk : data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
+        setCookie(
+          "orgName",
+          data.organization?.name ? data.organization?.name : "Name",
+        );
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
-        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
+        dispatch(
+          setCompany(
+            data.organization?.name ? data.organization?.name : "Name",
+          ),
+        );
+        dispatch(
+          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
+        );
         router
           .push({
             pathname:
@@ -136,7 +170,7 @@ const Login: NextPage = () => {
 
   const { data: session, status } = useSession();
   useEffect(() => {
-    if (status === "authenticated") { 
+    if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
       console.log("authenticated", accessToken);
@@ -231,7 +265,7 @@ const Login: NextPage = () => {
                         ? "student"
                         : value.toString() == "Nhà tuyển dụng"
                           ? "recruiter"
-                          : "advisor"
+                          : "advisor",
                     );
                     const role = {
                       isStudent: value.toString() == "Học sinh",
