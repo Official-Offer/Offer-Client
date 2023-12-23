@@ -50,6 +50,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
       if (selectedFile) {
         const resumeData = new FormData();
         resumeData.append("resume", selectedFile);
+        resumeData.append("uploading_resume", "true");
         return await updateStudentResume(resumeData);
       }
     },

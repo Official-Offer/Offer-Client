@@ -77,7 +77,8 @@ export const getStudentResume = async () => {
 };
 
 export const updateStudentResume = async (file: FormData) => {
-  const response = await request.post(`/students/resume/`, file);
+  const id = getCookie("id");
+  const response = await request.patch(`/students/${id}/files/`, file);
   return response.data;
 };
 
@@ -89,6 +90,7 @@ export const deleteStudentResume = async (pk: number) => {
 // Educations
 export const getStudentEducations = async () => {
   const response = await request.get(`/students/educations/`);
+  
   const educations = response.data;
   // If school's id exists, fetch its name
   for (const education of educations) {
