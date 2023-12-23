@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
@@ -24,6 +25,7 @@ import {
 } from "@services/apiStudent";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
+import { getMajorList } from "@services/apiSchool";
 import { getJob } from "@services/apiJob";
 
 const profile = {
@@ -55,13 +57,13 @@ const info = {
 const eduFieldItems = {
   itemTitle: "Trường",
   dataIDLabel: "school",
-  dataName: "schoolName",
+  dataName: ["schoolName", "majors"],
   disableEndDate: false,
-  layout: ["study_fields", "gpa"],
+  layout: ["majors", "gpa"],
   labelToAPI: {
     itemTitle: "schoolName",
     GPA: "gpa",
-    "Ngành học": "study_fields",
+    "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
     "Ngày tốt nghiệp": "end_date",
     "Tôi đang học trường này": "is_current",
@@ -69,7 +71,7 @@ const eduFieldItems = {
   APIToLabel: {
     schoolName: "itemTitle",
     gpa: "GPA",
-    study_fields: "Ngành học",
+    majors: "Ngành học",
     start_date: "Ngày bắt đầu",
     end_date: "Ngày tốt nghiệp",
     is_current: "Tôi đang học trường này",
@@ -86,7 +88,7 @@ const eduFieldItems = {
 const expFieldItems = {
   itemTitle: "Vị Trí",
   dataIDLabel: "company",
-  dataName: "companyName",
+  dataName: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -119,67 +121,96 @@ const StudentProfile: NextPage = () => {
     string,
     any
   > | null>(null);
+  const id = getCookie("id");
   const studentQuery = useQuery({
-    queryKey: ["students/me"],
+    queryKey: [`students/${id}`],
     queryFn: getStudentDetails,
-    onSuccess: (res) => setStudentDetails(res),
+    onSuccess: (res) => {
+      setStudentDetails(res);
+    },
     onError: (err) => console.log(`Error: ${err}`),
   });
+
+  const getSchoolAndMajorList = async () => {
+    const schoolList = await getSchoolList();
+    const majorList = await getMajorList();
+    return [schoolList, majorList];
+  };
 
   return (
     <main className="split-layout">
       <section className="split-layout-sticky student-profile">
         <AntdCard
           loading={studentQuery.isLoading}
-          cover={<img src={profile.cover} />}
+          cover={<img src={studentDetails?.account.cover_photo} />}
           children={
             <div>
-              <img className="student-profile-avatar" src={profile.avatar} />
+              <img
+                className="student-profile-avatar"
+                src={studentDetails?.account.avatar}
+              />
               <div className="student-profile-header">
-                <h2>{studentDetails?.name}</h2>
+                <h2>
+                  {studentDetails?.account.first_name +
+                    " " +
+                    studentDetails?.account.last_name}
+                </h2>
                 <span>
-                  {studentDetails?.expected_graduation === undefined
+                  {studentDetails?.expected_graduation_date === undefined
                     ? "Ngày không xác định"
                     : new Date(
-                        studentDetails?.expected_graduation,
+                        studentDetails?.expected_graduation_date,
                       ).toDateString()}
                 </span>
               </div>
               <div className="student-profile-info">
-                {studentDetails?.school?.length === 0 ? (
-                  <h4>Trường không xác định</h4>
-                ) : (
-                  studentDetails?.school.map(
-                    (eachSchool: Record<string, string>) => (
-                      <h4>{eachSchool.name}</h4>
-                    ),
-                  )
-                )}
-                <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
+                {studentDetails?.school?.name ?? "Trường không xác định"}
+                <h4>
+                  {studentDetails?.majors
+                    ?.map((major: { name: string }) => major.name)
+                    .join(", ") ?? "Ngành không xác định"}
+                </h4>
                 <h4>Đang tìm kiếm công việc:</h4>
-                <h4>{studentDetails?.desired_job ?? "Không xác định"}</h4>
+                <h4>
+                  {studentDetails?.desired_industries
+                    ?.map((industry: { name: string }) => industry.name)
+                    .join(", " ?? "Chưa xác định")}
+                </h4>
               </div>
             </div>
           }
         />
       </section>
-      <section className="split-layout-item flex-md">
-        <ResumeCard isEditable />
+      <section className="split-layout-item flx-md">
+        <ResumeCard
+          isEditable
+          resumes={studentDetails?.resumes}
+          isError={studentQuery.isError}
+          isLoading={studentQuery.isLoading}
+          isRefetching={studentQuery.isRefetching}
+          refetchFunction={studentQuery.refetch}
+        />
         <ProfileCard
           isEditable
           fieldTitle="Giáo Dục"
           fieldItemProps={eduFieldItems}
-          getFunction={getStudentEducations}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.educations}
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
-          dataFunction={getSchoolList}
+          dataFunction={getSchoolAndMajorList}
         />
         <ProfileCard
           isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
-          getFunction={getStudentExperiences}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.experiences}
           addFunction={addStudentExperience}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperience}

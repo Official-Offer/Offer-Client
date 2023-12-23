@@ -9,8 +9,8 @@ import parse from "html-react-parser";
 export const getJobs = async () => {
   const response = await request.get(`/jobs`, {
     params: {
-      ordered_by: "created_at"
-    }
+      ordered_by: "created_at",
+    },
   });
   const jobList = response.data;
   return jobList;

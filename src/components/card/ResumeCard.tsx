@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal } from "antd";
 import {
@@ -19,37 +19,50 @@ import {
   updateStudentResume,
   deleteStudentResume,
 } from "@services/apiStudent";
+import { CardTray } from "@components/list";
+import type { Resume } from "src/types/dataTypes";
 
 type ResumeCardProps = {
   isEditable?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  refetchFunction: () => void;
+  isRefetching?: boolean;
+  resumes?: Record<string, Resume[]>;
 };
 
-export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
+export const ResumeCard: React.FC<ResumeCardProps> = ({
+  isEditable,
+  resumes,
+  isError,
+  isLoading,
+  isRefetching,
+  refetchFunction,
+}) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Holding the formData of the selected file before uploading
-  const [uploadedFile, setUploadedFile] = useState<string | null>(null); // Holding the URL of uploaded resume for downloading
+  const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>([]); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
-
+  const [activeResumeIndex, setActiveResumeIndex] = useState<number>(0); // For switching between resumes
   // Hooks
-  const downloadQuery = useQuery({
-    queryKey: ["resumeDownload"],
-    queryFn: getStudentResume,
-    onSuccess: (res) => setUploadedFile(!res.endsWith("media/") && res),
-    onError: (err) => console.log(`Download Error: ${err}`),
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
+  useEffect(() => {
+    console.log("Resumes: ", resumes);
+    if (resumes) {
+      setUploadedFiles(resumes.resumes);
+      setActiveResumeIndex(resumes.active_resume.pk);
+    }
+  }, [resumes, isError, isLoading, isRefetching]);
   const uploadMutation = useMutation({
     mutationFn: async () => {
       if (selectedFile) {
         const resumeData = new FormData();
         resumeData.append("resume", selectedFile);
+        resumeData.append("uploading_resume", "true");
         return await updateStudentResume(resumeData);
       }
     },
     onSuccess: () => {
-      downloadQuery.refetch();
+      refetchFunction();
       if (resetTimer) clearTimeout(resetTimer);
       setResetTimer(
         setTimeout(() => {
@@ -61,9 +74,9 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteStudentResume,
+    mutationFn: (pk: number) => deleteStudentResume(pk),
     onSuccess: () => {
-      downloadQuery.refetch();
+      refetchFunction();
     },
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
@@ -81,7 +94,8 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
   };
 
   const handleDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    pk: number,
   ) => {
     event.preventDefault();
     Modal.confirm({
@@ -90,15 +104,15 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
       okText: `Xóa`,
       cancelText: `Không, cảm ơn`,
       onOk() {
-        deleteMutation.mutate();
+        deleteMutation.mutate(pk);
       },
     });
   };
-
+  //TODO: Render multiple resumes and allow user to upload.
   return (
     <AntdCard
       className="main-panel-card"
-      loading={downloadQuery.isLoading || downloadQuery.isRefetching}
+      loading={isLoading || isRefetching}
       title={
         <div className="main-panel-header">
           <h2>CV</h2>
@@ -158,38 +172,44 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable }) => {
           )}
         </div>
       }
+      // eslint-disable-next-line react/no-children-prop
       children={
-        downloadQuery.isLoading ? (
+        isLoading ? (
           <div>Đang tải...</div>
-        ) : !uploadedFile || uploadedFile.length < 0 ? (
+        ) : !uploadedFiles || uploadedFiles.length < 0 ? (
           <div>Vui lòng tải lên CV</div>
         ) : (
-          <StyledResumeCard>
-            <h3>CV hiện tại</h3>
-            <div className="btn-list-horizontal">
-              <a
-                className="btn-list-horizontal-expand"
-                href={uploadedFile}
-                target="_blank"
-              >
-                <IconButton round fullWidth backgroundColor="#8799AE">
-                  <div className="btn-body">
-                    <span>Tải xuống</span>
-                    <CloudDownloadOutlined className="icon-md" />
-                  </div>
-                </IconButton>
-              </a>
-              {isEditable && (
-                <Button
-                  danger
-                  shape="circle"
-                  loading={deleteMutation.isLoading}
-                  icon={<DeleteOutlined />}
-                  onClick={handleDelete}
-                />
-              )}
-            </div>
-          </StyledResumeCard>
+          <CardTray
+            cardList={uploadedFiles.map((uploadedFile) => (
+              // eslint-disable-next-line react/jsx-key
+              <StyledResumeCard>
+                {uploadedFile.pk == activeResumeIndex && <h3>CV hiện tại</h3>}
+                <div className="btn-list-horizontal">
+                  <a
+                    className="btn-list-horizontal-expand"
+                    href={uploadedFile.resume}
+                    target="_blank"
+                  >
+                    <IconButton round fullWidth backgroundColor="#8799AE">
+                      <div className="btn-body">
+                        <span>Tải xuống</span>
+                        <CloudDownloadOutlined className="icon-md" />
+                      </div>
+                    </IconButton>
+                  </a>
+                  {isEditable && (
+                    <Button
+                      danger
+                      shape="circle"
+                      loading={deleteMutation.isLoading}
+                      icon={<DeleteOutlined />}
+                      onClick={(event) => handleDelete(event, uploadedFile.pk)}
+                    />
+                  )}
+                </div>
+              </StyledResumeCard>
+            ))}
+          />
         )
       }
     />

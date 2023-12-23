@@ -57,14 +57,14 @@ export const useDisplayJobs = () => {
       .filter((job) => {
         if (
           Object.keys(filters.jobTypes).length !== 0 &&
-          !Object.values(filters.jobTypes).every((value) => !value) 
+          !Object.values(filters.jobTypes).every((value) => !value)
           // && !filters.jobTypes[job.job_type]
         ) {
           return false;
         }
         if (
           Object.keys(filters.workTypes).length !== 0 &&
-          !Object.values(filters.workTypes).every((value) => !value) 
+          !Object.values(filters.workTypes).every((value) => !value)
           //  && !filters.workTypes[job.work_type]
         ) {
           return false;

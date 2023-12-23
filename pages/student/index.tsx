@@ -229,6 +229,7 @@ const Home: NextPage = () => {
                     ))
               }
               itemSize="quarter"
+              slidesToScroll={4}
             />
           </AntdCard>
         </section>

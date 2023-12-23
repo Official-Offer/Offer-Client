@@ -41,9 +41,10 @@ const Login: NextPage = () => {
           ? data.access_token
           : data.access
             ? data.access
-            : data.token
+            : data.token,
       );
       setCookie("id", data.pk ? data.pk : data.id);
+      setCookie("avatar", data.avatar);
       // dispatch(setID(data.id));
       if (data.role == "guest") {
         setSelectRole(true);
@@ -51,14 +52,16 @@ const Login: NextPage = () => {
         setCookie("role", data.role);
         setCookie(
           "orgName",
-          data.organization?.name ? data.organization?.name : "Name"
+          data.organization?.name ? data.organization?.name : "Name",
         );
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
         dispatch(
-          setCompany(data.organization?.name ? data.organization?.name : "Name")
+          setCompany(
+            data.organization?.name ? data.organization?.name : "Name",
+          ),
         );
         dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1")
+          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
         );
         router
           .push({
@@ -92,14 +95,14 @@ const Login: NextPage = () => {
           ? data.access_token
           : data.access
             ? data.access
-            : data.token
+            : data.token,
       );
       setToken(
         data.access_token
           ? data.access_token
           : data.access
             ? data.access
-            : data.token
+            : data.token,
       );
       setCookie("id", data.pk ? data.pk : data.id);
       // dispatch(setID( data.pk ? data.pk : data.id));
@@ -109,14 +112,16 @@ const Login: NextPage = () => {
         setCookie("role", data.role);
         setCookie(
           "orgName",
-          data.organization?.name ? data.organization?.name : "Name"
+          data.organization?.name ? data.organization?.name : "Name",
         );
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
         dispatch(
-          setCompany(data.organization?.name ? data.organization?.name : "Name")
+          setCompany(
+            data.organization?.name ? data.organization?.name : "Name",
+          ),
         );
         dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1")
+          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
         );
         router
           .push({
@@ -265,7 +270,7 @@ const Login: NextPage = () => {
                         ? "student"
                         : value.toString() == "Nhà tuyển dụng"
                           ? "recruiter"
-                          : "advisor"
+                          : "advisor",
                     );
                     const role = {
                       isStudent: value.toString() == "Học sinh",

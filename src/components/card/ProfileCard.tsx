@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/jsx-key */
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Divider } from "antd";
@@ -17,7 +18,7 @@ type ProfileCardProps = {
   fieldItemProps: {
     itemTitle: string;
     dataIDLabel: string;
-    dataName: string;
+    dataName: string[];
     disableEndDate: boolean;
     layout: string[];
     labelToAPI: Record<string, string>;
@@ -25,18 +26,24 @@ type ProfileCardProps = {
     itemType: Record<string, string>;
     isRequired: Record<string, boolean>;
   };
-  getFunction: () => Promise<Record<string, unknown>[]>;
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: Record<string, unknown>[];
+  refetchFunction: () => void;
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
   deleteFunction?: (id: number) => void;
-  dataFunction: () => Promise<Record<string, unknown>[]>;
+  dataFunction: () => Promise<Record<string, unknown>[][]>;
 };
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
   isEditable,
   fieldTitle,
   fieldItemProps,
-  getFunction,
+  isLoading,
+  isError,
+  data,
+  refetchFunction,
   addFunction,
   editFunction,
   deleteFunction,
@@ -47,30 +54,26 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   // States
   const [queryItemList, setQueryItemList] = useState<Record<string, any>[]>([]);
-  const [dataArr, setDataArr] = useState<Record<string, unknown>[]>([]);
+  const [dataArr, setDataArr] = useState<Record<string, unknown>[][]>([]);
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(
     queryItemList.map(() => false),
   );
-
+  console.log("Data from educations: ", data);
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
-  const itemsQuery = useQuery({
-    queryKey: [fieldTitle],
-    queryFn: getFunction,
-    onSuccess: (res: Record<string, any>[]) =>
-      setQueryItemList(
-        res.map((item) => {
-          item.start_date = moment(item.start_date);
-          item.end_date = moment(item.end_date);
-          return item;
-        }),
-      ),
-    onError: (err) =>
-      console.log(`Not able to load profileCard's data: ${err}`),
-    refetchOnWindowFocus: false,
-  });
+
+  useEffect(() => {
+    if (data) {
+      if (fieldItemProps.dataIDLabel === "school") {
+        for (let i = 0; i < data.length; i++) {
+          data[i].majors = data[i].majors?.map((item: any) => item.name);
+        }
+      }
+      setQueryItemList(data);
+    }
+  }, [data, isLoading]);
 
   // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
   const dataQuery = useQuery({
@@ -96,7 +99,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   return (
     <AntdCard
       className="main-panel-card"
-      loading={itemsQuery.isLoading || itemsQuery.isRefetching}
+      loading={isLoading}
       title={
         <div className="main-panel-header">
           <h2>{fieldTitle}</h2>
@@ -117,16 +120,16 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             fieldItemProps={fieldItemProps}
             fieldItems={queryItemList?.[0]}
             postFunction={addFunction}
-            refetchFunction={itemsQuery.refetch}
+            refetchFunction={refetchFunction}
             dataArr={dataArr}
           />
         </div>
       }
     >
       <div className="main-panel-layout">
-        {itemsQuery.isLoading ? (
+        {isLoading ? (
           <div>Đang tải...</div>
-        ) : queryItemList === undefined || itemsQuery.isError ? (
+        ) : queryItemList === undefined || isError ? (
           <div>Server hiện tại không đưa thông tin được.</div>
         ) : queryItemList.length === 0 ? (
           <div>Xin hãy thêm thông tin vào đây.</div>
@@ -147,6 +150,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
               );
             })
             .map((item, index) => {
+              const get_logo = (item: Record<string, any>) => {
+                return item[fieldItemProps.dataIDLabel]?.logo ?? logoURL;
+              };
               return (
                 <div>
                   {index !== 0 && <Divider />}
@@ -160,12 +166,12 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                     fieldItems={queryItemList[index]}
                     postFunction={editFunction}
                     deleteFunction={deleteFunction}
-                    refetchFunction={itemsQuery.refetch}
+                    refetchFunction={refetchFunction}
                     dataArr={dataArr}
                   />
                   <div className="main-panel-info">
                     <div className="main-panel-info-logo">
-                      <img src={logoURL} />
+                      <img src={get_logo(item)} />
                     </div>
                     <div className="main-panel-info-center">
                       <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>

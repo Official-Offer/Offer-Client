@@ -4,7 +4,8 @@ export const replaceUrl = (
   deleteOtherParams?: boolean,
 ) => {
   const { as, url } = window.history.state;
-  const baseUrl = process.env.BASE_URL || "https://offer-client-offer.vercel.app/";
+  const baseUrl =
+    process.env.BASE_URL || "https://offer-client-offer.vercel.app/";
   const urlObj = new URL(url, baseUrl);
   const queryParams = new URLSearchParams(urlObj.search);
 
