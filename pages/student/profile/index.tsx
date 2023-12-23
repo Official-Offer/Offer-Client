@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
@@ -25,6 +26,7 @@ import {
 } from "@services/apiStudent";
 import { getSchoolList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
+import { getMajorList } from "@services/apiSchool";
 import { getJob } from "@services/apiJob";
 
 const profile = {
@@ -54,7 +56,7 @@ const info = {
 const eduFieldItems = {
   itemTitle: "Trường",
   dataIDLabel: "school",
-  dataName: "schoolName",
+  dataName: ["schoolName", "majors"],
   disableEndDate: false,
   layout: ["majors", "gpa"],
   labelToAPI: {
@@ -85,7 +87,7 @@ const eduFieldItems = {
 const expFieldItems = {
   itemTitle: "Vị Trí",
   dataIDLabel: "company",
-  dataName: "companyName",
+  dataName: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -124,6 +126,12 @@ const StudentProfile: NextPage = () => {
     },
     onError: (err) => console.log(`Error: ${err}`),
   });
+
+  const getSchoolAndMajorList = async () => {
+    const schoolList = await getSchoolList();
+    const majorList = await getMajorList();
+    return [schoolList, majorList];
+  }
 
   return (
     <main className="split-layout">
@@ -182,7 +190,7 @@ const StudentProfile: NextPage = () => {
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
-          dataFunction={getSchoolList}
+          dataFunction={getSchoolAndMajorList}
         />
         <ProfileCard
           isEditable

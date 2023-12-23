@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -17,7 +18,7 @@ type ProfileCardProps = {
   fieldItemProps: {
     itemTitle: string;
     dataIDLabel: string;
-    dataName: string;
+    dataName: string[];
     disableEndDate: boolean;
     layout: string[];
     labelToAPI: Record<string, string>;
@@ -32,7 +33,7 @@ type ProfileCardProps = {
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
   deleteFunction?: (id: number) => void;
-  dataFunction: () => Promise<Record<string, unknown>[]>;
+  dataFunction: () => Promise<Record<string, unknown>[][]>;
 };
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -53,7 +54,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   // States
   const [queryItemList, setQueryItemList] = useState<Record<string, any>[]>([]);
-  const [dataArr, setDataArr] = useState<Record<string, unknown>[]>([]);
+  const [dataArr, setDataArr] = useState<Record<string, unknown>[][]>([]);
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(
     queryItemList.map(() => false),
