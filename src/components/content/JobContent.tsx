@@ -58,7 +58,9 @@ export const JobContent: React.FC<JobContentProps> = ({
   ).fill("/images/avatar.png");
 
   // States
-  const [openApplyForm, setOpenApplyForm] = useState<boolean>(isApplying ?? false);
+  const [openApplyForm, setOpenApplyForm] = useState<boolean>(
+    isApplying ?? false
+  );
 
   console.log("jobData", jobData);
   return (
@@ -95,16 +97,20 @@ export const JobContent: React.FC<JobContentProps> = ({
           <span>
             Đăng vào {formatDate(jobData?.created_at, "D/M/YYYY", true)}
           </span>
-          <span>&ensp;•&ensp;</span>
-          <span>
-            {moment(jobData?.deadline).diff(moment()) <= 0
-              ? "Đã đóng đơn"
-              : `Hạn nộp: ${formatDate(jobData?.deadline, "D/M/YYYY")}`}
-          </span>
+          {jobData?.deadline && (
+            <>
+              <span>&ensp;•&ensp;</span>
+              <span>
+                {moment(jobData?.deadline).diff(moment()) <= 0
+                  ? "Đã đóng đơn"
+                  : `Hạn nộp: ${formatDate(jobData?.deadline, "D/M/YYYY")}`}
+              </span>
+            </>
+          )}
         </div>
         <img
           className="job-portal-description-logo"
-          src="/images/samsing.png"
+          src={jobData?.company.logo ?? "/images/samsung.png"}
         />
         <div className="job-portal-description-employees avatar-info-mini">
           <div>
@@ -125,7 +131,7 @@ export const JobContent: React.FC<JobContentProps> = ({
                 ? router.push(
                     `/student/jobs${
                       jobData?.pk ? `?id=${jobData.pk}` : ""
-                    }&apply=true`,
+                    }&apply=true`
                   )
                 : setOpenApplyForm(true)
             }
@@ -163,13 +169,13 @@ export const JobContent: React.FC<JobContentProps> = ({
               <h4>Mức lương:</h4>
               <div>
                 {/* {jobData?.lower_salary} - {jobData?.upper_salary} */}
-                {formatCurrency(jobData?.lower_salary, "Thỏa thuận")} - {" "} 
+                {formatCurrency(jobData?.lower_salary, "Thỏa thuận")} -{" "}
                 {formatCurrency(jobData?.upper_salary, "Thỏa thuận")}
               </div>
             </div>
             <div>
               <h5>Cấp bậc:</h5>
-              <div>Undergrad</div>
+              <div>{jobData?.levels ? jobData?.levels?.join(", "): "Không xác định"}</div>
             </div>
             <div>
               <h4>Địa điểm:</h4>
@@ -179,11 +185,11 @@ export const JobContent: React.FC<JobContentProps> = ({
           <div className="job-portal-description-info-section">
             <div>
               <h5>Hình thức làm việc:</h5>
-              <div>{translateJobType(jobData?.job_type)}</div>
+              <div>{jobData?.job_types? "Không xác định" : jobData?.job_types?.map((job_type) => translateJobType(job_type))}</div>
             </div>
             <div>
               <h5>Mô hình làm việc:</h5>
-              <div>{translateJobType(jobData?.work_type)}</div>
+              <div>{jobData?.work_types? "Không xác định" : jobData?.work_types?.map((work_type) => translateJobType(work_type))}</div>
             </div>
             <div>
               <h5>Yêu cầu ngành học:</h5>

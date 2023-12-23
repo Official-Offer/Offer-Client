@@ -15,6 +15,7 @@ import { setCompanyId, setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
 import { Button, Form, Input, Segmented } from "antd";
+import { LoadingPage } from "@components/loading/LoadingPage";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -128,7 +129,9 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <h1> Đang tải ... </h1>;
 
-  return (
+  return status == "authenticated" ? (
+    <LoadingPage />
+  ) : (
     <div className="register">
       <div className="register-sideBar">
         <LeftPanel />

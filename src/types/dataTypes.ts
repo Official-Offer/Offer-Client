@@ -100,9 +100,9 @@ export type Job = {
   pk: number;
   address: Address;
   title: string; // Max length of 100 characters
-  level?: string;
-  job_type: string;
-  work_type: string;
+  levels: string[];
+  job_types?: string[];
+  work_types?: string[];
   published: boolean;
   location?: string; // Max length of 100 characters, optional
   lower_salary: number; // Range: -2147483648 to 2147483647

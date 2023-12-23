@@ -34,14 +34,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const router = useRouter();
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
-  // const majorList = [
-  //   { value: 1, label: "Công nghệ thông tin" },
-  //   { value: 2, label: "Kinh tế" },
-  //   { value: 3, label: "Marketing" },
-  //   { value: 4, label: "Quản trị kinh doanh" },
-  //   { value: 5, label: "Luật" },
-  // ];
   const state = useSelector((state: RootState) => state.jobs);
+  console.log(state.major)
   const accountState = useSelector((state: RootState) => state.account);
   const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");

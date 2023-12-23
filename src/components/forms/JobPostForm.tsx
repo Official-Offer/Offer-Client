@@ -42,6 +42,7 @@ export const JobPostForm: React.FC<IForm> = ({
   const dispatch = useDispatch();
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
 
+  console.log(majorList);
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
@@ -89,8 +90,9 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleMajorChange = (value: any) => {
-    // console.log(value);
-    dispatch(setMajor(value.key));
+    console.log(value);
+    dispatch(setMajor(value.map((v: { key: any }) => v.key)));
+    // value.map((v: { key: any; }) => dispatch(setMajor(v.key)));
     // setMajor(majorList[value - 1]);
   };
   const state = useSelector((state: RootState) => state.jobs);
