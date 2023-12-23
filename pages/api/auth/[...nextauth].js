@@ -38,7 +38,7 @@ export default NextAuth({
       return token;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      return true
+      return true;
     },
     async session({ session, token, user }) {
       // console.log("token", token);

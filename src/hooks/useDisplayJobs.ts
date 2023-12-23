@@ -3,8 +3,9 @@ import { formatAddress } from "@utils/formatters/stringFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters, CompanyFilters } from "src/types/filterTypes";
 import type { Company } from "src/types/dataTypes";
+
 export const useDisplayJobs = () => {
-  const [page, setPage] = useState<number>(2);
+  const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(12);
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
   const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
@@ -51,7 +52,7 @@ export const useDisplayJobs = () => {
   };
 
   useEffect(() => {
-    console.log(originalJobs)
+    console.log(originalJobs);
     const displayed = originalJobs
       .filter((job) => {
         if (
@@ -104,11 +105,10 @@ export const useDisplayJobs = () => {
       .sort((a: Job, b: Job) => {
         if (sort === "date-posted") {
           return (
-            new Date(b.time_posted).getTime() -
-            new Date(a.time_posted).getTime()
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           );
         }
-        if (sort === "date_posted") {
+        if (sort === "date-updated") {
           return (
             new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
           );
@@ -151,4 +151,4 @@ export const useDisplayCompanies = () => {
     companies,
     setCompanies,
   };
-}
+};

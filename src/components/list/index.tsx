@@ -1,1 +1,1 @@
-export { CardTray } from "./CardTray";
+export { Carousel } from "./Carousel";

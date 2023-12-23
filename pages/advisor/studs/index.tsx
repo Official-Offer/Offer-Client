@@ -16,17 +16,16 @@ const Students: NextPage = () => {
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
 
   const [school, setSchool] = useState<Number>(
-    getCookie("orgId") ? Number(getCookie("orgId")) : 1
+    getCookie("orgId") ? Number(getCookie("orgId")) : 1,
   );
 
-  const studentQuery = useQuery(
-    ["jobs"], {
+  const studentQuery = useQuery(["jobs"], {
     queryFn: () => getStudentsFromSchool(school),
     onSuccess: (students) => {
       setData(students);
       setDataSet(students);
       console.log(students);
-      setSearchResults(students.map((student: { name: any; }) => student.name));
+      setSearchResults(students.map((student: { name: any }) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
   });
@@ -37,7 +36,7 @@ const Students: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
@@ -45,18 +44,18 @@ const Students: NextPage = () => {
     <div className="applicant">
       <h1 className="applicant-title">Học sinh</h1>
       <br />
-        <div className="applicant-table">
-          <BaseTable
-            dataset={data}
-            columns={StudentColumns}
-            placeholder={"Tìm học sinh"}
-            // handleFilterType={handleFilterType}
-            handleFilterSearch={handleFilterSearch}
-            searchResults={searchResults}
-            tableType={"Students"}
-            isLoading={studentQuery.isLoading}
-          />
-        </div>
+      <div className="applicant-table">
+        <BaseTable
+          dataset={data}
+          columns={StudentColumns}
+          placeholder={"Tìm học sinh"}
+          // handleFilterType={handleFilterType}
+          handleFilterSearch={handleFilterSearch}
+          searchResults={searchResults}
+          tableType={"Students"}
+          isLoading={studentQuery.isLoading}
+        />
+      </div>
     </div>
   );
 };

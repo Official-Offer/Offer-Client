@@ -9,4 +9,4 @@ export type JobFilters = {
 
 export type CompanyFilters = {
   isVerified: boolean;
-}
+};

@@ -24,8 +24,8 @@ const PostJobs: NextPage = () => {
           }}
           onSubmit={(): void => {
             school
-            ? router.push(`/advisor/postJobs/jobDesc?school=${school}`)
-            : router.push(`/advisor/postJobs/jobDesc`);
+              ? router.push(`/advisor/postJobs/jobDesc?school=${school}`)
+              : router.push(`/advisor/postJobs/jobDesc`);
           }}
         />
       </div>

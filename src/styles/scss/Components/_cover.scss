@@ -1,6 +1,6 @@
 .uni-cover {
   .ant-card-cover > img {
-    height: 255px;
+    height: 169px;
     object-fit: cover;
   }
 
@@ -26,6 +26,10 @@
       height: 100%;
       width: 100%;
     }
+  }
+
+  .card-title {
+    font-size: 1.5rem;
   }
 
   .logo-spacing {

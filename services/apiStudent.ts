@@ -44,12 +44,14 @@ export const getApplicantsFromJobs = async (id: number) => {
 };
 
 export const getStudentsFromSchool = async (school: any) => {
-  const response = (await request.get(`/students/`, {
-    params: {
-      page_size: 1000,
-      school, 
-    },
-  })).data.results;
+  const response = (
+    await request.get(`/students/`, {
+      params: {
+        page_size: 1000,
+        school,
+      },
+    })
+  ).data.results;
   console.log(response);
   // const schoolApplicants = ["1", "2", "3", "4"];
   return response.map((student: any) => ({
@@ -97,7 +99,7 @@ export const getStudentEducations = async () => {
 
 export const editStudentEducation = async (
   id: number,
-  input: Record<string, unknown>
+  input: Record<string, unknown>,
 ) => {
   const response = await request.put(`/students/educations/${id}/`, input);
   return response.data;
@@ -126,7 +128,7 @@ export const getStudentExperiences = async () => {
 
 export const editStudentExperience = async (
   id: number,
-  input: Record<string, unknown>
+  input: Record<string, unknown>,
 ) => {
   const response = await request.put(`/students/experiences/${id}/`, input);
   return response.data;

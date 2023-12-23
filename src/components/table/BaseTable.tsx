@@ -51,7 +51,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
       console.log(
         `selectedRowKeys: ${selectedRowKeys}`,
         "selectedRows: ",
-        selectedRows
+        selectedRows,
       );
     },
     onSelect: (record, selected, selectedRows) => {
@@ -90,38 +90,60 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         </div> */}
         {(handleAdd || handleVerify || handleDelete) && (
           <div className="table-functions-add">
-            {handleVerify && <IconButton
-              round
-              className=""
-              backgroundColor={"#DE3163"}
-              onClick={() => {
-                jobIDs.forEach((id) => {
-                  handleVerify?.(id, false);
-                });
-              }}
-            >
-              <div className="btn-body">
-                <span>Từ chối</span>
-                <span>
-                  <MinusCircleFilled />
-                </span>
-              </div>
-            </IconButton>}
+            {handleVerify && (
+              <IconButton
+                round
+                className=""
+                backgroundColor={"#DE3163"}
+                onClick={() => {
+                  jobIDs.forEach((id) => {
+                    handleVerify?.(id, false);
+                  });
+                }}
+              >
+                <div className="btn-body">
+                  <span>Từ chối</span>
+                  <span>
+                    <MinusCircleFilled />
+                  </span>
+                </div>
+              </IconButton>
+            )}
 
             <IconButton
               round
               className=""
-              backgroundColor={handleAdd ? "#D30B81" : handleDelete ? "#DE3163" : "#228B22"}
-              onClick={handleAdd ? handleAdd : handleDelete ? handleDelete : () => {
-                jobIDs.forEach((id) => {
-                  handleVerify?.(id, true);
-                });
-              }}
+              backgroundColor={
+                handleAdd ? "#D30B81" : handleDelete ? "#DE3163" : "#228B22"
+              }
+              onClick={
+                handleAdd
+                  ? handleAdd
+                  : handleDelete
+                    ? handleDelete
+                    : () => {
+                        jobIDs.forEach((id) => {
+                          handleVerify?.(id, true);
+                        });
+                      }
+              }
             >
               <div className="btn-body">
-                <span>{handleAdd ? `Tạo công việc` : handleDelete ? `Xoá công việc`: `Duyệt công việc`}</span>
                 <span>
-                  {handleAdd ? <PlusOutlined /> : handleDelete ? <DeleteOutlined /> : <CheckCircleFilled />}
+                  {handleAdd
+                    ? `Tạo công việc`
+                    : handleDelete
+                      ? `Xoá công việc`
+                      : `Duyệt công việc`}
+                </span>
+                <span>
+                  {handleAdd ? (
+                    <PlusOutlined />
+                  ) : handleDelete ? (
+                    <DeleteOutlined />
+                  ) : (
+                    <CheckCircleFilled />
+                  )}
                 </span>
               </div>
             </IconButton>

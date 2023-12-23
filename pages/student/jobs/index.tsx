@@ -14,6 +14,7 @@ import {
   Space,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import Split from "react-split";
 import { getJobs } from "@services/apiJob";
 import { JobFilterNavbar } from "@components/navbar/JobFilterNavbar";
 import { JobCard } from "@components/card/JobCard";
@@ -28,6 +29,7 @@ import type { JobFilters } from "src/types/filterTypes";
 const StudentJobs: NextPage = () => {
   const searchParams = useSearchParams();
   const jobId = parseInt(searchParams.get("id") ?? "0");
+  const isApplying = searchParams.get("apply") === "true";
   const router = useRouter();
 
   const display = useDisplayJobs();
@@ -82,7 +84,7 @@ const StudentJobs: NextPage = () => {
   const updatePage = (id: number | unknown) => {
     if (typeof id === "number") {
       setActiveCardIndex(jobIndexMap.get(id) ?? 0);
-      replaceUrl("id", `${id}`);
+      replaceUrl("id", `${id}`, true);
     }
   };
 
@@ -125,8 +127,13 @@ const StudentJobs: NextPage = () => {
   return (
     <div>
       <JobFilterNavbar displayHook={display} />
-      <div className="job-portal split-layout no-padding">
-        <div className="split-layout-item flex-sm no-padding">
+      <Split
+        className="split"
+        direction="horizontal"
+        sizes={[25, 75]}
+        minSize={[200, 600]}
+      >
+        <div>
           <ul className="job-portal-list">
             <li className="job-portal-list-result">
               {jobQuery.isLoading
@@ -168,16 +175,19 @@ const StudentJobs: NextPage = () => {
             }
           </ul>
         </div>
-        <div className="split-layout-item flex-xl no-padding">
+        <div>
           <JobContent
             isLoading={jobQuery.isLoading}
+            isApplying={isApplying}
             jobData={displayedJobs?.[activeCardIndex]}
             bookmarkClicked={jobContentBookmarkClicked}
             setBookmarkClicked={setJobContentBookmarkClicked}
             setJobCardBookmarkClicked={setJobCardBookmarkClicked}
           />
         </div>
-      </div>
+      </Split>
+      {/* <div className="job-portal split-layout no-padding">
+      </div> */}
     </div>
   );
 };

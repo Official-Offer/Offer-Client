@@ -20,7 +20,7 @@ export default function LayoutGlobal(props: any): ReactElement {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Analytics />
-      <div>{props.children}</div>
+      <div class="global">{props.children}</div>
     </Nav>
   );
 }

@@ -84,7 +84,7 @@ const jobSlice = createSlice({
     },
     setSchoolIds: (state, action) => {
       state.schoolIds = action.payload;
-    }
+    },
   },
 });
 
@@ -103,7 +103,7 @@ export const {
   setReqs,
   setBenefits,
   setUpperSalary,
-  setSchoolIds
+  setSchoolIds,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

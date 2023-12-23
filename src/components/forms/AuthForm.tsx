@@ -41,18 +41,16 @@ export const AuthForm: React.FC<ILogInForm> = ({
     //check if all fields are filled
     if (!email || !password) {
       setError("Vui lòng điền đầy đủ thông tin");
-    }
-    else if (embedSignup && password !== rePassword) {
+    } else if (embedSignup && password !== rePassword) {
       setError("Mật khẩu không khớp");
     }
     //check if email has the right format
     else if (!email.includes("@")) {
       setError("Email không hợp lệ");
-    }
-    else {
+    } else {
       setError("");
     }
-    onSubmit({ email, password, error});
+    onSubmit({ email, password, error });
   };
 
   return (

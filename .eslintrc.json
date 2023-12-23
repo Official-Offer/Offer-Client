@@ -1,10 +1,6 @@
 {
   "extends": "next/core-web-vitals",
-  "ignorePatterns": [
-    ".github/",
-    ".next/",
-    "node_modules/"
-  ],
+  "ignorePatterns": [".github/", ".next/", "node_modules/"],
   "rules": {
     "@next/next/no-img-element": "warn",
     "react/jsx-key": "warn",

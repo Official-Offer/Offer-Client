@@ -86,7 +86,7 @@ const Applicants: NextPage = () => {
   const handleDeleteJob = () => {
     deleteJobMutation.mutate();
     // router.back();
-  }
+  };
 
   return (
     <div className="applicant">
@@ -103,19 +103,23 @@ const Applicants: NextPage = () => {
       </p>
       {/* <h3>Ứng viên cho công việc </h3> */}
       <h3 className="applicant-title">Ứng viên cho công việc {jobTitle}</h3>
-      {message ? <p>{message}</p> : <div className="applicant-table">
-        <BaseTable
-          dataset={data}
-          columns={ApplicantColumns}
-          placeholder={"Tìm ứng viên"}
-          // handleFilterType={handleFilterType}
-          handleFilterSearch={handleFilterSearch}
-          handleDelete={handleDeleteJob}
-          searchResults={searchResults}
-          tableType={"Applicants"}
-          isLoading={applicantQuery.isLoading || deleteJobMutation.isLoading}
-        />
-      </div>}
+      {message ? (
+        <p>{message}</p>
+      ) : (
+        <div className="applicant-table">
+          <BaseTable
+            dataset={data}
+            columns={ApplicantColumns}
+            placeholder={"Tìm ứng viên"}
+            // handleFilterType={handleFilterType}
+            handleFilterSearch={handleFilterSearch}
+            handleDelete={handleDeleteJob}
+            searchResults={searchResults}
+            tableType={"Applicants"}
+            isLoading={applicantQuery.isLoading || deleteJobMutation.isLoading}
+          />
+        </div>
+      )}
     </div>
   );
 };
