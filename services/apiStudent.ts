@@ -81,8 +81,8 @@ export const updateStudentResume = async (file: FormData) => {
   return response.data;
 };
 
-export const deleteStudentResume = async () => {
-  const response = await request.delete(`/students/resume/`);
+export const deleteStudentResume = async (pk: number) => {
+  const response = await request.delete(`/students/resume/${pk}`);
   return response.data;
 };
 

@@ -28,6 +28,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-i18next": "^7.0.1",
     "npm": "^9.6.4",
+    "nvm-win": "^0.2.4",
     "openai": "^4.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

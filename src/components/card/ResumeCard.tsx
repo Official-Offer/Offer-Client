@@ -66,7 +66,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
   });
 
   const deleteMutation = useMutation({
-    mutationFn: deleteStudentResume,
+    mutationFn: (pk: number)=>deleteStudentResume(pk),
     onSuccess: () => {
       refetchFunction();
     },
@@ -86,8 +86,10 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
   };
 
   const handleDelete = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    pk: number,
   ) => {
+    
     event.preventDefault();
     Modal.confirm({
       centered: true,
@@ -95,7 +97,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
       okText: `Xóa`,
       cancelText: `Không, cảm ơn`,
       onOk() {
-        deleteMutation.mutate();
+        deleteMutation.mutate(pk);
       },
     });
   };
@@ -163,6 +165,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
           )}
         </div>
       }
+      // eslint-disable-next-line react/no-children-prop
       children={
         isLoading ? (
           <div>Đang tải...</div>
@@ -171,6 +174,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
         ) : (
           <CardTray
             cardList={uploadedFiles.map((uploadedFile) => (
+              // eslint-disable-next-line react/jsx-key
               <StyledResumeCard>
                 {uploadedFile.pk== activeResumeIndex && <h3>CV hiện tại</h3>}
                 <div className="btn-list-horizontal">
@@ -192,7 +196,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({ isEditable, resumes, isE
                       shape="circle"
                       loading={deleteMutation.isLoading}
                       icon={<DeleteOutlined />}
-                      onClick={handleDelete}
+                      onClick={(event)=> handleDelete(event, uploadedFile.pk)}
                     />
                   )}
                 </div>

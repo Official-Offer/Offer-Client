@@ -28,8 +28,7 @@ import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 
 const profile = {
-  cover:
-    "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+  cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   avatar: "/images/avatar.png",
   name: "Kien To",
   year: "2021-2024",
@@ -49,8 +48,7 @@ const info = {
     { name: "Kien To", avatar: "/images/avatar.png" },
   ],
   date: new Date("2023-2-27"),
-  cover:
-    "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+  cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
 };
 
 const eduFieldItems = {
@@ -116,15 +114,14 @@ const expFieldItems = {
 };
 
 const StudentProfile: NextPage = () => {
-  const [studentDetails, setStudentDetails] = useState<Record<
-    string,
-    any
-  > | null>(null);
-  const id = getCookie("id")
+  const [studentDetails, setStudentDetails] = useState<Record<string, any> | null>(null);
+  const id = getCookie("id");
   const studentQuery = useQuery({
     queryKey: [`students/${id}`],
     queryFn: getStudentDetails,
-    onSuccess: (res) => { setStudentDetails(res) },
+    onSuccess: (res) => {
+      setStudentDetails(res);
+    },
     onError: (err) => console.log(`Error: ${err}`),
   });
 
@@ -138,20 +135,28 @@ const StudentProfile: NextPage = () => {
             <div>
               <img className="student-profile-avatar" src={studentDetails?.account.avatar} />
               <div className="student-profile-header">
-                <h2>{studentDetails?.account.first_name + " " + studentDetails?.account.last_name}</h2>
+                <h2>
+                  {studentDetails?.account.first_name + " " + studentDetails?.account.last_name}
+                </h2>
                 <span>
                   {studentDetails?.expected_graduation_date === undefined
                     ? "Ngày không xác định"
-                    : new Date(
-                      studentDetails?.expected_graduation_date,
-                    ).toDateString()}
+                    : new Date(studentDetails?.expected_graduation_date).toDateString()}
                 </span>
               </div>
               <div className="student-profile-info">
                 {studentDetails?.school?.name ?? "Trường không xác định"}
-                <h4>{studentDetails?.majors?.map((major: { name: string }) => major.name).join(', ') ?? "Ngành không xác định"}</h4>
+                <h4>
+                  {studentDetails?.majors
+                    ?.map((major: { name: string }) => major.name)
+                    .join(", ") ?? "Ngành không xác định"}
+                </h4>
                 <h4>Đang tìm kiếm công việc:</h4>
-                <h4>{studentDetails?.desired_industries?.map((industry: { name: string }) => industry.name).join(', ' ?? "Chưa xác định")}</h4>
+                <h4>
+                  {studentDetails?.desired_industries
+                    ?.map((industry: { name: string }) => industry.name)
+                    .join(", " ?? "Chưa xác định")}
+                </h4>
               </div>
             </div>
           }
