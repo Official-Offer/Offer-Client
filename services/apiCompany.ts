@@ -35,15 +35,16 @@ export const getCompaniesForAdvisor = async (id: number) => {
   //   { name: "Garena", desc: "rac" },
   //   { name: "Shoppee", desc: "rac" },
   // ];
-  return companies.map((company: any) => ({
-    key: "1",
-    ID: "2",
-    name: company.name,
-    description: company.description,
-    recruiters: 3,
-    unapproved_jobs: 200,
-    approved_jobs: 10000,
-    student_employees: 20,
-    compatibility: "70%",
-  }));
+  return companies;
+  // .map((company: any) => ({
+  //   key: "1",
+  //   ID: "2",
+  //   name: company.name,
+  //   description: company.description,
+  //   recruiters: 3,
+  //   unapproved_jobs: 200,
+  //   approved_jobs: 10000,
+  //   student_employees: 20,
+  //   compatibility: "70%",
+  // }));
 };

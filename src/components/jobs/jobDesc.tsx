@@ -35,7 +35,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const state = useSelector((state: RootState) => state.jobs);
-  console.log(state.major)
+  // console.log(state.major)
   const accountState = useSelector((state: RootState) => state.account);
   const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
   const [title, setTitle] = useState<string>(state.title || "Công việc mẫu");
@@ -154,7 +154,6 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             </h2>
           )}
         </div>
-        <h4>Mới đăng</h4>
         {/* {editing ? (
           <Select
             // mode="multiple"
@@ -165,7 +164,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             options={companies}
           />
         ) : ( */}
-        <p>{company}</p>
+        <h3>{company}</h3>
+        <p>Mới đăng</p>
         <div>
           {editing ? (
             <div style={{ marginBottom: "10px" }}>
