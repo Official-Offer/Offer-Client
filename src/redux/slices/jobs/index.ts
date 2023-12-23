@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { set } from "lodash";
 
 interface ICJob {
   title: string;
@@ -16,6 +17,7 @@ interface ICJob {
   upperSalary: number;
   jobId?: number;
   schoolIds?: number[];
+  applied: boolean;
 }
 
 const initialState: ICJob = {
@@ -34,6 +36,7 @@ const initialState: ICJob = {
   benefits: "",
   upperSalary: 0,
   schoolIds: [],
+  applied: false,
 };
 
 const jobSlice = createSlice({
@@ -85,6 +88,9 @@ const jobSlice = createSlice({
     setSchoolIds: (state, action) => {
       state.schoolIds = action.payload;
     },
+    setApplied: (state, action) => {
+      state.applied = action.payload;
+    }
   },
 });
 
@@ -104,6 +110,7 @@ export const {
   setBenefits,
   setUpperSalary,
   setSchoolIds,
+  setApplied
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
