@@ -22,6 +22,7 @@ import {
   formatNum,
   formatDate,
   dateDist,
+  formatCurrency,
 } from "@utils/formatters/numberFormat";
 import {
   translateJobType,
@@ -48,7 +49,7 @@ export const JobContent: React.FC<JobContentProps> = ({
 }) => {
   // Mock data
   const avatarURL = Array(
-    Math.min(jobData?.expected_no_applicants ?? 0, 3),
+    Math.min(jobData?.expected_no_applicants ?? 0, 3)
   ).fill("/images/avatar.png");
 
   // States
@@ -103,7 +104,7 @@ export const JobContent: React.FC<JobContentProps> = ({
         <div className="job-portal-description-employees avatar-info-mini">
           <div>
             {new Array(Math.min(3, jobData?.company.no_employees ?? 3)).fill(
-              <img src="/images/avatar.png" alt="Avatar" />,
+              <img src="/images/avatar.png" alt="Avatar" />
             )}
           </div>
           <h4>
@@ -144,7 +145,11 @@ export const JobContent: React.FC<JobContentProps> = ({
           <div className="job-portal-description-info-section">
             <div>
               <h4>Mức lương:</h4>
-              <div>{formatNum(jobData?.lower_salary, false, "Thỏa thuận")}</div>
+              <div>
+                {/* {jobData?.lower_salary} - {jobData?.upper_salary} */}
+                {formatCurrency(jobData?.lower_salary, "Thỏa thuận")} - {" "} 
+                {formatCurrency(jobData?.upper_salary, "Thỏa thuận")}
+              </div>
             </div>
             <div>
               <h4>Cấp bậc:</h4>
@@ -152,7 +157,7 @@ export const JobContent: React.FC<JobContentProps> = ({
             </div>
             <div>
               <h4>Địa điểm:</h4>
-              <div>{formatAddress(jobData?.company.address)}</div>
+              <div>{formatAddress(jobData?.address)}</div>
             </div>
           </div>
           <div className="job-portal-description-info-section">
@@ -170,7 +175,7 @@ export const JobContent: React.FC<JobContentProps> = ({
             </div>
           </div>
         </section>
-        <section className="job-portal-description-section">
+        {/* <section className="job-portal-description-section">
           <div className="job-portal-description-title">
             <h3>Yêu Cầu</h3>
           </div>
@@ -180,7 +185,7 @@ export const JobContent: React.FC<JobContentProps> = ({
             repudiandae, iusto, velit excepturi dignissimos maiores quisquam,
             optio labore nobis nisi ducimus possimus tempora.
           </div>
-        </section>
+        </section> */}
         <section>
           <div className="job-portal-description-title">
             <h3>Mô Tả</h3>
