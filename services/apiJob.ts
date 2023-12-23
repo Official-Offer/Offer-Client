@@ -289,6 +289,7 @@ export const deleteJob = async (id: any) => {
 };
 
 export const postJobApp = async (data: any) => {
+  
   const response = await request.post(`/job-applications/`, data);
   return response.data;
 };

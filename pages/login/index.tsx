@@ -140,7 +140,7 @@ const Login: NextPage = () => {
     onError: (error: any) => {
       console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
-      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
     },
   });
 
@@ -171,9 +171,9 @@ const Login: NextPage = () => {
 
   const { data: session, status } = useSession();
   useEffect(() => {
-    if (errorMessage) {
-      signIn("google");
-    }
+    // if (errorMessage) {
+    //   signIn("google");
+    // }
     if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
@@ -186,7 +186,7 @@ const Login: NextPage = () => {
   }, [status]);
 
   if (status === "loading") return <LoadingPage />;
-  return status == "authenticated" ? (
+  return status == "authenticated" && !errorMessage ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -291,7 +291,7 @@ const Login: NextPage = () => {
           >
             Dang Xuat
           </Button> */}
-          {errorMessage && (
+          {(errorMessage && status !== 'authenticated') && (
             <p className="register-content-error">{errorMessage}</p>
           )}
           <FootnoteForm embedLogin={true} type={""} />
