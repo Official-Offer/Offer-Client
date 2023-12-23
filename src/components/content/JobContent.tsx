@@ -157,7 +157,10 @@ export const JobContent: React.FC<JobContentProps> = ({
           <ApplyForm
             jobId={jobData?.pk}
             open={jobData && openApplyForm ? true : false}
-            submitFunction={postJobApp}
+            submitFunction={(data:any) => {
+              
+              return postJobApp(data)
+            }}
             onCancel={() => {
               setOpenApplyForm(false);
             }}
