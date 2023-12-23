@@ -5,11 +5,7 @@ export const formatNum = (
   long: boolean,
   alt?: string,
 ): string => {
-  console.log("number:", number)
-  if (number === 0) {
-    return "0"
-  }
-  else if (!number || isNaN(number)) {
+  if (number === undefined || number === null || isNaN(number)) {
     return alt || "Không xác định";
   }
   if (long) {

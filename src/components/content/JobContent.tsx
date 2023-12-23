@@ -30,6 +30,7 @@ import {
   translateMajors,
 } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
+import { BuildingOfficeIcon } from "@heroicons/react/24/solid";
 
 type JobContentProps = {
   isLoading?: boolean;
@@ -108,10 +109,15 @@ export const JobContent: React.FC<JobContentProps> = ({
             </>
           )}
         </div>
-        <img
-          className="job-portal-description-logo"
-          src={jobData?.company.logo ?? "/images/samsung.png"}
-        />
+        {
+          jobData?.company.logo ?
+            <img
+              className="job-portal-description-logo"
+              src={jobData.company.logo}
+            />
+          :
+            <BuildingOfficeIcon className="job-portal-description-logo" />
+        }
         <div className="job-portal-description-employees avatar-info-mini">
           <div>
             {new Array(Math.min(3, jobData?.company.no_employees ?? 3)).fill(

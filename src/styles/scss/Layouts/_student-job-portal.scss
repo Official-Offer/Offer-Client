@@ -204,7 +204,8 @@
     }
 
     &-logo {
-      max-width: 72px;
+      object-fit: cover;
+      max-height: 24px;
       margin-bottom: 8px;
     }
 

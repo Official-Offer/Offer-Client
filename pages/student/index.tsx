@@ -92,12 +92,15 @@ const Home: NextPage = () => {
   } = useDisplayJobs();
 
   const { companies, setCompanies } = useDisplayCompanies();
+  const [jobPage, setJobPage] = useState<number>(1);
 
   const jobQuery = useQuery({
     queryKey: ["jobs list"],
-    queryFn: () => getJobsPerPage(1, 12),
+    queryFn: () => getJobsPerPage(jobPage, 12),
     onSuccess: (jobData: Record<string, any>) => {
       setJobs(jobData.results);
+      setSort("date-posted");
+      setJobPage(jobPage + 1);
     },
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
@@ -196,6 +199,9 @@ const Home: NextPage = () => {
                     ]
               }
               itemSize="full"
+              isAsync
+              isLoading
+              loadNextFunc={() => console.log("bruh")}
             />
           </AntdCard>
         </section>

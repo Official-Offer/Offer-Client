@@ -89,4 +89,11 @@
       background: $pinkish-red;
     }
   }
+
+  &__infinite-scroll-spinner {
+    flex: 0 0 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

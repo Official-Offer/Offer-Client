@@ -9,14 +9,17 @@ import useEmblaCarousel, {
   EmblaCarouselType,
 } from "embla-carousel-react";
 import { Card as AntdCard, Button } from "antd";
-import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, LoadingOutlined } from "@ant-design/icons";
 
 type CarouselProps = {
   items: any[];
   itemSize?: "quarter" | "full";
+  isAsync?: boolean;
+  isLoading?: boolean;
+  loadNextFunc?: () => void;
 };
 
-export const Carousel: React.FC<CarouselProps> = ({ items, itemSize }) => {
+export const Carousel: React.FC<CarouselProps> = ({ items, itemSize, isAsync, isLoading, nextFetchFunc }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     skipSnaps: true,
     slidesToScroll: 4,
@@ -29,6 +32,7 @@ export const Carousel: React.FC<CarouselProps> = ({ items, itemSize }) => {
   }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
+    if (isAsync && loadNextFunc) loadNextFunc();
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
@@ -62,9 +66,14 @@ export const Carousel: React.FC<CarouselProps> = ({ items, itemSize }) => {
               {item}
             </div>
           ))}
+          {isAsync && isLoading && nextFetchFunc && (
+            <div className="embla__infinite-scroll-spinner">
+              <LoadingOutlined />
+            </div>
+          )}
         </div>
       </div>
-
+      <h1>{isAsync && isLoading && nextFetchFunc && "heheheheheheh"}</h1>
       <div className="embla__buttons">
         <Button
           className="embla__prev"
