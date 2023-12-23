@@ -5,7 +5,11 @@ export const formatNum = (
   long: boolean,
   alt?: string,
 ): string => {
-  if (!number || isNaN(number)) {
+  console.log("number:", number)
+  if (number === 0) {
+    return "0"
+  }
+  else if (!number || isNaN(number)) {
     return alt || "Không xác định";
   }
   if (long) {
@@ -29,6 +33,21 @@ export const formatNum = (
       billion.toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " tỷ"
     );
   }
+};
+
+export const formatCurrency = (
+  number: number | undefined | null,
+  alt?: string,
+): string => {
+  if (number === 0) {
+    return "0"
+  }
+  else if (!number || isNaN(number)) {
+    return alt || "Không xác định";
+  }
+  // console.log(number)
+  number *= 1000000
+  return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
 };
 
 export const formatDate = (

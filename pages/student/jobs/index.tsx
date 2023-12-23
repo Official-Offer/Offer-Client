@@ -63,13 +63,15 @@ const StudentJobs: NextPage = () => {
   const jobQuery = useQuery({
     queryKey: ["jobslist"],
     queryFn: getJobs,
-    onSuccess: (jobData) =>
+    onSuccess: async (jobData) => {
+      // console.log(jobData);
       setJobs(
         jobData.results.sort((a: Job, b: Job) =>
           a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0,
         ),
-      ),
-    onError: (error) => console.log(`Error: ${error}`),
+      );
+    },
+    onError: (error) => {console.log(`Error: ${error}`)},
     refetchOnWindowFocus: false,
   });
 
