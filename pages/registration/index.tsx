@@ -36,13 +36,13 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
-  console.log("data", session);
-  console.log("status", status);
+  // console.log("data", session);
+  // console.log("status", status);
 
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
     onSuccess: async (data: any) => {
-      console.log(data);
+      // console.log(data);
       // Invalidate and refetch
       setCookie(
         "cookieToken",
@@ -69,7 +69,7 @@ const Registration: NextPage = () => {
         });
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
@@ -107,7 +107,7 @@ const Registration: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
@@ -231,7 +231,7 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
-                  console.log("org", org);
+                  // console.log("org", org);
                   if (!org) {
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;

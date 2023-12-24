@@ -62,10 +62,10 @@ export const getRecruitersForCompany = async () => {
 };
 
 export const getApplicantsForJob = async (id: any) => {
-  console.log(id);
+  // console.log(id);
   const response = await request.get(`/jobs/${id}/applications/`);
   const applicantList = response.data.message;
-  console.log(applicantList);
+  // console.log(applicantList);
 
   const applicants = [
     {
@@ -97,6 +97,6 @@ export const getApplicantsForJob = async (id: any) => {
   //   resume: app.resume,
   //   compatibility: app.compatibility,
   // }));
-  console.log(applicantList);
+  // console.log(applicantList);
   return applicantList;
 };

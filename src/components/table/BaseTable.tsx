@@ -48,20 +48,20 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
   const rowSelection: TableRowSelection<any> = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows,
-      );
+      // console.log(
+      //   `selectedRowKeys: ${selectedRowKeys}`,
+      //   "selectedRows: ",
+      //   selectedRows,
+      // );
     },
     onSelect: (record, selected, selectedRows) => {
       // router.push(`/recruiter/applicants/${record.id}`)
       setJobIDs(selectedRows.map((row) => row.key.pk));
-      console.log(record, selected, selectedRows);
+      // console.log(record, selected, selectedRows);
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
       setJobIDs(selectedRows.map((row) => row.key.pk));
-      console.log(selected, selectedRows, changeRows);
+      // console.log(selected, selectedRows, changeRows);
     },
   };
 

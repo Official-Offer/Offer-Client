@@ -17,7 +17,7 @@ const Jobs: NextPage = () => {
     queryKey: ["jobs", searchChange],
     queryFn: getAdvisorJobs,
     onSuccess: async (jobs) => {
-      console.log("job query", jobs);
+      // console.log("job query", jobs);
       setData(jobs);
       setDataSet(jobs);
 
@@ -38,14 +38,14 @@ const Jobs: NextPage = () => {
     setData(filteredData);
   };
 
-  console.log(getCookie("cookieToken"));
-  console.log(getCookie("orgName"));
+  // console.log(getCookie("cookieToken"));
+  // console.log(getCookie("orgName"));
 
   const verifyMutation = useMutation({
     mutationKey: ["verify"],
     mutationFn: verifyJobs,
     onSuccess: async (data: any) => {
-      console.log("verify", data);
+      // console.log("verify", data);
     },
     onError: (error: any) => {
       console.log(error.response.data.message);

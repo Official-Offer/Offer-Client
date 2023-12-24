@@ -25,7 +25,7 @@ const Contact: NextPage = () => {
       setSubmitted(true);
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage("Gửi thất bại");
     },
   });

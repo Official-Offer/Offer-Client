@@ -95,12 +95,12 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     mutationKey: ["post-job"],
     mutationFn: postJob,
     onSuccess: async (data) => {
-      console.log(data);
+      // console.log(data);
       dispatch(setJobId(data.id));
       onClick();
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
     },
   });
 
