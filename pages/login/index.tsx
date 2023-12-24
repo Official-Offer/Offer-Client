@@ -181,7 +181,7 @@ const Login: NextPage = () => {
   }, [status]);
 
   if (status === "loading") return <LoadingPage />;
-  return status == "authenticated" && !errorMessage ? (
+  return (status == "authenticated" && !errorMessage && !selectRole )? (
     <LoadingPage />
   ) : (
     <div className="register">
