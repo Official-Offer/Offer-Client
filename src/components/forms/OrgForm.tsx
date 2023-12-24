@@ -33,7 +33,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   // const role = getCookie("role");
   // const orgId = Number(getCookie("orgId")) - 1;
-  console.log(state.role);
+  // console.log(state.role);
   const isStudent = state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
@@ -47,7 +47,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
     queryFn: getOrgList,
     onSuccess: async (orgs) => {
       // add "school is not found" into the list
-      console.log(orgs);
+      // console.log(orgs);
       const schoolList = orgs.schools;
       const companyList = orgs.companies;
       //push the "not found" option to the list at the top
@@ -60,7 +60,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       setCompanies(companyList);
     },
     onError: () => {
-      console.log("error");
+      // console.log("error");
     },
   });
 
@@ -73,7 +73,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       setSubmitted(true);
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage("Gửi thất bại");
     },
   });

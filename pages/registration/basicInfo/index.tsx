@@ -24,11 +24,11 @@ const BasicInformation: NextPage = () => {
     // queryKey: ["register"],
     mutationFn: state.role.isStudent ? updateEducation : updateCompany,
     onSuccess: async () => {
-      console.log("updated");
+      // console.log("updated");
       setSubmitted(true);
     },
     onError: (error: any) => {
-      console.log(error);
+      // console.log(error);
     },
   });
 

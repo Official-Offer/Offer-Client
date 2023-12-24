@@ -18,7 +18,7 @@ export const getSearch = async (query: string) => {
     }
   }
 
-  console.log(searchResults);
+  // console.log(searchResults);
 
   return searchResults;
 };

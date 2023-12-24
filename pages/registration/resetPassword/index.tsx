@@ -30,7 +30,7 @@ const ResetPassword: NextPage = () => {
       return;
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
     },
   });
@@ -68,7 +68,7 @@ const ResetPassword: NextPage = () => {
               <PasswordForm
                 isLoading={mutation.isLoading}
                 onSubmit={(password: string) => {
-                  console.log(password);
+                  // console.log(password);
                   // setSubmitted(true);
                   mutation.mutate({
                     new_password: password,

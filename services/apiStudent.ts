@@ -52,7 +52,7 @@ export const getStudentsFromSchool = async (school: any) => {
       },
     })
   ).data.results;
-  console.log(response);
+  // console.log(response);
   // const schoolApplicants = ["1", "2", "3", "4"];
   return response.map((student: any) => ({
     key: student.account.id,

@@ -25,7 +25,7 @@ export const updateEducation = async (body: any) => {
 
 export const getSchoolsForRecruiter = async (id: number) => {
   const schools = (await request.get(`/schools/`)).data;
-  console.log(schools);
+  // console.log(schools);
   // const schools = [
   //   { name: "Bach Khoa", desc: "trường đại học kỹ thuật" },
   //   { name: "Ngoai Thuong", desc: "trường đại học kỹ thuật" },

@@ -49,7 +49,7 @@ export const GeneralSearch: React.FC<GeneralSearchProps> = ({ hidden }) => {
   };
 
   const handleBlur = () => {
-    console.log("what");
+    // console.log("what");
     setOpenDropdown(false);
     setHideBar(searchInput === "");
   };

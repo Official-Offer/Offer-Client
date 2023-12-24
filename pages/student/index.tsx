@@ -155,7 +155,7 @@ const Home: NextPage = () => {
   };
 
   const { data: session, status } = useSession();
-  console.log(session);
+  // console.log(session);
 
   // paginate the job list
   return (

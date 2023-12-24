@@ -29,7 +29,7 @@ const Applicants: NextPage = () => {
   const id = parseInt(router.query.id as string);
   const [message, setMessage] = useState<string>("");
 
-  console.log(id);
+  // console.log(id);
   const applicantQuery = useQuery(
     ["applicants"],
     () => getApplicantsForJob(id),
@@ -60,12 +60,12 @@ const Applicants: NextPage = () => {
 
   const deleteJobMutation = useMutation(() => deleteJob(id), {
     onSuccess: () => {
-      console.log("delete job successfully");
+      // console.log("delete job successfully");
       setMessage("Xóa công việc thành công");
       // queryClient.invalidateQueries("jobs");
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
       // message.error("Có lỗi xảy ra");
     },
   });

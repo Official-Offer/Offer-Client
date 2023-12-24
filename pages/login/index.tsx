@@ -34,7 +34,7 @@ const Login: NextPage = () => {
     mutationKey: ["login"],
     mutationFn: userLogIn,
     onSuccess: async (data) => {
-      console.log(data);
+      // console.log(data);
       setCookie(
         "cookieToken",
         data.access_token
@@ -75,7 +75,7 @@ const Login: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
@@ -84,7 +84,7 @@ const Login: NextPage = () => {
   const socialMutation = useMutation(["login"], {
     mutationFn: socialAuth,
     onSuccess: async (data) => {
-      console.log("social login", data);
+      // console.log("social login", data);
       // Invalidate and refetch
       setCookie(
         "cookieToken",
@@ -133,7 +133,7 @@ const Login: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
     },
@@ -143,7 +143,7 @@ const Login: NextPage = () => {
     mutationKey: ["roleAndOrg"],
     mutationFn: setRoleAndOrgToken,
     onSuccess: async (data) => {
-      console.log(data);
+      // console.log(data);
       router
         .push({
           pathname:
@@ -158,7 +158,7 @@ const Login: NextPage = () => {
         });
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage("Lỗi chọn tổ chức");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
@@ -172,7 +172,7 @@ const Login: NextPage = () => {
     if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
-      console.log("authenticated", accessToken);
+      // console.log("authenticated", accessToken);
       socialMutation.mutate({
         auth_token: accessToken,
       });
@@ -181,7 +181,7 @@ const Login: NextPage = () => {
   }, [status]);
 
   if (status === "loading") return <LoadingPage />;
-  return status == "authenticated" && !errorMessage ? (
+  return (status == "authenticated" && !errorMessage && !selectRole )? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -219,7 +219,7 @@ const Login: NextPage = () => {
               <h1>Chọn tổ chức và vai trò</h1>
               <OrgForm
                 onSubmit={(org: any) => {
-                  console.log("org", org);
+                  // console.log("org", org);
                   if (!org) {
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;

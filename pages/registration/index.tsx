@@ -36,13 +36,13 @@ const Registration: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
 
   const { data: session, status } = useSession();
-  console.log("data", session);
-  console.log("status", status);
+  // console.log("data", session);
+  // console.log("status", status);
 
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
     onSuccess: async (data: any) => {
-      console.log(data);
+      // console.log(data);
       // Invalidate and refetch
       setCookie(
         "cookieToken",
@@ -50,7 +50,7 @@ const Registration: NextPage = () => {
           ? data.access_token
           : data.access
             ? data.access
-            : data.token,
+            : data.token
       );
       // console.log(data.access);
       setCookie("id", data.pk ? data.pk : data.id);
@@ -62,14 +62,14 @@ const Registration: NextPage = () => {
             ? "/student"
             : data.role == "advisor"
               ? "/advisor/jobs"
-              : "/recruiter/jobs",
+              : "/recruiter/jobs"
         )
         .then(() => {
           router.reload();
         });
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
@@ -84,7 +84,7 @@ const Registration: NextPage = () => {
           ? data.message.access_token
           : data.message.access
             ? data.message.access
-            : data.message.token,
+            : data.message.token
       );
       setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
@@ -102,12 +102,12 @@ const Registration: NextPage = () => {
             ? "/student"
             : r.isAdvisor
               ? "/advisor/jobs"
-              : "/recruiter/jobs",
+              : "/recruiter/jobs"
         );
       }
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
@@ -127,9 +127,9 @@ const Registration: NextPage = () => {
     }
   }, [status]);
 
-  if (status === "loading") return <h1> Đang tải ... </h1>;
+  if (status === "loading") return <LoadingPage />;
 
-  return status == "authenticated" && !errorMessage ? (
+  return status == "authenticated" && !errorMessage && pwScreen ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -231,7 +231,7 @@ const Registration: NextPage = () => {
               <h1>Đăng ký</h1>
               <OrgForm
                 onSubmit={(org) => {
-                  console.log("org", org);
+                  // console.log("org", org);
                   if (!org) {
                     setErrorMessage("Vui lòng điền thông tin cần thiết");
                     return;
@@ -273,7 +273,7 @@ const Registration: NextPage = () => {
               )}
             </>
           )}
-          {(errorMessage && status !== 'authenticated') && (
+          {errorMessage && status !== "authenticated" && (
             <>
               <p className="register-content-error">{errorMessage}</p>
             </>
