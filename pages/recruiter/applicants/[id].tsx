@@ -18,7 +18,8 @@ import { formatDate } from "@utils/formatters/numberFormat";
 import { BackwardOutlined } from "@ant-design/icons";
 import { on } from "events";
 import { deleteJob } from "@services/apiJob";
-import { Button, message, Popconfirm } from "antd";
+import { Button, message, notification, Popconfirm } from "antd";
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -29,6 +30,7 @@ const Applicants: NextPage = () => {
   // make id an integer instead of string
   const id = parseInt(router.query.id as string);
   const [confirmMessage, setMessage] = useState<string>("");
+  const [api, contextHolder] = notification.useNotification();
 
   // console.log(id);
   const applicantQuery = useQuery(
@@ -37,16 +39,6 @@ const Applicants: NextPage = () => {
     {
       onSuccess: async (res: ApplicantDataType) => {
         console.log(res);
-        // ApplicantDataType[]
-        // const apps = res.applicants.map((app: any) => ({
-        //   key: app.id,
-        //   applied_at: formatDate(app.created_at, "D/M/YYYY"),
-        //   name:
-        //     app.student.account.firstName + " " + app.student.account.lastName,
-        //   school: app.student.school || "Không tìm thấy",
-        //   job: app.job.title || "Không tìm thấy",
-        //   resume: app.resume,
-        // }));
         setData(res.applicants);
         setDataSet(res.applicants);
         setJobTitle(res.job || " ");
@@ -60,16 +52,20 @@ const Applicants: NextPage = () => {
       onError: () => {},
     }
   );
+  const openNotification = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
 
   const deleteJobMutation = useMutation(() => deleteJob(id), {
     onSuccess: () => {
-      // console.log("delete job successfully");
+      openNotification("success", "Xóa công việc thành công", "");
       setMessage("Xóa công việc thành công");
-      // queryClient.invalidateQueries("jobs");
     },
     onError: (error) => {
-      // console.log(error);
-      // message.error("Có lỗi xảy ra");
+      openNotification("error", "Xóa công việc thất bại", "");
     },
   });
 
@@ -103,32 +99,19 @@ const Applicants: NextPage = () => {
         }}
         onClick={() => {
           router.back();
-          // setScreen(false);
         }}
       >
         <BackwardOutlined /> Quay lại
       </p>
-      {/* <h3>Ứng viên cho công việc </h3> */}
       <h3 className="applicant-title">Chi tiết công việc {jobTitle}</h3>
       {confirmMessage ? (
         <p>{confirmMessage}</p>
       ) : (
         <div className="applicant-table">
-          {/* <Popconfirm
-            title="Delete the task"
-            description="Are you sure to delete this task?"
-            onConfirm={confirm}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button danger>Xoá công việc</Button>
-          </Popconfirm> */}
           <BaseTable
             dataset={data}
             columns={ApplicantColumns}
             placeholder={"Tìm ứng viên"}
-            // handleFilterType={handleFilterType}
             handleFilterSearch={handleFilterSearch}
             handleDelete={handleDeleteJob}
             handleEdit={handleEditJob}
@@ -138,6 +121,7 @@ const Applicants: NextPage = () => {
           />
         </div>
       )}
+      {contextHolder}
     </div>
   );
 };

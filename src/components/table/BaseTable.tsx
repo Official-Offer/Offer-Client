@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Space, Table, Tag } from "antd";
+import { Popconfirm, Space, Table, Tag, message, notification } from "antd";
 import { ColumnsType } from "antd/es/table";
 import FilterType from "@components/filter/TypeFilter";
 import { FilterSearch } from "@components/search/FilterSearch";
@@ -32,6 +32,7 @@ type BaseTableProps = {
   isLoading?: boolean;
   tableType?: string;
 };
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export const BaseTable: React.FC<BaseTableProps> = ({
   dataset,
@@ -49,7 +50,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
 }) => {
   const router = useRouter();
   const [jobIDs, setJobIDs] = useState<string[]>([]);
-  // const type = dataType = unapprovedJob? UnapprovedJobDataType : ''
+  const [api, contextHolder] = notification.useNotification();
   const rowSelection: TableRowSelection<any> = {
     onChange: (selectedRowKeys, selectedRows) => {
       // console.log(
@@ -69,6 +70,16 @@ export const BaseTable: React.FC<BaseTableProps> = ({
     },
   };
 
+  const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
+    console.log(e);
+    // message.success('Xoá công việc thành công');
+    handleDelete?.();
+  };
+  
+  const cancel = (e: React.MouseEvent<HTMLElement> | undefined) => {
+    console.log(e);
+  };
+  
   return (
     <div>
       <div className="table-functions">
@@ -95,23 +106,42 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         {(handleAdd || handleVerify || handleDelete || handleEdit) && (
           <div className="table-functions-add">
             {handleVerify && (
-              <IconButton
-                round
-                className=""
-                backgroundColor={"#DE3163"}
-                onClick={() => {
-                  jobIDs.forEach((id) => {
-                    handleVerify?.(id, false);
-                  });
-                }}
-              >
-                <div className="btn-body">
-                  <span>Từ chối</span>
-                  <span>
-                    <MinusCircleFilled />
-                  </span>
-                </div>
-              </IconButton>
+              <div>
+                <IconButton
+                  round
+                  className=""
+                  backgroundColor={"#DE3163"}
+                  onClick={() => {
+                    jobIDs.forEach((id) => {
+                      handleVerify?.(id, false);
+                    });
+                  }}
+                >
+                  <div className="btn-body">
+                    <span>Từ chối</span>
+                    <span>
+                      <MinusCircleFilled />
+                    </span>
+                  </div>
+                </IconButton>
+                <IconButton
+                  round
+                  className=""
+                  backgroundColor={"#228B22"}
+                  onClick={() => {
+                    jobIDs.forEach((id) => {
+                      handleVerify?.(id, true);
+                    });
+                  }}
+                >
+                  <div className="btn-body">
+                    <span>Duyệt công việc</span>
+                    <span>
+                      <CheckCircleFilled />
+                    </span>
+                  </div>
+                </IconButton>
+              </div>
             )}
 
             {handleEdit && (
@@ -131,43 +161,47 @@ export const BaseTable: React.FC<BaseTableProps> = ({
                 </div>
               </IconButton>
             )}
-            <IconButton
-              round
-              className=""
-              backgroundColor={
-                handleAdd ? "#D30B81" : handleDelete ? "#DE3163" : "#228B22"
-              }
-              onClick={
-                handleAdd
-                  ? handleAdd
-                  : handleDelete
-                    ? handleDelete
-                    : () => {
-                        jobIDs.forEach((id) => {
-                          handleVerify?.(id, true);
-                        });
-                      }
-              }
-            >
-              <div className="btn-body">
-                <span>
-                  {handleAdd
-                    ? `Tạo công việc`
-                    : handleDelete
-                      ? `Xoá công việc`
-                      : `Duyệt công việc`}
-                </span>
-                <span>
-                  {handleAdd ? (
+
+            {handleAdd && (
+              <IconButton
+                round
+                className=""
+                backgroundColor={"#D30B81"}
+                onClick={handleAdd}
+              >
+                <div className="btn-body">
+                  <span>Tạo công việc</span>
+                  <span>
                     <PlusOutlined />
-                  ) : handleDelete ? (
-                    <DeleteOutlined />
-                  ) : (
-                    <CheckCircleFilled />
-                  )}
-                </span>
-              </div>
-            </IconButton>
+                  </span>
+                </div>
+              </IconButton>
+            )}
+
+            {handleDelete && (
+              <Popconfirm
+                title="Bạn có chắc chắn muốn xoá công việc này?"
+                // description="Are you sure to delete this task?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Có"
+                cancelText="Không"
+              >
+                <IconButton
+                  round
+                  className=""
+                  backgroundColor={"#D30B81"}
+                  onClick={()=>{}}
+                >
+                  <div className="btn-body">
+                    <span>Xoá công việc</span>
+                    <span>
+                      <DeleteOutlined />
+                    </span>
+                  </div>
+                </IconButton>
+              </Popconfirm>
+            )}
           </div>
         )}
       </div>
@@ -191,6 +225,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         dataSource={dataset}
         loading={isLoading}
       />
+      {contextHolder}
     </div>
   );
 };
