@@ -59,13 +59,12 @@ const info = {
 
 const eduFieldItems = {
   itemTitle: "Trường",
-  dataIDLabel: "school",
-  dataName: ["name", "majors"],
+  dataIdMap: ["itemTitle", "majors"],
+  dataName: ["schoolName", "majors"],
   disableEndDate: false,
   layout: ["majors", "gpa"],
   labelToAPI: {
     itemTitle: "school",
-    nestedItemTitle: "name",
     GPA: "gpa",
     "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
@@ -73,8 +72,7 @@ const eduFieldItems = {
     "Tôi đang học trường này": "is_current",
   },
   APIToLabel: {
-    school: "itemTitle",
-    name: "nestedItemTitle",
+    schoolName: "Trường",
     gpa: "GPA",
     majors: "Ngành học",
     start_date: "Ngày bắt đầu",
@@ -82,7 +80,7 @@ const eduFieldItems = {
     is_current: "Tôi đang học trường này",
   },
   itemType: {
-    study_fields: "object",
+    majors: "object",
     gpa: "number",
   },
   isRequired: {
@@ -192,7 +190,7 @@ const StudentProfile: NextPage = () => {
                       studentQuery.isLoading ? <Skeleton height="1rem" /> :
                         studentDetails?.expected_graduation_date
                           ? formatDate(studentDetails.expected_graduation_date,"D/M/YYYY")
-                          : "Không có ngày tốt nghiệp"
+                          : "Không xác định"
                     }
                   </span>
                 </div>
@@ -214,7 +212,7 @@ const StudentProfile: NextPage = () => {
                         studentQuery.isLoading ? <Skeleton height="1rem" /> :
                           studentDetails?.desired_industries?.length > 0 ?
                             studentDetails?.desired_industries?.map((industry: { name: string }) => industry.name)
-                            .join(", ") : "Chưa có nghề mong muốn"
+                            .join(", ") : "Không xác định"
                       }
                     </span>
                 </div>
@@ -259,7 +257,11 @@ const StudentProfile: NextPage = () => {
           dataFunction={getSchoolAndMajorList}
         />
       </section>
-      <section className="split-layout-sticky flex-sm"></section>
+      <section className="split-layout-sticky flex-sm student-profile">
+        <AntdCard>
+          <h3>Advisor</h3>
+        </AntdCard>
+      </section>
     </main>
   );
 };

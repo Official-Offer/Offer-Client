@@ -22,6 +22,7 @@ import {
   getStudentResume,
   updateStudentResume,
   deleteStudentResume,
+  updateStudentActiveResume
 } from "@services/apiStudent";
 import { Carousel } from "@components/list";
 import { formatOverflowText, extractFileName } from "@utils/formatters/stringFormat";
@@ -46,19 +47,31 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
 }) => {
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>();
-  const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>([]); // Holding the URL of uploaded resume for downloading
+  const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>(); // Holding the URL of uploaded resume for downloading
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
+  const [deletingResumeIndex, setDeletingResumeIndex] = useState<number | null>(); // For deleting the file
   const [activeResumeIndex, setActiveResumeIndex] = useState<number>(0); // For switching between resumes
+
   // Hooks
-  // useEffect(() => {
-  //   console.log("Resumes: ", resumes);
-  //   if (resumes) {
-  //     setUploadedFiles(resumes.resumes);
-  //     setActiveResumeIndex(resumes.active_resume?.pk ?? 0);
-  //   }
-  // }, [resumes, isError, isLoading, isRefetching]);
+  useEffect(() => {
+    console.log("Resumes: ", resumes);
+    if (resumes) {
+      setUploadedFiles(resumes.resumes);
+      setDeletingResumeIndex(null);
+
+      // Temporary until Thuan fixes active_index to active_pk
+      let activeIndex = 0;
+      resumes.resumes.forEach((resume, index) => {
+        if (resume.pk === resumes.active_resume?.pk) {
+          activeIndex = index;
+        }
+      })
+      setActiveResumeIndex(activeIndex);
+    }
+  }, [resumes]);
 
   const uploadMutation = useMutation({
+    mutationKey: ["upload"],
     mutationFn: async (selectedFile: File) => {
       const resumeData = new FormData();
       resumeData.append("resume", selectedFile);
@@ -71,19 +84,29 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
       setResetTimer(
         setTimeout(() => {
           setSelectedFile(null);
-        }, 2000),
+        }, 1000),
       );
     },
     onError: (err) => console.log(`Upload Error: ${err}`),
   });
 
   const deleteMutation = useMutation({
+    mutationKey: ["delete"],
     mutationFn: (pk: number) => deleteStudentResume(pk),
     onSuccess: () => {
       refetchFunction();
     },
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
+
+  const updateActiveResumeMutation = useMutation({
+    mutationKey: ["updateActiveResume"],
+    mutationFn: (pk: number) => updateStudentActiveResume(pk),
+    onSuccess: () => {
+      refetchFunction();
+    },
+    onError: (err) => console.log(`Update Active Resume Error: ${err}`),
+  })
 
   // Functions
   // const selectResume = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,15 +144,22 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
       okText: `Xóa`,
       cancelText: `Không, cảm ơn`,
       onOk() {
+        setDeletingResumeIndex(pk);
         deleteMutation.mutate(pk);
       },
     });
   };
+
+  const handleUpdateActiveResume = (pk: number) => {
+    setActiveResumeIndex(pk)
+    updateActiveResumeMutation.mutate(pk);
+  }
+
   //TODO: Render multiple resumes and allow user to upload.
   return (
     <AntdCard
       className="main-panel-card"
-      loading={isLoading || isRefetching}
+      loading={isLoading}
       title={
         <div className="main-panel-header">
           <h3>CV</h3>
@@ -219,14 +249,17 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
         ) : (
           <Carousel
             noMargin
-            slides={uploadedFiles.map((uploadedFile) => (
+            slidesToScroll={2}
+            slides={uploadedFiles.map((uploadedFile, index) => (
               // eslint-disable-next-line react/jsx-key
               <StyledResumeCard>
-                {uploadedFile.pk == activeResumeIndex && (
-                  <div className="resume-star">
+                <div className="resume-star" onClick={() => handleUpdateActiveResume(index)}>
+                {
+                // uploadedFile.pk === (resumes?.active_resume?.pk ?? -1) || 
+                  index === activeResumeIndex ? (
                     <StarIcon />
-                  </div>
-                )}
+                    ) : <StarIconOutlined />}
+                </div>
                 <h3 className="clamp-1">{extractFileName(uploadedFile.resume)}</h3>
                 <div className="btn-list-horizontal">
                   <a
@@ -246,7 +279,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
                       danger
                       type="primary"
                       shape="circle"
-                      loading={deleteMutation.isLoading}
+                      loading={deletingResumeIndex === uploadedFile.pk}
                       icon={<DeleteOutlined />}
                       onClick={(event) => handleDelete(event, uploadedFile.pk)}
                     />

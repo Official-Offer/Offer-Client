@@ -26,6 +26,10 @@
         object-fit: cover;
         height: 100%;
       }
+
+      .anticon-loading {
+        svg { font-size: $fs-7; }
+      }
     }
 
     &-header {
@@ -38,7 +42,7 @@
 
       &-item {
         display: flex;
-        align-items: center;
+        align-items: start;
         justify-content: stretch;
         margin-top: 4px;
         font-size: $fs-3;
@@ -145,6 +149,9 @@
       flex: 2;
       h3 { font-size: $fs-4;}
       b { font-weight: $fw-bold-3;}
+      &-date {
+        color: $grey-dark;
+      }
       &-description {
         padding-top: 8px;
       }

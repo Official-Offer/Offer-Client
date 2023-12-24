@@ -73,13 +73,19 @@
     padding: 8px;
     width: 100%;
     border-radius: 8px;
-    border: 1px solid #000000;
+    border: 2px solid #{$grey-light};
     // height: 45px;
     &-long {
       // height: 150px;
       border-radius: 8px;
       padding: 8px;
-      border: 1px solid #000000;
+      border: 2px solid #{$grey-light};
+    }
+    &:hover {
+      border-right-width: 2px !important;
+    }
+    &:focus {
+      border-right-width: 2px !important;
     }
   }
   &-date-picker {

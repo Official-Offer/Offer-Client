@@ -22,7 +22,7 @@ interface ProfileCardFormProps {
   fieldTitle: string;
   fieldItemProps: {
     itemTitle: string;
-    dataIDLabel: string;
+    dataIdMap: string[];
     dataName: string[];
     disableEndDate: boolean;
     layout: string[];
@@ -97,8 +97,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     },
     onError: (err) => console.log(`Delete Error: ${err}`),
   });
-  if (!props.isAdd) {
-  }
+  // if (!props.isAdd) {
+  // }
 
   // Functions
   const getLabel = (itemName: string, isLowerCase: boolean): string => {

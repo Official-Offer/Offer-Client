@@ -84,6 +84,16 @@ export const updateStudentResume = async (file: FormData) => {
   return response.data;
 };
 
+export const updateStudentActiveResume = async (pk: number) => {
+  const id = getCookie("id");
+  const response = await request.patch(`/students/${id}/`, {
+    resumes: {
+      active_index: pk,
+    },
+  });
+  return response.data;
+}
+
 export const deleteStudentResume = async (pk: number) => {
   const response = await request.delete(`/students/resume/${pk}`);
   return response.data;

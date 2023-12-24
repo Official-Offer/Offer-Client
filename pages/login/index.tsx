@@ -198,13 +198,13 @@ const Login: NextPage = () => {
           {!selectRole ? (
             <>
               <h1>Đăng nhập</h1>
-              <br />
               <Button
                 icon={<GoogleOutlined />}
                 onClick={() => {
                   deleteCookie("cookieToken");
                   signIn("google");
                 }}
+                className="sso-btn"
               >
                 {" "}
                 Đăng nhập với Google{" "}

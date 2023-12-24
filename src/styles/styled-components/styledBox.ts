@@ -180,6 +180,10 @@ export const StyledResumeCard = styled.div`
     top: 12px;
     right: 12px;
     width: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   span {

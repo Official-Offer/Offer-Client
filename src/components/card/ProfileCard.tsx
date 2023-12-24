@@ -10,16 +10,16 @@ import {
   PlusOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import { formatProfileData } from "@utils/formatters/dataFormat";
 import { formatDate } from "@utils/formatters/numberFormat";
 
-// I bet you would think about how shit this code is, and I agree
+// I bet you're thinking about how shit this code is, and I agree
 type ProfileCardProps = {
   isEditable?: boolean;
   fieldTitle: string;
   fieldItemProps: {
     itemTitle: string;
-    nestedItemTitle?: string;
-    dataIDLabel: string;
+    dataIdMap: string[];
     dataName: string[];
     disableEndDate: boolean;
     layout: string[];
@@ -37,6 +37,13 @@ type ProfileCardProps = {
   deleteFunction?: (id: number) => void;
   dataFunction: () => Promise<Record<string, unknown>[][]>;
 };
+
+/*
+  Layout:
+  - dates
+  - sections in the order of field `layout`
+  - description
+*/
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({
   isEditable,
@@ -176,9 +183,9 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                       <img src={get_logo(item)} />
                     </div>
                     <div className="main-panel-info-center">
-                      <h3>{fieldItemProps.labelToAPI.nestedItemTitle ? item[fieldItemProps.labelToAPI.itemTitle][fieldItemProps.labelToAPI.nestedItemTitle] : item[fieldItemProps.labelToAPI.itemTitle]}</h3>
+                      <h3>{formatProfileData(item[fieldItemProps.labelToAPI.itemTitle])}</h3>
                       {item.start_date && (
-                        <div>
+                        <div className="main-panel-info-center-date">
                           <span>
                             {formatDate(item.start_date, "MM/YYYY") +
                               " - " +
@@ -191,7 +198,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                       {fieldItemProps.layout.map((apiName) => (
                         <div>
                           <b>{fieldItemProps.APIToLabel[apiName]}</b>
-                          <span>{": " + (item[apiName] ?? "Không xác định")}</span>
+                          <span>{": " + formatProfileData(item[apiName])}</span>
                         </div>
                       ))}
                       <div className="main-panel-info-center-description">
