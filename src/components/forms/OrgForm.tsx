@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Select, Typography } from "antd";
+import { Alert, Form, Input, Select, Typography, notification } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { SubmitButton } from "@components/button/SubmitButton";
@@ -14,6 +14,7 @@ interface IOrgForm {
   isLoading: boolean;
   type?: string;
 }
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
@@ -33,7 +34,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   // const role = getCookie("role");
   // const orgId = Number(getCookie("orgId")) - 1;
-  console.log(state.role);
+  // console.log(state.role);
   const isStudent = state.role.isStudent || router.pathname.includes("student");
   const isRecruiter =
     state.role.isRecruiter || router.pathname.includes("recruiter");
@@ -41,13 +42,14 @@ export const OrgForm: React.FC<IOrgForm> = ({
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [api, contextHolder] = notification.useNotification();
 
   const orgQuery = useQuery({
     queryKey: ["orgs"],
     queryFn: getOrgList,
     onSuccess: async (orgs) => {
       // add "school is not found" into the list
-      console.log(orgs);
+      // console.log(orgs);
       const schoolList = orgs.schools;
       const companyList = orgs.companies;
       //push the "not found" option to the list at the top
@@ -60,7 +62,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       setCompanies(companyList);
     },
     onError: () => {
-      console.log("error");
+      // console.log("error");
     },
   });
 
@@ -70,14 +72,22 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSuccess: async (data: any) => {
       // Invalidate and refetch
       // router.reload();
+      openNotification("success", "Gửi thành công", "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể");
       setSubmitted(true);
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
+      openNotification("error", "Gửi thất bại", error.response.data.message);
       setErrorMessage("Gửi thất bại");
     },
   });
 
+  const openNotification = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(Org);
@@ -133,12 +143,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
             (submitted ? (
               <>
                 {contactMutation.isSuccess && (
-                  <p style={{ color: "green" }}>
-                    Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể
-                  </p>
+                  <Alert message="Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể" type="success" />
                 )}
                 {errorMessage && (
-                  <p className="register-content-error">{errorMessage}</p>
+                  <Alert message={errorMessage} type="error" />
                 )}
               </>
             ) : (
@@ -205,6 +213,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
             : handleSubmit
         }
       />
+      {contextHolder}
     </Form>
   );
 };

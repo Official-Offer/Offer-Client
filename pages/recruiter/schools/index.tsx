@@ -21,7 +21,7 @@ const Schools: NextPage = () => {
     queryKey: ["schools"],
     queryFn: () => getSchoolsForRecruiter(0),
     onSuccess: async (schools: School[]) => {
-      console.log(schools);
+      // console.log(schools);
       setData(schools);
       setDataSet(schools);
       setSearchResults(schools.map((school: any) => school.name));
@@ -46,7 +46,7 @@ const Schools: NextPage = () => {
   // };
 
   const handleFilterSearch = (value: string) => {
-    console.log(value);
+    // console.log(value);
     if (!value) {
       setData(dataset);
       return;

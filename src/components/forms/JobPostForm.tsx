@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { DatePicker, Form, Input, Select, SelectProps, Slider } from "antd";
+import {
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  SelectProps,
+  Slider,
+  notification,
+} from "antd";
 import {
   setCompany,
   setTitle,
@@ -12,10 +20,8 @@ import {
   setSalary,
   setMajor,
   setType,
-  setReqs,
-  setBenefits,
   setUpperSalary,
-  setCompanyId,
+  setCreatedAt,
 } from "@redux/actions";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
@@ -26,6 +32,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { majorList } from "@public/static/majorList";
+import { set } from "lodash";
 // import ReactQuill from 'react-quill';
 
 interface IForm {
@@ -33,6 +40,7 @@ interface IForm {
   onCancel: () => void;
   isLoading?: boolean;
 }
+type NotificationType = "success" | "info" | "warning" | "error";
 
 export const JobPostForm: React.FC<IForm> = ({
   onSubmit,
@@ -47,51 +55,72 @@ export const JobPostForm: React.FC<IForm> = ({
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
   const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
   const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
+  const [title, setTitl] = useState<any>("");
+  const [address, setAdd] = useState<string>("Hà Nội");
+  const [major, setMaj] = useState<any>([]);
+  const [salary, setSal] = useState<number>(0);
+  const [upperSalary, setUpperSal] = useState<number>(100);
+  const [type, setTyp] = useState<any>([]);
+  const [deadline, setDeadl] = useState<any>("");
+  const [level, setLev] = useState<any>("");
   const [desc, setDesc] = useState<any>("");
+  const [api, contextHolder] = notification.useNotification();
 
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string
+  ) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
   const marks: SliderMarks = {
     0: "0",
     100: "100",
   };
 
   const handleTitleChange = (event: any) => {
-    dispatch(setTitle(event.target.value));
+    setTitl(event.target.value);
   };
 
   const handleTypeChange = (value: any) => {
-    console.log(value);
-    dispatch(setType(value));
+    setTyp(value);
   };
 
   const handleDeadlineChange = (value: any) => {
     // console.log(moment(value).format("DD-MM-YYYY"));
-    dispatch(setDeadline(value.toDate()));
+    // dispatch(setDeadline(value.toDate()));
+    setDeadl(value.toDate());
   };
 
   const handleDescChange = (value: any) => {
     setDesc(value);
-    dispatch(setDescription(value));
+    // dispatch(setDescription(value));
   };
 
   const handleLevelChange = (value: any) => {
     // console.log(value);
-    dispatch(setLevel(value));
+    setLev(value);
+    // dispatch(setLevel(value));
   };
 
   const handleAddressChange = (value: any) => {
-    // console.log(value);
-    dispatch(setAddress(value));
+    setAdd(value);
+    // dispatch(setAddress(value));
   };
 
   const handleSalaryChange = (value: any) => {
     // console.log(value);
-    dispatch(setSalary(value[0]));
-    dispatch(setUpperSalary(value[1]));
+    setSal(value[0]);
+    setUpperSal(value[1]);
   };
 
   const handleMajorChange = (value: any) => {
     // console.log(value);
-    dispatch(setMajor(value.map((v: { key: any }) => v.key)));
+    // dispatch(setMajor(value.map((v: { key: any }) => v.key)));
+    setMaj(value.map((v: { key: any }) => v.key));
     // value.map((v: { key: any; }) => dispatch(setMajor(v.key)));
     // setMajor(majorList[value - 1]);
   };
@@ -99,10 +128,32 @@ export const JobPostForm: React.FC<IForm> = ({
 
   const handleContinue = (event: { preventDefault: () => void }) => {
     //don't let user continue if they haven't filled in all the required fields
-    if (!state.title || !state.address || !state.level || !state.description) {
-      alert("Vui lòng điền thông tin cần thiết");
+    if (!title) {
+      openNotification("error", "Vui lòng điền tiêu đề", "");
+      return;
+    }
+    if (!address) {
+      openNotification("error", "Vui lòng chọn địa điểm", "");
+      return;
+    }
+    if (!level) {
+      openNotification("error", "Vui lòng chọn cấp bậc", "");
+      return;
+    }
+    if (!desc) {
+      openNotification("error", "Vui lòng điền mô tả", "");
       return;
     } else {
+      dispatch(setTitle(title));
+      dispatch(setAddress(address));
+      dispatch(setLevel(level));
+      dispatch(setDescription(desc));
+      dispatch(setSalary(salary));
+      dispatch(setUpperSalary(upperSalary));
+      dispatch(setMajor(major));
+      dispatch(setType(type));
+      dispatch(setDeadline(deadline));
+      dispatch(setCreatedAt(new Date()));
       onSubmit();
       event.preventDefault();
     }
@@ -195,6 +246,7 @@ export const JobPostForm: React.FC<IForm> = ({
             onClick={handleContinue}
           />
         </div>
+        {contextHolder}
       </div>
     </Form>
   );

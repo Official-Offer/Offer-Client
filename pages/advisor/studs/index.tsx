@@ -24,12 +24,12 @@ const Students: NextPage = () => {
     onSuccess: (students) => {
       setData(students);
       setDataSet(students);
-      console.log(students);
+      // console.log(students);
       setSearchResults(students.map((student: { name: any }) => student.name));
     },
     onError: (error) => console.log(`Error: ${error}`),
   });
-  console.log(jobList);
+  // console.log(jobList);
   const handleFilterSearch = (value: string) => {
     if (!value) {
       setData(dataset);

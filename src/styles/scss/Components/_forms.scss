@@ -1,6 +1,12 @@
 .form {
   margin: 12px 0 12px 0;
-
+  &-description {
+    img {
+      // width: 100%;
+      // height: 100%;
+      object-fit: cover;
+    }
+  }
   &-flex {
     display: flex;
     flex-direction: column;
@@ -94,6 +100,11 @@
   &-desc {
     height: 10em;
     margin-bottom: 20px;
+    img {
+      // width: 100%;
+      // height: 100%;
+      object-fit: cover;
+    }
   }
   &-submit-button {
     margin-top: 4px;

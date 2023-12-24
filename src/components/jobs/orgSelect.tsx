@@ -29,7 +29,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
       setCompanies(companyList);
     },
     onError: () => {
-      console.log("error");
+      // console.log("error");
     },
   });
 
@@ -59,7 +59,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                 className="form-select"
                 bordered={false}
                 onChange={(value: any) => {
-                  console.log(value);
+                  // console.log(value);
                   if (isRecruiter) {
                     setSelectedOrgIds(
                       value.map((item: { key: any }) => Number(item.key)),

@@ -36,12 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const { data: session, status } = useSession();
   const role = getCookie("role");
   const conflict = role !== "student";
-  console.log("social login", session);
+  // console.log("social login", session);
   const loggedIn =
     (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
 
-  console.log("loggedIn?");
-  console.log(getCookie("cookieToken"));
+  // console.log("loggedIn?");
+  // console.log(getCookie("cookieToken"));
 
   // const [hideMesPanel, setHideMesPanel] = useState(true);
 

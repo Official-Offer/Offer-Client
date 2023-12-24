@@ -49,7 +49,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    "Ứng viên",
+    "Công việc",
     "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",
@@ -102,7 +102,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   //   }
   // }, [getCookie("cookieToken")]);
 
-  console.log(router.pathname);
+  // console.log(router.pathname);
 
   if (
     router.pathname.includes("recruiter") ||

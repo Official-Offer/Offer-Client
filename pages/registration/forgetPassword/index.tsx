@@ -8,23 +8,40 @@ import { RootState } from "@redux/reducers";
 import { useState } from "react";
 import { forgetPassword } from "@services/apiUser";
 import { BackwardOutlined } from "@ant-design/icons";
+import { Alert, notification } from "antd";
+type NotificationType = "success" | "info" | "warning" | "error";
+
 //create a next page for the student home page, code below
 const ForgetPassword: NextPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string
+  ) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
   const state = useSelector((state: RootState) => state.account);
   const mutation = useMutation({
     mutationFn: forgetPassword,
     onSuccess: async (data: any) => {
-      console.log("email have been sent");
-      queryClient.invalidateQueries({ queryKey: ["register"] });
+      // console.log("email have been sent");
+      openNotification(
+        "success",
+        "Thành công",
+        "Link để thay đổi mật khẩu đã được gửi đến email của bạn."
+      );
       setSubmitted(true);
     },
     onError: (error: any) => {
-      queryClient.invalidateQueries({ queryKey: ["register"] });
-      setErrorMessage("Email không tồn tại.");
+      openNotification("error", "Thất bại", "Email không tồn tại.");
     },
   });
 
@@ -35,44 +52,33 @@ const ForgetPassword: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {submitted ? (
-            <>
-              <p
-                style={{
-                  cursor: "pointer",
-                }}
+          <>
+            {" "}
+            <div className="register-content-back">
+              <BackwardOutlined
                 onClick={() => {
-                  setSubmitted(false);
-                }}
-              >
-                <BackwardOutlined /> Quay lại
-              </p>
-              <p style={{ color: "red" }}>
-                Link để thay đổi mật khẩu đã được gửi đến email của bạn.
-              </p>
-            </>
-          ) : (
-            <>
-              {" "}
-              <h1>Quên Mật khẩu</h1>
-              <EmailForm
-                isLoading={mutation.isLoading}
-                onSubmit={(email: string) => {
-                  if (email) {
-                    setErrorMessage("");
-                    // console.log(email);
-                    mutation.mutate({
-                      email: email,
-                    });
-                  }
+                  router.back();
                 }}
               />
-              {errorMessage && (
-                <p className="register-content-error">{errorMessage}</p>
-              )}
-            </>
-          )}
-          <br />
+              Quay lại
+            </div>
+            <h1>Quên Mật khẩu</h1>
+            <EmailForm
+              isLoading={mutation.isLoading}
+              onSubmit={(email: string) => {
+                if (!email || email.includes("@") === false) {
+                  openNotification("error", "Thất bại", "Email không hợp lệ.");
+                } else if (email) {
+                  // console.log(email);
+                  mutation.mutate({
+                    email: email,
+                  });
+                }
+              }}
+            />
+            {contextHolder}
+            <br />
+          </>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export const registerAdvisor = async (body: any) => {
 
 export const getAdvisor = async () => {
   const id = getCookie("id");
-  console.log("id", id);
+  // console.log("id", id);
   const response = (await request.get(`/advisors/${id}/`)).data;
   return response;
 };
