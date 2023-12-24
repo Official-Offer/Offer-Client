@@ -28,7 +28,7 @@ export const ProfilePage: React.FC<any> = () => {
     queryKey: ["profile"],
     queryFn: isRecruiter ? getRecruiter : getAdvisor,
     onSuccess: async (info) => {
-      console.log("info", info);
+      // console.log("info", info);
       setFName(info.account.first_name);
       setLName(info.account.last_name);
       setEmail(info.account.email);
@@ -44,12 +44,12 @@ export const ProfilePage: React.FC<any> = () => {
     mutationFn: isRecruiter ? updateRecruiter : updateAdvisor,
     onSuccess: async (data) => {
       setUpdated(true);
-      console.log(data);
+      // console.log(data);
     },
     onError: (error: any) => {
       setErrorMessage("Cập nhật thất bại");
       //   setErrorMessage(error.response.data.message);
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
     },
   });
   return (

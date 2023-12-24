@@ -43,7 +43,7 @@ export const generateJobDescription = async (inputDescription: string) => {
   // salary (tiếng việt), level (internship/newgrad/experienced),
   //  requirements (tiếng việt), benefits (tiếng việt), location (tiếng việt),
   //  job_type (fulltime/parttime/contract), discipline (tiếng việt), work_type(onsite/hybrid/remote), howTo (cách ứng tuyển)
-  console.log(prompt);
+  // console.log(prompt);
   const llm = new OpenAI({
     modelName: "gpt-3.5-turbo",
     openAIApiKey: apiKey,
@@ -51,7 +51,7 @@ export const generateJobDescription = async (inputDescription: string) => {
 
   try {
     const response = await llm.call(prompt);
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error: any) {
     console.error("Error generating job description:", error.message);
@@ -97,7 +97,7 @@ export const getJobsForRecruiter = async () => {
       created_by: recruiter,
     },
   });
-  console.log(response.data.message);
+  // console.log(response.data.message);
 
   const jobs = response.data.results || [
     {
@@ -163,7 +163,7 @@ export const getJobsForRecruiter = async () => {
 
 export const getAdvisorJobs = async () => {
   const school = parseInt(getCookie("orgId") as string);
-  console.log(school);
+  // console.log(school);
   const response = await request.get(`/jobs/`, {
     params: {
       school,
@@ -171,7 +171,7 @@ export const getAdvisorJobs = async () => {
   });
   const jobs = response.data.results;
 
-  console.log("jobs", jobs);
+  // console.log("jobs", jobs);
   const res = jobs.map((job: any) => ({
     key: job,
     posted_date: formatDate(job.updated_at, "D/M/YYYY"),
@@ -264,7 +264,7 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
-  console.log(getCookie("cookieToken"));
+  // console.log(getCookie("cookieToken"));
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };

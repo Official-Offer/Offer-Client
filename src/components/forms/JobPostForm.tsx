@@ -59,7 +59,7 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleTypeChange = (value: any) => {
-    console.log(value);
+    // console.log(value);
     dispatch(setType(value));
   };
 

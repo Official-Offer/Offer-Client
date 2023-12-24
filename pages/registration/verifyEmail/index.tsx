@@ -24,7 +24,7 @@ const VerifyPassword: NextPage = () => {
       return;
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setSubmitted(true);
       setErrorMessage("Xác nhận email không thành công.");
       // setErrorMessage(error.response.data.message);
@@ -38,7 +38,7 @@ const VerifyPassword: NextPage = () => {
       return;
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setSubmitted(true);
       setErrorMessage("Gửi lại email không thành công.");
       // setErrorMessage(error.response.data.message);
@@ -46,7 +46,7 @@ const VerifyPassword: NextPage = () => {
   });
 
   useEffect(() => {
-    console.log(otp);
+    // console.log(otp);
     if (otp) {
       mutation.mutate({ otp });
     }

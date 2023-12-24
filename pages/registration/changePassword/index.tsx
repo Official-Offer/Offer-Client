@@ -24,7 +24,7 @@ const ChangePassword: NextPage = () => {
       return;
     },
     onError: (error: any) => {
-      console.log(error.response.data.message);
+      // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
     },
   });
@@ -40,7 +40,7 @@ const ChangePassword: NextPage = () => {
           <PasswordForm
             isLoading={mutation.isLoading}
             onSubmit={(password: string) => {
-              console.log(state.email, password);
+              // console.log(state.email, password);
               mutation.mutate({
                 email: state.email,
                 password: password,

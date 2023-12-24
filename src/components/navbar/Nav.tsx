@@ -102,7 +102,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   //   }
   // }, [getCookie("cookieToken")]);
 
-  console.log(router.pathname);
+  // console.log(router.pathname);
 
   if (
     router.pathname.includes("recruiter") ||

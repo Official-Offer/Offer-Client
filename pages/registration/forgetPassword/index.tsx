@@ -18,7 +18,7 @@ const ForgetPassword: NextPage = () => {
   const mutation = useMutation({
     mutationFn: forgetPassword,
     onSuccess: async (data: any) => {
-      console.log("email have been sent");
+      // console.log("email have been sent");
       queryClient.invalidateQueries({ queryKey: ["register"] });
       setSubmitted(true);
     },
