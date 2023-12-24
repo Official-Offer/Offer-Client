@@ -220,7 +220,7 @@ export const getJobListWithApplicant = async () => {
 export const getJob = async (id: number) => {
   const response = await request.get(`/jobs/${id}/`);
   const job = response.data;
-  job.company_data = await getCompany(job.company);
+  job.company_data = job.company;
   return job;
 };
 
@@ -268,6 +268,14 @@ export const postJob = async (body: any) => {
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };
+
+
+export const editJob = async (body: any) => {
+  // console.log(getCookie("cookieToken"));
+  const response = await request.patch(`/jobs/${body.id}/`, body.content);
+  return response.data;
+};
+
 
 export const addSchoolsToJob = async (body: any) => {
   // const response = await request.patch(`/jobs/${body.id}/`, body.content);

@@ -275,7 +275,9 @@
       border-radius: 10px;
       background: rgba(237, 113, 173, 0.3);
 
-      h5 { font-weight: $fw-bold-2; }
+      h5 {
+        font-weight: $fw-bold-2;
+      }
 
       &-section {
         display: flex;
@@ -290,6 +292,13 @@
 
     &-section {
       margin-bottom: 32px;
+    }
+    &-detail {
+      img {
+        // width: 100%;
+        // height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }

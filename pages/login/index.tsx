@@ -7,12 +7,13 @@ import { deleteCookie, setCookie } from "cookies-next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setRoleAndOrgToken, socialAuth, userLogIn } from "@services/apiUser";
 import { useDispatch } from "react-redux";
-import { Button, Segmented } from "antd";
+import { Alert, Button, Segmented, notification } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { LoadingPage } from "@components/loading/LoadingPage";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -29,6 +30,13 @@ const Login: NextPage = () => {
     isAdvisor: false,
     isRecruiter: false,
   });
+  const openNotification = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
+  const [api, contextHolder] = notification.useNotification();
 
   const mutation = useMutation({
     mutationKey: ["login"],
@@ -79,6 +87,7 @@ const Login: NextPage = () => {
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
+      openNotification("error", "Lỗi đăng nhập", "Sai tên đăng nhập hoặc mật khẩu");
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
@@ -138,6 +147,7 @@ const Login: NextPage = () => {
       }
     },
     onError: (error: any) => {
+      openNotification("error", "Lỗi đăng nhập", "Email đã tồn tại hoặc lỗi đăng ký google");
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
@@ -163,6 +173,7 @@ const Login: NextPage = () => {
         });
     },
     onError: (error: any) => {
+      openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
       // console.log(error.response.data.message);
       setErrorMessage("Lỗi chọn tổ chức");
       queryClient.invalidateQueries({ queryKey: ["login"] });
@@ -226,7 +237,7 @@ const Login: NextPage = () => {
                 onSubmit={(org: any) => {
                   // console.log("org", org);
                   if (!org) {
-                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
                     return;
                   }
                   setErrorMessage("");
@@ -292,8 +303,10 @@ const Login: NextPage = () => {
             Dang Xuat
           </Button> */}
           {errorMessage && status !== "authenticated" && (
-            <p className="register-content-error">{errorMessage}</p>
+            <Alert message={errorMessage} type="error"/>
+            // <p className="register-content-error">{errorMessage}</p>
           )}
+          {contextHolder}
           <FootnoteForm embedLogin={true} type={""} />
         </div>
       </div>

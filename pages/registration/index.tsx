@@ -14,8 +14,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { setCompanyId, setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
-import { Button, Form, Input, Segmented } from "antd";
+import { Alert, Button, Form, Input, Segmented, notification } from "antd";
 import { LoadingPage } from "@components/loading/LoadingPage";
+type NotificationType = "success" | "info" | "warning" | "error";
 
 //create a next page for the student home page, code below
 const Registration: NextPage = () => {
@@ -33,11 +34,21 @@ const Registration: NextPage = () => {
   const dispatch = useDispatch();
   const [rol, setRol] = useState<string>("Học sinh");
   const [selectRole, setSelectRole] = useState<boolean>(false);
-  const state = useSelector((state: RootState) => state.account);
-
+  // const state = useSelector((state: RootState) => state.account);
+  const [api, contextHolder] = notification.useNotification();
   const { data: session, status } = useSession();
   // console.log("data", session);
   // console.log("status", status);
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string
+  ) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
 
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
@@ -56,6 +67,7 @@ const Registration: NextPage = () => {
       setCookie("id", data.pk ? data.pk : data.id);
       setCookie("role", data.role);
       dispatch(setLoggedIn(true));
+      // openNotification("success", "Đăng nhập thành công", "");
       router
         .push(
           data.role == "student"
@@ -69,6 +81,11 @@ const Registration: NextPage = () => {
         });
     },
     onError: (error: any) => {
+      openNotification(
+        "error",
+        "Đăng ký thất bại",
+        "Email đã tồn tại hoặc lỗi đăng ký"
+      );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
@@ -107,6 +124,11 @@ const Registration: NextPage = () => {
       }
     },
     onError: (error: any) => {
+      openNotification(
+        "error",
+        "Đăng ký thất bại",
+        "Email đã tồn tại hoặc lỗi đăng ký"
+      );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
@@ -274,10 +296,10 @@ const Registration: NextPage = () => {
             </>
           )}
           {errorMessage && status !== "authenticated" && (
-            <>
-              <p className="register-content-error">{errorMessage}</p>
-            </>
+            <Alert message={errorMessage} type="error" />
+            // <p className="register-content-error">{errorMessage}</p>
           )}
+          {contextHolder}
           {/* <Button
             onClick={() => {
               signOut();

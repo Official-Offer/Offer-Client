@@ -23,4 +23,5 @@ export {
   setJobId,
   setSchoolIds,
   setApplied,
+  setCreatedAt
 } from "@redux/slices/jobs";

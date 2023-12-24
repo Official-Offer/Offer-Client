@@ -49,7 +49,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   ) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
-    "Ứng viên",
+    "Công việc",
     "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
     "Tài khoản",

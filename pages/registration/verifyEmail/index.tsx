@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { resendEmail, verifyEmail } from "@services/apiUser";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
+import { Alert } from "antd";
 
 //create a next page for the student home page, code below
 const VerifyPassword: NextPage = () => {
@@ -60,11 +61,23 @@ const VerifyPassword: NextPage = () => {
       <div className="register-content">
         <div className="register-content-form">
           <h1 style={{ color: "Purple" }}>
-            {submitted
-              ? errorMessage
-                ? errorMessage
-                : `Email đã được xác nhận.`
-              : `Link xác nhận đã được gửi đến email của bạn `}
+            {submitted ? (
+              errorMessage ? (
+                <Alert message={errorMessage} type="error" showIcon />
+              ) : (
+                <Alert
+                  message="Xác nhận email thành công"
+                  type="success"
+                  showIcon
+                />
+              )
+            ) : (
+              <Alert
+                message="Link xác nhận đã được gửi đến email của bạn"
+                type="info"
+                showIcon
+              />
+            )}
           </h1>
           <br />
           {submitted && (

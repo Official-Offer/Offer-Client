@@ -10,6 +10,8 @@ import { IconButton } from "@styles/styled-components/styledButton";
 import {
   CheckCircleFilled,
   DeleteOutlined,
+  EditFilled,
+  EditOutlined,
   MinusCircleFilled,
   PlusOutlined,
 } from "@ant-design/icons";
@@ -24,6 +26,7 @@ type BaseTableProps = {
   handleFilterSearch?: (value: string) => void;
   handleAdd?: () => void;
   handleVerify?: (id: string, is_approved: boolean) => void;
+  handleEdit?: () => void;
   handleDelete?: () => void;
   placeholder?: string;
   isLoading?: boolean;
@@ -39,6 +42,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   handleAdd,
   handleVerify,
   handleDelete,
+  handleEdit,
   placeholder,
   isLoading,
   tableType,
@@ -88,7 +92,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
             />
           )}
         </div> */}
-        {(handleAdd || handleVerify || handleDelete) && (
+        {(handleAdd || handleVerify || handleDelete || handleEdit) && (
           <div className="table-functions-add">
             {handleVerify && (
               <IconButton
@@ -110,6 +114,23 @@ export const BaseTable: React.FC<BaseTableProps> = ({
               </IconButton>
             )}
 
+            {handleEdit && (
+              <IconButton
+                round
+                className=""
+                backgroundColor={"orange"}
+                onClick={() => {
+                  handleEdit?.();
+                }}
+              >
+                <div className="btn-body">
+                  <span>Sửa công việc</span>
+                  <span>
+                    <EditFilled />
+                  </span>
+                </div>
+              </IconButton>
+            )}
             <IconButton
               round
               className=""

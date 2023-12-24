@@ -13,6 +13,8 @@ import { registerRecruiter } from "@services/apiRecruiter";
 import { resetPassword } from "@services/apiUser";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { setID } from "@redux/actions";
+import { Alert, notification } from "antd";
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 //create a next page for the student home page, code below
 const ResetPassword: NextPage = () => {
@@ -21,19 +23,29 @@ const ResetPassword: NextPage = () => {
   const state = useSelector((state: RootState) => state.account);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [api, contextHolder] = notification.useNotification();
   const { token } = router.query;
   // console.log(token);
   const mutation = useMutation({
     mutationFn: resetPassword,
     onSuccess: async (data) => {
-      setSubmitted(true);
+      // setSubmitted(true);
+      openNotification("success", "Cập nhật thành công", "Mật khẩu của bạn đã được cập nhật");
       return;
     },
     onError: (error: any) => {
+      openNotification("error", "Cập nhật thất bại", error.response.data.message);
       // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
     },
   });
+
+  const openNotification = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
 
   return (
     <div className="register">
@@ -42,27 +54,6 @@ const ResetPassword: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-          {submitted ? (
-            <>
-              <h2 style={{ color: "purple" }}>Mật khẩu thay đổi thành công.</h2>
-              <br />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <SubmitButton
-                  text="Quay lại đăng nhập"
-                  onClick={() => {
-                    router.push("/login");
-                  }}
-                />
-              </div>{" "}
-            </>
-          ) : (
             <div>
               <h1>Đặt lại Mật khẩu</h1>
               <PasswordForm
@@ -77,11 +68,26 @@ const ResetPassword: NextPage = () => {
                   });
                 }}
               />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
+              <SubmitButton
+                  text="Quay lại đăng nhập"
+                  onClick={() => {
+                    router.push("/login");
+                  }}
+                />
+                </div>
               {errorMessage && (
-                <p className="register-content-error">{errorMessage}</p>
+                <Alert message={errorMessage} type="error" />
+                // <p className="register-content-error">{errorMessage}</p>
               )}
             </div>
-          )}
         </div>
       </div>
     </div>

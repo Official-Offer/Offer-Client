@@ -18,6 +18,7 @@ interface ICJob {
   jobId?: number;
   schoolIds?: number[];
   applied: boolean;
+  createdAt?: Date | null;
 }
 
 const initialState: ICJob = {
@@ -37,6 +38,7 @@ const initialState: ICJob = {
   upperSalary: 0,
   schoolIds: [],
   applied: false,
+  createdAt: null,
 };
 
 const jobSlice = createSlice({
@@ -91,6 +93,9 @@ const jobSlice = createSlice({
     setApplied: (state, action) => {
       state.applied = action.payload;
     },
+    setCreatedAt: (state, action) => {
+      state.createdAt = action.payload;
+    }
   },
 });
 
@@ -111,6 +116,7 @@ export const {
   setUpperSalary,
   setSchoolIds,
   setApplied,
+  setCreatedAt
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
