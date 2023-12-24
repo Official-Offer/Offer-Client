@@ -87,6 +87,7 @@ const ResetPassword: NextPage = () => {
                 <Alert message={errorMessage} type="error" />
                 // <p className="register-content-error">{errorMessage}</p>
               )}
+              {contextHolder}
             </div>
         </div>
       </div>
