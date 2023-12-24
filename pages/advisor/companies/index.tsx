@@ -32,7 +32,7 @@ const Companies: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
     );
     setData(filteredData);
   };
@@ -62,12 +62,12 @@ const Companies: NextPage = () => {
               {company.logo ? (
                 <Image src={company.logo ?? ""} />
               ) : (
-                <AntDesignOutlined/>
+                <AntDesignOutlined />
               )}
             </div>
             <div className="recruiter-schools-card-info">
               <b>{company.name}</b>
-              <br/>
+              <br />
               <u>{company.email}</u>
               <p>{company.description}</p>
             </div>

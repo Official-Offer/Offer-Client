@@ -71,7 +71,9 @@ const StudentJobs: NextPage = () => {
         ),
       );
     },
-    onError: (error) => {console.log(`Error: ${error}`)},
+    onError: (error) => {
+      console.log(`Error: ${error}`);
+    },
     refetchOnWindowFocus: false,
   });
 

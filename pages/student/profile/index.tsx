@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
@@ -10,6 +11,7 @@ import {
   ArrowRightOutlined,
   PlusOutlined,
   EditOutlined,
+  LoadingOutlined
 } from "@ant-design/icons";
 import {
   getStudentDetails,
@@ -22,9 +24,12 @@ import {
   addStudentExperience,
   deleteStudentExperience,
 } from "@services/apiStudent";
-import { getSchoolList } from "@services/apiSchool";
+import { getSchoolList, getMajorList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
+import { formatDate } from "@utils/formatters/numberFormat";
+import { BuildingOfficeIcon, BookOpenIcon, AcademicCapIcon, HeartIcon, UserIcon } from "@heroicons/react/24/solid";
+import Skeleton from "react-loading-skeleton";
 
 const profile = {
   cover:
@@ -55,21 +60,23 @@ const info = {
 const eduFieldItems = {
   itemTitle: "Trường",
   dataIDLabel: "school",
-  dataName: "schoolName",
+  dataName: ["name", "majors"],
   disableEndDate: false,
-  layout: ["study_fields", "gpa"],
+  layout: ["majors", "gpa"],
   labelToAPI: {
-    itemTitle: "schoolName",
+    itemTitle: "school",
+    nestedItemTitle: "name",
     GPA: "gpa",
-    "Ngành học": "study_fields",
+    "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
     "Ngày tốt nghiệp": "end_date",
     "Tôi đang học trường này": "is_current",
   },
   APIToLabel: {
-    schoolName: "itemTitle",
+    school: "itemTitle",
+    name: "nestedItemTitle",
     gpa: "GPA",
-    study_fields: "Ngành học",
+    majors: "Ngành học",
     start_date: "Ngày bắt đầu",
     end_date: "Ngày tốt nghiệp",
     is_current: "Tôi đang học trường này",
@@ -86,7 +93,7 @@ const eduFieldItems = {
 const expFieldItems = {
   itemTitle: "Vị Trí",
   dataIDLabel: "company",
-  dataName: "companyName",
+  dataName: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -115,78 +122,144 @@ const expFieldItems = {
 };
 
 const StudentProfile: NextPage = () => {
-  const [studentDetails, setStudentDetails] = useState<Record<
-    string,
-    any
-  > | null>(null);
+  const [studentDetails, setStudentDetails] = useState<Record<string, any> | null>(null);
+  const id = getCookie("id");
   const studentQuery = useQuery({
-    queryKey: ["students/me"],
+    queryKey: [`students/${id}`],
     queryFn: getStudentDetails,
-    onSuccess: (res) => setStudentDetails(res),
+    onSuccess: (res) => {
+      setStudentDetails(res);
+    },
     onError: (err) => console.log(`Error: ${err}`),
+    refetchOnWindowFocus: false
   });
+
+  const getSchoolAndMajorList = async () => {
+    const schoolList = await getSchoolList();
+    const majorList = await getMajorList();
+    return [schoolList, majorList];
+  };
 
   return (
     <main className="split-layout">
-      <section className="split-layout-sticky student-profile">
+      <section className="split-layout-sticky student-profile split-layout-item flex-sm">
         <AntdCard
-          loading={studentQuery.isLoading}
-          cover={<img src={profile.cover} />}
+          cover={
+            studentDetails?.account.cover_photo ? (
+              <img src={studentDetails?.account.cover_photo} />
+            ) : (
+              <div className="gradient"></div>
+            )}
           children={
             <div>
-              <img className="student-profile-avatar" src={profile.avatar} />
+              {
+                studentDetails?.account.avatar ? (
+                  <img className="student-profile-avatar" src={studentDetails?.account.avatar} />
+                ) : (
+                  <div className="student-profile-avatar">
+                    {studentQuery.isLoading ? <LoadingOutlined /> : <UserIcon />}
+                  </div>
+                )
+              }
               <div className="student-profile-header">
-                <h2>{studentDetails?.name}</h2>
-                <span>
-                  {studentDetails?.expected_graduation === undefined
-                    ? "Ngày không xác định"
-                    : new Date(
-                        studentDetails?.expected_graduation,
-                      ).toDateString()}
-                </span>
+                {
+                  studentQuery.isLoading ? <Skeleton height="1.25rem" width="50%" /> :
+                    <h1>
+                      {
+                        studentDetails?.account?.first_name && studentDetails?.account?.last_name ? (
+                          studentDetails?.account.first_name +
+                          " " +
+                          studentDetails?.account.last_name
+                        ) : (
+                          "Họ Tên"
+                        )
+                      }
+                    </h1>
+                }
               </div>
               <div className="student-profile-info">
-                {studentDetails?.school?.length === 0 ? (
-                  <h4>Trường không xác định</h4>
-                ) : (
-                  studentDetails?.school.map(
-                    (eachSchool: Record<string, string>) => (
-                      <h4>{eachSchool.name}</h4>
-                    ),
-                  )
-                )}
-                <h4>{studentDetails?.major ?? "Ngành không xác định"}</h4>
-                <h4>Đang tìm kiếm công việc:</h4>
-                <h4>{studentDetails?.desired_job ?? "Không xác định"}</h4>
+                <div className="student-profile-info-item">
+                  <BuildingOfficeIcon />
+                  <span>{
+                    studentQuery.isLoading ? <Skeleton height="1rem" /> :
+                      studentDetails?.school?.name ?? "Trường không xác định"
+                  }</span>
+                </div>
+                <div className="student-profile-info-item">
+                  <AcademicCapIcon />
+                  <span>
+                    {
+                      studentQuery.isLoading ? <Skeleton height="1rem" /> :
+                        studentDetails?.expected_graduation_date
+                          ? formatDate(studentDetails.expected_graduation_date,"D/M/YYYY")
+                          : "Không có ngày tốt nghiệp"
+                    }
+                  </span>
+                </div>
+                <div className="student-profile-info-item">
+                  <BookOpenIcon />
+                    <span>
+                      {
+                        studentQuery.isLoading ? <Skeleton height="1rem" /> :
+                          studentDetails?.majors?.length > 0 ?
+                            studentDetails?.majors?.map((major: { name: string }) => major.name)
+                            .join(", ") : "Ngành chưa xác định"
+                      }
+                    </span>
+                  </div>
+                  <div className="student-profile-info-item">
+                    <HeartIcon />
+                    <span>
+                      {
+                        studentQuery.isLoading ? <Skeleton height="1rem" /> :
+                          studentDetails?.desired_industries?.length > 0 ?
+                            studentDetails?.desired_industries?.map((industry: { name: string }) => industry.name)
+                            .join(", ") : "Chưa có nghề mong muốn"
+                      }
+                    </span>
+                </div>
               </div>
             </div>
           }
         />
       </section>
       <section className="split-layout-item flex-md">
-        <ResumeCard isEditable />
+        <ResumeCard
+          isEditable
+          resumes={studentDetails?.resumes}
+          isError={studentQuery.isError}
+          isLoading={studentQuery.isLoading}
+          isRefetching={studentQuery.isRefetching}
+          refetchFunction={studentQuery.refetch}
+        />
         <ProfileCard
           isEditable
-          fieldTitle="Giáo Dục"
+          fieldTitle="Học Vấn"
           fieldItemProps={eduFieldItems}
-          getFunction={getStudentEducations}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.educations}
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
-          dataFunction={getSchoolList}
+          dataFunction={getSchoolAndMajorList}
         />
         <ProfileCard
           isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
-          getFunction={getStudentExperiences}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.experiences}
           addFunction={addStudentExperience}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperience}
-          dataFunction={getCompanyList}
+          dataFunction={getSchoolAndMajorList}
         />
       </section>
-      <section className="split-layout-sticky"></section>
+      <section className="split-layout-sticky flex-sm"></section>
     </main>
   );
 };

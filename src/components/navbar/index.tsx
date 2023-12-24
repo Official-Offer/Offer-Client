@@ -85,7 +85,8 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             routeSelected: "/student/contact",
           },
         ];
-
+  const avatar = loggedIn ? getCookie("avatar") : null;
+  console.log("avatar", avatar);
   return router.pathname.includes("registration") ||
     router.pathname.includes("login") ||
     router.pathname == "/" ? (

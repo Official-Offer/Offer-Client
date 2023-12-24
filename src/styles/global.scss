@@ -5,6 +5,7 @@
 
 .global {
   background-color: $grey-light-background;
+  min-height: calc(100dvh - 64px);
 
   & > div,
   > section {
@@ -16,7 +17,7 @@
 @import "./scss/Components/forms";
 @import "./scss/Components/cards";
 @import "./scss/Components/navbar";
-@import "./scss/Components/cover";
+@import "./scss/Components/hero";
 @import "./scss/Components/filter";
 @import "./scss/Components/table";
 @import "./scss/Components/custom";
@@ -32,6 +33,7 @@
 /* Plugins */
 @import "./scss/Plugins/antd";
 @import "./scss/Plugins/carousel";
+@import "./scss/Plugins/skeleton";
 
 /* Layouts */
 @import "./scss/Layouts/main";
@@ -46,7 +48,6 @@
 @import "./scss/Layouts/email";
 @import "./scss/Layouts/student-profile";
 @import "./scss/Layouts/register";
-@import "./scss/Components/forms";
 @import "./scss/Layouts/student-job-portal";
 @import "./scss/Layouts/split-layout";
 @import "./scss/Layouts/form-page";

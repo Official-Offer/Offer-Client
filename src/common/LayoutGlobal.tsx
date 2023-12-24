@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import "antd/dist/antd.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function LayoutGlobal(props: any): ReactElement {
   const Nav = dynamic(() =>

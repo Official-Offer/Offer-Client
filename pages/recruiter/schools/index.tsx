@@ -73,28 +73,29 @@ const Schools: NextPage = () => {
       </div>
       <div className="recruiter-schools-grid">
         {data.map((school) => {
-          // console.log(school)
+          console.log(school);
           return (
-          <Card className="recruiter-schools-card">
-            {/* <Avatar
+            <Card className="recruiter-schools-card">
+              {/* <Avatar
               size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
               icon={school.logo ? <Image src={school.logo ?? ""} />: <AntDesignOutlined />}
             /> */}
-            <div className="recruiter-schools-logo">
-              {school.logo ? (
-                <Image src={school.logo ?? ""} />
-              ) : (
-                <AntDesignOutlined />
-              )}
-            </div>
-            <div className="recruiter-schools-card-info">
-              <b>{school.name}</b>
-              <br/>
-              <u>{school.email}</u>
-              <p>{school.description}</p>
-            </div>
-          </Card>
-        )})}
+              <div className="recruiter-schools-logo">
+                {school.logo ? (
+                  <Image src={school.logo ?? ""} />
+                ) : (
+                  <AntDesignOutlined />
+                )}
+              </div>
+              <div className="recruiter-schools-card-info">
+                <b>{school.name}</b>
+                <br />
+                <u>{school.email}</u>
+                <p>{school.description}</p>
+              </div>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

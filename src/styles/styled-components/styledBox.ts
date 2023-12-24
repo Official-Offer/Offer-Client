@@ -157,21 +157,33 @@ export const MessageBox = styled.div<{ seen?: boolean }>`
 `;
 
 export const StyledResumeCard = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: 320px;
-  height: 320px;
+  width: 200px;
+  height: 250px;
   padding: 16px;
   color: white;
   border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff 0%, #313c49 100%);
+  background: linear-gradient(180deg, #000000 0%, #313c49 100%);
 
   h3 {
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
     color: white;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+  }
+
+  .resume-star {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+  }
+
+  span {
+    font-weight: 500;
   }
 `;
 

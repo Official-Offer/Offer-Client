@@ -1,10 +1,15 @@
 import { URL_API_ADMIN } from "@config";
 import request from "./apiService";
 import axios from "axios";
+import { schoolList } from "@public/static/schoolList";
+import { majorList } from "@public/static/majorList";
 
 export const getSchoolList = async () => {
-  const response = await request.get(`/schools/`);
-  return response.data;
+  return schoolList;
+};
+
+export const getMajorList = async () => {
+  return majorList;
 };
 
 export const getSchool = async (id: number) => {

@@ -204,7 +204,8 @@
     }
 
     &-logo {
-      max-width: 72px;
+      object-fit: cover;
+      max-height: 24px;
       margin-bottom: 8px;
     }
 
@@ -273,6 +274,8 @@
       margin-bottom: 40px;
       border-radius: 10px;
       background: rgba(237, 113, 173, 0.3);
+
+      h5 { font-weight: $fw-bold-2; }
 
       &-section {
         display: flex;

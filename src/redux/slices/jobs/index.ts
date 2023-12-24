@@ -90,7 +90,7 @@ const jobSlice = createSlice({
     },
     setApplied: (state, action) => {
       state.applied = action.payload;
-    }
+    },
   },
 });
 
@@ -110,7 +110,7 @@ export const {
   setBenefits,
   setUpperSalary,
   setSchoolIds,
-  setApplied
+  setApplied,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

@@ -1,36 +1,40 @@
 .split-layout {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1440px;
   display: flex;
   align-items: flex-start;
   padding: 48px 40px 0px 40px;
+  gap: 32px;
 
   &-sticky {
     position: sticky;
     max-height: 0;
-    top: 116px;
+    top: 112px;
     flex: 1;
+  }
+
+  .flex-xs {
+    flex: 1;
+  }
+  .flex-sm {
+    flex: 1.5;
+  }
+  .flex-md {
+    flex: 3;
+  }
+  .flex-lg {
+    flex: 4;
+  }
+  .flex-xl {
+    flex: 5;
   }
 
   &-item {
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    padding: 0px 40px 40px 40px;
+    gap: 24px;
 
-    &.flex-xs {
-      flex: 1;
-    }
-    &.flex-sm {
-      flex: 1.5;
-    }
-    &.flex-md {
-      flex: 3;
-    }
-    &.flex-lg {
-      flex: 4;
-    }
-    &.flex-xl {
-      flex: 5;
-    }
 
     &.right-border {
       border-right: solid 1px $grey-light;

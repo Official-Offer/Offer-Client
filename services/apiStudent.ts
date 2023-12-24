@@ -1,4 +1,4 @@
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { getSchool } from "./apiSchool";
 import { getCompany } from "./apiCompany";
 import request from "./apiService";
@@ -15,7 +15,9 @@ export const updateStudent = async (body: any) => {
 };
 
 export const getStudentDetails = async () => {
-  const response = (await request.get(`/students/me/`)).data.Response;
+  const id = getCookie("id");
+  const response = (await request.get(`/students/${id}/`)).data;
+  console.log("Student details", response);
   return response;
 };
 
@@ -77,18 +79,20 @@ export const getStudentResume = async () => {
 };
 
 export const updateStudentResume = async (file: FormData) => {
-  const response = await request.post(`/students/resume/`, file);
+  const id = getCookie("id");
+  const response = await request.patch(`/students/${id}/files/`, file);
   return response.data;
 };
 
-export const deleteStudentResume = async () => {
-  const response = await request.delete(`/students/resume/`);
+export const deleteStudentResume = async (pk: number) => {
+  const response = await request.delete(`/students/resume/${pk}`);
   return response.data;
 };
 
 // Educations
 export const getStudentEducations = async () => {
   const response = await request.get(`/students/educations/`);
+
   const educations = response.data;
   // If school's id exists, fetch its name
   for (const education of educations) {

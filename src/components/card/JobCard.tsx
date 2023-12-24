@@ -40,7 +40,11 @@ export const JobCard: React.FC<JobCardProp> = ({
           <div>
             {formatAddress(jobData.address || jobData.company.address, true)}
           </div>
-          <div>{jobData.job_types ? jobData.job_types.map(job_type => translateJobType(job_type)) : "Không xác định"}</div>
+          <div>
+            {jobData.job_types
+              ? jobData.job_types.map((job_type) => translateJobType(job_type))
+              : "Không xác định"}
+          </div>
         </div>
       </div>
       <BookmarkButton

@@ -4,6 +4,10 @@
   &__viewport {
     position: relative;
     padding-top: 12px;
+
+    &--no-margin {
+      padding-top: 0px;
+    }
   }
 
   &__container {
@@ -11,6 +15,11 @@
     display: flex;
     touch-action: pan-y;
     margin-left: 24px;
+    margin-bottom: 16px;
+
+    &--no-margin {
+      margin-left: 0px;
+    }
   }
 
   &__slide {
@@ -28,8 +37,12 @@
   &__prev,
   &__next {
     position: absolute;
-    top: 44.5%;
+    top: 53.5%;
     transition: 0.3s ease-out;
+
+    &--with-dots {
+      top: 44.5%;
+    }
 
     &:disabled {
       opacity: 0;
@@ -50,6 +63,9 @@
     &:disabled {
       left: 20px;
     }
+    &--no-margin {
+      left: 28px;
+    }
   }
 
   &__next {
@@ -58,10 +74,12 @@
     &:disabled {
       right: 20px;
     }
+    &--no-margin {
+      right: 28px;
+    }
   }
 
   &__dots {
-    margin-top: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +105,18 @@
 
     &--selected:after {
       background: $pinkish-red;
+    }
+  }
+
+  &__infinite-scroll-spinner {
+    flex: 0 0 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 16px;
+
+    .anticon-spin {
+      font-size: 2rem;
     }
   }
 }
