@@ -40,7 +40,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const { data: session, status } = useSession();
   // console.log(getCookie("cookieToken"));
   // console.log(getCookie("role"));
-  console.log(conflict, r, state.role);
+  // console.log(conflict, r, state.role);
   const loggedIn =
     (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";

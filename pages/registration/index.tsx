@@ -273,7 +273,7 @@ const Registration: NextPage = () => {
               )}
             </>
           )}
-          {(errorMessage && status !== 'authenticated') && (
+          {errorMessage && status !== "authenticated" && (
             <>
               <p className="register-content-error">{errorMessage}</p>
             </>

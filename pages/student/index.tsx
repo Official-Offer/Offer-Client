@@ -1,8 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { NextPage } from "next";
+import { getCookie } from "cookies-next";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import {
   Button,
   Card as AntdCard,
@@ -13,21 +15,25 @@ import {
   Slider,
   Space,
 } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { useSession } from "next-auth/react";
+import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
+import type { RadioChangeEvent } from "antd/lib/radio";
+import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
+
 import { EventCard, InfoCard } from "@components/card";
 import { Carousel } from "@components/list";
+import { OfferLogo } from "@components/icons";
+
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
 import { getJobs, getJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
+
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { useDisplayCompanies } from "@hooks/useDisplayJobs";
+
 import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
-import type { RadioChangeEvent } from "antd/lib/radio";
-import { BuildingOfficeIcon } from "@heroicons/react/24/solid";
 
 const DHBK = {
   name: "Đại Học Bách Khoa Hà Nội",
@@ -92,19 +98,34 @@ const Home: NextPage = () => {
   } = useDisplayJobs();
 
   const { companies, setCompanies } = useDisplayCompanies();
-  const [jobPage, setJobPage] = useState<number>(1);
 
-  const jobQuery = useQuery({
-    queryKey: ["jobs list"],
-    queryFn: () => getJobsPerPage(jobPage, 12),
-    onSuccess: (jobData: Record<string, any>) => {
-      setJobs(jobData.results);
-      setSort("date-posted");
-      setJobPage(jobPage + 1);
-    },
+  const id = getCookie("id");
+  const schoolName = decodeURI(getCookie("orgName") as string ?? "");
+
+  const [school, setSchool] = useState<Record<string, any> | undefined>();
+  const schoolQuery = useQuery({
+    queryKey: ["school"],
+    queryFn: getStudentDetails,
+    onSuccess: (res) =>
+      setSchool(res.school),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
+    enabled: id !== undefined
   });
+
+  const jobInfiniteQuery = useInfiniteQuery({
+    queryKey: ["paginated jobs"],
+    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12),
+    getNextPageParam: (lastPage) => (lastPage.count / lastPage.results)
+  });
+
+  useEffect(() => {
+    if (jobInfiniteQuery.data) {
+      console.log(jobInfiniteQuery.data);
+      // setJobs(jobInfiniteQuery.data.pages.results);
+      // setSort("date-posted");
+    }
+  }, [jobInfiniteQuery.data]);
 
   const companyQuery = useQuery({
     queryKey: ["companies list"],
@@ -158,7 +179,7 @@ const Home: NextPage = () => {
   };
 
   const { data: session, status } = useSession();
-  console.log(session);
+  // console.log(session);
 
   // paginate the job list
   return (
@@ -166,16 +187,33 @@ const Home: NextPage = () => {
       <div className="main-content">
         <section>
           <AntdCard
-            className="uni-cover"
-            cover={<img src={DHBK.cover} alt={DHBK.name} />}
+            className={id ? "uni-cover" : "public-hero"}
+            cover={id && <img src={DHBK.cover} alt={school?.name ?? ""} />}
             children={
-              <div className="cover-spacing">
-                <div className="card-logo">
-                  <img alt={"Logo of " + DHBK.name} src={DHBK.logo} />
+              id ? (
+                <div className="uni-wrapper">
+                  <div className="uni-logo">
+                    {
+                      schoolQuery.isLoading ? <LoadingOutlined />
+                      : (
+                        school ?
+                          <img alt={"Logo of " + school.name} src={school.logo} />
+                        :
+                          <BuildingOffice2Icon />
+                      )
+                    }
+                  </div>
+                  <h2 className="uni-title">{schoolName ?? "Trường không xác định"}</h2>
                 </div>
-                <div className="logo-spacing"></div>
-                <h2 className="card-title">{DHBK.name}</h2>
-              </div>
+              ) : (
+                <div>
+                  <OfferLogo width={100} height={100} />
+                  <div>
+                    <h1>Offer</h1>
+                    <h3>Tạo một hành trình đến tương lai dành riêng cho bạn</h3>
+                  </div>
+                </div>
+              )
             }
           />
         </section>
@@ -183,8 +221,13 @@ const Home: NextPage = () => {
           <AntdCard className="section-card">
             <h3 className="header">Cơ hội thực tập dành riêng cho bạn</h3>
             <Carousel
-              items={
-                jobQuery.isLoading
+              slideSize="full"
+              isAsync
+              isFetching
+              slidesLimit={3}
+              loadNextFunc={jobInfiniteQuery.fetchNextPage}
+              slides={
+                jobInfiniteQuery.isLoading
                   ? [
                       <div className="layout-grid">
                         {new Array(4).fill(<InfoCard loading />)}
@@ -198,10 +241,6 @@ const Home: NextPage = () => {
                       </div>,
                     ]
               }
-              itemSize="full"
-              isAsync
-              isLoading
-              loadNextFunc={() => console.log("bruh")}
             />
           </AntdCard>
         </section>
@@ -209,7 +248,10 @@ const Home: NextPage = () => {
           <AntdCard className="section-card">
             <h3 className="header">Các công ty hàng đầu</h3>
             <Carousel
-              items={
+              slideSize="quarter"
+              slidesToScroll={4}
+              showDots
+              slides={
                 companyQuery.isLoading
                   ? new Array(4).fill(<AntdCard loading />)
                   : companies.map((companyData) => (
@@ -228,8 +270,6 @@ const Home: NextPage = () => {
                       </AntdCard>
                     ))
               }
-              itemSize="quarter"
-              slidesToScroll={4}
             />
           </AntdCard>
         </section>

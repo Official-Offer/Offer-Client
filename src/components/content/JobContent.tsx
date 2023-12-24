@@ -63,7 +63,6 @@ export const JobContent: React.FC<JobContentProps> = ({
     isApplying ?? false,
   );
 
-  console.log("jobData", jobData);
   return (
     <div
       className={"job-portal-description " + (isMinimized ? "minimized" : "")}
@@ -162,9 +161,8 @@ export const JobContent: React.FC<JobContentProps> = ({
           <ApplyForm
             jobId={jobData?.pk}
             open={jobData && openApplyForm ? true : false}
-            submitFunction={(data:any) => {
-              
-              return postJobApp(data)
+            submitFunction={(data: any) => {
+              return postJobApp(data);
             }}
             onCancel={() => {
               setOpenApplyForm(false);
@@ -191,7 +189,13 @@ export const JobContent: React.FC<JobContentProps> = ({
             </div>
             <div>
               <h5>Địa điểm:</h5>
-              <div>{formatAddress(jobData?.address)}</div>
+              <div>
+                {jobData?.address
+                  ? formatAddress(jobData.address, true)
+                  : jobData?.company?.address
+                    ? formatAddress(jobData.company.address, true)
+                    : jobData?.location ?? "Không có địa điểm"}
+              </div>
             </div>
           </div>
           <div className="job-portal-description-info-section">

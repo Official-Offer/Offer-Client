@@ -275,6 +275,8 @@
       border-radius: 10px;
       background: rgba(237, 113, 173, 0.3);
 
+      h5 { font-weight: $fw-bold-2; }
+
       &-section {
         display: flex;
         flex-direction: column;

@@ -266,7 +266,8 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     >
       <Form
         form={form}
-        name="profileForm"
+        name="profile-form"
+        className="profile-form"
         layout="vertical"
         disabled={postMutation.isLoading}
         initialValues={!props.isAdd ? props.fieldItems : {}}
@@ -325,7 +326,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
             {getLabel("is_current", false)}
           </Checkbox>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="start_date"
           label={getLabel("start_date", false)}
           validateStatus={!areValidDates ? "error" : ""}
@@ -346,7 +347,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           hidden={props.fieldItemProps.disableEndDate && isCurrent}
         >
           <DatePicker format="DD/MM/YYYY" onChange={validateDates} />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           name="description"
           label={`Mô tả ${props.fieldItemProps.itemTitle.toLowerCase()}`}

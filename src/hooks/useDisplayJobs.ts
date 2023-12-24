@@ -52,7 +52,6 @@ export const useDisplayJobs = () => {
   };
 
   useEffect(() => {
-    console.log(originalJobs);
     const displayed = originalJobs
       .filter((job) => {
         if (

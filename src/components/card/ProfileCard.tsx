@@ -12,11 +12,13 @@ import {
 } from "@ant-design/icons";
 import { formatDate } from "@utils/formatters/numberFormat";
 
+// I bet you would think about how shit this code is, and I agree
 type ProfileCardProps = {
   isEditable?: boolean;
   fieldTitle: string;
   fieldItemProps: {
     itemTitle: string;
+    nestedItemTitle?: string;
     dataIDLabel: string;
     dataName: string[];
     disableEndDate: boolean;
@@ -28,7 +30,7 @@ type ProfileCardProps = {
   };
   isLoading?: boolean;
   isError?: boolean;
-  data?: Record<string, unknown>[];
+  data?: any[];
   refetchFunction: () => void;
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
@@ -102,7 +104,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       loading={isLoading}
       title={
         <div className="main-panel-header">
-          <h2>{fieldTitle}</h2>
+          <h3>{fieldTitle}</h3>
           {isEditable && (
             <Button
               className="icon-btn"
@@ -132,7 +134,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         ) : queryItemList === undefined || isError ? (
           <div>Server hiện tại không đưa thông tin được.</div>
         ) : queryItemList.length === 0 ? (
-          <div>Xin hãy thêm thông tin vào đây.</div>
+          <div>Vui lòng thêm thông tin vào đây.</div>
         ) : (
           queryItemList
             .sort((item1, item2) => {
@@ -165,7 +167,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                     fieldItemProps={fieldItemProps}
                     fieldItems={queryItemList[index]}
                     postFunction={editFunction}
-                    deleteFunction={deleteFunction}
+                    deleteFunction={deleteFunction} // If there's only one school do not show delete function
                     refetchFunction={refetchFunction}
                     dataArr={dataArr}
                   />
@@ -174,8 +176,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                       <img src={get_logo(item)} />
                     </div>
                     <div className="main-panel-info-center">
-                      <h3>{item[fieldItemProps.labelToAPI.itemTitle]}</h3>
-                      {item.start_date.length !== 0 && (
+                      <h3>{fieldItemProps.labelToAPI.nestedItemTitle ? item[fieldItemProps.labelToAPI.itemTitle][fieldItemProps.labelToAPI.nestedItemTitle] : item[fieldItemProps.labelToAPI.itemTitle]}</h3>
+                      {item.start_date && (
                         <div>
                           <span>
                             {formatDate(item.start_date, "MM/YYYY") +
@@ -189,7 +191,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                       {fieldItemProps.layout.map((apiName) => (
                         <div>
                           <b>{fieldItemProps.APIToLabel[apiName]}</b>
-                          <span>{": " + item[apiName]}</span>
+                          <span>{": " + (item[apiName] ?? "Không xác định")}</span>
                         </div>
                       ))}
                       <div className="main-panel-info-center-description">

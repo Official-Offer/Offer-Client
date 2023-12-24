@@ -291,7 +291,7 @@ const Login: NextPage = () => {
           >
             Dang Xuat
           </Button> */}
-          {(errorMessage && status !== 'authenticated') && (
+          {errorMessage && status !== "authenticated" && (
             <p className="register-content-error">{errorMessage}</p>
           )}
           <FootnoteForm embedLogin={true} type={""} />

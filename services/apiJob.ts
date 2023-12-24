@@ -9,7 +9,7 @@ import parse from "html-react-parser";
 export const getJobs = async () => {
   const response = await request.get(`/jobs`, {
     params: {
-      ordered_by: "created_at",
+      ordered_by: "-created_at",
     },
   });
   const jobList = response.data;
@@ -21,7 +21,7 @@ export const getJobsPerPage = async (page: number, pageSize: number) => {
     params: {
       page,
       page_size: pageSize,
-      ordered_by: "created_at",
+      ordered_by: "-created_at",
     },
   });
   const jobList = response.data;

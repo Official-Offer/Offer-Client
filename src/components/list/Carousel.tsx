@@ -3,7 +3,9 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  useRef
 } from "react";
+import { EngineType } from "embla-carousel/components/Engine"
 import useEmblaCarousel, {
   EmblaOptionsType,
   EmblaCarouselType,
@@ -16,26 +18,67 @@ import {
 } from "@ant-design/icons";
 
 type CarouselProps = {
-  items: any[];
-  itemSize?: "quarter" | "full";
-  isAsync?: boolean;
-  isLoading?: boolean;
-  loadNextFunc?: () => void;
+  slides: any[];
+  slideSize?: "quarter" | "full";
+  showDots?: boolean;
+  slidesLimit?: number;
   slidesToScroll?: number;
+  isAsync?: boolean;
+  isFetching?: boolean;
+  loadNextFunc?: () => void;
+  viewMoreUrl?: string;
+  noMargin?: boolean;
 };
 
+// Instead of add hasMoreToLoad, just change is Async to false once you reaced the bottom
+// This will still work since rerendering the parent component with certain props would only rerender the children components with certain props
+
 export const Carousel: React.FC<CarouselProps> = ({
-  items,
-  itemSize,
-  isAsync,
-  isLoading,
-  loadNextFunc,
+  slides,
+  slideSize,
+  showDots,
+  slidesLimit,
   slidesToScroll,
+  isAsync,
+  isFetching,
+  loadNextFunc,
+  viewMoreUrl,
+  noMargin
 }) => {
+  // Use ref so that it won't change during rerenders -> Less variables rerendered
+  const slideRef = useRef<number>(1);
+  const scrollListenerRef = useRef<() => void>(() => undefined);
+  const listenForScrollRef = useRef<boolean>(true);
+  const hasMoreToLoadRef = useRef<boolean>(slideRef.current < (slidesLimit ?? 0));
+  const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(slideRef.current < (slidesLimit ?? 0));
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     skipSnaps: true,
     slidesToScroll: slidesToScroll ?? 1,
+    watchSlides: (emblaApi) => {
+      // Keep the scroll position when loading more
+      const reloadEmbla = (): void => {
+        emblaApi.reInit();
+      };
+
+      const reloadAfterPointerUp = (): void => {
+        emblaApi.off("pointerUp", reloadAfterPointerUp);
+        reloadEmbla();
+      };
+
+      const engine = emblaApi.internalEngine();
+
+      if (hasMoreToLoadRef.current && engine.dragHandler.pointerDown()) {
+        const boundsActive = engine.limit.reachedMax(engine.target.get());
+        engine.scrollBounds.toggleActive(boundsActive);
+        emblaApi.on("pointerUp", reloadAfterPointerUp);
+      } else {
+        reloadEmbla();
+      }
+    },
   });
+
   const [prevBtnDisabled, setPrevBtnDisabled] = useState<boolean>(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
 
@@ -53,6 +96,30 @@ export const Carousel: React.FC<CarouselProps> = ({
     setNextBtnDisabled(!emblaApi.canScrollNext());
   }, []);
 
+  const onScroll = useCallback((emblaApi: EmblaCarouselType) => {
+    if (!listenForScrollRef.current) return;
+
+    setLoadingMore((loadingMore) => {
+      const lastSlide = emblaApi.slideNodes().length - 1;
+      const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
+      console.log(lastSlideInView)
+      const loadMore = !loadingMore && lastSlideInView;
+      if (loadMore && loadNextFunc) {
+        listenForScrollRef.current = false;
+        
+        let currentSlideNum = slideRef.current;
+        loadNextFunc();
+        slideRef.current = currentSlideNum + 1;
+      }
+
+      return loadingMore || lastSlideInView
+    })
+  }, []);
+
+  useEffect(() => {
+    hasMoreToLoadRef.current = hasMoreToLoad;
+  }, [hasMoreToLoad]);
+
   useEffect(() => {
     if (!emblaApi) return;
 
@@ -66,20 +133,20 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
-          {items.map((item, index) => (
+      <div className={"embla__viewport" + (noMargin ? " embla__viewport--no-margin" : "")} ref={emblaRef}>
+        <div className={"embla__container" + (noMargin ? " embla__container--no-margin" : "")}>
+          {slides.map((item, index) => (
             <div
               className={`embla__slide ${
-                itemSize ? `embla__slide--${itemSize}` : ""
+                slideSize ? `embla__slide--${slideSize}` : ""
               }`}
               key={index}
             >
               {item}
             </div>
           ))}
-          {isAsync && isLoading && loadNextFunc && (
-            <div className="embla__slide">
+          {isAsync && hasMoreToLoad && (
+            <div className="embla__infinite-scroll-spinner">
               <LoadingOutlined />
             </div>
           )}
@@ -87,7 +154,9 @@ export const Carousel: React.FC<CarouselProps> = ({
       </div>
       <div className="embla__buttons">
         <Button
-          className="embla__prev"
+          className={
+            "embla__prev" + (showDots ? " embla__prev--with-dots" : "") + (noMargin ? " embla__prev--no-margin" : "")
+          }
           icon={<ArrowLeftOutlined />}
           onClick={scrollPrev}
           disabled={prevBtnDisabled}
@@ -95,7 +164,9 @@ export const Carousel: React.FC<CarouselProps> = ({
           shape="circle"
         />
         <Button
-          className="embla__next"
+          className={
+            "embla__next" + (showDots ? " embla__next--with-dots" : "") + (noMargin ? " embla__next--no-margin" : "")
+          }
           icon={<ArrowRightOutlined />}
           onClick={scrollNext}
           disabled={nextBtnDisabled}
@@ -103,18 +174,19 @@ export const Carousel: React.FC<CarouselProps> = ({
           shape="circle"
         />
       </div>
-
-      <div className="embla__dots">
-        {scrollSnaps.map((_, index) => (
-          <DotButton
-            key={index}
-            onClick={() => onDotButtonClick(index)}
-            className={"embla__dot".concat(
-              index === selectedIndex ? " embla__dot--selected" : "",
-            )}
-          />
-        ))}
-      </div>
+      {showDots && (
+        <div className="embla__dots">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={"embla__dot".concat(
+                index === selectedIndex ? " embla__dot--selected" : "",
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

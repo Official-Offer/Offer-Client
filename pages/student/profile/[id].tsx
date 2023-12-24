@@ -23,7 +23,7 @@ import {
   addStudentExperience,
   deleteStudentExperience,
 } from "@services/apiStudent";
-import { getSchoolList } from "@services/apiSchool";
+import { getSchoolList, getMajorList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 
@@ -41,7 +41,7 @@ const profile = {
 const eduFieldItems = {
   itemTitle: "Trường",
   dataIDLabel: "school",
-  dataName: "schoolName",
+  dataName: ["schoolName"],
   disableEndDate: false,
   layout: ["study_fields", "gpa"],
   labelToAPI: {
@@ -72,7 +72,7 @@ const eduFieldItems = {
 const expFieldItems = {
   itemTitle: "Vị Trí",
   dataIDLabel: "company",
-  dataName: "companyName",
+  dataName: ["companyName"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -111,6 +111,12 @@ const StudentIDProfile: NextPage = () => {
     router?.query?.id && !Array.isArray(router.query.id)
       ? parseInt(router.query.id)
       : 0;
+
+  const getSchoolAndMajorList = async () => {
+    const schoolList = await getSchoolList();
+    const majorList = await getMajorList();
+    return [schoolList, majorList];
+  };
 
   const studentQuery = useQuery({
     queryKey: [`students/${studentID}`],
@@ -157,24 +163,32 @@ const StudentIDProfile: NextPage = () => {
         />
       </section>
       <section className="split-layout-item flex-md">
-        <ResumeCard />
+        <ResumeCard refetchFunction={studentQuery.refetch} />
         <ProfileCard
-          fieldTitle="Giáo Dục"
+          isEditable
+          fieldTitle="Học Vấn"
           fieldItemProps={eduFieldItems}
-          getFunction={getStudentEducations}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.educations}
           addFunction={addStudentEducation}
           editFunction={editStudentEducation}
           deleteFunction={deleteStudentEducation}
-          dataFunction={getSchoolList}
+          dataFunction={getSchoolAndMajorList}
         />
         <ProfileCard
+          isEditable
           fieldTitle="Kinh Nghiệm"
           fieldItemProps={expFieldItems}
-          getFunction={getStudentExperiences}
+          isLoading={studentQuery.isLoading}
+          isError={studentQuery.isError}
+          refetchFunction={studentQuery.refetch}
+          data={studentDetails?.experiences}
           addFunction={addStudentExperience}
           editFunction={editStudentExperience}
           deleteFunction={deleteStudentExperience}
-          dataFunction={getCompanyList}
+          dataFunction={getSchoolAndMajorList}
         />
       </section>
       <section className="split-layout-sticky"></section>
