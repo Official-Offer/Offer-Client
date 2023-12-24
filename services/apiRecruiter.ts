@@ -63,40 +63,26 @@ export const getRecruitersForCompany = async () => {
 
 export const getApplicantsForJob = async (id: any) => {
   // console.log(id);
+  const res = await request.get(`/jobs/${id}/`);
   const response = await request.get(`/jobs/${id}/applications/`);
   const applicantList = response.data.message;
-  // console.log(applicantList);
-
-  const applicants = [
-    {
-      name: "Kien",
-      school: "Umass",
-      job: "Ke Toan",
-      resume: "resume_link",
-      compatibility: "90%",
-    },
-    {
-      name: "Thuan",
-      school: "AT&T",
-      job: "Dev",
-      resume: "resume_link",
-      compatibility: "10%",
-    },
-    {
-      name: "Bao Dang",
-      school: "Umass",
-      job: "FE Dev",
-      resume: "resume_link",
-      compatibility: "40%",
-    },
-  ];
-  // return applicants.map((app) => ({
-  //   name: app.name,
-  //   school: app.school,
-  //   job: app.job,
-  //   resume: app.resume,
-  //   compatibility: app.compatibility,
-  // }));
-  // console.log(applicantList);
-  return applicantList;
+  console.log("applicantList", applicantList);
+  return {
+    job: res.data.title,
+    applicants: applicantList.map((app: any) => ({
+      // key: app.id,
+      // ID: app.id,
+      // name: app.name,
+      // school: app.school,
+      // job: app.job,
+      // resume: app.resume,
+      // compatibility: app.compatibility,
+      key: app.id,
+      applied_at: formatDate(app.created_at, "D/M/YYYY"),
+      name: app.student.account.firstName + " " + app.student.account.lastName,
+      school: app.student.school || "Không tìm thấy",
+      job: app.job.title || "Không tìm thấy",
+      resume: app.resume,
+    })),
+  };
 };

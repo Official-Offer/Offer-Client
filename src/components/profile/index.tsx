@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Form, Input } from "antd";
+import { Form, Input, notification } from "antd";
 import { OrgForm } from "@components/forms";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { getAdvisor, updateAdvisor } from "@services/apiAdvisor";
 import { getCookie } from "cookies-next";
 import { getRecruiter, updateRecruiter } from "@services/apiRecruiter";
 import { SubmitButton } from "@components/button/SubmitButton";
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export const ProfilePage: React.FC<any> = () => {
   const [fname, setFName] = useState("");
@@ -16,13 +17,12 @@ export const ProfilePage: React.FC<any> = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [org, setOrg] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
-  const [updated, setUpdated] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
   const role = getCookie("role");
   const isRecruiter =
     role == "recruiter" || router.pathname.includes("recruiter");
   const orgName = getCookie("orgName");
+  const [api, contextHolder] = notification.useNotification();
 
   const profileQuery = useQuery({
     queryKey: ["profile"],
@@ -39,17 +39,23 @@ export const ProfilePage: React.FC<any> = () => {
     onError: () => {},
   });
 
+  const openNotification = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
+
   const profileMutation = useMutation({
     mutationKey: ["update"],
     mutationFn: isRecruiter ? updateRecruiter : updateAdvisor,
     onSuccess: async (data) => {
-      setUpdated(true);
+      openNotification("success", "Cập nhật thành công", "");
+      // setUpdated(true);
       // console.log(data);
     },
     onError: (error: any) => {
-      setErrorMessage("Cập nhật thất bại");
-      //   setErrorMessage(error.response.data.message);
-      // console.log(error.response.data.message);
+      openNotification("error", "Cập nhật thất bại", error.response.data.message);
     },
   });
   return (
@@ -114,8 +120,8 @@ export const ProfilePage: React.FC<any> = () => {
         </Form.Item>
         <SubmitButton
           onClick={() => {
-            setUpdated(false);
-            setErrorMessage("");
+            // setUpdated(false);
+            // setErrorMessage("");
             isRecruiter
               ? profileMutation.mutate({
                   account: {
@@ -141,8 +147,9 @@ export const ProfilePage: React.FC<any> = () => {
           isLoading={profileMutation.isLoading || profileQuery.isLoading}
           text="Cập nhật"
         />
-        {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {contextHolder}
+        {/* {updated && <p style={{ color: "green" }}>Cập nhật thành công</p>}
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>} */}
       </Form>
     </div>
   );

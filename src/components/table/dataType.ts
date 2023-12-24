@@ -49,17 +49,26 @@ export interface ApprovedJobDataType {
 }
 
 export interface ApplicantDataType {
-  id: number;
-  job: Job;
-  student: Student;
-  is_submitted: boolean;
-  created_at: string; // Assuming ISO format date-time string
-  updated_at: string; // Assuming ISO format date-time string
-  time_opened: string; // Assuming ISO format date-time string
-  time_submitted?: string | null; // Assuming ISO format date-time string
-  resume?: string | null; // URL to the resume
-  cover_letter?: string | null; // URL to the cover letter
-  questionnaire_answer?: number | null;
+  job: string;
+  applicants: {
+    key: string | null;
+    applied_at: string | null;
+    name: string | null;
+    school: string | null;
+    job: string | null;
+    resume: string | null;
+    // id: number;
+    // job: Job;
+    // student: Student;
+    // is_submitted: boolean;
+    // created_at: string; // Assuming ISO format date-time string
+    // updated_at: string; // Assuming ISO format date-time string
+    // time_opened: string; // Assuming ISO format date-time string
+    // time_submitted?: string | null; // Assuming ISO format date-time string
+    // resume?: string | null; // URL to the resume
+    // cover_letter?: string | null; // URL to the cover letter
+    // questionnaire_answer?: number | null;
+  }[];
 }
 
 export interface StudentDataType {
