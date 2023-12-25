@@ -152,7 +152,7 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <LoadingPage />;
 
-  return status == "authenticated" && !errorMessage && pwScreen ? (
+  return status == "authenticated" && !errorMessage && !pwScreen ? (
     <LoadingPage />
   ) : (
     <div className="register">
