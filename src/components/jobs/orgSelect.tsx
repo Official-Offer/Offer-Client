@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { getOrgList } from "@services/apiUser";
 import { setCompany, setCompanyId, setSchoolIds } from "@redux/actions";
+import { schoolList } from "@public/static/schoolList";
+import { companyList } from "@public/static/companyList";
 
 export const SelectOrg: React.FC<any> = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);
@@ -17,21 +19,21 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
   const [companyName, setCompanyName] = useState<string>("");
   const dispatch = useDispatch();
 
-  const orgQuery = useQuery({
-    queryKey: ["orgs"],
-    queryFn: getOrgList,
-    onSuccess: async (orgs) => {
-      // add "school is not found" into the list
-      const schoolList = orgs.schools;
-      const companyList = orgs.companies;
+  // const orgQuery = useQuery({
+  //   queryKey: ["orgs"],
+  //   queryFn: getOrgList,
+  //   onSuccess: async (orgs) => {
+  //     // add "school is not found" into the list
+  //     const schoolList = orgs.schools;
+  //     const companyList = orgs.companies;
 
-      setSchools(schoolList);
-      setCompanies(companyList);
-    },
-    onError: () => {
-      // console.log("error");
-    },
-  });
+  //     setSchools(schoolList);
+  //     setCompanies(companyList);
+  //   },
+  //   onError: () => {
+  //     // console.log("error");
+  //   },
+  // });
 
   const isRecruiter = router.pathname.includes("recruiter") ? true : false;
 
@@ -69,10 +71,10 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                     setSelectedOrgIds(Number(value.key));
                   }
                 }}
-                loading={orgQuery.isLoading}
+                // loading={orgQuery.isLoading}
               >
                 {isRecruiter
-                  ? schools?.map((school: any) => (
+                  ? schoolList.map((school: any) => (
                       <Select.Option
                         key={school.id}
                         className="form-select-dropdown"
@@ -81,7 +83,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                         {school.name}
                       </Select.Option>
                     ))
-                  : companies?.map((company: any) => (
+                  : companyList.map((company: any) => (
                       <Select.Option
                         key={company.id}
                         className="form-select-dropdown"
@@ -96,7 +98,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
         </div>
         <SubmitButton
           text={"Tiếp tục"}
-          isLoading={orgQuery.isLoading}
+          // isLoading={orgQuery.isLoading}
           onClick={() => {
             if (!selectedOrgIds) {
               return;

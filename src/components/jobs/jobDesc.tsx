@@ -116,8 +116,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
-      openNotification('error', 'Lỗi', error.response.data.message);
       setErrorMessage(error.response.data.message);
+      openNotification('error', 'Lỗi', error.response.data.message);
     },
   });
 
@@ -132,9 +132,9 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
       // onClick();
     },
     onError: (error: any) => {
+      setErrorMessage(error.response.data.message);
       openNotification('error', 'Lỗi', error.response.data.message);
       // console.log(error.response.data.message);
-      setErrorMessage(error.response.data.message);
     },
   });
 

@@ -11,4 +11,7 @@ export const schoolList = [
     id: 1,
     name: "MIT",
   },
+  { id: 0, 
+    name: "Trường không có trong danh sách" 
+  },
 ];
