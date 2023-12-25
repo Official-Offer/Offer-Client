@@ -61,8 +61,8 @@ const Applicants: NextPage = () => {
 
   const deleteJobMutation = useMutation(() => deleteJob(id), {
     onSuccess: () => {
-      openNotification("success", "Xóa công việc thành công", "");
       setMessage("Xóa công việc thành công");
+      openNotification("success", "Xóa công việc thành công", "");
     },
     onError: (error) => {
       openNotification("error", "Xóa công việc thất bại", "");

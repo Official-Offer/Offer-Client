@@ -72,13 +72,13 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSuccess: async (data: any) => {
       // Invalidate and refetch
       // router.reload();
-      openNotification("success", "Gửi thành công", "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể");
       setSubmitted(true);
+      openNotification("success", "Gửi thành công", "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể");
     },
     onError: (error: any) => {
+      setErrorMessage("Gửi thất bại");
       // console.log(error.response.data.message);
       openNotification("error", "Gửi thất bại", error.response.data.message);
-      setErrorMessage("Gửi thất bại");
     },
   });
 
