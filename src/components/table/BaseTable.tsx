@@ -106,7 +106,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
         {(handleAdd || handleVerify || handleDelete || handleEdit) && (
           <div className="table-functions-add">
             {handleVerify && (
-              <div>
+              <>
                 <IconButton
                   round
                   className=""
@@ -141,7 +141,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
                     </span>
                   </div>
                 </IconButton>
-              </div>
+              </>
             )}
 
             {handleEdit && (
