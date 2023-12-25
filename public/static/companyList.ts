@@ -39,4 +39,8 @@ export const companyList = [
     id: 2,
     name: "Tesla",
   },
+  {
+    id: "0",
+    name: "Công ty không có trong danh sách",
+  }
 ];
