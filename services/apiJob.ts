@@ -16,6 +16,18 @@ export const getJobs = async () => {
   return jobList;
 };
 
+export const getStudentJobsPerPage = async (page: number, pageSize: number) => {
+  const response = await request.get(`/jobs/student`, {
+    params: {
+      page,
+      page_size: pageSize,
+      ordered_by: "-created_at",
+    },
+  });
+  const jobList = response.data;
+  return jobList;
+};
+
 export const getJobsPerPage = async (page: number, pageSize: number) => {
   const response = await request.get(`/jobs`, {
     params: {

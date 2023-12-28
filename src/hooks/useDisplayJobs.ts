@@ -24,7 +24,7 @@ export const useDisplayJobs = () => {
     setOriginalJobs(jobList);
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
-    for (let i = 0; i < jobList.length; i++) {
+    for (let i = 0; i < jobList?.length; i++) {
       const job = jobList[i];
       if (job.job_types) {
         const type = job.job_types;
