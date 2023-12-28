@@ -188,7 +188,7 @@ const Home: NextPage = () => {
         <section>
           <AntdCard
             className={id ? "uni-cover" : "public-hero"}
-            cover={id && <img src={DHBK.cover} alt={school?.name ?? ""} />}
+            cover={id && <img src={school?.background_image || DHBK.cover} alt={school?.name ?? ""} />}
             children={
               id ? (
                 <div className="uni-wrapper">
