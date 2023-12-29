@@ -26,7 +26,7 @@ type CarouselProps = {
   isAsync?: boolean;
   isFetching?: boolean;
   loadNextFunc?: () => void;
-  viewMoreUrl?: string;
+  viewMoreUrl?: string; // This is the URL for the button at the end
   noMargin?: boolean;
 };
 
@@ -50,7 +50,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   const scrollListenerRef = useRef<() => void>(() => undefined);
   const listenForScrollRef = useRef<boolean>(true);
   const hasMoreToLoadRef = useRef<boolean>(slideRef.current < (slidesLimit ?? 0));
-  const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(slideRef.current < (slidesLimit ?? 0));
+  const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -98,23 +98,46 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const onScroll = useCallback((emblaApi: EmblaCarouselType) => {
     if (!listenForScrollRef.current) return;
-
     setLoadingMore((loadingMore) => {
       const lastSlide = emblaApi.slideNodes().length - 1;
       const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
-      console.log(lastSlideInView)
       const loadMore = !loadingMore && lastSlideInView;
-      if (loadMore && loadNextFunc) {
+      if (lastSlideInView) {
         listenForScrollRef.current = false;
-        
         let currentSlideNum = slideRef.current;
-        loadNextFunc();
+        console.log(currentSlideNum)
+        if (loadNextFunc) loadNextFunc();
         slideRef.current = currentSlideNum + 1;
       }
 
-      return loadingMore || lastSlideInView
+      return loadingMore || lastSlideInView;
     })
-  }, []);
+  }, [loadNextFunc]);
+
+  const addScrollListener = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      scrollListenerRef.current = () => onScroll(emblaApi)
+      emblaApi.on('scroll', scrollListenerRef.current)
+    },
+    [onScroll]
+  );
+
+  useEffect(() => {
+    if (isAsync && emblaApi && slides.length > 1) emblaApi.scrollTo(slides.length - 1);
+  }, [slides]);
+
+  useEffect(() => {
+    if (!emblaApi) return
+    addScrollListener(emblaApi)
+
+    const onResize = () => emblaApi.reInit()
+    window.addEventListener('resize', onResize)
+    emblaApi.on('destroy', () => window.removeEventListener('resize', onResize))
+  }, [emblaApi, addScrollListener]);
+
+  useEffect(() => {
+    setHasMoreToLoad(slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined);
+  }, [loadNextFunc])
 
   useEffect(() => {
     hasMoreToLoadRef.current = hasMoreToLoad;

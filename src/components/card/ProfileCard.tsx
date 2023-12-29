@@ -19,8 +19,8 @@ type ProfileCardProps = {
   fieldTitle: string;
   fieldItemProps: {
     itemTitle: string;
-    dataIdMap: string[];
-    dataName: string[];
+    queryLabel: string;
+    dataIdMap: string[]; // Which field needs list of data as options
     disableEndDate: boolean;
     layout: string[];
     labelToAPI: Record<string, string>;
@@ -68,16 +68,17 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const [openEditFormArr, setOpenEditFormArr] = useState<boolean[]>(
     queryItemList.map(() => false),
   );
-  console.log("Data from educations: ", data);
+  // console.log("Data from educations: ", data);
   // Hooks
   // fieldItemProps define how API fields are formatted as labels (For ex: "start_date" field in API would be shown as "Ngày bắt đầu" as label)
   // queryItemList will keep the raw JSON array from the API
 
   useEffect(() => {
     if (data) {
-      if (fieldItemProps.dataIDLabel === "school") {
+      if (fieldItemProps.queryLabel === "school") {
         for (let i = 0; i < data.length; i++) {
           data[i].majors = data[i].majors?.map((item: any) => item.name);
+          data[i].schoolName = data[i].school.name || "Trường không xác định";
         }
       }
       setQueryItemList(data);
@@ -86,7 +87,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   // Fetch lists of datas (ex: if this is education, it will fetch schools for the form)
   const dataQuery = useQuery({
-    queryKey: [fieldItemProps.dataIDLabel],
+    queryKey: [fieldItemProps.queryLabel],
     queryFn: dataFunction,
     onSuccess: (data) => typeof data === "object" && setDataArr(data),
     onError: (err) => console.log(`Data Error: ${err}`),
@@ -105,6 +106,10 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
     }
   };
 
+  const getLogo = (item: Record<string, any>) => {
+    return item[fieldItemProps.queryLabel]?.logo ?? logoURL;
+  };
+  
   return (
     <AntdCard
       className="main-panel-card"
@@ -127,8 +132,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             isAdd={true}
             fieldTitle={fieldTitle}
             fieldItemProps={fieldItemProps}
-            fieldItems={queryItemList?.[0]}
-            postFunction={addFunction}
+            fieldValues={queryItemList?.[0]}
+            updateFunction={addFunction}
             refetchFunction={refetchFunction}
             dataArr={dataArr}
           />
@@ -159,9 +164,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
               );
             })
             .map((item, index) => {
-              const get_logo = (item: Record<string, any>) => {
-                return item[fieldItemProps.dataIDLabel]?.logo ?? logoURL;
-              };
               return (
                 <div>
                   {index !== 0 && <Divider />}
@@ -172,15 +174,15 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                     isAdd={false}
                     fieldTitle={fieldTitle}
                     fieldItemProps={fieldItemProps}
-                    fieldItems={queryItemList[index]}
-                    postFunction={editFunction}
+                    fieldValues={queryItemList[index]}
+                    updateFunction={editFunction}
                     deleteFunction={deleteFunction} // If there's only one school do not show delete function
                     refetchFunction={refetchFunction}
                     dataArr={dataArr}
                   />
                   <div className="main-panel-info">
                     <div className="main-panel-info-logo">
-                      <img src={get_logo(item)} />
+                      <img src={getLogo(item)} />
                     </div>
                     <div className="main-panel-info-center">
                       <h3>{formatProfileData(item[fieldItemProps.labelToAPI.itemTitle])}</h3>

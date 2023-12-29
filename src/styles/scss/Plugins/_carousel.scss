@@ -1,4 +1,5 @@
 .embla {
+  --slide-spacing: 16px;
   overflow: hidden;
 
   &__viewport {
@@ -14,18 +15,30 @@
     backface-visibility: hidden;
     display: flex;
     touch-action: pan-y;
-    margin-left: 24px;
+    // margin-left: calc(var(--slide-spacing) * -1);
     margin-bottom: 16px;
+
+    // overflow: auto;
+    // scroll-snap-type: x mandatory;
+    // -ms-overflow-style: none;
+    // scrollbar-width: none;
+
+    // &::-webkit-scrollbar {
+    //   display: none;
+    // }
 
     &--no-margin {
       margin-left: 0px;
+      margin-bottom: 0px;
     }
   }
 
   &__slide {
-    padding-right: 16px;
-
+    padding-left: var(--slide-spacing);
+    // scroll-snap-align: start;
+    
     &--full {
+      padding-right: var(--slide-spacing);
       flex: 0 0 100%;
     }
 

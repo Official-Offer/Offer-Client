@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card as AntdCard, Button, Modal, Upload } from "antd";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
@@ -20,12 +20,12 @@ import {
 } from "@styles/styled-components/styledButton";
 import {
   getStudentResume,
-  updateStudentResume,
+  addStudentResume,
   deleteStudentResume,
   updateStudentActiveResume
 } from "@services/apiStudent";
 import { Carousel } from "@components/list";
-import { formatOverflowText, extractFileName } from "@utils/formatters/stringFormat";
+import { formatOverflowText, getFileNameFromUrl } from "@utils/formatters/stringFormat";
 import type { Resume } from "src/types/dataTypes";
 
 type ResumeCardProps = {
@@ -48,25 +48,30 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
   // States
   const [selectedFile, setSelectedFile] = useState<File | null>();
   const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>(); // Holding the URL of uploaded resume for downloading
+  const fileOrderRef = useRef<Map<number, number>>(new Map());
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
   const [deletingResumeIndex, setDeletingResumeIndex] = useState<number | null>(); // For deleting the file
-  const [activeResumeIndex, setActiveResumeIndex] = useState<number>(0); // For switching between resumes
+  const [activeResumeId, setActiveResumeId] = useState<number>(0); // For switching between resumes
 
   // Hooks
   useEffect(() => {
-    console.log("Resumes: ", resumes);
     if (resumes) {
-      setUploadedFiles(resumes.resumes);
-      setDeletingResumeIndex(null);
-
-      // Temporary until Thuan fixes active_index to active_pk
-      let activeIndex = 0;
-      resumes.resumes.forEach((resume, index) => {
-        if (resume.pk === resumes.active_resume?.pk) {
-          activeIndex = index;
+      // Store the order of resumes when first mounted to account for changes in the order of resumes returned from API
+      let lastIndexInOrder = fileOrderRef.current.size;
+      for (let i = 0; i < resumes.length; i++) {
+        if (fileOrderRef.current.has(resumes[i].pk)) continue;
+        if (resumes[i].is_active) {
+          setActiveResumeId(resumes[i].pk);
+          fileOrderRef.current.set(resumes[i].pk, 0); // Place active first
+          continue;
         }
-      })
-      setActiveResumeIndex(activeIndex);
+        fileOrderRef.current.set(resumes[i].pk, ++lastIndexInOrder);
+      }
+      resumes.sort((a, b) => {
+        return fileOrderRef.current.get(a.pk)! - fileOrderRef.current.get(b.pk)!;
+      });
+      setUploadedFiles(resumes);
+      setDeletingResumeIndex(null);
     }
   }, [resumes]);
 
@@ -75,8 +80,8 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
     mutationFn: async (selectedFile: File) => {
       const resumeData = new FormData();
       resumeData.append("resume", selectedFile);
-      resumeData.append("uploading_resume", "true");
-      return await updateStudentResume(resumeData);
+      resumeData.append("is_active", false);
+      return await addStudentResume(resumeData);
     },
     onSuccess: () => {
       refetchFunction();
@@ -151,7 +156,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
   };
 
   const handleUpdateActiveResume = (pk: number) => {
-    setActiveResumeIndex(pk)
+    setActiveResumeId(pk)
     updateActiveResumeMutation.mutate(pk);
   }
 
@@ -250,17 +255,17 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
           <Carousel
             noMargin
             slidesToScroll={2}
-            slides={uploadedFiles.map((uploadedFile, index) => (
+            slides={uploadedFiles.map((uploadedFile) => (
               // eslint-disable-next-line react/jsx-key
               <StyledResumeCard>
-                <div className="resume-star" onClick={() => handleUpdateActiveResume(index)}>
+                <div className="resume-star" onClick={() => handleUpdateActiveResume(uploadedFile.pk)}>
                 {
                 // uploadedFile.pk === (resumes?.active_resume?.pk ?? -1) || 
-                  index === activeResumeIndex ? (
+                  activeResumeId === uploadedFile.pk ? (
                     <StarIcon />
                     ) : <StarIconOutlined />}
                 </div>
-                <h3 className="clamp-1">{extractFileName(uploadedFile.resume)}</h3>
+                <h3 className="clamp-1">{getFileNameFromUrl(uploadedFile.resume)}</h3>
                 <div className="btn-list-horizontal">
                   <a
                     className="btn-list-horizontal-expand"

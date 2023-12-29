@@ -15,6 +15,7 @@ import {
 } from "@ant-design/icons";
 import {
   getStudentDetails,
+  getStudentResume,
   getStudentEducations,
   editStudentEducation,
   addStudentEducation,
@@ -59,12 +60,13 @@ const info = {
 
 const eduFieldItems = {
   itemTitle: "Trường",
+  queryLabel: "school",
   dataIdMap: ["itemTitle", "majors"],
-  dataName: ["schoolName", "majors"],
+  // dataName: ["schoolName", "majors"],
   disableEndDate: false,
   layout: ["majors", "gpa"],
   labelToAPI: {
-    itemTitle: "school",
+    itemTitle: "schoolName",
     GPA: "gpa",
     "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
@@ -80,7 +82,8 @@ const eduFieldItems = {
     is_current: "Tôi đang học trường này",
   },
   itemType: {
-    majors: "object",
+    itemTitle: "object",
+    majors: "object-multi",
     gpa: "number",
   },
   isRequired: {
@@ -90,7 +93,7 @@ const eduFieldItems = {
 
 const expFieldItems = {
   itemTitle: "Vị Trí",
-  dataIDLabel: "company",
+  queryLabel: "company",
   dataName: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
@@ -130,6 +133,18 @@ const StudentProfile: NextPage = () => {
     },
     onError: (err) => console.log(`Error: ${err}`),
     refetchOnWindowFocus: false
+  });
+
+  const resumeQuery = useQuery({
+    queryKey: [`students/${id}/resumes`],
+    queryFn: getStudentResume,
+    onSuccess: (res) => {
+      studentDetails.resumes = res;
+      console.log(studentDetails);
+      setStudentDetails(studentDetails);
+    },
+    onError: (err) => console.log(`Error: ${err}`),
+    enabled: false
   });
 
   const getSchoolAndMajorList = async () => {
@@ -225,10 +240,10 @@ const StudentProfile: NextPage = () => {
         <ResumeCard
           isEditable
           resumes={studentDetails?.resumes}
-          isError={studentQuery.isError}
+          isError={studentQuery.isError || resumeQuery.isError}
           isLoading={studentQuery.isLoading}
-          isRefetching={studentQuery.isRefetching}
-          refetchFunction={studentQuery.refetch}
+          isRefetching={resumeQuery.isRefetching}
+          refetchFunction={resumeQuery.refetch}
         />
         <ProfileCard
           isEditable

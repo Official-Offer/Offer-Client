@@ -17,7 +17,9 @@ export const getJobs = async () => {
 };
 
 export const getJobsPerPage = async (page: number, pageSize: number) => {
-  const response = await request.get(`/jobs`, {
+  console.log(page, pageSize)
+  const role: string = getCookie("role");
+  const response = await request.get(`/jobs/${role}/`, {
     params: {
       page,
       page_size: pageSize,

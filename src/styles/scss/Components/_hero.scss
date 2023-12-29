@@ -51,6 +51,9 @@
 }
 
 .public-hero {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border: 0px;
   padding: 32px;
   color: white !important;
   background: radial-gradient(at top left, $pinkish-red, $purple-color);

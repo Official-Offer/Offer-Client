@@ -17,7 +17,6 @@ export const updateStudent = async (body: any) => {
 export const getStudentDetails = async () => {
   const id = getCookie("id");
   const response = (await request.get(`/students/${id}/`)).data;
-  console.log("Student details", response);
   return response;
 };
 
@@ -75,86 +74,76 @@ export const studentLogin = async (body: any) => {
 // Resume
 export const getStudentResume = async () => {
   const response = await request.get(`/students/resume/`);
-  return response.data.Response;
-};
-
-export const updateStudentResume = async (file: FormData) => {
-  const id = getCookie("id");
-  const response = await request.patch(`/students/${id}/files/`, file);
   return response.data;
 };
 
-export const updateStudentActiveResume = async (pk: number) => {
-  const id = getCookie("id");
-  const response = await request.patch(`/students/${id}/`, {
-    resumes: {
-      active_index: pk,
-    },
-  });
+export const addStudentResume = async (input: any) => {
+  const response = await request.post(`/students/resume/`, input);
   return response.data;
 }
 
-export const deleteStudentResume = async (pk: number) => {
-  const response = await request.delete(`/students/resume/${pk}`);
+export const updateStudentActiveResume = async (id: number) => {
+  const formData = new FormData();
+  formData.append("is_active", "true");
+  const response = await request.patch(`/students/resume/${id}/`, formData);
+  return response.data;
+}
+
+export const deleteStudentResume = async (id: number) => {
+  const response = await request.delete(`/students/resume/${id}/`);
   return response.data;
 };
 
 // Educations
-export const getStudentEducations = async () => {
-  const response = await request.get(`/students/educations/`);
-
-  const educations = response.data;
-  // If school's id exists, fetch its name
-  for (const education of educations) {
-    education.schoolName = (await getSchool(education.school)).name;
-  }
-  return educations;
-};
+// export const getStudentEducations = async (id: number) => {
+//   const response = await request.get(`/students/education/${id}/`);
+//   return response.data;
+// };
 
 export const editStudentEducation = async (
   id: number,
   input: Record<string, unknown>,
 ) => {
-  const response = await request.put(`/students/educations/${id}/`, input);
+  const response = await request.patch(`/students/education/${id}/`, input);
   return response.data;
 };
 
 export const addStudentEducation = async (input: Record<string, unknown>) => {
-  const response = await request.post(`/students/educations/`, input);
+  const response = await request.post(`/students/education/`, input);
   return response.data;
 };
 
 export const deleteStudentEducation = async (id: number) => {
-  const response = await request.delete(`/students/educations/${id}/`);
+  const response = await request.delete(`/students/education/${id}/`);
   return response.data;
 };
 
 // Experiences
-export const getStudentExperiences = async () => {
-  const response = await request.get(`/students/experiences/`);
-  const experiences = response.data;
-  // If company's id exists, fetch its name
-  for (const experience of experiences) {
-    experience.companyName = (await getCompany(experience.company)).name;
-  }
-  return experiences;
-};
+// export const getStudentExperiences = async (id: number) => {
+//   const response = await request.get(`/students/experiences/`);
+//   const experiences = response.data;
+//   // If company's id exists, fetch its name
+//   for (const experience of experiences) {
+//     experience.companyName = (await getCompany(experience.company)).name;
+//   }
+//   return experiences;
+// };
 
 export const editStudentExperience = async (
   id: number,
   input: Record<string, unknown>,
 ) => {
-  const response = await request.put(`/students/experiences/${id}/`, input);
+  const response = await request.patch(`/students/experience/${id}/`, input);
   return response.data;
 };
 
 export const addStudentExperience = async (input: Record<string, unknown>) => {
-  const response = await request.post(`/students/experiences/`, input);
+  const response = await request.post(`/students/experience/`, input);
   return response.data;
 };
 
 export const deleteStudentExperience = async (id: number) => {
-  console.log(id, `/students/experiences/${id}/`);
-  const response = await request.delete(`/students/experiences/${id}/`);
+  con
+  const response = await request.delete(`/students/experience/${id}/`);
   return response.data;
 };

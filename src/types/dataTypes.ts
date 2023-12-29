@@ -45,6 +45,7 @@ export type School = {
 export type Resume = {
   pk: number;
   resume: string;
+  is_active?: boolean;
 };
 
 export type Major = {

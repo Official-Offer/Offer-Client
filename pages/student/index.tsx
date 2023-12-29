@@ -31,6 +31,7 @@ import { getCompanyList } from "@services/apiCompany";
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { useDisplayCompanies } from "@hooks/useDisplayJobs";
 
+import { getPageNumFromUrl } from "@utils/formatters/stringFormat";
 import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
@@ -103,6 +104,7 @@ const Home: NextPage = () => {
   const schoolName = decodeURI(getCookie("orgName") as string ?? "");
 
   const [school, setSchool] = useState<Record<string, any> | undefined>();
+  // const [page, setPage] = useState<number>(1)
   const schoolQuery = useQuery({
     queryKey: ["school"],
     queryFn: getStudentDetails,
@@ -116,14 +118,15 @@ const Home: NextPage = () => {
   const jobInfiniteQuery = useInfiniteQuery({
     queryKey: ["paginated jobs"],
     queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12),
-    getNextPageParam: (lastPage) => (lastPage.count / lastPage.results)
+    getNextPageParam: (lastPage) => getPageNumFromUrl(lastPage.next),
+    refetchOnWindowFocus: false
   });
 
   useEffect(() => {
     if (jobInfiniteQuery.data) {
       console.log(jobInfiniteQuery.data);
-      // setJobs(jobInfiniteQuery.data.pages.results);
-      // setSort("date-posted");
+      setJobs(jobInfiniteQuery.data.pages.reduce((acc, page) => [...acc, ...page.results], [] as Job[]));
+      setSort("date-posted");
     }
   }, [jobInfiniteQuery.data]);
 
@@ -223,9 +226,9 @@ const Home: NextPage = () => {
             <Carousel
               slideSize="full"
               isAsync
-              isFetching
               slidesLimit={3}
-              loadNextFunc={jobInfiniteQuery.fetchNextPage}
+              isFetching={jobInfiniteQuery.isFetchingNextPage}
+              loadNextFunc={jobInfiniteQuery.hasNextPage ? jobInfiniteQuery.fetchNextPage : undefined}
               slides={
                 jobInfiniteQuery.isLoading
                   ? [
@@ -233,14 +236,14 @@ const Home: NextPage = () => {
                         {new Array(4).fill(<InfoCard loading />)}
                       </div>,
                     ]
-                  : [
+                  : displayedJobs.map((slide) => (
                       <div className="layout-grid">
-                        {displayedJobs.map((jobData) => (
-                          <InfoCard info={jobData} />
+                        {slide.map((job) => (
+                          <InfoCard key={job.id} info={job} />
                         ))}
-                      </div>,
-                    ]
-              }
+                      </div>
+                    ))
+                }
             />
           </AntdCard>
         </section>
