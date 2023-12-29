@@ -9,7 +9,7 @@ import {
   LoadingOutlined,
   CheckOutlined,
   DeleteOutlined,
-  UploadOutlined
+  UploadOutlined,
 } from "@ant-design/icons";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconOutlined } from "@heroicons/react/24/outline";
@@ -22,10 +22,13 @@ import {
   getStudentResume,
   addStudentResume,
   deleteStudentResume,
-  updateStudentActiveResume
+  updateStudentActiveResume,
 } from "@services/apiStudent";
 import { Carousel } from "@components/list";
-import { formatOverflowText, getFileNameFromUrl } from "@utils/formatters/stringFormat";
+import {
+  formatOverflowText,
+  getFileNameFromUrl,
+} from "@utils/formatters/stringFormat";
 import type { Resume } from "src/types/dataTypes";
 
 type ResumeCardProps = {
@@ -50,7 +53,9 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
   const [uploadedFiles, setUploadedFiles] = useState<Resume[] | null>(); // Holding the URL of uploaded resume for downloading
   const fileOrderRef = useRef<Map<number, number>>(new Map());
   const [resetTimer, setResetTimer] = useState<ReturnType<typeof setTimeout>>(); // For resetting the timer after each upload
-  const [deletingResumeIndex, setDeletingResumeIndex] = useState<number | null>(); // For deleting the file
+  const [deletingResumeIndex, setDeletingResumeIndex] = useState<
+    number | null
+  >(); // For deleting the file
   const [activeResumeId, setActiveResumeId] = useState<number>(0); // For switching between resumes
 
   // Hooks
@@ -68,7 +73,9 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
         fileOrderRef.current.set(resumes[i].pk, ++lastIndexInOrder);
       }
       resumes.sort((a, b) => {
-        return fileOrderRef.current.get(a.pk)! - fileOrderRef.current.get(b.pk)!;
+        return (
+          fileOrderRef.current.get(a.pk)! - fileOrderRef.current.get(b.pk)!
+        );
       });
       setUploadedFiles(resumes);
       setDeletingResumeIndex(null);
@@ -111,7 +118,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
       refetchFunction();
     },
     onError: (err) => console.log(`Update Active Resume Error: ${err}`),
-  })
+  });
 
   // Functions
   // const selectResume = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,20 +127,18 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
 
   const uploadsExist = () => {
     return uploadedFiles && uploadedFiles.length !== 0;
-  }
+  };
 
   const selectResumeDrag = (file: File) => {
     setSelectedFile(file);
-  }
+  };
 
-  const handleUpload = (
-    event?: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleUpload = (event?: React.ChangeEvent<HTMLInputElement>) => {
     if (event) {
       event.preventDefault();
       if (event.target.files?.[0]) {
         uploadMutation.mutate(event.target.files[0]);
-        setSelectedFile(event.target.files[0])
+        setSelectedFile(event.target.files[0]);
       }
     } else if (selectedFile) uploadMutation.mutate(selectedFile);
   };
@@ -156,9 +161,9 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
   };
 
   const handleUpdateActiveResume = (pk: number) => {
-    setActiveResumeId(pk)
+    setActiveResumeId(pk);
     updateActiveResumeMutation.mutate(pk);
-  }
+  };
 
   //TODO: Render multiple resumes and allow user to upload.
   return (
@@ -187,43 +192,47 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
             //       </IconButton>
             //     </label>
             //   </div>
-              <div className="file-btn">
-                {
-                  uploadsExist() &&
-                    <input type="file" id="file-input" onChange={handleUpload} />
-                }
-                <label htmlFor="file-input">
-                  <IconButton
-                    round
-                    backgroundColor="#7277F1"
-                    disabled={uploadMutation.isLoading}
-                    onClick={() => !uploadsExist() && handleUpload()}
-                  >
-                    {uploadMutation.isLoading ? (
-                      <div className="btn-body">
-                        <span>Đang tải lên {formatOverflowText(selectedFile?.name ?? "CV", 10)}</span>
-                        <span>
-                          <LoadingOutlined />
-                        </span>
-                      </div>
-                    ) : selectedFile && uploadMutation.isSuccess && uploadsExist() ? (
-                      <div className="btn-body">
-                        <span>Tải lên thành công</span>
-                        <span>
-                          <CheckOutlined />
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="btn-body">
-                        <span>Tải lên</span>
-                        <span>
-                          <CloudUploadOutlined />
-                        </span>
-                      </div>
-                    )}
-                  </IconButton>
-                </label>
-              </div>
+            <div className="file-btn">
+              {uploadsExist() && (
+                <input type="file" id="file-input" onChange={handleUpload} />
+              )}
+              <label htmlFor="file-input">
+                <IconButton
+                  round
+                  backgroundColor="#7277F1"
+                  disabled={uploadMutation.isLoading}
+                  onClick={() => !uploadsExist() && handleUpload()}
+                >
+                  {uploadMutation.isLoading ? (
+                    <div className="btn-body">
+                      <span>
+                        Đang tải lên{" "}
+                        {formatOverflowText(selectedFile?.name ?? "CV", 10)}
+                      </span>
+                      <span>
+                        <LoadingOutlined />
+                      </span>
+                    </div>
+                  ) : selectedFile &&
+                    uploadMutation.isSuccess &&
+                    uploadsExist() ? (
+                    <div className="btn-body">
+                      <span>Tải lên thành công</span>
+                      <span>
+                        <CheckOutlined />
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="btn-body">
+                      <span>Tải lên</span>
+                      <span>
+                        <CloudUploadOutlined />
+                      </span>
+                    </div>
+                  )}
+                </IconButton>
+              </label>
+            </div>
           )}
         </div>
       }
@@ -239,7 +248,8 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
             accept=".pdf"
             progress={{
               strokeColor: "#D30B81",
-              format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
+              format: (percent) =>
+                percent && `${parseFloat(percent.toFixed(2))}%`,
             }}
             showUploadList={{
               showRemoveIcon: true,
@@ -258,14 +268,22 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
             slides={uploadedFiles.map((uploadedFile) => (
               // eslint-disable-next-line react/jsx-key
               <StyledResumeCard>
-                <div className="resume-star" onClick={() => handleUpdateActiveResume(uploadedFile.pk)}>
-                {
-                // uploadedFile.pk === (resumes?.active_resume?.pk ?? -1) || 
-                  activeResumeId === uploadedFile.pk ? (
-                    <StarIcon />
-                    ) : <StarIconOutlined />}
+                <div
+                  className="resume-star"
+                  onClick={() => handleUpdateActiveResume(uploadedFile.pk)}
+                >
+                  {
+                    // uploadedFile.pk === (resumes?.active_resume?.pk ?? -1) ||
+                    activeResumeId === uploadedFile.pk ? (
+                      <StarIcon />
+                    ) : (
+                      <StarIconOutlined />
+                    )
+                  }
                 </div>
-                <h3 className="clamp-1">{getFileNameFromUrl(uploadedFile.resume)}</h3>
+                <h3 className="clamp-1">
+                  {getFileNameFromUrl(uploadedFile.resume)}
+                </h3>
                 <div className="btn-list-horizontal">
                   <a
                     className="btn-list-horizontal-expand"

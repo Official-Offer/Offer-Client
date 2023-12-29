@@ -70,7 +70,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     //     const end_date = props.fieldValues.end_date;
     //     prev.start_date = start_date ? moment(start_date) : null;
     //     prev.end_date = end_date ? moment(end_date) : null;
-  
+
     //     if (props.fieldItemProps.dataIdMap?.[0] === "itemTitle") {
     //       const itemTitle = prev[props.fieldItemProps.labelToAPI.itemTitle];
     //       prev[props.fieldItemProps.labelToAPI.itemTitle] = parseInt(extractKeyByValue(props.dataArr[0], itemTitle));
@@ -169,7 +169,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
       .validateFields()
       .then((formData) => {
         formData.start_date = formData.start_date.format("YYYY-MM-DD");
-        formData.end_date = formData.end_date ? formData.end_date.format("YYYY-MM-DD") : null;
+        formData.end_date = formData.end_date
+          ? formData.end_date.format("YYYY-MM-DD")
+          : null;
         if (props.fieldItemProps.queryLabel === "school") {
           // convert all numeric string to number
           formData.school = parseInt(formData.schoolName);
@@ -186,7 +188,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     label,
     isRequired,
     isMulti,
-    optionList
+    optionList,
   }) => (
     <Form.Item
       name={name}
@@ -206,11 +208,18 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
         placeholder={`Vui lòng chọn ${label.toLowerCase()}`}
         placement="bottomLeft"
         loading={props.dataArr === undefined}
-        options={optionList ? Object.keys(optionList).map((key) => ({
-          key: parseInt(key),
-          value: parseInt(key),
-          label: typeof optionList[key] === "object" ? (optionList[key].name || optionList[key].label) : optionList[key],
-        })) : []}
+        options={
+          optionList
+            ? Object.keys(optionList).map((key) => ({
+                key: parseInt(key),
+                value: parseInt(key),
+                label:
+                  typeof optionList[key] === "object"
+                    ? optionList[key].name || optionList[key].label
+                    : optionList[key],
+              }))
+            : []
+        }
       />
     </Form.Item>
   );
@@ -239,7 +248,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
             label={getLabel(itemName, false)}
             isRequired={props.fieldItemProps.isRequired[itemName]}
             isMulti={false}
-            optionList={props.dataArr[props.fieldItemProps.dataIdMap.indexOf(itemName)]}
+            optionList={
+              props.dataArr[props.fieldItemProps.dataIdMap.indexOf(itemName)]
+            }
           />
         );
       case "object-multi":
@@ -261,7 +272,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
             label={getLabel(itemName, false)}
             isRequired={props.fieldItemProps.isRequired[itemName]}
             isMulti={true}
-            optionList={props.dataArr[props.fieldItemProps.dataIdMap.indexOf(itemName)]}
+            optionList={
+              props.dataArr[props.fieldItemProps.dataIdMap.indexOf(itemName)]
+            }
           />
         );
       default:
@@ -357,7 +370,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
             <ItemInput itemName={itemName} />
           ),
         )} */}
-        {props.fieldItemProps.layout.map((itemName) => <ItemInput itemName={itemName} />)}
+        {props.fieldItemProps.layout.map((itemName) => (
+          <ItemInput itemName={itemName} />
+        ))}
         {/* Current, Start date, End date, Description */}
         <Form.Item name="is_current" valuePropName="checked">
           <Checkbox

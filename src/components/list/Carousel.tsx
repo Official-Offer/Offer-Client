@@ -3,9 +3,10 @@ import React, {
   useCallback,
   useEffect,
   useState,
-  useRef
+  useRef,
 } from "react";
-import { EngineType } from "embla-carousel/components/Engine"
+import Link from "next/link";
+import { EngineType } from "embla-carousel/components/Engine";
 import useEmblaCarousel, {
   EmblaOptionsType,
   EmblaCarouselType,
@@ -43,14 +44,18 @@ export const Carousel: React.FC<CarouselProps> = ({
   isFetching,
   loadNextFunc,
   viewMoreUrl,
-  noMargin
+  noMargin,
 }) => {
   // Use ref so that it won't change during rerenders -> Less variables rerendered
   const slideRef = useRef<number>(1);
   const scrollListenerRef = useRef<() => void>(() => undefined);
   const listenForScrollRef = useRef<boolean>(true);
-  const hasMoreToLoadRef = useRef<boolean>(slideRef.current < (slidesLimit ?? 0));
-  const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined);
+  const hasMoreToLoadRef = useRef<boolean>(
+    slideRef.current < (slidesLimit ?? 0),
+  );
+  const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(
+    slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined,
+  );
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -96,48 +101,56 @@ export const Carousel: React.FC<CarouselProps> = ({
     setNextBtnDisabled(!emblaApi.canScrollNext());
   }, []);
 
-  const onScroll = useCallback((emblaApi: EmblaCarouselType) => {
-    if (!listenForScrollRef.current) return;
-    setLoadingMore((loadingMore) => {
-      const lastSlide = emblaApi.slideNodes().length - 1;
-      const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
-      const loadMore = !loadingMore && lastSlideInView;
-      if (lastSlideInView) {
-        listenForScrollRef.current = false;
-        let currentSlideNum = slideRef.current;
-        console.log(currentSlideNum)
-        if (loadNextFunc) loadNextFunc();
-        slideRef.current = currentSlideNum + 1;
-      }
+  const onScroll = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      if (!listenForScrollRef.current) return;
+      setLoadingMore((loadingMore) => {
+        const lastSlide = emblaApi.slideNodes().length - 1;
+        const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
+        const loadMore = !loadingMore && lastSlideInView;
+        if (lastSlideInView) {
+          listenForScrollRef.current = false;
+          let currentSlideNum = slideRef.current;
+          console.log(currentSlideNum);
+          if (loadNextFunc) loadNextFunc();
+          slideRef.current = currentSlideNum + 1;
+        }
 
-      return loadingMore || lastSlideInView;
-    })
-  }, [loadNextFunc]);
+        return loadingMore || lastSlideInView;
+      });
+    },
+    [loadNextFunc],
+  );
 
   const addScrollListener = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      scrollListenerRef.current = () => onScroll(emblaApi)
-      emblaApi.on('scroll', scrollListenerRef.current)
+      scrollListenerRef.current = () => onScroll(emblaApi);
+      emblaApi.on("scroll", scrollListenerRef.current);
     },
-    [onScroll]
+    [onScroll],
   );
 
   useEffect(() => {
-    if (isAsync && emblaApi && slides.length > 1) emblaApi.scrollTo(slides.length - 1);
+    if (isAsync && emblaApi && slides.length > 1)
+      emblaApi.scrollTo(slides.length - 1);
   }, [slides]);
 
   useEffect(() => {
-    if (!emblaApi) return
-    addScrollListener(emblaApi)
+    if (!emblaApi) return;
+    addScrollListener(emblaApi);
 
-    const onResize = () => emblaApi.reInit()
-    window.addEventListener('resize', onResize)
-    emblaApi.on('destroy', () => window.removeEventListener('resize', onResize))
+    const onResize = () => emblaApi.reInit();
+    window.addEventListener("resize", onResize);
+    emblaApi.on("destroy", () =>
+      window.removeEventListener("resize", onResize),
+    );
   }, [emblaApi, addScrollListener]);
 
   useEffect(() => {
-    setHasMoreToLoad(slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined);
-  }, [loadNextFunc])
+    setHasMoreToLoad(
+      slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined,
+    );
+  }, [loadNextFunc]);
 
   useEffect(() => {
     hasMoreToLoadRef.current = hasMoreToLoad;
@@ -156,8 +169,18 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div className="embla">
-      <div className={"embla__viewport" + (noMargin ? " embla__viewport--no-margin" : "")} ref={emblaRef}>
-        <div className={"embla__container" + (noMargin ? " embla__container--no-margin" : "")}>
+      <div
+        className={
+          "embla__viewport" + (noMargin ? " embla__viewport--no-margin" : "")
+        }
+        ref={emblaRef}
+      >
+        <div
+          className={
+            "embla__container" +
+            (noMargin ? " embla__container--no-margin" : "")
+          }
+        >
           {slides.map((item, index) => (
             <div
               className={`embla__slide ${
@@ -168,17 +191,35 @@ export const Carousel: React.FC<CarouselProps> = ({
               {item}
             </div>
           ))}
-          {isAsync && hasMoreToLoad && (
-            <div className="embla__infinite-scroll-spinner">
+          {isAsync && hasMoreToLoad ? (
+            <div className="embla__scroll-extender">
               <LoadingOutlined />
             </div>
-          )}
+          ) : viewMoreUrl ? (
+            <div className="embla__scroll-extender">
+              <Link href={viewMoreUrl}>
+                <Button
+                  // className={
+                  //   "embla__next" + (showDots ? " embla__next--with-dots" : "") + (noMargin ? " embla__next--no-margin" : "")
+                  // }
+                  icon={<ArrowRightOutlined />}
+                  onClick={scrollNext}
+                  // disabled={nextBtnDisabled}
+                  // type="primary"
+                  shape="circle"
+                />
+                <div className="embla__scroll-extender-text">Xem thêm</div>
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="embla__buttons">
         <Button
           className={
-            "embla__prev" + (showDots ? " embla__prev--with-dots" : "") + (noMargin ? " embla__prev--no-margin" : "")
+            "embla__prev" +
+            (showDots ? " embla__prev--with-dots" : "") +
+            (noMargin ? " embla__prev--no-margin" : "")
           }
           icon={<ArrowLeftOutlined />}
           onClick={scrollPrev}
@@ -188,7 +229,9 @@ export const Carousel: React.FC<CarouselProps> = ({
         />
         <Button
           className={
-            "embla__next" + (showDots ? " embla__next--with-dots" : "") + (noMargin ? " embla__next--no-margin" : "")
+            "embla__next" +
+            (showDots ? " embla__next--with-dots" : "") +
+            (noMargin ? " embla__next--no-margin" : "")
           }
           icon={<ArrowRightOutlined />}
           onClick={scrollNext}

@@ -17,7 +17,7 @@ export const getJobs = async () => {
 };
 
 export const getJobsPerPage = async (page: number, pageSize: number) => {
-  console.log(page, pageSize)
+  console.log(page, pageSize);
   const role: string = getCookie("role");
   const response = await request.get(`/jobs/${role}/`, {
     params: {
@@ -271,13 +271,11 @@ export const postJob = async (body: any) => {
   return response.data;
 };
 
-
 export const editJob = async (body: any) => {
   // console.log(getCookie("cookieToken"));
   const response = await request.patch(`/jobs/${body.id}/`, body.content);
   return response.data;
 };
-
 
 export const addSchoolsToJob = async (body: any) => {
   // const response = await request.patch(`/jobs/${body.id}/`, body.content);
@@ -299,7 +297,6 @@ export const deleteJob = async (id: any) => {
 };
 
 export const postJobApp = async (data: any) => {
-  
   const response = await request.post(`/job-applications/`, data);
   return response.data;
 };

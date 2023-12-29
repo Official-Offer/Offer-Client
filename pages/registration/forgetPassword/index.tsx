@@ -21,7 +21,7 @@ const ForgetPassword: NextPage = () => {
   const openNotification = (
     type: NotificationType,
     message: string,
-    description: string
+    description: string,
   ) => {
     api[type]({
       message,
@@ -36,7 +36,7 @@ const ForgetPassword: NextPage = () => {
       openNotification(
         "success",
         "Thành công",
-        "Link để thay đổi mật khẩu đã được gửi đến email của bạn."
+        "Link để thay đổi mật khẩu đã được gửi đến email của bạn.",
       );
       setSubmitted(true);
     },

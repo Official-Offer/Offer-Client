@@ -14,7 +14,7 @@ interface IOrgForm {
   isLoading: boolean;
   type?: string;
 }
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 export const OrgForm: React.FC<IOrgForm> = ({
   onSubmit,
@@ -72,7 +72,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSuccess: async (data: any) => {
       // Invalidate and refetch
       // router.reload();
-      openNotification("success", "Gửi thành công", "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể");
+      openNotification(
+        "success",
+        "Gửi thành công",
+        "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể",
+      );
       setSubmitted(true);
     },
     onError: (error: any) => {
@@ -82,7 +86,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
     },
   });
 
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -143,11 +151,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
             (submitted ? (
               <>
                 {contactMutation.isSuccess && (
-                  <Alert message="Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể" type="success" />
+                  <Alert
+                    message="Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể"
+                    type="success"
+                  />
                 )}
-                {errorMessage && (
-                  <Alert message={errorMessage} type="error" />
-                )}
+                {errorMessage && <Alert message={errorMessage} type="error" />}
               </>
             ) : (
               <>

@@ -36,7 +36,7 @@
   &__slide {
     padding-left: var(--slide-spacing);
     // scroll-snap-align: start;
-    
+
     &--full {
       padding-right: var(--slide-spacing);
       flex: 0 0 100%;
@@ -121,12 +121,22 @@
     }
   }
 
-  &__infinite-scroll-spinner {
+  &__scroll-extender {
     flex: 0 0 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-right: 16px;
+
+    &-text {
+      margin-top: 8px;
+    }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     .anticon-spin {
       font-size: 2rem;

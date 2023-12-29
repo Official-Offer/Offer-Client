@@ -4,10 +4,16 @@ export const extractNestedData = (data: any, keyPath: string) => {
   }, data);
 };
 
-export const extractKeyByValue = (object: any, value: any, nestedValuePath?: string) => {
+export const extractKeyByValue = (
+  object: any,
+  value: any,
+  nestedValuePath?: string,
+) => {
   let key = Object.keys(object).find((key) => object[key] === value);
   if (nestedValuePath) {
-    key = Object.keys(object).find((key) => object[key][nestedValuePath] === value);
+    key = Object.keys(object).find(
+      (key) => object[key][nestedValuePath] === value,
+    );
   }
 
   if (!Number.isNaN(key)) {

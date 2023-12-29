@@ -109,7 +109,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   const getLogo = (item: Record<string, any>) => {
     return item[fieldItemProps.queryLabel]?.logo ?? logoURL;
   };
-  
+
   return (
     <AntdCard
       className="main-panel-card"
@@ -185,7 +185,11 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                       <img src={getLogo(item)} />
                     </div>
                     <div className="main-panel-info-center">
-                      <h3>{formatProfileData(item[fieldItemProps.labelToAPI.itemTitle])}</h3>
+                      <h3>
+                        {formatProfileData(
+                          item[fieldItemProps.labelToAPI.itemTitle],
+                        )}
+                      </h3>
                       {item.start_date && (
                         <div className="main-panel-info-center-date">
                           <span>

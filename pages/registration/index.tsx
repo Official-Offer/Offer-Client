@@ -42,7 +42,7 @@ const Registration: NextPage = () => {
   const openNotification = (
     type: NotificationType,
     message: string,
-    description: string
+    description: string,
   ) => {
     api[type]({
       message,
@@ -61,7 +61,7 @@ const Registration: NextPage = () => {
           ? data.access_token
           : data.access
             ? data.access
-            : data.token
+            : data.token,
       );
       // console.log(data.access);
       setCookie("id", data.pk ? data.pk : data.id);
@@ -74,7 +74,7 @@ const Registration: NextPage = () => {
             ? "/student"
             : data.role == "advisor"
               ? "/advisor/jobs"
-              : "/recruiter/jobs"
+              : "/recruiter/jobs",
         )
         .then(() => {
           router.reload();
@@ -84,7 +84,7 @@ const Registration: NextPage = () => {
       openNotification(
         "error",
         "Đăng ký thất bại",
-        "Email đã tồn tại hoặc lỗi đăng ký"
+        "Email đã tồn tại hoặc lỗi đăng ký",
       );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
@@ -101,7 +101,7 @@ const Registration: NextPage = () => {
           ? data.message.access_token
           : data.message.access
             ? data.message.access
-            : data.message.token
+            : data.message.token,
       );
       setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
@@ -119,7 +119,7 @@ const Registration: NextPage = () => {
             ? "/student"
             : r.isAdvisor
               ? "/advisor/jobs"
-              : "/recruiter/jobs"
+              : "/recruiter/jobs",
         );
       }
     },
@@ -127,7 +127,7 @@ const Registration: NextPage = () => {
       openNotification(
         "error",
         "Đăng ký thất bại",
-        "Email đã tồn tại hoặc lỗi đăng ký"
+        "Email đã tồn tại hoặc lỗi đăng ký",
       );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);

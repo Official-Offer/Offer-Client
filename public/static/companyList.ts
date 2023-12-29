@@ -30,6 +30,6 @@ export const companyList = {
     name: "Tesla",
   },
   1: {
-    name: "Meta"
-  }
+    name: "Meta",
+  },
 };

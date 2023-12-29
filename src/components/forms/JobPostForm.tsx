@@ -69,7 +69,7 @@ export const JobPostForm: React.FC<IForm> = ({
   const openNotification = (
     type: NotificationType,
     message: string,
-    description: string
+    description: string,
   ) => {
     api[type]({
       message,

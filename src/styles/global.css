@@ -599,7 +599,6 @@ a {
 .job-portal-description-detail {
   display: flex;
   flex-direction: row;
-  
 }
 .job-portal-description-logo {
   max-width: 72px;

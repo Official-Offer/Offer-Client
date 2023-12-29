@@ -80,14 +80,14 @@ export const getStudentResume = async () => {
 export const addStudentResume = async (input: any) => {
   const response = await request.post(`/students/resume/`, input);
   return response.data;
-}
+};
 
 export const updateStudentActiveResume = async (id: number) => {
   const formData = new FormData();
   formData.append("is_active", "true");
   const response = await request.patch(`/students/resume/${id}/`, formData);
   return response.data;
-}
+};
 
 export const deleteStudentResume = async (id: number) => {
   const response = await request.delete(`/students/resume/${id}/`);
@@ -143,7 +143,7 @@ export const addStudentExperience = async (input: Record<string, unknown>) => {
 };
 
 export const deleteStudentExperience = async (id: number) => {
-  con
+  con;
   const response = await request.delete(`/students/experience/${id}/`);
   return response.data;
 };

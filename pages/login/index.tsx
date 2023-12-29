@@ -13,7 +13,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { LoadingPage } from "@components/loading/LoadingPage";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -30,7 +30,11 @@ const Login: NextPage = () => {
     isAdvisor: false,
     isRecruiter: false,
   });
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -87,7 +91,11 @@ const Login: NextPage = () => {
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
-      openNotification("error", "Lỗi đăng nhập", "Sai tên đăng nhập hoặc mật khẩu");
+      openNotification(
+        "error",
+        "Lỗi đăng nhập",
+        "Sai tên đăng nhập hoặc mật khẩu",
+      );
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
@@ -147,7 +155,11 @@ const Login: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      openNotification("error", "Lỗi đăng nhập", "Email đã tồn tại hoặc lỗi đăng ký google");
+      openNotification(
+        "error",
+        "Lỗi đăng nhập",
+        "Email đã tồn tại hoặc lỗi đăng ký google",
+      );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
       setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
@@ -197,7 +209,7 @@ const Login: NextPage = () => {
   }, [status]);
 
   if (status === "loading") return <LoadingPage />;
-  return (status == "authenticated" && !errorMessage && !selectRole )? (
+  return status == "authenticated" && !errorMessage && !selectRole ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -237,7 +249,11 @@ const Login: NextPage = () => {
                 onSubmit={(org: any) => {
                   // console.log("org", org);
                   if (!org) {
-                    openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
+                    openNotification(
+                      "error",
+                      "Lỗi chọn tổ chức",
+                      "Vui lòng chọn tổ chức",
+                    );
                     return;
                   }
                   setErrorMessage("");
@@ -303,7 +319,7 @@ const Login: NextPage = () => {
             Dang Xuat
           </Button> */}
           {errorMessage && status !== "authenticated" && (
-            <Alert message={errorMessage} type="error"/>
+            <Alert message={errorMessage} type="error" />
             // <p className="register-content-error">{errorMessage}</p>
           )}
           {contextHolder}

@@ -127,7 +127,6 @@ export const useDisplayJobs = () => {
         return null;
       })
       .filter((job) => job !== null);
-    console.log(displayed)
     setDisplayedJobs(displayed);
   }, [originalJobs, filters, sort, searchTerm]);
 
@@ -136,6 +135,7 @@ export const useDisplayJobs = () => {
     setPage,
     pageSize,
     setPageSize,
+    originalJobs,
     displayedJobs,
     setJobs,
     setSearchTerm,

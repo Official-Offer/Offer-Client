@@ -27,17 +27,17 @@ export const formatOverflowText = (text: string, maxLength: number): string => {
     return `${text.slice(0, maxLength)}...`;
   }
   return text;
-}
+};
 
 export const getFileNameFromUrl = (url: string): string => {
   const start = url.lastIndexOf("/") + 1;
   const end = url.indexOf("?");
   if (start != -1 && end != -1) {
-      return url.substring(start, end);
+    return url.substring(start, end);
   } else {
-      return "";
+    return "";
   }
-}
+};
 
 export const getPageNumFromUrl = (url?: string): number | undefined => {
   // console.log(url)
@@ -51,4 +51,4 @@ export const getPageNumFromUrl = (url?: string): number | undefined => {
   } else {
     return undefined;
   }
-}
+};
