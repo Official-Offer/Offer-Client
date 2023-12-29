@@ -37,7 +37,7 @@ type ResumeCardProps = {
   isError?: boolean;
   refetchFunction: () => void;
   isRefetching?: boolean;
-  resumes?: Record<string, Resume[]>;
+  resumes?: Resume[];
 };
 
 export const ResumeCard: React.FC<ResumeCardProps> = ({
@@ -87,7 +87,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
     mutationFn: async (selectedFile: File) => {
       const resumeData = new FormData();
       resumeData.append("resume", selectedFile);
-      resumeData.append("is_active", false);
+      resumeData.append("is_active", "false");
       return await addStudentResume(resumeData);
     },
     onSuccess: () => {

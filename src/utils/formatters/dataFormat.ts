@@ -1,4 +1,4 @@
-export const formatProfileData = (data: any) => {
+export const formatProfileData = (data: any): string => {
   if (Array.isArray(data)) {
     return data
       .map((item) => {

@@ -91,12 +91,8 @@ const Login: NextPage = () => {
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
-      openNotification(
-        "error",
-        "Lỗi đăng nhập",
-        "Sai tên đăng nhập hoặc mật khẩu",
-      );
       setErrorMessage("Sai tên đăng nhập hoặc mật khẩu");
+      openNotification("error", "Lỗi đăng nhập", "Sai tên đăng nhập hoặc mật khẩu");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
@@ -155,14 +151,10 @@ const Login: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      openNotification(
-        "error",
-        "Lỗi đăng nhập",
-        "Email đã tồn tại hoặc lỗi đăng ký google",
-      );
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
+      openNotification("error", "Lỗi đăng nhập", "Email đã tồn tại hoặc lỗi đăng ký google");
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
-      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký google");
     },
   });
 
@@ -185,18 +177,15 @@ const Login: NextPage = () => {
         });
     },
     onError: (error: any) => {
+      setErrorMessage("Lỗi chọn tổ chức");
       openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
       // console.log(error.response.data.message);
-      setErrorMessage("Lỗi chọn tổ chức");
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
 
   const { data: session, status } = useSession();
   useEffect(() => {
-    // if (errorMessage) {
-    //   signIn("google");
-    // }
     if (status === "authenticated") {
       //@ts-ignore
       const accessToken = session?.user?.accessToken;
@@ -208,8 +197,9 @@ const Login: NextPage = () => {
     }
   }, [status]);
 
+  console.log(status, errorMessage, selectRole)
   if (status === "loading") return <LoadingPage />;
-  return status == "authenticated" && !errorMessage && !selectRole ? (
+  return (status == "authenticated" && !errorMessage && !selectRole ) ? (
     <LoadingPage />
   ) : (
     <div className="register">

@@ -3,10 +3,11 @@ import { SubmitButton } from "@components/button/SubmitButton";
 import { contact } from "@services/apiUser";
 import { LeftPanel } from "@styles/styled-components/styledDiv";
 import { useMutation } from "@tanstack/react-query";
-import { Button, Form, Input } from "antd";
+import { Alert, Button, Form, Input, notification } from "antd";
 import { NextPage } from "next";
 import router from "next/router";
 import { useState } from "react";
+type NotificationType = "success" | "info" | "warning" | "error";
 
 const Contact: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ const Contact: NextPage = () => {
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [api, contextHolder] = notification.useNotification();
 
   const contactMutation = useMutation({
     mutationKey: ["contact"],
@@ -23,12 +25,26 @@ const Contact: NextPage = () => {
       // Invalidate and refetch
       // router.reload();
       setSubmitted(true);
+      openNotification("success", "Gửi thành công, chúng tôi sẽ liên hệ với bạn sớm nhất có thể", "");
     },
     onError: (error: any) => {
-      // console.log(error.response.data.message);
       setErrorMessage("Gửi thất bại");
+
+      // console.log(error.response.data.message);
+      openNotification("error", "Gửi thất bại", error.response.data.message);
     },
   });
+
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string
+  ) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
 
   return (
     <div className="contact">
@@ -110,8 +126,10 @@ const Contact: NextPage = () => {
                   </Form.Item>
                 </div>
                 {errorMessage && (
-                  <p className="register-content-error">{errorMessage}</p>
+                  <Alert message={errorMessage} type="error" showIcon />
+                  // <p className="register-content-error">{errorMessage}</p>
                 )}
+                {contextHolder}
                 <SubmitButton
                   isLoading={contactMutation.isLoading}
                   text="Gửi"

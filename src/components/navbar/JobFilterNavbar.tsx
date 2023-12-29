@@ -8,7 +8,7 @@ import type { JobFilters } from "src/types/filterTypes";
 
 type JobFilterNavbarProps = {
   displayHook: {
-    displayedJobs?: Job[];
+    displayedJobs?: Job[][];
     setJobs?: (jobs: Job[]) => void;
     searchTerm?: string;
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>;

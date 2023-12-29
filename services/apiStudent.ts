@@ -143,7 +143,6 @@ export const addStudentExperience = async (input: Record<string, unknown>) => {
 };
 
 export const deleteStudentExperience = async (id: number) => {
-  con;
   const response = await request.delete(`/students/experience/${id}/`);
   return response.data;
 };

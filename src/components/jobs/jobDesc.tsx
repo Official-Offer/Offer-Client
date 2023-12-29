@@ -47,6 +47,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const state = useSelector((state: RootState) => state.jobs);
+  const processedMajorList: any[] = Object.keys(majorList).map((key) => ({
+    value: key,
+    label: majorList[parseInt(key)].label,
+  }));
   // console.log(state.major)
   const accountState = useSelector((state: RootState) => state.account);
   const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
@@ -59,7 +63,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
-    state.major.map((major) => majorList[major - 1].label + ", ") || [
+    state.major.map((major) => processedMajorList[major - 1].label + ", ") || [
       "Công nghệ thông tin",
     ],
   );
@@ -130,8 +134,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
-      openNotification("error", "Lỗi", error.response.data.message);
       setErrorMessage(error.response.data.message);
+      openNotification('error', 'Lỗi', error.response.data.message);
     },
   });
 
@@ -150,9 +154,9 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
       // onClick();
     },
     onError: (error: any) => {
-      openNotification("error", "Lỗi", error.response.data.message);
-      // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
+      openNotification('error', 'Lỗi', error.response.data.message);
+      // console.log(error.response.data.message);
     },
   });
 
@@ -304,11 +308,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => majorList[major - 1].label + ", ",
+                        (major: number) => processedMajorList[major - 1].label + ", ",
                       ),
                     );
                   }}
-                  options={majorList}
+                  options={processedMajorList}
                 />
               ) : (
                 <p>{majorNames}</p>

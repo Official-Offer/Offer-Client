@@ -14,11 +14,11 @@ import {
 } from "@ant-design/icons";
 import {
   getStudentDetailsFromID,
-  getStudentEducations,
+  // getStudentEducations,
   editStudentEducation,
   addStudentEducation,
   deleteStudentEducation,
-  getStudentExperiences,
+  // getStudentExperiences,
   editStudentExperience,
   addStudentExperience,
   deleteStudentExperience,
@@ -40,28 +40,30 @@ const profile = {
 
 const eduFieldItems = {
   itemTitle: "Trường",
-  dataIDLabel: "school",
-  dataName: ["schoolName"],
+  queryLabel: "school",
+  dataIdMap: ["itemTitle", "majors"],
+  // dataName: ["schoolName", "majors"],
   disableEndDate: false,
-  layout: ["study_fields", "gpa"],
+  layout: ["majors", "gpa"],
   labelToAPI: {
     itemTitle: "schoolName",
     GPA: "gpa",
-    "Ngành học": "study_fields",
+    "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
     "Ngày tốt nghiệp": "end_date",
     "Tôi đang học trường này": "is_current",
   },
   APIToLabel: {
-    schoolName: "itemTitle",
+    schoolName: "Trường",
     gpa: "GPA",
-    study_fields: "Ngành học",
+    majors: "Ngành học",
     start_date: "Ngày bắt đầu",
     end_date: "Ngày tốt nghiệp",
     is_current: "Tôi đang học trường này",
   },
   itemType: {
-    study_fields: "object",
+    itemTitle: "object",
+    majors: "object-multi",
     gpa: "number",
   },
   isRequired: {
@@ -71,8 +73,8 @@ const eduFieldItems = {
 
 const expFieldItems = {
   itemTitle: "Vị Trí",
-  dataIDLabel: "company",
-  dataName: ["companyName"],
+  queryLabel: "company",
+  dataIdMap: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {

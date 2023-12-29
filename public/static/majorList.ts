@@ -1,4 +1,4 @@
-export const majorList = {
+export const majorList: Record<number, any> = {
   1: {
     label: "Ngành Luật",
     disciplines: [],

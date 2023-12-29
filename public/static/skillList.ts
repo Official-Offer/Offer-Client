@@ -1,4 +1,4 @@
-export const skillList = {
+export const skillList: Record<number, string> = {
   1: "React",
   2: "Vue",
   3: "Angular",

@@ -8,6 +8,8 @@ import { getOrgList } from "@services/apiUser";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { contact } from "../../../services/apiUser";
+import { schoolList } from "@public/static/schoolList";
+import { companyList } from "@public/static/companyList";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;
@@ -40,31 +42,40 @@ export const OrgForm: React.FC<IOrgForm> = ({
     state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
 
+  const processedSchoolList: any[] = Object.keys(schoolList).map((key) => ({
+    id: key,
+    name: schoolList[parseInt(key)],
+  }));
+  const processedCompanyList: any[] = Object.keys(companyList).map((key) => ({
+    id: key,
+    name: companyList[parseInt(key)],
+  }));
+
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
 
-  const orgQuery = useQuery({
-    queryKey: ["orgs"],
-    queryFn: getOrgList,
-    onSuccess: async (orgs) => {
-      // add "school is not found" into the list
-      // console.log(orgs);
-      const schoolList = orgs.schools;
-      const companyList = orgs.companies;
-      //push the "not found" option to the list at the top
-      schoolList.push({ id: 0, name: "Trường không có trong danh sách" });
-      companyList.push({
-        id: "0",
-        name: "Công ty không có trong danh sách",
-      });
-      setSchools(schoolList);
-      setCompanies(companyList);
-    },
-    onError: () => {
-      // console.log("error");
-    },
-  });
+  // const orgQuery = useQuery({
+  //   queryKey: ["orgs"],
+  //   queryFn: getOrgList,
+  //   onSuccess: async (orgs) => {
+  //     // add "school is not found" into the list
+  //     // console.log(orgs);
+  //     const schoolList = orgs.schools;
+  //     const companyList = orgs.companies;
+  //     //push the "not found" option to the list at the top
+  //     schoolList.push({ id: 0, name: "Trường không có trong danh sách" });
+  //     companyList.push({
+  //       id: "0",
+  //       name: "Công ty không có trong danh sách",
+  //     });
+  //     setSchools(schoolList);
+  //     setCompanies(companyList);
+  //   },
+  //   onError: () => {
+  //     // console.log("error");
+  //   },
+  // });
 
   const contactMutation = useMutation({
     mutationKey: ["contact"],
@@ -72,24 +83,24 @@ export const OrgForm: React.FC<IOrgForm> = ({
     onSuccess: async (data: any) => {
       // Invalidate and refetch
       // router.reload();
+      setSubmitted(true);
       openNotification(
         "success",
         "Gửi thành công",
-        "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể",
+        "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể"
       );
-      setSubmitted(true);
     },
     onError: (error: any) => {
+      setErrorMessage("Gửi thất bại");
       // console.log(error.response.data.message);
       openNotification("error", "Gửi thất bại", error.response.data.message);
-      setErrorMessage("Gửi thất bại");
     },
   });
 
   const openNotification = (
     type: NotificationType,
     message: string,
-    description: string,
+    description: string
   ) => {
     api[type]({
       message,
@@ -124,10 +135,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
               className="form-select"
               bordered={false}
               onChange={handleOrgChange}
-              loading={orgQuery.isLoading}
+              // loading={orgQuery.isLoading}
             >
               {isStudent || isAdvisor
-                ? schools?.map((school: any) => (
+                ? processedSchoolList?.map((school: any) => (
                     <Select.Option
                       key={school.id}
                       className="form-select-dropdown"
@@ -136,7 +147,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                       {school.name}
                     </Select.Option>
                   ))
-                : companies?.map((company: any) => (
+                : processedCompanyList?.map((company: any) => (
                     <Select.Option
                       key={company.id}
                       className="form-select-dropdown"
@@ -205,9 +216,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
       </div>
       <SubmitButton
         text={notFound ? "Gửi" : type ? "Cập nhật" : "Tiếp tục"}
-        isLoading={
-          notFound ? contactMutation.isLoading : orgQuery.isLoading || isLoading
-        }
+        isLoading={notFound && contactMutation.isLoading}
         onClick={
           notFound
             ? () => {

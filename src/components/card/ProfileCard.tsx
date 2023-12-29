@@ -35,7 +35,7 @@ type ProfileCardProps = {
   addFunction: (input: Record<string, unknown>) => void;
   editFunction: (id: number, input: Record<string, unknown>) => void;
   deleteFunction?: (id: number) => void;
-  dataFunction: () => Promise<Record<string, unknown>[][]>;
+  dataFunction: () => any;
 };
 
 /*

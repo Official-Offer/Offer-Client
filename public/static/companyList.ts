@@ -1,4 +1,4 @@
-export const companyList = {
+export const companyList: Record<number, any> = {
   11: {
     name: "Johnson and Johnson",
   },
