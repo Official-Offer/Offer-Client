@@ -8,7 +8,7 @@ import { getAdvisor, updateAdvisor } from "@services/apiAdvisor";
 import { getCookie } from "cookies-next";
 import { getRecruiter, updateRecruiter } from "@services/apiRecruiter";
 import { SubmitButton } from "@components/button/SubmitButton";
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 export const ProfilePage: React.FC<any> = () => {
   const [fname, setFName] = useState("");
@@ -39,7 +39,11 @@ export const ProfilePage: React.FC<any> = () => {
     onError: () => {},
   });
 
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -55,7 +59,11 @@ export const ProfilePage: React.FC<any> = () => {
       // console.log(data);
     },
     onError: (error: any) => {
-      openNotification("error", "Cập nhật thất bại", error.response.data.message);
+      openNotification(
+        "error",
+        "Cập nhật thất bại",
+        error.response.data.message,
+      );
     },
   });
   return (

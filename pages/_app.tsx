@@ -4,6 +4,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "antd/dist/antd.css";
 import { ConfigProvider } from "antd";
+const locale = require("antd/lib/locale/vi_VN").default;
 import { StyledThemeProvider } from "@definitions/styled-components";
 import "@styles/global.scss";
 import { Provider } from "react-redux";
@@ -28,7 +29,7 @@ function MyApp({
   const queryClient = new QueryClient();
 
   return (
-    <ConfigProvider>
+    <ConfigProvider locale={locale}>
       {/* <Script
         strategy="afterInteractive"
         src="https://accounts.google.com/gsi/client"

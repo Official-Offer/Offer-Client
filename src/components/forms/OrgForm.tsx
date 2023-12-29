@@ -42,6 +42,15 @@ export const OrgForm: React.FC<IOrgForm> = ({
     state.role.isRecruiter || router.pathname.includes("recruiter");
   const isAdvisor = state.role.isAdvisor || router.pathname.includes("advisor");
 
+  const processedSchoolList: any[] = Object.keys(schoolList).map((key) => ({
+    id: key,
+    name: schoolList[parseInt(key)],
+  }));
+  const processedCompanyList: any[] = Object.keys(companyList).map((key) => ({
+    id: key,
+    name: companyList[parseInt(key)],
+  }));
+
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
@@ -129,7 +138,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
               // loading={orgQuery.isLoading}
             >
               {isStudent || isAdvisor
-                ? schoolList?.map((school: any) => (
+                ? processedSchoolList?.map((school: any) => (
                     <Select.Option
                       key={school.id}
                       className="form-select-dropdown"
@@ -138,7 +147,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                       {school.name}
                     </Select.Option>
                   ))
-                : companyList?.map((company: any) => (
+                : processedCompanyList?.map((company: any) => (
                     <Select.Option
                       key={company.id}
                       className="form-select-dropdown"

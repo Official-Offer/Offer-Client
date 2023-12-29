@@ -27,14 +27,28 @@ export const formatOverflowText = (text: string, maxLength: number): string => {
     return `${text.slice(0, maxLength)}...`;
   }
   return text;
-}
+};
 
-export const extractFileName = (url: string): string => {
+export const getFileNameFromUrl = (url: string): string => {
   const start = url.lastIndexOf("/") + 1;
-  const end = url.indexOf(".pdf");
+  const end = url.indexOf("?");
   if (start != -1 && end != -1) {
-      return url.substring(start, end);
+    return url.substring(start, end);
   } else {
-      return "";
+    return "";
   }
-}
+};
+
+export const getPageNumFromUrl = (url?: string): number | undefined => {
+  // console.log(url)
+  if (!url) return undefined;
+  const start = url.indexOf("?");
+  const end = url.length;
+  const params = url.substring(start + 1, end).split("&");
+  const pageParam = params.find((param) => param.includes("page="));
+  if (pageParam) {
+    return parseInt(pageParam.split("=")[1]);
+  } else {
+    return undefined;
+  }
+};

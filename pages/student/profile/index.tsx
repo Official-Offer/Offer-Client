@@ -11,15 +11,16 @@ import {
   ArrowRightOutlined,
   PlusOutlined,
   EditOutlined,
-  LoadingOutlined
+  LoadingOutlined,
 } from "@ant-design/icons";
 import {
   getStudentDetails,
-  getStudentEducations,
+  getStudentResume,
+  // getStudentEducations,
   editStudentEducation,
   addStudentEducation,
   deleteStudentEducation,
-  getStudentExperiences,
+  // getStudentExperiences,
   editStudentExperience,
   addStudentExperience,
   deleteStudentExperience,
@@ -28,7 +29,13 @@ import { getSchoolList, getMajorList } from "@services/apiSchool";
 import { getCompanyList } from "@services/apiCompany";
 import { getJob } from "@services/apiJob";
 import { formatDate } from "@utils/formatters/numberFormat";
-import { BuildingOfficeIcon, BookOpenIcon, AcademicCapIcon, HeartIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+  BuildingOfficeIcon,
+  BookOpenIcon,
+  AcademicCapIcon,
+  HeartIcon,
+  UserIcon,
+} from "@heroicons/react/24/solid";
 import Skeleton from "react-loading-skeleton";
 
 const profile = {
@@ -59,13 +66,13 @@ const info = {
 
 const eduFieldItems = {
   itemTitle: "Trường",
-  dataIDLabel: "school",
-  dataName: ["name", "majors"],
+  queryLabel: "school",
+  dataIdMap: ["itemTitle", "majors"],
+  // dataName: ["schoolName", "majors"],
   disableEndDate: false,
   layout: ["majors", "gpa"],
   labelToAPI: {
-    itemTitle: "school",
-    nestedItemTitle: "name",
+    itemTitle: "schoolName",
     GPA: "gpa",
     "Ngành học": "majors",
     "Ngày bắt đầu": "start_date",
@@ -73,8 +80,7 @@ const eduFieldItems = {
     "Tôi đang học trường này": "is_current",
   },
   APIToLabel: {
-    school: "itemTitle",
-    name: "nestedItemTitle",
+    schoolName: "Trường",
     gpa: "GPA",
     majors: "Ngành học",
     start_date: "Ngày bắt đầu",
@@ -82,7 +88,8 @@ const eduFieldItems = {
     is_current: "Tôi đang học trường này",
   },
   itemType: {
-    study_fields: "object",
+    itemTitle: "object",
+    majors: "object-multi",
     gpa: "number",
   },
   isRequired: {
@@ -92,8 +99,8 @@ const eduFieldItems = {
 
 const expFieldItems = {
   itemTitle: "Vị Trí",
-  dataIDLabel: "company",
-  dataName: ["companyName", "skills"],
+  queryLabel: "company",
+  dataIdMap: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -122,7 +129,10 @@ const expFieldItems = {
 };
 
 const StudentProfile: NextPage = () => {
-  const [studentDetails, setStudentDetails] = useState<Record<string, any> | null>(null);
+  const [studentDetails, setStudentDetails] = useState<Record<
+    string,
+    any
+  >>({});
   const id = getCookie("id");
   const studentQuery = useQuery({
     queryKey: [`students/${id}`],
@@ -131,7 +141,18 @@ const StudentProfile: NextPage = () => {
       setStudentDetails(res);
     },
     onError: (err) => console.log(`Error: ${err}`),
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+  });
+
+  const resumeQuery = useQuery({
+    queryKey: [`students/${id}/resumes`],
+    queryFn: getStudentResume,
+    onSuccess: (res) => {
+      studentDetails.resumes = res;
+      setStudentDetails(studentDetails);
+    },
+    onError: (err) => console.log(`Error: ${err}`),
+    enabled: false,
   });
 
   const getSchoolAndMajorList = async () => {
@@ -145,78 +166,91 @@ const StudentProfile: NextPage = () => {
       <section className="split-layout-sticky student-profile split-layout-item flex-sm">
         <AntdCard
           cover={
-            studentDetails?.account.cover_photo ? (
-              <img src={studentDetails?.account.cover_photo} />
+            studentDetails?.account?.cover_photo ? (
+              <img src={studentDetails.account.cover_photo} />
             ) : (
               <div className="gradient"></div>
-            )}
+            )
+          }
           children={
             <div>
-              {
-                studentDetails?.account.avatar ? (
-                  <img className="student-profile-avatar" src={studentDetails?.account.avatar} />
-                ) : (
-                  <div className="student-profile-avatar">
-                    {studentQuery.isLoading ? <LoadingOutlined /> : <UserIcon />}
-                  </div>
-                )
-              }
+              {studentDetails?.account?.avatar ? (
+                <img
+                  className="student-profile-avatar"
+                  src={studentDetails.account.avatar}
+                />
+              ) : (
+                <div className="student-profile-avatar">
+                  {studentQuery.isLoading ? <LoadingOutlined /> : <UserIcon />}
+                </div>
+              )}
               <div className="student-profile-header">
-                {
-                  studentQuery.isLoading ? <Skeleton height="1.25rem" width="50%" /> :
-                    <h1>
-                      {
-                        studentDetails?.account?.first_name && studentDetails?.account?.last_name ? (
-                          studentDetails?.account.first_name +
-                          " " +
-                          studentDetails?.account.last_name
-                        ) : (
-                          "Họ Tên"
-                        )
-                      }
-                    </h1>
-                }
+                {studentQuery.isLoading ? (
+                  <Skeleton height="1.25rem" width="50%" />
+                ) : (
+                  <h1>
+                    {studentDetails?.account?.first_name &&
+                    studentDetails?.account?.last_name
+                      ? studentDetails?.account.first_name +
+                        " " +
+                        studentDetails?.account.last_name
+                      : "Họ Tên"}
+                  </h1>
+                )}
               </div>
               <div className="student-profile-info">
                 <div className="student-profile-info-item">
                   <BuildingOfficeIcon />
-                  <span>{
-                    studentQuery.isLoading ? <Skeleton height="1rem" /> :
+                  <span>
+                    {studentQuery.isLoading ? (
+                      <Skeleton height="1rem" />
+                    ) : (
                       studentDetails?.school?.name ?? "Trường không xác định"
-                  }</span>
+                    )}
+                  </span>
                 </div>
                 <div className="student-profile-info-item">
                   <AcademicCapIcon />
                   <span>
-                    {
-                      studentQuery.isLoading ? <Skeleton height="1rem" /> :
-                        studentDetails?.expected_graduation_date
-                          ? formatDate(studentDetails.expected_graduation_date,"D/M/YYYY")
-                          : "Không có ngày tốt nghiệp"
-                    }
+                    {studentQuery.isLoading ? (
+                      <Skeleton height="1rem" />
+                    ) : studentDetails?.expected_graduation_date ? (
+                      formatDate(
+                        studentDetails.expected_graduation_date,
+                        "D/M/YYYY",
+                      )
+                    ) : (
+                      "Không xác định"
+                    )}
                   </span>
                 </div>
                 <div className="student-profile-info-item">
                   <BookOpenIcon />
-                    <span>
-                      {
-                        studentQuery.isLoading ? <Skeleton height="1rem" /> :
-                          studentDetails?.majors?.length > 0 ?
-                            studentDetails?.majors?.map((major: { name: string }) => major.name)
-                            .join(", ") : "Ngành chưa xác định"
-                      }
-                    </span>
-                  </div>
-                  <div className="student-profile-info-item">
-                    <HeartIcon />
-                    <span>
-                      {
-                        studentQuery.isLoading ? <Skeleton height="1rem" /> :
-                          studentDetails?.desired_industries?.length > 0 ?
-                            studentDetails?.desired_industries?.map((industry: { name: string }) => industry.name)
-                            .join(", ") : "Chưa có nghề mong muốn"
-                      }
-                    </span>
+                  <span>
+                    {studentQuery.isLoading ? (
+                      <Skeleton height="1rem" />
+                    ) : studentDetails?.majors?.length > 0 ? (
+                      studentDetails?.majors
+                        ?.map((major: { name: string }) => major.name)
+                        .join(", ")
+                    ) : (
+                      "Ngành chưa xác định"
+                    )}
+                  </span>
+                </div>
+                <div className="student-profile-info-item">
+                  <HeartIcon />
+                  <span>
+                    {studentQuery.isLoading ? (
+                      <Skeleton height="1rem" />
+                    ) : studentDetails?.desired_industries?.length > 0 ? (
+                      studentDetails?.desired_industries
+                        ?.map((industry: { name: string }) => industry.name)
+                        .join(", ")
+                    ) : (
+                      "Không xác định"
+                    )}
+                  </span>
                 </div>
               </div>
             </div>
@@ -227,10 +261,10 @@ const StudentProfile: NextPage = () => {
         <ResumeCard
           isEditable
           resumes={studentDetails?.resumes}
-          isError={studentQuery.isError}
+          isError={studentQuery.isError || resumeQuery.isError}
           isLoading={studentQuery.isLoading}
-          isRefetching={studentQuery.isRefetching}
-          refetchFunction={studentQuery.refetch}
+          isRefetching={resumeQuery.isRefetching}
+          refetchFunction={resumeQuery.refetch}
         />
         <ProfileCard
           isEditable
@@ -259,7 +293,11 @@ const StudentProfile: NextPage = () => {
           dataFunction={getSchoolAndMajorList}
         />
       </section>
-      <section className="split-layout-sticky flex-sm"></section>
+      <section className="split-layout-sticky flex-sm student-profile">
+        <AntdCard>
+          <h3>Advisor</h3>
+        </AntdCard>
+      </section>
     </main>
   );
 };

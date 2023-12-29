@@ -19,7 +19,7 @@ import { BackwardOutlined } from "@ant-design/icons";
 import { on } from "events";
 import { deleteJob } from "@services/apiJob";
 import { Button, message, notification, Popconfirm } from "antd";
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 const Applicants: NextPage = () => {
   const [searchResults, setSearchResults] = useState<string[]>([]);
@@ -44,14 +44,19 @@ const Applicants: NextPage = () => {
         setJobTitle(res.job || " ");
         setSearchResults(
           res.applicants.map(
-            (a: any) => a.student.account.firstName
-          )
+            (a: any) => a.student.account.firstName,
+            // formatFullName(applicant.student.account)
+          ),
         );
       },
       onError: () => {},
-    }
+    },
   );
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -76,7 +81,7 @@ const Applicants: NextPage = () => {
     const filteredData = dataset.filter(
       (item) =>
         value.toLowerCase() ===
-        formatFullName(item.student.account).toLowerCase()
+        formatFullName(item.student.account).toLowerCase(),
     );
     setData(filteredData);
   };

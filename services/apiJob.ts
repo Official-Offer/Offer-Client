@@ -4,49 +4,29 @@ import { getCompany } from "./apiCompany";
 import { OpenAI } from "langchain/llms/openai";
 import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
+
 import parse from "html-react-parser";
 
-export const getJobs = async () => {
-  // DEPRECATED
-  const response = await request.get(`/jobs`, {
+export const getJobs = async (params?: any) => {
+  const role = getCookie("role");
+  const response = await request.get(`/jobs/${role}/`, {
     params: {
       ordered_by: "-created_at",
+      ...params
     },
   });
   const jobList = response.data;
   return jobList;
 };
 
-export const getStudentNonAppliedJobs = async () => {
-  const response = await request.get(`/jobs/student`, {
-    params: {
-      ordered_by: "-created_at",
-      applied: false,
-    },
-  });
-  const jobList = response.data;
-  return jobList;
-};
-
-export const getStudentJobsPerPage = async (page: number, pageSize: number) => {
-  const response = await request.get(`/jobs/student`, {
+export const getJobsPerPage = async (page: number, pageSize: number, params?: any) => {
+  const role = getCookie("role");
+  const response = await request.get(`/jobs/${role}/`, {
     params: {
       page,
       page_size: pageSize,
       ordered_by: "-created_at",
-    },
-  });
-  const jobList = response.data;
-  return jobList;
-};
-
-export const getJobsPerPage = async (page: number, pageSize: number) => {
-  // DEPRECATED
-  const response = await request.get(`/jobs`, {
-    params: {
-      page,
-      page_size: pageSize,
-      ordered_by: "-created_at",
+      ...params
     },
   });
   const jobList = response.data;
@@ -189,11 +169,7 @@ export const getJobsForRecruiter = async () => {
 export const getAdvisorJobs = async () => {
   const school = parseInt(getCookie("orgId") as string);
   // console.log(school);
-  const response = await request.get(`/jobs/`, {
-    params: {
-      school,
-    },
-  });
+  const response = await request.get(`/jobs/advisor`, {});
   const jobs = response.data.results;
 
   // console.log("jobs", jobs);
@@ -346,7 +322,6 @@ export const deleteJob = async (id: any) => {
 };
 
 export const postJobApp = async (data: any) => {
-  
   const response = await request.post(`/job-applications/`, data);
   return response.data;
 };

@@ -37,18 +37,18 @@ const Applicants: NextPage = () => {
         setJobTitle(res.job || " ");
         setSearchResults(
           res.applicants.map(
-            (a: any) => a.student.account.firstName
+            (a: any) => a.student.account.firstName,
             // formatFullName(applicant.student.account)
-          )
+          ),
         );
       },
       onError: () => {},
-    }
+    },
   );
   const openNotification = (
     type: NotificationType,
     message: string,
-    description: string
+    description: string,
   ) => {
     api[type]({
       message,
@@ -70,7 +70,7 @@ const Applicants: NextPage = () => {
     const filteredData = dataset.filter(
       (item) =>
         value.toLowerCase() ===
-        formatFullName(item.student.account).toLowerCase()
+        formatFullName(item.student.account).toLowerCase(),
     );
     setData(filteredData);
   };

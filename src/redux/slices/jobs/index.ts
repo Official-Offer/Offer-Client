@@ -95,7 +95,7 @@ const jobSlice = createSlice({
     },
     setCreatedAt: (state, action) => {
       state.createdAt = action.payload;
-    }
+    },
   },
 });
 
@@ -116,7 +116,7 @@ export const {
   setUpperSalary,
   setSchoolIds,
   setApplied,
-  setCreatedAt
+  setCreatedAt,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

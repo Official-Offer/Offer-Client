@@ -17,7 +17,10 @@ import {
 } from "antd";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd/lib/radio";
-import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
+import {
+  BuildingOfficeIcon,
+  BuildingOffice2Icon,
+} from "@heroicons/react/24/solid";
 
 import { EventCard, InfoCard } from "@components/card";
 import { Carousel } from "@components/list";
@@ -25,12 +28,13 @@ import { OfferLogo } from "@components/icons";
 
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
-import { getJobs, getStudentJobsPerPage } from "@services/apiJob";
+import { getJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
 
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
 import { useDisplayCompanies } from "@hooks/useDisplayJobs";
 
+import { getPageNumFromUrl } from "@utils/formatters/stringFormat";
 import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
@@ -100,30 +104,35 @@ const Home: NextPage = () => {
   const { companies, setCompanies } = useDisplayCompanies();
 
   const id = getCookie("id");
-  const schoolName = decodeURI(getCookie("orgName") as string ?? "");
+  const schoolName = decodeURI((getCookie("orgName") as string) ?? "");
 
   const [school, setSchool] = useState<Record<string, any> | undefined>();
+  // const [page, setPage] = useState<number>(1)
   const schoolQuery = useQuery({
     queryKey: ["school"],
     queryFn: getStudentDetails,
-    onSuccess: (res) =>
-      setSchool(res.school),
+    onSuccess: (res) => setSchool(res.school),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
-    enabled: id !== undefined
+    enabled: id !== undefined,
   });
 
   const jobInfiniteQuery = useInfiniteQuery({
     queryKey: ["paginated jobs"],
-    queryFn: ({ pageParam = 1 }) => getStudentJobsPerPage(pageParam, 12),
-    getNextPageParam: (lastPage) => (lastPage.count / lastPage.results)
+    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12, { applied: false }),
+    getNextPageParam: (lastPage) => getPageNumFromUrl(lastPage.next),
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
     if (jobInfiniteQuery.data) {
-      console.log(jobInfiniteQuery.data);
-      setJobs(jobInfiniteQuery.data.pages[page - 1].results);
-      // setSort("date-posted");
+      setJobs(
+        jobInfiniteQuery.data.pages.reduce(
+          (acc, page) => [...acc, ...page.results],
+          [] as Job[],
+        ),
+      );
+      setSort("date-posted");
     }
   }, [jobInfiniteQuery.data]);
 
@@ -193,17 +202,17 @@ const Home: NextPage = () => {
               id ? (
                 <div className="uni-wrapper">
                   <div className="uni-logo">
-                    {
-                      schoolQuery.isLoading ? <LoadingOutlined />
-                      : (
-                        school ?
-                          <img alt={"Logo of " + school.name} src={school.logo} />
-                        :
-                          <BuildingOffice2Icon />
-                      )
-                    }
+                    {schoolQuery.isLoading ? (
+                      <LoadingOutlined />
+                    ) : school ? (
+                      <img alt={"Logo of " + school.name} src={school.logo} />
+                    ) : (
+                      <BuildingOffice2Icon />
+                    )}
                   </div>
-                  <h2 className="uni-title">{schoolName ?? "Trường không xác định"}</h2>
+                  <h2 className="uni-title">
+                    {schoolName ?? "Trường không xác định"}
+                  </h2>
                 </div>
               ) : (
                 <div>
@@ -220,28 +229,37 @@ const Home: NextPage = () => {
         <section>
           <AntdCard className="section-card">
             <h3 className="header">Cơ hội thực tập dành riêng cho bạn</h3>
-            <Carousel
-              slideSize="full"
-              isAsync
-              isFetching
-              slidesLimit={3}
-              loadNextFunc={jobInfiniteQuery.fetchNextPage}
-              slides={
-                jobInfiniteQuery.isLoading
-                  ? [
-                      <div className="layout-grid">
-                        {new Array(4).fill(<InfoCard loading />)}
-                      </div>,
-                    ]
-                  : [
-                      <div className="layout-grid">
-                        {displayedJobs.map((jobData) => (
-                          <InfoCard info={jobData} />
-                        ))}
-                      </div>,
-                    ]
-              }
-            />
+            {!jobInfiniteQuery.isError ? (
+              <Carousel
+                slideSize="full"
+                isAsync
+                slidesLimit={3}
+                isFetching={jobInfiniteQuery.isFetchingNextPage}
+                loadNextFunc={
+                  jobInfiniteQuery.hasNextPage
+                    ? jobInfiniteQuery.fetchNextPage
+                    : undefined
+                }
+                viewMoreUrl={"/student/jobs"}
+                slides={
+                  jobInfiniteQuery.isLoading
+                    ? [
+                        <div className="layout-grid">
+                          {new Array(4).fill(<InfoCard loading />)}
+                        </div>,
+                      ]
+                    : displayedJobs.map((slide) => (
+                        <div className="layout-grid">
+                          {slide?.map((job: Job) => (
+                            <InfoCard key={job.pk} info={job} />
+                          ))}
+                        </div>
+                      ))
+                }
+              />
+            ) : (
+              <p className="error">Server đang bảo trì, vui lòng thử lại sau</p>
+            )}
           </AntdCard>
         </section>
         <section>
