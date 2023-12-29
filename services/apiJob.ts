@@ -7,6 +7,7 @@ import { getCookie } from "cookies-next";
 import parse from "html-react-parser";
 
 export const getJobs = async () => {
+  // DEPRECATED
   const response = await request.get(`/jobs`, {
     params: {
       ordered_by: "-created_at",
@@ -16,7 +17,31 @@ export const getJobs = async () => {
   return jobList;
 };
 
+export const getStudentNonAppliedJobs = async () => {
+  const response = await request.get(`/jobs/student`, {
+    params: {
+      ordered_by: "-created_at",
+      applied: false,
+    },
+  });
+  const jobList = response.data;
+  return jobList;
+};
+
+export const getStudentJobsPerPage = async (page: number, pageSize: number) => {
+  const response = await request.get(`/jobs/student`, {
+    params: {
+      page,
+      page_size: pageSize,
+      ordered_by: "-created_at",
+    },
+  });
+  const jobList = response.data;
+  return jobList;
+};
+
 export const getJobsPerPage = async (page: number, pageSize: number) => {
+  // DEPRECATED
   const response = await request.get(`/jobs`, {
     params: {
       page,

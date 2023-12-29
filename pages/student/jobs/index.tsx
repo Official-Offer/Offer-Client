@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Split from "react-split";
-import { getJobs } from "@services/apiJob";
+import { getStudentNonAppliedJobs } from "@services/apiJob";
 import { JobFilterNavbar } from "@components/navbar/JobFilterNavbar";
 import { JobCard } from "@components/card/JobCard";
 import { JobContent } from "@components/content/JobContent";
@@ -62,7 +62,7 @@ const StudentJobs: NextPage = () => {
 
   const jobQuery = useQuery({
     queryKey: ["jobslist"],
-    queryFn: getJobs,
+    queryFn: getStudentNonAppliedJobs,
     onSuccess: async (jobData) => {
       // console.log(jobData);
       setJobs(

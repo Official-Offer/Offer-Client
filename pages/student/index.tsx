@@ -25,7 +25,7 @@ import { OfferLogo } from "@components/icons";
 
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
-import { getJobs, getJobsPerPage } from "@services/apiJob";
+import { getJobs, getStudentJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
 
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
@@ -115,14 +115,14 @@ const Home: NextPage = () => {
 
   const jobInfiniteQuery = useInfiniteQuery({
     queryKey: ["paginated jobs"],
-    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12),
+    queryFn: ({ pageParam = 1 }) => getStudentJobsPerPage(pageParam, 12),
     getNextPageParam: (lastPage) => (lastPage.count / lastPage.results)
   });
 
   useEffect(() => {
     if (jobInfiniteQuery.data) {
       console.log(jobInfiniteQuery.data);
-      // setJobs(jobInfiniteQuery.data.pages.results);
+      setJobs(jobInfiniteQuery.data.pages[page - 1].results);
       // setSort("date-posted");
     }
   }, [jobInfiniteQuery.data]);
@@ -188,7 +188,7 @@ const Home: NextPage = () => {
         <section>
           <AntdCard
             className={id ? "uni-cover" : "public-hero"}
-            cover={id && <img src={DHBK.cover} alt={school?.name ?? ""} />}
+            cover={id && <img src={school?.background_image || DHBK.cover} alt={school?.name ?? ""} />}
             children={
               id ? (
                 <div className="uni-wrapper">
