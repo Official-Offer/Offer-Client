@@ -10,7 +10,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import { DatePicker, Input, Select, Skeleton, Slider, notification } from "antd";
+import {
+  DatePicker,
+  Input,
+  Select,
+  Skeleton,
+  Slider,
+  notification,
+} from "antd";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
 import { setJobId } from "@redux/actions";
@@ -28,7 +35,7 @@ interface JobDescriptionProps {
   edit?: boolean;
   id?: string | string[] | undefined;
 }
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 export const JobDescription: React.FC<JobDescriptionProps> = ({
   onClick,
@@ -40,6 +47,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const state = useSelector((state: RootState) => state.jobs);
+  const processedMajorList: any[] = Object.keys(majorList).map((key) => ({
+    value: key,
+    label: majorList[parseInt(key)].label,
+  }));
   // console.log(state.major)
   const accountState = useSelector((state: RootState) => state.account);
   const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
@@ -52,12 +63,12 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
-    state.major.map((major) => majorList[major - 1].label + ", ") || [
+    state.major.map((major) => processedMajorList[major - 1].label + ", ") || [
       "Công nghệ thông tin",
-    ]
+    ],
   );
   const [company, setCompany] = useState<string | undefined>(
-    state.company || "Công ty mẫu"
+    state.company || "Công ty mẫu",
   );
   const [companyId, setCompanyId] = useState<number>(
     router.pathname.includes("recruiter")
@@ -66,11 +77,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         ? state.companyId
         : getCookie("orgId")
           ? Number(getCookie("orgId"))
-          : 1
+          : 1,
   );
   const [editing, setEditing] = useState<boolean>(false);
   const [jd, setJd] = useState<string>(
-    state.description || "Mô tả công việc mẫu"
+    state.description || "Mô tả công việc mẫu",
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
@@ -86,8 +97,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
 
-
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -111,7 +125,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     onSuccess: async (data) => {
       // console.log(data);
       dispatch(setJobId(data.id));
-      openNotification('success', 'Hoàn tất đăng công việc', 'Bạn đã thành công đăng công việc');
+      openNotification(
+        "success",
+        "Hoàn tất đăng công việc",
+        "Bạn đã thành công đăng công việc",
+      );
       onClick();
     },
     onError: (error: any) => {
@@ -127,7 +145,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     onSuccess: async (data) => {
       // console.log(data);
       dispatch(setJobId(data.id));
-      openNotification('success', 'Hoàn tất sửa công việc', 'Bạn đã thành công sửa công việc');
+      openNotification(
+        "success",
+        "Hoàn tất sửa công việc",
+        "Bạn đã thành công sửa công việc",
+      );
       // notification.success();
       // onClick();
     },
@@ -286,11 +308,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => majorList[major - 1].label + ", "
-                      )
+                        (major: number) => processedMajorList[major - 1].label + ", ",
+                      ),
                     );
                   }}
-                  options={majorList}
+                  options={processedMajorList}
                 />
               ) : (
                 <p>{majorNames}</p>

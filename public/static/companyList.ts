@@ -1,46 +1,35 @@
-export const companyList = [
-  {
-    id: 11,
+export const companyList: Record<number, any> = {
+  11: {
     name: "Johnson and Johnson",
   },
-  {
-    id: 10,
+  10: {
     name: "Lehman Brothers",
   },
-  {
-    id: 9,
+  9: {
     name: "Roll Royce",
   },
-  {
-    id: 8,
+  8: {
     name: "VNPT",
   },
-  {
-    id: 7,
+  7: {
     name: "Apple",
   },
-  {
-    id: 6,
+  6: {
     name: "eBay",
   },
-  {
-    id: 5,
+  5: {
     name: "Riot",
   },
-  {
-    id: 4,
+  4: {
     name: "VinaCapital",
   },
-  {
-    id: 3,
+  3: {
     name: "Amazon",
   },
-  {
-    id: 2,
+  2: {
     name: "Tesla",
   },
-  {
-    id: "0",
-    name: "Công ty không có trong danh sách",
-  }
-];
+  1: {
+    name: "Meta",
+  },
+};

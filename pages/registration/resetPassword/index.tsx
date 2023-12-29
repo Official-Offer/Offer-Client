@@ -14,7 +14,7 @@ import { resetPassword } from "@services/apiUser";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { setID } from "@redux/actions";
 import { Alert, notification } from "antd";
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 //create a next page for the student home page, code below
 const ResetPassword: NextPage = () => {
@@ -30,17 +30,29 @@ const ResetPassword: NextPage = () => {
     mutationFn: resetPassword,
     onSuccess: async (data) => {
       // setSubmitted(true);
-      openNotification("success", "Cập nhật thành công", "Mật khẩu của bạn đã được cập nhật");
+      openNotification(
+        "success",
+        "Cập nhật thành công",
+        "Mật khẩu của bạn đã được cập nhật",
+      );
       return;
     },
     onError: (error: any) => {
-      openNotification("error", "Cập nhật thất bại", error.response.data.message);
+      openNotification(
+        "error",
+        "Cập nhật thất bại",
+        error.response.data.message,
+      );
       // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
     },
   });
 
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -54,41 +66,41 @@ const ResetPassword: NextPage = () => {
       </div>
       <div className="register-content">
         <div className="register-content-form">
-            <div>
-              <h1>Đặt lại Mật khẩu</h1>
-              <PasswordForm
-                isLoading={mutation.isLoading}
-                onSubmit={(password: string) => {
-                  // console.log(password);
-                  // setSubmitted(true);
-                  mutation.mutate({
-                    new_password: password,
-                    confirm_password: password,
-                    token,
-                  });
+          <div>
+            <h1>Đặt lại Mật khẩu</h1>
+            <PasswordForm
+              isLoading={mutation.isLoading}
+              onSubmit={(password: string) => {
+                // console.log(password);
+                // setSubmitted(true);
+                mutation.mutate({
+                  new_password: password,
+                  confirm_password: password,
+                  token,
+                });
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <SubmitButton
+                text="Quay lại đăng nhập"
+                onClick={() => {
+                  router.push("/login");
                 }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-              <SubmitButton
-                  text="Quay lại đăng nhập"
-                  onClick={() => {
-                    router.push("/login");
-                  }}
-                />
-                </div>
-              {errorMessage && (
-                <Alert message={errorMessage} type="error" />
-                // <p className="register-content-error">{errorMessage}</p>
-              )}
-              {contextHolder}
             </div>
+            {errorMessage && (
+              <Alert message={errorMessage} type="error" />
+              // <p className="register-content-error">{errorMessage}</p>
+            )}
+            {contextHolder}
+          </div>
         </div>
       </div>
     </div>

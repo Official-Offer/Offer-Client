@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   Button,
   Input,
@@ -15,16 +15,23 @@ import {
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Split from "react-split";
-import { getStudentNonAppliedJobs } from "@services/apiJob";
+
+import { getJobsPerPage } from "@services/apiJob";
+
 import { JobFilterNavbar } from "@components/navbar/JobFilterNavbar";
 import { JobCard } from "@components/card/JobCard";
 import { JobContent } from "@components/content/JobContent";
+
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
-import { TogglableButton } from "@styles/styled-components/styledButton";
-import { formatAddress } from "@utils/formatters/stringFormat";
-import { replaceUrl } from "@utils/replaceUrl";
+
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
+
+import { replaceUrl } from "@utils/replaceUrl";
+import { getPageNumFromUrl } from "@utils/formatters/stringFormat";
+import { formatAddress } from "@utils/formatters/stringFormat";
+
+import { TogglableButton } from "@styles/styled-components/styledButton";
 
 const StudentJobs: NextPage = () => {
   const searchParams = useSearchParams();
@@ -52,36 +59,58 @@ const StudentJobs: NextPage = () => {
   const [jobContentBookmarkClicked, setJobContentBookmarkClicked] =
     useState<boolean>(false);
 
-  const setIndexMap = (jobData: Job[]) => {
-    for (let i = 0; i < displayedJobs.length; i++) {
-      jobIndexMap.set(displayedJobs[i].pk, i);
-    }
-    setJobIndexMap(new Map(jobIndexMap));
-    setActiveCardIndex(jobIndexMap.get(jobId) ?? 0);
-  };
+    const setIndexMap = (jobData: Job[][]) => {
+      let index = 0;
+      for (let i = 0; i < displayedJobs.length; i++) {
+        for (let j = 0; j < displayedJobs[i].length; j++) {
+          jobIndexMap.set(displayedJobs[i][j].pk, index);
+          index++;
+        }
+      }
+      setJobIndexMap(new Map(jobIndexMap));
+      setActiveCardIndex(jobIndexMap.get(jobId) ?? 0);
+    };
 
-  const jobQuery = useQuery({
-    queryKey: ["jobslist"],
-    queryFn: getStudentNonAppliedJobs,
-    onSuccess: async (jobData) => {
-      // console.log(jobData);
-      setJobs(
-        jobData.results.sort((a: Job, b: Job) =>
-          a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0,
-        ),
-      );
-    },
-    onError: (error) => {
-      console.log(`Error: ${error}`);
-    },
+  // const jobInfiniteQuery = useQuery({
+  //   queryKey: ["jobslist"],
+  //   queryFn: getJobs,
+  //   onSuccess: async (jobData) => {
+  //     // console.log(jobData);
+  //     setJobs(
+  //       jobData.results.sort((a: Job, b: Job) =>
+  //         a.pk === jobId ? -1 : b.pk === jobId ? 1 : 0,
+  //       ),
+  //     );
+  //   },
+  //   onError: (error) => {
+  //     console.log(`Error: ${error}`);
+  //   },
+  //   refetchOnWindowFocus: false,
+  // });
+  const jobInfiniteQuery = useInfiniteQuery({
+    queryKey: ["paginated jobs"],
+    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 10, { applied: false }),
+    getNextPageParam: (lastPage) => getPageNumFromUrl(lastPage.next),
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (jobInfiniteQuery.data) {
+      setJobs(
+        jobInfiniteQuery.data.pages.reduce(
+          (acc, page) => [...acc, ...page.results],
+          [] as Job[],
+        ),
+      );
+      setSort("date-posted");
+    }
+  }, [jobInfiniteQuery.data]);
 
   useEffect(() => {
     setIndexMap(displayedJobs);
     replaceUrl(
       "id",
-      displayedJobs?.[0]?.pk ? `${displayedJobs[0].pk}` : undefined,
+      displayedJobs?.[0]?.[0]?.pk ? `${displayedJobs[0][0].pk}` : undefined,
     );
   }, [displayedJobs]);
 
@@ -140,54 +169,63 @@ const StudentJobs: NextPage = () => {
         <div>
           <ul className="job-portal-list">
             <li className="job-portal-list-result">
-              {jobQuery.isLoading
+              {jobInfiniteQuery.isLoading
                 ? "Đang tải..."
                 : `${displayedJobs?.length ?? "Không có"} kết quả`}
             </li>
             {
               // If the jobs are still loading, show the skeletons
-              !jobQuery.isLoading
-                ? displayedJobs.map((job: any, i: number) => (
+              !jobInfiniteQuery.isLoading && displayedJobs[0]
+                ? displayedJobs[0].map((job: any, index: number) => (
                     <li>
                       <JobCard
                         jobData={job}
-                        active={i === activeCardIndex}
+                        active={index === activeCardIndex}
                         onClick={() => updatePage(job.pk)}
                         bookmarkClicked={
-                          i === activeCardIndex
+                          index === activeCardIndex
                             ? jobCardBookmarkClicked
                             : undefined
                         }
                         setBookmarkClicked={
-                          i === activeCardIndex
+                          index === activeCardIndex
                             ? setJobCardBookmarkClicked
                             : undefined
                         }
                         setJobContentBookmarkClicked={
-                          i === activeCardIndex
+                          index === activeCardIndex
                             ? setJobContentBookmarkClicked
                             : undefined
                         }
                       />
                     </li>
                   ))
-                : Array(4).fill(
-                    <li>
-                      <Skeleton className="job-portal-list-loading" active />
-                    </li>,
-                  )
+                : !jobInfiniteQuery.isError
+                  ? Array(4).fill(
+                      <li>
+                        <Skeleton className="job-portal-list-loading" active />
+                      </li>,
+                    )
+                  : null
             }
           </ul>
         </div>
         <div>
-          <JobContent
-            isLoading={jobQuery.isLoading}
-            isApplying={isApplying}
-            jobData={displayedJobs?.[activeCardIndex]}
-            bookmarkClicked={jobContentBookmarkClicked}
-            setBookmarkClicked={setJobContentBookmarkClicked}
-            setJobCardBookmarkClicked={setJobCardBookmarkClicked}
-          />
+          {!jobInfiniteQuery.isError ? (
+            <JobContent
+              isLoading={jobInfiniteQuery.isLoading}
+              isApplying={isApplying}
+              jobData={displayedJobs?.[0]?.[activeCardIndex]}
+              bookmarkClicked={jobContentBookmarkClicked}
+              setBookmarkClicked={setJobContentBookmarkClicked}
+              setJobCardBookmarkClicked={setJobCardBookmarkClicked}
+            />
+          ) : (
+            <article className="error-page">
+              <h1>500</h1>
+              <h2>Server đang bảo trì, vui lòng thử lại sau</h2>
+            </article>
+          )}
         </div>
       </Split>
       {/* <div className="job-portal split-layout no-padding">

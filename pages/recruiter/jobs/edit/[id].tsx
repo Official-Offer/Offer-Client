@@ -19,7 +19,7 @@ import {
   setUpperSalary,
   setSalary,
   setSchoolIds,
-  setCreatedAt
+  setCreatedAt,
 } from "@redux/actions";
 // import { LoadingLine } from "@components/loading/LoadingLine";
 
@@ -35,7 +35,7 @@ const JobEdit: NextPage = () => {
       dispatch(setDeadline(job.deadline));
       dispatch(setSalary(job.lower_salary));
       dispatch(setUpperSalary(job.upper_salary));
-      dispatch(setCreatedAt(job.created_at))
+      dispatch(setCreatedAt(job.created_at));
       dispatch(setSchoolIds(job.request_approval_from));
       dispatch(
         setLevel(
@@ -43,20 +43,20 @@ const JobEdit: NextPage = () => {
             if (level == "internship") return "Thực tập";
             if (level == "newgrad") return "Nhân viên chính thức";
             if (level == "experienced") return "Đã có kinh nghiệm";
-          })
-        )
+          }),
+        ),
       );
       dispatch(
         setType(
-            job.job_types.map((type: any) => {
-                if (type == "contract") return "Hợp đồng";
-                if (type == "volunteer") return "Tình nguyện";
-                return type
-            })
-            )
-        )
+          job.job_types.map((type: any) => {
+            if (type == "contract") return "Hợp đồng";
+            if (type == "volunteer") return "Tình nguyện";
+            return type;
+          }),
+        ),
+      );
       dispatch(setDescription(job.description));
-    //   console.log(job);
+      //   console.log(job);
     },
     onError: () => {},
   });

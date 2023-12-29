@@ -1,10 +1,10 @@
 .split-layout {
   margin-left: auto;
   margin-right: auto;
-  width: 1440px;
+  width: min(calc(100vw - 20px), 1440px);
   display: flex;
   align-items: flex-start;
-  padding: 48px 40px 0px 40px;
+  padding: 48px 40px 40px 40px;
   gap: 32px;
 
   &-sticky {
@@ -34,7 +34,6 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-
 
     &.right-border {
       border-right: solid 1px $grey-light;

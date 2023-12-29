@@ -32,7 +32,7 @@ type BaseTableProps = {
   isLoading?: boolean;
   tableType?: string;
 };
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 export const BaseTable: React.FC<BaseTableProps> = ({
   dataset,
@@ -75,11 +75,11 @@ export const BaseTable: React.FC<BaseTableProps> = ({
     // message.success('Xoá công việc thành công');
     handleDelete?.();
   };
-  
+
   const cancel = (e: React.MouseEvent<HTMLElement> | undefined) => {
     console.log(e);
   };
-  
+
   return (
     <div>
       <div className="table-functions">
@@ -191,7 +191,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
                   round
                   className=""
                   backgroundColor={"#D30B81"}
-                  onClick={()=>{}}
+                  onClick={() => {}}
                 >
                   <div className="btn-body">
                     <span>Xoá công việc</span>

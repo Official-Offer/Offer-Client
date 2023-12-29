@@ -13,7 +13,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { AuthForm } from "@components/forms/AuthForm";
 import { LoadingPage } from "@components/loading/LoadingPage";
 import { setCompany, setCompanyId, setID, setRole } from "@redux/actions";
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+type NotificationType = "success" | "info" | "warning" | "error";
 
 //create a next page for the student home page, code below
 const Login: NextPage = () => {
@@ -30,7 +30,11 @@ const Login: NextPage = () => {
     isAdvisor: false,
     isRecruiter: false,
   });
-  const openNotification = (type: NotificationType, message: string, description: string) => {
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
     api[type]({
       message,
       description,
@@ -207,13 +211,13 @@ const Login: NextPage = () => {
           {!selectRole ? (
             <>
               <h1>Đăng nhập</h1>
-              <br />
               <Button
                 icon={<GoogleOutlined />}
                 onClick={() => {
                   deleteCookie("cookieToken");
                   signIn("google");
                 }}
+                className="sso-btn"
               >
                 {" "}
                 Đăng nhập với Google{" "}
@@ -235,7 +239,11 @@ const Login: NextPage = () => {
                 onSubmit={(org: any) => {
                   // console.log("org", org);
                   if (!org) {
-                    openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
+                    openNotification(
+                      "error",
+                      "Lỗi chọn tổ chức",
+                      "Vui lòng chọn tổ chức",
+                    );
                     return;
                   }
                   setErrorMessage("");
@@ -301,7 +309,7 @@ const Login: NextPage = () => {
             Dang Xuat
           </Button> */}
           {errorMessage && status !== "authenticated" && (
-            <Alert message={errorMessage} type="error"/>
+            <Alert message={errorMessage} type="error" />
             // <p className="register-content-error">{errorMessage}</p>
           )}
           {contextHolder}

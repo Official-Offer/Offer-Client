@@ -38,7 +38,9 @@
       width: 100%;
     }
 
-    svg { font-size: 2rem; }
+    svg {
+      font-size: 2rem;
+    }
   }
 
   .uni-title {
@@ -51,20 +53,25 @@
 }
 
 .public-hero {
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border: 0px;
   padding: 32px;
   color: white !important;
   background: radial-gradient(at top left, $pinkish-red, $purple-color);
-  
+
   .ant-card-body {
     & > div {
       display: flex;
       align-items: end;
       gap: 36px;
-      h1 { 
+      h1 {
         font-weight: $fw-bold-3;
-        color: white; 
+        color: white;
       }
-      h3 { color: white; }
+      h3 {
+        color: white;
+      }
       img {
         filter: brightness(0) invert(1);
       }

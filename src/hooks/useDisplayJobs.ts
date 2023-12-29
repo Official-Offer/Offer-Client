@@ -8,7 +8,7 @@ export const useDisplayJobs = () => {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(12);
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
-  const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
+  const [displayedJobs, setDisplayedJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filters, setFilters] = useState<JobFilters>({
     jobTypes: {},
@@ -43,7 +43,7 @@ export const useDisplayJobs = () => {
       if (job.address) {
         newFilters.locations[formatAddress(job.address, true)] = false;
       }
-      if (job.company.address) {
+      if (job.company?.address) {
         newFilters.locations[formatAddress(job.company.address, true)] = false;
       }
     }
@@ -119,7 +119,14 @@ export const useDisplayJobs = () => {
           return a.lower_salary - b.lower_salary;
         }
         return 0;
-      });
+      })
+      .map((job, index) => {
+        if (index % pageSize === 0) {
+          return originalJobs.slice(index, index + pageSize);
+        }
+        return null;
+      })
+      .filter((job) => job !== null);
     setDisplayedJobs(displayed);
   }, [originalJobs, filters, sort, searchTerm]);
 
@@ -128,6 +135,7 @@ export const useDisplayJobs = () => {
     setPage,
     pageSize,
     setPageSize,
+    originalJobs,
     displayedJobs,
     setJobs,
     setSearchTerm,

@@ -79,7 +79,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
                       </h4>
                     </div>
                     <div className="bottom-section">
-                      <h6>{info.company.name || "Công ty trống"}</h6>
+                      <h6>{info.company?.name || "Công ty trống"}</h6>
                       <span>
                         {info?.job_types && info?.job_types?.length !== 0
                           ? info.job_types.map((job_type) =>
@@ -89,7 +89,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
                         {" | "}
                         {info.address
                           ? formatAddress(info.address, true)
-                          : info.company.address
+                          : info.company?.address
                             ? formatAddress(info.company.address, true)
                             : info.location ?? "Không có địa điểm"}
                       </span>

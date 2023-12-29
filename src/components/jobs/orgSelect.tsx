@@ -19,6 +19,15 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
   const [companyName, setCompanyName] = useState<string>("");
   const dispatch = useDispatch();
 
+  const processedSchoolList: any[] = Object.keys(schoolList).map((key) => ({
+    id: key,
+    name: schoolList[parseInt(key)],
+  }));
+  const processedCompanyList: any[] = Object.keys(companyList).map((key) => ({
+    id: key,
+    name: companyList[parseInt(key)],
+  }));
+
   // const orgQuery = useQuery({
   //   queryKey: ["orgs"],
   //   queryFn: getOrgList,
@@ -74,7 +83,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                 // loading={orgQuery.isLoading}
               >
                 {isRecruiter
-                  ? schoolList.map((school: any) => (
+                  ? processedSchoolList.map((school: any) => (
                       <Select.Option
                         key={school.id}
                         className="form-select-dropdown"
@@ -83,7 +92,7 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
                         {school.name}
                       </Select.Option>
                     ))
-                  : companyList.map((company: any) => (
+                  : processedCompanyList.map((company: any) => (
                       <Select.Option
                         key={company.id}
                         className="form-select-dropdown"

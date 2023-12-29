@@ -26,11 +26,19 @@
         object-fit: cover;
         height: 100%;
       }
+
+      .anticon-loading {
+        svg {
+          font-size: $fs-7;
+        }
+      }
     }
 
     &-header {
       margin-top: 24px;
-      h1 { font-size: $fs-5; }
+      h1 {
+        font-size: $fs-5;
+      }
     }
 
     &-info {
@@ -38,7 +46,7 @@
 
       &-item {
         display: flex;
-        align-items: center;
+        align-items: start;
         justify-content: stretch;
         margin-top: 4px;
         font-size: $fs-3;
@@ -54,7 +62,7 @@
       }
     }
 
-    .ant-card{
+    .ant-card {
       &-cover {
         img {
           height: 75px;
@@ -143,8 +151,15 @@
 
     &-center {
       flex: 2;
-      h3 { font-size: $fs-4;}
-      b { font-weight: $fw-bold-3;}
+      h3 {
+        font-size: $fs-4;
+      }
+      b {
+        font-weight: $fw-bold-3;
+      }
+      &-date {
+        color: $grey-dark;
+      }
       &-description {
         padding-top: 8px;
       }
