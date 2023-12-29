@@ -8,7 +8,7 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
-  getApplicantsForJob,
+  getApplicantsForJobRecruiter,
   getRecruitersForCompany,
 } from "@services/apiRecruiter";
 import { ApplicantDataType } from "@components/table/dataType";
@@ -35,7 +35,7 @@ const Applicants: NextPage = () => {
   // console.log(id);
   const applicantQuery = useQuery(
     ["applicants"],
-    () => getApplicantsForJob(id),
+    () => getApplicantsForJobRecruiter(id),
     {
       onSuccess: async (res: ApplicantDataType) => {
         console.log(res);
@@ -45,7 +45,6 @@ const Applicants: NextPage = () => {
         setSearchResults(
           res.applicants.map(
             (a: any) => a.student.account.firstName
-            // formatFullName(applicant.student.account)
           )
         );
       },

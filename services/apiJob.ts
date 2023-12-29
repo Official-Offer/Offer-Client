@@ -117,9 +117,9 @@ export const getUnapprovedJobs = async () => {
 
 export const getJobsForRecruiter = async () => {
   const recruiter = parseInt(getCookie("id") as string);
-  const response = await request.get(`/jobs/`, {
+  const response = await request.get(`/jobs/recruiter`, {
     params: {
-      created_by: recruiter,
+      // created_by: recruiter,
     },
   });
   // console.log(response.data.message);
@@ -243,7 +243,15 @@ export const getJobListWithApplicant = async () => {
 };
 
 export const getJob = async (id: number) => {
+  // DEPRECATED
   const response = await request.get(`/jobs/${id}/`);
+  const job = response.data;
+  job.company_data = job.company;
+  return job;
+};
+
+export const getJobRecruiter = async (id: number) => {
+  const response = await request.get(`/jobs/recruiter/${id}/`);
   const job = response.data;
   job.company_data = job.company;
   return job;
@@ -289,18 +297,34 @@ export const bookmarkJob = async (id: number | string) => {
 };
 
 export const postJob = async (body: any) => {
-  // console.log(getCookie("cookieToken"));
+  // DEPRECATED
   const response = await request.post(`/jobs/`, body);
   return response.data;
 };
 
+export const postJobRecruiter = async (body: any) => {
+  const response = await request.post(`/jobs/recruiter/`, body);
+  return response.data;
+};
+
+
 
 export const editJob = async (body: any) => {
-  // console.log(getCookie("cookieToken"));
+  // DEPRECATED
   const response = await request.patch(`/jobs/${body.id}/`, body.content);
   return response.data;
 };
 
+export const editJobRecruiter = async (body: any) => {
+  const response = await request.patch(`/jobs/recruiter/${body.id}/`, body.content);
+  return response.data;
+};
+
+export const editJobAdvisor = async (body: any) => {
+  // DEPRECATED
+  const response = await request.patch(`/jobs/advisor/${body.id}/`, body.content);
+  return response.data;
+};
 
 export const addSchoolsToJob = async (body: any) => {
   // const response = await request.patch(`/jobs/${body.id}/`, body.content);

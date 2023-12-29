@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { editJob, generateJobDescription, postJob } from "@services/apiJob";
+import { editJob, generateJobDescription, postJob, postJobRecruiter } from "@services/apiJob";
 import { SubmitButton } from "@components/button/SubmitButton";
 import {
   BackwardOutlined,
@@ -107,7 +107,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
 
   const postJobQuery = useMutation({
     mutationKey: ["post-job"],
-    mutationFn: postJob,
+    mutationFn: postJobRecruiter,
     onSuccess: async (data) => {
       // console.log(data);
       dispatch(setJobId(data.id));
