@@ -28,7 +28,7 @@ import { OfferLogo } from "@components/icons";
 
 import { getStudentDetails } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
-import { getJobs, getJobsPerPage } from "@services/apiJob";
+import { getJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
 
 import { useDisplayJobs } from "@hooks/useDisplayJobs";
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
 
   const jobInfiniteQuery = useInfiniteQuery({
     queryKey: ["paginated jobs"],
-    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12),
+    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 12, { applied: false }),
     getNextPageParam: (lastPage) => getPageNumFromUrl(lastPage.next),
     refetchOnWindowFocus: false,
   });
@@ -197,7 +197,7 @@ const Home: NextPage = () => {
         <section>
           <AntdCard
             className={id ? "uni-cover" : "public-hero"}
-            cover={id && <img src={DHBK.cover} alt={school?.name ?? ""} />}
+            cover={id && <img src={school?.background_image || DHBK.cover} alt={school?.name ?? ""} />}
             children={
               id ? (
                 <div className="uni-wrapper">
@@ -251,8 +251,8 @@ const Home: NextPage = () => {
                       ]
                     : displayedJobs.map((slide) => (
                         <div className="layout-grid">
-                          {slide.map((job) => (
-                            <InfoCard key={job.id} info={job} />
+                          {slide?.map((job: Job) => (
+                            <InfoCard key={job.pk} info={job} />
                           ))}
                         </div>
                       ))

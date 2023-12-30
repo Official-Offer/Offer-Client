@@ -8,7 +8,7 @@ export const useDisplayJobs = () => {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(12);
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
-  const [displayedJobs, setDisplayedJobs] = useState<Job[][]>([]);
+  const [displayedJobs, setDisplayedJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filters, setFilters] = useState<JobFilters>({
     jobTypes: {},
@@ -24,7 +24,7 @@ export const useDisplayJobs = () => {
     setOriginalJobs(jobList);
     const filterKeys = Object.keys(filters);
     const newFilters = filters;
-    for (let i = 0; i < jobList.length; i++) {
+    for (let i = 0; i < jobList?.length; i++) {
       const job = jobList[i];
       if (job.job_types) {
         const type = job.job_types;

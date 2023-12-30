@@ -59,13 +59,17 @@ const StudentJobs: NextPage = () => {
   const [jobContentBookmarkClicked, setJobContentBookmarkClicked] =
     useState<boolean>(false);
 
-  const setIndexMap = (jobData: Job[]) => {
-    for (let i = 0; i < displayedJobs.length; i++) {
-      jobIndexMap.set(displayedJobs[i].pk, i);
-    }
-    setJobIndexMap(new Map(jobIndexMap));
-    setActiveCardIndex(jobIndexMap.get(jobId) ?? 0);
-  };
+    const setIndexMap = (jobData: Job[][]) => {
+      let index = 0;
+      for (let i = 0; i < displayedJobs.length; i++) {
+        for (let j = 0; j < displayedJobs[i].length; j++) {
+          jobIndexMap.set(displayedJobs[i][j].pk, index);
+          index++;
+        }
+      }
+      setJobIndexMap(new Map(jobIndexMap));
+      setActiveCardIndex(jobIndexMap.get(jobId) ?? 0);
+    };
 
   // const jobInfiniteQuery = useQuery({
   //   queryKey: ["jobslist"],
@@ -85,7 +89,7 @@ const StudentJobs: NextPage = () => {
   // });
   const jobInfiniteQuery = useInfiniteQuery({
     queryKey: ["paginated jobs"],
-    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 10),
+    queryFn: ({ pageParam = 1 }) => getJobsPerPage(pageParam, 10, { applied: false }),
     getNextPageParam: (lastPage) => getPageNumFromUrl(lastPage.next),
     refetchOnWindowFocus: false,
   });

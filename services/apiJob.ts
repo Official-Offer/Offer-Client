@@ -4,26 +4,29 @@ import { getCompany } from "./apiCompany";
 import { OpenAI } from "langchain/llms/openai";
 import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
+
 import parse from "html-react-parser";
 
-export const getJobs = async () => {
-  const response = await request.get(`/jobs`, {
+export const getJobs = async (params?: any) => {
+  const role = getCookie("role");
+  const response = await request.get(`/jobs/${role}/`, {
     params: {
       ordered_by: "-created_at",
+      ...params
     },
   });
   const jobList = response.data;
   return jobList;
 };
 
-export const getJobsPerPage = async (page: number, pageSize: number) => {
-  console.log(page, pageSize);
-  const role: string = getCookie("role");
+export const getJobsPerPage = async (page: number, pageSize: number, params?: any) => {
+  const role = getCookie("role");
   const response = await request.get(`/jobs/${role}/`, {
     params: {
       page,
       page_size: pageSize,
       ordered_by: "-created_at",
+      ...params
     },
   });
   const jobList = response.data;

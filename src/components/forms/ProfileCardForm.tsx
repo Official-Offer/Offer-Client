@@ -25,7 +25,7 @@ interface ProfileCardFormProps {
   fieldTitle: string;
   fieldItemProps: {
     itemTitle: string;
-    fieldItemProps: string;
+    queryLabel: string;
     dataIdMap: string[];
     disableEndDate: boolean;
     layout: string[];
@@ -38,7 +38,7 @@ interface ProfileCardFormProps {
   updateFunction: (...args: any[]) => void;
   deleteFunction?: (id: number) => void;
   refetchFunction: () => void;
-  dataArr: Record<string, unknown>[][];
+  dataArr: any;
 }
 
 interface DataInputProps {
@@ -79,7 +79,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     //     return prev;
     //   })
     // }
-    setFieldValues(props.fieldValues);
+    setFieldValues((prev) => props.fieldValues || prev);
   }, [props.fieldValues]);
 
   const [form] = Form.useForm();
@@ -155,7 +155,7 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
     Modal.confirm({
       centered: true,
       content: `Bạn chắc chắn bạn muốn xóa mục ${props.fieldTitle?.toLowerCase()} của bạn tại ${props
-        .fieldValues?.[props.fieldItemProps.dataName[0]]}?`,
+        .fieldValues?.[props.fieldItemProps.labelToAPI.itemTitle]}?`,
       okText: `Xóa`,
       cancelText: `Không, cảm ơn`,
       onOk() {
@@ -214,9 +214,9 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
                 key: parseInt(key),
                 value: parseInt(key),
                 label:
-                  typeof optionList[key] === "object"
-                    ? optionList[key].name || optionList[key].label
-                    : optionList[key],
+                  typeof optionList[parseInt(key)] === "object"
+                    ? optionList[parseInt(key)].name || optionList[parseInt(key)].label
+                    : optionList[parseInt(key)],
               }))
             : []
         }

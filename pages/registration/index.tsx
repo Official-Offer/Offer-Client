@@ -81,6 +81,8 @@ const Registration: NextPage = () => {
         });
     },
     onError: (error: any) => {
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
+
       openNotification(
         "error",
         "Đăng ký thất bại",
@@ -88,7 +90,6 @@ const Registration: NextPage = () => {
       );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
-      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
   });
 
@@ -124,6 +125,7 @@ const Registration: NextPage = () => {
       }
     },
     onError: (error: any) => {
+      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
       openNotification(
         "error",
         "Đăng ký thất bại",
@@ -131,7 +133,6 @@ const Registration: NextPage = () => {
       );
       // console.log(error.response.data.message);
       // setErrorMessage(error.response.data.message);
-      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
     },
   });
 
@@ -151,7 +152,7 @@ const Registration: NextPage = () => {
 
   if (status === "loading") return <LoadingPage />;
 
-  return status == "authenticated" && !errorMessage && pwScreen ? (
+  return status == "authenticated" && !errorMessage && !pwScreen ? (
     <LoadingPage />
   ) : (
     <div className="register">

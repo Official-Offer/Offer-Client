@@ -16,11 +16,11 @@ import {
 import {
   getStudentDetails,
   getStudentResume,
-  getStudentEducations,
+  // getStudentEducations,
   editStudentEducation,
   addStudentEducation,
   deleteStudentEducation,
-  getStudentExperiences,
+  // getStudentExperiences,
   editStudentExperience,
   addStudentExperience,
   deleteStudentExperience,
@@ -100,7 +100,7 @@ const eduFieldItems = {
 const expFieldItems = {
   itemTitle: "Vị Trí",
   queryLabel: "company",
-  dataName: ["companyName", "skills"],
+  dataIdMap: ["companyName", "skills"],
   disableEndDate: true,
   layout: ["companyName", "location"],
   labelToAPI: {
@@ -132,7 +132,7 @@ const StudentProfile: NextPage = () => {
   const [studentDetails, setStudentDetails] = useState<Record<
     string,
     any
-  > | null>(null);
+  >>({});
   const id = getCookie("id");
   const studentQuery = useQuery({
     queryKey: [`students/${id}`],
@@ -165,18 +165,18 @@ const StudentProfile: NextPage = () => {
       <section className="split-layout-sticky student-profile split-layout-item flex-sm">
         <AntdCard
           cover={
-            studentDetails?.account.cover_photo ? (
-              <img src={studentDetails?.account.cover_photo} />
+            studentDetails?.account?.cover_photo ? (
+              <img src={studentDetails.account.cover_photo} />
             ) : (
               <div className="gradient"></div>
             )
           }
           children={
             <div>
-              {studentDetails?.account.avatar ? (
+              {studentDetails?.account?.avatar ? (
                 <img
                   className="student-profile-avatar"
-                  src={studentDetails?.account.avatar}
+                  src={studentDetails.account.avatar}
                 />
               ) : (
                 <div className="student-profile-avatar">
