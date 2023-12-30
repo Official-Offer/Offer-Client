@@ -91,6 +91,7 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
       return await addStudentResume(resumeData);
     },
     onSuccess: () => {
+      console.log("refetch")
       refetchFunction();
       if (resetTimer) clearTimeout(resetTimer);
       setResetTimer(
@@ -236,7 +237,6 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
           )}
         </div>
       }
-      // eslint-disable-next-line react/no-children-prop
       children={
         isLoading ? (
           <div>Đang tải...</div>
@@ -266,7 +266,6 @@ export const ResumeCard: React.FC<ResumeCardProps> = ({
             noMargin
             slidesToScroll={2}
             slides={uploadedFiles.map((uploadedFile) => (
-              // eslint-disable-next-line react/jsx-key
               <StyledResumeCard>
                 <div
                   className="resume-star"
