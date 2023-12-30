@@ -229,8 +229,6 @@ const Home: NextPage = () => {
         <section>
           <AntdCard className="section-card">
             <h3 className="header">Cơ hội thực tập dành riêng cho bạn</h3>
-            {jobInfiniteQuery.hasNextPage ? "T" : "F"}
-            {jobInfiniteQuery.fetchNextPage ? "T" : "F"}
             {!jobInfiniteQuery.isError ? (
               <Carousel
                 slideSize="full"
