@@ -148,8 +148,7 @@ const StudentProfile: NextPage = () => {
     queryKey: [`students/${id}/resumes`],
     queryFn: getStudentResume,
     onSuccess: (res) => {
-      studentDetails.resumes = res;
-      setStudentDetails(studentDetails);
+      setStudentDetails((studentDetails) => ({ ...studentDetails, resumes: res }));
     },
     onError: (err) => console.log(`Error: ${err}`),
     enabled: false,
