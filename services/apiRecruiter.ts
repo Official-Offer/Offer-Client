@@ -89,8 +89,8 @@ export const getApplicantsForJob = async (id: any) => {
 
 export const getApplicantsForJobRecruiter = async (id: any) => {
   const res = await request.get(`/jobs/recruiter/${id}/`);
-  const response = await request.get(`/job-applications/${id}/`);
-  const applicantList = response.data.message;
+  const response = await request.get(`/job-applications/?job=${id}`);
+  const applicantList = response.data.results;
   console.log("applicantList", applicantList);
   return {
     job: res.data.title,

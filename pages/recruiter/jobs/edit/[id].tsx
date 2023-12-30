@@ -3,7 +3,7 @@ import { NextPage } from "next";
 // import { JobDescription } from "@components/jobs";
 import { useRouter } from "next/router";
 import { JobDescription } from "@components/jobs/jobDesc";
-import { getJob } from "../../../../services/apiJob";
+import { getJob, getJobRecruiter } from "../../../../services/apiJob";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingLine } from "@components/loading/LoadingLine";
 import { LoadingPage } from "@components/loading/LoadingPage";
@@ -27,11 +27,11 @@ const JobEdit: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
   const dispatch = useDispatch();
-  const getJobQuery = useQuery(["job", id], () => getJob(Number(id)), {
+  const getJobQuery = useQuery(["job", id], () => getJobRecruiter(Number(id)), {
     onSuccess: async (job: any) => {
       dispatch(setTitle(job.title));
-      dispatch(setMajor(job.required_majors.map((major: any) => major.id)));
-      dispatch(setAddress(job.address.city));
+      dispatch(setMajor(job.required_majors?.map((major: any) => major.id)));
+      dispatch(setAddress(job.address?.city));
       dispatch(setDeadline(job.deadline));
       dispatch(setSalary(job.lower_salary));
       dispatch(setUpperSalary(job.upper_salary));

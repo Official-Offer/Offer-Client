@@ -226,6 +226,13 @@ export const getJob = async (id: number) => {
   return job;
 };
 
+export const getJobAdvisor = async (id: number) => {
+  const response = await request.get(`/jobs/advisor/${id}/`);
+  const job = response.data;
+  job.company_data = job.company;
+  return job;
+}
+
 export const getJobRecruiter = async (id: number) => {
   const response = await request.get(`/jobs/recruiter/${id}/`);
   const job = response.data;
@@ -290,6 +297,7 @@ export const editJob = async (body: any) => {
   const response = await request.patch(`/jobs/${body.id}/`, body.content);
   return response.data;
 };
+
 
 export const editJobRecruiter = async (body: any) => {
   const response = await request.patch(`/jobs/recruiter/${body.id}/`, body.content);
