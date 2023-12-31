@@ -2,6 +2,7 @@ import { getCookie, setCookie } from "cookies-next";
 import { getSchool } from "./apiSchool";
 import { getCompany } from "./apiCompany";
 import request from "./apiService";
+import { majorDict } from "@public/static/list/majorList";
 
 // Auth
 export const registerStudent = async (body: any) => {
@@ -53,16 +54,14 @@ export const getStudentsFromSchool = async (school: any) => {
       },
     })
   ).data.results;
-  // console.log(response);
-  // const schoolApplicants = ["1", "2", "3", "4"];
+  // map majorList to a dict with id: {name, industries}
   return response.map((student: any) => ({
     key: student.account.id,
     name: student.account.first_name + " " + student.account.last_name,
     email: student.account.email,
-    major: "Biology",
-    resume: student.active_resume,
-    expected_graduation: student.expected_graduation || "2025",
-    // transcript: student.transcript,
+    major: student.majors.map((major: any) => (majorDict as Record<string, { name: string; industries: never[] }>)[major].name).join(", "), //wtf copilot so smart
+    resume: student.active_resume?.resume,
+    expected_graduation: student.expected_graduation_date || "N/A",
   }));
 };
 
