@@ -7,8 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { getOrgList } from "@services/apiUser";
 import { setCompany, setCompanyId, setSchoolIds } from "@redux/actions";
-import { schoolList } from "@public/static/schoolList";
-import { companyList } from "@public/static/companyList";
+import { schoolList, companyList } from "@public/static/list";
 
 export const SelectOrg: React.FC<any> = ({ onClick }) => {
   const state = useSelector((state: RootState) => state.jobs);

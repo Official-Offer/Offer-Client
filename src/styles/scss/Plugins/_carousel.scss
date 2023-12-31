@@ -1,5 +1,5 @@
 .embla {
-  --slide-spacing: 16px;
+  --slide-spacing: 24px;
   overflow: hidden;
 
   &__viewport {
@@ -37,6 +37,10 @@
     padding-left: var(--slide-spacing);
     // scroll-snap-align: start;
 
+    &:last-child {
+      padding-right: var(--slide-spacing)
+    }
+    
     &--full {
       padding-right: var(--slide-spacing);
       flex: 0 0 100%;

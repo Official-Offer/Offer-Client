@@ -1,8 +1,7 @@
 import { URL_API_ADMIN } from "@config";
 import request from "./apiService";
 import axios from "axios";
-import { schoolList } from "@public/static/schoolList";
-import { majorList } from "@public/static/majorList";
+import { schoolList, majorList } from "@public/static/list";
 
 export const getSchoolList = async () => {
   return schoolList;

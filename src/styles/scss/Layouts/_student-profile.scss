@@ -1,5 +1,6 @@
 .student {
-  &-profile {
+  &-bio {
+    $cover-height: 75px;
     text-align: left;
 
     &-avatar {
@@ -34,6 +35,15 @@
       }
     }
 
+    &-edit {
+      &-btn {
+        position: absolute;
+        top: calc($cover-height + 12px);
+        right: 12px;
+      }
+    }
+
+
     &-header {
       margin-top: 24px;
       h1 {
@@ -65,12 +75,12 @@
     .ant-card {
       &-cover {
         img {
-          height: 75px;
+          height: $cover-height;
           border-radius: 8px 8px 0px 0px;
           object-fit: cover;
         }
         .gradient {
-          height: 75px;
+          height: $cover-height;
           border-radius: 8px 8px 0px 0px;
           background: radial-gradient(at top left, $grey-color, $grey-dark);
         }
@@ -125,6 +135,12 @@
     .embla {
       &__container {
         width: 550px;
+      }
+
+      &__slide {
+        &:first-child {
+          padding-left: 0px;
+        }
       }
     }
   }

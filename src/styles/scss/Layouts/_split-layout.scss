@@ -1,16 +1,17 @@
 .split-layout {
+  $padding: 32px;
   margin-left: auto;
   margin-right: auto;
   width: min(calc(100vw - 20px), 1440px);
   display: flex;
   align-items: flex-start;
-  padding: 48px 40px 40px 40px;
-  gap: 32px;
+  padding: $padding;
+  gap: 16px;
 
   &-sticky {
     position: sticky;
     max-height: 0;
-    top: 112px;
+    top: calc($padding + 64px);
     flex: 1;
   }
 
@@ -33,7 +34,7 @@
   &-item {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
 
     &.right-border {
       border-right: solid 1px $grey-light;
