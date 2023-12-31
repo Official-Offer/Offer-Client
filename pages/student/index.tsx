@@ -236,10 +236,9 @@ const Home: NextPage = () => {
                 slidesLimit={3}
                 isFetching={jobInfiniteQuery.isFetchingNextPage}
                 loadNextFunc={
-                  jobInfiniteQuery.hasNextPage
-                    ? jobInfiniteQuery.fetchNextPage
-                    : undefined
+                  jobInfiniteQuery.fetchNextPage
                 }
+                hasNextSlide={jobInfiniteQuery.hasNextPage}
                 viewMoreUrl={"/student/jobs"}
                 slides={
                   jobInfiniteQuery.isLoading

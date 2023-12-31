@@ -27,6 +27,7 @@ type CarouselProps = {
   isAsync?: boolean;
   isFetching?: boolean;
   loadNextFunc?: () => void;
+  hasNextSlide?: boolean;
   viewMoreUrl?: string; // This is the URL for the button at the end
   noMargin?: boolean;
 };
@@ -43,6 +44,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   isAsync,
   isFetching,
   loadNextFunc,
+  hasNextSlide,
   viewMoreUrl,
   noMargin,
 }) => {
@@ -54,7 +56,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     slideRef.current < (slidesLimit ?? 0),
   );
   const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(
-    slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined,
+    slideRef.current < (slidesLimit ?? 0) && hasNextSlide,
   );
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
@@ -103,23 +105,23 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const onScroll = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      if (!listenForScrollRef.current) return;
+      // if (!listenForScrollRef.current) return;
       setLoadingMore((loadingMore) => {
+        // console.log(loadNextFunc)
         const lastSlide = emblaApi.slideNodes().length - 1;
         const lastSlideInView = emblaApi.slidesInView().includes(lastSlide);
         const loadMore = !loadingMore && lastSlideInView;
-        if (lastSlideInView) {
+        if (loadMore) {
           listenForScrollRef.current = false;
-          let currentSlideNum = slideRef.current;
-          console.log(currentSlideNum);
+          // let currentSlideNum = slideRef.current;
           if (loadNextFunc) loadNextFunc();
-          slideRef.current = currentSlideNum + 1;
+          // slideRef.current = currentSlideNum + 1;
         }
 
         return loadingMore || lastSlideInView;
       });
     },
-    [loadNextFunc],
+    [],
   );
 
   const addScrollListener = useCallback(
@@ -148,9 +150,10 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   useEffect(() => {
     setHasMoreToLoad(
-      slideRef.current < (slidesLimit ?? 0) && loadNextFunc !== undefined,
+      slideRef.current < (slidesLimit ?? 0) && hasNextSlide
     );
-  }, [loadNextFunc]);
+    setLoadingMore(false);
+  }, [isFetching]);
 
   useEffect(() => {
     hasMoreToLoadRef.current = hasMoreToLoad;
