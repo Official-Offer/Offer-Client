@@ -47,7 +47,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const state = useSelector((state: RootState) => state.jobs);
-  const processedMajorList: any[] = Object.keys(majorList).map((key) => ({
+  const processedMajorList: any[] = majorList.map((major) => ({
+    value: major.id,
+    label: major.label,
+  }));
+  Object.keys(majorList).map((key) => ({
     value: key,
     label: majorList[parseInt(key)].label,
   }));
@@ -63,7 +67,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [majorNames, setMajorNames] = useState<string[]>(
-    state.major.map((major) => processedMajorList[major - 1].label + ", ") || [
+    state.major.map((major) => processedMajorList[major - 1]?.label + ", ") || [
       "Công nghệ thông tin",
     ],
   );
@@ -308,7 +312,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => processedMajorList[major - 1].label + ", ",
+                        (major: number) => processedMajorList[major - 1]?.label + ", ",
                       ),
                     );
                   }}

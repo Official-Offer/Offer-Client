@@ -30,7 +30,7 @@ const JobEdit: NextPage = () => {
   const getJobQuery = useQuery(["job", id], () => getJobRecruiter(Number(id)), {
     onSuccess: async (job: any) => {
       dispatch(setTitle(job.title));
-      dispatch(setMajor(job.required_majors?.map((major: any) => major.id)));
+      dispatch(setMajor(job.required_majors));
       dispatch(setAddress(job.address?.city));
       dispatch(setDeadline(job.deadline));
       dispatch(setSalary(job.lower_salary));
