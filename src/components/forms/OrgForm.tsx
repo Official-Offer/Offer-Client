@@ -8,8 +8,7 @@ import { getOrgList } from "@services/apiUser";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { contact } from "../../../services/apiUser";
-import { schoolList } from "@public/static/schoolList";
-import { companyList } from "@public/static/companyList";
+import { schoolList, companyList } from "@public/static/list";
 
 interface IOrgForm {
   onSubmit: (org: string) => void;

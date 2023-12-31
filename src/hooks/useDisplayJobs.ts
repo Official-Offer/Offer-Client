@@ -10,6 +10,7 @@ export const useDisplayJobs = () => {
   const [originalJobs, setOriginalJobs] = useState<Job[]>([]);
   const [displayedJobs, setDisplayedJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedJob, setSelectedJob] = useState<number>(0);
   const [filters, setFilters] = useState<JobFilters>({
     jobTypes: {},
     workTypes: {},
@@ -120,15 +121,22 @@ export const useDisplayJobs = () => {
         }
         return 0;
       })
-      .map((job, index) => {
-        if (index % pageSize === 0) {
-          return originalJobs.slice(index, index + pageSize);
-        }
-        return null;
+      .sort((a: Job, b: Job) => {
+        if (a.pk === selectedJob) return -1;
+        if (b.pk === selectedJob) return 1;
+        return 0;
       })
-      .filter((job) => job !== null);
+      .filter((job: Job, index: number, self: Job[]) => self.findIndex((j: Job) => j.pk === job.pk) === index)
+      .reduce((acc: any[], job: Job, index: number) => {
+        const pageIndex = Math.floor(index / pageSize);
+        if (!acc[pageIndex]) {
+          acc[pageIndex] = [];
+        }
+        acc[pageIndex].push(job);
+        return acc;
+      }, []);
     setDisplayedJobs(displayed);
-  }, [originalJobs, filters, sort, searchTerm]);
+  }, [originalJobs, filters, sort, searchTerm, selectedJob]);
 
   return {
     page,
@@ -139,6 +147,7 @@ export const useDisplayJobs = () => {
     displayedJobs,
     setJobs,
     setSearchTerm,
+    setSelectedJob,
     filters,
     sort,
     setFilters,

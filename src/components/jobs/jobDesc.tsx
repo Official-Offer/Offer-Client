@@ -27,7 +27,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { majorList } from "@public/static/majorList";
+import { majorList } from "@public/static/list";
 
 interface JobDescriptionProps {
   onClick: () => void;

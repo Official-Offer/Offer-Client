@@ -6,10 +6,10 @@ import { formatDate } from "@utils/formatters/numberFormat";
 import { getCookie } from "cookies-next";
 
 import parse from "html-react-parser";
+const role = getCookie("role");
 
 export const getJobs = async (params?: any) => {
-  const role = getCookie("role");
-  const response = await request.get(`/jobs/${role}/`, {
+  const response = await request.get(`/jobs/${role ?? "student"}/`, {
     params: {
       ordered_by: "-created_at",
       ...params
@@ -19,9 +19,14 @@ export const getJobs = async (params?: any) => {
   return jobList;
 };
 
+export const getJobById = async (id: number) => {
+  const response = await request.get(`/jobs/${role ?? "student"}/${id}/`);
+  const job = response.data;
+  return job;
+}
+
 export const getJobsPerPage = async (page: number, pageSize: number, params?: any) => {
-  const role = getCookie("role");
-  const response = await request.get(`/jobs/${role}/`, {
+  const response = await request.get(`/jobs/${role ?? "student"}/`, {
     params: {
       page,
       page_size: pageSize,

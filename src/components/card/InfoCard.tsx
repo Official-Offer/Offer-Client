@@ -11,7 +11,7 @@ import { formatNum, dateDist } from "@utils/formatters/numberFormat";
 import { translateJobType } from "@utils/formatters/translateFormat";
 import { FireIcon } from "@heroicons/react/16/solid";
 
-type InfoCardProps = {
+interface InfoCardProps {
   info?: Job;
   loading?: boolean;
 };
@@ -74,7 +74,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
                           <span>Nổi bật</span>
                         </div>
                       )}
-                      <h4 className="clamp-2 bold">
+                      <h4 className="clamp-1 bold">
                         {info.title || "Tiêu đề trống"}
                       </h4>
                     </div>

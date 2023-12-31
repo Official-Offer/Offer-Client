@@ -31,7 +31,7 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { majorList } from "@public/static/majorList";
+import { majorList } from "@public/static/list";
 import { set } from "lodash";
 // import ReactQuill from 'react-quill';
 

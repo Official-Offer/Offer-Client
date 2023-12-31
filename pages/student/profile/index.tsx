@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import { Card as AntdCard, Button } from "antd";
-import { InfoCard, ProfileCard, ResumeCard } from "@components/card";
+import { BioCard, InfoCard, ProfileCard, ResumeCard } from "@components/card";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -162,99 +162,8 @@ const StudentProfile: NextPage = () => {
 
   return (
     <main className="split-layout">
-      <section className="split-layout-sticky student-profile split-layout-item flex-sm">
-        <AntdCard
-          cover={
-            studentDetails?.account?.cover_photo ? (
-              <img src={studentDetails.account.cover_photo} />
-            ) : (
-              <div className="gradient"></div>
-            )
-          }
-          children={
-            <div>
-              {studentDetails?.account?.avatar ? (
-                <img
-                  className="student-profile-avatar"
-                  src={studentDetails.account.avatar}
-                />
-              ) : (
-                <div className="student-profile-avatar">
-                  {studentQuery.isLoading ? <LoadingOutlined /> : <UserIcon />}
-                </div>
-              )}
-              <div className="student-profile-header">
-                {studentQuery.isLoading ? (
-                  <Skeleton height="1.25rem" width="50%" />
-                ) : (
-                  <h1>
-                    {studentDetails?.account?.first_name &&
-                    studentDetails?.account?.last_name
-                      ? studentDetails?.account.first_name +
-                        " " +
-                        studentDetails?.account.last_name
-                      : "Họ Tên"}
-                  </h1>
-                )}
-              </div>
-              <div className="student-profile-info">
-                <div className="student-profile-info-item">
-                  <BuildingOfficeIcon />
-                  <span>
-                    {studentQuery.isLoading ? (
-                      <Skeleton height="1rem" />
-                    ) : (
-                      studentDetails?.school?.name ?? "Trường không xác định"
-                    )}
-                  </span>
-                </div>
-                <div className="student-profile-info-item">
-                  <AcademicCapIcon />
-                  <span>
-                    {studentQuery.isLoading ? (
-                      <Skeleton height="1rem" />
-                    ) : studentDetails?.expected_graduation_date ? (
-                      formatDate(
-                        studentDetails.expected_graduation_date,
-                        "D/M/YYYY",
-                      )
-                    ) : (
-                      "Không xác định"
-                    )}
-                  </span>
-                </div>
-                <div className="student-profile-info-item">
-                  <BookOpenIcon />
-                  <span>
-                    {studentQuery.isLoading ? (
-                      <Skeleton height="1rem" />
-                    ) : studentDetails?.majors?.length > 0 ? (
-                      studentDetails?.majors
-                        ?.map((major: { name: string }) => major.name)
-                        .join(", ")
-                    ) : (
-                      "Ngành chưa xác định"
-                    )}
-                  </span>
-                </div>
-                <div className="student-profile-info-item">
-                  <HeartIcon />
-                  <span>
-                    {studentQuery.isLoading ? (
-                      <Skeleton height="1rem" />
-                    ) : studentDetails?.desired_industries?.length > 0 ? (
-                      studentDetails?.desired_industries
-                        ?.map((industry: { name: string }) => industry.name)
-                        .join(", ")
-                    ) : (
-                      "Không xác định"
-                    )}
-                  </span>
-                </div>
-              </div>
-            </div>
-          }
-        />
+      <section className="split-layout-sticky student-bio split-layout-item flex-sm">
+        <BioCard data={studentDetails} isLoading={studentQuery.isLoading} />
       </section>
       <section className="split-layout-item flex-md">
         <ResumeCard
@@ -292,7 +201,7 @@ const StudentProfile: NextPage = () => {
           dataFunction={getSchoolAndMajorList}
         />
       </section>
-      <section className="split-layout-sticky flex-sm student-profile">
+      <section className="split-layout-sticky flex-sm student-bio">
         <AntdCard>
           <h3>Advisor</h3>
         </AntdCard>

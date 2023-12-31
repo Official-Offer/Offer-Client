@@ -14,3 +14,4 @@ export { InfoCard } from "./InfoCard";
 export { EventCard } from "./EventCard";
 export { ProfileCard } from "./ProfileCard";
 export { ResumeCard } from "./ResumeCard";
+export { BioCard } from "./BioCard";
