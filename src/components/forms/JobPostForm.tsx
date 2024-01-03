@@ -54,19 +54,30 @@ export const JobPostForm: React.FC<IForm> = ({
     value: key,
     label: majorList[parseInt(key)].label,
   }));
+  const state = useSelector((state: RootState) => state.jobs);
+  console.log(state)
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
-  const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
-  const [title, setTitl] = useState<any>("");
-  const [address, setAdd] = useState<string>("Hà Nội");
-  const [major, setMaj] = useState<any>([]);
-  const [salary, setSal] = useState<number>(0);
-  const [upperSalary, setUpperSal] = useState<number>(100);
-  const [type, setTyp] = useState<any>([]);
-  const [deadline, setDeadl] = useState<any>("");
-  const [level, setLev] = useState<any>("");
-  const [desc, setDesc] = useState<any>("");
+  const types = [
+    {value: "fulltime", label: "Full-time"},
+    {value: "parttime", label: "Part-time"},
+    {value: "contract", label: "Hợp đồng"},
+    {value: "volunteer", label: "Tình nguyện"},
+  ]
+  const levels = [
+    {value: "internship", label: "Thực tập"},
+    {value: "newgrad", label: "Fresher"},
+    {value: "experienced", label: "Đã có kinh nghiệm"}
+  ]
+  const [title, setTitl] = useState<any>(state.title || "");
+  const [address, setAdd] = useState<string>(state.address || "");
+  const [major, setMaj] = useState<any>(state.major || []);
+  const [salary, setSal] = useState<number>(state.salary || 0);
+  const [upperSalary, setUpperSal] = useState<number>(state.upperSalary || 0);
+  const [type, setTyp] = useState<any>(state.type || []);
+  const [deadline, setDeadl] = useState<any>(state.deadline || new Date());
+  const [level, setLev] = useState<any>(state.level || []);
+  const [desc, setDesc] = useState<any>(state.description || "");
   const [api, contextHolder] = notification.useNotification();
 
   const openNotification = (
@@ -104,8 +115,8 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleLevelChange = (value: any) => {
-    // console.log(value);
-    setLev(value);
+    console.log(value);
+    setLev([...value]);
     // dispatch(setLevel(value));
   };
 
@@ -127,7 +138,6 @@ export const JobPostForm: React.FC<IForm> = ({
     // value.map((v: { key: any; }) => dispatch(setMajor(v.key)));
     // setMajor(processedMajorList[value - 1]);
   };
-  const state = useSelector((state: RootState) => state.jobs);
 
   const handleContinue = (event: { preventDefault: () => void }) => {
     //don't let user continue if they haven't filled in all the required fields
@@ -171,7 +181,7 @@ export const JobPostForm: React.FC<IForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" required className="form-input full-width">
-          <Input required onChange={handleTitleChange} />
+          <Input required onChange={handleTitleChange} value={title}/>
         </Form.Item>
         <Form.Item label="Địa điểm" required>
           <Select
@@ -179,6 +189,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Hà Nội"
             onChange={handleAddressChange}
             options={locations}
+            value={address}
           />
         </Form.Item>
         <Form.Item label="Cấp bậc" className="form-input" required>
@@ -187,6 +198,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}
+            value={[...level]}
           />
         </Form.Item>
         <Form.Item label="Mức lương (triệu đồng/tháng)">
@@ -195,6 +207,7 @@ export const JobPostForm: React.FC<IForm> = ({
             defaultValue={[0, 100]}
             marks={marks}
             onAfterChange={handleSalaryChange}
+            value={[salary, upperSalary]}
           />
         </Form.Item>
         <Form.Item label="Tính chất công việc">
@@ -204,6 +217,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Fulltime"
             onChange={handleTypeChange}
             options={types}
+            value={type}
           />
         </Form.Item>
         <Form.Item label="Ngành học liên quan">
@@ -214,6 +228,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
             options={processedMajorList}
+            value={major.map((v: any) => ({ key: v, label: majorList[v].label }))}
           />
         </Form.Item>
         <Form.Item label="Hạn chót">
@@ -221,6 +236,7 @@ export const JobPostForm: React.FC<IForm> = ({
             className="form-date-picker"
             // locale={locale}
             onChange={handleDeadlineChange}
+            value={moment(deadline)}
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">

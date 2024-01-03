@@ -10,11 +10,15 @@ import { setCompany, setCompanyId, setSchoolIds, setPubliclyAvailalble } from "@
 import { schoolList, companyList } from "@public/static/list";
 
 export const SelectOrg: React.FC<any> = ({ onClick }) => {
-  const state = useSelector((state: RootState) => state.jobs);
   const router = useRouter();
+  const isRecruiter = router.pathname.includes("recruiter") ? true : false;
+  const state = useSelector((state: RootState) => state.jobs);
+  console.log(state);
   const [schools, setSchools] = useState<any>();
   const [companies, setCompanies] = useState<any>();
-  const [selectedOrgIds, setSelectedOrgIds] = useState<any>([]);
+  const [selectedOrgIds, setSelectedOrgIds] = useState<any>(
+    (isRecruiter ? state.schoolIds : state.companyId) || []
+  );
   const [publiclyAvail, setPubliclyAvail] = useState<any>(null);
   const [companyName, setCompanyName] = useState<string>("");
   const dispatch = useDispatch();
@@ -44,8 +48,6 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
   //   },
   // });
 
-  const isRecruiter = router.pathname.includes("recruiter") ? true : false;
-
   return (
     <div className="job-school">
       <h2>{`Chọn ${isRecruiter ? `trường` : `công ty`} để đăng công việc`}</h2>
@@ -68,6 +70,13 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
               <Form.Item label={isRecruiter ? "Chọn 1 hoặc nhiều trường" : "Công ty"}>
                 <Select
                   // defaultValue={orgName}
+                  value={selectedOrgIds.map((id: any) => {
+                    if (isRecruiter) {
+                      return { key: id.toString(), label: schoolList[id].name };
+                    } else {
+                      return { key: id.toString(), label: companyList[id].name };
+                    }
+                  })}
                   labelInValue={true}
                   mode={isRecruiter ? "multiple" : undefined}
                   showSearch
@@ -111,11 +120,11 @@ export const SelectOrg: React.FC<any> = ({ onClick }) => {
       )}
       <SubmitButton
         text={"Tiếp tục"}
-        disabled = {!selectedOrgIds && typeof publiclyAvail !== "boolean"}
+        disabled={!selectedOrgIds && typeof publiclyAvail !== "boolean"}
         // isLoading={orgQuery.isLoading}
         onClick={() => {
           if (isRecruiter) {
-            console.log(publiclyAvail)
+            console.log(publiclyAvail);
             dispatch(setPubliclyAvailalble(publiclyAvail));
             dispatch(setSchoolIds(selectedOrgIds));
           } else {

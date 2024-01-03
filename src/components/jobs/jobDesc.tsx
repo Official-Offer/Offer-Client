@@ -166,7 +166,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
 
   return (
     <div className="job-desc">
-      <p
+<p
         style={{
           cursor: "pointer",
         }}
