@@ -66,6 +66,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [location, setLocation] = useState<string>(state.address || "Hà Nội");
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
   const [majors, setMajors] = useState<number[]>(state.major || [1]);
+  const [publiclyAvail, setPubliclyAvail] = useState<any>(state.publiclyAvailalble || false);
   const [majorNames, setMajorNames] = useState<string[]>(
     state.major.map((major) => processedMajorList[major - 1]?.label + ", ") || [
       "Công nghệ thông tin",
@@ -100,7 +101,6 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   ];
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
-
   const openNotification = (
     type: NotificationType,
     message: string,
@@ -344,7 +344,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
           <h2>Mô tả</h2>
           {editing ? (
             <ReactQuill
-              className="form-desc"
+              className=""
               value={jd}
               onChange={(value) => {
                 setJd(value);
@@ -357,53 +357,56 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
             />
           )}
         </div>
+        <div className="job-desc-button">
+          <br/>
+          <SubmitButton
+            onClick={() => {
+              // console.log(state.address);
+              const payload = {
+                title,
+                levels: levels.map((level: any) => {
+                  if (level.value == "Thực tập") return "internship";
+                  if (level.value == "Nhân viên chính thức") return "newgrad";
+                  if (level.value == "Đã có kinh nghiệm") return "experienced";
+                }),
+                job_types: types.map((type: any) => {
+                  if (type.value == "fulltime") return "fulltime";
+                  if (type.value == "parttime") return "parttime";
+                  if (type.value == "Hợp đồng") return "contract";
+                  if (type.value == "Tình nguyện") return "volunteer";
+                }),
+                lower_salary: salary,
+                address: edit
+                  ? 1
+                  : {
+                      city: location,
+                    },
+                upper_salary: upperSalary,
+                description: jd,
+                company: companyId,
+                contact_person: Number(getCookie("id")),
+                deadline,
+                required_majors: majors,
+                request_approval_from: router.pathname.includes("advisor")
+                  ? [Number(getCookie("orgId"))]
+                  : school
+                    ? [Number(school)]
+                    : schoolIds
+                      ? schoolIds
+                      : [],
+                publicly_available: publiclyAvail,
+              };
+              edit
+                ? editJobQuery.mutate({ id, content: payload })
+                : postJobQuery.mutate(payload);
+            }}
+            isLoading={edit ? editJobQuery.isLoading : postJobQuery.isLoading}
+            text={edit ? "Hoàn tất sửa công việc" : "Đăng tuyển"}
+          />
+        </div>
       </div>
       {contextHolder}
-      <div className="job-desc-button">
-        <SubmitButton
-          onClick={() => {
-            // console.log(state.address);
-            const payload = {
-              title,
-              levels: levels.map((level: any) => {
-                if (level.value == "Thực tập") return "internship";
-                if (level.value == "Nhân viên chính thức") return "newgrad";
-                if (level.value == "Đã có kinh nghiệm") return "experienced";
-              }),
-              job_types: types.map((type: any) => {
-                if (type.value == "fulltime") return "fulltime";
-                if (type.value == "parttime") return "parttime";
-                if (type.value == "Hợp đồng") return "contract";
-                if (type.value == "Tình nguyện") return "volunteer";
-              }),
-              lower_salary: salary,
-              address: edit
-                ? 1
-                : {
-                    city: location,
-                  },
-              upper_salary: upperSalary,
-              description: jd,
-              company: companyId,
-              contact_person: Number(getCookie("id")),
-              deadline,
-              required_majors: majors,
-              request_approval_from: router.pathname.includes("advisor")
-                ? [Number(getCookie("orgId"))]
-                : school
-                  ? [Number(school)]
-                  : schoolIds
-                    ? schoolIds
-                    : [],
-            };
-            edit
-              ? editJobQuery.mutate({ id, content: payload })
-              : postJobQuery.mutate(payload);
-          }}
-          isLoading={edit ? editJobQuery.isLoading : postJobQuery.isLoading}
-          text={edit ? "Hoàn tất sửa công việc" : "Đăng tuyển"}
-        />
-      </div>
+      
     </div>
   );
 };

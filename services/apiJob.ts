@@ -104,7 +104,8 @@ export const getJobsForRecruiter = async () => {
   const recruiter = parseInt(getCookie("id") as string);
   const response = await request.get(`/jobs/recruiter`, {
     params: {
-      // created_by: recruiter,
+      // created_by: recruiter
+      page_size: 1000,
     },
   });
   // console.log(response.data.message);

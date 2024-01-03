@@ -1,8 +1,21 @@
+.job-desc-wrapper {
+  // max-width: 900px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .job-desc {
+  max-width: 900px;
   margin: 40px;
+  padding: 30px;
+  border-radius: 15px;
   p,
   pre {
     color: black;
+  }
+  .ql-editor {
+    min-height: 200px;
   }
 }
 
@@ -20,7 +33,7 @@
 }
 .job-desc-content {
   background-color: white;
-  padding: 30px;
+  // padding: 30px;
   border-radius: 10px;
 }
 .job-desc-pink {
@@ -47,10 +60,9 @@
 
 .job-desc-button {
   margin-top: 20px;
-  margin-bottom: 20px;
   display: flex;
   margin-left: auto;
-  float: right;
+  width: fit-content;
 }
 
 .job-school {
