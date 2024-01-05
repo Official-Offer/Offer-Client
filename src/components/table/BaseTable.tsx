@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Popconfirm, Space, Table, Tag, message, notification } from "antd";
 import { ColumnsType } from "antd/es/table";
 import FilterType from "@components/filter/TypeFilter";
@@ -79,6 +79,10 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   const cancel = (e: React.MouseEvent<HTMLElement> | undefined) => {
     console.log(e);
   };
+
+  useEffect(() => {
+    console.log(dataset);
+  }, [dataset]);
 
   return (
     <div>

@@ -8,6 +8,7 @@ type SubmitButtonProps = {
   isLoading?: boolean;
   onClick?: (event: any) => void;
   type?: number;
+  disabled?: boolean;
 };
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
@@ -15,6 +16,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   isLoading,
   onClick,
   type,
+  disabled
 }: any) => {
   const styles =
     type == 2
@@ -34,7 +36,7 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
         : {};
   return (
     <StyledSubmitButton
-      disabled={isLoading}
+      disabled={disabled || isLoading}
       type="submit"
       onClick={onClick}
       {...styles}

@@ -62,10 +62,10 @@ export const getRecruitersForCompany = async () => {
 };
 
 export const getApplicantsForJob = async (id: any) => {
-  // console.log(id);
-  const res = await request.get(`/jobs/${id}/`);
-  const response = await request.get(`/jobs/${id}/applications/`);
-  const applicantList = response.data.message;
+  const role = getCookie("role");
+  const res = await request.get(`/jobs/${role}/${id}/`);
+  const response = await request.get(`/job-applications/?job=${id}`);
+  const applicantList = response.data.results;
   console.log("applicantList", applicantList);
   return {
     job: res.data.title,
@@ -79,10 +79,11 @@ export const getApplicantsForJob = async (id: any) => {
       // compatibility: app.compatibility,
       key: app.id,
       applied_at: formatDate(app.created_at, "D/M/YYYY"),
-      name: app.student.account.firstName + " " + app.student.account.lastName,
+      name: app.student.account.first_name + " " + app.student.account.last_name,
       school: app.student.school || "Không tìm thấy",
       job: app.job.title || "Không tìm thấy",
       resume: app.resume,
     })),
   };
 };
+

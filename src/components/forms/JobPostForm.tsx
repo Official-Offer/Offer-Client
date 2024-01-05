@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import {
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  SelectProps,
-  Slider,
-  notification,
-} from "antd";
+import { DatePicker, Form, Input, Select, SelectProps, Slider, notification } from "antd";
 import {
   setCompany,
   setTitle,
@@ -31,7 +23,8 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { majorList } from "@public/static/list";
+import { majorList, processedMajorList, value_to_label } from "@public/static/list";
+import { workTypes, levels } from "@public/static/dict";
 import { set } from "lodash";
 // import ReactQuill from 'react-quill';
 
@@ -42,38 +35,25 @@ interface IForm {
 }
 type NotificationType = "success" | "info" | "warning" | "error";
 
-export const JobPostForm: React.FC<IForm> = ({
-  onSubmit,
-  onCancel,
-  isLoading,
-}) => {
+export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) => {
   const dispatch = useDispatch();
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
-  // console.log(majorList);
-  const processedMajorList: any[] = Object.keys(majorList).map((key) => ({
-    value: key,
-    label: majorList[parseInt(key)].label,
-  }));
+  const state = useSelector((state: RootState) => state.jobs);
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
-  const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
-  const [title, setTitl] = useState<any>("");
-  const [address, setAdd] = useState<string>("Hà Nội");
-  const [major, setMaj] = useState<any>([]);
-  const [salary, setSal] = useState<number>(0);
-  const [upperSalary, setUpperSal] = useState<number>(100);
-  const [type, setTyp] = useState<any>([]);
-  const [deadline, setDeadl] = useState<any>("");
-  const [level, setLev] = useState<any>("");
-  const [desc, setDesc] = useState<any>("");
+  const types = workTypes;
+  const [title, setTitl] = useState<any>(state.title || "");
+  const [address, setAdd] = useState<string>(state.address || "");
+  const [major, setMaj] = useState<any>(state.major || []);
+  const [salary, setSal] = useState<number>(state.salary || 0);
+  const [upperSalary, setUpperSal] = useState<number>(state.upperSalary || 0);
+  const [type, setTyp] = useState<any>(state.type || []);
+  const [deadline, setDeadl] = useState<any>(state.deadline || new Date());
+  const [level, setLev] = useState<any>(state.level || []);
+  const [desc, setDesc] = useState<any>(state.description || "");
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotification = (
-    type: NotificationType,
-    message: string,
-    description: string,
-  ) => {
+  const openNotification = (type: NotificationType, message: string, description: string) => {
     api[type]({
       message,
       description,
@@ -104,8 +84,8 @@ export const JobPostForm: React.FC<IForm> = ({
   };
 
   const handleLevelChange = (value: any) => {
-    // console.log(value);
-    setLev(value);
+    console.log(value);
+    setLev([...value]);
     // dispatch(setLevel(value));
   };
 
@@ -120,14 +100,10 @@ export const JobPostForm: React.FC<IForm> = ({
     setUpperSal(value[1]);
   };
 
-  const handleMajorChange = (value: any) => {
-    // console.log(value);
-    // dispatch(setMajor(value.map((v: { key: any }) => v.key)));
-    setMaj(value.map((v: { key: any }) => v.key));
-    // value.map((v: { key: any; }) => dispatch(setMajor(v.key)));
-    // setMajor(processedMajorList[value - 1]);
+  const handleMajorChange = (value:any) => {
+    console.log(value.map((v:any) => v.value));
+    setMaj(value.map((v:any) => v.value));
   };
-  const state = useSelector((state: RootState) => state.jobs);
 
   const handleContinue = (event: { preventDefault: () => void }) => {
     //don't let user continue if they haven't filled in all the required fields
@@ -171,7 +147,7 @@ export const JobPostForm: React.FC<IForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" required className="form-input full-width">
-          <Input required onChange={handleTitleChange} />
+          <Input required onChange={handleTitleChange} value={title} />
         </Form.Item>
         <Form.Item label="Địa điểm" required>
           <Select
@@ -179,6 +155,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Hà Nội"
             onChange={handleAddressChange}
             options={locations}
+            value={address}
           />
         </Form.Item>
         <Form.Item label="Cấp bậc" className="form-input" required>
@@ -187,6 +164,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Thực tập"
             onChange={handleLevelChange}
             options={levels}
+            value={[...level]}
           />
         </Form.Item>
         <Form.Item label="Mức lương (triệu đồng/tháng)">
@@ -195,6 +173,7 @@ export const JobPostForm: React.FC<IForm> = ({
             defaultValue={[0, 100]}
             marks={marks}
             onAfterChange={handleSalaryChange}
+            value={[salary, upperSalary]}
           />
         </Form.Item>
         <Form.Item label="Tính chất công việc">
@@ -204,6 +183,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Fulltime"
             onChange={handleTypeChange}
             options={types}
+            value={type}
           />
         </Form.Item>
         <Form.Item label="Ngành học liên quan">
@@ -214,6 +194,7 @@ export const JobPostForm: React.FC<IForm> = ({
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
             options={processedMajorList}
+            value={major.map((v: any) => ({ value: v, label: value_to_label(v, processedMajorList) }))}
           />
         </Form.Item>
         <Form.Item label="Hạn chót">
@@ -221,33 +202,19 @@ export const JobPostForm: React.FC<IForm> = ({
             className="form-date-picker"
             // locale={locale}
             onChange={handleDeadlineChange}
+            value={moment(deadline)}
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <ReactQuill
-            className="form-desc"
-            theme="snow"
-            value={desc}
-            onChange={handleDescChange}
-          />
+          <ReactQuill className="form-desc" theme="snow" value={desc} onChange={handleDescChange} />
         </Form.Item>
       </div>
       <div className="form-submit-button">
         <div className="form-submit-button-back">
-          <SubmitButton
-            text={"Quay lại"}
-            isLoading={isLoading}
-            type={2}
-            onClick={handleCancel}
-          />
+          <SubmitButton text={"Quay lại"} isLoading={isLoading} type={2} onClick={handleCancel} />
         </div>
         <div className="form-submit-button-continue">
-          <SubmitButton
-            text={"Tiếp tục"}
-            isLoading={isLoading}
-            type={3}
-            onClick={handleContinue}
-          />
+          <SubmitButton text={"Tiếp tục"} isLoading={isLoading} type={3} onClick={handleContinue} />
         </div>
         {contextHolder}
       </div>

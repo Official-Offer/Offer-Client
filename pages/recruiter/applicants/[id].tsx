@@ -44,7 +44,7 @@ const Applicants: NextPage = () => {
         setJobTitle(res.job || " ");
         setSearchResults(
           res.applicants.map(
-            (a: any) => a.student.account.firstName,
+            (a: any) => a?.student?.account?.firstName,
             // formatFullName(applicant.student.account)
           ),
         );

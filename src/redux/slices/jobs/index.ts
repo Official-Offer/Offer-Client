@@ -19,6 +19,7 @@ interface ICJob {
   schoolIds?: number[];
   applied: boolean;
   createdAt?: Date | null;
+  publiclyAvailalble: boolean;
 }
 
 const initialState: ICJob = {
@@ -39,12 +40,16 @@ const initialState: ICJob = {
   schoolIds: [],
   applied: false,
   createdAt: null,
+  publiclyAvailalble: false,
 };
 
 const jobSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
+    setPubliclyAvailalble: (state, action) => {
+      state.publiclyAvailalble = action.payload;
+    },
     setTitle: (state, action) => {
       state.title = action.payload;
     },
@@ -96,6 +101,10 @@ const jobSlice = createSlice({
     setCreatedAt: (state, action) => {
       state.createdAt = action.payload;
     },
+    clearJobAll: (state) => {
+      state = initialState;
+      alert("clear");
+    },
   },
 });
 
@@ -117,6 +126,8 @@ export const {
   setSchoolIds,
   setApplied,
   setCreatedAt,
+  setPubliclyAvailalble,
+  clearJobAll,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
