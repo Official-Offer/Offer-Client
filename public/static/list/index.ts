@@ -11,7 +11,7 @@ type Option = {
 export const process = (list: any[]): Option[] => {
     return list.map(item => {
         return {
-            value: item.value || item.pk,
+            value: item.value || item.pk || item.id,
             label: item.label || item.name
         }
     })

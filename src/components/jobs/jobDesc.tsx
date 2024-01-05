@@ -1,26 +1,21 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { editJob, generateJobDescription, postJob, postJobRecruiter, editJobRecruiter} from "@services/apiJob";
-import { SubmitButton } from "@components/button/SubmitButton";
 import {
-  BackwardOutlined,
-  CheckOutlined,
-  EditOutlined,
-} from "@ant-design/icons";
+  editJob,
+  generateJobDescription,
+  postJob,
+  postJobRecruiter,
+  editJobRecruiter,
+} from "@services/apiJob";
+import { SubmitButton } from "@components/button/SubmitButton";
+import { BackwardOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { LoadingLine } from "@components/loading/LoadingLine";
-import {
-  DatePicker,
-  Input,
-  Select,
-  Skeleton,
-  Slider,
-  notification,
-} from "antd";
+import { DatePicker, Input, Select, Skeleton, Slider, notification } from "antd";
 import moment from "moment";
 import { SliderMarks } from "antd/lib/slider";
-import { setJobId } from "@redux/actions";
+import { setJobId, clearJobAll } from "@redux/actions";
 // import locale from "antd/es/date-picker/locale/vi_VN";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -37,12 +32,7 @@ interface JobDescriptionProps {
 }
 type NotificationType = "success" | "info" | "warning" | "error";
 
-export const JobDescription: React.FC<JobDescriptionProps> = ({
-  onClick,
-  onBack,
-  edit,
-  id,
-}) => {
+export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack, edit, id }) => {
   const router = useRouter();
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
@@ -57,16 +47,9 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const [type, setType] = useState<string[]>(state.type || ["fulltime"]);
   const [location, setLocation] = useState<string>(state.address || "Hà Nội");
   const [deadline, setDeadline] = useState<Date>(state.deadline || new Date());
-  const [majors, setMajors] = useState<number[]>(state.major || [1]);
   const [publiclyAvail, setPubliclyAvail] = useState<any>(state.publiclyAvailalble || false);
-  const [majorNames, setMajorNames] = useState<string[]>(
-    state.major.map((major) => processedMajorList[major - 1]?.label + ", ") || [
-      "Công nghệ thông tin",
-    ],
-  );
-  const [company, setCompany] = useState<string | undefined>(
-    state.company || "Công ty mẫu",
-  );
+  const [majors, setMajors] = useState<number[]>(state.major || [1]);
+  const [company, setCompany] = useState<string | undefined>(state.company || "Công ty mẫu");
   const [companyId, setCompanyId] = useState<number>(
     router.pathname.includes("recruiter")
       ? Number(getCookie("orgId"))
@@ -74,23 +57,17 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         ? state.companyId
         : getCookie("orgId")
           ? Number(getCookie("orgId"))
-          : 1,
+          : 1
   );
   const [editing, setEditing] = useState<boolean>(false);
-  const [jd, setJd] = useState<string>(
-    state.description || "Mô tả công việc mẫu",
-  );
+  const [jd, setJd] = useState<string>(state.description || "Mô tả công việc mẫu");
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
   const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
   const types = workTypes;
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
-  const openNotification = (
-    type: NotificationType,
-    message: string,
-    description: string,
-  ) => {
+  const openNotification = (type: NotificationType, message: string, description: string) => {
     api[type]({
       message,
       description,
@@ -112,19 +89,17 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     mutationKey: ["post-job"],
     mutationFn: postJobRecruiter,
     onSuccess: async (data) => {
-      // console.log(data);
+      console.log(data);
       dispatch(setJobId(data.id));
-      openNotification(
-        "success",
-        "Hoàn tất đăng công việc",
-        "Bạn đã thành công đăng công việc",
-      );
+      clearJobAll()
+      openNotification("success", "Hoàn tất đăng công việc", "Bạn đã thành công đăng công việc");
       onClick();
+      // clear redux state
     },
     onError: (error: any) => {
       // console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
-      openNotification('error', 'Lỗi', error.response.data.message);
+      openNotification("error", "Lỗi", error.response.data.message);
     },
   });
 
@@ -132,26 +107,22 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
     mutationKey: ["edit-job"],
     mutationFn: editJobRecruiter,
     onSuccess: async (data) => {
-      // console.log(data);
       dispatch(setJobId(data.id));
-      openNotification(
-        "success",
-        "Hoàn tất sửa công việc",
-        "Bạn đã thành công sửa công việc",
-      );
+      clearJobAll()
+      openNotification("success", "Hoàn tất sửa công việc", "Bạn đã thành công sửa công việc");
       // notification.success();
       // onClick();
     },
     onError: (error: any) => {
       setErrorMessage(error.response.data.message);
-      openNotification('error', 'Lỗi', error.response.data.message);
+      openNotification("error", "Lỗi", error.response.data.message);
       // console.log(error.response.data.message);
     },
   });
 
   return (
     <div className="job-desc">
-<p
+      <p
         style={{
           cursor: "pointer",
         }}
@@ -192,9 +163,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               }}
             />
           ) : (
-            <h2
-              onClick={() => (editing ? setEditing(false) : setEditing(true))}
-            >
+            <h2 onClick={() => (editing ? setEditing(false) : setEditing(true))}>
               {title} <EditOutlined />
             </h2>
           )}
@@ -230,9 +199,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               />
             </div>
           ) : (
-            <p style={{ color: "red" }}>
-              Hạn nộp: {moment(deadline).format("DD/MM/YYYY")}
-            </p>
+            <p style={{ color: "red" }}>Hạn nộp: {moment(deadline).format("DD/MM/YYYY")}</p>
           )}
         </div>
         {/* <SubmitButton text={"Nộp đơn"} /> */}
@@ -270,7 +237,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                   value={level}
                 />
               ) : (
-                <p>{level.map(lv => value_to_label(lv, levels)).join(", ")}</p>
+                <p>{level.map((lv) => value_to_label(lv, levels)).join(", ")}</p>
               )}
             </div>
             <div>
@@ -294,22 +261,18 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               <h3>Ngành học liên quan</h3>
               {editing ? (
                 <Select
+                  labelInValue
                   className="job-desc-form"
                   mode="multiple"
                   placeholder="Công nghệ thông tin"
                   onChange={(value) => {
-                    setMajors(value);
-                    setMajorNames(
-                      value.map(
-                        (major: number) => processedMajorList[major - 1]?.label,
-                      ),
-                    );
+                    setMajors(value.map((v:any) => v?.value));
                   }}
                   options={processedMajorList}
-                  value={majors}
+                  value={majors.map((v: any) => ({ value: v, label: value_to_label(v, processedMajorList) }))}
                 />
               ) : (
-                <p>{majorNames.join(", ")}</p>
+                <p>{majors.map((v: any) => (value_to_label(v, processedMajorList))).join(", ")}</p>
               )}
             </div>
             <div>
@@ -342,14 +305,11 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
               }}
             />
           ) : (
-            <div
-              className="form-description"
-              dangerouslySetInnerHTML={{ __html: jd }}
-            />
+            <div className="form-description" dangerouslySetInnerHTML={{ __html: jd }} />
           )}
         </div>
         <div className="job-desc-button">
-          <br/>
+          <br />
           <SubmitButton
             onClick={() => {
               // console.log(state.address);
@@ -387,9 +347,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                       : [],
                 publicly_available: publiclyAvail,
               };
-              edit
-                ? editJobQuery.mutate({ id, content: payload })
-                : postJobQuery.mutate(payload);
+              edit ? editJobQuery.mutate({ id, content: payload }) : postJobQuery.mutate(payload);
             }}
             isLoading={edit ? editJobQuery.isLoading : postJobQuery.isLoading}
             text={edit ? "Hoàn tất sửa công việc" : "Đăng tuyển"}
@@ -397,7 +355,6 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
         </div>
       </div>
       {contextHolder}
-      
     </div>
   );
 };

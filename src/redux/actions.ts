@@ -24,5 +24,6 @@ export {
   setSchoolIds,
   setApplied,
   setCreatedAt,
-  setPubliclyAvailalble
+  setPubliclyAvailalble,
+  clearJobAll,
 } from "@redux/slices/jobs";

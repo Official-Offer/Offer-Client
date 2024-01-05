@@ -23,7 +23,7 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { majorList, processedMajorList } from "@public/static/list";
+import { majorList, processedMajorList, value_to_label } from "@public/static/list";
 import { workTypes, levels } from "@public/static/dict";
 import { set } from "lodash";
 // import ReactQuill from 'react-quill';
@@ -100,12 +100,9 @@ export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) 
     setUpperSal(value[1]);
   };
 
-  const handleMajorChange = (value: any) => {
-    // console.log(value);
-    // dispatch(setMajor(value.map((v: { key: any }) => v.key)));
-    setMaj(value.map((v: { key: any }) => v.key));
-    // value.map((v: { key: any; }) => dispatch(setMajor(v.key)));
-    // setMajor(processedMajorList[value - 1]);
+  const handleMajorChange = (value:any) => {
+    console.log(value.map((v:any) => v.value));
+    setMaj(value.map((v:any) => v.value));
   };
 
   const handleContinue = (event: { preventDefault: () => void }) => {
@@ -197,7 +194,7 @@ export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) 
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
             options={processedMajorList}
-            value={major.map((v: any) => ({ key: v, label: majorList[v].label }))}
+            value={major.map((v: any) => ({ value: v, label: value_to_label(v, processedMajorList) }))}
           />
         </Form.Item>
         <Form.Item label="Hạn chót">

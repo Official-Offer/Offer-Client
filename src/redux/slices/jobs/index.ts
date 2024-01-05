@@ -101,6 +101,10 @@ const jobSlice = createSlice({
     setCreatedAt: (state, action) => {
       state.createdAt = action.payload;
     },
+    clearJobAll: (state) => {
+      state = initialState;
+      alert("clear");
+    },
   },
 });
 
@@ -123,6 +127,7 @@ export const {
   setApplied,
   setCreatedAt,
   setPubliclyAvailalble,
+  clearJobAll,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
