@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SubmitButton } from "@components/button/SubmitButton";
-import {
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  SelectProps,
-  Slider,
-  notification,
-} from "antd";
+import { DatePicker, Form, Input, Select, SelectProps, Slider, notification } from "antd";
 import {
   setCompany,
   setTitle,
@@ -31,7 +23,8 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { majorList } from "@public/static/list";
+import { majorList, processedMajorList } from "@public/static/list";
+import { workTypes, levels } from "@public/static/dict";
 import { set } from "lodash";
 // import ReactQuill from 'react-quill';
 
@@ -42,33 +35,13 @@ interface IForm {
 }
 type NotificationType = "success" | "info" | "warning" | "error";
 
-export const JobPostForm: React.FC<IForm> = ({
-  onSubmit,
-  onCancel,
-  isLoading,
-}) => {
+export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) => {
   const dispatch = useDispatch();
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
-  // console.log(majorList);
-  const processedMajorList: any[] = Object.keys(majorList).map((key) => ({
-    value: key,
-    label: majorList[parseInt(key)].label,
-  }));
   const state = useSelector((state: RootState) => state.jobs);
-  console.log(state)
   const { RangePicker } = DatePicker;
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const types = [
-    {value: "fulltime", label: "Full-time"},
-    {value: "parttime", label: "Part-time"},
-    {value: "contract", label: "Hợp đồng"},
-    {value: "volunteer", label: "Tình nguyện"},
-  ]
-  const levels = [
-    {value: "internship", label: "Thực tập"},
-    {value: "newgrad", label: "Fresher"},
-    {value: "experienced", label: "Đã có kinh nghiệm"}
-  ]
+  const types = workTypes;
   const [title, setTitl] = useState<any>(state.title || "");
   const [address, setAdd] = useState<string>(state.address || "");
   const [major, setMaj] = useState<any>(state.major || []);
@@ -80,11 +53,7 @@ export const JobPostForm: React.FC<IForm> = ({
   const [desc, setDesc] = useState<any>(state.description || "");
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotification = (
-    type: NotificationType,
-    message: string,
-    description: string,
-  ) => {
+  const openNotification = (type: NotificationType, message: string, description: string) => {
     api[type]({
       message,
       description,
@@ -181,7 +150,7 @@ export const JobPostForm: React.FC<IForm> = ({
     <Form className="form" layout="vertical">
       <div className="form-grid-white">
         <Form.Item label="Tiêu đề" required className="form-input full-width">
-          <Input required onChange={handleTitleChange} value={title}/>
+          <Input required onChange={handleTitleChange} value={title} />
         </Form.Item>
         <Form.Item label="Địa điểm" required>
           <Select
@@ -240,30 +209,15 @@ export const JobPostForm: React.FC<IForm> = ({
           />
         </Form.Item>
         <Form.Item required label="Miêu tả" className="form-input full-width">
-          <ReactQuill
-            className="form-desc"
-            theme="snow"
-            value={desc}
-            onChange={handleDescChange}
-          />
+          <ReactQuill className="form-desc" theme="snow" value={desc} onChange={handleDescChange} />
         </Form.Item>
       </div>
       <div className="form-submit-button">
         <div className="form-submit-button-back">
-          <SubmitButton
-            text={"Quay lại"}
-            isLoading={isLoading}
-            type={2}
-            onClick={handleCancel}
-          />
+          <SubmitButton text={"Quay lại"} isLoading={isLoading} type={2} onClick={handleCancel} />
         </div>
         <div className="form-submit-button-continue">
-          <SubmitButton
-            text={"Tiếp tục"}
-            isLoading={isLoading}
-            type={3}
-            onClick={handleContinue}
-          />
+          <SubmitButton text={"Tiếp tục"} isLoading={isLoading} type={3} onClick={handleContinue} />
         </div>
         {contextHolder}
       </div>

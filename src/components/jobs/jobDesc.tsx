@@ -27,8 +27,8 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import { majorList } from "@public/static/list";
-
+import { majorList, processedMajorList } from "@public/static/list";
+import { workTypes, levels, value_to_label } from "@public/static/dict";
 interface JobDescriptionProps {
   onClick: () => void;
   onBack: () => void;
@@ -47,14 +47,6 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   const { school } = router.query;
   const f = (arr: any) => arr.map((v: any) => ({ value: v, label: v }));
   const state = useSelector((state: RootState) => state.jobs);
-  const processedMajorList: any[] = majorList.map((major) => ({
-    value: major.id,
-    label: major.label,
-  }));
-  Object.keys(majorList).map((key) => ({
-    value: key,
-    label: majorList[parseInt(key)].label,
-  }));
   // console.log(state.major)
   const accountState = useSelector((state: RootState) => state.account);
   const [schoolIds, setSchoolIds] = useState<any>(state.schoolIds);
@@ -90,15 +82,8 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
   );
   //
   const locations = f(["Hà nội", "TP.HCM", "Đà Nẵng"]);
-  const types = f(["fulltime", "parttime", "Hợp đồng", "Tình nguyện"]);
-  const levels = f(["Thực tập", "Nhân viên chính thức", "Đã có kinh nghiệm"]);
   const companyList = ["Meta", "Tesla", "Amazon", "VinaCapital"];
-  const companies = [
-    { value: 1, label: "Meta" },
-    { value: 2, label: "Tesla" },
-    { value: 3, label: "Amazon" },
-    { value: 4, label: "VinaCapital" },
-  ];
+  const types = workTypes;
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (
@@ -241,6 +226,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setDeadline(value.toDate());
                   }
                 }}
+                value={moment(deadline)}
               />
             </div>
           ) : (
@@ -264,6 +250,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setSalary(value[0]);
                     setUpperSalary(value[1]);
                   }}
+                  value={[salary, upperSalary]}
                 />
               ) : (
                 <p>{`${salary} - ${upperSalary} triệu VNĐ/tháng`}</p>
@@ -280,9 +267,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setLevel(value);
                   }}
                   options={levels}
+                  value={level}
                 />
               ) : (
-                <p>{level.map((level) => level + ", ")}</p>
+                <p>{level.map(lv => value_to_label(lv, levels)).join(", ")}</p>
               )}
             </div>
             <div>
@@ -296,9 +284,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setType(value);
                   }}
                   options={types}
+                  value={type}
                 />
               ) : (
-                <p>{type.map((type) => type + ", ")}</p>
+                <p>{type.map((type) => value_to_label(type, types)).join(", ")}</p>
               )}
             </div>
             <div>
@@ -312,14 +301,15 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setMajors(value);
                     setMajorNames(
                       value.map(
-                        (major: number) => processedMajorList[major - 1]?.label + ", ",
+                        (major: number) => processedMajorList[major - 1]?.label,
                       ),
                     );
                   }}
                   options={processedMajorList}
+                  value={majors}
                 />
               ) : (
-                <p>{majorNames}</p>
+                <p>{majorNames.join(", ")}</p>
               )}
             </div>
             <div>
@@ -333,6 +323,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({
                     setLocation(value);
                   }}
                   options={locations}
+                  value={location}
                 />
               ) : (
                 <p>{location}</p>
