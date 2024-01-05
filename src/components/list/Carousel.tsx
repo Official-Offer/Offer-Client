@@ -56,7 +56,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     slideRef.current < (slidesLimit ?? 0),
   );
   const [hasMoreToLoad, setHasMoreToLoad] = useState<boolean>(
-    slideRef.current < (slidesLimit ?? 0) && hasNextSlide,
+    slideRef.current < (slidesLimit ?? 0) && (hasNextSlide ?? false),
   );
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
@@ -150,7 +150,8 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   useEffect(() => {
     setHasMoreToLoad(
-      slideRef.current < (slidesLimit ?? 0) && hasNextSlide
+      slideRef.current < (slidesLimit ?? 0) && (hasNextSlide ?? false),
+
     );
     setLoadingMore(false);
   }, [isFetching]);
