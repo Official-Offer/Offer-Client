@@ -62,12 +62,15 @@
   }
 
   &-list {
-    padding: 0;
     border-right: 1px solid lightgrey;
     height: calc(100dvh - 128px);
     overflow-y: auto;
-    margin: 0;
-    list-style: none;
+    
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
     &-loading {
       padding: 32px 24px;
@@ -159,6 +162,18 @@
           }
         }
       }
+    }
+  }
+
+  &-infinite-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    // background-color: $grey-light;
+
+    .anticon {
+      font-size: 32px;
     }
   }
 
