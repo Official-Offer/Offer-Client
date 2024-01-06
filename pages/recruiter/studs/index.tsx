@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Select } from "antd";
-
+import {processedSchoolList} from "@public/static/list"
 //create a next page for the student home page, code below
 const Students: NextPage = () => {
   const [jobList, setJobList] = useState([]);
@@ -47,12 +47,11 @@ const Students: NextPage = () => {
           onSelect={(value) => {
             //convert value to number
             setSchool(Number(value));
+            // console.log(value)
             // setSchool(value);
           }}
+          options={processedSchoolList}
         >
-          <Select.Option value="1">Harvard</Select.Option>
-          <Select.Option value="2">Harvard</Select.Option>
-          <Select.Option value="3">UMass Amherst</Select.Option>
         </Select>
       </div>
       <br />
