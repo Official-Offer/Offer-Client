@@ -1,6 +1,6 @@
 module.exports = {
   URL_API_ADMIN:
-    process.env.API_URL || "http://127.0.0.1:8080/api",
+    process.env.API_URL || "https://offer-v2-f60717006b8c.herokuapp.com/api",
   //  "http://official-offer.herokuapp.com/api",
   TOKEN_BEARER: "",
   NEXT_PUBLIC_GOOGLE_CLIENT_ID:

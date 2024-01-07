@@ -20,7 +20,7 @@ import {
 
 type CarouselProps = {
   slides: any[];
-  slideSize?: "quarter" | "full";
+  slideSize?: "quarter" | "half" | "full";
   showDots?: boolean;
   slidesLimit?: number;
   slidesToScroll?: number;

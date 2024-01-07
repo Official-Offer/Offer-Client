@@ -41,14 +41,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({
         hoverable
         loading={loading}
         onClick={() => !loading && setOpenModal(true)}
-        // cover={
-        //   // Temporary solution for disabling clicking during loading
-        //   loading ? (
-        //     <img src="https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc" />
-        //   ) : (
-        //     <img src="https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc" />
-        //   )
-        // }
         children={
           info && (
             <div>
@@ -58,11 +50,6 @@ export const InfoCard: React.FC<InfoCardProps> = ({
                 // title={info.title || ""}
                 description={
                   <>
-                    {/* <div className="date-posted">
-                      {info.created_at === null
-                        ? "Ngày không xác định"
-                        : `Đăng ${dateDist(info.created_at)}`}
-                    </div> */}
                     <div>
                       {isNew(info.created_at) ? (
                         <div className="new-tag">Mới đăng</div>
