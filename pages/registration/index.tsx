@@ -206,8 +206,9 @@ const Registration: NextPage = () => {
                     required
                     className="form-item"
                     onChange={(event) => {
-                      const fname = event.target.value.split(" ")[0];
-                      const lname = event.target.value.split(" ")[1];
+                      const name = event.target.value.split(" ")
+                      const lname = name.pop() || " "
+                      const fname = name.join(" ") || " "
                       setFirstName(fname);
                       setLastName(lname);
                     }}
