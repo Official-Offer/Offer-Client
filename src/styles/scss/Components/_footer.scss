@@ -6,6 +6,8 @@ $gradient-img: url('../../../../public/images/gradient.jpg');
   padding: 64px;
   gap: 160px;
   background-image: $gradient-img;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
   color: white;
 

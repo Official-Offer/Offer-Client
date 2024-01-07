@@ -371,7 +371,7 @@ const Home: NextPage = () => {
                 <Button type="primary" htmlType="submit" icon={<SendOutlined />} />
               </form>
             </div>
-            <img src="/images/contact.png" alt="" className="profile-contact-image" />
+            <img src="/images/contact.svg" alt="" className="profile-contact-image" />
           </div>
         </section>
       </div>
