@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div>
-        <OfferLogo className="footer-logo" />
+        <OfferLogo className="footer-logo" width={80} height={80}/>
         <h2>Offer</h2>
         <p>Công cụ hỗ trợ hướng nghiệp cho học sinh</p>
         <div className="footer-social">

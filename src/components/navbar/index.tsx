@@ -163,7 +163,6 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               className="m-0"
               title={(<span>Công việc</span>)}
               popupClassName="link-dropdown"
-              placement="bottom"
             >
               <Menu.Item key={"/student/jobs/"} className="m-0">
                 <Link href={"/student/jobs"}>
@@ -221,7 +220,6 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             className="m-0"
             title={(<span>Chia sẻ</span>)}
             popupClassName="link-dropdown"
-            placement="bottom"
           >
             <Menu.Item key={"/student/scholarship"} className="m-0">
               <Link href={"/student/scholarship"}>
@@ -252,7 +250,6 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             className="m-0"
             title={(<span>Hướng nghiệp</span>)}
             popupClassName="link-dropdown"
-            placement="bottom"
           >
             <Menu.Item key={"/student/advising/create-cv"} className="m-0">
               <Link href={"/student/advising/create-cv"}>
