@@ -134,3 +134,13 @@ export type Job = {
   disciplines: number[];
   request_approval_from: number[];
 };
+
+export type NewsEvent = {
+  id: number;
+  title: string;
+  description: string;
+  content: string;
+  image: string;
+  date: string;
+  location?: string;
+};

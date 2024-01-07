@@ -5,22 +5,10 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import {
-  Button,
-  Card as AntdCard,
-  Input,
-  Popover,
-  Radio,
-  Select,
-  Slider,
-  Space,
-} from "antd";
+import { Button, Card as AntdCard, Input, Popover, Radio, Select, Slider, Space } from "antd";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd/lib/radio";
-import {
-  BuildingOfficeIcon,
-  BuildingOffice2Icon,
-} from "@heroicons/react/24/solid";
+import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
 
 import { EventCard, InfoCard } from "@components/card";
 import { Carousel } from "@components/list";
@@ -59,8 +47,7 @@ const clubList = [
     attribute: "Full-Time/Part-Time/Remote",
     commonSchool: [],
     date: new Date("2023-2-27"),
-    cover:
-      "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
 ];
 
@@ -72,8 +59,7 @@ const scholarshipList = [
     attribute: "$16,000",
     commonSchool: [],
     date: new Date("2023-2-27"),
-    cover:
-      "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
+    cover: "https://p1-tt.byteimg.com/origin/pgc-image/ab3ad6504eab497aaef03096a3863991?from=pc",
   },
 ];
 
@@ -120,10 +106,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (jobInfiniteQuery.data) {
       setJobs(
-        jobInfiniteQuery.data.pages.reduce(
-          (acc, page) => [...acc, ...page.results],
-          [] as Job[],
-        ),
+        jobInfiniteQuery.data.pages.reduce((acc, page) => [...acc, ...page.results], [] as Job[])
       );
       setSort("date-posted");
     }
@@ -132,8 +115,7 @@ const Home: NextPage = () => {
   const companyQuery = useQuery({
     queryKey: ["companies list"],
     queryFn: getCompanyList,
-    onSuccess: (companyData: Record<string, any>) =>
-      setCompanies(companyData.results),
+    onSuccess: (companyData: Record<string, any>) => setCompanies(companyData.results),
     onError: (error) => console.log(`Error: ${error}`),
     refetchOnWindowFocus: false,
   });
@@ -152,9 +134,7 @@ const Home: NextPage = () => {
       if (filterType === 1) filterDict = filters.workTypes;
       if (filterType === 2) filterDict = filters.locations;
 
-      Object.keys(filterDict).forEach(
-        (key) => (filterDict[key] = filterArr.includes(key)),
-      );
+      Object.keys(filterDict).forEach((key) => (filterDict[key] = filterArr.includes(key)));
       return { ...filters };
     });
   };
@@ -168,9 +148,7 @@ const Home: NextPage = () => {
     });
   };
 
-  const handleSort = (
-    event: React.ChangeEvent<HTMLInputElement> | RadioChangeEvent,
-  ) => {
+  const handleSort = (event: React.ChangeEvent<HTMLInputElement> | RadioChangeEvent) => {
     setSort(event.target.value);
   };
 
@@ -203,9 +181,7 @@ const Home: NextPage = () => {
                       <BuildingOffice2Icon />
                     )}
                   </div>
-                  <h2 className="uni-title">
-                    {schoolName ?? "Trường không xác định"}
-                  </h2>
+                  <h2 className="uni-title">{schoolName ?? "Trường không xác định"}</h2>
                 </div>
               ) : (
                 <div>
@@ -228,23 +204,15 @@ const Home: NextPage = () => {
                 isAsync
                 slidesLimit={3}
                 isFetching={jobInfiniteQuery.isFetchingNextPage}
-                loadNextFunc={
-                  jobInfiniteQuery.fetchNextPage
-                }
+                loadNextFunc={jobInfiniteQuery.fetchNextPage}
                 hasNextSlide={jobInfiniteQuery.hasNextPage}
                 viewMoreUrl={"/student/jobs"}
                 slides={
                   jobInfiniteQuery.isLoading
-                    ? [
-                        <div className="layout-grid">
-                          {new Array(4).fill(<InfoCard loading />)}
-                        </div>,
-                      ]
+                    ? [<div className="layout-grid">{new Array(4).fill(<InfoCard loading />)}</div>]
                     : displayedJobs.map((slide) => (
                         <div className="layout-grid">
-                          {slide?.map((job: Job) => (
-                            <InfoCard key={job.pk} info={job} />
-                          ))}
+                          {slide?.map((job: Job) => <InfoCard key={job.pk} info={job} />)}
                         </div>
                       ))
                 }
@@ -254,6 +222,50 @@ const Home: NextPage = () => {
             )}
           </AntdCard>
         </section>
+
+        <section>
+          <AntdCard className="section-card">
+            <h3 className="header">Sự kiện dành riêng cho bạn</h3>
+            <Carousel
+              slideSize="half"
+              slidesToScroll={2}
+              showDots
+              slides={
+                companyQuery.isLoading
+                  ? new Array(2).fill(<AntdCard loading />)
+                  : [
+                      <EventCard info={eventList[0]} />,
+                      <EventCard info={eventList[0]} />,
+                      <EventCard info={eventList[0]} />,
+                      <EventCard info={eventList[0]} />,
+                    ]
+              }
+            />
+          </AntdCard>
+        </section>
+
+        <section>
+          <AntdCard className="section-card">
+            <h3 className="header">Tin tức nổi bật</h3>
+            <Carousel
+              slideSize="quarter"
+              slidesToScroll={2}
+              showDots
+              slides={
+                companyQuery.isLoading
+                  ? new Array(2).fill(<AntdCard loading />)
+                  : [
+                      <div>Tin tức</div>,
+                      <div>Tin tức</div>,
+                      <div>Tin tức</div>,
+                      <div>Tin tức</div>,
+                      <div>Tin tức</div>,
+                    ]
+              }
+            />
+          </AntdCard>
+        </section>
+
         <section>
           <AntdCard className="section-card">
             <h3 className="header">Các công ty hàng đầu</h3>
@@ -268,10 +280,7 @@ const Home: NextPage = () => {
                       <AntdCard className="company-card" hoverable>
                         <div className="company-logo">
                           {companyData.logo ? (
-                            <img
-                              src={companyData.logo}
-                              alt={companyData.name}
-                            ></img>
+                            <img src={companyData.logo} alt={companyData.name}></img>
                           ) : (
                             <BuildingOfficeIcon />
                           )}
