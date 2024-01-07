@@ -5,7 +5,18 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { Button, Card as AntdCard, Input, Popover, Radio, Select, Slider, Space, Form } from "antd";
+import {
+  Button,
+  Card as AntdCard,
+  Input,
+  Popover,
+  Radio,
+  Select,
+  Slider,
+  Space,
+  Form,
+  notification,
+} from "antd";
 import { DownOutlined, LoadingOutlined, SendOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd/lib/radio";
 import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
@@ -14,7 +25,7 @@ import { EventCard, InfoCard, NewsEventCard } from "@components/card";
 import { Carousel } from "@components/list";
 import { OfferLogo } from "@components/icons";
 
-import { getStudentDetails } from "@services/apiStudent";
+import { getStudentDetails, postContactEmail } from "@services/apiStudent";
 import { getUserDetails } from "@services/apiUser";
 import { getJobsPerPage } from "@services/apiJob";
 import { getCompanyList } from "@services/apiCompany";
@@ -117,7 +128,7 @@ const Home: NextPage = () => {
     setFilters,
     setSort,
   } = useDisplayJobs();
-
+  const [contactEmail, setContactEmail] = useState<string>("");
   const { companies, setCompanies } = useDisplayCompanies();
 
   const id = getCookie("id");
@@ -328,10 +339,37 @@ const Home: NextPage = () => {
           <div className="profile-contact">
             <div className="profile-contact-info">
               <h2>Bạn muốn hỗ trợ đăng tuyển? Liên hệ với chúng tôi tại đây</h2>
-              <div className="profile-contact-form">
-                <Input placeholder="example@gmail.com" />
+              <form
+                className="profile-contact-form"
+                onSubmit={(event) => {
+                  event.preventDefault(); // Prevents the default form submission behavior
+                  console.log(contactEmail); // You can perform other actions here
+                  postContactEmail(contactEmail).then((res) => {
+                    console.log(res);
+                    // noti
+                    notification.success({
+                      message: "Gửi email thành công",
+                      description: "Chúng tôi sẽ liên hệ với bạn sớm nhất có thể",
+                    });
+                  }).catch((err) => {
+                    console.log(err);
+                    notification.error({
+                      message: "Có lỗi xảy ra",
+                      description: "Vui lòng thử lại sau",
+                    });
+                  })
+                }}
+              >
+                <Input
+                  placeholder="example@gmail.com"
+                  value={contactEmail}
+                  onChange={(event) => {
+                    event.preventDefault();
+                    setContactEmail(event.target.value);
+                  }}
+                />
                 <Button type="primary" htmlType="submit" icon={<SendOutlined />} />
-              </div>
+              </form>
             </div>
             <img src="/images/contact.png" alt="" className="profile-contact-image" />
           </div>
