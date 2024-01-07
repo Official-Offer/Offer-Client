@@ -29,12 +29,12 @@ export const EventCard: React.FC<EventCardProps> = ({ info, ...rest }) => {
       children={
         <div>
           <div className="event-date">
-            <h2>{info.date.getDate()}</h2>
-            <h3>tháng</h3>
+            <h3>{info.date.getDate()}</h3>
+            <h4>tháng</h4>
             <h3>{info.date.getMonth()}</h3>
           </div>
           <div className="event-info">
-            <h2>{info.name}</h2>
+            <h3>{info.name}</h3>
             <h4>{info.institution}</h4>
             <span>{info.location}</span>
             <p>{info.attribute}</p>
