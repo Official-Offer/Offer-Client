@@ -392,13 +392,15 @@ export const ProfileCardForm: React.FC<ProfileCardFormProps> = (props) => {
           name="start_date"
           label={getLabel("start_date", false)}
           validateStatus={!areValidDates ? "error" : ""}
+          valuePropName={'date'}
         >
-          <DatePicker format="D/M/YYYY" onChange={validateDates} />
+          <DatePicker format="D/M/YYYY" onChange={validateDates}/>
         </Form.Item>
         <Form.Item
           name={"end_date"}
           label={getLabel("end_date", false) + (isCurrent ? " (dự định)" : "")}
           validateStatus={!areValidDates ? "error" : ""}
+          valuePropName={'date'}
           help={
             !areValidDates &&
             `Xin hãy nhập đúng hai ngày (${getLabel(
