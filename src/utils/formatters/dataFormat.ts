@@ -14,3 +14,17 @@ export const formatProfileData = (data: any): string => {
   }
   return data;
 };
+
+type Option = {
+  value: string;
+  label: string;
+}
+
+export const formatAPIData = (list: any[]): Option[] => {
+  return list.map(item => {
+      return {
+          value: item.value || item.pk || item.id,
+          label: item.label || item.name
+      }
+  })
+}

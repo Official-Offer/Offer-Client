@@ -56,7 +56,7 @@
   &.left-menu {
     display: flex;
     justify-content: stretch;
-    width: 40%;
+    width: 25%;
 
     & > div {
       width: 100%;
@@ -65,12 +65,14 @@
 
   &.center-menu {
     justify-content: center;
-    width: 40%;
+    width: 50%;
+
+
   }
 
   &.right-menu {
     justify-content: flex-end;
-    width: 40%;
+    width: 25%;
 
     .ant-menu-item {
       &::after {
@@ -79,28 +81,38 @@
     }
   }
 
-  .ant-menu-item {
-    padding: 10px 20px !important;
+  .ant-menu {
+    &-submenu {
+      padding: 10px 20px !important;
 
-    // Highlight when dropdown is open
-    &.ant-dropdown-open {
-      .icon-btn {
-        .anticon {
-          background-color: $grey-light;
-        }
+      &-popup {
+        border-radius: 8px;
       }
     }
 
-    .ant-btn {
-      border-radius: 50%;
-      object-fit: cover;
+    &-item {
+      padding: 10px 20px !important;
+
+      // Highlight when dropdown is open
+      &.ant-dropdown-open {
+        .icon-btn {
+          .anticon {
+            background-color: $grey-light;
+          }
+        }
+      }
+
+      .ant-btn {
+        border-radius: 50%;
+        object-fit: cover;
+      }
     }
   }
 }
 
 .search-bar {
   border-radius: 40px;
-  min-width: 200px;
+  width: 90%;
   max-width: 300px;
   background-color: $grey-light;
 
@@ -146,6 +158,49 @@
     &-item-divider {
       background-color: $grey-dark;
     }
+  }
+}
+
+.link-dropdown {
+  a {
+    font-weight: $fw-bold-1;
+  }
+
+  .ant-menu {
+    width: calc(100% + 48px);
+    border-radius: 4px;
+
+    &-item {
+      width: 100%;
+
+      a > span {
+        position: absolute;
+        left: 16px;
+        transition: 0.2s ease-out;
+      }
+
+      &:hover {
+        a { 
+          color: #1890ff;
+          span {
+            left: 24px;
+          }
+        }
+      }
+
+      &:active {
+        background: none;
+      }
+
+      &-selected {
+        a { color: rgba(0, 0, 0, 0.85); }
+        background: none !important;
+      }
+    }
+  }
+
+  .ant-menu-item-divider  {
+    margin: 0;
   }
 }
 

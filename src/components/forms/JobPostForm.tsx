@@ -23,7 +23,8 @@ import { RootState } from "@redux/reducers";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { majorList, processedMajorList, value_to_label } from "@public/static/list";
+import { extractLabelFromValue } from "@utils/extractors";
+import { majorList, processedMajorList } from "@public/static/list";
 import { workTypes, levels } from "@public/static/dict";
 import { set } from "lodash";
 // import ReactQuill from 'react-quill';
@@ -194,7 +195,7 @@ export const JobPostForm: React.FC<IForm> = ({ onSubmit, onCancel, isLoading }) 
             placeholder="Công nghệ thông tin"
             onChange={handleMajorChange}
             options={processedMajorList}
-            value={major.map((v: any) => ({ value: v, label: value_to_label(v, processedMajorList) }))}
+            value={major.map((v: any) => ({ value: v, label: extractLabelFromValue(v, processedMajorList) }))}
           />
         </Form.Item>
         <Form.Item label="Hạn chót">

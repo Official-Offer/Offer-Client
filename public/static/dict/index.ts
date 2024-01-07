@@ -15,8 +15,3 @@ export const jobTypes = [
     {value: "onsite", label: "Onsite"},
     {value: "hybrid", label: "Hybrid"}
 ]
-
-export const value_to_label = (value: string, dict: Record<string, string>[]) => {
-    const item = dict.find(item => item.value === value);
-    return item ? item.label : "";
-}

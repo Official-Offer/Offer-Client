@@ -21,3 +21,8 @@ export const extractKeyByValue = (
   }
   return key;
 };
+
+export const extractLabelFromValue = (value: string, dict: Record<string, string>[]): string => {
+  const item = dict.find(item => item.value === value);
+  return item ? item.label : "";
+}

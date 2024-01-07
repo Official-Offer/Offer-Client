@@ -1,0 +1,64 @@
+$gradient-img: url('../../../../public/images/gradient.jpg');
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 64px;
+  gap: 160px;
+  background-image: $gradient-img;
+  background-position: center;
+  color: white;
+
+  h2, h4 { 
+    color: white; 
+  }
+
+  &-logo {
+    height: 80px;
+    filter: brightness(0) invert(1);
+    margin-bottom: 12px;
+  }
+
+  &-social {
+    display: flex;
+    gap: 12px;
+    svg {
+      font-size: 24px;
+      color: white;
+      transition: 0.2s ease-out;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
+  &-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+  }
+
+  &-link {
+    ul {
+      padding-left: 0;
+      list-style: none;
+
+      a { 
+        color: white;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      li {
+        margin-top: 8px;
+      }
+    }
+
+    hr { 
+      border: 1.5px solid white;
+      margin-bottom: 20px;
+    }
+  }
+}

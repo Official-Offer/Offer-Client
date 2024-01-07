@@ -22,8 +22,9 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
+import { extractLabelFromValue } from "@utils/extractors";
 import { majorList, processedMajorList } from "@public/static/list";
-import { workTypes, levels, value_to_label } from "@public/static/dict";
+import { workTypes, levels } from "@public/static/dict";
 interface JobDescriptionProps {
   onClick: () => void;
   onBack: () => void;
@@ -237,7 +238,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack,
                   value={level}
                 />
               ) : (
-                <p>{level.map((lv) => value_to_label(lv, levels)).join(", ")}</p>
+                <p>{level.map((lv) => extractLabelFromValue(lv, levels)).join(", ")}</p>
               )}
             </div>
             <div>
@@ -254,7 +255,7 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack,
                   value={type}
                 />
               ) : (
-                <p>{type.map((type) => value_to_label(type, types)).join(", ")}</p>
+                <p>{type.map((type) => extractLabelFromValue(type, types)).join(", ")}</p>
               )}
             </div>
             <div>
@@ -269,10 +270,10 @@ export const JobDescription: React.FC<JobDescriptionProps> = ({ onClick, onBack,
                     setMajors(value.map((v:any) => v?.value));
                   }}
                   options={processedMajorList}
-                  value={majors.map((v: any) => ({ value: v, label: value_to_label(v, processedMajorList) }))}
+                  value={majors.map((v: any) => ({ value: v, label: extractLabelFromValue(v, processedMajorList) }))}
                 />
               ) : (
-                <p>{majors.map((v: any) => (value_to_label(v, processedMajorList))).join(", ")}</p>
+                <p>{majors.map((v: any) => (extractLabelFromValue(v, processedMajorList))).join(", ")}</p>
               )}
             </div>
             <div>
