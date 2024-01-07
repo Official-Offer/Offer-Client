@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { Button, Card as AntdCard, Input, Popover, Radio, Select, Slider, Space } from "antd";
-import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Button, Card as AntdCard, Input, Popover, Radio, Select, Slider, Space, Form } from "antd";
+import { DownOutlined, LoadingOutlined, SendOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd/lib/radio";
 import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
 
@@ -323,6 +323,18 @@ const Home: NextPage = () => {
               }
             />
           </AntdCard>
+        </section>
+        <section>
+          <div className="profile-contact">
+            <div className="profile-contact-info">
+              <h2>Bạn muốn hỗ trợ đăng tuyển? Liên hệ với chúng tôi tại đây</h2>
+              <div className="profile-contact-form">
+                <Input placeholder="example@gmail.com" />
+                <Button type="primary" htmlType="submit" icon={<SendOutlined />} />
+              </div>
+            </div>
+            <img src="/images/contact.png" alt="" className="profile-contact-image" />
+          </div>
         </section>
       </div>
     </main>
