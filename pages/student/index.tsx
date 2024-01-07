@@ -39,13 +39,6 @@ import { translateJobType } from "@utils/formatters/translateFormat";
 import type { Job } from "src/types/dataTypes";
 import type { JobFilters } from "src/types/filterTypes";
 
-const DHBK = {
-  name: "Đại Học Bách Khoa Hà Nội",
-  cover:
-    "https://cafefcdn.com/203337114487263232/2022/9/9/photo-1-1662692607178636727514.jpg",
-  logo: "https://upload.wikimedia.org/wikipedia/vi/thumb/e/ef/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg/1200px-Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_B%C3%A1ch_Khoa_H%C3%A0_N%E1%BB%99i.svg.png",
-};
-
 const eventList = [
   {
     name: "HackHer",
@@ -197,7 +190,7 @@ const Home: NextPage = () => {
         <section>
           <AntdCard
             className={id ? "uni-cover" : "public-hero"}
-            cover={id && <img src={school?.background_image || DHBK.cover} alt={school?.name ?? ""} />}
+            cover={id && <img src={school?.background_image} alt={school?.name ?? ""} />}
             children={
               id ? (
                 <div className="uni-wrapper">
