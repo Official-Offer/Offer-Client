@@ -10,7 +10,7 @@ import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd/lib/radio";
 import { BuildingOfficeIcon, BuildingOffice2Icon } from "@heroicons/react/24/solid";
 
-import { EventCard, InfoCard } from "@components/card";
+import { EventCard, InfoCard, NewsEventCard } from "@components/card";
 import { Carousel } from "@components/list";
 import { OfferLogo } from "@components/icons";
 
@@ -63,6 +63,44 @@ const scholarshipList = [
   },
 ];
 
+const newsEventList = [
+  {
+    id: 1,
+    title: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    description: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    content: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    image: "https://newtecons.vn/wp-content/uploads/2021/08/fulbright.jpg",
+    date: new Date("2023-2-27"),
+    location: "TP. Hồ Chí Minh",
+  },
+  {
+    id: 2,
+    title: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    description: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    content: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    image: "https://newtecons.vn/wp-content/uploads/2021/08/fulbright.jpg",
+    date: new Date("2023-2-27"),
+    location: "TP. Hồ Chí Minh",
+  },
+  {
+    id: 3,
+    title: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    description: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    content: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    image: "https://newtecons.vn/wp-content/uploads/2021/08/fulbright.jpg",
+    date: new Date("2023-2-27"),
+    location: "TP. Hồ Chí Minh",
+  },
+  {
+    id: 4,
+    title: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    description: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    content: "Học bổng Fulbright 2022: Cơ hội du học Mỹ cho sinh viên Việt Nam",
+    image: "https://newtecons.vn/wp-content/uploads/2021/08/fulbright.jpg",
+    date: new Date("2023-2-27"),
+    location: "TP. Hồ Chí Minh",
+  },
+];
 //create a next page for the student home page, code below
 const Home: NextPage = () => {
   // States
@@ -248,19 +286,13 @@ const Home: NextPage = () => {
           <AntdCard className="section-card">
             <h3 className="header">Tin tức nổi bật</h3>
             <Carousel
-              slideSize="quarter"
+              slideSize="half"
               slidesToScroll={2}
               showDots
               slides={
                 companyQuery.isLoading
                   ? new Array(2).fill(<AntdCard loading />)
-                  : [
-                      <div>Tin tức</div>,
-                      <div>Tin tức</div>,
-                      <div>Tin tức</div>,
-                      <div>Tin tức</div>,
-                      <div>Tin tức</div>,
-                    ]
+                  : newsEventList.map((newsEvent) => <NewsEventCard newsEvent={newsEvent} />)
               }
             />
           </AntdCard>

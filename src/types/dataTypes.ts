@@ -59,13 +59,13 @@ export type Student = {
   pk: number; // Title suggests this might represent the "Account" field, you may want to ensure this.
   expected_graduation_date?: string | null; // x-nullable
   school_year?:
-    | "freshman"
-    | "sophomore"
-    | "junior"
-    | "senior"
-    | "master"
-    | "phd"
-    | null; // Assuming an enum of 6 possible values
+  | "freshman"
+  | "sophomore"
+  | "junior"
+  | "senior"
+  | "master"
+  | "phd"
+  | null; // Assuming an enum of 6 possible values
   school: School;
   gpa: string; // readOnly
   educations: any[]; // Need the actual structure of this array
@@ -112,12 +112,12 @@ export type Job = {
   description?: string; // Optional
   requirement?: string; // Optional
   required_school_year:
-    | "freshman"
-    | "sophomore"
-    | "junior"
-    | "senior"
-    | "master"
-    | "phd";
+  | "freshman"
+  | "sophomore"
+  | "junior"
+  | "senior"
+  | "master"
+  | "phd";
   travel_requirement: boolean;
   travel_support?: boolean; // Optional
   benefits?: string; // Optional
@@ -135,12 +135,3 @@ export type Job = {
   request_approval_from: number[];
 };
 
-export type NewsEvent = {
-  id: number;
-  title: string;
-  description: string;
-  content: string;
-  image: string;
-  date: string;
-  location?: string;
-};

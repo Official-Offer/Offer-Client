@@ -175,6 +175,58 @@
   }
 }
 
+.newsEvent-card {
+  cursor: pointer;
+  .ant-card-meta-description {
+    height: 150px;
+    display: flex;
+    gap: 15px;
+  }
+
+  .newsEvent-image {
+    max-width: 40%;
+    min-height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  .newsEvent-content {
+    h4 {
+      // always show 3 lines
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      // word not to be cut off
+      word-break: break-word;
+      font-size: 17px;
+      height: 80px;
+    }
+    .newsEvent-content-detail {
+      // stick this to bottom
+      margin-top: auto;
+    }
+  }
+  .location-tag,
+  .date-tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .uni-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    left: 20px;
+    bottom: 20px;
+    border: none;
+    padding: 0;
+    height: 17px;
+    width: 17px;
+    background-color: #fff;
+  }
+}
+
 .company-card {
   .company-logo {
     display: flex;
