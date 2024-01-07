@@ -55,3 +55,4 @@ export const NewsEventCard: React.FC<NewsEventCardProps> = ({ newsEvent, loading
     </>
   );
 };
+ 
