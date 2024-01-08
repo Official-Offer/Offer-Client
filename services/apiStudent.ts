@@ -149,4 +149,4 @@ export const deleteStudentExperience = async (id: number) => {
 export const postContactEmail = async(email: string)=>{
   const response = await request.post(`/contacts/email/`, {email});
   return response.data;
-}
+} 
