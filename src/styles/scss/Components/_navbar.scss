@@ -139,6 +139,18 @@
 }
 
 .avatar-dropdown {
+  &-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      filter: brightness(0.75);
+    }
+  }
+
   .ant-dropdown-menu {
     padding: 8px;
     text-align: right;

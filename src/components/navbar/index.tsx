@@ -84,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             routeSelected: "/student/contact",
           },
         ];
-  const avatar = loggedIn ? getCookie("avatar") : null;
+  const avatar = getCookie("avatar") || "";
   // console.log("avatar", avatar);
   return router.pathname.includes("registration") ||
     router.pathname.includes("login") ||
@@ -439,7 +439,13 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               }
             >
               <Menu.Item>
-                <Button type="primary" icon={<SmileFilled />} />
+                {
+                  avatar !== undefined ? (
+                    <img className="avatar-dropdown-img" src={avatar.toString()} />
+                  ) : (
+                    <Button type="primary" icon={<SmileFilled />} />
+                  )
+                }
               </Menu.Item>
             </Dropdown>
           ) : (
