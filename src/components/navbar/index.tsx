@@ -37,8 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
   const role = getCookie("role");
   const conflict = role !== "student";
   // console.log("social login", session);
-  const loggedIn =
-    (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
+  const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
 
   // console.log("loggedIn?");
   // console.log(getCookie("cookieToken"));
@@ -99,16 +98,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           mode="horizontal"
           className="navbar left-menu"
         >
-          {router.pathname.includes("recruiter") ||
-          router.pathname.includes("advisor") ? null : (
+          {router.pathname.includes("recruiter") || router.pathname.includes("advisor") ? null : (
             <Menu.Item key={"/student/"} className="m-0">
               {false ? (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="m-0"
-                  href={"/student/"}
-                >
+                <a target="_blank" rel="noopener noreferrer" className="m-0" href={"/student/"}>
                   {"Home"}
                 </a>
               ) : (
@@ -128,9 +121,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           mode="horizontal"
           className="navbar center-menu"
         >
-            {/* <Menu.Item key={"/student/jobs/"} className="m-0"> */}
+          {/* <Menu.Item key={"/student/jobs/"} className="m-0"> */}
 
-            {/* <Dropdown
+          {/* <Dropdown
               overlayClassName="link-dropdown"
               menu={{
                 items: [
@@ -158,54 +151,49 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               }}
             >
             </Dropdown> */}
-            <Menu.SubMenu 
-              key={"/student/jobs/"} 
-              className="m-0"
-              title={(<span>Công việc</span>)}
-              popupClassName="link-dropdown"
-            >
-              <Menu.Item key={"/student/jobs/"} className="m-0">
-                <Link href={"/student/jobs"}>
-                  <span>Thực tập</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item key={"/student/jobs/"} className="m-0">
-                <Link href={"/student/jobs"}>
-                  <span>Fresher</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item key={"/student/jobs/"} className="m-0">
-                <Link href={"/student/jobs"}>
-                  <span>Part-time</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item key={"/student/jobs/"} className="m-0">
-                <Link href={"/student/jobs"}>
-                  <span>Full-time</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item key={"/student/jobs/"} className="m-0">
-                <Link href={"/student/jobs"}>
-                  <span>Remote</span>
-                </Link>
-              </Menu.Item>
-            </Menu.SubMenu>
-              {/* </Menu.Item> */}
+          <Menu.SubMenu
+            key={"/student/jobs/"}
+            className="m-0"
+            title={<span>Công việc</span>}
+            popupClassName="link-dropdown"
+          >
+            <Menu.Item key={"/student/jobs/"} className="m-0">
+              <Link href={"/student/jobs"}>
+                <span>Thực tập</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key={"/student/jobs/"} className="m-0">
+              <Link href={"/student/jobs"}>
+                <span>Fresher</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key={"/student/jobs/"} className="m-0">
+              <Link href={"/student/jobs"}>
+                <span>Part-time</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key={"/student/jobs/"} className="m-0">
+              <Link href={"/student/jobs"}>
+                <span>Full-time</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item key={"/student/jobs/"} className="m-0">
+              <Link href={"/student/jobs"}>
+                <span>Remote</span>
+              </Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+          {/* </Menu.Item> */}
           {listMenu.map((menu, i) => {
             return (
               menu.name !== "Login" && (
                 <Menu.Item key={menu.routeSelected} className="m-0">
                   {menu.newTab ? (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="m-0"
-                      href={menu.link}
-                    >
+                    <a target="_blank" rel="noopener noreferrer" className="m-0" href={menu.link}>
                       {menu.name}
                     </a>
                   ) : (
@@ -215,10 +203,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               )
             );
           })}
-          <Menu.SubMenu 
-            key={"/student/share"} 
+          <Menu.SubMenu
+            key={"/student/share"}
             className="m-0"
-            title={(<span>Chia sẻ</span>)}
+            title={<span>Chia sẻ</span>}
             popupClassName="link-dropdown"
           >
             <Menu.Item key={"/student/scholarship"} className="m-0">
@@ -245,10 +233,10 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
               </Link>
             </Menu.Item>
           </Menu.SubMenu>
-          <Menu.SubMenu 
-            key={"/student/advising"} 
+          <Menu.SubMenu
+            key={"/student/advising"}
             className="m-0"
-            title={(<span>Hướng nghiệp</span>)}
+            title={<span>Hướng nghiệp</span>}
             popupClassName="link-dropdown"
           >
             <Menu.Item key={"/student/advising/create-cv"} className="m-0">
@@ -400,9 +388,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                   <Link href="/student/jobs/bookmarked">Đã Lưu</Link>
                 </Menu.Item> */}
                   <Menu.Item>
-                    <Link href={`/${path}/jobs/applied`}>
-                      Công Việc Đã Ứng Tuyển
-                    </Link>
+                    <Link href={`/${path}/jobs/applied`}>Công Việc Đã Ứng Tuyển</Link>
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item>
@@ -417,10 +403,21 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                   <Menu.Item>
                     <div
                       onClick={() => {
+                        function clearAllCookies() {
+                          var cookies = document.cookie.split(";");
+
+                          for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i];
+                            var eqPos = cookie.indexOf("=");
+                            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                          }
+                        }
                         if (status == "authenticated") {
                           deleteCookie("cookieToken");
                           deleteCookie("role");
                           deleteCookie("id");
+                          clearAllCookies();
                           router.push("/login").then(() => signOut());
                         } else {
                           //sign out traditional way
@@ -428,6 +425,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
                           deleteCookie("cookieToken");
                           deleteCookie("role");
                           deleteCookie("id");
+                          clearAllCookies();
                           router.push("/login").then(() => {
                             router.reload();
                           });

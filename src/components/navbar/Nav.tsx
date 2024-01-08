@@ -159,25 +159,26 @@ export const Nav: React.FC = (props: any): ReactElement => {
         </Layout>
       </div>
     );
-  } else if (
-    router.pathname !== "/student" &&
-    router.pathname !== "/student/contact" &&
-    !router.pathname.includes("login") &&
-    !router.pathname.includes("registration") &&
-    !loggedIn
-  ) {
-    router.push("/login");
-    <div style={{ margin: "auto", marginTop: "100px" }}>
-      Bạn cần đăng nhập để sử dụng chức năng này{" "}
-      <Button
-        onClick={() => {
-          router.push("/login");
-        }}
-      >
-        Đăng nhập
-      </Button>
-    </div>;
-  }
+  } 
+  // else if (
+  //   router.pathname !== "/student" &&
+  //   router.pathname !== "/student/contact" &&
+  //   !router.pathname.includes("login") &&
+  //   !router.pathname.includes("registration") &&
+  //   !loggedIn
+  // ) {
+  //   router.push("/login");
+  //   <div style={{ margin: "auto", marginTop: "100px" }}>
+  //     Bạn cần đăng nhập để sử dụng chức năng này{" "}
+  //     <Button
+  //       onClick={() => {
+  //         router.push("/login");
+  //       }}
+  //     >
+  //       Đăng nhập
+  //     </Button>
+  //   </div>;
+  // }
   return (
     <>
       <Navbar
