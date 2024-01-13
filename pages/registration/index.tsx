@@ -66,6 +66,8 @@ const Registration: NextPage = () => {
       // console.log(data.access);
       setCookie("id", data.pk ? data.pk : data.id);
       setCookie("role", data.role);
+      setCookie("orgLogo", data.organization?.logo);
+      setCookie("orgName", data.organization?.name);
       dispatch(setLoggedIn(true));
       // openNotification("success", "Đăng nhập thành công", "");
       router
@@ -104,8 +106,10 @@ const Registration: NextPage = () => {
             ? data.message.access
             : data.message.token,
       );
+      alert(data.message)
       setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
+      setCookie("orgLogo", data.message.organization?.logo);
       setCookie("orgId", org.key);
       setCookie("orgName", org.label);
       dispatch(setCompanyId(org.key));

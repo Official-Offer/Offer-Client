@@ -30,11 +30,7 @@ const Login: NextPage = () => {
     isAdvisor: false,
     isRecruiter: false,
   });
-  const openNotification = (
-    type: NotificationType,
-    message: string,
-    description: string,
-  ) => {
+  const openNotification = (type: NotificationType, message: string, description: string) => {
     api[type]({
       message,
       description,
@@ -49,11 +45,7 @@ const Login: NextPage = () => {
       // console.log(data);
       setCookie(
         "cookieToken",
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
+        data.access_token ? data.access_token : data.access ? data.access : data.token
       );
       setCookie("id", data.pk ? data.pk : data.id);
       setCookie("avatar", data.avatar);
@@ -62,19 +54,11 @@ const Login: NextPage = () => {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie(
-          "orgName",
-          data.organization?.name ? data.organization?.name : "Name",
-        );
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(
-          setCompany(
-            data.organization?.name ? data.organization?.name : "Name",
-          ),
-        );
-        dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
-        );
+        setCookie("orgLogo", data.organization?.logo);
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
@@ -104,38 +88,20 @@ const Login: NextPage = () => {
       // Invalidate and refetch
       setCookie(
         "cookieToken",
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
+        data.access_token ? data.access_token : data.access ? data.access : data.token
       );
-      setToken(
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
-      );
+      setToken(data.access_token ? data.access_token : data.access ? data.access : data.token);
       setCookie("id", data.pk ? data.pk : data.id);
       // dispatch(setID( data.pk ? data.pk : data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie(
-          "orgName",
-          data.organization?.name ? data.organization?.name : "Name",
-        );
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(
-          setCompany(
-            data.organization?.name ? data.organization?.name : "Name",
-          ),
-        );
-        dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
-        );
+        setCookie("orgLogo", data.organization?.logo);
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
@@ -166,11 +132,7 @@ const Login: NextPage = () => {
       router
         .push({
           pathname:
-            rol == "student"
-              ? "/student"
-              : rol == "advisor"
-                ? "/advisor/jobs"
-                : "/recruiter/jobs",
+            rol == "student" ? "/student" : rol == "advisor" ? "/advisor/jobs" : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
@@ -197,9 +159,9 @@ const Login: NextPage = () => {
     }
   }, [status]);
 
-  console.log(status, errorMessage, selectRole)
+  console.log(status, errorMessage, selectRole);
   if (status === "loading") return <LoadingPage />;
-  return (status == "authenticated" && !errorMessage && !selectRole ) ? (
+  return status == "authenticated" && !errorMessage && !selectRole ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -239,17 +201,14 @@ const Login: NextPage = () => {
                 onSubmit={(org: any) => {
                   // console.log("org", org);
                   if (!org) {
-                    openNotification(
-                      "error",
-                      "Lỗi chọn tổ chức",
-                      "Vui lòng chọn tổ chức",
-                    );
+                    openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
                     return;
                   }
                   setErrorMessage("");
                   setOrg(org);
                   setCookie("orgName", org.label);
                   setCookie("orgId", org.key);
+
                   dispatch(setCompany(org.label));
                   dispatch(setCompanyId(org.key));
                   setCookie("role", rol);
@@ -287,7 +246,7 @@ const Login: NextPage = () => {
                         ? "student"
                         : value.toString() == "Nhà tuyển dụng"
                           ? "recruiter"
-                          : "advisor",
+                          : "advisor"
                     );
                     const role = {
                       isStudent: value.toString() == "Học sinh",
