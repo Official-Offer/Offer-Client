@@ -38,12 +38,9 @@ export const Nav: React.FC = (props: any): ReactElement => {
     (router.pathname.includes("student") && r == "recruiter") ||
     (router.pathname.includes("student") && r == "advisor");
   const { data: session, status } = useSession();
-  const loggedIn =
-    (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
+  const loggedIn = (!!getCookie("cookieToken") || status == "authenticated") && !conflict;
   const role = isRecruiter ? "recruiter" : "advisor";
-  const Navbar = dynamic(() =>
-    import("@components").then((mod: any) => mod.Navbar),
-  ) as any;
+  const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
     "Công việc",
@@ -101,16 +98,21 @@ export const Nav: React.FC = (props: any): ReactElement => {
 
   // console.log(router.pathname);
 
-  if (
-    router.pathname.includes("recruiter") ||
-    router.pathname.includes("advisor")
-  ) {
+  if (router.pathname.includes("recruiter") || router.pathname.includes("advisor")) {
+    const orgLogo = getCookie("orgLogo")?.toString() || "/images/logo.png";
     return (
       <div>
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
-              <Image src="/images/logo.png" width={40} height={40} alt="logo" />
+              <Image
+                src={orgLogo}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "auto", maxWidth: "100px", maxHeight: "120px" }}
+                alt="logo"
+              />
             </div>
             <IconButton
               round
@@ -156,7 +158,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
         </Layout>
       </div>
     );
-  } 
+  }
   // else if (
   //   router.pathname !== "/student" &&
   //   router.pathname !== "/student/contact" &&

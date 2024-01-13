@@ -31,6 +31,16 @@ module.exports = {
   //     },
   //   ],
   // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'official-offer.s3.amazonaws.com',
+        port: '',
+        pathname: '/**/*',
+      }
+    ]
+  },
   async redirects() {
     return [
       {
