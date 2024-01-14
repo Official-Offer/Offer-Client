@@ -14,7 +14,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { setCompanyId, setLoggedIn } from "@redux/actions";
 import { AuthForm } from "@components/forms/AuthForm";
 import { setCompany, setRole, setSchool } from "@redux/slices/account";
-import { Alert, Button, Form, Input, Segmented, notification } from "antd";
+import { Alert, Button, Form, Input, Segmented, Space, notification } from "antd";
 import { LoadingPage } from "@components/loading/LoadingPage";
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -26,13 +26,13 @@ const Registration: NextPage = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [org, setOrg] = useState<any>();
-  const [r, setR] = useState<any>({
+  const [roleBool, setRoleBool] = useState<any>({
     isStudent: true,
     isAdvisor: false,
     isRecruiter: false,
   });
   const dispatch = useDispatch();
-  const [rol, setRol] = useState<string>("Học sinh");
+  const [roleStr, setRoleStr] = useState<string>("Học sinh");
   const [selectRole, setSelectRole] = useState<boolean>(false);
   // const state = useSelector((state: RootState) => state.account);
   const [api, contextHolder] = notification.useNotification();
@@ -49,6 +49,13 @@ const Registration: NextPage = () => {
       description,
     });
   };
+
+  useEffect(() => {
+    if (errorMessage !== "") {
+      openNotification("error", "Đăng ký thất bại", errorMessage);
+      setErrorMessage("");
+    }
+  }, [errorMessage]);
 
   const socialMutation = useMutation(["socialLogin"], {
     mutationFn: socialAuth,
@@ -128,7 +135,6 @@ const Registration: NextPage = () => {
       }
     },
     onError: (error: any) => {
-      setErrorMessage("Email đã tồn tại hoặc lỗi đăng ký");
       openNotification(
         "error",
         "Đăng ký thất bại",
@@ -183,12 +189,13 @@ const Registration: NextPage = () => {
               </p>
               {/* Add google sign in button below */}
               <Button
+                className="sso-btn"
                 icon={<GoogleOutlined />}
                 onClick={() => {
                   const role =
-                    rol == "Học sinh"
+                    roleStr == "Học sinh"
                       ? "student"
-                      : rol == "Trường"
+                      : roleStr == "Trường"
                         ? "advisor"
                         : "recruiter";
                   setCookie("role", role);
@@ -215,6 +222,7 @@ const Registration: NextPage = () => {
                       setFirstName(fname);
                       setLastName(lname);
                     }}
+                    status={errorMessage === "Vui lòng điền tên đầy đủ" ? "error" : "validating"}
                   />
                 </Form.Item>
               </Form>
@@ -225,7 +233,7 @@ const Registration: NextPage = () => {
                     return;
                   }
                   if (!firstName && !lastName) {
-                    setErrorMessage("Vui lòng điền thông tin cần thiết");
+                    setErrorMessage("Vui lòng điền tên đầy đủ");
                     return;
                   }
                   if (item.error) {
@@ -233,21 +241,21 @@ const Registration: NextPage = () => {
                     return;
                   }
                   const role =
-                    rol == "Học sinh"
+                    roleStr == "Học sinh"
                       ? "student"
-                      : rol == "Trường"
+                      : roleStr == "Trường"
                         ? "advisor"
                         : "recruiter";
-                  // console.log(r);
-                  dispatch(setRole(r));
-                  mutation.mutate({
-                    email: item.email,
-                    password: item.password,
-                    first_name: firstName,
-                    last_name: lastName,
-                    role,
-                    org_id: Number(org.key),
-                  });
+                        // console.log(roleBool);
+                        dispatch(setRole(roleBool));
+                        mutation.mutate({
+                          email: item.email,
+                          password: item.password,
+                          first_name: firstName,
+                          last_name: lastName,
+                          role,
+                          org_id: Number(org.key),
+                        });
                 }}
                 isLoading={mutation.isLoading}
                 embedSignup={true}
@@ -256,6 +264,22 @@ const Registration: NextPage = () => {
           ) : (
             <>
               <h1>Đăng ký</h1>
+              <p>Bạn là</p>
+              <Segmented
+                options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
+                size={"large"}
+                onChange={(value) => {
+                  // console.log("value", value)
+                  setRoleStr(value.toString());
+                  const role = {
+                    isStudent: value.toString() == "Học sinh",
+                    isAdvisor: value.toString() == "Trường",
+                    isRecruiter: value.toString() == "Nhà tuyển dụng",
+                  };
+                  setRoleBool(role);
+                  dispatch(setRole(role));
+                }}
+              />
               <OrgForm
                 onSubmit={(org) => {
                   // console.log("org", org);
@@ -269,7 +293,7 @@ const Registration: NextPage = () => {
                 }}
                 isLoading={mutation.isLoading}
               />
-              <p
+              {/* <p
                 style={{
                   cursor: "pointer",
                   color: "#1890ff",
@@ -282,28 +306,13 @@ const Registration: NextPage = () => {
                 Là nhà tuyển dụng hoặc đại diện trường?
               </p>
               {selectRole && (
-                <Segmented
-                  options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
-                  size={"large"}
-                  onChange={(value) => {
-                    // console.log("value", value)
-                    setRol(value.toString());
-                    const role = {
-                      isStudent: value.toString() == "Học sinh",
-                      isAdvisor: value.toString() == "Trường",
-                      isRecruiter: value.toString() == "Nhà tuyển dụng",
-                    };
-                    setR(role);
-                    dispatch(setRole(role));
-                  }}
-                />
-              )}
+              )} */}
             </>
           )}
-          {errorMessage && status !== "authenticated" && (
+          {/* {errorMessage && status !== "authenticated" && (
             <Alert message={errorMessage} type="error" />
             // <p className="register-content-error">{errorMessage}</p>
-          )}
+          )} */}
           {contextHolder}
           {/* <Button
             onClick={() => {

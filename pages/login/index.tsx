@@ -21,11 +21,11 @@ const Login: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [rol, setRol] = useState<string>("student");
+  const [roleStr, setRoleStr] = useState<string>("student");
   const [selectRole, setSelectRole] = useState<boolean>(false);
   const [org, setOrg] = useState<any>();
   const [tok, setToken] = useState<string>("");
-  const [r, setR] = useState<any>({
+  const [roleBool, setRoleBool] = useState<any>({
     isStudent: true,
     isAdvisor: false,
     isRecruiter: false,
@@ -132,7 +132,7 @@ const Login: NextPage = () => {
       router
         .push({
           pathname:
-            rol == "student" ? "/student" : rol == "advisor" ? "/advisor/jobs" : "/recruiter/jobs",
+            roleStr == "student" ? "/student" : roleStr == "advisor" ? "/advisor/jobs" : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
@@ -211,12 +211,12 @@ const Login: NextPage = () => {
 
                   dispatch(setCompany(org.label));
                   dispatch(setCompanyId(org.key));
-                  setCookie("role", rol);
-                  // dispatch(setRole(r));
+                  setCookie("role", roleStr);
+                  // dispatch(setRole(roleBool));
                   orgMutation.mutate({
                     token: tok,
                     content: {
-                      role: rol,
+                      role: roleStr,
                       org_id: Number(org.key),
                     },
                   });
@@ -241,7 +241,7 @@ const Login: NextPage = () => {
                   options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
                   size={"large"}
                   onChange={(value) => {
-                    setRol(
+                    setRoleStr(
                       value.toString() == "Học sinh"
                         ? "student"
                         : value.toString() == "Nhà tuyển dụng"
@@ -253,7 +253,7 @@ const Login: NextPage = () => {
                       isAdvisor: value.toString() == "Trường",
                       isRecruiter: value.toString() == "Nhà tuyển dụng",
                     };
-                    setR(role);
+                    setRoleBool(role);
                     dispatch(setRole(role));
                   }}
                 />
@@ -267,10 +267,10 @@ const Login: NextPage = () => {
           >
             Dang Xuat
           </Button> */}
-          {errorMessage && status !== "authenticated" && (
+          {/* {errorMessage && status !== "authenticated" && (
             <Alert message={errorMessage} type="error" />
             // <p className="register-content-error">{errorMessage}</p>
-          )}
+          )} */}
           {contextHolder}
           <FootnoteForm embedLogin={true} type={""} />
         </div>

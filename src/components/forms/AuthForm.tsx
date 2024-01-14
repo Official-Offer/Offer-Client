@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitButton } from "@components/button/SubmitButton";
-import { Form, Input } from "antd";
+import { Form, Input, notification } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 interface ILogInForm {
@@ -21,7 +21,25 @@ export const AuthForm: React.FC<ILogInForm> = ({
   const [password, setPassword] = useState<string>("");
   const [rePassword, setRePassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (
+    type: NotificationType,
+    message: string,
+    description: string,
+  ) => {
+    api[type]({
+      message,
+      description,
+    });
+  };
+
+  // useEffect(() => {
+  //   if (error) {
+  //     openNotification("error", "Đăng ký không thành công", error);
+  //   }
+  // }, [error]);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value ?? "");
@@ -39,30 +57,36 @@ export const AuthForm: React.FC<ILogInForm> = ({
   const handleSubmit = (values: Record<string, any>) => {
     // event.preventDefault();
     //check if all fields are filled
-    if (!email || !password) {
-      setError("Vui lòng điền đầy đủ thông tin");
+    let error = "";
+    if (!email) {
+      error = "Vui lòng nhập email";
+    } else if (!email.includes("@") || !email.includes(".")) {
+      error = "Email không hợp lệ";
+    } else if (!password) {
+      error = "Vui lòng nhập mật khẩu";
     } else if (embedSignup && password !== rePassword) {
-      setError("Mật khẩu không khớp");
-    }
+      error = "Mật khẩu không khớp";
     //check if email has the right format
-    else if (!email.includes("@")) {
-      setError("Email không hợp lệ");
     } else {
-      setError("");
+      error = "";
     }
+    setErrorMessage(error);
     onSubmit({ email, password, error });
   };
 
   return (
-    <Form className="form" layout="vertical">
+    <Form className="form" layout="vertical" noValidate>
       <div className="form-flex">
         <div className="form-input">
           <Form.Item label="Email">
             <Input
               required
+              placeholder="example@gmail.com"
               className="form-item"
-              placeholder={"Email"}
               onChange={handleEmailChange}
+              status={
+                errorMessage.toLowerCase().includes("email") ? "error" : "validating"
+              }
             />
           </Form.Item>
         </div>
@@ -71,11 +95,14 @@ export const AuthForm: React.FC<ILogInForm> = ({
             <Input.Password
               required
               className="form-password"
-              placeholder="Mật khẩu"
+              placeholder="Vui lòng có ít nhất 6 ký tự"
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
               onChange={handlePasswordChange}
+              status={
+                errorMessage.toLowerCase().includes("mật khẩu") ? "error" : "validating"
+              }
             />
           </Form.Item>
         </div>
@@ -85,11 +112,14 @@ export const AuthForm: React.FC<ILogInForm> = ({
               <Input.Password
                 required
                 className="form-password"
-                placeholder="Nhập lại mật khẩu"
+                // placeholder="Nhập lại mật khẩu"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
                 onChange={handleReenterPasswordChange}
+                status={
+                  errorMessage.toLowerCase().includes("mật khẩu") ? "error" : "validating"
+                }
               />
             </Form.Item>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Form, Input, Select, Typography, notification } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
@@ -41,6 +41,12 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [api, contextHolder] = notification.useNotification();
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.resetFields();
+  }, [state.role.isAdvisor, state.role.isStudent, state.role.isRecruiter]);
 
   const contactMutation = useMutation({
     mutationKey: ["contact"],
@@ -89,10 +95,10 @@ export const OrgForm: React.FC<IOrgForm> = ({
   const orgy = isRecruiter ? "Công ty" : "Trường";
   // console.log(schools?.[orgId].name)
   return (
-    <Form className="form" layout="vertical">
+    <Form className="form" layout="vertical" form={form}>
       <div className="form-flex">
         <div className="form-input">
-          <Form.Item label={isStudent || isAdvisor ? `Trường` : `Công ty`}>
+          <Form.Item name="orgName" label={isStudent || isAdvisor ? `Trường` : `Công ty`}>
             <Select
               // defaultValue={orgName}
               labelInValue={true}
@@ -100,6 +106,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
               className="form-select"
               bordered={false}
               onChange={handleOrgChange}
+              value={Org}
               // loading={orgQuery.isLoading}
             >
               {isStudent || isAdvisor
@@ -139,7 +146,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                 <p>Không có trong danh sách? Điền thông tin dưới đây:</p>
                 <div className="form-input">
                   {/* <div className="form-grid"> */}
-                  <Form.Item required label="Email hoặc số điện thoại">
+                  <Form.Item required name="contact" label="Email hoặc số điện thoại">
                     <Input
                       required
                       className="form-item"
@@ -152,10 +159,11 @@ export const OrgForm: React.FC<IOrgForm> = ({
                       }}
                     />
                   </Form.Item>
-                  <Form.Item required label="Họ tên">
+                  <Form.Item required name="name" label="Họ tên">
                     <Input
                       required
                       className="form-item"
+                      placeholder="Vui lòng nhập họ tên đầy đủ của bạn"
                       onChange={(event) => {
                         setTitle(event.target.value);
                       }}
@@ -163,6 +171,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                   </Form.Item>
 
                   <Form.Item
+                    name="orgName"
                     label={`Tên ${isRecruiter ? "Công ty" : "Trường"}`}
                   >
                     <Input
@@ -172,6 +181,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                       onChange={(event) => {
                         setMessage(event.target.value);
                       }}
+                      status={errorMessage ? "error" : "validating"}
                     />
                   </Form.Item>
                 </div>
