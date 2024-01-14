@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { SubmitButton } from "@components/button/SubmitButton";
 import { Form, Input, notification } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+type NotificationType = "success" | "info" | "warning" | "error";
 
 interface ILogInForm {
   onSubmit: (emailAndPassword: {
@@ -85,7 +86,7 @@ export const AuthForm: React.FC<ILogInForm> = ({
               className="form-item"
               onChange={handleEmailChange}
               status={
-                errorMessage.toLowerCase().includes("email") ? "error" : "validating"
+                errorMessage.toLowerCase().includes("email") ? "error" : ""
               }
             />
           </Form.Item>
@@ -101,7 +102,7 @@ export const AuthForm: React.FC<ILogInForm> = ({
               }
               onChange={handlePasswordChange}
               status={
-                errorMessage.toLowerCase().includes("mật khẩu") ? "error" : "validating"
+                errorMessage.toLowerCase().includes("mật khẩu") ? "error" : ""
               }
             />
           </Form.Item>
@@ -118,7 +119,7 @@ export const AuthForm: React.FC<ILogInForm> = ({
                 }
                 onChange={handleReenterPasswordChange}
                 status={
-                  errorMessage.toLowerCase().includes("mật khẩu") ? "error" : "validating"
+                  errorMessage.toLowerCase().includes("mật khẩu") ? "error" : ""
                 }
               />
             </Form.Item>
