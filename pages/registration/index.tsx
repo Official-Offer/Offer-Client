@@ -127,9 +127,9 @@ const Registration: NextPage = () => {
         });
       } else {
         router.push(
-          r.isStudent
+          roleBool.isStudent
             ? "/student"
-            : r.isAdvisor
+            : roleBool.isAdvisor
               ? "/advisor/jobs"
               : "/recruiter/jobs",
         );
@@ -223,7 +223,7 @@ const Registration: NextPage = () => {
                       setFirstName(fname);
                       setLastName(lname);
                     }}
-                    status={errorMessage === "Vui lòng điền tên đầy đủ" ? "error" : "validating"}
+                    status={errorMessage === "Vui lòng điền tên đầy đủ" ? "error" : ""}
                   />
                 </Form.Item>
               </Form>

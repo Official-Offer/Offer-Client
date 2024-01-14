@@ -1,4 +1,4 @@
-function lightenColor(primaryColor: string, percent: number = 20) {
+export function lightenColor(primaryColor: string, percent: number = 20) {
     // Validate input
     if (!primaryColor || !/^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(primaryColor)) {
         console.error("Invalid primary color format");

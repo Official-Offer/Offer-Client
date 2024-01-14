@@ -181,7 +181,7 @@ export const OrgForm: React.FC<IOrgForm> = ({
                       onChange={(event) => {
                         setMessage(event.target.value);
                       }}
-                      status={errorMessage ? "error" : "validating"}
+                      status={errorMessage ? "error" : ""}
                     />
                   </Form.Item>
                 </div>
