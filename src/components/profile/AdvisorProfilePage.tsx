@@ -171,6 +171,7 @@ export const AdvisorProfilePage: React.FC<any> = () => {
           }}
           isLoading={profileMutation.isLoading || profileQuery.isLoading}
           text="Lưu thay đổi"
+          background={getCookie("orgLogoColor")?.toString() || "#EA0A8E"}
         />
         {contextHolder}
       </Form>

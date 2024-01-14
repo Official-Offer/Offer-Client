@@ -9,6 +9,7 @@ type SubmitButtonProps = {
   onClick?: (event: any) => void;
   type?: number;
   disabled?: boolean;
+  background?: string;
 };
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
@@ -16,7 +17,8 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   isLoading,
   onClick,
   type,
-  disabled
+  disabled,
+  background
 }: any) => {
   const styles =
     type == 2
@@ -33,7 +35,9 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
               "var(--theme, linear-gradient(180deg, #EA0A8E 0%, #7289DA 100%));",
             gradient: true,
           }
-        : {};
+        : {
+          background: background,
+        };
   return (
     <StyledSubmitButton
       disabled={disabled || isLoading}

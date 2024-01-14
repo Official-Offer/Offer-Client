@@ -105,6 +105,8 @@ export const Nav: React.FC = (props: any): ReactElement => {
         .getColorAsync(orgLogoRef.current, { algorithm: "dominant" })
         .then((color) => {
           setOrgLogoColor(color.hex);
+          setCookie("orgLogoColor", color.hex);
+          setCookie("orgLogoColorLight", color.hex.replace(")", ", 0.2)").replace("rgb", "rgba"));
         })
         .catch((e) => {
           console.log(e);
