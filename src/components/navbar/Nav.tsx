@@ -15,13 +15,13 @@ import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import { deleteCookie, getCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { signOut, useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { userLogOut } from "@services/apiUser";
 import { IconButton } from "@styles/styled-components/styledButton";
-import { get } from "lodash";
-
+import { get, set } from "lodash";
+import { FastAverageColor } from "fast-average-color";
 const { Sider } = Layout;
 
 export const Nav: React.FC = (props: any): ReactElement => {
@@ -88,48 +88,78 @@ export const Nav: React.FC = (props: any): ReactElement => {
       }
     },
   }));
+  const [orgLogoColor, setOrgLogoColor] = useState("#FFF");
+  const orgLogo = getCookie("orgLogo")?.toString() || "";
 
-  // useEffect to check if the user is logged in, else redirect to login page
-  // useEffect(() => {
-  //   if (status != "authenticated" && !getCookie("cookieToken")) {
-  //     router.push("/login");
-  //   }
-  // }, [getCookie("cookieToken")]);
+  const fac = new FastAverageColor();
+  const orgLogoRef = useRef(null);
+  useEffect(() => {
+    if (orgLogoRef.current) {
+      fac
+        .getColorAsync(orgLogoRef.current, { algorithm: "dominant" })
+        .then((color) => {
+          setOrgLogoColor(color.hex);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [orgLogoRef.current]);
 
-  // console.log(router.pathname);
-
+  
   if (router.pathname.includes("recruiter") || router.pathname.includes("advisor")) {
-    const orgLogo = getCookie("orgLogo")?.toString() || "/images/logo.png";
     return (
       <div>
         <Layout style={{ minHeight: "100vh" }}>
           <Sider className="navbar-sider">
             <div className="navbar-sider-logo">
               <Image
-                src={orgLogo}
+                src={orgLogo || "/images/logo.png"}
                 width={0}
                 height={0}
                 sizes="100vw"
                 style={{ width: "100%", height: "auto", maxWidth: "100px", maxHeight: "120px" }}
                 alt="logo"
+                ref={orgLogoRef}
               />
             </div>
-            <IconButton
-              round
-              className="table-add-btn"
-              backgroundColor={"#D30B81"}
-              style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
-              onClick={() => {
-                router.push(`/${role}/postJobs/orgSelect`);
-              }}
-            >
-              <div className="table-add-btn-body">
-                <span>Tạo công việc</span>
-                <span>
-                  <PlusOutlined />
-                </span>
-              </div>
-            </IconButton>
+            {isRecruiter ? (
+              <IconButton
+                round
+                className="table-add-btn"
+                backgroundColor={"#D30B81"}
+                style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
+                onClick={() => {
+                  router.push(`/${role}/postJobs/orgSelect`);
+                }}
+              >
+                <div className="table-add-btn-body">
+                  <span>Tạo công việc</span>
+                  <span>
+                    <PlusOutlined />
+                  </span>
+                </div>
+              </IconButton>
+            ) : (
+              // Create an instance of FastAverageColor
+
+              // Use the orgLogoColor as the background color
+              <IconButton
+                round
+                className="table-add-btn"
+                backgroundColor={orgLogoColor}
+                style={{
+                  margin: "auto",
+                  width: "fit-content",
+                  marginBottom: "10px",
+                  borderRadius: "10px",
+                }}
+              >
+                <div className="table-add-btn-body">
+                  <span>Profile</span>
+                </div>
+              </IconButton>
+            )}
             <Menu
               defaultSelectedKeys={[`/${role}`]}
               // defaultOpenKeys={[isAdvisor ? `/${role}/jobs` : ``]}

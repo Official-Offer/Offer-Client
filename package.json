@@ -24,6 +24,7 @@
     "embla-carousel": "^8.0.0-rc17",
     "embla-carousel-react": "^8.0.0-rc17",
     "eslint-config-next": "^14.0.0",
+    "fast-average-color": "^9.4.0",
     "html-react-parser": "^4.0.0",
     "i": "^0.3.7",
     "langchain": "^0.0.156",
