@@ -113,7 +113,6 @@ const Registration: NextPage = () => {
             ? data.message.access
             : data.message.token,
       );
-      alert(data.message)
       setCookie("id", data.message.pk ? data.message.pk : data.message.id);
       setCookie("role", data.message.role);
       setCookie("orgLogo", data.message.organization?.logo);

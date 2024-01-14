@@ -27,3 +27,4 @@ export function lightenColor(primaryColor: string, percent: number = 20) {
 
     return secondaryColor;
 }
+export default lightenColor;

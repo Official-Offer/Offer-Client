@@ -1,3 +1,5 @@
+const { getCookie } = require("cookies-next");
+
 module.exports = {
   // i18n: {
   //   // Support vietnamese and english
@@ -45,7 +47,8 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "/student",
+        // redirect to /{role} based on user role
+        destination: getCookie("role") ? `/${getCookie("role")}/profile` : "/student",
         permanent: true,
       },
       {
