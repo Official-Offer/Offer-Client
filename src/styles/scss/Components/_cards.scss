@@ -249,3 +249,67 @@
     margin-top: 12px;
   }
 }
+
+.student-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.student-cards > .ant-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 9px 0;
+  > .ant-col {
+    width: 500px;
+  }
+}
+.student-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  gap: 15px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  &-icon-value {
+    display: flex;
+    align-items: start;
+    justify-content: stretch;
+    margin-top: 4px;
+    font-size: $fs-3;
+    gap: 10px;
+    padding: 3px 0;
+    span {
+      width: 100%;
+    }
+
+    svg {
+      height: $fs-6;
+    }
+  }
+  .ant-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  &-avatar {
+    img {
+      border-radius: 100%;
+      width: 90px;
+      height: 92px;
+    }
+  }
+  &-info {
+    width: 100%;
+    &-name {
+      font-size: 19px;
+    }
+    &-detail-school-location {
+      display: flex;
+      gap: 5px;
+      font-size: 14px;
+      justify-content: space-between;
+    }
+  }
+}

@@ -1,4 +1,7 @@
 .table {
+  &-base {
+
+  }
   &-add-btn {
     margin-bottom: 20px;
     width: 20px;
@@ -18,8 +21,6 @@
     }
     &-add {
       margin-left: auto;
-      // margin-left: 150px;
-      //make elements inside inline and has gap between them
       display: flex;
       align-items: center;
       justify-content: center;

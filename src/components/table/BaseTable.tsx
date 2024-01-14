@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Popconfirm, Space, Table, Tag, message, notification } from "antd";
+import { Popconfirm, Space, Table, Tag, message, notification, Switch, Row, Col } from "antd";
 import { ColumnsType } from "antd/es/table";
 import FilterType from "@components/filter/TypeFilter";
 import { FilterSearch } from "@components/search/FilterSearch";
@@ -17,6 +17,14 @@ import {
 } from "@ant-design/icons";
 import { TableRowSelection } from "antd/lib/table/interface";
 import { useRouter } from "next/router";
+import { Option } from "src/types/dataTypes";
+import { StudentCard } from "@components/card/StudentCard";
+import { Pagination } from "antd";
+
+type BaseTableFilterProps = {
+  label: string;
+  options: Option[];
+};
 
 type BaseTableProps = {
   dataset: any[];
@@ -31,6 +39,8 @@ type BaseTableProps = {
   placeholder?: string;
   isLoading?: boolean;
   tableType?: string;
+  allowGridView?: boolean;
+  filters?: BaseTableFilterProps[];
 };
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -47,6 +57,8 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   placeholder,
   isLoading,
   tableType,
+  allowGridView,
+  filters,
 }) => {
   const router = useRouter();
   const [jobIDs, setJobIDs] = useState<string[]>([]);
@@ -83,9 +95,23 @@ export const BaseTable: React.FC<BaseTableProps> = ({
   useEffect(() => {
     console.log(dataset);
   }, [dataset]);
-
+  const [gridView, setGridView] = useState(false);
+  const pairViewedDataset = [];
+  if (dataset.length % 2 === 1) {
+    dataset.push(null);
+  }
+  for (let i = 0; i < dataset.length; i += 2) {
+    pairViewedDataset.push([dataset[i], dataset[i + 1]]);
+  }
+  const pageSize = 5; // Number of rows per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalRows = dataset.length;
+  const totalPages = Math.ceil(totalRows / pageSize);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   return (
-    <div>
+    <div className="table-base">
       <div className="table-functions">
         <div className="table-functions-search">
           {handleFilterSearch && (
@@ -98,15 +124,6 @@ export const BaseTable: React.FC<BaseTableProps> = ({
             />
           )}
         </div>
-        {/* <div className="table-functions-type">
-          {handleFilterType && (
-            <FilterType
-              onSearch={(_x: any, values: any) => {
-                handleFilterType(values);
-              }}
-            />
-          )}
-        </div> */}
         {(handleAdd || handleVerify || handleDelete || handleEdit) && (
           <div className="table-functions-add">
             {handleVerify && (
@@ -167,12 +184,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
             )}
 
             {handleAdd && (
-              <IconButton
-                round
-                className=""
-                backgroundColor={"#D30B81"}
-                onClick={handleAdd}
-              >
+              <IconButton round className="" backgroundColor={"#D30B81"} onClick={handleAdd}>
                 <div className="btn-body">
                   <span>Tạo công việc</span>
                   <span>
@@ -191,12 +203,7 @@ export const BaseTable: React.FC<BaseTableProps> = ({
                 okText="Có"
                 cancelText="Không"
               >
-                <IconButton
-                  round
-                  className=""
-                  backgroundColor={"#D30B81"}
-                  onClick={() => {}}
-                >
+                <IconButton round className="" backgroundColor={"#D30B81"} onClick={() => {}}>
                   <div className="btn-body">
                     <span>Xoá công việc</span>
                     <span>
@@ -209,26 +216,50 @@ export const BaseTable: React.FC<BaseTableProps> = ({
           </div>
         )}
       </div>
-      <Table
-        rowSelection={handleVerify && rowSelection}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              if (
-                tableType === "RecruiterJobs" ||
-                tableType === "AdvisorJobs"
-              ) {
-                const role =
-                  tableType === "RecruiterJobs" ? "recruiter" : "advisor";
-                router.push(`/${role}/applicants/${record.key.pk}`);
-              }
-            }, // click row
-          };
-        }}
-        columns={columns}
-        dataSource={dataset}
-        loading={isLoading}
-      />
+      <Switch checked={gridView} onChange={() => setGridView(!gridView)} />
+      {gridView ? (
+        // display data in grid view. each row with 2 columns
+        <div className="student-cards">
+          {dataset
+            .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+            .map((data, index) => {
+              return (
+                <Row gutter={10}>
+                  <Col>
+                    <StudentCard student={data} />
+                  </Col>
+                  <Col>
+                    <StudentCard student={data} />
+                  </Col>
+                </Row>
+              );
+            })}
+
+          <Pagination
+            current={currentPage}
+            total={totalRows}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+          />
+        </div>
+      ) : (
+        <Table
+          rowSelection={handleVerify && rowSelection}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                if (tableType === "RecruiterJobs" || tableType === "AdvisorJobs") {
+                  const role = tableType === "RecruiterJobs" ? "recruiter" : "advisor";
+                  router.push(`/${role}/applicants/${record.key.pk}`);
+                }
+              }, // click row
+            };
+          }}
+          columns={columns}
+          dataSource={dataset}
+          loading={isLoading}
+        />
+      )}
       {contextHolder}
     </div>
   );

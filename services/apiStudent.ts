@@ -57,11 +57,16 @@ export const getStudentsFromSchool = async (school: any) => {
   // map majorList to a dict with id: {name, industries}
   return response.map((student: any) => ({
     key: student.account.id,
-    name: student.account.first_name + " " + student.account.last_name,
+    // return N/A if no name
+
+    name: (student.account.first_name || student.account.last_name) ? `${student.account.first_name} ${student.account.last_name}` : "N/A",
     email: student.account.email,
     major: student.majors.map((major: any) => (majorDict as Record<string, { name: string; industries: never[] }>)[major].name).join(", "), //wtf copilot so smart
     resume: student.active_resume?.resume,
-    expected_graduation: student.expected_graduation_date || "N/A",
+    expected_graduation: student.expected_graduation_date,
+    avatar: student.account.avatar,
+    school: student.school
+
   }));
 };
 
@@ -146,7 +151,7 @@ export const deleteStudentExperience = async (id: number) => {
   return response.data;
 };
 
-export const postContactEmail = async(email: string)=>{
-  const response = await request.post(`/contacts/email/`, {email});
+export const postContactEmail = async (email: string) => {
+  const response = await request.post(`/contacts/email/`, { email });
   return response.data;
 } 
