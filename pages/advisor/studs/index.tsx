@@ -5,8 +5,9 @@ import { getStudentsFromSchool } from "@services/apiStudent";
 import { NextPage } from "next";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Select } from "antd";
+import { Select, Switch } from "antd";
 import { getCookie } from "cookies-next";
+import { processedMajorList } from "@public/static/list";
 
 //create a next page for the student home page, code below
 const Students: NextPage = () => {
@@ -15,9 +16,7 @@ const Students: NextPage = () => {
   const [data, setData] = useState<StudentDataType[]>([]);
   const [dataset, setDataSet] = useState<StudentDataType[]>([]);
 
-  const [school, setSchool] = useState<Number>(
-    getCookie("orgId") ? Number(getCookie("orgId")) : 1,
-  );
+  const [school, setSchool] = useState<Number>(getCookie("orgId") ? Number(getCookie("orgId")) : 1);
 
   const studentQuery = useQuery(["jobs"], {
     queryFn: () => getStudentsFromSchool(school),
@@ -36,24 +35,32 @@ const Students: NextPage = () => {
       return;
     }
     const filteredData = dataset.filter(
-      (item) => item.name?.toLowerCase().includes(value.toLowerCase()),
+      (item) => item.name?.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
   };
+
   return (
-    <div className="applicant">
+    <div className="applicant" style={{ backgroundColor: "transparent" }}>
       <h1 className="applicant-title">Học sinh</h1>
       <br />
+
       <div className="applicant-table">
         <BaseTable
           dataset={data}
           columns={StudentColumns}
           placeholder={"Tìm học sinh"}
-          // handleFilterType={handleFilterType}
           handleFilterSearch={handleFilterSearch}
           searchResults={searchResults}
           tableType={"Students"}
           isLoading={studentQuery.isLoading}
+          filters={[
+            {
+              label: "Tất cả ngành",
+              options: processedMajorList,
+            },
+          ]}
+          allowGridView={true}
         />
       </div>
     </div>

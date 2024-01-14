@@ -28,13 +28,24 @@
       }
     }
     &-form {
-      min-width: 240px;
+      min-width: 280px;
       h1 {
         margin-bottom: 25px;
         text-align: center;
       }
+      a {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      p {
+        margin-bottom: 8px;
+      }
       &-pincode {
         text-align: center;
+      }
+      .form {
+        margin: 16px 0px;
       }
     }
   }

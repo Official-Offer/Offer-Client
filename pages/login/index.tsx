@@ -21,20 +21,16 @@ const Login: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const [rol, setRol] = useState<string>("student");
+  const [roleStr, setRoleStr] = useState<string>("student");
   const [selectRole, setSelectRole] = useState<boolean>(false);
   const [org, setOrg] = useState<any>();
   const [tok, setToken] = useState<string>("");
-  const [r, setR] = useState<any>({
+  const [roleBool, setRoleBool] = useState<any>({
     isStudent: true,
     isAdvisor: false,
     isRecruiter: false,
   });
-  const openNotification = (
-    type: NotificationType,
-    message: string,
-    description: string,
-  ) => {
+  const openNotification = (type: NotificationType, message: string, description: string) => {
     api[type]({
       message,
       description,
@@ -49,11 +45,7 @@ const Login: NextPage = () => {
       // console.log(data);
       setCookie(
         "cookieToken",
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
+        data.access_token ? data.access_token : data.access ? data.access : data.token
       );
       setCookie("id", data.pk ? data.pk : data.id);
       setCookie("avatar", data.avatar);
@@ -62,19 +54,11 @@ const Login: NextPage = () => {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie(
-          "orgName",
-          data.organization?.name ? data.organization?.name : "Name",
-        );
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(
-          setCompany(
-            data.organization?.name ? data.organization?.name : "Name",
-          ),
-        );
-        dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
-        );
+        setCookie("orgLogo", data.organization?.logo);
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
@@ -104,38 +88,20 @@ const Login: NextPage = () => {
       // Invalidate and refetch
       setCookie(
         "cookieToken",
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
+        data.access_token ? data.access_token : data.access ? data.access : data.token
       );
-      setToken(
-        data.access_token
-          ? data.access_token
-          : data.access
-            ? data.access
-            : data.token,
-      );
+      setToken(data.access_token ? data.access_token : data.access ? data.access : data.token);
       setCookie("id", data.pk ? data.pk : data.id);
       // dispatch(setID( data.pk ? data.pk : data.id));
       if (data.role == "guest") {
         setSelectRole(true);
       } else {
         setCookie("role", data.role);
-        setCookie(
-          "orgName",
-          data.organization?.name ? data.organization?.name : "Name",
-        );
+        setCookie("orgName", data.organization?.name ? data.organization?.name : "Name");
         setCookie("orgId", data.organization?.id ? data.organization?.id : "1");
-        dispatch(
-          setCompany(
-            data.organization?.name ? data.organization?.name : "Name",
-          ),
-        );
-        dispatch(
-          setCompanyId(data.organization?.id ? data.organization?.id : "1"),
-        );
+        setCookie("orgLogo", data.organization?.logo);
+        dispatch(setCompany(data.organization?.name ? data.organization?.name : "Name"));
+        dispatch(setCompanyId(data.organization?.id ? data.organization?.id : "1"));
         router
           .push({
             pathname:
@@ -166,11 +132,7 @@ const Login: NextPage = () => {
       router
         .push({
           pathname:
-            rol == "student"
-              ? "/student"
-              : rol == "advisor"
-                ? "/advisor/jobs"
-                : "/recruiter/jobs",
+            roleStr == "student" ? "/student" : roleStr == "advisor" ? "/advisor/jobs" : "/recruiter/jobs",
         })
         .then(() => {
           router.reload();
@@ -197,9 +159,9 @@ const Login: NextPage = () => {
     }
   }, [status]);
 
-  console.log(status, errorMessage, selectRole)
+  console.log(status, errorMessage, selectRole);
   if (status === "loading") return <LoadingPage />;
-  return (status == "authenticated" && !errorMessage && !selectRole ) ? (
+  return status == "authenticated" && !errorMessage && !selectRole ? (
     <LoadingPage />
   ) : (
     <div className="register">
@@ -239,25 +201,22 @@ const Login: NextPage = () => {
                 onSubmit={(org: any) => {
                   // console.log("org", org);
                   if (!org) {
-                    openNotification(
-                      "error",
-                      "Lỗi chọn tổ chức",
-                      "Vui lòng chọn tổ chức",
-                    );
+                    openNotification("error", "Lỗi chọn tổ chức", "Vui lòng chọn tổ chức");
                     return;
                   }
                   setErrorMessage("");
                   setOrg(org);
                   setCookie("orgName", org.label);
                   setCookie("orgId", org.key);
+
                   dispatch(setCompany(org.label));
                   dispatch(setCompanyId(org.key));
-                  setCookie("role", rol);
-                  // dispatch(setRole(r));
+                  setCookie("role", roleStr);
+                  // dispatch(setRole(roleBool));
                   orgMutation.mutate({
                     token: tok,
                     content: {
-                      role: rol,
+                      role: roleStr,
                       org_id: Number(org.key),
                     },
                   });
@@ -282,19 +241,19 @@ const Login: NextPage = () => {
                   options={["Học sinh", "Nhà tuyển dụng", "Trường"]}
                   size={"large"}
                   onChange={(value) => {
-                    setRol(
+                    setRoleStr(
                       value.toString() == "Học sinh"
                         ? "student"
                         : value.toString() == "Nhà tuyển dụng"
                           ? "recruiter"
-                          : "advisor",
+                          : "advisor"
                     );
                     const role = {
                       isStudent: value.toString() == "Học sinh",
                       isAdvisor: value.toString() == "Trường",
                       isRecruiter: value.toString() == "Nhà tuyển dụng",
                     };
-                    setR(role);
+                    setRoleBool(role);
                     dispatch(setRole(role));
                   }}
                 />
@@ -308,10 +267,10 @@ const Login: NextPage = () => {
           >
             Dang Xuat
           </Button> */}
-          {errorMessage && status !== "authenticated" && (
+          {/* {errorMessage && status !== "authenticated" && (
             <Alert message={errorMessage} type="error" />
             // <p className="register-content-error">{errorMessage}</p>
-          )}
+          )} */}
           {contextHolder}
           <FootnoteForm embedLogin={true} type={""} />
         </div>
