@@ -99,9 +99,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           className="navbar left-menu"
         >
           {router.pathname.includes("recruiter") || router.pathname.includes("advisor") ? null : (
-            <Menu.Item key={"/student/"} className="m-0">
+            <Menu.Item key={"/student/"}>
               {false ? (
-                <a target="_blank" rel="noopener noreferrer" className="m-0" href={"/student/"}>
+                <a target="_blank" rel="noopener noreferrer" href={"/student/"}>
                   {"Home"}
                 </a>
               ) : (
@@ -121,7 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           mode="horizontal"
           className="navbar center-menu"
         >
-          {/* <Menu.Item key={"/student/jobs/"} className="m-0"> */}
+          {/* <Menu.Item key={"/student/jobs/"}> */}
 
           {/* <Dropdown
               overlayClassName="link-dropdown"
@@ -153,35 +153,34 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
             </Dropdown> */}
           <Menu.SubMenu
             key={"/student/jobs/"}
-            className="m-0"
             title={<span>Công việc</span>}
             popupClassName="link-dropdown"
           >
-            <Menu.Item key={"/student/jobs/"} className="m-0">
+            <Menu.Item key={"/student/jobs/"}>
               <Link href={"/student/jobs"}>
                 <span>Thực tập</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/jobs/"} className="m-0">
+            <Menu.Item key={"/student/jobs/"}>
               <Link href={"/student/jobs"}>
                 <span>Fresher</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/jobs/"} className="m-0">
+            <Menu.Item key={"/student/jobs/"}>
               <Link href={"/student/jobs"}>
                 <span>Part-time</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/jobs/"} className="m-0">
+            <Menu.Item key={"/student/jobs/"}>
               <Link href={"/student/jobs"}>
                 <span>Full-time</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/jobs/"} className="m-0">
+            <Menu.Item key={"/student/jobs/"}>
               <Link href={"/student/jobs"}>
                 <span>Remote</span>
               </Link>
@@ -191,9 +190,9 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           {listMenu.map((menu, i) => {
             return (
               menu.name !== "Login" && (
-                <Menu.Item key={menu.routeSelected} className="m-0">
+                <Menu.Item key={menu.routeSelected}>
                   {menu.newTab ? (
-                    <a target="_blank" rel="noopener noreferrer" className="m-0" href={menu.link}>
+                    <a target="_blank" rel="noopener noreferrer" href={menu.link}>
                       {menu.name}
                     </a>
                   ) : (
@@ -205,29 +204,29 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           })}
           <Menu.SubMenu
             key={"/student/share"}
-            className="m-0"
+          
             title={<span>Chia sẻ</span>}
             popupClassName="link-dropdown"
           >
-            <Menu.Item key={"/student/scholarship"} className="m-0">
+            <Menu.Item key={"/student/scholarship"}>
               <Link href={"/student/scholarship"}>
                 <span>Học bổng</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/career-tips"} className="m-0">
+            <Menu.Item key={"/student/career-tips"}>
               <Link href={"/student/career-tips"}>
                 <span>Bí quyết apply</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/competition"} className="m-0">
+            <Menu.Item key={"/student/competition"}>
               <Link href={"/student/competition"}>
                 <span>Cuộc thi</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/club"} className="m-0">
+            <Menu.Item key={"/student/club"}>
               <Link href={"/student/club"}>
                 <span>Câu lạc bộ</span>
               </Link>
@@ -235,47 +234,47 @@ export const Navbar: React.FC<NavbarProps> = ({ searchBarHidden }) => {
           </Menu.SubMenu>
           <Menu.SubMenu
             key={"/student/advising"}
-            className="m-0"
+          
             title={<span>Hướng nghiệp</span>}
             popupClassName="link-dropdown"
           >
-            <Menu.Item key={"/student/advising/create-cv"} className="m-0">
+            <Menu.Item key={"/student/advising/create-cv"}>
               <Link href={"/student/advising/create-cv"}>
                 <span>Tạo CV</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/connect-advisor"} className="m-0">
+            <Menu.Item key={"/student/advising/connect-advisor"}>
               <Link href={"/student/advising/connect-advisor"}>
                 <span>Kết nối advisor</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/interview-practice"} className="m-0">
+            <Menu.Item key={"/student/advising/interview-practice"}>
               <Link href={"/student/advising/interview-practice"}>
                 <span>Luyện phỏng vấn</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/mentor-mentee"} className="m-0">
+            <Menu.Item key={"/student/advising/mentor-mentee"}>
               <Link href={"/student/advising/mentor-mentee"}>
                 <span>Mentor-mentee</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/personal-development"} className="m-0">
+            <Menu.Item key={"/student/advising/personal-development"}>
               <Link href={"/student/advising/personal-development"}>
                 <span>Phát triển bản thân</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/career-development"} className="m-0">
+            <Menu.Item key={"/student/advising/career-development"}>
               <Link href={"/student/advising/career-development"}>
                 <span>Phát triển nghề nghiệp</span>
               </Link>
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Item key={"/student/advising/personality-quiz"} className="m-0">
+            <Menu.Item key={"/student/advising/personality-quiz"}>
               <Link href={"/student/advising/personality-quiz"}>
                 <span>Trắc nghiệm tính cách</span>
               </Link>
