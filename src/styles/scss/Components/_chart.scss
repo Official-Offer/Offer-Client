@@ -1,0 +1,74 @@
+.piechart-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	margin: auto;
+	max-width: 400px; // Set a max-width for larger screens
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); // adds a shadow for aesthetics
+	border-radius: 10px; // for rounded corners
+
+	h2 {
+		margin-bottom: 20px;
+	}
+
+	.piechart {
+		width: 100%; // Responsive width
+		height: auto; // Maintain aspect ratio
+		// max-height: 400px; // Limit the size on larger screens
+
+		@media (max-width: 600px) {
+			max-height: 300px; // Smaller size on smaller screens
+		}
+	}
+}
+
+.linechart-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	margin: auto;
+	// max-width: 400px; // Set a max-width for larger screens
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); // Adds a shadow for aesthetics
+	border-radius: 10px; // For rounded corners
+
+	h2 {
+		margin-bottom: 20px;
+	}
+
+	.linechart {
+		width: 100%; // Responsive width
+		height: auto; // Maintain aspect ratio
+		max-height: 400px; // to limit the size on larger screens
+
+		@media (max-width: 600px) {
+			max-height: 300px; // Smaller size on smaller screens
+		}
+	}
+}
+
+.barchart-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	margin: auto;
+	max-width: 800px; // Set a max-width for larger screens
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); // Adds a shadow for aesthetics
+	border-radius: 10px; // For rounded corners
+
+	h2 {
+		margin-bottom: 20px;
+	}
+
+	.barchart {
+		width: 100%; // Responsive width
+		height: auto; // Maintain aspect ratio
+		max-height: 400px; // Limit the size on larger screens
+
+		@media (max-width: 600px) {
+			max-height: 300px; // Smaller size on smaller screens
+		}
+	}
+}

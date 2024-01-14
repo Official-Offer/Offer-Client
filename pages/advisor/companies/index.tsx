@@ -5,7 +5,7 @@ import { CompanyDataType } from "@components/table/dataType";
 import { getCompaniesForAdvisor } from "@services/apiCompany";
 import { FilterSearch } from "@components/search/FilterSearch";
 import { CompanyFilter } from "@components/filter/CompanyFilter";
-import { Avatar, Card } from "antd";
+import { Avatar, Card as AntdCard } from "antd";
 import {
 	AntDesignOutlined,
 	MailOutlined,
@@ -14,7 +14,7 @@ import {
 import type { Company } from "src/types/dataTypes";
 import { Image, Row, Col } from "antd";
 
-const { Meta } = Card;
+const { Meta } = AntdCard;
 const Companies: NextPage = () => {
 	const [searchResults, setSearchResults] = useState<string[]>([]);
 	const [data, setData] = useState<Company[]>([]);
@@ -84,7 +84,7 @@ const Companies: NextPage = () => {
 				>
 					{data.map((company, index) => (
 						<Col key={index}>
-							<Card
+							<AntdCard
 								hoverable
 								style={{ width: 300 }}
 								cover={
@@ -123,7 +123,7 @@ const Companies: NextPage = () => {
 										ở đây
 									</p>
 								)}
-							</Card>
+							</AntdCard>
 						</Col>
 					))}
 				</Row>
