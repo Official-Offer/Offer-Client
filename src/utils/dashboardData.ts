@@ -19,18 +19,18 @@ export const PieChartData = {
 
 export const LineChartData = {
 	labels: [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December",
+		"Tháng 1", // January
+		"Tháng 2", // February
+		"Tháng 3", // March
+		"Tháng 4", // April
+		"Tháng 5", // May
+		"Tháng 6", // June
+		"Tháng 7", // July
+		"Tháng 8", // August
+		"Tháng 9", // September
+		"Tháng 10", // October
+		"Tháng 11", // November
+		"Tháng 12", // December
 	],
 	datasets: [
 		{
@@ -43,14 +43,6 @@ export const LineChartData = {
 };
 
 export const BarChartData = {
-	// labels: [
-	// 	"Computer Science",
-	// 	"Mechanical Engineering",
-	// 	"Business Administration",
-	// 	"Biology",
-	// 	"Graphic Design",
-	// ],
-
 	labels: [
 		"Khoa học máy tính",
 		"Kỹ thuật cơ khí",
@@ -62,13 +54,6 @@ export const BarChartData = {
 		{
 			label: "Số lượng hồ sơ ứng tuyển",
 			data: [303, 414, 310, 310, 330],
-			// backgroundColor: [
-			// 	"#FF6384",
-			// 	"#36A2EB",
-			// 	"#FFCE56",
-			// 	"#4BC0C0",
-			// 	"#9966FF",
-			// ],
 			backgroundColor: "#00196E",
 		},
 	],
