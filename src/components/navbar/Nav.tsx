@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import {
+  StockOutlined,
   DesktopOutlined,
   LockOutlined,
   PlusOutlined,
@@ -9,7 +10,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, ConfigProvider } from "antd";
 import router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
@@ -43,6 +44,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
   const Navbar = dynamic(() => import("@components").then((mod: any) => mod.Navbar)) as any;
   const [collapsed, setCollapsed] = useState(false);
   const titles = [
+    "Thống kê",
     "Công việc",
     "Học sinh",
     isRecruiter ? "Trường" : "Công ty",
@@ -50,6 +52,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     loggedIn ? "Đăng xuất" : "Đăng nhập",
   ];
   const path = [
+    "/dashboard",
     "/jobs",
     "/studs",
     isRecruiter ? "/schools" : "/companies",
@@ -57,6 +60,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
     loggedIn ? "/logout" : "/login",
   ];
   const items: MenuProps["items"] = [
+    StockOutlined,
     SnippetsOutlined,
     TeamOutlined,
     DesktopOutlined,
@@ -66,8 +70,10 @@ export const Nav: React.FC = (props: any): ReactElement => {
     key: `/${role}${path[index]}`,
     icon: React.createElement(icon),
     label: titles[index],
+    // if active, background color set to lighter orgLogoColor, and color to orgLogoColor
     onClick: (e) => {
-      if (index == 4) {
+      // if logout
+      if (index == 5) {
         if (status == "authenticated") {
           deleteCookie("cookieToken");
           deleteCookie("role");
@@ -106,7 +112,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
     }
   }, [orgLogoRef.current]);
 
-  
   if (router.pathname.includes("recruiter") || router.pathname.includes("advisor")) {
     return (
       <div>
@@ -127,7 +132,7 @@ export const Nav: React.FC = (props: any): ReactElement => {
               <IconButton
                 round
                 className="table-add-btn"
-                backgroundColor={"#D30B81"}
+                backgroundColor={orgLogoColor}
                 style={{ margin: "auto", width: "150px", marginBottom: "10px" }}
                 onClick={() => {
                   router.push(`/${role}/postJobs/orgSelect`);
@@ -189,25 +194,6 @@ export const Nav: React.FC = (props: any): ReactElement => {
       </div>
     );
   }
-  // else if (
-  //   router.pathname !== "/student" &&
-  //   router.pathname !== "/student/contact" &&
-  //   !router.pathname.includes("login") &&
-  //   !router.pathname.includes("registration") &&
-  //   !loggedIn
-  // ) {
-  //   router.push("/login");
-  //   <div style={{ margin: "auto", marginTop: "100px" }}>
-  //     Bạn cần đăng nhập để sử dụng chức năng này{" "}
-  //     <Button
-  //       onClick={() => {
-  //         router.push("/login");
-  //       }}
-  //     >
-  //       Đăng nhập
-  //     </Button>
-  //   </div>;
-  // }
   return (
     <>
       <Navbar
