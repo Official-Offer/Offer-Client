@@ -60,6 +60,7 @@ const Students: NextPage = () => {
               options: processedMajorList,
             },
           ]}
+          allowGridView={true}
         />
       </div>
     </div>

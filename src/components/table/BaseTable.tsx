@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { Option } from "src/types/dataTypes";
 import { StudentCard } from "@components/card/StudentCard";
 import { Pagination } from "antd";
-
+import { Bars3Icon, Squares2X2Icon } from "@heroicons/react/24/solid";
 type BaseTableFilterProps = {
   label: string;
   options: Option[];
@@ -216,7 +216,12 @@ export const BaseTable: React.FC<BaseTableProps> = ({
           </div>
         )}
       </div>
-      <Switch checked={gridView} onChange={() => setGridView(!gridView)} />
+      {allowGridView && <Switch
+        checked={gridView}
+        onChange={() => setGridView(!gridView)}
+        checkedChildren={<Bars3Icon />}
+        unCheckedChildren={<Squares2X2Icon />}
+      />}
       {gridView ? (
         // display data in grid view. each row with 2 columns
         <div className="student-cards">

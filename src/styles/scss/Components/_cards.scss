@@ -272,6 +272,7 @@
   gap: 15px;
   padding: 15px 25px;
   border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   &-icon-value {
     display: flex;
     align-items: start;
@@ -296,8 +297,8 @@
   &-avatar {
     img {
       border-radius: 100%;
-      width: 90px;
-      height: 92px;
+      width: 95px;
+      height: 97px;
     }
   }
   &-info {
