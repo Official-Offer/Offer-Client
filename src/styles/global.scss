@@ -4,13 +4,13 @@
 @import "./scss/Helper/mixin";
 
 .global {
-  background-color: $grey-light-background;
-  min-height: calc(100dvh - 64px);
+	background-color: $grey-light-background;
+	min-height: calc(100dvh - 64px);
 
-  & > div,
-  > section {
-    background-color: white;
-  }
+	& > div,
+	> section {
+		background-color: white;
+	}
 }
 
 /* Components */
@@ -22,6 +22,7 @@
 @import "./scss/Components/filter";
 @import "./scss/Components/table";
 @import "./scss/Components/custom";
+@import "./scss/Components/chart";
 
 /* Helper */
 @import "./scss/Helper/button";
@@ -53,22 +54,23 @@
 @import "./scss/Layouts/student-job-portal";
 @import "./scss/Layouts/split-layout";
 @import "./scss/Layouts/form-page";
+@import "./scss/Layouts/dashboard";
 
 .swiper {
-  width: 100%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
+	width: 100%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  height: calc((100% - 30px) / 2) !important;
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	height: calc((100% - 30px) / 2) !important;
 
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	/* Center slide text vertically */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

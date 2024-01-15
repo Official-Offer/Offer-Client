@@ -1,0 +1,24 @@
+.dashboard-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: black;
+	padding: 50px;
+
+	.top-charts {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		.pie-chart,
+		.line-chart {
+			flex: 1;
+			margin: 10px;
+		}
+	}
+
+	.bar-chart {
+		width: 100%;
+		margin-top: 20px;
+	}
+}
